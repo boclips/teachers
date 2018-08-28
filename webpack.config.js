@@ -6,7 +6,7 @@ const distPath = path.resolve(__dirname, "dist");
 
 module.exports = {
     "mode": "development",
-    "entry": path.resolve(srcPath, "index.js"),
+    "entry": path.resolve(srcPath, "index.ts"),
     "output": {
         "path": distPath,
         "filename": "[name].[chunkhash:8].js"
