@@ -7,7 +7,7 @@ const distPath = path.resolve(__dirname, "dist");
 
 module.exports = {
     "mode": "development",
-    "entry": path.resolve(srcPath, "index.ts"),
+    "entry": path.resolve(srcPath, "index.tsx"),
     "output": {
         "path": distPath,
         "filename": "[name].[chunkhash:8].js"
@@ -16,7 +16,7 @@ module.exports = {
     "module": {
         "rules": [
             {
-                "test": /\.tsx?$/,
+                "test": /\.(ts|tsx)$/,
                 "exclude": /node_modules/,
                 "use": {
                     "loader": "ts-loader",
@@ -36,7 +36,7 @@ module.exports = {
         ]
     },
     "plugins": [
-      new MiniCssExtractPlugin({filename: "[name]-[contenthash:8].css"}),
-      new HtmlWebpackPlugin(),
+        new MiniCssExtractPlugin({filename: "[name]-[contenthash:8].css"}),
+        new HtmlWebpackPlugin({ template: path.resolve(srcPath, 'index.html') })
     ]
-}
+};
