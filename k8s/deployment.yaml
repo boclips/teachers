@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: teachers-ui
+  labels:
+    app: teachers-ui
+spec:
+  replicas: ${REPLICAS}
+  selector:
+    matchLabels:
+      app: teachers-ui
+  template:
+    metadata:
+      labels:
+        app: teachers-ui
+    spec:
+      containers:
+      - name: teachers-ui
+        image: eu.gcr.io/boclips-prod/boclips/teachers-ui:${VERSION}
+        ports:
+        - name: http
+          containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "1m"
+            memory: "100Mi"
+          limits:
+            cpu: "50m"
+            memory: "200Mi"

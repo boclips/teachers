@@ -1,0 +1,16 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: teachers-ui
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: teacherspet.${DOMAIN}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: teachers-ui
+          servicePort: http
