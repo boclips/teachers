@@ -11,6 +11,7 @@ module.exports = {
         path: distPath,
         filename: '[name].[chunkhash:8].js'
     },
+    // Allows ts(x) and js files to be imported without extension
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },

@@ -8,6 +8,7 @@ const distPath = path.resolve(__dirname, '../dist');
 module.exports = merge(common, {
     mode: 'production',
     plugins: [
+        // Cleans dist folder before building
         new CleanWebpackPlugin([distPath], { root: path.resolve(__dirname , '..') }),
     ]
 });
