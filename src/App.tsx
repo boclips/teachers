@@ -1,4 +1,4 @@
-import {Tag} from 'antd';
+import Tag from 'antd/lib/tag';
 import React from 'react';
 
 export default class App extends React.Component {
