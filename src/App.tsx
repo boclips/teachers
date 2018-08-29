@@ -1,7 +1,10 @@
 import React from 'react';
 
 export default class App extends React.Component {
-    render() {
-        return <div>Hola Ben</div>;
+  render() {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('Looks like we are in development mode!', process.env.NODE_ENV);
     }
+    return <div>Hola Ben</div>;
+  }
 }
