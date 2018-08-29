@@ -5,6 +5,7 @@ set -x -e
 app=source
 (
 cd ${app}
+npm i
 npm run compile
 npm run lint
 npm run test
