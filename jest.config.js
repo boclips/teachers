@@ -28,6 +28,6 @@ module.exports = {
         '^.+\\.(ts|tsx)$': 'ts-jest'
     },
 
-    setupTestFrameworkScriptFile: './enzyme.config.ts'
+    setupTestFrameworkScriptFile: './testSetup.ts'
 
 };
