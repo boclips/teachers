@@ -7,7 +7,8 @@
     "test": "jest",
     "dev": "webpack-dev-server --config webpack-config/webpack.dev.js",
     "build": "webpack --config webpack-config/webpack.prod.js",
-    "watch": "tsc -p . --noEmit --watch"
+    "compile": "tsc -p . --noEmit",
+    "watch": "npm run compile -- --watch"
   },
   "repository": {
     "type": "git",
