@@ -11,6 +11,9 @@ module.exports = {
         path: distPath,
         filename: '[name].[chunkhash:8].js'
     },
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js']
+    },
     module: {
         rules: [
             {
@@ -35,6 +38,6 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({filename: '[name]-[contenthash:8].css'}),
-        new HtmlWebpackPlugin({ template: path.resolve(srcPath, 'index.html') })
+        new HtmlWebpackPlugin({template: path.resolve(srcPath, 'index.html')})
     ]
 };
