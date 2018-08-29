@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "dev": "webpack-dev-server --config webpack-config/webpack.dev.js",
-    "build": "webpack --config webpack-config/webpack.prod.js"
+    "build": "webpack --config webpack-config/webpack.prod.js",
+    "watch": "tsc -p . --noEmit --watch"
   },
   "repository": {
     "type": "git",
