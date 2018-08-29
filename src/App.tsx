@@ -5,6 +5,6 @@ export default class App extends React.Component {
     if (process.env.NODE_ENV !== 'production') {
       console.log('Looks like we are in development mode!', process.env.NODE_ENV);
     }
-    return <div>Hola Ben</div>;
+    return <div id="greetings">Hola Ben</div>;
   }
 }
