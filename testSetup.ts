@@ -1,12 +1,12 @@
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
-import { JSDOM } from 'jsdom';
+import {JSDOM} from 'jsdom';
 
-Enzyme.configure({ adapter: new Adapter() });
+Enzyme.configure({adapter: new Adapter()});
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = jsdom;
+const {window} = jsdom;
 
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
@@ -17,6 +17,7 @@ function copyProps(src, target) {
     }), {});
   Object.defineProperties(target, props);
 }
+
 /* tslint:disable:no-string-literal */
 global['window'] = window;
 global['document'] = window.document;
@@ -25,3 +26,5 @@ global['navigator'] = {
 };
 /* tslint:enable:no-string-literal */
 copyProps(window, global);
+
+global['fetch'] = require('fetch-mock');

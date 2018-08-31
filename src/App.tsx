@@ -1,11 +1,29 @@
-import Tag from 'antd/lib/tag';
-import React from 'react';
+import React, {PureComponent} from 'react';
+import {Provider} from 'react-redux';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
+import ConfigLoader from './config/ConfigLoader';
+import {linksReducer} from './links/linksReducer';
 
-export default class App extends React.Component {
+import searchVideosMiddleware from './search-videos/searchVideosMiddleware';
+import SearchView from './search-videos/SearchView';
+import {videosReducer} from './search-videos/videosReducer';
+import State from './State';
+
+export default class App extends PureComponent {
+
+  private store = createStore<State, any, any, any>(
+    combineReducers({
+      videos: videosReducer,
+      links: linksReducer,
+    }),
+    applyMiddleware(searchVideosMiddleware),
+  );
+
   public render() {
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('Looks like we are in development mode!', process.env.NODE_ENV);
-    }
-    return <div id="greetings"><Tag>Hola Ben</Tag></div>;
+    return <Provider store={this.store}>
+      <ConfigLoader loadingComponent={() => <div>loading</div>}>
+        <SearchView/>
+      </ConfigLoader>
+    </Provider>;
   }
 }

@@ -20,7 +20,7 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     testMatch: [
-        '**/*.test.(ts|tsx|js)'
+        '**/*.(integrationTest|test).(ts|tsx|js)'
     ],
 
     // A map from regular expressions to paths to transformers
