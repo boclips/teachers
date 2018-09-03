@@ -6,8 +6,8 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {Store} from 'redux';
 import configureStore from 'redux-mock-store';
-import {Link} from '../links/Link';
 import fetchLinks from '../links/fetchLinks';
+import {Link} from '../links/Link';
 import {LinksState} from '../State';
 import eventually from '../test-support/eventually';
 import ConfigLoader, {storeLinksAction} from './ConfigLoader';
@@ -26,7 +26,7 @@ const fetchLinksMock = fetchLinks as Mock;
 describe('when component mounts', () => {
   describe('when links fetched', () => {
     test('dispatches STORE_LINKS action', async () => {
-      fetchLinksMock.mockReturnValue(Promise.resolve({videos: new Link({href: '/videos'})}))
+      fetchLinksMock.mockReturnValue(Promise.resolve({videos: new Link({href: '/videos'})}));
       const store = mockStore({links: null});
 
       mountConfigLoader(store);

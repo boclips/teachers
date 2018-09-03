@@ -19,11 +19,15 @@ export default class App extends PureComponent {
     applyMiddleware(searchVideosMiddleware),
   );
 
+  private loadingComponent = () => <div>loading</div>;
+
   public render() {
-    return <Provider store={this.store}>
-      <ConfigLoader loadingComponent={() => <div>loading</div>}>
-        <SearchView/>
-      </ConfigLoader>
-    </Provider>;
+    return (
+      <Provider store={this.store}>
+        <ConfigLoader loadingComponent={this.loadingComponent}>
+          <SearchView/>
+        </ConfigLoader>
+      </Provider>
+    );
   }
 }

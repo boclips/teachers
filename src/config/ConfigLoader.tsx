@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import fetchLinks from '../links/fetchLinks';
-import {Links} from '../links/VideoLinks';
+import {Links} from '../links/Links';
 import {actionCreatorFactory} from '../redux/actions';
 import {LinksState} from '../State';
 
@@ -16,11 +16,11 @@ export const storeLinksAction = actionCreatorFactory<Links>('STORE_LINKS');
 
 class ConfigLoader extends React.PureComponent<Props> {
 
-  componentDidMount(): void {
+  public componentDidMount(): void {
     this.props.requestConfig();
   }
 
-  render() {
+  public render() {
     if (this.props.configHasBeenLoaded) {
       return this.props.children;
     }

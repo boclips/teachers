@@ -3,8 +3,8 @@ import Mock = jest.Mock;
 jest.mock('./searchVideos');
 
 import configureStore from 'redux-mock-store';
-import eventually from '../test-support/eventually';
 import {Link} from '../links/Link';
+import eventually from '../test-support/eventually';
 import searchVideos from './searchVideos';
 import searchVideosMiddleware, {storeVideosAction} from './searchVideosMiddleware';
 import {searchVideosAction} from './SearchView';

@@ -1,4 +1,4 @@
-import {Reducer} from '';
+import {Reducer} from 'redux';
 import {Action, actionCreatorFactory, actionCreatorFactoryVoid} from './actions';
 import createReducer, {Handler} from './createReducer';
 

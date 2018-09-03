@@ -1,11 +1,10 @@
-import * as fetch from 'fetch-mock';
+import fetchMock from 'fetch-mock';
 import {Link} from '../links/Link';
-import {links, videos} from './video-service-responses';
 import searchVideos from './searchVideos';
-
+import {links, videos} from './video-service-responses';
 
 test('search Videos', async () => {
-  fetch.mockResponseOnce(JSON.stringify(videos), {url: '/videos?query=some%20video'});
+  fetchMock.get('/videos?query=hong kong', JSON.stringify(videos));
 
   const result = await searchVideos('hong kong', {videos: new Link(links._links.videos)});
 

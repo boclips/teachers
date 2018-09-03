@@ -5,7 +5,8 @@ export type ReducerDefinedState<TState, TPayload> = (state: TState, action: Acti
 
 export type Handler<TState, TPayload> = [ActionCreator<TPayload>, ReducerDefinedState<TState, TPayload>];
 
-export default function createReducer<TState>(initialState: TState, ...handlers: Array<Handler<TState, any>>): Reducer<TState> {
+export default function createReducer<TState>(initialState: TState, ...handlers: Array<Handler<TState, any>>)
+  : Reducer<TState> {
 
   if (initialState === undefined) {
     throw new Error('Initial state must not be undefined');

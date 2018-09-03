@@ -5,7 +5,7 @@ describe('non templated link', () => {
   test('returns original link', () => {
     const link = new Link({href: 'a-link'});
 
-    expect(link.getLink()).toEqual('a-link')
+    expect(link.getLink()).toEqual('a-link');
   });
 
   describe('when params', () => {
@@ -23,7 +23,7 @@ describe('templated link', () => {
   test('returns original interpolated link', () => {
     const link = new Link({href: 'a-link?search={search}', templated: true});
 
-    expect(link.getLink({search: 'perro'})).toEqual('a-link?search=perro')
+    expect(link.getLink({search: 'perro'})).toEqual('a-link?search=perro');
   });
 
   describe('when no params', () => {

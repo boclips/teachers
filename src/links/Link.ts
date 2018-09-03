@@ -5,7 +5,7 @@ export class Link {
     this.link = link;
   }
 
-  getLink(params?: any) {
+  public getLink(params?: any) {
     if (this.link.templated) {
       if (params && this.containsAllTemplatedParams(params)) {
         return this.getAllParams()
@@ -22,11 +22,11 @@ export class Link {
 
   private containsAllTemplatedParams(params: any) {
     return this.getAllParams()
-      .map(param => params.hasOwnProperty(param))
+      .map((param) => params.hasOwnProperty(param))
       .reduce(((previousValue, currentValue) => previousValue && currentValue));
   }
 
-  getAllParams() : string[] {
+  public getAllParams(): string[] {
     return this.link.href.match(/[^{\}]+(?=})/g);
   }
 }

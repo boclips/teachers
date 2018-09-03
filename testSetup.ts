@@ -1,5 +1,7 @@
+/* tslint:disable:no-string-literal */
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import fetchMock from 'fetch-mock';
 import 'jest-enzyme';
 import {JSDOM} from 'jsdom';
 
@@ -18,13 +20,11 @@ function copyProps(src, target) {
   Object.defineProperties(target, props);
 }
 
-/* tslint:disable:no-string-literal */
 global['window'] = window;
 global['document'] = window.document;
 global['navigator'] = {
   userAgent: 'node.js',
 };
-/* tslint:enable:no-string-literal */
 copyProps(window, global);
 
-global['fetch'] = require('fetch-mock');
+global['fetch'] = fetchMock;
