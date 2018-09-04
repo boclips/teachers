@@ -7,8 +7,8 @@ import eventually from '../test-support/eventually';
 import {links, videos} from './video-service-responses';
 
 test('search for a video shows results', async () => {
-  fetchMock.get('/', JSON.stringify(links));
-  fetchMock.get('/videos?query=some video', JSON.stringify(videos));
+  fetchMock.get('/v1/', JSON.stringify(links));
+  fetchMock.get('/v1/videos?query=some video', JSON.stringify(videos));
   const page = new SearchPage();
   await page.hasLoaded();
 
