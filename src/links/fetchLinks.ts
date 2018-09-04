@@ -1,7 +1,7 @@
-import {Link} from './Link';
+import { Link } from './Link';
 
 export default function fetchLinks() {
   return fetch('/v1/')
-    .then((response) => response.json())
-    .then((body) => ({videos: new Link(body._links.search)}));
+    .then(response => response.json())
+    .then(body => ({ videos: new Link(body._links.search) }));
 }

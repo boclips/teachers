@@ -1,8 +1,15 @@
-import fetchMock, {MockOptionsMethodGet, MockResponse, MockResponseFunction} from 'fetch-mock';
+import fetchMock, {
+  MockOptionsMethodGet,
+  MockResponse,
+  MockResponseFunction,
+} from 'fetch-mock';
 
 export default class MockFetchVerify {
-  public static get(matcher: string, reponse: MockResponse | MockResponseFunction, options?: MockOptionsMethodGet)
-    : FetchMockStub {
+  public static get(
+    matcher: string,
+    reponse: MockResponse | MockResponseFunction,
+    options?: MockOptionsMethodGet,
+  ): FetchMockStub {
     if (fetchMock.called(matcher)) {
       throw new Error(`GET '${matcher}' has already been requested`);
     }
@@ -12,8 +19,7 @@ export default class MockFetchVerify {
 }
 
 class FetchMockStub {
-  constructor(private matcher: string) {
-  }
+  constructor(private matcher: string) {}
 
   public verify() {
     if (!fetchMock.called(this.matcher)) {

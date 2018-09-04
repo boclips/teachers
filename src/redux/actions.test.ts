@@ -1,9 +1,7 @@
-import {Action, ActionCreator, actionCreatorFactory} from './actions';
+import { Action, ActionCreator, actionCreatorFactory } from './actions';
 
 describe('actionCreatorFactory', () => {
-
   describe('action creator', () => {
-
     let actionCreator: ActionCreator<string>;
 
     beforeEach(() => {
@@ -15,7 +13,6 @@ describe('actionCreatorFactory', () => {
     });
 
     describe('action', () => {
-
       let action: Action<string>;
 
       beforeEach(() => {
@@ -29,9 +26,6 @@ describe('actionCreatorFactory', () => {
       it('contains a payload', () => {
         expect(action.payload).toBe('ACTION PAYLOAD');
       });
-
     });
-
   });
-
 });

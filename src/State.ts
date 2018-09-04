@@ -1,8 +1,8 @@
-import {Links} from './links/Links';
-import {Video} from './search-videos/Video';
+import { Links } from './links/Links';
+import { Video } from './search-videos/Video';
 
 export interface LinksState {
-  links: Links
+  links: Links;
 }
 
 export interface VideosState {

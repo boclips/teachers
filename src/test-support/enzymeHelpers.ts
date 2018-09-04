@@ -1,6 +1,6 @@
 import Search from 'antd/lib/input/Search';
-import {ReactWrapper} from 'enzyme';
-import {By} from './By';
+import { ReactWrapper } from 'enzyme';
+import { By } from './By';
 
 export function findOne(wrapper, dataQa) {
   const result: ReactWrapper = wrapper.find(By.dataQa(dataQa));
@@ -30,7 +30,7 @@ export function enterKeys(element: ReactWrapper, value) {
   }
 
   element.simulate('change', {
-    target: {value},
+    target: { value },
   });
 }
 
@@ -48,7 +48,9 @@ export function search(element: ReactWrapper, query: string) {
   const onSearch = searchElement.prop('onSearch');
 
   if (typeof onSearch !== 'function') {
-    throw new Error(`onSearch prop is not a function in ${searchElement.debug()}`);
+    throw new Error(
+      `onSearch prop is not a function in ${searchElement.debug()}`,
+    );
   }
 
   onSearch(query);

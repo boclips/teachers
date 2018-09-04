@@ -8,8 +8,10 @@ export class Link {
   public getLink(params?: any) {
     if (this.link.templated) {
       if (params && this.containsAllTemplatedParams(params)) {
-        return this.getAllParams()
-          .reduce((prev, current) => prev.replace(`{${current}}`, params[current]), this.link.href);
+        return this.getAllParams().reduce(
+          (prev, current) => prev.replace(`{${current}}`, params[current]),
+          this.link.href,
+        );
       }
       throw new Error('Templated link requires params {search:"value"}');
     } else {
@@ -22,8 +24,8 @@ export class Link {
 
   private containsAllTemplatedParams(params: any) {
     return this.getAllParams()
-      .map((param) => params.hasOwnProperty(param))
-      .reduce(((previousValue, currentValue) => previousValue && currentValue));
+      .map(param => params.hasOwnProperty(param))
+      .reduce((previousValue, currentValue) => previousValue && currentValue);
   }
 
   public getAllParams(): string[] {

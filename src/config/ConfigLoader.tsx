@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import fetchLinks from '../links/fetchLinks';
-import {Links} from '../links/Links';
-import {actionCreatorFactory} from '../redux/actions';
-import {LinksState} from '../State';
+import { Links } from '../links/Links';
+import { actionCreatorFactory } from '../redux/actions';
+import { LinksState } from '../State';
 
 interface Props {
   loadingComponent: React.ComponentType;
@@ -15,7 +15,6 @@ interface Props {
 export const storeLinksAction = actionCreatorFactory<Links>('STORE_LINKS');
 
 class ConfigLoader extends React.PureComponent<Props> {
-
   public componentDidMount(): void {
     this.props.requestConfig();
   }
@@ -26,7 +25,7 @@ class ConfigLoader extends React.PureComponent<Props> {
     }
 
     const LoadingComponent = this.props.loadingComponent;
-    return <LoadingComponent/>;
+    return <LoadingComponent />;
   }
 }
 
@@ -38,8 +37,14 @@ function mapStateToProps(state: LinksState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    requestConfig: () => fetchLinks().then(storeLinksAction).then(dispatch),
+    requestConfig: () =>
+      fetchLinks()
+        .then(storeLinksAction)
+        .then(dispatch),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigLoader);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ConfigLoader);

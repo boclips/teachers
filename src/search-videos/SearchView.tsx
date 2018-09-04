@@ -1,10 +1,10 @@
 import Search from 'antd/lib/input/Search';
-import React, {PureComponent} from 'react';
-import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
-import {actionCreatorFactory} from '../redux/actions';
-import {VideosState} from '../State';
-import {Video} from './Video';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { actionCreatorFactory } from '../redux/actions';
+import { VideosState } from '../State';
+import { Video } from './Video';
 
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
 
@@ -20,10 +20,12 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
   public render() {
     return (
       <section data-qa="search-page">
-        <Search type="text" data-qa="search-input" onSearch={this.props.onSearch}/>
-        <section>
-          {this.renderVideos()}
-        </section>
+        <Search
+          type="text"
+          data-qa="search-input"
+          onSearch={this.props.onSearch}
+        />
+        <section>{this.renderVideos()}</section>
       </section>
     );
   }
@@ -41,12 +43,15 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
   }
 }
 
-function mapStateToProps({videos}: VideosState): StateProps {
-  return {videos};
+function mapStateToProps({ videos }: VideosState): StateProps {
+  return { videos };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  return {onSearch: (query) => dispatch(searchVideosAction(query))};
+  return { onSearch: query => dispatch(searchVideosAction(query)) };
 }
 
-export default connect<StateProps, DispatchProps, {}>(mapStateToProps, mapDispatchToProps)(SearchView);
+export default connect<StateProps, DispatchProps, {}>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SearchView);

@@ -1,46 +1,61 @@
-import {Action as ReduxAction, Dispatch, Middleware, MiddlewareAPI} from 'redux';
+import {
+  Action as ReduxAction,
+  Dispatch,
+  Middleware,
+  MiddlewareAPI,
+} from 'redux';
 
-export const actionCreatorFactory: <P>(type: string) => ActionCreator<P> = <P>(type: string) => {
-  const actionFactory = (payload: P) => ({type, payload});
+export const actionCreatorFactory: <P>(type: string) => ActionCreator<P> = <P>(
+  type: string,
+) => {
+  const actionFactory = (payload: P) => ({ type, payload });
   (actionFactory as any).type = type;
   (actionFactory as any).toString = () => type;
   return actionFactory as ActionCreator<P>;
 };
 
-export const actionCreatorFactoryVoid: (type: string) => ActionCreator0 = (type: string) =>
-  actionCreatorFactory<never>(type) as ActionCreator0;
+export const actionCreatorFactoryVoid: (type: string) => ActionCreator0 = (
+  type: string,
+) => actionCreatorFactory<never>(type) as ActionCreator0;
 
 export interface Action<P> {
-  type: string,
-  payload: P
+  type: string;
+  payload: P;
 }
 
 export interface ActionCreator<Payload> {
-  type: string,
+  type: string;
 
-  (payload: Payload): Action<Payload>
+  (payload: Payload): Action<Payload>;
 }
 
 export interface ActionCreator0 {
-  type: string,
+  type: string;
 
-  (): Action<never>
+  (): Action<never>;
 }
 
 export type InterceptImpl<P> = (store: MiddlewareAPI, payload: P) => void;
 
-export type SideEffect = <P>(actionCreator: ActionCreator<P>, impl: InterceptImpl<P>) => Middleware;
+export type SideEffect = <P>(
+  actionCreator: ActionCreator<P>,
+  impl: InterceptImpl<P>,
+) => Middleware;
 
-export const sideEffect: SideEffect = <P>(actionCreator: ActionCreator<P>, impl: InterceptImpl<P>) => {
-  return <AnyS>(store: MiddlewareAPI) => (next: Dispatch) => (action: ReduxAction): any => {
+export const sideEffect: SideEffect = <P>(
+  actionCreator: ActionCreator<P>,
+  impl: InterceptImpl<P>,
+) => {
+  return <AnyS>(store: MiddlewareAPI) => (next: Dispatch) => (
+    action: ReduxAction,
+  ): any => {
     const result = next(action);
     if (action.type === actionCreator.type) {
-      const actionWithPayload = action as any as Action<P>;
-      impl(store as any as MiddlewareAPI, actionWithPayload.payload);
+      const actionWithPayload = (action as any) as Action<P>;
+      impl((store as any) as MiddlewareAPI, actionWithPayload.payload);
     }
     return result;
   };
 };
 
-export interface SE<T= never> extends InterceptImpl<T> {
-}
+export interface SE<T = never> extends InterceptImpl<T> {}

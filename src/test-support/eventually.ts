@@ -7,7 +7,7 @@ export default async function eventually(assert: () => void) {
       return;
     } catch (e) {
       error = e;
-      await new Promise((resolve) => setTimeout(resolve, i));
+      await new Promise(resolve => setTimeout(resolve, i));
     }
   }
 
