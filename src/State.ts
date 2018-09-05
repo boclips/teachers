@@ -5,8 +5,13 @@ export interface LinksState {
   links: Links;
 }
 
+export interface VideosStateValue {
+  loading: boolean;
+  items: Video[];
+}
+
 export interface VideosState {
-  videos: Video[];
+  videos: VideosStateValue;
 }
 
 export default interface State extends LinksState, VideosState {}
