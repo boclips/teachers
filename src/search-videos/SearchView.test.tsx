@@ -11,7 +11,7 @@ import { Video } from './Video';
 const mockStore = configureStore<VideosState>();
 
 test('dispatches an action with search query when search button clicked', () => {
-  const store = mockStore({ videos: { items: [], loading: false } });
+  const store = mockStore({ videos: { items: [], loading: false, query: '' } });
   const wrapper = mount(
     <Provider store={store}>
       <SearchView />
@@ -29,7 +29,7 @@ test('displays search results', () => {
   const video1: Video = { title: 'first video title' };
   const video2: Video = { title: 'second video title' };
   const store = mockStore({
-    videos: { items: [video1, video2], loading: false },
+    videos: { items: [video1, video2], loading: false, query: '' },
   });
 
   const results = findAll(
