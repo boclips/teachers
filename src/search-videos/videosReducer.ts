@@ -5,6 +5,8 @@ import { storeVideosAction } from './searchVideosMiddleware';
 import { searchVideosAction } from './SearchView';
 import { Video } from './Video';
 
+const initialState: VideosStateValue = { items: [], loading: false, query: '' };
+
 function onSearchVideosAction(_, query: string): VideosStateValue {
   return { items: [], loading: true, query };
 }
@@ -17,7 +19,7 @@ function onStoreVideosAction(
 }
 
 export const videosReducer: Reducer<VideosStateValue> = createReducer(
-  { items: [], loading: false },
+  initialState,
   actionHandler(searchVideosAction, onSearchVideosAction),
   actionHandler(storeVideosAction, onStoreVideosAction),
 );

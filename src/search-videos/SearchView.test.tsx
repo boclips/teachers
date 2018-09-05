@@ -1,22 +1,28 @@
 import { mount } from 'enzyme';
-import * as React from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { Store } from 'redux';
 
 import configureStore from 'redux-mock-store';
 import { VideosState } from '../State';
+import { By } from '../test-support/By';
 import { findAll, findOne, search } from '../test-support/enzymeHelpers';
 import SearchView, { searchVideosAction } from './SearchView';
 import { Video } from './Video';
 
 const mockStore = configureStore<VideosState>();
 
-test('dispatches an action with search query when search button clicked', () => {
-  const store = mockStore({ videos: { items: [], loading: false, query: '' } });
-  const wrapper = mount(
+function mountWith(store: Store) {
+  return mount(
     <Provider store={store}>
       <SearchView />
     </Provider>,
   );
+}
+
+test('dispatches an action with search query when search button clicked', () => {
+  const store = mockStore({ videos: { items: [], loading: false, query: '' } });
+  const wrapper = mountWith(store);
 
   search(wrapper, 'china firewall');
 
@@ -25,21 +31,45 @@ test('dispatches an action with search query when search button clicked', () => 
   );
 });
 
-test('displays search results', () => {
+test('shows placeholders when results are loading', () => {
+  const store = mockStore({
+    videos: { items: [], loading: true, query: 'donuts' },
+  });
+  const wrapper = mountWith(store);
+
+  const placeholders = wrapper.find(By.dataQa('search-results-placeholders'));
+
+  expect(placeholders).toExist();
+});
+
+test('shows a no results message when there are zero search results', () => {
+  const store = mockStore({
+    videos: { items: [], loading: false, query: 'donuts' },
+  });
+  const wrapper = mountWith(store);
+
+  const message = wrapper.find(By.dataQa('search-zero-results'));
+
+  expect(message).toHaveText('Your search for donuts returned no results');
+});
+
+test('does not show a no results message when search query is empty', () => {
+  const store = mockStore({ videos: { items: [], loading: false, query: '' } });
+  const wrapper = mountWith(store);
+
+  const message = wrapper.find(By.dataQa('search-zero-results'));
+
+  expect(message).not.toExist();
+});
+
+test('shows search results when there are any', () => {
   const video1: Video = { title: 'first video title' };
   const video2: Video = { title: 'second video title' };
   const store = mockStore({
     videos: { items: [video1, video2], loading: false, query: '' },
   });
 
-  const results = findAll(
-    mount(
-      <Provider store={store}>
-        <SearchView />
-      </Provider>,
-    ),
-    'search-result',
-  );
+  const results = findAll(mountWith(store), 'search-result');
   expect(results).toHaveLength(2);
 
   const firstVideo = results.at(0);

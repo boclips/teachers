@@ -38,7 +38,7 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-redux": "^6.0.6",
     "@types/redux-mock-store": "^1.0.0",
-    "antd": "^3.8.4",
+    "antd": "^3.9.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
     "enzyme": "^3.5.0",
