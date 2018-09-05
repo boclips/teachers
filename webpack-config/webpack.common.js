@@ -1,9 +1,11 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 const srcPath = path.resolve(__dirname, '../src');
 const distPath = path.resolve(__dirname, '../dist');
+const staticPath = path.resolve(__dirname, '../static');
 
 module.exports = {
     entry: path.resolve(srcPath, 'index.tsx'),
@@ -44,6 +46,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({filename: '[name]-[contenthash:8].css'}),
-        new HtmlWebpackPlugin({template: path.resolve(srcPath, 'index.html')})
+        new HtmlWebpackPlugin({template: path.resolve(srcPath, 'index.html')}),
+        new CopyWebpackPlugin([ { from: staticPath, to: distPath } ]),
     ]
 };
