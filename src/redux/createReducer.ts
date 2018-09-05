@@ -1,19 +1,26 @@
 import { Reducer } from 'redux';
 import { Action, ActionCreator } from './actions';
 
-export type ReducerDefinedState<TState, TPayload> = (
+export type ActionHandlerFunction<TState, TPayload> = (
   state: TState,
-  action: Action<TPayload>,
+  payload: TPayload,
 ) => TState;
 
-export type Handler<TState, TPayload> = [
+export type ActionHandler<TState, TPayload> = [
   ActionCreator<TPayload>,
-  ReducerDefinedState<TState, TPayload>
+  ActionHandlerFunction<TState, TPayload>
 ];
+
+export function actionHandler<TState, TPayload>(
+  action: ActionCreator<TPayload>,
+  handler: ActionHandlerFunction<TState, TPayload>,
+): ActionHandler<TState, TPayload> {
+  return [action, handler];
+}
 
 export default function createReducer<TState>(
   initialState: TState,
-  ...handlers: Array<Handler<TState, any>>
+  ...handlers: Array<ActionHandler<TState, any>>
 ): Reducer<TState> {
   if (initialState === undefined) {
     throw new Error('Initial state must not be undefined');
@@ -30,7 +37,7 @@ export default function createReducer<TState>(
 
   return function reducer(state: TState = initialState, action: Action<any>) {
     if (handlersMap.hasOwnProperty(action.type)) {
-      return handlersMap[action.type](state, action);
+      return handlersMap[action.type](state, action.payload);
     } else {
       return state;
     }

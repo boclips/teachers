@@ -1,17 +1,14 @@
 import { Reducer } from 'redux';
-import { Action } from '../redux/actions';
-import createReducer from '../redux/createReducer';
+import createReducer, { actionHandler } from '../redux/createReducer';
 import { VideosStateValue } from '../State';
 import { storeVideosAction } from './searchVideosMiddleware';
 import { Video } from './Video';
 
-const initialState: VideosStateValue = { items: [], loading: false };
-
-function onStoreVideosAction(_, action: Action<Video[]>): VideosStateValue {
-  return { items: action.payload, loading: false };
+function onStoreVideosAction(_, videos: Video[]): VideosStateValue {
+  return { items: videos, loading: false };
 }
 
 export const videosReducer: Reducer<VideosStateValue> = createReducer(
-  initialState,
-  [storeVideosAction, onStoreVideosAction],
+  { items: [], loading: false },
+  actionHandler(storeVideosAction, onStoreVideosAction),
 );

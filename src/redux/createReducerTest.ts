@@ -1,10 +1,5 @@
-import { Reducer } from 'redux';
-import {
-  Action,
-  actionCreatorFactory,
-  actionCreatorFactoryVoid,
-} from './actions';
-import createReducer, { Handler } from './createReducer';
+import { actionCreatorFactory, actionCreatorFactoryVoid } from './actions';
+import createReducer, { ActionHandler } from './createReducer';
 
 it('throws when initial state is undefined', () => {
   expect(() => {
@@ -13,11 +8,11 @@ it('throws when initial state is undefined', () => {
 });
 
 it('throws when there are multiple handlers for the same action type', () => {
-  const handler1: Handler<string, number> = [
+  const handler1: ActionHandler<string, number> = [
     actionCreatorFactoryVoid('ABC'),
     (s: string) => s,
   ];
-  const handler2: Handler<string, number> = [
+  const handler2: ActionHandler<string, number> = [
     actionCreatorFactoryVoid('ABC'),
     (s: string) => s,
   ];
@@ -27,12 +22,13 @@ it('throws when there are multiple handlers for the same action type', () => {
 });
 
 describe('reducer', () => {
-  const r: Reducer<string, Action<number>> = (s: string, a: Action<number>) =>
-    s + a.payload;
+  function reduce(s: string, n: number): string {
+    return s + n;
+  }
 
-  const h: Handler<string, number> = [
+  const h: ActionHandler<string, number> = [
     actionCreatorFactory<number>('CONCAT'),
-    r,
+    reduce,
   ];
 
   const reducer = createReducer<string>('', h);
