@@ -1,5 +1,5 @@
-import Card from 'antd/lib/Card';
-import Skeleton from 'antd/lib/Skeleton';
+import Card from 'antd/lib/card';
+import Skeleton from 'antd/lib/skeleton';
 import React from 'react';
 import { Video } from './Video';
 
