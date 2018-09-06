@@ -1,12 +1,17 @@
+import Col from 'antd/lib/grid/col';
+import Row from 'antd/lib/grid/row';
 import Search from 'antd/lib/input/Search';
+import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import { VideosState } from '../State';
 import SearchResult from './SearchResult';
 import { Video } from './Video';
 
+const { Header, Content } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
 
 interface DispatchProps {
@@ -22,14 +27,33 @@ interface StateProps {
 export class SearchView extends PureComponent<DispatchProps & StateProps> {
   public render() {
     return (
-      <section data-qa="search-page">
-        <Search
-          type="text"
-          data-qa="search-input"
-          onSearch={this.props.onSearch}
-        />
-        <section>{this.renderResults()}</section>
-      </section>
+      <Layout>
+        <section data-qa="search-page">
+          <Header className="fixed">
+            <Row>
+              <Col span={8}>
+                <img className="logo" src={boclipsLogo} />
+              </Col>
+              <Col span={16}>
+                <Search
+                  placeholder="Enter your search term"
+                  type="text"
+                  data-qa="search-input"
+                  onSearch={this.props.onSearch}
+                  enterButton="Search"
+                />
+              </Col>
+            </Row>
+          </Header>
+          <Content>
+            <Row>
+              <Col span={24}>
+                <section>{this.renderResults()}</section>
+              </Col>
+            </Row>
+          </Content>
+        </section>
+      </Layout>
     );
   }
 

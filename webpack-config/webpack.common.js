@@ -41,12 +41,19 @@ module.exports = {
                         }
                     }
                 ]
+            },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                    'file-loader',
+                    'image-webpack-loader'
+                ],
             }
         ]
     },
     plugins: [
         new MiniCssExtractPlugin({filename: '[name]-[contenthash:8].css'}),
         new HtmlWebpackPlugin({template: path.resolve(srcPath, 'index.html')}),
-        new CopyWebpackPlugin([ { from: staticPath, to: distPath } ]),
+        new CopyWebpackPlugin([{from: staticPath, to: distPath}]),
     ]
 };
