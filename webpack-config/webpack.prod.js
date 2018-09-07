@@ -21,8 +21,8 @@ module.exports = merge(common, {
     },
     performance: {
         hints: 'error',
-        maxAssetSize: 2000000,
-        maxEntrypointSize: 2000000
+        maxAssetSize: 3000000,
+        maxEntrypointSize: 3000000
     },
     plugins: [
         // Cleans dist folder before building

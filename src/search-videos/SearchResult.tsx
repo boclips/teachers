@@ -1,9 +1,10 @@
+import { Icon } from 'antd';
 import Card from 'antd/lib/card';
 import Skeleton from 'antd/lib/skeleton';
 import moment = require('moment');
+import 'moment-duration-format';
 import React from 'react';
 import { Video } from './Video';
-import 'moment-duration-format';
 
 interface Props {
   loading: boolean;
@@ -17,18 +18,27 @@ export default class SearchResult extends React.PureComponent<Props> {
         <Skeleton loading={this.props.loading} paragraph={false}>
           {this.props.video ? (
             <section>
-              <h3 data-qa="search-result-title">{this.props.video.title}</h3>
-              <p data-qa="search-result-description">
+              <section className={'search-result-header'}>
+                <h3 className="title" data-qa="search-result-title">
+                  {this.props.video.title}
+                </h3>
+                <p data-qa="search-result-duration" className={'subtitle'}>
+                  <Icon type="clock-circle" />{' '}
+                  {this.props.video.duration.format('h[h] m[m] s[s]')}
+                </p>
+              </section>
+              <p className={'subtitle'}>
+                Released on{' '}
+                <span data-qa="search-result-released-on">
+                  {moment(this.props.video.releasedOn).format('MMM D, YYYY')}
+                </span>{' '}
+                by{' '}
+                <span data-qa="search-result-content-provider">
+                  {this.props.video.contentProvider}
+                </span>
+              </p>
+              <p data-qa="search-result-description" className="description">
                 {this.props.video.description}
-              </p>
-              <p data-qa="search-result-content-provider">
-                {this.props.video.contentProvider}
-              </p>
-              <p data-qa="search-result-duration">
-                {this.props.video.duration.format('h[h] m[m] s[s]')}
-              </p>
-              <p data-qa="search-result-released-on">
-                {moment(this.props.video.releasedOn).format('MMM D, YYYY')}
               </p>
             </section>
           ) : null}
