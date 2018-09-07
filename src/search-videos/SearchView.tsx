@@ -39,6 +39,7 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
                   placeholder="Enter your search term"
                   type="text"
                   data-qa="search-input"
+                  aria-label="search"
                   onSearch={this.props.onSearch}
                   enterButton="Search"
                 />
