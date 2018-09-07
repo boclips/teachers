@@ -12,9 +12,14 @@ test('search for a video shows results', async () => {
   await page.search('some video');
 
   expect(page.getVideoResults()).toHaveLength(2);
-  expect(page.getVideoResults()[0]).toEqual(
-    'KS3/4 Science: Demonstrating Chemistry',
-  );
+  expect(page.getVideoResults()[0]).toEqual({
+    title: 'KS3/4 Science: Demonstrating Chemistry',
+    description: 'Matthew Tosh shows us the science.',
+    contentProvider: 'cp1',
+    // TODO fix formatting duration: '1m 1s',
+    duration: 'PT1M2S',
+    releasedOn: 'Feb 11, 2018',
+  });
 });
 
 class SearchPage {
@@ -54,6 +59,12 @@ class SearchPage {
   }
 
   public getVideoResults() {
-    return findAll(this.wrapper, 'search-result-title').map(el => el.text());
+    return findAll(this.wrapper, 'search-result').map(el => ({
+      title: findOne(el, 'search-result-title').text(),
+      description: findOne(el, 'search-result-description').text(),
+      contentProvider: findOne(el, 'search-result-content-provider').text(),
+      duration: findOne(el, 'search-result-duration').text(),
+      releasedOn: findOne(el, 'search-result-released-on').text(),
+    }));
   }
 }
