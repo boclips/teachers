@@ -14,7 +14,12 @@ export default class SearchResult extends React.PureComponent<Props> {
       <Card className="search-result">
         <Skeleton loading={this.props.loading} paragraph={false}>
           {this.props.video ? (
-            <h3 data-qa="search-result-title">{this.props.video.title}</h3>
+            <section>
+              <h3 data-qa="search-result-title">{this.props.video.title}</h3>
+              <p data-qa="search-result-description">
+                {this.props.video.description}
+              </p>
+            </section>
           ) : null}
         </Skeleton>
       </Card>

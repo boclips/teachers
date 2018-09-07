@@ -1,3 +1,4 @@
+import moment = require('moment');
 import { Link } from '../links/Link';
 import MockFetchVerify from '../test-support/MockFetchVerify';
 import searchVideos from './searchVideos';
@@ -11,7 +12,19 @@ test('search Videos', async () => {
   });
 
   expect(result).toEqual([
-    { title: 'KS3/4 Science: Demonstrating Chemistry' },
-    { title: 'KS3/4 Science: Big Screen Science' },
+    {
+      title: 'KS3/4 Science: Demonstrating Chemistry',
+      description: 'Matthew Tosh shows us the science.',
+      duration: moment.duration({ seconds: 2, minutes: 1 }),
+      releasedOn: new Date('2018-02-11'),
+      contentProvider: 'cp1',
+    },
+    {
+      title: 'KS3/4 Science: Big Screen Science',
+      description: 'The winners of the North West round.',
+      duration: moment.duration({ seconds: 3, minutes: 1 }),
+      releasedOn: new Date('2018-02-12'),
+      contentProvider: 'cp2',
+    },
   ]);
 });

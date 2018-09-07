@@ -1,7 +1,16 @@
+import moment = require('moment');
 import { Links } from '../links/Links';
 
 export default function searchVideos(query: string, links: Links) {
   return fetch(links.videos.getLink({ query }))
     .then(response => response.json())
-    .then(body => body._embedded.videos.map(video => ({ title: video.title })));
+    .then(body =>
+      body._embedded.videos.map(video => ({
+        title: video.title,
+        description: video.description,
+        duration: moment.duration(video.duration),
+        releasedOn: new Date(video.releasedOn),
+        contentProvider: video.contentProvider,
+      })),
+    );
 }

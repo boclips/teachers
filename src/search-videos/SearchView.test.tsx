@@ -7,6 +7,7 @@ import configureStore from 'redux-mock-store';
 import { VideosState } from '../State';
 import { By } from '../test-support/By';
 import { findAll, findOne, search } from '../test-support/enzymeHelpers';
+import { VideoFactory } from '../test-support/factories';
 import SearchView, { searchVideosAction } from './SearchView';
 import { Video } from './Video';
 
@@ -63,8 +64,8 @@ test('does not show a no results message when search query is empty', () => {
 });
 
 test('shows search results when there are any', () => {
-  const video1: Video = { title: 'first video title' };
-  const video2: Video = { title: 'second video title' };
+  const video1: Video = VideoFactory.sample({ title: 'first video title' });
+  const video2: Video = VideoFactory.sample({ title: 'second video title' });
   const store = mockStore({
     videos: { items: [video1, video2], loading: false, query: '' },
   });

@@ -1,4 +1,5 @@
 import { VideosStateValue } from '../State';
+import { VideoFactory } from '../test-support/factories';
 import { storeVideosAction } from './searchVideosMiddleware';
 import { searchVideosAction } from './SearchView';
 import { videosReducer } from './videosReducer';
@@ -6,7 +7,7 @@ import { videosReducer } from './videosReducer';
 test('Clears videos and sets loading flag and query on the loading action', () => {
   const state: VideosStateValue = {
     loading: false,
-    items: [{ title: 'my video' }],
+    items: [VideoFactory.sample({ title: 'my video' })],
     query: '',
   };
 
@@ -30,12 +31,12 @@ test('Sets videos and clears loading flag on the store action', () => {
 
   const newState = videosReducer(
     state,
-    storeVideosAction([{ title: 'my video' }]),
+    storeVideosAction([VideoFactory.sample({ title: 'my video' })]),
   );
 
   const expectedState: VideosStateValue = {
     loading: false,
-    items: [{ title: 'my video' }],
+    items: [VideoFactory.sample({ title: 'my video' })],
     query: 'pancakes',
   };
 

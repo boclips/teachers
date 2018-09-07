@@ -6,6 +6,7 @@ import configureStore, { MockStore } from 'redux-mock-store';
 import { Link } from '../links/Link';
 import { LinksState } from '../State';
 import eventually from '../test-support/eventually';
+import { VideoFactory } from '../test-support/factories';
 import searchVideos from './searchVideos';
 import searchVideosMiddleware, {
   storeVideosAction,
@@ -28,8 +29,8 @@ describe('on successful search', () => {
   test('dispatches a store action with received videos', async () => {
     searchVideosMock.mockReturnValue(
       Promise.resolve([
-        { title: 'video about cats' },
-        { title: 'video about dogs' },
+        VideoFactory.sample({ title: 'video about cats' }),
+        VideoFactory.sample({ title: 'video about dogs' }),
       ]),
     );
 
@@ -38,8 +39,8 @@ describe('on successful search', () => {
     await eventually(() =>
       expect(store.getActions()).toContainEqual(
         storeVideosAction([
-          { title: 'video about cats' },
-          { title: 'video about dogs' },
+          VideoFactory.sample({ title: 'video about cats' }),
+          VideoFactory.sample({ title: 'video about dogs' }),
         ]),
       ),
     );
