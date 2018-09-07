@@ -16,8 +16,7 @@ test('search for a video shows results', async () => {
     title: 'KS3/4 Science: Demonstrating Chemistry',
     description: 'Matthew Tosh shows us the science.',
     contentProvider: 'cp1',
-    // TODO fix formatting duration: '1m 1s',
-    duration: 'PT1M2S',
+    duration: '1m 2s',
     releasedOn: 'Feb 11, 2018',
   });
 });
