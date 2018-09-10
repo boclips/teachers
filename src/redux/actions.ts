@@ -46,7 +46,7 @@ export const sideEffect: SideEffect = <P>(
   actionCreator: ActionCreator<P>,
   impl: InterceptImpl<P>,
 ) => {
-  return <AnyS>(store: MiddlewareAPI) => (next: Dispatch) => (
+  return (store: MiddlewareAPI) => (next: Dispatch) => (
     action: ReduxAction,
   ): any => {
     const result = next(action);

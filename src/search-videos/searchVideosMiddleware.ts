@@ -1,9 +1,5 @@
 import { MiddlewareAPI } from 'redux';
-import {
-  actionCreatorFactory,
-  actionCreatorFactoryVoid,
-  sideEffect,
-} from '../redux/actions';
+import { actionCreatorFactory, sideEffect } from '../redux/actions';
 import { LinksState } from '../State';
 import searchVideos from './searchVideos';
 import { searchVideosAction } from './SearchView';
