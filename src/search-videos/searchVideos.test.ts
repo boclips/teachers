@@ -1,15 +1,19 @@
 import moment = require('moment');
 import { Link } from '../links/Link';
 import MockFetchVerify from '../test-support/MockFetchVerify';
+import { links, videos } from '../video-service-responses';
 import searchVideos from './searchVideos';
-import { links, videos } from './video-service-responses';
 
 test('search Videos', async () => {
   MockFetchVerify.get('/v1/videos?query=hong kong', JSON.stringify(videos));
 
-  const result = await searchVideos('hong kong', {
-    videos: new Link(links._links.search),
-  });
+  const result = await searchVideos(
+    'hong kong',
+    {
+      videos: new Link(links._links.search),
+    },
+    { username: '', password: '' },
+  );
 
   expect(result).toEqual([
     {

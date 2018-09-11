@@ -38,6 +38,10 @@ export function click(element: ReactWrapper) {
   element.simulate('click', { button: 0 });
 }
 
+export function submit(element: ReactWrapper) {
+  element.simulate('submit');
+}
+
 export function search(element: ReactWrapper, query: string) {
   const searchElement = element.find(Search);
 
@@ -54,4 +58,20 @@ export function search(element: ReactWrapper, query: string) {
   }
 
   onSearch(query);
+}
+
+export function login(element: ReactWrapper, username: string, password) {
+  const usernameInput = element.find(By.dataQa('username-input', 'input'));
+  const passwordInput = element.find(By.dataQa('password-input', 'input'));
+
+  if (!usernameInput.exists()) {
+    throw new Error(`Cannot find username input in ${element.debug()}`);
+  }
+  if (!passwordInput.exists()) {
+    throw new Error(`Cannot find password input in ${element.debug()}`);
+  }
+
+  enterKeys(usernameInput, username);
+  enterKeys(passwordInput, password);
+  submit(element.find(By.dataQa('login-form', 'form')));
 }

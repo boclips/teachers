@@ -10,10 +10,7 @@ export default class MockFetchVerify {
     reponse: MockResponse | MockResponseFunction,
     options?: MockOptionsMethodGet,
   ): FetchMockStub {
-    if (fetchMock.called(matcher)) {
-      throw new Error(`GET '${matcher}' has already been requested`);
-    }
-    fetchMock.get(matcher, reponse, options);
+    fetchMock.get(matcher, reponse, { overwriteRoutes: true, ...options });
     return new FetchMockStub(matcher);
   }
 }

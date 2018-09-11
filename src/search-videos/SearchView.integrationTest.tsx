@@ -1,18 +1,20 @@
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import App from '../App';
+import { LoginPage } from '../login/LoginView.integrationTest';
 import { findAll, findOne, search } from '../test-support/enzymeHelpers';
 import eventually from '../test-support/eventually';
 import MockFetchVerify from '../test-support/MockFetchVerify';
-import { links, videos } from './video-service-responses';
+import { links, videos } from '../video-service-responses';
 
 test('search for a video shows results', async () => {
-  const page = await SearchPage.mount();
+  const loginPage = await LoginPage.mount();
+  const searchPage = await loginPage.login('user', 'password');
 
-  await page.search('some video');
+  await searchPage.search('some video');
 
-  expect(page.getVideoResults()).toHaveLength(2);
-  expect(page.getVideoResults()[0]).toEqual({
+  expect(searchPage.getVideoResults()).toHaveLength(2);
+  expect(searchPage.getVideoResults()[0]).toEqual({
     title: 'KS3/4 Science: Demonstrating Chemistry',
     description: 'Matthew Tosh shows us the science.',
     contentProvider: 'cp1',
@@ -21,13 +23,12 @@ test('search for a video shows results', async () => {
   });
 });
 
-class SearchPage {
+export class SearchPage {
   constructor(private wrapper: ReactWrapper) {}
 
-  public static async mount() {
-    const linksStub = MockFetchVerify.get('/v1/', JSON.stringify(links));
-    const page = new SearchPage(mount(<App />));
-    linksStub.verify();
+  public static async mount(reactWrapper?: ReactWrapper) {
+    MockFetchVerify.get('/v1/', JSON.stringify(links));
+    const page = new SearchPage(reactWrapper || mount(<App />));
     await page.hasLoaded();
     return page;
   }

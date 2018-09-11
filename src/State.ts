@@ -1,5 +1,10 @@
 import { Links } from './links/Links';
+import { UserCredentials } from './login/UserCredentials';
 import { Video } from './search-videos/Video';
+
+export interface UserState {
+  user: UserCredentials;
+}
 
 export interface LinksState {
   links: Links;
@@ -15,4 +20,4 @@ export interface VideosState {
   videos: VideosStateValue;
 }
 
-export default interface State extends LinksState, VideosState {}
+export default interface State extends LinksState, VideosState, UserState {}

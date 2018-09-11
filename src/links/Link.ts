@@ -6,11 +6,15 @@ export class Link {
   }
 
   public getLink(params?: any) {
+    let link = this.link.href;
+    if (process.env.NODE_ENV === 'development') {
+      link = link.replace('localhost:8080', 'localhost:8081');
+    }
     if (this.link.templated) {
       if (params && this.containsAllTemplatedParams(params)) {
         return this.getAllParams().reduce(
           (prev, current) => prev.replace(`{${current}}`, params[current]),
-          this.link.href,
+          link,
         );
       }
       throw new Error('Templated link requires params {search:"value"}');
@@ -18,7 +22,7 @@ export class Link {
       if (params) {
         throw new Error('Non templated link does not support params');
       }
-      return this.link.href;
+      return link;
     }
   }
 
