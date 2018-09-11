@@ -39,7 +39,13 @@ class LoginComponent extends React.PureComponent<
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onSubmit: redirectPath => userCredentials => {
-      fetch('/v1/user') // use links
+      const headers = {
+        // TODO centralise auth
+        Authorization:
+          'Basic ' +
+          btoa(userCredentials.username + ':' + userCredentials.password),
+      };
+      fetch('/v1/user', { headers }) // TODO use links
         .then(response => {
           const ok = response.status < 400;
           if (ok) {
