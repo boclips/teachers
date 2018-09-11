@@ -2,8 +2,8 @@ import Search from 'antd/lib/input/Search';
 import { ReactWrapper } from 'enzyme';
 import { By } from './By';
 
-export function findOne(wrapper, dataQa) {
-  const result: ReactWrapper = wrapper.find(By.dataQa(dataQa));
+export function findOne(wrapper: ReactWrapper, dataQa: string, tag?: string) {
+  const result: ReactWrapper = wrapper.find(By.dataQa(dataQa, tag));
 
   if (result.length !== 1) {
     throw new Error(`Found ${result.length} elements with data-qa=${dataQa}`);
@@ -12,7 +12,7 @@ export function findOne(wrapper, dataQa) {
   return result;
 }
 
-export function findAll(wrapper: ReactWrapper, dataQa) {
+export function findAll(wrapper: ReactWrapper, dataQa: string) {
   const results = wrapper.find(By.dataQa(dataQa));
 
   if (results.length === 0) {
@@ -22,7 +22,7 @@ export function findAll(wrapper: ReactWrapper, dataQa) {
   return results;
 }
 
-export function enterKeys(element: ReactWrapper, value) {
+export function enterKeys(element: ReactWrapper, value: string) {
   const isInput = element.find('input');
 
   if (!isInput.exists()) {
