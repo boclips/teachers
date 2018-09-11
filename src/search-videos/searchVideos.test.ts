@@ -12,7 +12,7 @@ test('search Videos', async () => {
     {
       videos: new Link(links._links.search),
     },
-    { username: '', password: '' },
+    { valid: true, username: '', password: '' },
   );
 
   expect(result).toEqual([

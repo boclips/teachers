@@ -9,11 +9,25 @@ import MockFetchVerify from '../test-support/MockFetchVerify';
 import { links } from '../video-service-responses';
 
 test('after successful login redirects to video search', async () => {
+  const userStub = MockFetchVerify.get('/v1/user', 200);
   const page = await LoginPage.mount();
 
   const searchPage = await page.login('user', 'password');
+  userStub.verify();
 
   await searchPage.hasLoaded();
+});
+
+test('after unsuccessful login remains in search and displays error', async () => {
+  const userStub = MockFetchVerify.get('/v1/user', 401);
+  const loginPage = await LoginPage.mount();
+
+  loginPage.tryToLogin('wrong-user', 'password');
+  userStub.verify();
+
+  await eventually(() => {
+    expect(loginPage.hasWrongCredentialsAlert()).toBeTruthy();
+  });
 });
 
 export class LoginPage {
@@ -36,9 +50,23 @@ export class LoginPage {
     });
   }
 
-  public login(username: string, password): Promise<SearchPage> {
-    login(this.wrapper, username, password);
+  public loginWithValidCredentials(username: string, password: string) {
+    MockFetchVerify.get('/v1/user', 200);
+    return this.login(username, password);
+  }
+
+  public login(username: string, password: string): Promise<SearchPage> {
+    this.tryToLogin(username, password);
 
     return SearchPage.mount(this.wrapper);
+  }
+
+  public tryToLogin(username: string, password: string) {
+    login(this.wrapper, username, password);
+  }
+
+  public hasWrongCredentialsAlert() {
+    this.wrapper.update();
+    return findOne(this.wrapper, 'wrong-credentials-alert').exists();
   }
 }

@@ -25,7 +25,7 @@ class PrivateRoute extends React.Component<
     return <Route {...rest} render={renderRoute} />;
 
     function renderRoute() {
-      if (!user) {
+      if (!user || !user.valid) {
         return (
           <Redirect
             to={{
