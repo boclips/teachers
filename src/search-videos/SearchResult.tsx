@@ -15,9 +15,15 @@ export default class SearchResult extends React.PureComponent<Props> {
   public render() {
     return (
       <Card className="search-result">
-        <Skeleton loading={this.props.loading} paragraph={false}>
+        <Skeleton loading={this.props.loading} paragraph={false} avatar={true}>
           {this.props.video ? (
             <section>
+              <section className={'search-result-thumbnail'}>
+                <img
+                  data-qa="search-result-thumbnail"
+                  src={this.props.video.thumbnailUrl}
+                />
+              </section>
               <section className={'search-result-header'}>
                 <h3 className="title" data-qa="search-result-title">
                   {this.props.video.title}

@@ -22,6 +22,7 @@ test('search Videos', async () => {
       duration: moment.duration({ seconds: 2, minutes: 1 }),
       releasedOn: new Date('2018-02-11'),
       contentProvider: 'cp1',
+      thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
     },
     {
       title: 'KS3/4 Science: Big Screen Science',
@@ -29,6 +30,7 @@ test('search Videos', async () => {
       duration: moment.duration({ seconds: 3, minutes: 1 }),
       releasedOn: new Date('2018-02-12'),
       contentProvider: 'cp2',
+      thumbnailUrl: 'https://cdn.kaltura.com/thumbs/147.jpg',
     },
   ]);
 });

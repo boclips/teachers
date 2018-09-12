@@ -12,6 +12,7 @@ export default function searchVideos(query: string, links: Links) {
         duration: moment.duration(video.duration),
         releasedOn: new Date(video.releasedOn),
         contentProvider: video.contentProvider,
+        thumbnailUrl: video.thumbnailUrl,
       })),
     );
 }

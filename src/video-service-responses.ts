@@ -20,6 +20,7 @@ export const videos = {
         duration: 'PT1M2S',
         releasedOn: '2018-02-11',
         contentProvider: 'cp1',
+        thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
       },
       {
         id: '147',
@@ -28,6 +29,7 @@ export const videos = {
         duration: 'PT1M3S',
         releasedOn: '2018-02-12',
         contentProvider: 'cp2',
+        thumbnailUrl: 'https://cdn.kaltura.com/thumbs/147.jpg',
       },
     ],
   },

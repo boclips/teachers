@@ -6,4 +6,5 @@ export interface Video {
   duration: Duration;
   releasedOn: Date;
   contentProvider: string;
+  thumbnailUrl: string;
 }
