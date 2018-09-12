@@ -13,6 +13,7 @@ import {
 import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { Route, Switch } from 'react-router';
+import FetchProvider from './fetch/FetchProvider';
 import LoginView from './login/LoginView';
 import PrivateRoute from './login/PrivateRoute';
 import { userReducer } from './login/userReducer';
@@ -57,12 +58,14 @@ export default class App extends PureComponent<Props> {
     return (
       <Provider store={this.store}>
         <ConfigLoader loadingComponent={this.loadingComponent}>
-          <ConnectedRouter history={this.props.history || defaultHistory}>
-            <Switch>
-              <Route exact={true} path="/login" component={LoginView} />
-              <PrivateRoute path="/" component={SearchView} />
-            </Switch>
-          </ConnectedRouter>
+          <FetchProvider>
+            <ConnectedRouter history={this.props.history || defaultHistory}>
+              <Switch>
+                <Route exact={true} path="/login" component={LoginView} />
+                <PrivateRoute path="/" component={SearchView} />
+              </Switch>
+            </ConnectedRouter>
+          </FetchProvider>
         </ConfigLoader>
       </Provider>
     );

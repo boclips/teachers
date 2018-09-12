@@ -13,7 +13,6 @@ test('search Videos', async () => {
     LinksFactory.sample({
       videos: new Link(links._links.search),
     }),
-    { valid: true, username: '', password: '' },
   );
 
   expect(result).toEqual([

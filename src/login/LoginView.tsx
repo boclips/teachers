@@ -84,7 +84,6 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onSubmit: (redirectPath, userLink) => userCredentials => {
       const headers = {
-        // TODO centralise auth
         Authorization:
           'Basic ' +
           btoa(userCredentials.username + ':' + userCredentials.password),
