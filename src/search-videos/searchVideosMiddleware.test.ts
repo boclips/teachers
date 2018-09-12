@@ -3,10 +3,9 @@ import Mock = jest.Mock;
 jest.mock('./searchVideos');
 
 import configureStore, { MockStore } from 'redux-mock-store';
-import { Link } from '../links/Link';
 import { LinksState } from '../State';
 import eventually from '../test-support/eventually';
-import { VideoFactory } from '../test-support/factories';
+import { LinksFactory, VideoFactory } from '../test-support/factories';
 import searchVideos from './searchVideos';
 import searchVideosMiddleware, {
   storeVideosAction,
@@ -21,7 +20,7 @@ let store: MockStore<LinksState>;
 
 beforeEach(() => {
   store = mockStore({
-    links: { videos: new Link({ href: '/videos' }) },
+    links: LinksFactory.sample(),
   });
 });
 

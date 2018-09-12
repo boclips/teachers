@@ -8,9 +8,9 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import fetchLinks from '../links/fetchLinks';
-import { Link } from '../links/Link';
 import { LinksState } from '../State';
 import eventually from '../test-support/eventually';
+import { LinksFactory } from '../test-support/factories';
 import ConfigLoader, { storeLinksAction } from './ConfigLoader';
 
 const loading = () => <span id="loading" />;
@@ -28,16 +28,14 @@ const fetchLinksMock = fetchLinks as Mock;
 describe('when component mounts', () => {
   describe('when links fetched', () => {
     test('dispatches STORE_LINKS action', async () => {
-      fetchLinksMock.mockReturnValue(
-        Promise.resolve({ videos: new Link({ href: '/videos' }) }),
-      );
+      fetchLinksMock.mockReturnValue(Promise.resolve(LinksFactory.sample()));
       const store = mockStore({ links: null });
 
       mountConfigLoader(store);
 
       await eventually(() =>
         expect(store.getActions()).toContainEqual(
-          storeLinksAction({ videos: new Link({ href: '/videos' }) }),
+          storeLinksAction(LinksFactory.sample()),
         ),
       );
     });
@@ -47,7 +45,7 @@ describe('when component mounts', () => {
 describe('when links are present', () => {
   test('renders child component', () => {
     const wrapper = mountConfigLoader(
-      mockStore({ links: { videos: new Link({ href: '/videos' }) } }),
+      mockStore({ links: LinksFactory.sample() }),
     );
 
     expect(wrapper.find('#child')).toExist();

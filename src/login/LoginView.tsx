@@ -5,15 +5,19 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import boclipsLogo from '../images/boclips-logo.png';
+import { Link } from '../links/Link';
 import { actionCreatorFactory } from '../redux/actions';
-import { UserState } from '../State';
+import { LinksState, UserState } from '../State';
 import LoginForm from './LoginForm';
 import { UserCredentials } from './UserCredentials';
 
 export const loginUser = actionCreatorFactory<UserCredentials>('LOGIN_USER');
 
 interface DispatchProps {
-  onSubmit: (redirectPath: string) => (credentials: UserCredentials) => void;
+  onSubmit: (
+    redirectPath: string,
+    userLink: Link,
+  ) => (credentials: UserCredentials) => void;
 }
 
 interface Props {
@@ -22,6 +26,7 @@ interface Props {
 
 interface StateProps {
   invalidCredentials: boolean;
+  userLink: Link;
 }
 
 class LoginComponent extends React.PureComponent<
@@ -60,7 +65,10 @@ class LoginComponent extends React.PureComponent<
             xl={{ offset: 9, span: 6 }}
           >
             <LoginForm
-              onSubmit={this.props.onSubmit(this.props.redirectPath)}
+              onSubmit={this.props.onSubmit(
+                this.props.redirectPath,
+                this.props.userLink,
+              )}
             />
             {this.props.invalidCredentials && (
               <div data-qa="wrong-credentials-alert">Invalid credentials</div>
@@ -74,30 +82,30 @@ class LoginComponent extends React.PureComponent<
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onSubmit: redirectPath => userCredentials => {
+    onSubmit: (redirectPath, userLink) => userCredentials => {
       const headers = {
         // TODO centralise auth
         Authorization:
           'Basic ' +
           btoa(userCredentials.username + ':' + userCredentials.password),
       };
-      fetch('/v1/user', { headers }) // TODO use links
-        .then(response => {
-          const ok = response.status < 400;
-          if (ok) {
-            dispatch(loginUser({ valid: true, ...userCredentials }));
-            dispatch(push(redirectPath || '/'));
-          } else {
-            dispatch(loginUser({ valid: false, ...userCredentials }));
-          }
-        });
+      fetch(userLink.getLink(), { headers }).then(response => {
+        const ok = response.status < 400;
+        if (ok) {
+          dispatch(loginUser({ valid: true, ...userCredentials }));
+          dispatch(push(redirectPath || '/'));
+        } else {
+          dispatch(loginUser({ valid: false, ...userCredentials }));
+        }
+      });
     },
   };
 }
 
-function mapStateToProps(state: UserState): StateProps {
+function mapStateToProps(state: UserState & LinksState): StateProps {
   return {
     invalidCredentials: state.user && !state.user.valid,
+    userLink: state.links.user,
   };
 }
 

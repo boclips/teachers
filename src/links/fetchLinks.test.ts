@@ -5,13 +5,17 @@ import { Links } from './Links';
 
 test('it fetches links', async () => {
   MockFetchVerify.get('/v1/', {
-    _links: { search: { href: '/videos', templated: false } },
+    _links: {
+      search: { href: '/videos', templated: false },
+      user: { href: '/user' },
+    },
   });
 
   const links = await fetchLinks();
 
   const expectedLinks: Links = {
     videos: new Link({ href: '/videos', templated: false }),
+    user: new Link({ href: '/user' }),
   };
 
   expect(links).toEqual(expectedLinks);
