@@ -4,6 +4,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import ConfigLoader from './config/ConfigLoader';
 import { linksReducer } from './links/linksReducer';
 
+import { Icon } from 'antd';
 import {
   ConnectedRouter,
   connectRouter,
@@ -19,7 +20,6 @@ import searchVideosMiddleware from './search-videos/searchVideosMiddleware';
 import SearchView from './search-videos/SearchView';
 import { videosReducer } from './search-videos/videosReducer';
 import State from './State';
-
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
 const defaultHistory = createBrowserHistory();
@@ -45,7 +45,13 @@ export default class App extends PureComponent<Props> {
     ),
   );
 
-  private loadingComponent = () => <div>loading</div>;
+  private loadingComponent = () => (
+    <div className={'loading-site'}>
+      <h3>
+        <Icon type="loading" /> loading
+      </h3>
+    </div>
+  );
 
   public render() {
     return (

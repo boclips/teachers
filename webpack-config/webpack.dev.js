@@ -8,7 +8,7 @@ module.exports = merge(common, {
         historyApiFallback: true,
         proxy: {
             '/v1/**': {
-                target: 'http://localhost:8080/',
+              target: 'https://video-service.staging-boclips.com/',
                 changeOrigin: true,
             },
         },

@@ -1,7 +1,10 @@
+import Col from 'antd/lib/grid/col';
+import Row from 'antd/lib/grid/row';
 import { push } from 'connected-react-router';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import { UserState } from '../State';
 import LoginForm from './LoginForm';
@@ -26,11 +29,44 @@ class LoginComponent extends React.PureComponent<
 > {
   public render(): React.ReactNode {
     return (
-      <section data-qa="login-page">
-        <LoginForm onSubmit={this.props.onSubmit(this.props.redirectPath)} />
-        {this.props.invalidCredentials && (
-          <div data-qa="wrong-credentials-alert">Invalid credentials</div>
-        )}
+      <section data-qa="login-page" className={'login-form'}>
+        <Row>
+          <Col
+            className="centered"
+            xs={{ offset: 1, span: 20 }}
+            md={{ offset: 8, span: 8 }}
+            xl={{ offset: 9, span: 6 }}
+          >
+            <img className="login-logo" src={boclipsLogo} />
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={{ offset: 1, span: 20 }}
+            md={{ offset: 8, span: 8 }}
+            xl={{ offset: 9, span: 6 }}
+          >
+            <hr />
+            <p className="login-details">
+              If you’d like to try our video search but don’t have login details
+              contact us
+            </p>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={{ offset: 1, span: 20 }}
+            md={{ offset: 8, span: 8 }}
+            xl={{ offset: 9, span: 6 }}
+          >
+            <LoginForm
+              onSubmit={this.props.onSubmit(this.props.redirectPath)}
+            />
+            {this.props.invalidCredentials && (
+              <div data-qa="wrong-credentials-alert">Invalid credentials</div>
+            )}
+          </Col>
+        </Row>
       </section>
     );
   }
