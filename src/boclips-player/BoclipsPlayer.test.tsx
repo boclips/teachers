@@ -2,7 +2,7 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { By } from '../test-support/By';
 import BoclipsPlayer from './BoclipsPlayer';
-import { VideoPlayback } from './BoclipsPlayer';
+import { VideoPlayback } from './VideoPlayback';
 
 test('it initially shows the thumbnail', () => {
   const wrapper = mount(

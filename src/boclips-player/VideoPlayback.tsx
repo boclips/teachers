@@ -18,9 +18,9 @@ export class VideoPlayback extends React.Component<PlaybackProps> {
       <video
         data-qa="video-playback"
         ref={this.videoRef}
-        width="640"
+        width="500"
         controls={true}
-        autoplay={true}
+        autoPlay={true}
       />
     );
   }
