@@ -11,7 +11,8 @@ module.exports = {
     entry: path.resolve(srcPath, 'index.tsx'),
     output: {
         path: distPath,
-        filename: '[name].[chunkhash:8].js'
+        filename: '[name].[chunkhash:8].js',
+        publicPath: '/'
     },
     // Allows ts(x) and js files to be imported without extension
     resolve: {

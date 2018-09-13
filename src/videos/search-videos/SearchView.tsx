@@ -8,8 +8,8 @@ import { Dispatch } from 'redux';
 import boclipsLogo from '../../images/boclips-logo.png';
 import { actionCreatorFactory } from '../../redux/actions';
 import { VideosState } from '../../State';
-import SearchResult from './SearchResult';
 import { Video } from '../Video';
+import SearchResult from './SearchResult';
 
 const { Header, Content } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');

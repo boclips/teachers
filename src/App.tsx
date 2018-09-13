@@ -5,30 +5,22 @@ import ConfigLoader from './config/ConfigLoader';
 import { linksReducer } from './links/linksReducer';
 
 import { Icon } from 'antd';
-import {
-  ConnectedRouter,
-  connectRouter,
-  routerMiddleware,
-} from 'connected-react-router';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
-import createBrowserHistory from 'history/createBrowserHistory';
-import { Route, Switch } from 'react-router';
 import FetchProvider from './fetch/FetchProvider';
-import LoginView from './login/LoginView';
-import PrivateRoute from './login/PrivateRoute';
 import { userReducer } from './login/userReducer';
-import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
-import SearchView from './videos/search-videos/SearchView';
-import { videosReducer } from './videos/videosReducer';
+import { BoclipsRouter, defaultHistory } from './router/BoclipsRouter';
 import State from './State';
+import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
+import { videosReducer } from './videos/videosReducer';
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
-const defaultHistory = createBrowserHistory();
 
 const rootReducer = combineReducers({
   videos: videosReducer,
   links: linksReducer,
   user: userReducer,
+  video: () => null,
 });
 
 interface Props {
@@ -59,12 +51,7 @@ export default class App extends PureComponent<Props> {
       <Provider store={this.store}>
         <ConfigLoader loadingComponent={this.loadingComponent}>
           <FetchProvider>
-            <ConnectedRouter history={this.props.history || defaultHistory}>
-              <Switch>
-                <Route exact={true} path="/login" component={LoginView} />
-                <PrivateRoute path="/" component={SearchView} />
-              </Switch>
-            </ConnectedRouter>
+            <BoclipsRouter history={this.props.history} />
           </FetchProvider>
         </ConfigLoader>
       </Provider>

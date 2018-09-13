@@ -8,8 +8,8 @@ import { VideosState } from '../../State';
 import { By } from '../../test-support/By';
 import { findAll, findOne, search } from '../../test-support/enzymeHelpers';
 import { VideoFactory } from '../../test-support/factories';
-import SearchView, { searchVideosAction } from './SearchView';
 import { Video } from '../Video';
+import SearchView, { searchVideosAction } from './SearchView';
 
 const mockStore = configureStore<VideosState>();
 

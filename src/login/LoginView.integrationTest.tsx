@@ -2,17 +2,17 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../App';
-import { SearchPage } from '../videos/search-videos/SearchView.integrationTest';
 import { findOne, login } from '../test-support/enzymeHelpers';
 import eventually from '../test-support/eventually';
 import MockFetchVerify from '../test-support/MockFetchVerify';
 import { links } from '../video-service-responses';
+import { SearchPage } from '../videos/search-videos/SearchView.integrationTest';
 
 test('after successful login redirects to video search', async () => {
   const userStub = MockFetchVerify.get('/v1/user', 200);
   const page = await LoginPage.mount();
 
-  const searchPage = await page.login('user', 'password');
+  const searchPage = await SearchPage.mount(page.login('user', 'password'));
   userStub.verify();
 
   await searchPage.hasLoaded();
@@ -33,10 +33,10 @@ test('after unsuccessful login remains in search and displays error', async () =
 export class LoginPage {
   constructor(private wrapper: ReactWrapper) {}
 
-  public static async mount() {
+  public static async mount(url: string = '/') {
     const linksStub = MockFetchVerify.get('/v1/', JSON.stringify(links));
     const page = new LoginPage(
-      mount(<App history={createMemoryHistory({ initialEntries: ['/'] })} />),
+      mount(<App history={createMemoryHistory({ initialEntries: [url] })} />),
     );
     linksStub.verify();
     await page.hasLoaded();
@@ -55,10 +55,10 @@ export class LoginPage {
     return this.login(username, password);
   }
 
-  public login(username: string, password: string): Promise<SearchPage> {
+  public login(username: string, password: string): ReactWrapper {
     this.tryToLogin(username, password);
 
-    return SearchPage.mount(this.wrapper);
+    return this.wrapper;
   }
 
   public tryToLogin(username: string, password: string) {

@@ -16,8 +16,21 @@ export interface VideosStateValue {
   items: Video[];
 }
 
+export interface VideoStateValue {
+  loading: boolean;
+  item: Video;
+}
+
 export interface VideosState {
   videos: VideosStateValue;
 }
 
-export default interface State extends LinksState, VideosState, UserState {}
+export interface VideoDetailsState {
+  video: VideoStateValue;
+}
+
+export default interface State
+  extends LinksState,
+    VideosState,
+    UserState,
+    VideoDetailsState {}

@@ -1,9 +1,9 @@
 import { MiddlewareAPI } from 'redux';
 import { actionCreatorFactory, sideEffect } from '../../redux/actions';
 import { LinksState, UserState } from '../../State';
+import { Video } from '../Video';
 import searchVideos from './searchVideos';
 import { searchVideosAction } from './SearchView';
-import { Video } from '../Video';
 
 export const storeVideosAction = actionCreatorFactory<Video[]>('STORE_VIDEOS');
 

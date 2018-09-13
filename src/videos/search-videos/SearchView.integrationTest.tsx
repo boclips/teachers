@@ -9,9 +9,8 @@ import { links, videos } from '../../video-service-responses';
 
 test('search for a video shows results', async () => {
   const loginPage = await LoginPage.mount();
-  const searchPage = await loginPage.loginWithValidCredentials(
-    'user',
-    'password',
+  const searchPage = await SearchPage.mount(
+    loginPage.loginWithValidCredentials('user', 'password'),
   );
 
   await searchPage.search('some video');
