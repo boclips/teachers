@@ -1,6 +1,6 @@
 import { Links } from './links/Links';
 import { UserCredentials } from './login/UserCredentials';
-import { Video } from './search-videos/Video';
+import { Video } from './videos/Video';
 
 export interface UserState {
   user: UserCredentials;

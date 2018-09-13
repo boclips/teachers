@@ -3,9 +3,9 @@ import Mock = jest.Mock;
 jest.mock('./searchVideos');
 
 import configureStore, { MockStore } from 'redux-mock-store';
-import { LinksState } from '../State';
-import eventually from '../test-support/eventually';
-import { LinksFactory, VideoFactory } from '../test-support/factories';
+import { LinksState } from '../../State';
+import eventually from '../../test-support/eventually';
+import { LinksFactory, VideoFactory } from '../../test-support/factories';
 import searchVideos from './searchVideos';
 import searchVideosMiddleware, {
   storeVideosAction,

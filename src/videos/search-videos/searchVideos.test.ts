@@ -1,8 +1,8 @@
 import moment = require('moment');
-import { Link } from '../links/Link';
-import { LinksFactory } from '../test-support/factories';
-import MockFetchVerify from '../test-support/MockFetchVerify';
-import { links, videos } from '../video-service-responses';
+import { Link } from '../../links/Link';
+import { LinksFactory } from '../../test-support/factories';
+import MockFetchVerify from '../../test-support/MockFetchVerify';
+import { links, videos } from '../../video-service-responses';
 import searchVideos from './searchVideos';
 
 test('search Videos', async () => {

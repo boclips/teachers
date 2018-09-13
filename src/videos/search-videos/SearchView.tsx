@@ -5,11 +5,11 @@ import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import boclipsLogo from '../images/boclips-logo.png';
-import { actionCreatorFactory } from '../redux/actions';
-import { VideosState } from '../State';
+import boclipsLogo from '../../images/boclips-logo.png';
+import { actionCreatorFactory } from '../../redux/actions';
+import { VideosState } from '../../State';
 import SearchResult from './SearchResult';
-import { Video } from './Video';
+import { Video } from '../Video';
 
 const { Header, Content } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');

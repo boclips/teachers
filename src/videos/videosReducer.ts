@@ -1,8 +1,8 @@
 import { Reducer } from 'redux';
 import createReducer, { actionHandler } from '../redux/createReducer';
 import { VideosStateValue } from '../State';
-import { storeVideosAction } from './searchVideosMiddleware';
-import { searchVideosAction } from './SearchView';
+import { storeVideosAction } from './search-videos/searchVideosMiddleware';
+import { searchVideosAction } from './search-videos/SearchView';
 import { Video } from './Video';
 
 const initialState: VideosStateValue = { items: [], loading: false, query: '' };

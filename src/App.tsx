@@ -17,9 +17,9 @@ import FetchProvider from './fetch/FetchProvider';
 import LoginView from './login/LoginView';
 import PrivateRoute from './login/PrivateRoute';
 import { userReducer } from './login/userReducer';
-import searchVideosMiddleware from './search-videos/searchVideosMiddleware';
-import SearchView from './search-videos/SearchView';
-import { videosReducer } from './search-videos/videosReducer';
+import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
+import SearchView from './videos/search-videos/SearchView';
+import { videosReducer } from './videos/videosReducer';
 import State from './State';
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line

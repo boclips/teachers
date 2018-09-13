@@ -1,7 +1,7 @@
 import { VideosStateValue } from '../State';
 import { VideoFactory } from '../test-support/factories';
-import { storeVideosAction } from './searchVideosMiddleware';
-import { searchVideosAction } from './SearchView';
+import { storeVideosAction } from './search-videos/searchVideosMiddleware';
+import { searchVideosAction } from './search-videos/SearchView';
 import { videosReducer } from './videosReducer';
 
 test('Clears videos and sets loading flag and query on the loading action', () => {

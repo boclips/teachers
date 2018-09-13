@@ -1,7 +1,7 @@
 import moment = require('moment');
 import { Link } from '../links/Link';
 import { Links } from '../links/Links';
-import { Video } from '../search-videos/Video';
+import { Video } from '../videos/Video';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video>): Video {

@@ -4,7 +4,7 @@ import Skeleton from 'antd/lib/skeleton';
 import moment = require('moment');
 import 'moment-duration-format';
 import React from 'react';
-import { Video } from './Video';
+import { Video } from '../Video';
 
 interface Props {
   loading: boolean;

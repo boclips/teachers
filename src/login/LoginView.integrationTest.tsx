@@ -2,7 +2,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../App';
-import { SearchPage } from '../search-videos/SearchView.integrationTest';
+import { SearchPage } from '../videos/search-videos/SearchView.integrationTest';
 import { findOne, login } from '../test-support/enzymeHelpers';
 import eventually from '../test-support/eventually';
 import MockFetchVerify from '../test-support/MockFetchVerify';
