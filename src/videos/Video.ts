@@ -7,4 +7,5 @@ export interface Video {
   releasedOn: Date;
   contentProvider: string;
   thumbnailUrl: string;
+  streamUrl: string;
 }

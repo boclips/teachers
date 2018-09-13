@@ -68,7 +68,7 @@ export class SearchPage {
       contentProvider: findOne(el, 'search-result-content-provider').text(),
       duration: findOne(el, 'search-result-duration').text(),
       releasedOn: findOne(el, 'search-result-released-on').text(),
-      thumbnailUrl: findOne(el, 'search-result-thumbnail').prop('src'),
+      thumbnailUrl: findOne(el, 'video-thumbnail').prop('src'),
     }));
   }
 }

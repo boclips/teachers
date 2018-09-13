@@ -4,6 +4,7 @@ import Skeleton from 'antd/lib/skeleton';
 import moment = require('moment');
 import 'moment-duration-format';
 import React from 'react';
+import BoclipsPlayer from '../../boclips-player/BoclipsPlayer';
 import { Video } from '../Video';
 
 interface Props {
@@ -19,9 +20,9 @@ export default class SearchResult extends React.PureComponent<Props> {
           {this.props.video ? (
             <section>
               <section className={'search-result-thumbnail'}>
-                <img
-                  data-qa="search-result-thumbnail"
-                  src={this.props.video.thumbnailUrl}
+                <BoclipsPlayer
+                  thumbnail={this.props.video.thumbnailUrl}
+                  stream={this.props.video.streamUrl}
                 />
               </section>
               <section className={'search-result-header'}>

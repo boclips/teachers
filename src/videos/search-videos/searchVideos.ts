@@ -13,6 +13,7 @@ export default function searchVideos(query: string, links: Links) {
         releasedOn: new Date(video.releasedOn),
         contentProvider: video.contentProvider,
         thumbnailUrl: video.thumbnailUrl,
+        streamUrl: video.streamUrl,
       })),
     );
 }

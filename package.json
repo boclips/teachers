@@ -67,6 +67,7 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "redux-mock-store": "^1.5.3",
+    "shaka-player": "^2.5.0-beta",
     "ts-jest": "^23.1.4",
     "ts-loader": "^4.5.0",
     "tslint": "^5.11.0",
