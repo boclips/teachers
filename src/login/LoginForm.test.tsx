@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { findOne, login } from '../test-support/enzymeHelpers';
+import { findOne, login } from '../../test-support/enzymeHelpers';
 import LoginForm from './LoginForm';
 
 describe('LoginForm', () => {

@@ -1,10 +1,10 @@
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
+import { findOne } from '../../../test-support/enzymeHelpers';
+import eventually from '../../../test-support/eventually';
+import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import App from '../../App';
 import { LoginPage } from '../../login/LoginView.integrationTest';
-import { findOne } from '../../test-support/enzymeHelpers';
-import eventually from '../../test-support/eventually';
-import MockFetchVerify from '../../test-support/MockFetchVerify';
 import { links } from '../../video-service-responses';
 
 test.skip('video details shows data', async () => {

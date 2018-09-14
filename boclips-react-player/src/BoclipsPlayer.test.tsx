@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from '../test-support/By';
-import BoclipsPlayer from './BoclipsPlayer';
+import { By } from '../../test-support/By';
+import { BoclipsPlayer } from './BoclipsPlayer';
 import { VideoPlayback } from './VideoPlayback';
 
 test('shows the thumbnail on load when thumbnail set', () => {

@@ -11,7 +11,7 @@ interface State {
   showPreview: boolean;
 }
 
-export default class BoclipsPlayer extends React.Component<Props, State> {
+export class BoclipsPlayer extends React.Component<Props, State> {
   private onThumbnailClick = () => {
     this.setState({ isPlaying: true });
   };

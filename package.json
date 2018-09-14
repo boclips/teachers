@@ -41,6 +41,7 @@
     "@types/react-router-dom": "^4.3.0",
     "@types/redux-mock-store": "^1.0.0",
     "antd": "^3.9.1",
+    "boclips-react-player": "file:boclips-react-player",
     "clean-webpack-plugin": "^0.1.19",
     "connected-react-router": "^4.4.1",
     "copy-webpack-plugin": "^4.5.2",
@@ -67,7 +68,6 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "redux-mock-store": "^1.5.3",
-    "shaka-player": "^2.5.0-beta",
     "ts-jest": "^23.1.4",
     "ts-loader": "^4.5.0",
     "tslint": "^5.11.0",
@@ -81,6 +81,5 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.6",
     "webpack-merge": "^4.1.4"
-  },
-  "dependencies": {}
+  }
 }

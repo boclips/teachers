@@ -1,4 +1,4 @@
-import MockFetchVerify from '../test-support/MockFetchVerify';
+import MockFetchVerify from '../../test-support/MockFetchVerify';
 import fetchLinks from './fetchLinks';
 import { Link } from './Link';
 import { Links } from './Links';

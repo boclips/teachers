@@ -7,8 +7,7 @@
   "linterOptions": {
     "exclude": [
       "webpack-config/*.js",
-      "node_modules/**/*.ts",
-      "boclips-react-player/**/*"
+      "node_modules/**/*.ts"
     ]
   },
   "rulesDirectory": ["tslint-plugin-prettier"],

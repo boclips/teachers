@@ -1,10 +1,10 @@
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
+import { findOne, login } from '../../test-support/enzymeHelpers';
+import eventually from '../../test-support/eventually';
+import MockFetchVerify from '../../test-support/MockFetchVerify';
 import App from '../App';
-import { findOne, login } from '../test-support/enzymeHelpers';
-import eventually from '../test-support/eventually';
-import MockFetchVerify from '../test-support/MockFetchVerify';
 import { links } from '../video-service-responses';
 import { SearchPage } from '../videos/search-videos/SearchView.integrationTest';
 

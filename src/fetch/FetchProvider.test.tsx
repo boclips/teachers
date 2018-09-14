@@ -8,8 +8,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
+import MockFetchVerify from '../../test-support/MockFetchVerify';
 import { UserState } from '../State';
-import MockFetchVerify from '../test-support/MockFetchVerify';
 import FetchProvider, { boclipsFetch } from './FetchProvider';
 
 const mockStore = configureStore<UserState>();

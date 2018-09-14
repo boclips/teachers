@@ -7,10 +7,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
+import eventually from '../../test-support/eventually';
+import { LinksFactory } from '../../test-support/factories';
 import fetchLinks from '../links/fetchLinks';
 import { LinksState } from '../State';
-import eventually from '../test-support/eventually';
-import { LinksFactory } from '../test-support/factories';
 import ConfigLoader, { storeLinksAction } from './ConfigLoader';
 
 const loading = () => <span id="loading" />;

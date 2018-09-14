@@ -1,10 +1,10 @@
 import { Icon } from 'antd';
 import Card from 'antd/lib/card';
 import Skeleton from 'antd/lib/skeleton';
+import { BoclipsPlayer } from 'boclips-react-player';
 import moment = require('moment');
 import 'moment-duration-format';
 import React from 'react';
-import BoclipsPlayer from '../../boclips-player/BoclipsPlayer';
 import { Video } from '../Video';
 
 interface Props {

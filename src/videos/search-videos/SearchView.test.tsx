@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 
 import configureStore from 'redux-mock-store';
+import { By } from '../../../test-support/By';
+import { findAll, findOne, search } from '../../../test-support/enzymeHelpers';
+import { VideoFactory } from '../../../test-support/factories';
 import { VideosState } from '../../State';
-import { By } from '../../test-support/By';
-import { findAll, findOne, search } from '../../test-support/enzymeHelpers';
-import { VideoFactory } from '../../test-support/factories';
 import { Video } from '../Video';
 import SearchView, { searchVideosAction } from './SearchView';
 

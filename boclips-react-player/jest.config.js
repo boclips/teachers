@@ -1,5 +1,4 @@
 module.exports = {
-
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 
@@ -25,12 +24,11 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    '**/*.(integrationTest|test).(ts|tsx|js)'
+    '**/*.test.(ts|tsx|js)'
   ],
 
   testPathIgnorePatterns: [
-    'node_modules',
-    'boclips-react-player',
+    'node_modules'
   ],
 
   // A map from regular expressions to paths to transformers
@@ -39,5 +37,4 @@ module.exports = {
   },
 
   setupTestFrameworkScriptFile: './testSetup.ts'
-
 };

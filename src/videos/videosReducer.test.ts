@@ -1,5 +1,5 @@
+import { VideoFactory } from '../../test-support/factories';
 import { VideosStateValue } from '../State';
-import { VideoFactory } from '../test-support/factories';
 import { storeVideosAction } from './search-videos/searchVideosMiddleware';
 import { searchVideosAction } from './search-videos/SearchView';
 import { videosReducer } from './videosReducer';
