@@ -16,6 +16,7 @@ export class VideoPlayback extends React.Component<PlaybackProps> {
   public render() {
     return (
       <video
+        className={'boclips-player--playback'}
         data-qa="video-playback"
         ref={this.videoRef}
         width="500"

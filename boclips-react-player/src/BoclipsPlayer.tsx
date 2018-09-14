@@ -39,7 +39,7 @@ export class BoclipsPlayer extends React.Component<Props, State> {
         src={this.props.thumbnail}
         onClick={this.onThumbnailClick}
         data-qa="video-thumbnail"
-        className={'boclips-player-preview'}
+        className={'boclips-player--preview'}
       />
     );
   }
