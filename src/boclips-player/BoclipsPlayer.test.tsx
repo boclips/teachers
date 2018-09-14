@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
 import { By } from '../test-support/By';
 import BoclipsPlayer from './BoclipsPlayer';
