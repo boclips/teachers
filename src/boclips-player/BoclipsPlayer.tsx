@@ -2,12 +2,13 @@ import React from 'react';
 import { VideoPlayback } from './VideoPlayback';
 
 interface Props {
-  thumbnail: string;
+  thumbnail?: string;
   stream: string;
 }
 
 interface State {
   isPlaying: boolean;
+  showPreview: boolean;
 }
 
 export default class BoclipsPlayer extends React.Component<Props, State> {
@@ -17,19 +18,33 @@ export default class BoclipsPlayer extends React.Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    this.state = { isPlaying: false };
+
+    this.state = {
+      showPreview: props.thumbnail !== undefined,
+      isPlaying: false,
+    };
   }
 
   public render() {
-    if (this.state.isPlaying) {
-      return <VideoPlayback stream={this.props.stream} />;
+    if (this.state.isPlaying || !this.state.showPreview) {
+      return this.renderPlayback();
     }
+
+    return this.renderPreview();
+  }
+
+  private renderPreview() {
     return (
       <img
         src={this.props.thumbnail}
         onClick={this.onThumbnailClick}
         data-qa="video-thumbnail"
+        className={'boclips-player-preview'}
       />
     );
+  }
+
+  private renderPlayback() {
+    return <VideoPlayback stream={this.props.stream} />;
   }
 }

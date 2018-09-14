@@ -4,8 +4,8 @@ import { By } from '../test-support/By';
 import BoclipsPlayer from './BoclipsPlayer';
 import { VideoPlayback } from './VideoPlayback';
 
-test('it initially shows the thumbnail', () => {
-  const wrapper = mount(
+test('shows the thumbnail on load when thumbnail set', () => {
+  const wrapper = shallow(
     <BoclipsPlayer thumbnail={'/static/thumb.jpg'} stream={'stream.mdp'} />,
   );
   const thumbnail = wrapper.find(By.dataQa('video-thumbnail'));
@@ -15,7 +15,18 @@ test('it initially shows the thumbnail', () => {
   expect(wrapper.find(By.dataQa('video-playback', 'video'))).not.toExist();
 });
 
-test('on click on thumbnail shows video player', () => {
+test('shows video playback on load when thumbnail not set', () => {
+  const wrapper = shallow(<BoclipsPlayer stream={'/static/stream.mdp'} />);
+
+  expect(wrapper.find(VideoPlayback)).toExist();
+  expect(wrapper.find(VideoPlayback)).toHaveProp(
+    'stream',
+    '/static/stream.mdp',
+  );
+  expect(wrapper.find(By.dataQa('video-thumbnail'))).not.toExist();
+});
+
+test('on click on thumbnail shows video playback', () => {
   const wrapper = shallow(
     <BoclipsPlayer
       thumbnail={'/static/thumb.jpg'}
