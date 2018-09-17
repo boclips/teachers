@@ -5,4 +5,5 @@ interface PlaybackEvent {
   currentTimeSeconds: number;
   durationSeconds: number;
   eventTime: Date;
+  playerIdentifier: string;
 }

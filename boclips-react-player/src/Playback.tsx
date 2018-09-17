@@ -1,5 +1,6 @@
 import React from 'react';
 import shaka from 'shaka-player';
+import { uuid } from './uuid';
 
 interface Props {
   stream: string;
@@ -9,6 +10,8 @@ interface Props {
 
 export class Playback extends React.Component<Props> {
   private readonly videoRef: React.RefObject<any> = null;
+  private readonly playerIdentifier: string;
+
   private onPlay = () => {
     this.trackEvent('play');
   };
@@ -22,6 +25,7 @@ export class Playback extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.videoRef = React.createRef();
+    this.playerIdentifier = uuid();
   }
 
   public render() {
@@ -56,6 +60,7 @@ export class Playback extends React.Component<Props> {
         currentTimeSeconds: Math.ceil(this.videoRef.current.currentTime),
         durationSeconds: Math.ceil(this.videoRef.current.duration),
         eventTime: new Date(),
+        playerIdentifier: this.playerIdentifier,
       } as PlaybackEvent;
 
       this.props.events(eventData);
