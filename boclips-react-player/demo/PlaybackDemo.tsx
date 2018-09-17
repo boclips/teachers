@@ -1,9 +1,6 @@
 import React, { PureComponent } from 'react';
-import { BoclipsPlayer } from '../index';
+import { Playback } from '../src/Playback';
 import { TrackingTable } from './TrackingTable';
-
-const thumbnailUrl =
-  'https://cfvod.kaltura.com/p/2394162/sp/239416200/thumbnail/entry_id/1_spq0ilkd/version/100021/width/560/height/395';
 
 const streamUrl =
   'https://cdnapisec.kaltura.com/p/2394162/sp/239416200/playManifest/entryId/1_e0leuxs1/format/mpegdash/protocol/https/x36xhzz.mp4';
@@ -15,8 +12,8 @@ interface State {
 
 interface Props {}
 
-export class PlayerDemo extends PureComponent<Props, State> {
-  private eventHandler = (event: PlaybackEvent) => {
+export class PlaybackDemo extends PureComponent<Props, State> {
+  private trackEvent = (event: PlaybackEvent) => {
     this.setState({
       lastEvent: event,
       allEvents: [...this.state.allEvents, event],
@@ -35,11 +32,8 @@ export class PlayerDemo extends PureComponent<Props, State> {
   public render() {
     return (
       <div>
-        <BoclipsPlayer
-          thumbnail={thumbnailUrl}
-          stream={streamUrl}
-          eventHandler={this.eventHandler}
-        />
+        <Playback stream={streamUrl} events={this.trackEvent} autoPlay={true} />
+
         {this.renderTrackingTable()}
       </div>
     );

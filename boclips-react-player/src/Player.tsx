@@ -1,9 +1,10 @@
 import React from 'react';
-import { VideoPlayback } from './VideoPlayback';
+import { Playback } from './Playback';
 
 interface Props {
   thumbnail?: string;
   stream: string;
+  eventHandler?: (event: PlaybackEvent) => void;
 }
 
 interface State {
@@ -11,9 +12,15 @@ interface State {
   showPreview: boolean;
 }
 
-export class BoclipsPlayer extends React.Component<Props, State> {
+export class Player extends React.Component<Props, State> {
   private onThumbnailClick = () => {
     this.setState({ isPlaying: true });
+  };
+
+  private trackEvents = (event: PlaybackEvent) => {
+    if (this.props.eventHandler) {
+      this.props.eventHandler(event);
+    }
   };
 
   public constructor(props: Props) {
@@ -45,6 +52,12 @@ export class BoclipsPlayer extends React.Component<Props, State> {
   }
 
   private renderPlayback() {
-    return <VideoPlayback stream={this.props.stream} />;
+    return (
+      <Playback
+        stream={this.props.stream}
+        events={this.trackEvents}
+        autoPlay={this.state.isPlaying}
+      />
+    );
   }
 }

@@ -1,1 +1,1 @@
-export { BoclipsPlayer } from './src/BoclipsPlayer';
+export { Player as BoclipsPlayer } from './src/Player';

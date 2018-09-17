@@ -5,7 +5,7 @@ const path = require('path');
 const distPath = path.resolve(__dirname, 'dist');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'PlayerDemo.tsx'),
+  entry: path.resolve(__dirname, 'App.tsx'),
   output: {
     path: distPath,
     filename: '[name].[chunkhash:8].js',
