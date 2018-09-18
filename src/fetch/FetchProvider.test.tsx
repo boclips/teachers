@@ -1,16 +1,16 @@
 /* tslint:disable:no-string-literal */
 
+import axios from 'axios';
+
 jest.mock('../links/fetchLinks');
 
 import { mount } from 'enzyme';
-import fetchMock from 'fetch-mock';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
-import MockFetchVerify from '../../test-support/MockFetchVerify';
 import { UserState } from '../State';
-import FetchProvider, { boclipsFetch } from './FetchProvider';
+import FetchProvider from './FetchProvider';
 
 const mockStore = configureStore<UserState>();
 const mountFetchProvider = (store: Store) =>
@@ -30,30 +30,24 @@ describe('FetchProvider', () => {
   });
 });
 
-describe('boclipsFetch', () => {
-  test('when valid credentials received sets authorization header', async () => {
+describe('axios', () => {
+  test('when valid credentials received sets global authorization header', async () => {
     const store = mockStore({
       user: { username: 'user', password: 'password', valid: true },
     });
     mountFetchProvider(store);
-    MockFetchVerify.get('/test', {});
 
-    await boclipsFetch('/test').then(() => {
-      expect(fetchMock.lastOptions().headers['Authorization']).toEqual(
-        'Basic dXNlcjpwYXNzd29yZA==',
-      );
-    });
+    expect(axios.defaults.headers.common.Authorization).toEqual(
+      'Basic dXNlcjpwYXNzd29yZA==',
+    );
   });
 
-  test('when invalid credentials received sets no authorization header', async () => {
+  test('when invalid credentials received removes global authorization header', async () => {
     const store = mockStore({
       user: { username: 'user', password: 'password', valid: false },
     });
     mountFetchProvider(store);
-    MockFetchVerify.get('/test', {});
 
-    await boclipsFetch('/test').then(() => {
-      expect(fetchMock.lastOptions().headers).toBeFalsy();
-    });
+    expect(axios.defaults.headers.common.Authorization).toBeFalsy();
   });
 });

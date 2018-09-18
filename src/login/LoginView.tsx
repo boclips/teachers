@@ -1,5 +1,6 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
+import axios from 'axios';
 import { push } from 'connected-react-router';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -83,20 +84,20 @@ class LoginComponent extends React.PureComponent<
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onSubmit: (redirectPath, userLink) => userCredentials => {
-      const headers = {
-        Authorization:
-          'Basic ' +
-          btoa(userCredentials.username + ':' + userCredentials.password),
-      };
-      fetch(userLink.getLink(), { headers }).then(response => {
-        const ok = response.status < 400;
-        if (ok) {
+      axios
+        .get(userLink.getLink(), {
+          auth: {
+            username: userCredentials.username,
+            password: userCredentials.password,
+          },
+        })
+        .then(_ => {
           dispatch(loginUser({ valid: true, ...userCredentials }));
           dispatch(push(redirectPath || '/'));
-        } else {
+        })
+        .catch(_ => {
           dispatch(loginUser({ valid: false, ...userCredentials }));
-        }
-      });
+        });
     },
   };
 }

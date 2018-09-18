@@ -9,21 +9,19 @@ import { links } from '../video-service-responses';
 import { SearchPage } from '../videos/search-videos/SearchView.integrationTest';
 
 test('after successful login redirects to video search', async () => {
-  const userStub = MockFetchVerify.get('/v1/user', 200);
+  MockFetchVerify.get('/v1/user', undefined, 200);
   const page = await LoginPage.mount();
 
   const searchPage = await SearchPage.mount(page.login('user', 'password'));
-  userStub.verify();
 
   await searchPage.hasLoaded();
 });
 
 test('after unsuccessful login remains in search and displays error', async () => {
-  const userStub = MockFetchVerify.get('/v1/user', 401);
+  MockFetchVerify.get('/v1/user', undefined, 401);
   const loginPage = await LoginPage.mount();
 
   loginPage.tryToLogin('wrong-user', 'password');
-  userStub.verify();
 
   await eventually(() => {
     expect(loginPage.hasWrongCredentialsAlert()).toBeTruthy();
@@ -34,11 +32,10 @@ export class LoginPage {
   constructor(private wrapper: ReactWrapper) {}
 
   public static async mount(url: string = '/') {
-    const linksStub = MockFetchVerify.get('/v1/', JSON.stringify(links));
+    MockFetchVerify.get('/v1/', JSON.stringify(links));
     const page = new LoginPage(
       mount(<App history={createMemoryHistory({ initialEntries: [url] })} />),
     );
-    linksStub.verify();
     await page.hasLoaded();
     return page;
   }
@@ -51,7 +48,7 @@ export class LoginPage {
   }
 
   public loginWithValidCredentials(username: string, password: string) {
-    MockFetchVerify.get('/v1/user', 200);
+    MockFetchVerify.get('/v1/user', undefined, 200);
     return this.login(username, password);
   }
 

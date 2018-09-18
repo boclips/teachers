@@ -1,7 +1,6 @@
 /* tslint:disable:no-string-literal */
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import fetchMock from 'fetch-mock';
 import 'jest-enzyme';
 import { JSDOM } from 'jsdom';
 
@@ -29,5 +28,3 @@ global['navigator'] = {
   userAgent: 'node.js',
 };
 copyProps(window, global);
-
-global['fetch'] = fetchMock;

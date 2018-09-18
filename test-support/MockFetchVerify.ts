@@ -1,26 +1,14 @@
-import fetchMock, {
-  MockOptionsMethodGet,
-  MockResponse,
-  MockResponseFunction,
-} from 'fetch-mock';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+
+const axiosMock = new MockAdapter(axios);
 
 export default class MockFetchVerify {
   public static get(
     matcher: string,
-    reponse: MockResponse | MockResponseFunction,
-    options?: MockOptionsMethodGet,
-  ): FetchMockStub {
-    fetchMock.get(matcher, reponse, { overwriteRoutes: true, ...options });
-    return new FetchMockStub(matcher);
-  }
-}
-
-class FetchMockStub {
-  constructor(private matcher: string) {}
-
-  public verify() {
-    if (!fetchMock.called(this.matcher)) {
-      throw new Error(`GET '${this.matcher}' has not been requested`);
-    }
+    responseBody?: any,
+    status: number = 200,
+  ): void {
+    axiosMock.onGet(matcher).reply(status, responseBody);
   }
 }
