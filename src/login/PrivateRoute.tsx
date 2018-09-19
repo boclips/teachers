@@ -1,4 +1,4 @@
-import React, { ComponentClass } from 'react';
+import React, { ComponentClass, SFC } from 'react';
 import { connect } from 'react-redux';
 import {
   Redirect,
@@ -12,7 +12,7 @@ import { UserCredentials } from './UserCredentials';
 
 interface Props {
   user: UserCredentials;
-  component: ComponentClass;
+  component: ComponentClass | SFC;
 }
 
 class PrivateRoute extends React.Component<

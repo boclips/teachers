@@ -1,13 +1,11 @@
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { VideoDetailsState } from '../../State';
-import { Video } from '../Video';
 
-interface StateProps {
-  loading: boolean;
-  video: Video;
+interface OwnProps {
+  videoId: string;
 }
+interface StateProps {}
 
 export class VideoDetailsView extends PureComponent<StateProps> {
   public render() {
@@ -21,11 +19,11 @@ export class VideoDetailsView extends PureComponent<StateProps> {
   }
 }
 
-function mapStateToProps({ video }: VideoDetailsState): StateProps {
-  return { video: video.item, loading: video.loading };
+function mapStateToProps(): StateProps {
+  return {};
 }
 
-export default connect<StateProps, {}, {}>(
+export default connect<StateProps, {}, OwnProps>(
   mapStateToProps,
   null,
 )(VideoDetailsView);

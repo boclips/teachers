@@ -11,7 +11,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     proxy: {
       '/v1/**': {
-        target: localUrl,
+        target: stagingUrl,
         changeOrigin: true,
       },
     },

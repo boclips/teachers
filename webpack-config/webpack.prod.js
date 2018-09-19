@@ -7,6 +7,8 @@ const path = require('path');
 
 const distPath = path.resolve(__dirname, '../dist');
 
+const MB = 1024 * 1024;
+
 module.exports = merge(common, {
     mode: 'production',
     optimization: {
@@ -21,8 +23,8 @@ module.exports = merge(common, {
     },
     performance: {
         hints: 'error',
-        maxAssetSize: 3000000,
-        maxEntrypointSize: 3000000
+        maxAssetSize: 3 * MB,
+        maxEntrypointSize: 3 * MB
     },
     plugins: [
         // Cleans dist folder before building
