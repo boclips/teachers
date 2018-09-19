@@ -6,14 +6,14 @@ const streamUrl =
   'https://cdnapisec.kaltura.com/p/2394162/sp/239416200/playManifest/entryId/1_e0leuxs1/format/mpegdash/protocol/https/x36xhzz.mp4';
 
 interface State {
-  lastEvent: PlaybackEvent | null;
-  allEvents: PlaybackEvent[];
+  lastEvent: SegmentWatchedEvent | null;
+  allEvents: SegmentWatchedEvent[];
 }
 
 interface Props {}
 
 export class PlaybackDemo extends PureComponent<Props, State> {
-  private trackEvent = (event: PlaybackEvent) => {
+  private trackEvent = (event: SegmentWatchedEvent) => {
     this.setState({
       lastEvent: event,
       allEvents: [...this.state.allEvents, event],

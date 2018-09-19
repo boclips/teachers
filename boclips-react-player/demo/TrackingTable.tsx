@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface Props {
-  allEvents: PlaybackEvent[];
-  lastEvent: PlaybackEvent;
+  allEvents: SegmentWatchedEvent[];
+  lastEvent: SegmentWatchedEvent;
 }
 
 export class TrackingTable extends React.PureComponent<Props> {

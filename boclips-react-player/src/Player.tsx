@@ -4,7 +4,7 @@ import { Playback } from './Playback';
 interface Props {
   thumbnail?: string;
   stream: string;
-  eventHandler?: (event: PlaybackEvent) => void;
+  trackerConfig?: TrackerConfig;
 }
 
 interface State {
@@ -17,9 +17,9 @@ export class Player extends React.Component<Props, State> {
     this.setState({ isPlaying: true });
   };
 
-  private trackEvents = (event: PlaybackEvent) => {
-    if (this.props.eventHandler) {
-      this.props.eventHandler(event);
+  private trackEvents = (event: SegmentWatchedEvent) => {
+    if (this.props.trackerConfig && this.props.trackerConfig.onSegmentWatched) {
+      this.props.trackerConfig.onSegmentWatched(event);
     }
   };
 

@@ -1,4 +1,4 @@
-interface PlaybackEvent {
+interface SegmentWatchedEvent {
   playerIdentifier: string;
   segmentStartSeconds: number;
   segmentEndSeconds: number;

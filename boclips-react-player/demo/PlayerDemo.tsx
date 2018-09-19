@@ -9,14 +9,14 @@ const streamUrl =
   'https://cdnapisec.kaltura.com/p/2394162/sp/239416200/playManifest/entryId/1_e0leuxs1/format/mpegdash/protocol/https/x36xhzz.mp4';
 
 interface State {
-  lastEvent: PlaybackEvent | null;
-  allEvents: PlaybackEvent[];
+  lastEvent: SegmentWatchedEvent | null;
+  allEvents: SegmentWatchedEvent[];
 }
 
 interface Props {}
 
 export class PlayerDemo extends PureComponent<Props, State> {
-  private eventHandler = (event: PlaybackEvent) => {
+  private eventHandler = (event: SegmentWatchedEvent) => {
     this.setState({
       lastEvent: event,
       allEvents: [...this.state.allEvents, event],
@@ -38,7 +38,7 @@ export class PlayerDemo extends PureComponent<Props, State> {
         <BoclipsPlayer
           thumbnail={thumbnailUrl}
           stream={streamUrl}
-          eventHandler={this.eventHandler}
+          trackerConfig={{ onSegmentWatched: this.eventHandler }}
         />
         {this.renderTrackingTable()}
       </div>

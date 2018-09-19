@@ -5,14 +5,14 @@ import PlaybackStateTracker from './PlaybackStateTracker';
 interface Props {
   stream: string;
   autoPlay?: boolean;
-  events?: (event: PlaybackEvent) => void;
+  events?: (event: SegmentWatchedEvent) => void;
 }
 
 export class Playback extends React.Component<Props> {
   private readonly videoRef: React.RefObject<any> = null;
-  private readonly tracker: PlaybackStateTracker = new PlaybackStateTracker(
-    this.props.events,
-  );
+  private readonly tracker: PlaybackStateTracker = new PlaybackStateTracker({
+    onSegmentWatched: this.props.events,
+  });
 
   constructor(props: Props) {
     super(props);
@@ -27,7 +27,7 @@ export class Playback extends React.Component<Props> {
         data-qa="video-playback"
         width="500"
         controls={true}
-        {...this.tracker.props}
+        {...this.tracker.events}
       />
     );
   }
