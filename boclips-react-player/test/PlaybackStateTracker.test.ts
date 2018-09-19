@@ -28,7 +28,7 @@ describe('when tracking url', () => {
   test('it publishes playback event', () => {
     const trackingEndpoint = 'http://camelpun.cz';
 
-    trackPlayAndPause({ onSegmentWatched, trackingEndpoint });
+    trackPlayAndPause({ trackingEndpoint });
 
     const requestUrl = axiosMock.post.mock.calls[0][0];
     const requestBody = axiosMock.post.mock.calls[0][1];

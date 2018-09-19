@@ -27,10 +27,12 @@ export default class PlaybackStateTracker {
           segmentEndSeconds: e.currentTarget.currentTime,
           videoDurationSeconds: e.currentTarget.duration,
         };
-        this.config.onSegmentWatched(playbackEvent);
+        if (this.config.onSegmentWatched) {
+          this.config.onSegmentWatched(playbackEvent);
+        }
 
         if (this.config.trackingEndpoint) {
-          axios.post(this.config.trackingEndpoint, playbackEvent);
+          axios.post(this.config.trackingEndpoint.toString(), playbackEvent);
         }
       },
     };

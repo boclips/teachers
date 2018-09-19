@@ -9,7 +9,8 @@
     "e2e": "$(npm bin)/cypress open",
     "demo": "./node_modules/.bin/webpack-dev-server --config demo/webpack.config.js",
     "build-demo": "./node_modules/.bin/webpack --config demo/webpack.config.js",
-    "lint": "tslint -c tslint.json -p . --fix"
+    "lint": "tslint -c tslint.json -p . --fix",
+    "compile": "tsc -p . --noEmit"
   },
   "author": "",
   "license": "ISC",
@@ -22,7 +23,6 @@
   },
   "devDependencies": {
     "axios": "^0.18.0",
-    "axios-mock-adapter": "^1.15.0",
     "cypress": "^3.1.0",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.5.0",
@@ -33,6 +33,7 @@
     "tslint-language-service": "^0.9.9",
     "tslint-plugin-prettier": "^1.3.0",
     "tslint-react": "^3.6.0",
+    "typescript": "^3.0.3",
     "webpack": "^4.19.0",
     "webpack-dev-server": "^3.1.8"
   },
