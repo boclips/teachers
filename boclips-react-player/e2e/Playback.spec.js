@@ -2,18 +2,15 @@ describe('Playback', function() {
   it('Playback switches from playing to paused when clicking on the video', function() {
     cy.visit('http://localhost:8080/');
 
-    cy.get('#video-1 [data-qa="player-identifier"]').should('exist');
-
-    cy.get('#video-1 [data-qa="is-playing"]').should('contain', 'true');
-    cy.get('#video-1 [data-qa="is-paused"]').should('contain', 'false');
-    cy.get('#video-1 [data-qa="last-event"]').should('contain', 'play');
+    cy.wait(2000);
 
     cy.get('#video-1 [data-qa="video-playback"]').then(video => {
       video[0].pause();
     });
 
-    cy.get('#video-1 [data-qa="is-playing"]').should('contain', 'false');
-    cy.get('#video-1 [data-qa="is-paused"]').should('contain', 'true');
-    cy.get('#video-1 [data-qa="last-event"]').should('contain', 'pause');
+    cy.get('#video-1 [data-qa="segment-start"]').then(segmentStart => segmentStart.text()).should('equal', '0');
+    cy.get('#video-1 [data-qa="segment-end"]').then(segmentEnd => segmentEnd.text()).should('be.above', 0);
+    cy.get('#video-1 [data-qa="player-identifier"]').then(node => node.text()).should('not.be.empty');
+    cy.get('#video-1 [data-qa="capture-time"]').then(node => node.text()).should('not.be.empty');
   });
 });

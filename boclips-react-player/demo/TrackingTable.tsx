@@ -18,36 +18,22 @@ export class TrackingTable extends React.PureComponent<Props> {
               }`}</td>
             </tr>
             <tr>
-              <td>Last event</td>
-              <td data-qa="last-event">{`${this.props.lastEvent.action}`}</td>
-            </tr>
-            <tr>
-              <td>Current video time</td>
-              <td data-qa="video-time">{`${
-                this.props.lastEvent.currentTimeSeconds
+              <td>Capture time</td>
+              <td data-qa="capture-time">{`${
+                this.props.lastEvent.captureTime
               }`}</td>
             </tr>
             <tr>
-              <td>Current video time</td>
-              <td data-qa="video-duration">{`${
-                this.props.lastEvent.durationSeconds
+              <td>Segment start time</td>
+              <td data-qa="segment-start">{`${
+                this.props.lastEvent.segmentStartSeconds
               }`}</td>
             </tr>
             <tr>
-              <td>Time of event</td>
-              <td data-qa="event-time">{`${
-                this.props.lastEvent.eventTime
+              <td>Segment end time</td>
+              <td data-qa="segment-end">{`${
+                this.props.lastEvent.segmentEndSeconds
               }`}</td>
-            </tr>
-            <tr>
-              <td>Is playing?</td>
-              <td data-qa="is-playing">{`${
-                this.props.lastEvent.isPlaying
-              }`}</td>
-            </tr>
-            <tr>
-              <td>Is paused?</td>
-              <td data-qa="is-paused">{`${this.props.lastEvent.isPaused}`}</td>
             </tr>
             <tr>
               <td>Event log</td>
@@ -63,11 +49,11 @@ export class TrackingTable extends React.PureComponent<Props> {
                   value={this.props.allEvents
                     .map(event => {
                       return (
-                        event.action +
+                        event.segmentStartSeconds +
                         ' ' +
-                        event.currentTimeSeconds +
+                        event.segmentEndSeconds +
                         ' ' +
-                        event.eventTime
+                        event.captureTime
                       );
                     })
                     .join('\n')}

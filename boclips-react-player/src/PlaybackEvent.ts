@@ -1,9 +1,7 @@
 interface PlaybackEvent {
-  action: string;
-  isPaused: boolean;
-  isPlaying: boolean;
-  currentTimeSeconds: number;
-  durationSeconds: number;
-  eventTime: Date;
   playerIdentifier: string;
+  segmentStartSeconds: number;
+  segmentEndSeconds: number;
+  videoDurationSeconds: number;
+  captureTime: Date;
 }

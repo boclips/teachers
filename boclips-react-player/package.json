@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
+    "test:watch": "npm run test -- --watch",
     "e2e": "$(npm bin)/cypress open",
     "demo": "./node_modules/.bin/webpack-dev-server --config demo/webpack.config.js",
     "build-demo": "./node_modules/.bin/webpack --config demo/webpack.config.js",
