@@ -18,5 +18,5 @@ npm run test
 npm run build
 )
 
-cp -R ${app}/dist/ ${app}/Dockerfile dist/
+cp -R ${app}/app/dist/ ${app}/Dockerfile dist/
 
