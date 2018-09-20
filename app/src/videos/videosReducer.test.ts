@@ -8,7 +8,7 @@ test('Clears videos and sets loading flag and query on the loading action', () =
   const state: VideosStateValue = {
     loading: false,
     items: [VideoFactory.sample({ title: 'my video' })],
-    query: '',
+    query: { phrase: '' },
   };
 
   const newState = videosReducer(state, searchVideosAction('donuts'));
@@ -16,7 +16,7 @@ test('Clears videos and sets loading flag and query on the loading action', () =
   const expectedState: VideosStateValue = {
     loading: true,
     items: [],
-    query: 'donuts',
+    query: { phrase: 'donuts' },
   };
 
   expect(newState).toEqual(expectedState);
@@ -26,7 +26,7 @@ test('Sets videos and clears loading flag on the store action', () => {
   const state: VideosStateValue = {
     loading: true,
     items: [],
-    query: 'pancakes',
+    query: { phrase: 'pancakes' },
   };
 
   const newState = videosReducer(
@@ -37,7 +37,7 @@ test('Sets videos and clears loading flag on the store action', () => {
   const expectedState: VideosStateValue = {
     loading: false,
     items: [VideoFactory.sample({ title: 'my video' })],
-    query: 'pancakes',
+    query: { phrase: 'pancakes' },
   };
 
   expect(newState).toEqual(expectedState);

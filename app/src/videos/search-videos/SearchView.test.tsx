@@ -22,7 +22,9 @@ function mountWith(store: Store) {
 }
 
 test('dispatches an action with search query when search button clicked', () => {
-  const store = mockStore({ videos: { items: [], loading: false, query: '' } });
+  const store = mockStore({
+    videos: { items: [], loading: false, query: { phrase: '' } },
+  });
   const wrapper = mountWith(store);
 
   search(wrapper, 'china firewall');
@@ -34,7 +36,7 @@ test('dispatches an action with search query when search button clicked', () => 
 
 test('shows placeholders when results are loading', () => {
   const store = mockStore({
-    videos: { items: [], loading: true, query: 'donuts' },
+    videos: { items: [], loading: true, query: { phrase: 'donuts' } },
   });
   const wrapper = mountWith(store);
 
@@ -45,7 +47,7 @@ test('shows placeholders when results are loading', () => {
 
 test('shows a no results message when there are zero search results', () => {
   const store = mockStore({
-    videos: { items: [], loading: false, query: 'donuts' },
+    videos: { items: [], loading: false, query: { phrase: 'donuts' } },
   });
   const wrapper = mountWith(store);
 
@@ -55,7 +57,9 @@ test('shows a no results message when there are zero search results', () => {
 });
 
 test('does not show a no results message when search query is empty', () => {
-  const store = mockStore({ videos: { items: [], loading: false, query: '' } });
+  const store = mockStore({
+    videos: { items: [], loading: false, query: { phrase: '' } },
+  });
   const wrapper = mountWith(store);
 
   const message = wrapper.find(By.dataQa('search-zero-results'));
@@ -67,7 +71,7 @@ test('shows search results when there are any', () => {
   const video1: Video = VideoFactory.sample({ title: 'first video title' });
   const video2: Video = VideoFactory.sample({ title: 'second video title' });
   const store = mockStore({
-    videos: { items: [video1, video2], loading: false, query: '' },
+    videos: { items: [video1, video2], loading: false, query: { phrase: '' } },
   });
 
   const results = findAll(mountWith(store), 'search-result');

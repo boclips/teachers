@@ -106,7 +106,11 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
 }
 
 function mapStateToProps({ videos }: VideosState): StateProps {
-  return { videos: videos.items, loading: videos.loading, query: videos.query };
+  return {
+    videos: videos.items,
+    loading: videos.loading,
+    query: videos.query.phrase,
+  };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {

@@ -13,7 +13,9 @@ export interface LinksState {
 
 export interface VideosStateValue {
   loading: boolean;
-  query: string;
+  query: {
+    phrase: string;
+  };
   items: Video[];
 }
 

@@ -19,9 +19,9 @@ export default class SearchResult extends React.PureComponent<Props> {
         <Skeleton
           loading={this.props.loading}
           active={true}
-          title={{width: '300px'}}
-          paragraph={{rows: 5}}
-          avatar={{shape: 'square', size: 'large'}}
+          title={{ width: '300px' }}
+          paragraph={{ rows: 5 }}
+          avatar={{ shape: 'square', size: 'large' }}
         >
           {this.props.video ? (
             <section className="search-result-content">

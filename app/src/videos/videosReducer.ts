@@ -5,10 +5,14 @@ import { storeVideosAction } from './search-videos/searchVideosMiddleware';
 import { searchVideosAction } from './search-videos/SearchView';
 import { Video } from './Video';
 
-const initialState: VideosStateValue = { items: [], loading: false, query: '' };
+const initialState: VideosStateValue = {
+  items: [],
+  loading: false,
+  query: { phrase: '' },
+};
 
 function onSearchVideosAction(_, query: string): VideosStateValue {
-  return { items: [], loading: true, query };
+  return { items: [], loading: true, query: { phrase: query } };
 }
 
 function onStoreVideosAction(
