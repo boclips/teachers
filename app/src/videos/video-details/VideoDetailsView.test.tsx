@@ -4,15 +4,16 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { VideoFactory } from '../../../test-support/factories';
-import { VideoDetailsState } from '../../State';
+import { LinksFactory, VideoFactory } from '../../../test-support/factories';
+import { LinksState, VideoDetailsState } from '../../State';
 import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
 
-const mockStore = configureStore<VideoDetailsState>();
+const mockStore = configureStore<VideoDetailsState & LinksState>();
 
 test('dispatches FETCH_VIDEO when mounted', () => {
   const store = mockStore({
     video: { loading: false, item: null },
+    links: LinksFactory.sample(),
   });
 
   mount(
@@ -27,6 +28,7 @@ test('dispatches FETCH_VIDEO when mounted', () => {
 test('renders video details when the video has loaded', () => {
   const store = mockStore({
     video: { loading: false, item: VideoFactory.sample() },
+    links: LinksFactory.sample(),
   });
 
   const wrapper = mount(

@@ -8,7 +8,7 @@ test('converts a video', () => {
   expect(video.title).toEqual('KS3/4 Science: Demonstrating Chemistry');
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
-  expect(video.releasedOn).toEqual(new Date(2018, 1, 11));
+  expect(video.releasedOn).toEqual(new Date(Date.UTC(2018, 1, 11)));
   expect(video.contentProvider).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
   expect(video.streamUrl).toEqual('https://cdn.kaltura.com/stream/147.mpd');

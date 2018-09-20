@@ -14,7 +14,7 @@ function RenderVideoDetails({ video }: Props) {
 
   return (
     <section>
-      <VideoPreview video={video} />
+      <VideoPreview video={video} searchId={null} />
     </section>
   );
 }

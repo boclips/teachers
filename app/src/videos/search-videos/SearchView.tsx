@@ -77,12 +77,12 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
   public renderResultPlaceholders() {
     return (
       <section data-qa="search-results-placeholders">
-        <SearchResult loading={true} />
-        <SearchResult loading={true} />
-        <SearchResult loading={true} />
-        <SearchResult loading={true} />
-        <SearchResult loading={true} />
-        <SearchResult loading={true} />
+        <SearchResult loading={true} video={null} searchId={null} />
+        <SearchResult loading={true} video={null} searchId={null} />
+        <SearchResult loading={true} video={null} searchId={null} />
+        <SearchResult loading={true} video={null} searchId={null} />
+        <SearchResult loading={true} video={null} searchId={null} />
+        <SearchResult loading={true} video={null} searchId={null} />
       </section>
     );
   }
@@ -95,13 +95,17 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
     );
   }
 
-  public renderVideo(video: Video, index: number) {
+  public renderVideo = (video: Video, index: number) => {
     return (
       <section key={index} data-qa="search-result">
-        <SearchResult loading={false} video={video} />
+        <SearchResult
+          loading={false}
+          video={video}
+          searchId={this.props.results.searchId}
+        />
       </section>
     );
-  }
+  };
 }
 
 function mapStateToProps({ search }: SearchState): StateProps {

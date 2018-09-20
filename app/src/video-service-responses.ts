@@ -11,6 +11,9 @@ export const links = {
       href: '/v1/videos/{id}',
       templated: true,
     },
+    createEvent: {
+      href: '/v1/events',
+    },
   },
 };
 

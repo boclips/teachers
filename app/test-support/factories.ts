@@ -17,13 +17,12 @@ export class VideoFactory {
   }
 }
 export class LinksFactory {
-  public static sample(arg?: Partial<Links>): Links {
+  public static sample(arg: Partial<Links> = {}): Links {
     return Object.freeze({
-      videos: (arg && arg.videos) || new Link({ href: '/videos' }),
-      video:
-        (arg && arg.video) ||
-        new Link({ href: '/videos/{id}', templated: true }),
-      user: (arg && arg.user) || new Link({ href: '/user' }),
+      videos: arg.videos || new Link({ href: '/videos' }),
+      video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
+      user: arg.user || new Link({ href: '/user' }),
+      createEvent: arg.createEvent || new Link({ href: '/events' }),
     });
   }
 }

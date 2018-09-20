@@ -6,12 +6,13 @@ import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { findAll, findOne, search } from '../../../test-support/enzymeHelpers';
-import { VideoFactory } from '../../../test-support/factories';
-import { SearchState } from '../../State';
+import { LinksFactory, VideoFactory } from '../../../test-support/factories';
+import { LinksState, SearchState } from '../../State';
+import VideoPlayer from '../components/VideoPlayer';
 import { Video } from '../Video';
 import SearchView, { searchVideosAction } from './SearchView';
 
-const mockStore = configureStore<SearchState>();
+const mockStore = configureStore<SearchState & LinksState>();
 
 function mountWith(store: Store) {
   return mount(
@@ -24,6 +25,7 @@ function mountWith(store: Store) {
 test('dispatches an action with search query when search button clicked', () => {
   const store = mockStore({
     search: { videos: [], loading: false, query: '', searchId: 's123' },
+    links: LinksFactory.sample(),
   });
   const wrapper = mountWith(store);
 
@@ -37,6 +39,7 @@ test('dispatches an action with search query when search button clicked', () => 
 test('shows placeholders when results are loading', () => {
   const store = mockStore({
     search: { videos: [], loading: true, query: 'donuts', searchId: 's123' },
+    links: LinksFactory.sample(),
   });
   const wrapper = mountWith(store);
 
@@ -48,6 +51,7 @@ test('shows placeholders when results are loading', () => {
 test('shows a no results message when there are zero search results', () => {
   const store = mockStore({
     search: { videos: [], loading: false, query: 'donuts', searchId: 's123' },
+    links: LinksFactory.sample(),
   });
   const wrapper = mountWith(store);
 
@@ -59,6 +63,7 @@ test('shows a no results message when there are zero search results', () => {
 test('does not show a no results message when search query is empty', () => {
   const store = mockStore({
     search: { videos: [], loading: false, query: '', searchId: 's123' },
+    links: LinksFactory.sample(),
   });
   const wrapper = mountWith(store);
 
@@ -77,6 +82,7 @@ test('shows search results when there are any', () => {
       query: '',
       searchId: 's123',
     },
+    links: LinksFactory.sample(),
   });
 
   const results = findAll(mountWith(store), 'search-result');
@@ -84,4 +90,5 @@ test('shows search results when there are any', () => {
 
   const firstVideo = results.at(0);
   expect(findOne(firstVideo, 'video-title')).toHaveText('first video title');
+  expect(firstVideo.find(VideoPlayer)).toHaveProp('searchId', 's123');
 });

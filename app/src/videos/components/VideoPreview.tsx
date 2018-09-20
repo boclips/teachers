@@ -1,12 +1,13 @@
 import { Icon } from 'antd';
 import React from 'react';
-import { BoclipsPlayer } from '../../../../boclips-react-player';
 import { Video } from '../Video';
 import DateFormatter from './DateFormatter';
 import DurationFormatter from './DurationFormatter';
+import VideoPlayer from './VideoPlayer';
 
 interface Props {
   video: Video;
+  searchId: string | null;
 }
 
 export default class VideoPreview extends React.PureComponent<Props> {
@@ -14,9 +15,9 @@ export default class VideoPreview extends React.PureComponent<Props> {
     return (
       <section className="video-content">
         <section className={'video-thumbnail'}>
-          <BoclipsPlayer
-            thumbnail={this.props.video.thumbnailUrl}
-            stream={this.props.video.streamUrl}
+          <VideoPlayer
+            video={this.props.video}
+            searchId={this.props.searchId}
           />
         </section>
         <section className="video-details">

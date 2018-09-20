@@ -6,7 +6,8 @@ import { Video } from '../Video';
 
 interface Props {
   loading: boolean;
-  video?: Video;
+  video: Video | null;
+  searchId: string | null;
 }
 
 export default class SearchResult extends React.PureComponent<Props> {
@@ -20,7 +21,12 @@ export default class SearchResult extends React.PureComponent<Props> {
           paragraph={{ rows: 5 }}
           avatar={{ shape: 'square', size: 'large' }}
         >
-          {this.props.video ? <VideoPreview video={this.props.video} /> : null}
+          {this.props.video ? (
+            <VideoPreview
+              video={this.props.video}
+              searchId={this.props.searchId}
+            />
+          ) : null}
         </Skeleton>
       </Card>
     );
