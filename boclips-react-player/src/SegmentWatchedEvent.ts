@@ -1,4 +1,4 @@
-interface SegmentWatchedEvent {
+export default interface SegmentWatchedEvent {
   playerIdentifier: string;
   segmentStartSeconds: number;
   segmentEndSeconds: number;

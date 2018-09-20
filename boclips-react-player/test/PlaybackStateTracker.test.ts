@@ -2,6 +2,7 @@ import axiosMock from 'axios';
 import { SyntheticEvent } from 'react';
 import PlaybackStateTracker from '../src/PlaybackStateTracker';
 import Mock = jest.Mock;
+import TrackerConfig from "../src/TrackerConfig";
 
 const onSegmentWatched = jest.fn();
 

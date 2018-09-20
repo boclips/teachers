@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ReactEventHandler, SyntheticEvent } from 'react';
 import { uuid } from './uuid';
+import TrackerConfig from "./TrackerConfig";
 
 interface VideoElementProps {
   onPlay: ReactEventHandler<HTMLVideoElement>;

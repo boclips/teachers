@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
+import { BoclipsPlayer } from 'boclips-react-player';
 import React from 'react';
-import { BoclipsPlayer } from '../../../boclips-react-player';
 import DateFormatter from '../components/DateFormatter';
 import DurationFormatter from '../components/DurationFormatter';
 import { Video } from '../Video';

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Playback } from './Playback';
 import './styles/BoclipsPlayer.less';
+import TrackerConfig from "./TrackerConfig";
+import SegmentWatchedEvent from "./SegmentWatchedEvent";
 
 interface Props {
   thumbnail?: string;

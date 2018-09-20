@@ -3,8 +3,16 @@
 set -e
 
 git pull -r
-npm run compile
-npm run lint
-npm run test
-npm run build
+
+pushd boclips-react-player
+    npm run test
+popd
+
+pushd app
+    npm run compile
+    npm run lint
+    npm run test
+    npm run build
+popd
+
 git push

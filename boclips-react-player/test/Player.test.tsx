@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from '../../test-support/By';
 import { Playback } from '../src/Playback';
 import { Player } from '../src/Player';
+import { By } from "./By";
 
 test('shows the thumbnail on load when thumbnail set', () => {
   const wrapper = shallow(

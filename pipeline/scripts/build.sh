@@ -4,7 +4,7 @@ set -x -e
 
 app=source
 (
-cd ${app}
+cd ${app}/app
 npm i
 npm run compile
 npm run lint
