@@ -1,18 +1,26 @@
-import { RouterActionType, RouterState } from 'connected-react-router';
+import {
+  RouterActionType,
+  RouterState as ReactRouterState,
+} from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { UserCredentials } from '../login/UserCredentials';
-import { UserState } from '../State';
+import {
+  RouterState,
+  UserState,
+  VideoDetailsState,
+  VideoStateValue,
+} from '../State';
 import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
 import { BoclipsRouter } from './BoclipsRouter';
 
-const mockStore = configureStore<UserState & { router: RouterState }>();
+const mockStore = configureStore<UserState & RouterState & VideoDetailsState>();
 
 test('shows video details view on /videos/{id}', () => {
-  const router: RouterState = {
+  const router: ReactRouterState = {
     location: {
       pathname: '/videos/123',
       search: '',
@@ -28,9 +36,15 @@ test('shows video details view on /videos/{id}', () => {
     valid: true,
   };
 
+  const video: VideoStateValue = {
+    loading: false,
+    item: null,
+  };
+
   const store = mockStore({
     router,
     user,
+    video,
   });
 
   const history = createMemoryHistory();

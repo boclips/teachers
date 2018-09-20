@@ -1,15 +1,11 @@
 import axios from 'axios';
-
 import { Links } from '../../links/Links';
 import convertVideoResource from '../convertVideoResource';
 import { Video } from '../Video';
 
-export default function searchVideos(
-  query: string,
-  links: Links,
-): Promise<Video[]> {
+export default function fetchVideo(id: string, links: Links): Promise<Video> {
   return axios
-    .get(links.videos.getLink({ query }))
+    .get(links.video.getLink({ id }))
     .then(response => response.data)
-    .then(body => body._embedded.videos.map(convertVideoResource));
+    .then(convertVideoResource);
 }

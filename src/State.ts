@@ -1,3 +1,4 @@
+import { RouterState as ReactRouterState } from 'connected-react-router';
 import { Links } from './links/Links';
 import { UserCredentials } from './login/UserCredentials';
 import { Video } from './videos/Video';
@@ -27,6 +28,10 @@ export interface VideosState {
 
 export interface VideoDetailsState {
   video: VideoStateValue;
+}
+
+export interface RouterState {
+  router: ReactRouterState;
 }
 
 export default interface State

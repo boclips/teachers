@@ -12,6 +12,8 @@ import { userReducer } from './login/userReducer';
 import { BoclipsRouter, defaultHistory } from './router/BoclipsRouter';
 import State from './State';
 import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
+import videoDetailsMiddleware from './videos/video-details/videoDetailsMiddleware';
+import { videoReducer } from './videos/videoReducer';
 import { videosReducer } from './videos/videosReducer';
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
@@ -20,7 +22,7 @@ const rootReducer = combineReducers({
   videos: videosReducer,
   links: linksReducer,
   user: userReducer,
-  video: () => null,
+  video: videoReducer,
 });
 
 interface Props {
@@ -34,6 +36,7 @@ export default class App extends PureComponent<Props> {
       applyMiddleware(
         routerMiddleware(this.props.history || defaultHistory),
         searchVideosMiddleware,
+        videoDetailsMiddleware,
       ),
     ),
   );

@@ -1,29 +1,81 @@
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { actionCreatorFactory } from '../../redux/actions';
+import { VideoDetailsState } from '../../State';
+import { Video } from '../Video';
+import VideoDetails from './VideoDetails';
+
+export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
 
 interface OwnProps {
   videoId: string;
 }
-interface StateProps {}
 
-export class VideoDetailsView extends PureComponent<StateProps> {
+interface StateProps {
+  video: Video;
+}
+
+interface DispatchProps {
+  fetchVideo: () => void;
+}
+
+export class VideoDetailsView extends PureComponent<
+  StateProps & DispatchProps
+> {
   public render() {
     return (
       <Layout>
         <section data-qa="video-details-page">
-          this is a video, watch and learn
+          {this.renderVideoOrPlaceholder()}
         </section>
       </Layout>
     );
   }
+
+  public componentDidMount() {
+    this.props.fetchVideo();
+  }
+
+  public renderVideoOrPlaceholder() {
+    if (this.props.video) {
+      return this.renderDetails();
+    }
+    return this.renderPlaceholder();
+  }
+
+  public renderPlaceholder() {
+    return (
+      <section data-qa="video-placeholder">
+        <VideoDetails video={null} />
+      </section>
+    );
+  }
+
+  public renderDetails() {
+    return (
+      <section data-qa="video-details">
+        <VideoDetails video={this.props.video} />
+      </section>
+    );
+  }
 }
 
-function mapStateToProps(): StateProps {
-  return {};
+function mapStateToProps(state: VideoDetailsState): StateProps {
+  return { video: state.video.item };
 }
 
-export default connect<StateProps, {}, OwnProps>(
+function mapDispatchToProps(
+  dispatch: Dispatch,
+  props: OwnProps,
+): DispatchProps {
+  return {
+    fetchVideo: () => dispatch(fetchVideoAction(props.videoId)),
+  };
+}
+
+export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(VideoDetailsView);

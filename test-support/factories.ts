@@ -4,7 +4,7 @@ import { Links } from '../src/links/Links';
 import { Video } from '../src/videos/Video';
 
 export class VideoFactory {
-  public static sample(arg: Partial<Video>): Video {
+  public static sample(arg: Partial<Video> = {}): Video {
     return Object.freeze({
       title: arg.title || 'my video title',
       description: arg.description || 'my video description',
@@ -20,6 +20,9 @@ export class LinksFactory {
   public static sample(arg?: Partial<Links>): Links {
     return Object.freeze({
       videos: (arg && arg.videos) || new Link({ href: '/videos' }),
+      video:
+        (arg && arg.video) ||
+        new Link({ href: '/videos/{id}', templated: true }),
       user: (arg && arg.user) || new Link({ href: '/user' }),
     });
   }

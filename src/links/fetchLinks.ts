@@ -7,6 +7,7 @@ export default function fetchLinks() {
     .then(response => response.data)
     .then(body => ({
       videos: new Link(body._links.search),
+      video: new Link(body._links.video),
       user: new Link(body._links.user),
     }));
 }

@@ -8,7 +8,7 @@ import { Dispatch } from 'redux';
 import boclipsLogo from '../images/boclips-logo.png';
 import { Link } from '../links/Link';
 import { actionCreatorFactory } from '../redux/actions';
-import { LinksState, UserState } from '../State';
+import { LinksState, RouterState, UserState } from '../State';
 import LoginForm from './LoginForm';
 import { UserCredentials } from './UserCredentials';
 
@@ -21,18 +21,13 @@ interface DispatchProps {
   ) => (credentials: UserCredentials) => void;
 }
 
-interface Props {
-  redirectPath: string;
-}
-
 interface StateProps {
+  redirectPath: string;
   invalidCredentials: boolean;
   userLink: Link;
 }
 
-class LoginComponent extends React.PureComponent<
-  Props & StateProps & DispatchProps
-> {
+class LoginComponent extends React.PureComponent<StateProps & DispatchProps> {
   public render(): React.ReactNode {
     return (
       <section data-qa="login-page" className={'login-form'}>
@@ -102,8 +97,11 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-function mapStateToProps(state: UserState & LinksState): StateProps {
+function mapStateToProps(
+  state: UserState & LinksState & RouterState,
+): StateProps {
   return {
+    redirectPath: state.router.location.state.from.pathname,
     invalidCredentials: state.user && !state.user.valid,
     userLink: state.links.user,
   };

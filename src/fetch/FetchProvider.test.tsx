@@ -1,9 +1,6 @@
 /* tslint:disable:no-string-literal */
 
 import axios from 'axios';
-
-jest.mock('../links/fetchLinks');
-
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -11,6 +8,8 @@ import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import { UserState } from '../State';
 import FetchProvider from './FetchProvider';
+
+jest.mock('../links/fetchLinks');
 
 const mockStore = configureStore<UserState>();
 const mountFetchProvider = (store: Store) =>

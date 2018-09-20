@@ -2,9 +2,9 @@ import { Icon } from 'antd';
 import Card from 'antd/lib/card';
 import Skeleton from 'antd/lib/skeleton';
 import { BoclipsPlayer } from 'boclips-react-player';
-import moment = require('moment');
-import 'moment-duration-format';
 import React from 'react';
+import DateFormatter from '../components/DateFormatter';
+import DurationFormatter from '../components/DurationFormatter';
 import { Video } from '../Video';
 
 interface Props {
@@ -31,13 +31,13 @@ export default class SearchResult extends React.PureComponent<Props> {
                 </h3>
                 <p data-qa="search-result-duration" className={'subtitle'}>
                   <Icon type="clock-circle" />{' '}
-                  {this.props.video.duration.format('h[h] m[m] s[s]')}
+                  <DurationFormatter duration={this.props.video.duration} />
                 </p>
               </section>
               <p className={'subtitle'}>
                 Released on{' '}
                 <span data-qa="search-result-released-on">
-                  {moment(this.props.video.releasedOn).format('MMM D, YYYY')}
+                  <DateFormatter date={this.props.video.releasedOn} />
                 </span>{' '}
                 by{' '}
                 <span data-qa="search-result-content-provider">
