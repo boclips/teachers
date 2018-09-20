@@ -59,11 +59,11 @@ export class SearchPage {
 
   public getVideoResults() {
     return findAll(this.wrapper, 'search-result').map(el => ({
-      title: findOne(el, 'search-result-title').text(),
-      description: findOne(el, 'search-result-description').text(),
-      contentProvider: findOne(el, 'search-result-content-provider').text(),
-      duration: findOne(el, 'search-result-duration').text(),
-      releasedOn: findOne(el, 'search-result-released-on').text(),
+      title: findOne(el, 'video-title').text(),
+      description: findOne(el, 'video-description').text(),
+      contentProvider: findOne(el, 'video-content-provider').text(),
+      duration: findOne(el, 'video-duration').text(),
+      releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: findOne(el, 'video-thumbnail').prop('src'),
     }));
   }
