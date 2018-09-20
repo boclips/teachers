@@ -11,12 +11,14 @@ export interface LinksState {
   links: Links;
 }
 
-export interface VideosStateValue {
+export interface SearchResults {
+  searchId: string;
+  query: string;
+  videos: Video[];
+}
+
+export interface SearchStateValue extends SearchResults {
   loading: boolean;
-  query: {
-    phrase: string;
-  };
-  items: Video[];
 }
 
 export interface VideoStateValue {
@@ -24,8 +26,8 @@ export interface VideoStateValue {
   item: Video;
 }
 
-export interface VideosState {
-  videos: VideosStateValue;
+export interface SearchState {
+  search: SearchStateValue;
 }
 
 export interface VideoDetailsState {
@@ -38,6 +40,6 @@ export interface RouterState {
 
 export default interface State
   extends LinksState,
-    VideosState,
+    SearchState,
     UserState,
     VideoDetailsState {}

@@ -12,14 +12,14 @@ import { userReducer } from './login/userReducer';
 import { BoclipsRouter, defaultHistory } from './router/BoclipsRouter';
 import State from './State';
 import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
+import { searchReducer } from './videos/searchReducer';
 import videoDetailsMiddleware from './videos/video-details/videoDetailsMiddleware';
 import { videoReducer } from './videos/videoReducer';
-import { videosReducer } from './videos/videosReducer';
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
 
 const rootReducer = combineReducers({
-  videos: videosReducer,
+  search: searchReducer,
   links: linksReducer,
   user: userReducer,
   video: videoReducer,

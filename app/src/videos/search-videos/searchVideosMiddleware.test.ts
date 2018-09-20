@@ -5,10 +5,10 @@ jest.mock('./searchVideos');
 import configureStore, { MockStore } from 'redux-mock-store';
 import eventually from '../../../test-support/eventually';
 import { LinksFactory, VideoFactory } from '../../../test-support/factories';
-import { LinksState } from '../../State';
+import { LinksState, SearchResults } from '../../State';
 import searchVideos from './searchVideos';
 import searchVideosMiddleware, {
-  storeVideosAction,
+  storeSearchResultsAction,
 } from './searchVideosMiddleware';
 import { searchVideosAction } from './SearchView';
 
@@ -26,21 +26,22 @@ beforeEach(() => {
 
 describe('on successful search', () => {
   test('dispatches a store action with received videos', async () => {
-    searchVideosMock.mockReturnValue(
-      Promise.resolve([
+    const searchResults: SearchResults = {
+      videos: [
         VideoFactory.sample({ title: 'video about cats' }),
         VideoFactory.sample({ title: 'video about dogs' }),
-      ]),
-    );
+      ],
+      query: 'animals',
+      searchId: 's123',
+    };
+
+    searchVideosMock.mockReturnValue(Promise.resolve(searchResults));
 
     store.dispatch(searchVideosAction('llama'));
 
     await eventually(() =>
       expect(store.getActions()).toContainEqual(
-        storeVideosAction([
-          VideoFactory.sample({ title: 'video about cats' }),
-          VideoFactory.sample({ title: 'video about dogs' }),
-        ]),
+        storeSearchResultsAction(searchResults),
       ),
     );
   });

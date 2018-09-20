@@ -7,11 +7,11 @@ import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { findAll, findOne, search } from '../../../test-support/enzymeHelpers';
 import { VideoFactory } from '../../../test-support/factories';
-import { VideosState } from '../../State';
+import { SearchState } from '../../State';
 import { Video } from '../Video';
 import SearchView, { searchVideosAction } from './SearchView';
 
-const mockStore = configureStore<VideosState>();
+const mockStore = configureStore<SearchState>();
 
 function mountWith(store: Store) {
   return mount(
@@ -23,7 +23,7 @@ function mountWith(store: Store) {
 
 test('dispatches an action with search query when search button clicked', () => {
   const store = mockStore({
-    videos: { items: [], loading: false, query: { phrase: '' } },
+    search: { videos: [], loading: false, query: '', searchId: 's123' },
   });
   const wrapper = mountWith(store);
 
@@ -36,7 +36,7 @@ test('dispatches an action with search query when search button clicked', () => 
 
 test('shows placeholders when results are loading', () => {
   const store = mockStore({
-    videos: { items: [], loading: true, query: { phrase: 'donuts' } },
+    search: { videos: [], loading: true, query: 'donuts', searchId: 's123' },
   });
   const wrapper = mountWith(store);
 
@@ -47,7 +47,7 @@ test('shows placeholders when results are loading', () => {
 
 test('shows a no results message when there are zero search results', () => {
   const store = mockStore({
-    videos: { items: [], loading: false, query: { phrase: 'donuts' } },
+    search: { videos: [], loading: false, query: 'donuts', searchId: 's123' },
   });
   const wrapper = mountWith(store);
 
@@ -58,7 +58,7 @@ test('shows a no results message when there are zero search results', () => {
 
 test('does not show a no results message when search query is empty', () => {
   const store = mockStore({
-    videos: { items: [], loading: false, query: { phrase: '' } },
+    search: { videos: [], loading: false, query: '', searchId: 's123' },
   });
   const wrapper = mountWith(store);
 
@@ -71,7 +71,12 @@ test('shows search results when there are any', () => {
   const video1: Video = VideoFactory.sample({ title: 'first video title' });
   const video2: Video = VideoFactory.sample({ title: 'second video title' });
   const store = mockStore({
-    videos: { items: [video1, video2], loading: false, query: { phrase: '' } },
+    search: {
+      videos: [video1, video2],
+      loading: false,
+      query: '',
+      searchId: 's123',
+    },
   });
 
   const results = findAll(mountWith(store), 'search-result');

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import boclipsLogo from '../../images/boclips-logo.png';
 import { actionCreatorFactory } from '../../redux/actions';
-import { VideosState } from '../../State';
+import { SearchResults, SearchState } from '../../State';
 import { Video } from '../Video';
 import SearchResult from './SearchResult';
 
@@ -20,8 +20,7 @@ interface DispatchProps {
 
 interface StateProps {
   loading: boolean;
-  videos: Video[];
-  query: string;
+  results: SearchResults;
 }
 
 export class SearchView extends PureComponent<DispatchProps & StateProps> {
@@ -62,17 +61,17 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
     if (this.props.loading) {
       return this.renderResultPlaceholders();
     }
-    if (this.props.videos.length > 0) {
+    if (this.props.results.videos.length > 0) {
       return this.renderVideos();
     }
-    if (this.props.query.length > 0) {
+    if (this.props.results.query.length > 0) {
       return this.renderZeroResultsMessage();
     }
     return null;
   }
 
   public renderVideos() {
-    return this.props.videos.map(this.renderVideo);
+    return this.props.results.videos.map(this.renderVideo);
   }
 
   public renderResultPlaceholders() {
@@ -91,7 +90,7 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
   public renderZeroResultsMessage() {
     return (
       <span data-qa="search-zero-results">
-        Your search for <em>{this.props.query}</em> returned no results
+        Your search for <em>{this.props.results.query}</em> returned no results
       </span>
     );
   }
@@ -105,11 +104,10 @@ export class SearchView extends PureComponent<DispatchProps & StateProps> {
   }
 }
 
-function mapStateToProps({ videos }: VideosState): StateProps {
+function mapStateToProps({ search }: SearchState): StateProps {
   return {
-    videos: videos.items,
-    loading: videos.loading,
-    query: videos.query.phrase,
+    loading: search.loading,
+    results: search,
   };
 }
 
