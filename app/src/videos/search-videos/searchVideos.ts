@@ -11,5 +11,5 @@ export default function searchVideos(
   return axios
     .get(links.videos.getLink({ query }))
     .then(response => response.data)
-    .then(body => body._embedded.videos.map(convertVideoResource));
+    .then(body => body.videos.map(convertVideoResource));
 }
