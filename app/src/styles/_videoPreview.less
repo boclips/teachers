@@ -1,0 +1,67 @@
+.video-content {
+
+  @video-width: 488px;
+  @video-height: 356px;
+
+  display: flex;
+  justify-content: left;
+  height: 100%;
+
+  .boclips-player {
+    width: @video-width;
+    height: @video-height;
+    border-radius: 3px;
+
+    video {
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      border-radius: 4px;
+    }
+
+    .boclips-player--preview {
+      height: 100%;
+      border-radius: 4px;
+    }
+  }
+
+  .video-details {
+    width: 100%;
+    margin-left: 16px;
+
+    .video-header {
+      display: flex;
+      justify-content: space-between;
+
+      .title {
+        color: #3D4564;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 25px;
+        margin-bottom: 0px;
+      }
+
+      .duration {
+        text-align: right;
+      }
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #848FBB;
+      font-weight: bold;
+      line-height: 24px;
+      margin-bottom: 0px;
+      min-width: 100px;
+    }
+
+    .description {
+      margin-top: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+}

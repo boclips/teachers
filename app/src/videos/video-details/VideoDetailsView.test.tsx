@@ -57,7 +57,7 @@ test('renders video details when the video has loaded', () => {
   expect(wrapper.find(By.dataQa('video-content-provider'))).toHaveText(
     'Bodevs Productions',
   );
-  expect(wrapper.find(By.dataQa('video-duration'))).toHaveText('2m 0s');
+  expect(wrapper.find(By.dataQa('video-duration'))).toHaveText(' 2m 0s');
   expect(wrapper.find(By.dataQa('video-released-on'))).toHaveText(
     'Jun 20, 2018',
   );

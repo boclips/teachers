@@ -1,9 +1,7 @@
 import { Skeleton } from 'antd';
-import { BoclipsPlayer } from 'boclips-react-player';
 import React from 'react';
-import DateFormatter from '../components/DateFormatter';
-import DurationFormatter from '../components/DurationFormatter';
 import { Video } from '../Video';
+import VideoPreview from "../components/VideoPreview";
 
 interface Props {
   video: Video | null;
@@ -16,16 +14,7 @@ function RenderVideoDetails({ video }: Props) {
 
   return (
     <section>
-      <span data-qa="video-title">{video.title}</span>
-      <span data-qa="video-description">{video.description}</span>
-      <span data-qa="video-content-provider">{video.contentProvider}</span>
-      <span data-qa="video-duration">
-        <DurationFormatter duration={video.duration} />
-      </span>
-      <span data-qa="video-released-on">
-        <DateFormatter date={video.releasedOn} />
-      </span>
-      <BoclipsPlayer thumbnail={video.thumbnailUrl} stream={video.streamUrl} />
+      <VideoPreview video={video} />
     </section>
   );
 }
