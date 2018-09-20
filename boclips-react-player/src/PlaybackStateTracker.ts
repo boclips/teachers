@@ -21,6 +21,7 @@ export default class PlaybackStateTracker {
       },
       onPause: (e: SyntheticEvent<HTMLVideoElement>) => {
         const playbackEvent = {
+          ...this.config.eventExtraData,
           captureTime: new Date(),
           playerIdentifier: uuid(),
           segmentStartSeconds: this.segmentPlaybackStartTime,
@@ -32,7 +33,7 @@ export default class PlaybackStateTracker {
         }
 
         if (this.config.trackingEndpoint) {
-          axios.post(this.config.trackingEndpoint.toString(), playbackEvent);
+          axios.post(this.config.trackingEndpoint, playbackEvent);
         }
       },
     };
