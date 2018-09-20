@@ -83,7 +83,5 @@ test('shows search results when there are any', () => {
   expect(results).toHaveLength(2);
 
   const firstVideo = results.at(0);
-  expect(findOne(firstVideo, 'video-title')).toHaveText(
-    'first video title',
-  );
+  expect(findOne(firstVideo, 'video-title')).toHaveText('first video title');
 });

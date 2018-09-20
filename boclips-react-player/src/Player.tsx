@@ -1,8 +1,8 @@
 import React from 'react';
 import { Playback } from './Playback';
+import SegmentWatchedEvent from './SegmentWatchedEvent';
 import './styles/BoclipsPlayer.less';
-import TrackerConfig from "./TrackerConfig";
-import SegmentWatchedEvent from "./SegmentWatchedEvent";
+import TrackerConfig from './TrackerConfig';
 
 interface Props {
   thumbnail?: string;
@@ -42,7 +42,7 @@ export class Player extends React.Component<Props, State> {
     } else {
       playerContent = this.renderPreview();
     }
-    return <section className="boclips-player">{playerContent}</section>
+    return <section className="boclips-player">{playerContent}</section>;
   }
 
   private renderPreview() {

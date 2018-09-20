@@ -24,20 +24,6 @@ test('dispatches FETCH_VIDEO when mounted', () => {
   expect(store.getActions()).toContainEqual(fetchVideoAction('123'));
 });
 
-test('renders a placeholder when the video is loading', () => {
-  const store = mockStore({
-    video: { loading: true, item: null },
-  });
-
-  const wrapper = mount(
-    <Provider store={store}>
-      <VideoDetailsView videoId={'123'} />
-    </Provider>,
-  );
-
-  expect(wrapper.find(By.dataQa('video-placeholder'))).toExist();
-});
-
 test('renders video details when the video has loaded', () => {
   const store = mockStore({
     video: { loading: false, item: VideoFactory.sample() },

@@ -1,4 +1,4 @@
-import SegmentWatchedEvent from "./SegmentWatchedEvent";
+import SegmentWatchedEvent from './SegmentWatchedEvent';
 
 export default interface TrackerConfig {
   eventExtraData?: { [key: string]: string | number };

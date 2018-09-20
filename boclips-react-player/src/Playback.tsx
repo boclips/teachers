@@ -1,7 +1,7 @@
 import React from 'react';
 import shaka from 'shaka-player';
 import PlaybackStateTracker from './PlaybackStateTracker';
-import SegmentWatchedEvent from "./SegmentWatchedEvent";
+import SegmentWatchedEvent from './SegmentWatchedEvent';
 
 interface Props {
   stream: string;
