@@ -1,5 +1,6 @@
 import React from 'react';
 import { Playback } from './Playback';
+import './styles/BoclipsPlayer.less';
 
 interface Props {
   thumbnail?: string;
@@ -33,11 +34,13 @@ export class Player extends React.Component<Props, State> {
   }
 
   public render() {
+    let playerContent;
     if (this.state.isPlaying || !this.state.showPreview) {
-      return this.renderPlayback();
+      playerContent = this.renderPlayback();
+    } else {
+      playerContent = this.renderPreview();
     }
-
-    return this.renderPreview();
+    return <section className="boclips-player">{playerContent}</section>
   }
 
   private renderPreview() {
