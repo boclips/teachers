@@ -1,13 +1,13 @@
-import Layout from 'antd/lib/layout/layout';
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { actionCreatorFactory } from '../../redux/actions';
-import { VideoDetailsState } from '../../State';
-import { Video } from '../Video';
-import VideoDetails from './VideoDetails';
+import Layout from "antd/lib/layout/layout";
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { actionCreatorFactory } from "../../redux/actions";
+import { VideoDetailsState } from "../../State";
+import { Video } from "../Video";
+import VideoDetails from "./VideoDetails";
 
-export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
+export const fetchVideoAction = actionCreatorFactory<string>("FETCH_VIDEO");
 
 interface OwnProps {
   videoId: string;
@@ -21,9 +21,7 @@ interface DispatchProps {
   fetchVideo: () => void;
 }
 
-export class VideoDetailsView extends PureComponent<
-  StateProps & DispatchProps
-> {
+export class VideoDetailsView extends PureComponent<StateProps & DispatchProps> {
   public render() {
     return (
       <Layout>
@@ -39,18 +37,7 @@ export class VideoDetailsView extends PureComponent<
   }
 
   public renderVideoOrPlaceholder() {
-    if (this.props.video) {
-      return this.renderDetails();
-    }
-    return this.renderPlaceholder();
-  }
-
-  public renderPlaceholder() {
-    return (
-      <section data-qa="video-placeholder">
-        <VideoDetails video={null} />
-      </section>
-    );
+    return this.renderDetails();
   }
 
   public renderDetails() {
@@ -63,19 +50,21 @@ export class VideoDetailsView extends PureComponent<
 }
 
 function mapStateToProps(state: VideoDetailsState): StateProps {
-  return { video: state.video.item };
+  return {
+    video: state.video.item,
+  };
 }
 
 function mapDispatchToProps(
   dispatch: Dispatch,
-  props: OwnProps,
+  props: OwnProps
 ): DispatchProps {
   return {
-    fetchVideo: () => dispatch(fetchVideoAction(props.videoId)),
+    fetchVideo: () => dispatch(fetchVideoAction(props.videoId))
   };
 }
 
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(VideoDetailsView);
