@@ -16,7 +16,13 @@ export default class SearchResult extends React.PureComponent<Props> {
   public render() {
     return (
       <Card className="search-result" bordered={false}>
-        <Skeleton loading={this.props.loading} paragraph={false} avatar={true}>
+        <Skeleton
+          loading={this.props.loading}
+          active={true}
+          title={{width: '300px'}}
+          paragraph={{rows: 5}}
+          avatar={{shape: 'square', size: 'large'}}
+        >
           {this.props.video ? (
             <section className="search-result-content">
               <section className={'search-result-thumbnail'}>
