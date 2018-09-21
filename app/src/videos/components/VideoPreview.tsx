@@ -49,7 +49,7 @@ export default class VideoPreview extends React.PureComponent<Props> {
             text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
             onCopy={this.showCopiedNotification}
           >
-            <Button>Copy link</Button>
+            <Button className={'copy-link-button'}>Copy link</Button>
           </CopyToClipboard>
         </section>
       </section>
