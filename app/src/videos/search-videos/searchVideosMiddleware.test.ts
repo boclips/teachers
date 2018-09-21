@@ -6,11 +6,11 @@ import configureStore, { MockStore } from 'redux-mock-store';
 import eventually from '../../../test-support/eventually';
 import { LinksFactory, VideoFactory } from '../../../test-support/factories';
 import { LinksState, SearchResults } from '../../State';
+import { searchVideosAction } from '../SearchLayout';
 import searchVideos from './searchVideos';
 import searchVideosMiddleware, {
   storeSearchResultsAction,
 } from './searchVideosMiddleware';
-import { searchVideosAction } from './SearchView';
 
 const searchVideosMock = searchVideos as Mock;
 

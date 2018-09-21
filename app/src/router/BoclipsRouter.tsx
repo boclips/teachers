@@ -5,7 +5,7 @@ import React, { Component, SFC } from 'react';
 import { Route, Switch } from 'react-router';
 import LoginView from '../login/LoginView';
 import PrivateRoute from '../login/PrivateRoute';
-import SearchView from '../videos/search-videos/SearchView';
+import SearchLayout from '../videos/SearchLayout';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
 
 export const defaultHistory = createBrowserHistory();
@@ -29,7 +29,7 @@ export class BoclipsRouter extends Component<{ history: History }> {
             path="/videos/:videoId"
             component={withPathParams(this.renderVideoDetailsView)}
           />
-          <PrivateRoute path="/" component={SearchView} />
+          <PrivateRoute path="/" component={SearchLayout} />
         </Switch>
       </ConnectedRouter>
     );

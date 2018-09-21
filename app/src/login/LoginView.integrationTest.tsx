@@ -6,7 +6,7 @@ import eventually from '../../test-support/eventually';
 import MockFetchVerify from '../../test-support/MockFetchVerify';
 import App from '../App';
 import { links } from '../video-service-responses';
-import { SearchPage } from '../videos/search-videos/SearchView.integrationTest';
+import { SearchPage } from '../videos/SearchLayout.integrationTest';
 
 test('after successful login redirects to video search', async () => {
   MockFetchVerify.get('/v1/user', undefined, 200);

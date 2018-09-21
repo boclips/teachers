@@ -1,8 +1,8 @@
 import { MiddlewareAPI } from 'redux';
 import { actionCreatorFactory, sideEffect } from '../../redux/actions';
 import { LinksState, SearchResults, UserState } from '../../State';
+import { searchVideosAction } from '../SearchLayout';
 import searchVideos from './searchVideos';
-import { searchVideosAction } from './SearchView';
 
 export const storeSearchResultsAction = actionCreatorFactory<SearchResults>(
   'STORE_VIDEOS',
