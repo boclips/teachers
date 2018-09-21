@@ -48,7 +48,6 @@ function mapDispatchToProps(
   dispatch: Dispatch,
   props: RouteComponentProps<{}>,
 ): DispatchProps {
-  console.log(props);
   return {
     /* tslint:disable:no-string-literal */
     fetchVideo: () => dispatch(fetchVideoAction(props.match.params['videoId'])),
