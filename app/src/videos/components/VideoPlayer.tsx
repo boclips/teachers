@@ -21,7 +21,7 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
       onSegmentWatched: event => axios.post(trackingEndpoint, event),
       eventExtraData: {
         searchId,
-        videoIdentifier: video.id,
+        videoId: video.id,
       },
     };
     return (

@@ -20,5 +20,5 @@ test('configures event tracker', () => {
   const trackerConfig = boclipsPlayer.prop('trackerConfig');
 
   expect(trackerConfig.eventExtraData.searchId).toEqual('search-id');
-  expect(trackerConfig.eventExtraData.videoIdentifier).toEqual('video-id');
+  expect(trackerConfig.eventExtraData.videoId).toEqual('video-id');
 });
