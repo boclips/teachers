@@ -49,8 +49,12 @@ class LoginComponent extends React.PureComponent<StateProps & DispatchProps> {
           >
             <hr />
             <p className="login-details">
-              If you’d like to try our video search but don’t have login details
-              contact us
+              If you’d like to try our video search but don’t have login
+              details&nbsp;
+              <a href="mailto:contact@boclips.com?subject=I would like to join the Boclips teacher pilot">
+                contact us
+              </a>
+              .
             </p>
           </Col>
         </Row>
