@@ -8,53 +8,56 @@ const distPath = path.resolve(__dirname, '../dist');
 const staticPath = path.resolve(__dirname, '../static');
 
 module.exports = {
-    entry: path.resolve(srcPath, 'index.tsx'),
-    output: {
-        path: distPath,
-        filename: '[name].[chunkhash:8].js',
-        publicPath: '/'
-    },
-    // Allows ts(x) and js files to be imported without extension
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js']
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(ts|tsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'ts-loader',
-                    options: {
-                        transpileOnly: true
-                    }
-                }
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    {
-                        loader: "less-loader",
-                        options: {
-                            javascriptEnabled: true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    'image-webpack-loader'
-                ],
+  entry: path.resolve(srcPath, 'index.tsx'),
+  output: {
+    path: distPath,
+    filename: '[name].[chunkhash:8].js',
+    publicPath: '/'
+  },
+  // Allows ts(x) and js files to be imported without extension
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true
+          }
+        }
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: "less-loader",
+            options: {
+              javascriptEnabled: true
             }
+          }
         ]
-    },
-    plugins: [
-        new MiniCssExtractPlugin({filename: '[name]-[contenthash:8].css'}),
-        new HtmlWebpackPlugin({template: path.resolve(srcPath, 'index.html')}),
-        new CopyWebpackPlugin([{from: staticPath, to: distPath}]),
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          'image-webpack-loader'
+        ],
+      }
     ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({filename: '[name]-[contenthash:8].css'}),
+    new HtmlWebpackPlugin({
+      template: path.resolve(srcPath, 'index.html'),
+      ga: 'replaced-by-profile'
+    }),
+    new CopyWebpackPlugin([{from: staticPath, to: distPath}]),
+  ]
 };
