@@ -6,6 +6,7 @@ import { Video } from '../src/videos/Video';
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
     return Object.freeze({
+      id: arg.id || '123',
       title: arg.title || 'my video title',
       description: arg.description || 'my video description',
       contentProvider: arg.contentProvider || 'Bodevs Productions',
