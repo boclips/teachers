@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { BoclipsPlayer, TrackerConfig } from 'boclips-react-player';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -17,7 +18,7 @@ class VideoPlayer extends React.PureComponent<OwnProps & Props> {
   public render() {
     const { video, searchId, trackingEndpoint } = this.props;
     const trackerConfig: TrackerConfig = {
-      trackingEndpoint,
+      onSegmentWatched: event => axios.post(trackingEndpoint, event),
       eventExtraData: {
         searchId,
       },
