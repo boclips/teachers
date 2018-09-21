@@ -5,6 +5,7 @@ import convertVideoResource from './convertVideoResource';
 test('converts a video', () => {
   const video = convertVideoResource(video177);
 
+  expect(video.id).toEqual('177');
   expect(video.title).toEqual('KS3/4 Science: Demonstrating Chemistry');
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));

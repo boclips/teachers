@@ -3,6 +3,7 @@ import { Video } from './Video';
 
 export default function convertVideoResource(resource: any): Video {
   return {
+    id: resource.id,
     title: resource.title,
     description: resource.description,
     duration: moment.duration(resource.duration),

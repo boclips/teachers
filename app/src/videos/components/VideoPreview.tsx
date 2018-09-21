@@ -1,5 +1,7 @@
-import { Icon } from 'antd';
+import { Button, Icon, notification } from 'antd';
 import React from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import AppConfig from '../../AppConfig';
 import { Video } from '../Video';
 import DateFormatter from './DateFormatter';
 import DurationFormatter from './DurationFormatter';
@@ -43,8 +45,22 @@ export default class VideoPreview extends React.PureComponent<Props> {
           <p data-qa="video-description" className="description">
             {this.props.video.description}
           </p>
+          <CopyToClipboard
+            text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
+            onCopy={this.showCopiedNotification}
+          >
+            <Button>Copy link</Button>
+          </CopyToClipboard>
         </section>
       </section>
     );
+  }
+
+  private showCopiedNotification(url: string) {
+    notification.success({
+      message: `${url}`,
+      description: `has been copied to your clipboard. Paste link to your tool of choice.`,
+      placement: 'bottomRight',
+    });
   }
 }
