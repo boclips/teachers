@@ -63,6 +63,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "prettier": "^1.14.2",
     "react": "^16.4.2",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
