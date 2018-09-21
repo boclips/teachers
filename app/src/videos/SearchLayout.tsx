@@ -2,12 +2,13 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Search from 'antd/lib/input/Search';
 import Layout from 'antd/lib/layout/layout';
+import { push } from 'connected-react-router';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
-import SearchResultsView from './search-videos/SearchResultsView';
+import SearchLayoutRouter from '../router/SearchLayoutRouter';
 
 const { Header, Content } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
@@ -41,7 +42,7 @@ export class SearchLayout extends PureComponent<DispatchProps> {
           <Content>
             <Row>
               <Col span={24}>
-                <SearchResultsView />
+                <SearchLayoutRouter />
               </Col>
             </Row>
           </Content>
@@ -52,7 +53,12 @@ export class SearchLayout extends PureComponent<DispatchProps> {
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  return { onSearch: query => dispatch(searchVideosAction(query)) };
+  return {
+    onSearch: query => {
+      dispatch(searchVideosAction(query));
+      dispatch(push('/videos'));
+    },
+  };
 }
 
 export default connect<{}, DispatchProps, {}>(

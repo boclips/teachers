@@ -2,23 +2,32 @@ import React from 'react';
 
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { LinksFactory, VideoFactory } from '../../../test-support/factories';
-import { LinksState, VideoDetailsState } from '../../State';
+import SearchLayoutRouter from '../../router/SearchLayoutRouter';
+import { LinksState, UserState, VideoDetailsState } from '../../State';
 import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
 
-const mockStore = configureStore<VideoDetailsState & LinksState>();
+const mockStore = configureStore<VideoDetailsState & LinksState & UserState>();
 
 test('dispatches FETCH_VIDEO when mounted', () => {
   const store = mockStore({
     video: { loading: false, item: null },
     links: LinksFactory.sample(),
+    user: {
+      username: 'John',
+      password: 'j0hn',
+      valid: true,
+    },
   });
 
   mount(
     <Provider store={store}>
-      <VideoDetailsView videoId={'123'} />
+      <MemoryRouter initialEntries={['/videos/123']}>
+        <SearchLayoutRouter />
+      </MemoryRouter>
     </Provider>,
   );
 
@@ -29,11 +38,14 @@ test('renders video details when the video has loaded', () => {
   const store = mockStore({
     video: { loading: false, item: VideoFactory.sample() },
     links: LinksFactory.sample(),
+    user: null,
   });
 
   const wrapper = mount(
     <Provider store={store}>
-      <VideoDetailsView videoId={'123'} />
+      <MemoryRouter initialEntries={['/videos/123']}>
+        <VideoDetailsView />
+      </MemoryRouter>
     </Provider>,
   );
 

@@ -6,7 +6,7 @@ const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
 
 const googleAnalyticsId = "does-not-matter";
-const stagingUrl = "https://video-service.staging-boclips.com/";
+const stagingUrl = "https://video-service.staging-boclips.com";
 const srcPath = path.resolve(__dirname, "../src");
 
 module.exports = merge(common, {
@@ -14,6 +14,7 @@ module.exports = merge(common, {
   devtool: "eval-source-map",
   devServer: {
     historyApiFallback: true,
+    port: 8081,
     proxy: {
       "/v1/**": {
         target: stagingUrl,

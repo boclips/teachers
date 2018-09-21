@@ -9,6 +9,10 @@ export class Link {
     let link = this.link.href;
     if (process.env.NODE_ENV === 'development') {
       link = link.replace('localhost:8080', 'localhost:8081');
+      link = link.replace(
+        'https://video-service.staging-boclips.com',
+        'http://localhost:8081',
+      );
     }
     if (this.link.templated) {
       if (params && this.containsAllTemplatedParams(params)) {

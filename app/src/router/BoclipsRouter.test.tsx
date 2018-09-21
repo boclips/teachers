@@ -10,19 +10,50 @@ import configureStore from 'redux-mock-store';
 import { UserCredentials } from '../login/UserCredentials';
 import {
   RouterState,
+  SearchState,
+  SearchStateValue,
   UserState,
   VideoDetailsState,
   VideoStateValue,
 } from '../State';
+import { SearchLayout } from '../videos/SearchLayout';
 import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
 import { BoclipsRouter } from './BoclipsRouter';
 
-const mockStore = configureStore<UserState & RouterState & VideoDetailsState>();
+const mockStore = configureStore<
+  UserState & RouterState & VideoDetailsState & SearchState
+>();
 
 test('shows video details view on /videos/{id}', () => {
+  const history = createMemoryHistory();
+
+  const wrapper = mount(
+    <Provider store={buildStoreWithPath('/videos/123')}>
+      <BoclipsRouter history={history} />
+    </Provider>,
+  );
+
+  const videoDetailsView = wrapper.find(VideoDetailsView);
+  expect(videoDetailsView).toExist();
+});
+
+test('shows video search view on /videos', () => {
+  const history = createMemoryHistory();
+
+  const wrapper = mount(
+    <Provider store={buildStoreWithPath('/videos')}>
+      <BoclipsRouter history={history} />
+    </Provider>,
+  );
+
+  const videoDetailsView = wrapper.find(SearchLayout);
+  expect(videoDetailsView).toExist();
+});
+
+function buildStoreWithPath(path: string) {
   const router: ReactRouterState = {
     location: {
-      pathname: '/videos/123',
+      pathname: path,
       search: '',
       state: {},
       hash: '',
@@ -41,21 +72,18 @@ test('shows video details view on /videos/{id}', () => {
     item: null,
   };
 
+  const search: SearchStateValue = {
+    loading: false,
+    query: '',
+    searchId: '',
+    videos: [],
+  };
+
   const store = mockStore({
     router,
     user,
     video,
+    search,
   });
-
-  const history = createMemoryHistory();
-
-  const wrapper = mount(
-    <Provider store={store}>
-      <BoclipsRouter history={history} />
-    </Provider>,
-  );
-
-  const videoDetailsView = wrapper.find(VideoDetailsView);
-  expect(videoDetailsView).toExist();
-  expect(videoDetailsView).toHaveProp('videoId', '123');
-});
+  return store;
+}
