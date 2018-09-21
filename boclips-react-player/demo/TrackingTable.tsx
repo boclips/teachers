@@ -13,8 +13,8 @@ export class TrackingTable extends React.PureComponent<Props> {
           <tbody>
             <tr>
               <td>Player identifier</td>
-              <td data-qa="player-identifier">{`${
-                this.props.lastEvent.playerIdentifier
+              <td data-qa="player-id">{`${
+                this.props.lastEvent.playerId
               }`}</td>
             </tr>
             <tr>

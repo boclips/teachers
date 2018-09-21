@@ -1,5 +1,5 @@
 export default interface SegmentWatchedEvent {
-  playerIdentifier: string;
+  playerId: string;
   segmentStartSeconds: number;
   segmentEndSeconds: number;
   videoDurationSeconds: number;

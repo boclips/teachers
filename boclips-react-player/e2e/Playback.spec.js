@@ -10,7 +10,7 @@ describe('Playback', function() {
 
     cy.get('#video-1 [data-qa="segment-start"]').then(segmentStart => segmentStart.text()).should('equal', '0');
     cy.get('#video-1 [data-qa="segment-end"]').then(segmentEnd => segmentEnd.text()).should('be.above', 0);
-    cy.get('#video-1 [data-qa="player-identifier"]').then(node => node.text()).should('not.be.empty');
+    cy.get('#video-1 [data-qa="player-id"]').then(node => node.text()).should('not.be.empty');
     cy.get('#video-1 [data-qa="capture-time"]').then(node => node.text()).should('not.be.empty');
   });
 });

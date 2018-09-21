@@ -10,9 +10,11 @@ interface VideoElementProps {
 
 export default class PlaybackStateTracker {
   private segmentPlaybackStartTime: number;
+  private playerId: string;
 
   constructor(private config: TrackerConfig) {
     this.segmentPlaybackStartTime = -1;
+      this.playerId = uuid();
   }
 
   get events(): VideoElementProps {
@@ -24,7 +26,7 @@ export default class PlaybackStateTracker {
         const playbackEvent = {
           ...this.config.eventExtraData,
           captureTime: new Date(),
-          playerIdentifier: uuid(),
+          playerId: this.playerId,
           segmentStartSeconds: this.segmentPlaybackStartTime,
           segmentEndSeconds: e.currentTarget.currentTime,
           videoDurationSeconds: e.currentTarget.duration,

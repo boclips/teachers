@@ -12,7 +12,7 @@ describe('when no tracking url', () => {
 
     expect(onSegmentWatched).toHaveBeenCalled();
     const event = onSegmentWatched.mock.calls[0][0];
-    expect(event.playerIdentifier).not.toHaveLength(0);
+    expect(event.playerId).not.toHaveLength(0);
     expect(event.captureTime).toBeInstanceOf(Date);
     expect(event.segmentStartSeconds).toBe(2);
     expect(event.segmentEndSeconds).toBe(10);
@@ -43,7 +43,7 @@ describe('when tracking url', () => {
     const requestUrl = axiosPost.mock.calls[0][0];
     const requestBody = axiosPost.mock.calls[0][1];
     expect(requestUrl).toEqual(trackingEndpoint);
-    expect(requestBody.playerIdentifier).not.toHaveLength(0);
+    expect(requestBody.playerId).not.toHaveLength(0);
     expect(requestBody.captureTime).toBeInstanceOf(Date);
     expect(requestBody.segmentStartSeconds).toBe(2);
     expect(requestBody.segmentEndSeconds).toBe(10);
