@@ -22,7 +22,7 @@ export default class VideoPreview extends React.PureComponent<Props> {
             searchId={this.props.searchId}
           />
         </section>
-        <section className="video-details">
+        <section className="video-content--video-details">
           <section className={'video-header'}>
             <h3 className="title" data-qa="video-title">
               {this.props.video.title}

@@ -34,8 +34,8 @@ class LoginComponent extends React.PureComponent<StateProps & DispatchProps> {
         <Row>
           <Col
             className="centered"
-            xs={{ offset: 1, span: 20 }}
-            md={{ offset: 8, span: 8 }}
+            xs={{ span: 24 }}
+            md={{ offset: 6, span: 12 }}
             xl={{ offset: 9, span: 6 }}
           >
             <img className="login-logo" src={boclipsLogo} />
@@ -43,8 +43,8 @@ class LoginComponent extends React.PureComponent<StateProps & DispatchProps> {
         </Row>
         <Row>
           <Col
-            xs={{ offset: 1, span: 20 }}
-            md={{ offset: 8, span: 8 }}
+            xs={{ span: 24 }}
+            md={{ offset: 6, span: 12 }}
             xl={{ offset: 9, span: 6 }}
           >
             <hr />
@@ -60,8 +60,8 @@ class LoginComponent extends React.PureComponent<StateProps & DispatchProps> {
         </Row>
         <Row>
           <Col
-            xs={{ offset: 1, span: 20 }}
-            md={{ offset: 8, span: 8 }}
+            xs={{ span: 24 }}
+            md={{ offset: 6, span: 12 }}
             xl={{ offset: 9, span: 6 }}
           >
             <LoginForm

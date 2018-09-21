@@ -25,7 +25,7 @@ export class VideoDetailsView extends PureComponent<
     return (
       <Layout>
         <section data-qa="video-details-page">
-          <section data-qa="video-details">
+          <section className="video-details-page" data-qa="video-details">
             <VideoDetails video={this.props.video} />
           </section>
         </section>

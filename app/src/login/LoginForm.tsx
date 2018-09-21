@@ -45,9 +45,9 @@ class LoginForm extends React.Component<FormComponentProps & LoginProps> {
     const passwordError =
       isFieldTouched('password') && getFieldError('password');
     return (
-      <Form data-qa="login-form" layout="inline" onSubmit={this.handleSubmit}>
-        <Row>
-          <Col className="centered" xs={{ span: 12 }}>
+      <Form data-qa="login-form" layout="horizontal" onSubmit={this.handleSubmit}>
+        <Row gutter={{ md: 16 }}>
+          <Col className="centered expand" md={{ span: 12 }} xs={{ span: 24 }}>
             <FormItem
               validateStatus={usernameError ? 'error' : null}
               help={usernameError || ''}
@@ -67,7 +67,7 @@ class LoginForm extends React.Component<FormComponentProps & LoginProps> {
               )}
             </FormItem>
           </Col>
-          <Col className="centered" xs={{ span: 12 }}>
+          <Col className="centered expand" md={{ span: 12 }} xs={{ span: 24 }}>
             <FormItem
               validateStatus={passwordError ? 'error' : null}
               help={passwordError || ''}
@@ -90,7 +90,7 @@ class LoginForm extends React.Component<FormComponentProps & LoginProps> {
           </Col>
         </Row>
         <Row>
-          <Col className="centered button-container" xs={{ span: 24 }}>
+          <Col className="centered expand button-container" xs={{ span: 24 }}>
             <FormItem>
               <Button
                 className="login-button"
