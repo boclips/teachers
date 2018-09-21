@@ -1,6 +1,5 @@
 import React from 'react';
 import { Playback } from './Playback';
-import SegmentWatchedEvent from './SegmentWatchedEvent';
 import './styles/BoclipsPlayer.less';
 import TrackerConfig from './TrackerConfig';
 
@@ -18,12 +17,6 @@ interface State {
 export class Player extends React.Component<Props, State> {
   private onThumbnailClick = () => {
     this.setState({ isPlaying: true });
-  };
-
-  private trackEvents = (event: SegmentWatchedEvent) => {
-    if (this.props.trackerConfig && this.props.trackerConfig.onSegmentWatched) {
-      this.props.trackerConfig.onSegmentWatched(event);
-    }
   };
 
   public constructor(props: Props) {
@@ -60,7 +53,7 @@ export class Player extends React.Component<Props, State> {
     return (
       <Playback
         stream={this.props.stream}
-        events={this.trackEvents}
+        trackerConfig={this.props.trackerConfig}
         autoPlay={this.state.isPlaying}
       />
     );

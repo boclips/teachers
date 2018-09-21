@@ -15,8 +15,9 @@ interface Props {
 
 class VideoPlayer extends React.PureComponent<OwnProps & Props> {
   public render() {
-    const { video, searchId } = this.props;
+    const { video, searchId, trackingEndpoint } = this.props;
     const trackerConfig: TrackerConfig = {
+      trackingEndpoint,
       eventExtraData: {
         searchId,
       },

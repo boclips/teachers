@@ -1,23 +1,22 @@
 import React from 'react';
 import shaka from 'shaka-player';
 import PlaybackStateTracker from './PlaybackStateTracker';
-import SegmentWatchedEvent from './SegmentWatchedEvent';
+import TrackerConfig from './TrackerConfig';
 
 interface Props {
   stream: string;
   autoPlay?: boolean;
-  events?: (event: SegmentWatchedEvent) => void;
+  trackerConfig: TrackerConfig;
 }
 
 export class Playback extends React.Component<Props> {
   private readonly videoRef: React.RefObject<any> = null;
-  private readonly tracker: PlaybackStateTracker = new PlaybackStateTracker({
-    onSegmentWatched: this.props.events,
-  });
+  private readonly tracker: PlaybackStateTracker = null;
 
   constructor(props: Props) {
     super(props);
     this.videoRef = React.createRef();
+    this.tracker = new PlaybackStateTracker(props.trackerConfig);
   }
 
   public render() {
