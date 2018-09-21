@@ -11,7 +11,7 @@ const common = require('./webpack.common.js');
 const distPath = path.resolve(__dirname, '../dist');
 const srcPath = path.resolve(__dirname, '../src');
 
-const googleAnalyticsId = 'UA-126218810-1';
+const googleAnalyticsId = 'UA-126218810-2';
 const oneMegaByte = 1024 * 1024;
 
 module.exports = merge(common, {
