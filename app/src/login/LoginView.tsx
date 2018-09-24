@@ -9,6 +9,7 @@ import boclipsLogo from '../images/boclips-logo.png';
 import { Link } from '../links/Link';
 import { actionCreatorFactory } from '../redux/actions';
 import { LinksState, RouterState, UserState } from '../State';
+import getPreviousPath from './getPreviousPath';
 import LoginForm from './LoginForm';
 import { UserCredentials } from './UserCredentials';
 
@@ -105,7 +106,7 @@ function mapStateToProps(
   state: UserState & LinksState & RouterState,
 ): StateProps {
   return {
-    redirectPath: state.router.location.state.from.pathname,
+    redirectPath: getPreviousPath(state.router.location.state),
     invalidCredentials: state.user && !state.user.valid,
     userLink: state.links.user,
   };
