@@ -4,14 +4,16 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import LoginView from '../login/LoginView';
-import PrivateRoute from '../login/PrivateRoute';
+import PrivateRoute, { RouterComponentProps } from '../login/PrivateRoute';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import SearchLayout from '../videos/SearchLayout';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
 
 export const defaultHistory = createBrowserHistory();
 
-function renderVideoDetailsView({ computedMatch }: any) {
+function renderVideoDetailsView({
+  computedMatch,
+}: RouterComponentProps<{ videoId: string }>) {
   return <VideoDetailsView videoId={computedMatch.params.videoId} />;
 }
 

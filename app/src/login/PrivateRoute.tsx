@@ -1,4 +1,4 @@
-import React, { ComponentClass, SFC } from 'react';
+import React, { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import {
   Redirect,
@@ -10,9 +10,16 @@ import {
 import { UserState } from '../State';
 import { UserCredentials } from './UserCredentials';
 
+export interface RouterComponentProps<TParams>
+  extends RouteComponentProps<any> {
+  computedMatch: {
+    params: TParams;
+  };
+}
+
 interface Props {
   user: UserCredentials;
-  component: ComponentClass | SFC;
+  component: ComponentType<RouterComponentProps<any>> | ComponentType<any>;
 }
 
 class PrivateRoute extends React.Component<
