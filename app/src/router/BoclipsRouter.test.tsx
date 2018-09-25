@@ -16,7 +16,7 @@ import {
   VideoDetailsState,
   VideoStateValue,
 } from '../State';
-import { SearchLayout } from '../videos/SearchLayout';
+import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
 import { BoclipsRouter } from './BoclipsRouter';
 
@@ -28,33 +28,34 @@ test('shows video details view on /videos/{id}', () => {
   const history = createMemoryHistory();
 
   const wrapper = mount(
-    <Provider store={buildStoreWithPath('/videos/123')}>
+    <Provider store={buildStoreWithPathAndQuery('/videos/123')}>
       <BoclipsRouter history={history} />
     </Provider>,
   );
 
   const videoDetailsView = wrapper.find(VideoDetailsView);
   expect(videoDetailsView).toExist();
+  expect(videoDetailsView).toHaveProp('videoId', '123');
 });
 
-test('shows video search view on /videos', () => {
+test('shows search results view on /videos', () => {
   const history = createMemoryHistory();
 
   const wrapper = mount(
-    <Provider store={buildStoreWithPath('/videos')}>
+    <Provider store={buildStoreWithPathAndQuery('/videos', 'q=earthquakes')}>
       <BoclipsRouter history={history} />
     </Provider>,
   );
 
-  const videoDetailsView = wrapper.find(SearchLayout);
+  const videoDetailsView = wrapper.find(SearchResultsView);
   expect(videoDetailsView).toExist();
 });
 
-function buildStoreWithPath(path: string) {
+function buildStoreWithPathAndQuery(path: string, query: string = '') {
   const router: ReactRouterState = {
     location: {
       pathname: path,
-      search: '',
+      search: query,
       state: {},
       hash: '',
     },

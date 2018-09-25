@@ -1,12 +1,9 @@
-import React from 'react';
-
 import { mount } from 'enzyme';
+import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { LinksFactory, VideoFactory } from '../../../test-support/factories';
-import SearchLayoutRouter from '../../router/SearchLayoutRouter';
 import { LinksState, UserState, VideoDetailsState } from '../../State';
 import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
 
@@ -25,9 +22,7 @@ test('dispatches FETCH_VIDEO when mounted', () => {
 
   mount(
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/videos/123']}>
-        <SearchLayoutRouter />
-      </MemoryRouter>
+      <VideoDetailsView videoId="123" />
     </Provider>,
   );
 
@@ -43,9 +38,7 @@ test('renders video details when the video has loaded', () => {
 
   const wrapper = mount(
     <Provider store={store}>
-      <MemoryRouter initialEntries={['/videos/123']}>
-        <VideoDetailsView />
-      </MemoryRouter>
+      <VideoDetailsView videoId="123" />
     </Provider>,
   );
 

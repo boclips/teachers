@@ -1,23 +1,19 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
-import Search from 'antd/lib/input/Search';
 import Layout from 'antd/lib/layout/layout';
-import { push } from 'connected-react-router';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
-import SearchLayoutRouter from '../router/SearchLayoutRouter';
+import SearchBar from './search-videos/SearchBar';
 
 const { Header, Content, Footer } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
 
-interface DispatchProps {
-  onSearch: (query: string) => void;
+interface Props {
+  children: React.ReactNode;
 }
 
-export class SearchLayout extends PureComponent<DispatchProps> {
+export default class SearchLayout extends PureComponent<Props> {
   public render() {
     return (
       <Layout>
@@ -28,22 +24,13 @@ export class SearchLayout extends PureComponent<DispatchProps> {
                 <img className="logo" src={boclipsLogo} />
               </Col>
               <Col span={16}>
-                <Search
-                  placeholder="Enter your search term"
-                  type="text"
-                  data-qa="search-input"
-                  aria-label="search"
-                  onSearch={this.props.onSearch}
-                  enterButton="Search"
-                />
+                <SearchBar />
               </Col>
             </Row>
           </Header>
           <Content>
             <Row>
-              <Col span={24}>
-                <SearchLayoutRouter />
-              </Col>
+              <Col span={24}>{this.props.children}</Col>
             </Row>
           </Content>
           <Footer className="boclips-footer">
@@ -59,17 +46,3 @@ export class SearchLayout extends PureComponent<DispatchProps> {
     );
   }
 }
-
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  return {
-    onSearch: query => {
-      dispatch(searchVideosAction(query));
-      dispatch(push('/videos'));
-    },
-  };
-}
-
-export default connect<{}, DispatchProps, {}>(
-  null,
-  mapDispatchToProps,
-)(SearchLayout);

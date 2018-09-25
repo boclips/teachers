@@ -1,14 +1,17 @@
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { actionCreatorFactory } from '../../redux/actions';
-import { RouterState, VideoDetailsState } from '../../State';
+import { VideoDetailsState } from '../../State';
 import { Video } from '../Video';
 import VideoDetails from './VideoDetails';
 
 export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
+
+interface OwnProps {
+  videoId: string;
+}
 
 interface StateProps {
   video: Video;
@@ -19,7 +22,7 @@ interface DispatchProps {
 }
 
 export class VideoDetailsView extends PureComponent<
-  RouteComponentProps<{}> & StateProps & DispatchProps
+  StateProps & DispatchProps
 > {
   public render() {
     return (
@@ -38,7 +41,7 @@ export class VideoDetailsView extends PureComponent<
   }
 }
 
-function mapStateToProps(state: VideoDetailsState & RouterState): StateProps {
+function mapStateToProps(state: VideoDetailsState): StateProps {
   return {
     video: state.video.item,
   };
@@ -46,17 +49,14 @@ function mapStateToProps(state: VideoDetailsState & RouterState): StateProps {
 
 function mapDispatchToProps(
   dispatch: Dispatch,
-  props: RouteComponentProps<{}>,
+  ownProps: OwnProps,
 ): DispatchProps {
   return {
-    /* tslint:disable:no-string-literal */
-    fetchVideo: () => dispatch(fetchVideoAction(props.match.params['videoId'])),
+    fetchVideo: () => dispatch(fetchVideoAction(ownProps.videoId)),
   };
 }
 
-export default withRouter(
-  connect<StateProps, DispatchProps, {}>(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(VideoDetailsView),
-);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(VideoDetailsView);
