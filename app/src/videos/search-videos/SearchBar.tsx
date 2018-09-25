@@ -1,4 +1,3 @@
-import Search from 'antd/lib/input/Search';
 import { push } from 'connected-react-router';
 import queryString from 'query-string';
 import React from 'react';
@@ -6,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../State';
 import { searchVideosAction } from '../SearchLayout';
+import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {
   query?: string;
@@ -13,26 +13,18 @@ interface StateProps {
 
 interface DispatchProps {
   onSearch: (query: string) => void;
+  onQuerySubmitted: (query: string) => void;
 }
 
 export class SearchBar extends React.Component<StateProps & DispatchProps> {
   public render() {
     return (
-      <Search
-        placeholder="Enter your search term"
-        type="text"
-        data-qa="search-input"
-        aria-label="search"
+      <StatefulSearchBar
         onSearch={this.props.onSearch}
-        enterButton="Search"
+        onQuerySubmitted={this.props.onQuerySubmitted}
+        value={this.props.query}
       />
     );
-  }
-
-  public componentDidMount() {
-    if (this.props.query) {
-      this.props.onSearch(this.props.query);
-    }
   }
 }
 
@@ -46,6 +38,8 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onSearch: (query: string) => {
       dispatch(searchVideosAction(query));
+    },
+    onQuerySubmitted: (query: string) => {
       const queryParams = queryString.stringify({ q: query });
       dispatch(push(`/videos?${queryParams}`));
     },

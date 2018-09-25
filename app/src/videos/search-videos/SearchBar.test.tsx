@@ -1,18 +1,21 @@
-import Search from 'antd/lib/input/Search';
-import { RouterActionType } from 'connected-react-router';
-import { push } from 'connected-react-router';
-import { mount } from 'enzyme';
+import { push, RouterActionType } from 'connected-react-router';
+import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import configureStore, { MockStore } from 'redux-mock-store';
 import { RouterState } from '../../State';
 import { searchVideosAction } from '../SearchLayout';
 import SearchBar from './SearchBar';
+import StatefulSearchBar from './StatefulSearchBar';
 
 const mockStore = configureStore<RouterState>();
 
-test('Dispatches search action when mounted and query specified', () => {
-  const store = mockStore({
+let store: MockStore;
+
+let statefulSearchBar: ReactWrapper<any>;
+
+beforeEach(() => {
+  store = mockStore({
     router: {
       location: {
         pathname: '',
@@ -24,83 +27,27 @@ test('Dispatches search action when mounted and query specified', () => {
     },
   });
 
-  mount(
-    <Provider store={store}>
-      <SearchBar />
-    </Provider>,
-  );
-
-  expect(store.getActions()).toContainEqual(searchVideosAction('eggs'));
-});
-
-test('Does not dispatch when mounted and no query specified', () => {
-  const store = mockStore({
-    router: {
-      location: {
-        pathname: '',
-        search: '',
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
-  });
-
-  mount(
-    <Provider store={store}>
-      <SearchBar />
-    </Provider>,
-  );
-
-  expect(store.getActions()).toEqual([]);
-});
-
-test('Dispatches a search action when a query is submitted', () => {
-  const store = mockStore({
-    router: {
-      location: {
-        pathname: '',
-        search: '',
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
-  });
-
   const wrapper = mount(
     <Provider store={store}>
       <SearchBar />
     </Provider>,
   );
 
-  wrapper.find(Search).prop('onSearch')('japan');
-
-  expect(store.getActions()).toContainEqual(searchVideosAction('japan'));
+  statefulSearchBar = wrapper.find(StatefulSearchBar);
 });
 
-test('Dispatches a navigate action when a query is submitted', () => {
-  const store = mockStore({
-    router: {
-      location: {
-        pathname: '',
-        search: '',
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
-  });
+test('Extracts query string from the router state', () => {
+  expect(statefulSearchBar).toHaveProp('value', 'eggs');
+});
 
-  const wrapper = mount(
-    <Provider store={store}>
-      <SearchBar />
-    </Provider>,
-  );
+test('dispatches a search action when search callback invoked', () => {
+  statefulSearchBar.prop('onSearch')('dogs');
+  expect(store.getActions()).toContainEqual(searchVideosAction('dogs'));
+});
 
-  wrapper.find(Search).prop('onSearch')('meaning of life');
-
+test('dispatches a navigation action when query submitted callback invoked', () => {
+  statefulSearchBar.prop('onQuerySubmitted')('the meaning of life');
   expect(store.getActions()).toContainEqual(
-    push('/videos?q=meaning%20of%20life'),
+    push('/videos?q=the%20meaning%20of%20life'),
   );
 });
