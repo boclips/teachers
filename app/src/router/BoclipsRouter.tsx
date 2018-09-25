@@ -2,19 +2,17 @@ import { ConnectedRouter } from 'connected-react-router';
 import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, RouteComponentProps, Switch } from 'react-router';
 import LoginView from '../login/LoginView';
-import PrivateRoute, { RouterComponentProps } from '../login/PrivateRoute';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import SearchLayout from '../videos/SearchLayout';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
+import LoginRequired from './LoginRequired';
 
 export const defaultHistory = createBrowserHistory();
 
-function renderVideoDetailsView({
-  computedMatch,
-}: RouterComponentProps<{ videoId: string }>) {
-  return <VideoDetailsView videoId={computedMatch.params.videoId} />;
+function videoDetailsView(props: RouteComponentProps<{ videoId: string }>) {
+  return <VideoDetailsView videoId={props.match.params.videoId} />;
 }
 
 export class BoclipsRouter extends Component<{ history: History }> {
@@ -22,27 +20,17 @@ export class BoclipsRouter extends Component<{ history: History }> {
     return (
       <ConnectedRouter history={this.props.history || defaultHistory}>
         <Switch>
-          <Route exact={true} path="/login" component={LoginView} />
+          <Route path="/login" component={LoginView} />
           <Route path="/">
-            <SearchLayout>
-              <Switch>
-                <PrivateRoute
-                  exact={true}
-                  path="/videos"
-                  component={SearchResultsView}
-                />
-                <PrivateRoute
-                  exact={true}
-                  path="/videos/:videoId"
-                  component={renderVideoDetailsView}
-                />
-                <PrivateRoute
-                  exact={true}
-                  path="/"
-                  component={SearchResultsView}
-                />
-              </Switch>
-            </SearchLayout>
+            <LoginRequired>
+              <SearchLayout>
+                <Switch>
+                  <Route path="/videos/:videoId" component={videoDetailsView} />
+                  <Route path="/videos" component={SearchResultsView} />
+                  <Route path="/" component={SearchResultsView} />
+                </Switch>
+              </SearchLayout>
+            </LoginRequired>
           </Route>
         </Switch>
       </ConnectedRouter>

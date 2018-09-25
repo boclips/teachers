@@ -1,4 +1,5 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
+import { Location } from 'history';
 import { Links } from './links/Links';
 import { UserCredentials } from './login/UserCredentials';
 import { Video } from './videos/Video';
@@ -36,6 +37,10 @@ export interface VideoDetailsState {
 
 export interface RouterState {
   router: ReactRouterState;
+}
+
+export interface LocationState {
+  from?: Location;
 }
 
 export default interface State

@@ -1,10 +1,4 @@
-export interface LocationState {
-  from?: {
-    pathname: string;
-    search: string;
-    hash: string;
-  };
-}
+import { LocationState } from '../State';
 
 export default function getPreviousPath(state?: LocationState): string {
   if (!state || !state.from) {
