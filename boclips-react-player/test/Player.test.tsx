@@ -27,7 +27,7 @@ test('on click on thumbnail shows video playback', () => {
   const wrapper = shallow(
     <Player thumbnail={'/static/thumb.jpg'} stream={'/static/stream.mdp'} />,
   );
-  wrapper.find(By.dataQa('video-thumbnail')).simulate('click', {});
+  wrapper.find(By.dataQa('video-preview')).simulate('click', {});
 
   expect(wrapper.find(Playback)).toExist();
   expect(wrapper.find(Playback)).toHaveProp('stream', '/static/stream.mdp');

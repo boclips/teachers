@@ -3,10 +3,10 @@ import { BoclipsPlayer } from '../index';
 import { TrackingTable } from './TrackingTable';
 
 const thumbnailUrl =
-  'https://cfvod.kaltura.com/p/2394162/sp/239416200/thumbnail/entry_id/1_spq0ilkd/version/100021/width/560/height/395';
+  'https://cfvod.kaltura.com/p/1776261/sp/177626100/thumbnail/entry_id/0_q1saa1n9/version/100002/vid_sec/36/quality/75/width/600/height/450';
 
 const streamUrl =
-  'https://cdnapisec.kaltura.com/p/2394162/sp/239416200/playManifest/entryId/1_e0leuxs1/format/mpegdash/protocol/https/x36xhzz.mp4';
+  'https://cdnapisec.kaltura.com/p/1776261/sp/177626100/playManifest/entryId/0_q1saa1n9/format/mpegdash/protocol/https/x36xhzz.mp4';
 
 interface State {
   lastEvent: SegmentWatchedEvent | null;

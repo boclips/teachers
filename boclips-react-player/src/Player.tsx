@@ -40,12 +40,19 @@ export class Player extends React.Component<Props, State> {
 
   private renderPreview() {
     return (
-      <img
-        src={this.props.thumbnail}
-        onClick={this.onThumbnailClick}
-        data-qa="video-thumbnail"
-        className={'boclips-player--preview'}
-      />
+      <section
+        className="boclips-player--preview-container">
+        <section className="boclips-player--play"
+                 onClick={this.onThumbnailClick}
+                 data-qa="video-preview">
+          </section>
+
+        <img
+          src={this.props.thumbnail}
+          data-qa="video-thumbnail"
+          className={'boclips-player--preview'}
+        />
+      </section>
     );
   }
 

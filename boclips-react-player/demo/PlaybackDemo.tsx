@@ -3,7 +3,7 @@ import { Playback } from '../src/Playback';
 import { TrackingTable } from './TrackingTable';
 
 const streamUrl =
-  'https://cdnapisec.kaltura.com/p/2394162/sp/239416200/playManifest/entryId/1_e0leuxs1/format/mpegdash/protocol/https/x36xhzz.mp4';
+  'https://cdnapisec.kaltura.com/p/1776261/sp/177626100/playManifest/entryId/0_q1saa1n9/format/mpegdash/protocol/https/x36xhzz.mp4';
 
 interface State {
   lastEvent: SegmentWatchedEvent | null;
