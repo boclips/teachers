@@ -1,18 +1,16 @@
 import { mount, ReactWrapper } from 'enzyme';
+import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import { findOne } from '../../../test-support/enzymeHelpers';
 import eventually from '../../../test-support/eventually';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import App from '../../App';
-import { LoginPage } from '../../login/LoginView.integrationTest';
-import { video177 } from '../../video-service-responses';
+import { links, video177 } from '../../video-service-responses';
 
 test('video details shows data', async () => {
-  const loginPage = await LoginPage.mount('/videos/177');
+  MockFetchVerify.get('/v1/', JSON.stringify(links));
   VideoDetailsPage.mockVideoDetails(video177);
-  const videoDetailsPage = await VideoDetailsPage.mount(
-    loginPage.loginWithValidCredentials('user', 'password'),
-  );
+  const videoDetailsPage = await VideoDetailsPage.mount();
 
   expect(videoDetailsPage.getVideoDetails()).toEqual({
     title: 'KS3/4 Science: Demonstrating Chemistry',
@@ -31,8 +29,14 @@ export class VideoDetailsPage {
     MockFetchVerify.get(`/v1/videos/${video.id}`, JSON.stringify(video));
   }
 
-  public static async mount(reactWrapper?: ReactWrapper) {
-    const page = new VideoDetailsPage(reactWrapper || mount(<App />));
+  public static async mount() {
+    const page = new VideoDetailsPage(
+      mount(
+        <App
+          history={createMemoryHistory({ initialEntries: ['/videos/177'] })}
+        />,
+      ),
+    );
     await page.hasLoaded();
     return page;
   }

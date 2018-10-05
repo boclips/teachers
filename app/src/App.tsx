@@ -7,8 +7,6 @@ import { linksReducer } from './links/linksReducer';
 import { Icon } from 'antd';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
-import FetchProvider from './fetch/FetchProvider';
-import { userReducer } from './login/userReducer';
 import { BoclipsRouter, defaultHistory } from './router/BoclipsRouter';
 import State from './State';
 import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
@@ -21,7 +19,6 @@ const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compo
 const rootReducer = combineReducers({
   search: searchReducer,
   links: linksReducer,
-  user: userReducer,
   video: videoReducer,
 });
 
@@ -53,9 +50,7 @@ export default class App extends PureComponent<Props> {
     return (
       <Provider store={this.store}>
         <ConfigLoader loadingComponent={this.loadingComponent}>
-          <FetchProvider>
-            <BoclipsRouter history={this.props.history} />
-          </FetchProvider>
+          <BoclipsRouter history={this.props.history} />
         </ConfigLoader>
       </Provider>
     );

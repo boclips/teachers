@@ -22,7 +22,6 @@ export class LinksFactory {
     return Object.freeze({
       videos: arg.videos || new Link({ href: '/videos' }),
       video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
-      user: arg.user || new Link({ href: '/user' }),
       createEvent: arg.createEvent || new Link({ href: '/events' }),
     });
   }

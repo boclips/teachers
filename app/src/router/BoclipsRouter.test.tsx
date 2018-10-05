@@ -7,12 +7,10 @@ import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import { UserCredentials } from '../login/UserCredentials';
 import {
   RouterState,
   SearchState,
   SearchStateValue,
-  UserState,
   VideoDetailsState,
   VideoStateValue,
 } from '../State';
@@ -21,7 +19,7 @@ import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
 import { BoclipsRouter } from './BoclipsRouter';
 
 const mockStore = configureStore<
-  UserState & RouterState & VideoDetailsState & SearchState
+  RouterState & VideoDetailsState & SearchState
 >();
 
 test('shows video details view on /videos/{id}', () => {
@@ -62,12 +60,6 @@ function buildStoreWithPathAndQuery(path: string, query: string = '') {
     action: 'PUSH' as RouterActionType,
   };
 
-  const user: UserCredentials = {
-    username: 'John',
-    password: 'j0hn',
-    valid: true,
-  };
-
   const video: VideoStateValue = {
     loading: false,
     item: null,
@@ -82,7 +74,6 @@ function buildStoreWithPathAndQuery(path: string, query: string = '') {
 
   const store = mockStore({
     router,
-    user,
     video,
     search,
   });

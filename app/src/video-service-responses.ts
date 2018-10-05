@@ -4,9 +4,6 @@ export const links = {
       href: '/v1/videos?query={query}',
       templated: true,
     },
-    user: {
-      href: '/v1/user',
-    },
     video: {
       href: '/v1/videos/{id}',
       templated: true,

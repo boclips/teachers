@@ -1,12 +1,6 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
-import { Location } from 'history';
 import { Links } from './links/Links';
-import { UserCredentials } from './login/UserCredentials';
 import { Video } from './videos/Video';
-
-export interface UserState {
-  user: UserCredentials;
-}
 
 export interface LinksState {
   links: Links;
@@ -39,12 +33,7 @@ export interface RouterState {
   router: ReactRouterState;
 }
 
-export interface LocationState {
-  from?: Location;
-}
-
 export default interface State
   extends LinksState,
     SearchState,
-    UserState,
     VideoDetailsState {}
