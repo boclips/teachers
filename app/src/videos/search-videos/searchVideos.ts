@@ -6,7 +6,7 @@ import { SearchResults } from '../../State';
 import convertVideoResource from '../convertVideoResource';
 
 function parseResponse(response: any, query: string): SearchResults {
-  const videos = response.data.videos.map(convertVideoResource);
+  const videos = response.data._embedded.videos.map(convertVideoResource);
   const correlationId =
     response.headers[AppConfig.getCorrelationIdHeaderField()];
   return { videos, searchId: correlationId, query };
