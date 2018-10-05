@@ -9,6 +9,8 @@ test('search Videos', async () => {
   MockFetchVerify.get(
     '/v1/videos?query=hong kong',
     JSON.stringify(videosResource),
+    200,
+    { 'x-correlation-id': 'correlation-id' },
   );
 
   const results: SearchResults = await searchVideos(
@@ -19,7 +21,7 @@ test('search Videos', async () => {
   );
 
   expect(results.query).toEqual('hong kong');
-  expect(results.searchId).toEqual('srch-123');
+  expect(results.searchId).toEqual('correlation-id');
   expect(results.videos).toHaveLength(2);
   expect(results.videos[0].title).toEqual(
     'KS3/4 Science: Demonstrating Chemistry',

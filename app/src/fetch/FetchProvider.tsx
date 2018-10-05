@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
+import AppConfig from '../AppConfig';
 import { UserCredentials } from '../login/UserCredentials';
 import { UserState } from '../State';
 import { uuid } from '../uuid';
@@ -21,7 +22,7 @@ class FetchProvider extends React.Component<StateProps> {
   private setCorrelationIdInterceptor() {
     axios.interceptors.request.use(
       config => {
-        config.headers['Correlation-ID'] = uuid();
+        config.headers[AppConfig.getCorrelationIdHeaderField()] = uuid();
         return config;
       },
       error => {

@@ -18,7 +18,6 @@ export const links = {
 };
 
 export const videos = {
-  searchId: 'srch-123',
   videos: [
     {
       id: '177',

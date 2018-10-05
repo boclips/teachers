@@ -8,7 +8,8 @@ export default class MockFetchVerify {
     matcher: string,
     responseBody?: any,
     status: number = 200,
+    responseHeaders: any = {},
   ): void {
-    axiosMock.onGet(matcher).reply(status, responseBody);
+    axiosMock.onGet(matcher).reply(status, responseBody, responseHeaders);
   }
 }
