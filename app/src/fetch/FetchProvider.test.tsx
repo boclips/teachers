@@ -49,4 +49,12 @@ describe('axios', () => {
 
     expect(axios.defaults.headers.common.Authorization).toBeFalsy();
   });
+
+  test('sets Correlation-ID header on every request', async () => {
+    mountFetchProvider(mockStore());
+
+    const requestInterceptor = axios.interceptors.request as any;
+
+    expect(requestInterceptor.handlers).toHaveLength(1);
+  });
 });

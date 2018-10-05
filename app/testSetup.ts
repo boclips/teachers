@@ -1,4 +1,5 @@
 /* tslint:disable:no-string-literal */
+import axios from 'axios';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
@@ -28,3 +29,7 @@ global['navigator'] = {
   userAgent: 'node.js',
 };
 copyProps(window, global);
+
+beforeEach(() => {
+  (axios.interceptors.request as any).handlers = [];
+});

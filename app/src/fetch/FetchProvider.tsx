@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { UserCredentials } from '../login/UserCredentials';
 import { UserState } from '../State';
+import { uuid } from '../uuid';
 
 interface StateProps {
   user: UserCredentials;
@@ -11,6 +12,22 @@ interface StateProps {
 class FetchProvider extends React.Component<StateProps> {
   public render() {
     return this.props.children;
+  }
+
+  public componentDidMount() {
+    this.setCorrelationIdInterceptor();
+  }
+
+  private setCorrelationIdInterceptor() {
+    axios.interceptors.request.use(
+      config => {
+        config.headers['Correlation-ID'] = uuid();
+        return config;
+      },
+      error => {
+        return Promise.reject(error);
+      },
+    );
   }
 }
 
