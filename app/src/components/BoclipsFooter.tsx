@@ -1,6 +1,5 @@
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
-import React, { PureComponent } from 'react';
 
 const { Footer } = Layout;
 export class BoclipsFooter extends PureComponent {
