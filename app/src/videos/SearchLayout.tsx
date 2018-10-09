@@ -2,6 +2,7 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import SearchBar from './search-videos/SearchBar';
@@ -21,7 +22,9 @@ export default class SearchLayout extends PureComponent<Props> {
           <Header className="fixed">
             <Row>
               <Col span={8}>
-                <img className="logo" src={boclipsLogo} />
+                <Link to="/" data-qa="boclips-logo">
+                  <img className="logo" src={boclipsLogo} />
+                </Link>
               </Col>
               <Col span={16}>
                 <SearchBar />

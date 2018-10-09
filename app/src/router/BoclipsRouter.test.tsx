@@ -14,6 +14,7 @@ import {
   VideoDetailsState,
   VideoStateValue,
 } from '../State';
+import HomeView from '../videos/HomeView';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
 import { BoclipsRouter } from './BoclipsRouter';
@@ -26,7 +27,7 @@ test('shows video details view on /videos/{id}', () => {
   const history = createMemoryHistory();
 
   const wrapper = mount(
-    <Provider store={buildStoreWithPathAndQuery('/videos/123')}>
+    <Provider store={buildStore('/videos/123')}>
       <BoclipsRouter history={history} />
     </Provider>,
   );
@@ -40,7 +41,7 @@ test('shows search results view on /videos', () => {
   const history = createMemoryHistory();
 
   const wrapper = mount(
-    <Provider store={buildStoreWithPathAndQuery('/videos', 'q=earthquakes')}>
+    <Provider store={buildStore('/videos', 'q=earthquakes')}>
       <BoclipsRouter history={history} />
     </Provider>,
   );
@@ -49,7 +50,20 @@ test('shows search results view on /videos', () => {
   expect(videoDetailsView).toExist();
 });
 
-function buildStoreWithPathAndQuery(path: string, query: string = '') {
+test('shows home page on /', () => {
+  const history = createMemoryHistory();
+
+  const wrapper = mount(
+    <Provider store={buildStore('/')}>
+      <BoclipsRouter history={history} />
+    </Provider>,
+  );
+
+  const videoDetailsView = wrapper.find(HomeView);
+  expect(videoDetailsView).toExist();
+});
+
+function buildStore(path: string, query: string = '') {
   const router: ReactRouterState = {
     location: {
       pathname: path,
