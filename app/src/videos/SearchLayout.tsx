@@ -3,11 +3,12 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
+import { BoclipsFooter } from '../components/BoclipsFooter';
 import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import SearchBar from './search-videos/SearchBar';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
 
 interface Props {
@@ -36,14 +37,7 @@ export default class SearchLayout extends PureComponent<Props> {
               <Col span={24}>{this.props.children}</Col>
             </Row>
           </Content>
-          <Footer className="boclips-footer">
-            <p>Copyright © 2018 Boclips. All rights reserved.</p>
-            <p>
-              All trademarks, service marks, trade names, product names and
-              logos appearing on the site are the property of their respective
-              owners. Any rights not expressly granted herein are reserved.
-            </p>
-          </Footer>
+          <BoclipsFooter />
         </section>
       </Layout>
     );
