@@ -32,7 +32,7 @@ export class HomeViewPage {
   public async hasLoaded() {
     await eventually(() => {
       this.wrapper = this.wrapper.update();
-      findOne(this.wrapper, 'home-page');
+      findOne(this.wrapper, 'home-page', 'div');
     });
   }
 
