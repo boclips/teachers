@@ -7,7 +7,7 @@ import { linksReducer } from './links/linksReducer';
 import { Icon } from 'antd';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
-import { BoclipsRouter, defaultHistory } from './router/BoclipsRouter';
+import BoclipsRouter, { defaultHistory } from './router/BoclipsRouter';
 import State from './State';
 import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
 import { searchReducer } from './videos/searchReducer';

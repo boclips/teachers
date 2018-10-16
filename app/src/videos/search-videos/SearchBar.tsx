@@ -30,7 +30,7 @@ export class SearchBar extends React.Component<StateProps & DispatchProps> {
 
 function mapStateToProps(state: RouterState): StateProps {
   return {
-    query: queryString.parse(state.router.location.search).q,
+    query: queryString.parse(state.router.location.search).q as string,
   };
 }
 

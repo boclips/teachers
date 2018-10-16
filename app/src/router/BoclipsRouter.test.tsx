@@ -17,7 +17,7 @@ import {
 import HomeView from '../videos/HomeView';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
-import { BoclipsRouter } from './BoclipsRouter';
+import BoclipsRouter from './BoclipsRouter';
 
 const mockStore = configureStore<
   RouterState & VideoDetailsState & SearchState

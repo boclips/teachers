@@ -19,7 +19,7 @@ export default class SearchLayout extends PureComponent<Props> {
   public render() {
     return (
       <Layout>
-        <section data-qa="search-page">
+        <section>
           <Header className="fixed">
             <Row>
               <Col span={8}>

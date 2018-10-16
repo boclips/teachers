@@ -2,7 +2,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
+import { RouterState } from '../State';
 import HomeView from '../videos/HomeView';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import SearchLayout from '../videos/SearchLayout';
@@ -14,7 +16,7 @@ function videoDetailsView(props: RouteComponentProps<{ videoId: string }>) {
   return <VideoDetailsView videoId={props.match.params.videoId} />;
 }
 
-export class BoclipsRouter extends Component<{ history: History }> {
+class BoclipsRouter extends Component<{ history: History }> {
   public render() {
     return (
       <ConnectedRouter history={this.props.history || defaultHistory}>
@@ -33,3 +35,12 @@ export class BoclipsRouter extends Component<{ history: History }> {
     );
   }
 }
+
+function mapStateToProps(state: RouterState): {} {
+  return {
+    pathname: state.router.location.pathname,
+    search: state.router.location.search,
+  };
+}
+
+export default connect(mapStateToProps)(BoclipsRouter);

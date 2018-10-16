@@ -12,7 +12,7 @@ interface StateProps {
 class SearchResultsView extends React.PureComponent<StateProps> {
   public render() {
     return (
-      <section className={'search-results-container'}>
+      <section className={'search-results-container'} data-qa="search-page">
         {this.renderResults()}
       </section>
     );
