@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../State';
-import { searchVideosAction } from '../SearchLayout';
+import { searchVideosAction } from '../TopSearchBarLayout';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {

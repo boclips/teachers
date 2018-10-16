@@ -15,7 +15,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default class SearchLayout extends PureComponent<Props> {
+export default class TopSearchBarLayout extends PureComponent<Props> {
   public render() {
     return (
       <Layout>

@@ -6,7 +6,7 @@ import eventually from '../../test-support/eventually';
 import MockFetchVerify from '../../test-support/MockFetchVerify';
 import App from '../App';
 import { links, videos } from '../video-service-responses';
-import { SearchPage } from './SearchLayout.integrationTest';
+import { SearchPage } from './search-videos/SearchResultsView.integrationTest';
 
 test('search for a video goes to search page with results', async () => {
   const homeView = await HomeViewPage.mount();

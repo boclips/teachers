@@ -7,7 +7,7 @@ import { Route, RouteComponentProps, Switch } from 'react-router';
 import { RouterState } from '../State';
 import HomeView from '../videos/HomeView';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
-import SearchLayout from '../videos/SearchLayout';
+import TopSearchBarLayout from '../videos/TopSearchBarLayout';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
 
 export const defaultHistory = createBrowserHistory();
@@ -22,12 +22,12 @@ class BoclipsRouter extends Component<{ history: History }> {
       <ConnectedRouter history={this.props.history || defaultHistory}>
         <Switch>
           <Route path="/videos">
-            <SearchLayout>
+            <TopSearchBarLayout>
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
                 <Route path="/videos" component={SearchResultsView} />
               </Switch>
-            </SearchLayout>
+            </TopSearchBarLayout>
           </Route>
           <Route path="/" component={HomeView} />
         </Switch>
