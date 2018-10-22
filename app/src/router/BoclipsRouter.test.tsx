@@ -4,10 +4,12 @@ import {
 } from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
+import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {
+  LoginState,
   RouterState,
   SearchState,
   SearchStateValue,
@@ -20,7 +22,7 @@ import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
 
 const mockStore = configureStore<
-  RouterState & VideoDetailsState & SearchState
+  RouterState & VideoDetailsState & SearchState & LoginState
 >();
 
 test('shows video details view on /videos/{id}', () => {
@@ -37,33 +39,67 @@ test('shows video details view on /videos/{id}', () => {
   expect(videoDetailsView).toHaveProp('videoId', '123');
 });
 
-test('shows search results view on /videos', () => {
-  const history = createMemoryHistory();
+describe('when authorised', () => {
+  test('shows search results view on /videos', () => {
+    const history = createMemoryHistory();
 
-  const wrapper = mount(
-    <Provider store={buildStore('/videos', 'q=earthquakes')}>
-      <BoclipsRouter history={history} />
-    </Provider>,
-  );
+    const wrapper = mount(
+      <Provider store={buildStore('/videos', 'q=earthquakes')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
 
-  const videoDetailsView = wrapper.find(SearchResultsView);
-  expect(videoDetailsView).toExist();
+    const videoDetailsView = wrapper.find(SearchResultsView);
+    expect(videoDetailsView).toExist();
+  });
+
+  test('shows home page on /', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const videoDetailsView = wrapper.find(HomeView);
+    expect(videoDetailsView).toExist();
+  });
 });
 
-test('shows home page on /', () => {
-  const history = createMemoryHistory();
+describe('when not authorised', () => {
+  test('does not show search results view on /videos', () => {
+    const history = createMemoryHistory();
 
-  const wrapper = mount(
-    <Provider store={buildStore('/')}>
-      <BoclipsRouter history={history} />
-    </Provider>,
-  );
+    const wrapper = mount(
+      <Provider store={buildStore('/videos', 'q=earthquakes', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
 
-  const videoDetailsView = wrapper.find(HomeView);
-  expect(videoDetailsView).toExist();
+    const videoDetailsView = wrapper.find(SearchResultsView);
+    expect(videoDetailsView).not.toExist();
+  });
+
+  test('does not show home page on /', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/', '', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const videoDetailsView = wrapper.find(HomeView);
+    expect(videoDetailsView).not.toExist();
+  });
 });
 
-function buildStore(path: string, query: string = '') {
+function buildStore(
+  path: string,
+  query: string = '',
+  authorised: boolean = true,
+) {
   const router: ReactRouterState = {
     location: {
       pathname: path,
@@ -86,10 +122,17 @@ function buildStore(path: string, query: string = '') {
     videos: [],
   };
 
+  let login = null;
+  if (authorised) {
+    login = Keycloak();
+    login.authenticated = true;
+  }
+
   const store = mockStore({
     router,
     video,
     search,
+    login,
   });
   return store;
 }

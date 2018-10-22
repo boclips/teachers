@@ -48,6 +48,12 @@ class PrivateRoute extends React.Component<
       return React.createElement(component, props);
     }
   }
+
+  public componentDidMount(): void {
+    if (!this.props.authorized) {
+      this.props.authenticate();
+    }
+  }
 }
 
 function mapStateToProps(state: LoginState): StateProps {

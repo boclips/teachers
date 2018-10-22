@@ -9,6 +9,7 @@ import HomeView from '../videos/HomeView';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
 import TopSearchBarLayout from '../videos/TopSearchBarLayout';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
+import PrivateRoute from './PrivateRoute';
 
 export const defaultHistory = createBrowserHistory();
 
@@ -25,11 +26,11 @@ class BoclipsRouter extends Component<{ history: History }> {
             <TopSearchBarLayout>
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
-                <Route path="/videos" component={SearchResultsView} />
+                <PrivateRoute path="/videos" component={SearchResultsView} />
               </Switch>
             </TopSearchBarLayout>
           </Route>
-          <Route path="/" component={HomeView} />
+          <PrivateRoute path="/" component={HomeView} />
         </Switch>
       </ConnectedRouter>
     );
