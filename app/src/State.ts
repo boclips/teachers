@@ -1,4 +1,5 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
+import { KeycloakInstance } from 'keycloak-js';
 import { Links } from './links/Links';
 import { Video } from './videos/Video';
 
@@ -33,7 +34,12 @@ export interface RouterState {
   router: ReactRouterState;
 }
 
+export interface LoginState {
+  login: KeycloakInstance;
+}
+
 export default interface State
   extends LinksState,
     SearchState,
+    LoginState,
     VideoDetailsState {}
