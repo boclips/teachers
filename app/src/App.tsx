@@ -8,6 +8,7 @@ import { Icon } from 'antd';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
 import BoclipsRouter, { defaultHistory } from './router/BoclipsRouter';
+import LoginProvider from './router/LoginProvider';
 import { loginReducer } from './router/PrivateRoute';
 import State from './State';
 import searchVideosMiddleware from './videos/search-videos/searchVideosMiddleware';
@@ -51,9 +52,11 @@ export default class App extends PureComponent<Props> {
   public render() {
     return (
       <Provider store={this.store}>
-        <ConfigLoader loadingComponent={this.loadingComponent}>
-          <BoclipsRouter history={this.props.history} />
-        </ConfigLoader>
+        <LoginProvider>
+          <ConfigLoader loadingComponent={this.loadingComponent}>
+            <BoclipsRouter history={this.props.history} />
+          </ConfigLoader>
+        </LoginProvider>
       </Provider>
     );
   }

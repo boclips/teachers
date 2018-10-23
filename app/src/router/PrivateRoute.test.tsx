@@ -1,6 +1,4 @@
 import { mount } from 'enzyme';
-import Keycloak from 'keycloak-js';
-import { KeycloakInstance } from 'keycloak-js';
 import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
@@ -44,10 +42,26 @@ describe('when not logged in', () => {
 
 describe('when logged in', () => {
   test('Renders component', () => {
-    const login: KeycloakInstance = Keycloak();
-    login.authenticated = true;
+    const login = true;
 
     const wrapper = render(mockStore({ login }));
+
+    const content = wrapper.find(By.dataQa('restricted-content'));
+    expect(content).toExist();
+  });
+
+  test('Renders children', () => {
+    const login = true;
+
+    const wrapper = mount(
+      <Provider store={mockStore({ login })}>
+        <MemoryRouter initialEntries={['/']}>
+          <PrivateRoute path="/">
+            <TestComponent />
+          </PrivateRoute>
+        </MemoryRouter>
+      </Provider>,
+    );
 
     const content = wrapper.find(By.dataQa('restricted-content'));
     expect(content).toExist();

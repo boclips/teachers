@@ -21,12 +21,13 @@ export interface RouterComponentProps<TParams>
 }
 
 interface Props {
-  component: ComponentType<RouterComponentProps<any>> | ComponentType<any>;
+  component?: ComponentType<RouterComponentProps<any>> | ComponentType<any>;
 }
 
 interface StateProps {
   authorized: boolean;
 }
+
 interface DispatchProps {
   authenticate: () => void;
 }
@@ -37,15 +38,31 @@ class PrivateRoute extends React.Component<
 > {
   public render(): React.ReactNode {
     const props = this.props;
-    const { authorized, component, ...rest } = props;
+    const { authorized, component, children, ...rest } = props;
     return <Route {...rest} render={renderRoute} />;
 
     function renderRoute() {
+      if (!component && !children) {
+        throw Error(
+          'Either component or children should be defined in PrivateRoute',
+        );
+      }
+
+      if (component && children) {
+        throw Error(
+          'Only component or children should be defined in PrivateRoute but not both',
+        );
+      }
+
       if (!authorized) {
         return null;
       }
 
-      return React.createElement(component, props);
+      if (component) {
+        return React.createElement(component, props);
+      }
+
+      return children;
     }
   }
 
@@ -58,7 +75,7 @@ class PrivateRoute extends React.Component<
 
 function mapStateToProps(state: LoginState): StateProps {
   return {
-    authorized: state.login && state.login.authenticated,
+    authorized: state.login,
   };
 }
 
@@ -85,7 +102,7 @@ export default withRouter(
 
 export const storeLogin = actionCreatorFactory<KeycloakInstance>('STORE_LOGIN');
 
-export const loginReducer: Reducer<KeycloakInstance> = createReducer(
+export const loginReducer: Reducer<boolean> = createReducer(
   null,
-  actionHandler(storeLogin, (_, login) => login),
+  actionHandler(storeLogin, (_, login) => login.authenticated),
 );
