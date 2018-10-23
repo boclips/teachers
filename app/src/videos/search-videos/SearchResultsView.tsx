@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { SearchResults, SearchState } from '../../State';
 import { Video } from '../Video';
 import SearchResult from './SearchResult';
+import ZeroResultsView from './ZeroResultsView';
 
 interface StateProps {
   loading: boolean;
@@ -49,11 +50,7 @@ class SearchResultsView extends React.PureComponent<StateProps> {
   }
 
   public renderZeroResultsMessage() {
-    return (
-      <span data-qa="search-zero-results">
-        Your search for <em>{this.props.results.query}</em> returned no results
-      </span>
-    );
+    return <ZeroResultsView query={this.props.results.query} />;
   }
 
   public renderVideo = (video: Video, index: number) => {

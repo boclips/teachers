@@ -43,7 +43,9 @@ test('shows a no results message when there are zero search results', () => {
 
   const message = wrapper.find(By.dataQa('search-zero-results'));
 
-  expect(message).toHaveText('Your search for donuts returned no results');
+  expect(message).toHaveText(
+    'Oops, we couldn’t find any results that matched your search for donuts',
+  );
 });
 
 test('does not show a no results message when search query is empty', () => {
