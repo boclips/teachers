@@ -4,6 +4,8 @@ import React, { ChangeEvent } from 'react';
 interface Props {
   onSubmit: (state) => void;
   query: string | null;
+  validEmail: boolean;
+  validQuery: boolean;
 }
 
 class AddNoResultsForm extends React.PureComponent<Props> {
@@ -31,37 +33,43 @@ class AddNoResultsForm extends React.PureComponent<Props> {
     return (
       <section>
         <Col data-qa="add-no-results-form">
-          <p>My name is</p>
+          <p className="description">My name is (optional)</p>
           <Input
             data-qa="name"
             onChange={this.updateState('name')}
             placeholder={'Name'}
           />
-          <div style={{ margin: '24px 0' }} />
-          <p>I couldn’t find anything on</p>
+          <p className="description">I couldn’t find anything on</p>
           <Input
             data-qa="query"
             defaultValue={this.props.query}
             onChange={this.updateState('query')}
             placeholder={this.props.query}
           />
-          <div style={{ margin: '24px 0' }} />
-          <p>And you can send me suggestions to</p>
+          {!this.props.validQuery && (
+            <p className="alert-message-invalid">
+              Please enter your search query
+            </p>
+          )}
+          <p className="description">And you can send me suggestions to</p>
           <Input
             data-qa="email-address"
             onChange={this.updateState('mailAddress')}
             placeholder={'Email address'}
           />
-          <div style={{ margin: '24px 0' }} />
-          <p>Anything else you’d like us to know about this search?</p>
+          {!this.props.validEmail && (
+            <p className="alert-message-invalid">Email address is not valid</p>
+          )}
+          <p className="description">
+            Anything else you’d like us to know about this search? (optional)
+          </p>
           <Input
             data-qa="information"
             onChange={this.updateState('information')}
             placeholder={
-              'Other extra information relevant to your search eg type of subject, age group, etc'
+              'Other extra information relevant to your search e.g. type of subject, age group, etc.'
             }
           />
-          <div style={{ margin: '24px 0' }} />
           <Button
             type={'primary'}
             data-qa="no-results-submit"

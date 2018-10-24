@@ -7,28 +7,73 @@ interface Props {
   query: string | null;
 }
 
-export default class ZeroResultsView extends React.Component<Props> {
+interface State {
+  validEmail: boolean;
+  validQuery: boolean;
+}
+
+export default class ZeroResultsView extends React.Component<Props,State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      validEmail: true,
+      validQuery: true,
+    };
+  }
+
+  private checkValidity = state => {
+    if (state.query === '') {
+      console.log('invalid query');
+      this.setState({
+        validQuery: false,
+      });
+    } else {
+      this.setState({
+        validQuery: true,
+      });
+    }
+    if (state.mailAddress.indexOf('@') < 0) {
+      console.log('invalid mail');
+      this.setState({
+        validEmail: false,
+      });
+    } else {
+      this.setState({
+        validEmail: true,
+      });
+    }
+  };
+
   private submitForm = state => {
-    console.log('sending feedback email to boclips with following state:');
-    console.log(state);
+    this.checkValidity(state);
+    if (this.state.validEmail &&this.state.validQuery) {
+      console.log('sending feedback email to boclips with following state:');
+    }
   };
 
   public render() {
     return (
-      <section className="container">
-        <img className="col-md-6" src={noResultsIllustration} />
-        <div className="col-md-6">
-          <h2 data-qa="search-zero-results">
+      <section className="ant-layout-content zero-results">
+        <div className="ant-col-12">
+          <img className="ant-col-20" src={noResultsIllustration} />
+        </div>
+        <div className="ant-col-12">
+          <h1 data-qa="search-zero-results">
             Oops, we couldn’t find any results that matched your search for{' '}
             <em>{this.props.query}</em>
-          </h2>
-          <p data-qa="description">
+          </h1>
+          <p className="description" data-qa="description">
             We’d love to help you find the perfect videos to use in class. Let
             us know what you are looking for and we’ll get back to you with some
             suggestions.
           </p>
+          <AddNoResultsForm
+            onSubmit={this.submitForm}
+            query={this.props.query}
+            validQuery={this.state.validQuery}
+            validEmail={this.state.validEmail}
+          />
         </div>
-        <AddNoResultsForm onSubmit={this.submitForm} query={this.props.query} />
       </section>
     );
   }
