@@ -12,7 +12,7 @@ interface State {
   validQuery: boolean;
 }
 
-export default class ZeroResultsView extends React.Component<Props,State> {
+export default class ZeroResultsView extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -46,7 +46,7 @@ export default class ZeroResultsView extends React.Component<Props,State> {
 
   private submitForm = state => {
     this.checkValidity(state);
-    if (this.state.validEmail &&this.state.validQuery) {
+    if (this.state.validEmail && this.state.validQuery) {
       console.log('sending feedback email to boclips with following state:');
     }
   };

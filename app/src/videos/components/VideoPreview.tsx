@@ -2,6 +2,7 @@ import { Button, Icon, notification } from 'antd';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import AppConfig from '../../AppConfig';
+import tickIcon from '../../images/green-check.png';
 import { Video } from '../Video';
 import DateFormatter from './DateFormatter';
 import DurationFormatter from './DurationFormatter';
@@ -24,9 +25,9 @@ export default class VideoPreview extends React.PureComponent<Props> {
         </section>
         <section className="video-content--video-details">
           <section className={'video-header'}>
-            <h3 className="title" data-qa="video-title">
+            <h1 className="title" data-qa="video-title">
               {this.props.video.title}
-            </h3>
+            </h1>
             <p data-qa="video-duration" className={'subtitle duration'}>
               <Icon type="clock-circle" />{' '}
               <DurationFormatter duration={this.props.video.duration} />
@@ -49,7 +50,9 @@ export default class VideoPreview extends React.PureComponent<Props> {
             text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
             onCopy={this.showCopiedNotification}
           >
-            <Button className={'copy-link-button'}>Copy link</Button>
+            <Button size={'large'} className={'secondary copy-link-button'}>
+              Copy link
+            </Button>
           </CopyToClipboard>
         </section>
       </section>
@@ -58,9 +61,14 @@ export default class VideoPreview extends React.PureComponent<Props> {
 
   private showCopiedNotification(url: string) {
     notification.success({
-      message: `${url}`,
+      message: `loooooooooooooooooongUrl${url}`,
       description: `has been copied to your clipboard. Paste link to your tool of choice.`,
       placement: 'bottomRight',
+      icon: <img src={tickIcon} />,
+      style: {
+        background: '#E9FEF1',
+      },
+      duration: 100,
     });
   }
 }

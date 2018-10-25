@@ -8,7 +8,12 @@ it('invokes the callback when the form is submitted', () => {
   const onSubmit = jest.fn();
 
   let wrapper = mount(
-    <AddNoResultsForm validEmail={true} validQuery={true} onSubmit={onSubmit} query={'testquerynomatches'} />,
+    <AddNoResultsForm
+      validEmail={true}
+      validQuery={true}
+      onSubmit={onSubmit}
+      query={'testquerynomatches'}
+    />,
   );
   wrapper = new EventSimulator(wrapper).setText(
     'some-name',
