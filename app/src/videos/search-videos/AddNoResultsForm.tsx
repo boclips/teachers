@@ -1,6 +1,8 @@
 import { Button, Col, Input } from 'antd';
 import React, { ChangeEvent } from 'react';
+import alert from "../../images/round-error-icon.svg";
 
+const { TextArea } = Input;
 interface Props {
   onSubmit: (state) => void;
   query: string | null;
@@ -33,48 +35,61 @@ class AddNoResultsForm extends React.PureComponent<Props> {
     return (
       <section>
         <Col data-qa="add-no-results-form">
-          <p className="description">My name is (optional)</p>
+          <p className="form-title">My name is <span>(optional)</span></p>
           <Input
             data-qa="name"
             onChange={this.updateState('name')}
             placeholder={'Name'}
           />
-          <p className="description">I couldn’t find anything on</p>
+          <div className="alert-placeholder">
+          </div>
+          <p className="form-title">I couldn’t find anything on</p>
           <Input
             data-qa="query"
             defaultValue={this.props.query}
             onChange={this.updateState('query')}
             placeholder={this.props.query}
           />
-          {!this.props.validQuery && (
-            <p className="alert-message-invalid">
-              Please enter your search query
-            </p>
+          <div className="alert-placeholder">
+            {!this.props.validQuery && (
+              <div>
+                <img src={alert}/>
+                <p className="alert-message-invalid">
+                Please enter your search query
+              </p>
+              </div>
           )}
-          <p className="description">And you can send me suggestions to</p>
+          </div>
+          <p className="form-title">And you can send me suggestions to</p>
           <Input
             data-qa="email-address"
             onChange={this.updateState('mailAddress')}
             placeholder={'Email address'}
           />
+          <div className="alert-placeholder">
           {!this.props.validEmail && (
             <p className="alert-message-invalid">Email address is not valid</p>
           )}
-          <p className="description">
-            Anything else you’d like us to know about this search? (optional)
+          </div>
+          <p className="form-title">
+            Anything else you’d like us to know about this search? <span>(optional)</span>
           </p>
-          <Input
+          <TextArea
             data-qa="information"
             onChange={this.updateState('information')}
             placeholder={
               'Other extra information relevant to your search e.g. type of subject, age group, etc.'
             }
+            autosize={{ minRows: 3, maxRows: 3 }}
           />
+          <div className="alert-placeholder">
+          </div>
           <Button
             type={'primary'}
             data-qa="no-results-submit"
             color="primary"
             onClick={this.submit}
+            size={"large"}
           >
             Contact us
           </Button>
