@@ -4,43 +4,121 @@ import { By } from '../../../test-support/By';
 import EventSimulator from '../../../test-support/EventSimulator';
 import AddNoResultsForm from './AddNoResultsForm';
 
-it('invokes the callback when the form is submitted', () => {
-  const onSubmit = jest.fn();
+let onSubmit;
+let form;
 
-  let wrapper = mount(
-    <AddNoResultsForm
-      validEmail={true}
-      validQuery={true}
-      onSubmit={onSubmit}
-      query={'testquerynomatches'}
-    />,
-  );
-  wrapper = new EventSimulator(wrapper).setText(
-    'some-name',
-    wrapper.find(By.dataQa('name', 'input')),
-  );
-  wrapper = new EventSimulator(wrapper).setText(
-    'some query',
-    wrapper.find(By.dataQa('query', 'input')),
-  );
-  wrapper = new EventSimulator(wrapper).setText(
-    'somemail@boclips.com',
-    wrapper.find(By.dataQa('email-address', 'input')),
-  );
-  wrapper = new EventSimulator(wrapper).setText(
-    'some information',
-    wrapper.find(By.dataQa('information', 'input')),
-  );
-  new EventSimulator(wrapper).click(
-    wrapper.find(By.dataQa('no-results-submit', 'button')),
-  );
+describe('AddNoResultsForm', () => {
+  beforeEach(() => {
+    onSubmit = jest.fn();
+    form = NoResultsFormPage.getInstance(onSubmit);
+  });
 
-  const expectedData = {
-    name: 'some-name',
-    query: 'some query',
-    mailAddress: 'somemail@boclips.com',
-    information: 'some information',
-  };
+  describe('when valid form', () => {
+    it('invokes the callback when the form is submitted', () => {
+      form.fillValidForm();
 
-  expect(onSubmit).toBeCalledWith(expectedData);
+      form.submit();
+
+      const expectedData = {
+        name: 'some-name',
+        query: 'some query',
+        email: 'somemail@boclips.com',
+        description: 'some description',
+      };
+      expect(onSubmit).toBeCalledWith(expectedData);
+    });
+  });
+
+  describe('when invalid form', () => {
+    describe('and invalid email', () => {
+      it('does not submit', () => {
+        form.fillValidForm();
+        form.setEmail('somemail');
+
+        form.submit();
+
+        expect(onSubmit).not.toBeCalledWith();
+      });
+    });
+
+    describe('and empty query', () => {
+      it('does not submit', () => {
+        form.fillValidForm();
+        form.setQuery('');
+
+        form.submit();
+
+        expect(onSubmit).not.toBeCalledWith();
+      });
+    });
+  });
 });
+
+export class NoResultsFormPage {
+  private readonly wrapper;
+  private events;
+
+  private constructor(wrapper) {
+    this.wrapper = wrapper;
+    this.events = new EventSimulator(this.wrapper);
+  }
+
+  public static getInstance(onSubmitCallback, query = 'thea is killing it') {
+    return new NoResultsFormPage(
+      mount(
+        <AddNoResultsForm
+          onSuccessfulSubmit={onSubmitCallback}
+          query={query}
+        />,
+      ),
+    );
+  }
+
+  public static fromWrapper(wrapper) {
+    return new NoResultsFormPage(wrapper);
+  }
+
+  public fillValidForm(
+    name = 'some-name',
+    query = 'some query',
+    email = 'somemail@boclips.com',
+    description = 'some description',
+  ) {
+    this.setName(name);
+    this.setQuery(query);
+    this.setEmail(email);
+    this.setDescription(description);
+  }
+
+  public submit() {
+    this.events.submit(this.wrapper.find(By.dataQa('no-results-form', 'form')));
+  }
+
+  public setName(name: string) {
+    return this.events.setText(
+      name,
+      this.wrapper.find(By.dataQa('name', 'input')),
+    );
+  }
+
+  public setQuery(query: string) {
+    return this.events.setText(
+      query,
+      this.wrapper.find(By.dataQa('query', 'input')),
+    );
+  }
+
+  public setEmail(email: string) {
+    return this.events.setText(
+      email,
+      this.wrapper.find(By.dataQa('email-address', 'input')),
+    );
+  }
+
+  public setDescription(description: string) {
+    return this.events.setText(
+      description,
+      this.wrapper.find(By.dataQa('description', 'textarea')),
+    );
+  }
+}

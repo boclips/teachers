@@ -1,102 +1,126 @@
-import { Button, Col, Input } from 'antd';
-import React, { ChangeEvent } from 'react';
-import alert from "../../images/round-error-icon.svg";
+import { Button, Col, Form, Input } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
+import React from 'react';
 
 const { TextArea } = Input;
-interface Props {
-  onSubmit: (state) => void;
-  query: string | null;
-  validEmail: boolean;
-  validQuery: boolean;
+const FormItem = Form.Item;
+
+interface NoResultsFormData {
+  name: string;
+  query: string;
+  email: string;
+  description: string;
 }
 
-class AddNoResultsForm extends React.PureComponent<Props> {
-  constructor(props: Props) {
+interface Props {
+  onSuccessfulSubmit: (NoResultsFormData) => void;
+  query: string | null;
+}
+
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
+
+class AddNoResultsForm extends React.PureComponent<Props & FormComponentProps> {
+  constructor(props: Props & FormComponentProps) {
     super(props);
-    this.state = {
-      name: 'Name',
-      query: this.props.query,
-      mailAddress: '',
-      information: '',
-    };
   }
 
-  private updateState = key => (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      [key]: event.target.value,
+  public componentDidMount() {
+    this.props.form.validateFields();
+    this.props.form.setFieldsValue({
+      query: this.props.query,
+    });
+  }
+
+  public handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((_, values) => {
+      const data = values as NoResultsFormData;
+      this.props.onSuccessfulSubmit(data);
     });
   };
 
-  private submit = () => {
-    this.props.onSubmit(this.state);
-  };
-
   public render() {
+    const {
+      getFieldDecorator,
+      getFieldsError,
+      getFieldError,
+      isFieldTouched,
+    } = this.props.form;
+
+    const emailError = isFieldTouched('email') && getFieldError('email');
+
     return (
-      <section>
+      <Form
+        data-qa="no-results-form"
+        onSubmit={this.handleSubmit}
+        className="login-form"
+      >
         <Col data-qa="add-no-results-form">
-          <p className="form-title">My name is <span>(optional)</span></p>
-          <Input
-            data-qa="name"
-            onChange={this.updateState('name')}
-            placeholder={'Name'}
-          />
-          <div className="alert-placeholder">
-          </div>
-          <p className="form-title">I couldn’t find anything on</p>
-          <Input
-            data-qa="query"
-            defaultValue={this.props.query}
-            onChange={this.updateState('query')}
-            placeholder={this.props.query}
-          />
-          <div className="alert-placeholder">
-            {!this.props.validQuery && (
-              <div>
-                <img src={alert}/>
-                <p className="alert-message-invalid">
-                Please enter your search query
-              </p>
-              </div>
-          )}
-          </div>
-          <p className="form-title">And you can send me suggestions to</p>
-          <Input
-            data-qa="email-address"
-            onChange={this.updateState('mailAddress')}
-            placeholder={'Email address'}
-          />
-          <div className="alert-placeholder">
-          {!this.props.validEmail && (
-            <p className="alert-message-invalid">Email address is not valid</p>
-          )}
-          </div>
           <p className="form-title">
-            Anything else you’d like us to know about this search? <span>(optional)</span>
+            My name is <span>(optional)</span>
           </p>
-          <TextArea
-            data-qa="information"
-            onChange={this.updateState('information')}
-            placeholder={
-              'Other extra information relevant to your search e.g. type of subject, age group, etc.'
-            }
-            autosize={{ minRows: 3, maxRows: 3 }}
-          />
-          <div className="alert-placeholder">
-          </div>
+          <FormItem>
+            {getFieldDecorator('name')(
+              <Input data-qa="name" placeholder={'Name'} />,
+            )}
+          </FormItem>
+          <p className="form-title">I couldn’t find anything on</p>
+          <FormItem>
+            {getFieldDecorator('query', {
+              rules: [
+                { required: true, message: 'Please enter your search query' },
+              ],
+            })(<Input data-qa="query" placeholder={this.props.query} />)}
+          </FormItem>
+          <p className="form-title">And you can send me suggestions to</p>
+          <FormItem
+            validateStatus={emailError ? 'error' : 'success'}
+            help={emailError || ''}
+          >
+            {getFieldDecorator('email', {
+              rules: [
+                {
+                  type: 'email',
+                  message: 'Email address is not valid',
+                },
+                {
+                  required: true,
+                  message: 'Please input your email address!',
+                },
+              ],
+            })(<Input data-qa="email-address" placeholder={'Email address'} />)}
+          </FormItem>
+          <p className="form-title">
+            Anything else you’d like us to know about this search?{' '}
+            <span>(optional)</span>
+          </p>
+          <FormItem>
+            {getFieldDecorator('description')(
+              <TextArea
+                data-qa="description"
+                placeholder={
+                  'Other extra information relevant to your search e.g. type of subject, age group, etc.'
+                }
+                autosize={{ minRows: 3, maxRows: 3 }}
+              />,
+            )}
+          </FormItem>
           <Button
             type={'primary'}
             data-qa="no-results-submit"
             color="primary"
-            onClick={this.submit}
-            size={"large"}
+            size={'large'}
+            htmlType="submit"
+            disabled={hasErrors(getFieldsError())}
           >
             Contact us
           </Button>
         </Col>
-      </section>
+      </Form>
     );
   }
 }
 
-export default AddNoResultsForm;
+export default Form.create<Props>()(AddNoResultsForm);

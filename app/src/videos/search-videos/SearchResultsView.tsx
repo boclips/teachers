@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SearchResults, SearchState } from '../../State';
+import { Links } from '../../links/Links';
+import { SearchResults } from '../../State';
+import State from '../../State';
 import { Video } from '../Video';
 import SearchResult from './SearchResult';
 import ZeroResultsView from './ZeroResultsView';
@@ -8,6 +10,7 @@ import ZeroResultsView from './ZeroResultsView';
 interface StateProps {
   loading: boolean;
   results: SearchResults;
+  links: Links;
 }
 
 class SearchResultsView extends React.PureComponent<StateProps> {
@@ -50,7 +53,12 @@ class SearchResultsView extends React.PureComponent<StateProps> {
   }
 
   public renderZeroResultsMessage() {
-    return <ZeroResultsView query={this.props.results.query} />;
+    return (
+      <ZeroResultsView
+        links={this.props.links}
+        query={this.props.results.query}
+      />
+    );
   }
 
   public renderVideo = (video: Video, index: number) => {
@@ -66,10 +74,11 @@ class SearchResultsView extends React.PureComponent<StateProps> {
   };
 }
 
-function mapStateToProps({ search }: SearchState): StateProps {
+function mapStateToProps({ search, links }: State): StateProps {
   return {
     loading: search.loading,
     results: search,
+    links,
   };
 }
 

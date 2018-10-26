@@ -2,6 +2,7 @@ import { ReactWrapper } from 'enzyme';
 import { KeyboardEvent } from 'react';
 
 export default class EventSimulator {
+  public submit = this.interact(EventSimulator.doSubmit);
   public click = this.interact(EventSimulator.doClick);
   public pressEsc = this.interact(this.doPressKey(27));
   public pressEnter = this.interact(this.doPressKey(13));
@@ -20,6 +21,17 @@ export default class EventSimulator {
       throw new Error(`onClick handler is not a function: ${clickHandler}`);
     }
     clickHandler();
+  }
+
+  private static doSubmit(element: ReactWrapper) {
+    const submitHandler = element.prop('onSubmit');
+    if (submitHandler === null || submitHandler === undefined) {
+      throw new Error(`Element has no submit handler:\n${element.debug()} `);
+    }
+    if (typeof submitHandler !== 'function') {
+      throw new Error(`onSubmit handler is not a function: ${submitHandler}`);
+    }
+    submitHandler({ preventDefault: () => {} });
   }
 
   private doPressKey(keyCode: number, shiftKey: boolean = false) {

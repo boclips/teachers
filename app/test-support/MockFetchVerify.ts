@@ -12,4 +12,8 @@ export default class MockFetchVerify {
   ): void {
     axiosMock.onGet(matcher).reply(status, responseBody, responseHeaders);
   }
+
+  public static post(matcher, requestBody, status) {
+    axiosMock.onPost(matcher, requestBody).reply(status);
+  }
 }

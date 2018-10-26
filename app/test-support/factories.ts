@@ -23,6 +23,8 @@ export class LinksFactory {
       videos: arg.videos || new Link({ href: '/videos' }),
       video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
       createEvent: arg.createEvent || new Link({ href: '/events' }),
+      createNoSearchResultsEvent:
+        arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
     });
   }
 }

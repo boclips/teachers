@@ -9,5 +9,8 @@ export default function fetchLinks() {
       videos: new Link(body._links.search),
       video: new Link(body._links.video),
       createEvent: new Link(body._links.createEvent),
+      createNoSearchResultsEvent: new Link(
+        body._links.createNoSearchResultsEvent,
+      ),
     }));
 }

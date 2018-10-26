@@ -9,6 +9,7 @@ test('it fetches links', async () => {
       search: { href: '/videos', templated: false },
       video: { href: '/videos/{id}', templated: true },
       createEvent: { href: '/events' },
+      createNoSearchResultsEvent: { href: '/events/no-search-results' },
     },
   });
 
@@ -18,6 +19,7 @@ test('it fetches links', async () => {
     videos: new Link({ href: '/videos', templated: false }),
     video: new Link({ href: '/videos/{id}', templated: true }),
     createEvent: new Link({ href: '/events' }),
+    createNoSearchResultsEvent: new Link({ href: '/events/no-search-results' }),
   };
 
   expect(links).toEqual(expectedLinks);
