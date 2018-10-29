@@ -36,7 +36,7 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
 
 function mapStateToProps(state: LinksState): Props {
   return {
-    trackingEndpoint: state.links.createEvent.getLink(),
+    trackingEndpoint: state.links.createPlaybackEvent.getLink(),
   };
 }
 

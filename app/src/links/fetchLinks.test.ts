@@ -8,7 +8,7 @@ test('it fetches links', async () => {
     _links: {
       search: { href: '/videos', templated: false },
       video: { href: '/videos/{id}', templated: true },
-      createEvent: { href: '/events' },
+      createPlaybackEvent: { href: '/events' },
       createNoSearchResultsEvent: { href: '/events/no-search-results' },
     },
   });
@@ -18,7 +18,7 @@ test('it fetches links', async () => {
   const expectedLinks: Links = {
     videos: new Link({ href: '/videos', templated: false }),
     video: new Link({ href: '/videos/{id}', templated: true }),
-    createEvent: new Link({ href: '/events' }),
+    createPlaybackEvent: new Link({ href: '/events' }),
     createNoSearchResultsEvent: new Link({ href: '/events/no-search-results' }),
   };
 

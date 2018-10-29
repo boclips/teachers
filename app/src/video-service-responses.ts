@@ -8,7 +8,7 @@ export const links = {
       href: '/v1/videos/{id}',
       templated: true,
     },
-    createEvent: {
+    createPlaybackEvent: {
       href: '/v1/events',
     },
   },
