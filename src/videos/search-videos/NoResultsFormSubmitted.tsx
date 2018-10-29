@@ -4,10 +4,10 @@ class NoResultsFormSubmitted extends React.PureComponent {
   public render() {
     return (
       <section>
-        <div>
+        <div className="form-submitted">
+          <h1>Thanks for sharing your search query with us</h1>
           <p>
-            Thank you. Leave it with us! We'll get back to you as soon as we
-            can.
+            We’ll get back to you with some video suggestions as soon as possible.
           </p>
         </div>
       </section>
