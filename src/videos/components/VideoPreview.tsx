@@ -61,12 +61,13 @@ export default class VideoPreview extends React.PureComponent<Props> {
 
   private showCopiedNotification(url: string) {
     notification.success({
-      message: `loooooooooooooooooongUrl${url}`,
+      message: url,
       description: `has been copied to your clipboard. Paste link to your tool of choice.`,
       placement: 'bottomRight',
       icon: <img src={tickIcon} />,
       style: {
-        background: '#E9FEF1',
+        background: '#008F52',
+        color: '#FFFFFF',
       },
       duration: 100,
     });
