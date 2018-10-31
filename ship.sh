@@ -11,3 +11,4 @@ npm run test
 npm run build
 
 git push
+say "shipity ship"
