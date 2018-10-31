@@ -13,6 +13,7 @@ npm run test
 cd ${app}/app
 npm i
 npm run lint
+npm run compile
 npm run test
 npm run build
 )

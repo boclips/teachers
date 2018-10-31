@@ -4,10 +4,6 @@ set -e
 
 git pull -r
 
-pushd boclips-react-player
-    npm run test
-popd
-
 pushd app
     npm run compile
     npm run lint
