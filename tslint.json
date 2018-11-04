@@ -20,7 +20,7 @@
     "object-literal-sort-keys": false,
     "member-ordering": false,
     "max-classes-per-file": false,
-    "prettier": true,
+    "prettier": [ true, ".prettierrc" ],
     "no-empty": false
   }
 }
