@@ -17,10 +17,12 @@ spec:
     spec:
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            preference:
-              matchExpressions: [{key: priority, operator: In, values: [noncritical]}]
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: priority
+                operator: In
+                values: [noncritical]
 
       $TOLERATE_NONCRITICAL_EXCEPT_PRODUCTION
 
