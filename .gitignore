@@ -1,4 +1,6 @@
 node_modules
+educators-acceptance/cypress/videos
+educators-acceptance/cypress/screenshots
 dist
 *.iml
 .idea
