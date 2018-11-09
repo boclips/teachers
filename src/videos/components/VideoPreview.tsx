@@ -73,7 +73,7 @@ export default class VideoPreview extends React.PureComponent<Props> {
         background: '#008F52',
         color: '#FFFFFF',
       },
-      duration: 100,
+      duration: 5,
     });
   }
 }
