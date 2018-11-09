@@ -8,4 +8,4 @@ npm run compile
 npm run test
 npm run build
 
-cp -R dist/ Dockerfile ../../dist/
+cp -R dist/ Dockerfile ../dist/

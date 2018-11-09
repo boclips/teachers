@@ -15,4 +15,4 @@ outputs:
 
 run:
   path: pipeline/scripts/build.sh
-  dir: source/educators-ui
+  dir: source
