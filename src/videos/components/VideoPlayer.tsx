@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { BoclipsPlayer, TrackerConfig } from 'boclips-react-player';
+import { PlaybackConfig } from 'boclips-react-player/dist/src/PlaybackConfig';
 import React from 'react';
 import { connect } from 'react-redux';
 import { LinksState } from '../../State';
-import { StreamPlayback, Video } from '../Video';
+import { StreamPlayback, Video, YoutubePlayback } from '../Video';
 
 interface OwnProps {
   video: Video;
@@ -26,14 +27,29 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
     };
     return (
       <BoclipsPlayer
-        playbackConfig={{
-          type: 'STREAM',
-          stream: (video.playback as StreamPlayback).getUrl(),
-        }}
+        playbackConfig={this.toPlayerConfiguration(video.playback)}
         thumbnail={video.thumbnailUrl}
         trackerConfig={trackerConfig}
       />
     );
+  }
+
+  private toPlayerConfiguration(
+    playback: StreamPlayback | YoutubePlayback,
+  ): PlaybackConfig {
+    if (playback instanceof StreamPlayback) {
+      return {
+        type: 'STREAM',
+        stream: (playback as StreamPlayback).getUrl(),
+      };
+    } else if (playback instanceof YoutubePlayback) {
+      return {
+        type: 'YOUTUBE',
+        stream: (playback as YoutubePlayback).getId(),
+      };
+    } else {
+      throw Error(`Could not extract player configuration from ${playback}`);
+    }
   }
 }
 

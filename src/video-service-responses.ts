@@ -57,3 +57,16 @@ export const video177 = {
     duration: 'PT1M2S',
   },
 };
+
+export const youtubeVideo1 = {
+  id: '1',
+  title: 'A youtube video',
+  description: 'Matthew Tosh shows us the science.',
+  releasedOn: '2018-02-11',
+  contentProvider: 'cp1',
+  playback: {
+    thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
+    youtubeId: 'youtubeId',
+    duration: 'PT1M2S',
+  },
+};
