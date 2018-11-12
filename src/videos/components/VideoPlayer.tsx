@@ -26,8 +26,11 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
     };
     return (
       <BoclipsPlayer
+        playbackConfig={{
+          type: 'STREAM',
+          stream: video.streamUrl,
+        }}
         thumbnail={video.thumbnailUrl}
-        stream={video.streamUrl}
         trackerConfig={trackerConfig}
       />
     );
