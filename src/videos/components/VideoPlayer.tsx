@@ -45,11 +45,11 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
     } else if (playback instanceof YoutubePlayback) {
       return {
         type: 'YOUTUBE',
-        stream: (playback as YoutubePlayback).getId(),
+        youtubeId: (playback as YoutubePlayback).getId(),
       };
-    } else {
-      throw Error(`Could not extract player configuration from ${playback}`);
     }
+
+    throw Error(`Could not extract player configuration from ${playback}`);
   }
 }
 
