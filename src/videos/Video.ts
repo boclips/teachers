@@ -7,6 +7,22 @@ export interface Video {
   duration: Duration;
   releasedOn: Date;
   contentProvider: string;
+  playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;
-  streamUrl: string;
+}
+
+export class StreamPlayback {
+  constructor(private streamUrl: string) {}
+
+  public getUrl(): string {
+    return this.streamUrl;
+  }
+}
+
+export class YoutubePlayback {
+  constructor(private youtubeId: string) {}
+
+  public getId(): string {
+    return this.youtubeId;
+  }
 }

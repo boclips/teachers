@@ -3,7 +3,7 @@ import { BoclipsPlayer, TrackerConfig } from 'boclips-react-player';
 import React from 'react';
 import { connect } from 'react-redux';
 import { LinksState } from '../../State';
-import { Video } from '../Video';
+import { StreamPlayback, Video } from '../Video';
 
 interface OwnProps {
   video: Video;
@@ -28,7 +28,7 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
       <BoclipsPlayer
         playbackConfig={{
           type: 'STREAM',
-          stream: video.streamUrl,
+          stream: (video.playback as StreamPlayback).getUrl(),
         }}
         thumbnail={video.thumbnailUrl}
         trackerConfig={trackerConfig}

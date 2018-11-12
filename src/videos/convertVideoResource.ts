@@ -1,7 +1,11 @@
 import moment from 'moment';
-import { Video } from './Video';
+import { StreamPlayback, Video } from './Video';
 
 export default function convertVideoResource(resource: any): Video {
+  const playback: StreamPlayback = new StreamPlayback(
+    resource.playback.streamUrl,
+  );
+
   return {
     id: resource.id,
     title: resource.title,
@@ -10,6 +14,6 @@ export default function convertVideoResource(resource: any): Video {
     releasedOn: new Date(resource.releasedOn),
     contentProvider: resource.contentProvider,
     thumbnailUrl: resource.playback.thumbnailUrl,
-    streamUrl: resource.playback.streamUrl,
+    playback,
   };
 }

@@ -1,7 +1,7 @@
 import moment = require('moment');
 import { Link } from '../src/links/Link';
 import { Links } from '../src/links/Links';
-import { Video } from '../src/videos/Video';
+import { StreamPlayback, Video } from '../src/videos/Video';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
@@ -13,7 +13,9 @@ export class VideoFactory {
       duration: arg.duration || moment.duration(2, 'minutes'),
       releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',
-      streamUrl: arg.streamUrl || 'http://cdn.kaltura.com/stream.mdp',
+      playback:
+        (arg.playback as StreamPlayback) ||
+        new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
     });
   }
 }
