@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: teachers-ui
+  name: educators
   labels:
-    app: teachers-ui
+    app: educators
 spec:
   type: ClusterIP
   ports:
@@ -13,4 +13,4 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: teachers-ui
+    app: educators

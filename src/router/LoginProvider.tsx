@@ -40,7 +40,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
           dispatch(storeLogin(keycloak));
         },
         'teachers',
-        'teachers-ui',
+        'educators',
         'check-sso',
       );
     },

@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: teachers-ui
+  name: educators
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
@@ -12,5 +12,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: teachers-ui
+          serviceName: educators
           servicePort: http
