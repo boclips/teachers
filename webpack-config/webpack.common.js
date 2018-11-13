@@ -11,7 +11,7 @@ module.exports = {
   entry: path.resolve(srcPath, 'index.tsx'),
   output: {
     path: distPath,
-    filename: '[name].[chunkhash:8].js',
+    filename: '[name]-[contenthash:20].js',
     publicPath: '/'
   },
   // Allows ts(x) and js files to be imported without extension
@@ -53,7 +53,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({filename: '[name]-[contenthash:8].css'}),
+    new MiniCssExtractPlugin({filename: '[name]-[contenthash:20].css'}),
     new HtmlWebpackPlugin({
       template: path.resolve(srcPath, 'index.html'),
       ga: 'replaced-by-profile'
