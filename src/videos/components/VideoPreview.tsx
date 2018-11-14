@@ -49,6 +49,7 @@ export default class VideoPreview extends React.PureComponent<Props> {
           <CopyToClipboard
             text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
             onCopy={this.showCopiedNotification}
+            options={{ debug: true }}
           >
             <Button
               data-qa="copy-link"
