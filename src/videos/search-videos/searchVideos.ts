@@ -17,6 +17,6 @@ export default function searchVideos(
   links: Links,
 ): Promise<SearchResults> {
   return axios
-    .get(links.videos.getLink({ query }))
+    .get(links.videos.getLink({ query, pageNumber: 0, pageSize: 10 }))
     .then(response => parseResponse(response, query));
 }

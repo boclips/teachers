@@ -11,7 +11,7 @@ import eventually from '../../../test-support/eventually';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import App from '../../App';
 import { links, videos } from '../../video-service-responses';
-import { HomeViewPage } from '../HomeView.integrationTest';
+import { HomeViewPage } from '../HomeViewPage';
 
 test('search for a video shows results', async () => {
   const searchPage = await SearchPage.mount();
@@ -68,7 +68,7 @@ export class SearchPage {
 
   public async search(query: string) {
     MockFetchVerify.get(
-      `/v1/videos?query=${encodeURIComponent(query)}`,
+      `/v1/videos?pageNumber=0&pageSize=10&query=${encodeURIComponent(query)}`,
       JSON.stringify(videos),
     );
     search(this.wrapper, query);

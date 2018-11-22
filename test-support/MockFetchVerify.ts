@@ -16,4 +16,8 @@ export default class MockFetchVerify {
   public static post(matcher, requestBody, status) {
     axiosMock.onPost(matcher, requestBody).reply(status);
   }
+
+  public static clear() {
+    axiosMock.reset();
+  }
 }

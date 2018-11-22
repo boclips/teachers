@@ -1,7 +1,8 @@
 export const links = {
   _links: {
     search: {
-      href: '/v1/videos?query={query}',
+      href:
+        '/v1/videos?query={query}&pageNumber={pageNumber}&pageSize={pageSize}',
       templated: true,
     },
     video: {
