@@ -5,7 +5,7 @@ import { Video } from '../Video';
 
 export default function fetchVideo(id: string, links: Links): Promise<Video> {
   return axios
-    .get(links.video.getLink({ id }))
+    .get(links.video.getTemplatedLink({ id }))
     .then(response => response.data)
     .then(convertVideoResource);
 }

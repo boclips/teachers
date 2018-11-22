@@ -26,7 +26,7 @@ export default class ZeroResultsView extends React.Component<Props, State> {
 
   private renderFormSubmittedView = (data: FormData) => {
     axios
-      .post(this.props.links.createNoSearchResultsEvent.getLink(), data)
+      .post(this.props.links.createNoSearchResultsEvent.getOriginalLink(), data)
       .then(() => {
         this.setState({
           isFormSubmitted: true,

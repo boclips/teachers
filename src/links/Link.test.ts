@@ -3,15 +3,7 @@ import { Link } from './Link';
 test('returns link when not templated', () => {
   const link = new Link({ href: 'a-link' });
 
-  expect(link.getLink()).toEqual('a-link');
-});
-
-test('throws when params are passed to non-templated link', () => {
-  const link = new Link({ href: 'a-link' });
-
-  expect(() => link.getLink({})).toThrowError(
-    'Non templated link does not support params',
-  );
+  expect(link.getOriginalLink()).toEqual('a-link');
 });
 
 describe('templated link', () => {
@@ -23,7 +15,7 @@ describe('templated link', () => {
     });
 
     expect(
-      link.getLink({ query: 'perro', pageSize: 10, pageNumber: 0 }),
+      link.getTemplatedLink({ query: 'perro', pageSize: 10, pageNumber: 0 }),
     ).toEqual(
       'https://educators.testing-boclips.com/v1/videos?pageNumber=0&pageSize=10&query=perro',
     );
@@ -35,7 +27,7 @@ describe('templated link', () => {
       templated: true,
     });
 
-    expect(link.getLink()).toEqual(
+    expect(link.getOriginalLink()).toEqual(
       'https://educators.testing-boclips.com/v1/videos/{}',
     );
   });
@@ -46,19 +38,8 @@ describe('templated link', () => {
       templated: true,
     });
 
-    expect(link.getLink({ id: 'andrew-was-crying' })).toEqual(
+    expect(link.getTemplatedLink({ id: 'andrew-was-crying' })).toEqual(
       'https://educators.testing-boclips.com/v1/videos/andrew-was-crying',
-    );
-  });
-
-  test('throws error when no params specified', () => {
-    const link = new Link({
-      href: 'a-link?search={search}',
-      templated: true,
-    });
-
-    expect(() => link.getLink()).toThrowError(
-      'Templated link requires missing param search',
     );
   });
 
@@ -68,7 +49,7 @@ describe('templated link', () => {
       templated: true,
     });
 
-    expect(() => link.getLink({})).toThrowError(
+    expect(() => link.getTemplatedLink({})).toThrowError(
       'Templated link requires missing param search',
     );
   });

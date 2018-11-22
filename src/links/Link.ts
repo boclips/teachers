@@ -7,25 +7,21 @@ export class Link {
     this.link = link;
   }
 
-  public getLink(paramKeysValues?: any) {
+  public getOriginalLink() {
+    return this.link.href;
+  }
+
+  public getTemplatedLink(paramKeysValues: any) {
     const templateUrl = this.link.href;
+    const { url, query } = queryString.parseUrl(templateUrl);
 
-    if (this.link.templated) {
-      const { url, query } = queryString.parseUrl(templateUrl);
+    const baseUrl = this.interpolateBaseUrl(url, paramKeysValues);
+    const newQuery = this.interpolateQueryString(query, paramKeysValues);
 
-      const baseUrl = this.interpolateBaseUrl(url, paramKeysValues);
-      const newQuery = this.interpolateQueryString(query, paramKeysValues);
-
-      if (newQuery === '') {
-        return baseUrl;
-      } else {
-        return baseUrl + '?' + newQuery;
-      }
+    if (newQuery === '') {
+      return baseUrl;
     } else {
-      if (paramKeysValues) {
-        throw new Error('Non templated link does not support params');
-      }
-      return templateUrl;
+      return baseUrl + '?' + newQuery;
     }
   }
 
