@@ -67,7 +67,10 @@ export class SearchPage {
   }
 
   public async search(query: string) {
-    MockFetchVerify.get('/v1/videos?query=some video', JSON.stringify(videos));
+    MockFetchVerify.get(
+      `/v1/videos?query=${encodeURIComponent(query)}`,
+      JSON.stringify(videos),
+    );
     search(this.wrapper, query);
 
     await this.hasResults();

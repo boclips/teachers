@@ -65,7 +65,7 @@
     "moment-duration-format": "^2.2.2",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "prettier": "^1.14.2",
-    "query-string": "^6.1.0",
+    "query-string": "^6.2.0",
     "react": "^16.4.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.4.2",

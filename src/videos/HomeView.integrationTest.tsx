@@ -37,7 +37,10 @@ export class HomeViewPage {
   }
 
   public search(query: string) {
-    MockFetchVerify.get('/v1/videos?query=some video', JSON.stringify(videos));
+    MockFetchVerify.get(
+      '/v1/videos?query=some%20video',
+      JSON.stringify(videos),
+    );
     search(this.wrapper, query);
   }
 }

@@ -7,7 +7,7 @@ import searchVideos from './searchVideos';
 
 test('search Videos', async () => {
   MockFetchVerify.get(
-    '/v1/videos?query=hong kong',
+    '/v1/videos?query=hong%20kong',
     JSON.stringify(videosResource),
     200,
     { 'x-correlation-id': 'correlation-id' },
