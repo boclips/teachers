@@ -15,10 +15,20 @@
 
   .ant-card-body {
     height: 100%;
+    @media (max-width: 768px) {
+      padding: 0px;
+    }
   }
 
   .boclips-player {
-    width: @video-width;
-    height: @video-height;
+    @media (min-width: 768px) {
+      width: @video-width;
+      height: @video-height;
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 200px;
+    }
   }
 }

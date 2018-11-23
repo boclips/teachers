@@ -8,9 +8,15 @@
   height: 100%;
   animation: fade-in 0.4s ease;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
   .boclips-player {
-    width: @video-width;
-    height: @video-height;
+    @media (min-width: 768px) {
+      width: @video-width;
+      height: @video-height;
+    }
     border-radius: 3px;
 
     video {
@@ -18,17 +24,31 @@
       height: 100%;
       background-color: black;
       border-radius: 4px;
+      @media (max-width: 768px) {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
     }
 
     .boclips-player--preview-container {
       border-radius: 4px;
+      @media (max-width: 768px) {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
     }
   }
 
   .video-content--video-details {
     width: 100%;
+    display: flex;
+    flex-direction: column;
     margin-left: 16px;
-    position: relative;
+
+    @media (max-width: 768px) {
+      margin-left: 0px;
+      padding: 12px;
+    }
 
     .video-header {
       display: flex;
@@ -40,10 +60,15 @@
         font-weight: bold;
         line-height: 25px;
         margin-bottom: 0px;
+
       }
 
       .duration {
         text-align: right;
+      }
+
+      @media (max-width: 768px) {
+        flex-direction: column;
       }
     }
 
@@ -58,16 +83,20 @@
 
     .description {
       margin-top: 16px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+
+      @media (min-width: 768px) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+
     }
 
     .copy-link-button {
-      position: absolute;
-      bottom: 0;
+      align-self: flex-start;
+      margin-top: auto;
     }
   }
 }
