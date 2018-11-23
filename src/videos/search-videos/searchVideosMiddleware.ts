@@ -16,5 +16,4 @@ export function onSearchVideos(
     store.dispatch(storeSearchResultsAction(videos));
   });
 }
-
 export default sideEffect(searchVideosAction, onSearchVideos);

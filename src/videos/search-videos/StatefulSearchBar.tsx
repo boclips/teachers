@@ -4,7 +4,6 @@ import logo from '../../images/search-icon.png';
 
 interface Props {
   onQuerySubmitted: (query: string) => void;
-  onSearch: (query: string) => void;
   value?: string;
 }
 
@@ -25,11 +24,11 @@ class FreshSearchOnValueChange extends React.Component<Props> {
     );
   }
 
-  public componentDidMount() {
-    if (this.props.value) {
-      this.props.onSearch(this.props.value);
-    }
-  }
+  // public componentDidMount() {
+  //   if (this.props.value) {
+  //     this.props.onSearch(this.props.value);
+  //   }
+  // }
 }
 
 export default class StatefulSearchBar extends React.Component<Props> {
@@ -37,7 +36,7 @@ export default class StatefulSearchBar extends React.Component<Props> {
     return [
       <FreshSearchOnValueChange
         key={this.props.value || ''}
-        onSearch={this.props.onSearch}
+        // onSearch={this.props.onSearch}
         onQuerySubmitted={this.props.onQuerySubmitted}
         value={this.props.value}
       />,

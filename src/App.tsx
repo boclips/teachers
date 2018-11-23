@@ -1,11 +1,19 @@
+import React, { PureComponent } from 'react';
+import { Provider } from 'react-redux';
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+  Reducer,
+} from 'redux';
+import ConfigLoader from './config/ConfigLoader';
+import { linksReducer } from './links/linksReducer';
+
 import { Icon } from 'antd';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
-import React, { PureComponent } from 'react';
-import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import ConfigLoader from './config/ConfigLoader';
-import { linksReducer } from './links/linksReducer';
+import onUrlChangeMiddleware from './onUrlChangeMiddleware';
 import BoclipsRouter, { defaultHistory } from './router/BoclipsRouter';
 import { loginReducer } from './router/PrivateRoute';
 import State from './State';
@@ -14,9 +22,10 @@ import { searchReducer } from './videos/searchReducer';
 import videoDetailsMiddleware from './videos/video-details/videoDetailsMiddleware';
 import { videoReducer } from './videos/videoReducer';
 
-const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
+const composeEnhancers =
+  window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
 
-const rootReducer = combineReducers({
+const rootReducer: Reducer<any> = combineReducers({
   search: searchReducer,
   links: linksReducer,
   video: videoReducer,
@@ -35,6 +44,7 @@ export default class App extends PureComponent<Props> {
         routerMiddleware(this.props.history || defaultHistory),
         searchVideosMiddleware,
         videoDetailsMiddleware,
+        onUrlChangeMiddleware,
       ),
     ),
   );

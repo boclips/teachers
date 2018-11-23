@@ -3,7 +3,6 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { searchVideosAction } from '../../layout/TopSearchBarLayout';
 import { RouterState } from '../../State';
 import StatefulSearchBar from './StatefulSearchBar';
 
@@ -12,7 +11,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onSearch: (query: string) => void;
   onQuerySubmitted: (query: string) => void;
 }
 
@@ -20,7 +18,6 @@ export class SearchBar extends React.Component<StateProps & DispatchProps> {
   public render() {
     return (
       <StatefulSearchBar
-        onSearch={this.props.onSearch}
         onQuerySubmitted={this.props.onQuerySubmitted}
         value={this.props.query}
       />
@@ -36,11 +33,11 @@ function mapStateToProps(state: RouterState): StateProps {
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onSearch: (query: string) => {
-      dispatch(searchVideosAction(query));
-    },
     onQuerySubmitted: (query: string) => {
-      const queryParams = queryString.stringify({ q: query });
+      const queryParams = queryString.stringify({
+        q: query,
+        pageNumber: 1,
+      });
       dispatch(push(`/videos?${queryParams}`));
     },
   };

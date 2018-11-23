@@ -134,6 +134,12 @@ function buildStore(
     query: '',
     searchId: '',
     videos: [],
+    paging: {
+      totalElements: 0,
+      totalPages: 0,
+      number: 0,
+      size: 10,
+    },
   };
 
   let login = null;

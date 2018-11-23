@@ -3,7 +3,6 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStore } from 'redux-mock-store';
-import { searchVideosAction } from '../../layout/TopSearchBarLayout';
 import { RouterState } from '../../State';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
@@ -40,14 +39,9 @@ test('Extracts query string from the router state', () => {
   expect(statefulSearchBar).toHaveProp('value', 'eggs');
 });
 
-test('dispatches a search action when search callback invoked', () => {
-  statefulSearchBar.prop('onSearch')('dogs');
-  expect(store.getActions()).toContainEqual(searchVideosAction('dogs'));
-});
-
 test('dispatches a navigation action when query submitted callback invoked', () => {
   statefulSearchBar.prop('onQuerySubmitted')('the meaning of life');
   expect(store.getActions()).toContainEqual(
-    push('/videos?q=the%20meaning%20of%20life'),
+    push('/videos?pageNumber=1&q=the%20meaning%20of%20life'),
   );
 });

@@ -44,6 +44,12 @@ export const videos = {
       },
     ],
   },
+  page: {
+    size: 10,
+    totalElements: 15,
+    totalPages: 2,
+    number: 0,
+  },
 };
 
 export const video177 = {

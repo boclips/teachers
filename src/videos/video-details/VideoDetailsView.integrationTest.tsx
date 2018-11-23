@@ -22,14 +22,6 @@ test('video details shows data', async () => {
   });
 });
 
-test('users can perform new search', async () => {
-  MockFetchVerify.get('/v1/', JSON.stringify(links));
-  VideoDetailsPage.mockVideoDetails(video177);
-  const videoDetailsPage = await VideoDetailsPage.mount();
-
-  await videoDetailsPage.search('test');
-});
-
 export class VideoDetailsPage {
   constructor(private wrapper: ReactWrapper) {}
 
@@ -69,7 +61,7 @@ export class VideoDetailsPage {
 
   public async search(query: string) {
     MockFetchVerify.get(`/v1/videos?query=${query}`, JSON.stringify(videos));
-    search(this.wrapper, query);
+    search(query);
 
     await this.hasNavigatedToSearchResults();
   }

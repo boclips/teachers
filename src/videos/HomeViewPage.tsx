@@ -31,6 +31,6 @@ export class HomeViewPage {
       '/v1/videos?query=some%20video',
       JSON.stringify(videos),
     );
-    search(this.wrapper, query);
+    search(query);
   }
 }

@@ -33,6 +33,12 @@ describe('on successful search', () => {
       ],
       query: 'animals',
       searchId: 's123',
+      paging: {
+        totalElements: 0,
+        totalPages: 0,
+        number: 0,
+        size: 10,
+      },
     };
 
     searchVideosMock.mockReturnValue(Promise.resolve(searchResults));

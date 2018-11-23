@@ -1,22 +1,16 @@
 import axios from 'axios';
-
-import AppConfig from '../../AppConfig';
 import { Links } from '../../links/Links';
 import { SearchResults } from '../../State';
-import convertVideoResource from '../convertVideoResource';
-
-function parseResponse(response: any, query: string): SearchResults {
-  const videos = response.data._embedded.videos.map(convertVideoResource);
-  const correlationId =
-    response.headers[AppConfig.getCorrelationIdHeaderField()];
-  return { videos, searchId: correlationId, query };
-}
+import { parseVideosResponse } from './parseVideosResponse';
 
 export default function searchVideos(
   query: string,
   links: Links,
 ): Promise<SearchResults> {
-  return axios
-    .get(links.videos.getTemplatedLink({ query, pageNumber: 0, pageSize: 10 }))
-    .then(response => parseResponse(response, query));
+  const url = links.videos.getTemplatedLink({
+    query,
+    pageSize: 10,
+    pageNumber: 1,
+  });
+  return axios.get(url).then(response => parseVideosResponse(response, query));
 }

@@ -1,8 +1,11 @@
+import Pagination from 'antd/lib/pagination/Pagination';
+import { push } from 'connected-react-router';
+import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { Links } from '../../links/Links';
-import { SearchResults } from '../../State';
-import State from '../../State';
+import State, { SearchResults } from '../../State';
 import { Video } from '../Video';
 import SearchResult from './SearchResult';
 import ZeroResultsView from './ZeroResultsView';
@@ -11,13 +14,21 @@ interface StateProps {
   loading: boolean;
   results: SearchResults;
   links: Links;
+  currentPage: number;
 }
 
-class SearchResultsView extends React.PureComponent<StateProps> {
+interface DispatchProps {
+  onPageChange: (pageNumber: number, query: string) => void;
+}
+
+class SearchResultsView extends React.PureComponent<
+  StateProps & DispatchProps
+> {
   public render() {
     return (
       <section className={'search-results-container'} data-qa="search-page">
         {this.renderResults()}
+        {this.renderPagination()}
       </section>
     );
   }
@@ -33,6 +44,22 @@ class SearchResultsView extends React.PureComponent<StateProps> {
       return this.renderZeroResultsMessage();
     }
     return null;
+  }
+
+  public renderPagination() {
+    return (
+      this.props.results.paging && (
+        <section className={'results-pagination'} data-qa="pagination">
+          <Pagination
+            current={this.props.currentPage}
+            defaultCurrent={this.props.currentPage}
+            defaultPageSize={this.props.results.paging.size}
+            total={this.props.results.paging.totalElements}
+            onChange={this.changePage}
+          />
+        </section>
+      )
+    );
   }
 
   public renderVideos() {
@@ -72,17 +99,34 @@ class SearchResultsView extends React.PureComponent<StateProps> {
       </section>
     );
   };
+
+  private changePage = (currentPage: number) => {
+    this.props.onPageChange(currentPage, this.props.results.query);
+  };
 }
 
-function mapStateToProps({ search, links }: State): StateProps {
+function mapStateToProps({ search, links, router }: State): StateProps {
   return {
     loading: search.loading,
     results: search,
     links,
+    currentPage: +queryString.parse(router.location.search).pageNumber || 1,
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+  return {
+    onPageChange: (pageNumber: number, query: string) => {
+      const queryParams = queryString.stringify({
+        q: query,
+        pageNumber,
+      });
+      dispatch(push(`/videos?${queryParams}`));
+    },
   };
 }
 
 export default connect<StateProps, {}, {}>(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(SearchResultsView);

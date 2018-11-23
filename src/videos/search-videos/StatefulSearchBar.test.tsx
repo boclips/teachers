@@ -13,11 +13,7 @@ beforeEach(() => {
   onSearch = jest.fn();
   onQuerySubmitted = jest.fn();
   wrapper = mount(
-    <StatefulSearchBar
-      onSearch={onSearch}
-      onQuerySubmitted={onQuerySubmitted}
-      value={'bears'}
-    />,
+    <StatefulSearchBar onQuerySubmitted={onQuerySubmitted} value={'bears'} />,
   );
 });
 
@@ -30,18 +26,9 @@ test('initializes input with value prop', () => {
   expect(getValue()).toEqual('bears');
 });
 
-test('invokes search callback after mounting when value specified', () => {
-  expect(onSearch).toHaveBeenCalledWith('bears');
-});
-
 test('does not invoke the search callback after mounting when value not specified', () => {
   onSearch.mockClear();
-  mount(
-    <StatefulSearchBar
-      onSearch={onSearch}
-      onQuerySubmitted={onQuerySubmitted}
-    />,
-  );
+  mount(<StatefulSearchBar onQuerySubmitted={onQuerySubmitted} />);
   expect(onSearch).not.toHaveBeenCalled();
 });
 
@@ -58,9 +45,5 @@ describe('when value prop changes', () => {
 
   test('updates input value', () => {
     expect(getValue()).toEqual('polar bears');
-  });
-
-  test('invokes search callback', () => {
-    expect(onSearch).toHaveBeenCalledWith('polar bears');
   });
 });

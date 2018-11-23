@@ -1,5 +1,6 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
 import { Links } from './links/Links';
+import PageSpec from './PageSpec';
 import { Video } from './videos/Video';
 
 export interface LinksState {
@@ -10,6 +11,7 @@ export interface SearchResults {
   searchId: string;
   query: string;
   videos: Video[];
+  paging: PageSpec;
 }
 
 export interface SearchStateValue extends SearchResults {
@@ -41,4 +43,5 @@ export default interface State
   extends LinksState,
     SearchState,
     LoginState,
-    VideoDetailsState {}
+    VideoDetailsState,
+    RouterState {}
