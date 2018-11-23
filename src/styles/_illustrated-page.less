@@ -1,6 +1,25 @@
 .illustrated-page {
   margin-top: 54px;
+  @media (max-width: 768px) {
+    h1, p, a{
+      text-align: center;
+    }
+  }
+
+  .illustration {
+    display: flex;
+    justify-content: center;
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
   .message {
+    padding-left: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;

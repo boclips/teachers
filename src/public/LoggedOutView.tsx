@@ -7,17 +7,17 @@ import TopSearchBarLayout from '../layout/TopSearchBarLayout';
 
 export default class LoggedOutView extends React.PureComponent {
   public render() {
-    const fixedHeight = { height: '230px' };
+    const fixedHeight = { minHeight: '230px' };
     return (
       <TopSearchBarLayout>
         <section className="illustrated-page">
           <Row>
-            <Col span={8}>
+            <Col sm={{ span: 24 }} md={{ span: 8 }}>
               <section className="illustration" style={fixedHeight}>
                 <img src={wavingHand} />
               </section>
             </Col>
-            <Col span={16}>
+            <Col sm={{ span: 24 }} md={{ span: 16 }}>
               <section className="message" style={fixedHeight}>
                 <h1 className="big-title">You're now logged out!</h1>
                 <p>
