@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { actionCreatorFactory } from '../../redux/actions';
+import LoginProvider from '../../router/LoginProvider';
 import { VideoDetailsState } from '../../State';
 import { Video } from '../Video';
 import VideoDetails from './VideoDetails';
@@ -26,13 +27,15 @@ export class VideoDetailsView extends PureComponent<
 > {
   public render() {
     return (
-      <Layout>
-        <section data-qa="video-details-page">
-          <section className="video-details-page" data-qa="video-details">
-            <VideoDetails video={this.props.video} />
+      <LoginProvider>
+        <Layout>
+          <section data-qa="video-details-page">
+            <section className="video-details-page" data-qa="video-details">
+              <VideoDetails video={this.props.video} />
+            </section>
           </section>
-        </section>
-      </Layout>
+        </Layout>
+      </LoginProvider>
     );
   }
 

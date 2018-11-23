@@ -46,12 +46,6 @@ describe('when not authenticated', () => {
     expect(wrapper.find('Connect(SearchBar)')).not.toExist();
   });
 
-  test('does not render Link in logo', () => {
-    const wrapper = mountAnonymousLayout();
-
-    expect(wrapper.find(Link)).not.toExist();
-  });
-
   test('renders logout button', () => {
     const wrapper = mountAnonymousLayout();
 

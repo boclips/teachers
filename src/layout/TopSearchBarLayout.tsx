@@ -23,17 +23,14 @@ interface StateProps {
 }
 
 class TopSearchBarLayout extends PureComponent<Props & StateProps> {
-  public renderLogo(authorized) {
-    if (authorized) {
-      return (
-        <Link to="/" data-qa="boclips-logo">
-          <img className="logo" src={boclipsLogo} />
-        </Link>
-      );
-    } else {
-      return <img className="logo" src={boclipsLogo} />;
-    }
+  public renderLogo() {
+    return (
+      <Link to="/" data-qa="boclips-logo">
+        <img className="logo" src={boclipsLogo} />
+      </Link>
+    );
   }
+
   public renderLogout(authorized) {
     if (authorized) {
       return <LogoutButton />;
@@ -46,7 +43,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
         <section>
           <Header className="fixed">
             <Row>
-              <Col span={6}>{this.renderLogo(this.props.authorized)}</Col>
+              <Col span={6}>{this.renderLogo()}</Col>
               <Col span={12}>
                 {this.props.authorized ? <SearchBar /> : null}
               </Col>
