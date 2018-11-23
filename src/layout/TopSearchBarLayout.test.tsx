@@ -3,6 +3,7 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
+import { LogoutButton } from '../components/LogoutButton';
 import { LoginState } from '../State';
 import TopSearchBarLayout from './TopSearchBarLayout';
 
@@ -13,15 +14,19 @@ describe('when authenticated', () => {
   test('renders search bar', () => {
     const wrapper = mountAuthenticatedLayout();
 
-    console.log(wrapper.debug());
     expect(wrapper.find('Connect(SearchBar)')).toExist();
   });
 
   test('renders Link in logo', () => {
     const wrapper = mountAuthenticatedLayout();
 
-    console.log(wrapper.debug());
     expect(wrapper.find(Link)).toExist();
+  });
+
+  test('renders logout button', () => {
+    const wrapper = mountAuthenticatedLayout();
+
+    expect(wrapper.find(LogoutButton)).toExist();
   });
 
   function mountAuthenticatedLayout() {
@@ -38,15 +43,19 @@ describe('when not authenticated', () => {
   test('does not render search bar', () => {
     const wrapper = mountAnonymousLayout();
 
-    console.log(wrapper.debug());
     expect(wrapper.find('Connect(SearchBar)')).not.toExist();
   });
 
   test('does not render Link in logo', () => {
     const wrapper = mountAnonymousLayout();
 
-    console.log(wrapper.debug());
     expect(wrapper.find(Link)).not.toExist();
+  });
+
+  test('renders logout button', () => {
+    const wrapper = mountAnonymousLayout();
+
+    expect(wrapper.find(LogoutButton)).not.toExist();
   });
 
   function mountAnonymousLayout() {

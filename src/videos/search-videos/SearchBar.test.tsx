@@ -3,8 +3,8 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStore } from 'redux-mock-store';
+import { searchVideosAction } from '../../layout/TopSearchBarLayout';
 import { RouterState } from '../../State';
-import { searchVideosAction } from '../TopSearchBarLayout';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
 

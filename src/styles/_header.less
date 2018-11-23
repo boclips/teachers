@@ -1,3 +1,5 @@
+@header-height: 64px;
+
 .ant-layout-header {
   background-color: white;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -11,8 +13,21 @@
       width: 110px;
       position: relative;
     }
+
+    .logout-container {
+      width: 100%;
+      height: @header-height;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      button {
+        min-width: 84px;
+      }
+    }
+
     & + .ant-layout-content {
-      padding: 64px 50px 0px;
+      padding: @header-height 50px 0px;
     }
   }
 

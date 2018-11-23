@@ -8,6 +8,7 @@ import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import LoggedOutView from '../public/LoggedOutView';
 import {
   LoginState,
   RouterState,
@@ -92,6 +93,19 @@ describe('when not authorised', () => {
 
     const videoDetailsView = wrapper.find(HomeView);
     expect(videoDetailsView).not.toExist();
+  });
+
+  test('shows logged out page', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/bye')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const loggedOutView = wrapper.find(LoggedOutView);
+    expect(loggedOutView).toExist();
   });
 });
 

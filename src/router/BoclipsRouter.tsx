@@ -4,10 +4,11 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
+import TopSearchBarLayout from '../layout/TopSearchBarLayout';
+import LoggedOutView from '../public/LoggedOutView';
 import { RouterState } from '../State';
 import HomeView from '../videos/HomeView';
 import SearchResultsView from '../videos/search-videos/SearchResultsView';
-import TopSearchBarLayout from '../videos/TopSearchBarLayout';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
 import PrivateRoute from './PrivateRoute';
 
@@ -22,6 +23,7 @@ class BoclipsRouter extends Component<{ history: History }> {
     return (
       <ConnectedRouter history={this.props.history || defaultHistory}>
         <Switch>
+          <Route path="/bye" component={LoggedOutView} />
           <Route path="/videos">
             <TopSearchBarLayout>
               <Switch>

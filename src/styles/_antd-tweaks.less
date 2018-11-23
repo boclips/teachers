@@ -1,0 +1,143 @@
+@import "_antd-theme";
+
+.ant-btn {
+  border: 2px solid #4189FF;
+  border-radius: 8px;
+  color: #4189FF;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  min-width: 120px;
+
+
+  &:hover {
+    border-color: #0051BC;
+    color: #0051BC;
+  }
+
+  &:disabled {
+    color: #D3DCF5;
+  }
+
+  &:focus {
+    border-color: #4189FF;
+    box-shadow: 0 0 4px 1px #4189FF;
+    color: #4189FF;
+  }
+
+  &:active {
+    border-color: #00217D;
+    color: #00217D;
+  }
+
+  &-primary {
+    border: none;
+    color: #FFFFFF;
+  }
+
+  &.ant-btn-primary {
+    &:hover {
+      background-color: #0051BC;
+      color: #FFFFFF;
+    }
+
+    &:disabled {
+      background-color: #E8EFFF;
+    }
+
+    &:focus {
+      background-color: #4189FF;
+      box-shadow: 0 0 4px 1px #4189FF;
+      color: #FFFFFF;
+    }
+
+    &:active {
+      background-color: #00217D;
+      color: #FFFFFF;
+    }
+  }
+}
+
+.ant-input {
+  border: 2px solid #E8EFFF;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 24px;
+
+  &:disabled {
+    border-color: #E8EFFF;
+  }
+
+  &:focus {
+    border-color: #E8EFFF;
+    box-shadow: 0 0 4px 1px #4189FF;
+    color: #3D4564;
+  }
+
+  &.ant-input-lg {
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
+
+.ant-input-search.ant-input-search-enter-button > .ant-input {
+  padding-left: 38px;
+}
+
+.ant-notification {
+  .ant-notification-notice-description {
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 20px;
+  }
+
+  .ant-notification-notice-with-icon .ant-notification-notice-description {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .ant-notification-notice-with-icon .ant-notification-notice-message {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 20px;
+    margin-left: 30px;
+  }
+
+  .ant-notification-notice-message {
+    max-width: 300px;
+    word-wrap: break-word;
+  }
+
+  .ant-notification-notice-closable .ant-notification-notice-message {
+    padding-right: 16px;
+  }
+
+  .ant-notification-notice {
+    padding: 18px;
+    border-radius: 8px;
+  }
+
+  .ant-notification-notice-icon {
+    margin: 0px;
+  }
+
+  .ant-notification-close-icon {
+    color: #ffffff;
+    font-weight: 800;
+  }
+}
+
+.ant-modal {
+  .ant-modal-confirm-body {
+    .anticon {
+      color: @primary-color;
+    }
+
+  }
+}
+
+.ant-form-explain, .ant-form-extra {
+  padding-left: 12px;
+}
+

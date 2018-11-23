@@ -5,10 +5,11 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { BoclipsFooter } from '../components/BoclipsFooter';
+import { LogoutButton } from '../components/LogoutButton';
 import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import { LoginState } from '../State';
-import SearchBar from './search-videos/SearchBar';
+import SearchBar from '../videos/search-videos/SearchBar';
 
 const { Header, Content } = Layout;
 export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
@@ -33,6 +34,11 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
       return <img className="logo" src={boclipsLogo} />;
     }
   }
+  public renderLogout(authorized) {
+    if (authorized) {
+      return <LogoutButton />;
+    }
+  }
 
   public render() {
     return (
@@ -40,10 +46,11 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
         <section>
           <Header className="fixed">
             <Row>
-              <Col span={8}>{this.renderLogo(this.props.authorized)}</Col>
-              <Col span={16}>
+              <Col span={6}>{this.renderLogo(this.props.authorized)}</Col>
+              <Col span={12}>
                 {this.props.authorized ? <SearchBar /> : null}
               </Col>
+              <Col span={6}>{this.renderLogout(this.props.authorized)}</Col>
             </Row>
           </Header>
           <Content>

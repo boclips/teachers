@@ -1,8 +1,8 @@
 import { Reducer } from 'redux';
+import { searchVideosAction } from '../layout/TopSearchBarLayout';
 import createReducer, { actionHandler } from '../redux/createReducer';
 import { SearchResults, SearchStateValue } from '../State';
 import { storeSearchResultsAction } from './search-videos/searchVideosMiddleware';
-import { searchVideosAction } from './TopSearchBarLayout';
 
 const initialState: SearchStateValue = {
   videos: [],

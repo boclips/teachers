@@ -3,8 +3,8 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { searchVideosAction } from '../../layout/TopSearchBarLayout';
 import { RouterState } from '../../State';
-import { searchVideosAction } from '../TopSearchBarLayout';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {

@@ -1,8 +1,8 @@
 import { VideoFactory } from '../../test-support/factories';
+import { searchVideosAction } from '../layout/TopSearchBarLayout';
 import { SearchResults, SearchStateValue } from '../State';
 import { storeSearchResultsAction } from './search-videos/searchVideosMiddleware';
 import { searchReducer } from './searchReducer';
-import { searchVideosAction } from './TopSearchBarLayout';
 
 test('Clears videos and sets loading flag and query on the loading action', () => {
   const state: SearchStateValue = {
