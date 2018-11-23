@@ -3,6 +3,7 @@ import { searchVideosAction } from '../layout/TopSearchBarLayout';
 import PageSpec from '../PageSpec';
 import createReducer, { actionHandler } from '../redux/createReducer';
 import { SearchResults, SearchStateValue } from '../State';
+import { SearchRequest } from './search-videos/SearchRequest';
 import { storeSearchResultsAction } from './search-videos/searchVideosMiddleware';
 
 const defaultPaging: PageSpec = {
@@ -20,10 +21,13 @@ const initialState: SearchStateValue = {
   paging: defaultPaging,
 };
 
-function onSearchVideosAction(_, query: string): SearchStateValue {
+function onSearchVideosAction(
+  _,
+  searchRequest: SearchRequest,
+): SearchStateValue {
   return {
     videos: [],
-    query,
+    query: searchRequest.query,
     searchId: null,
     loading: true,
     paging: defaultPaging,

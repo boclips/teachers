@@ -43,7 +43,7 @@ describe('on successful search', () => {
 
     searchVideosMock.mockReturnValue(Promise.resolve(searchResults));
 
-    store.dispatch(searchVideosAction('llama'));
+    store.dispatch(searchVideosAction({ query: 'llama', pageNumber: 1 }));
 
     await eventually(() =>
       expect(store.getActions()).toContainEqual(

@@ -1,5 +1,5 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import { Store } from 'redux';
 import { searchVideosAction } from './layout/TopSearchBarLayout';
 import { actionCreatorFactory, sideEffect } from './redux/actions';
@@ -14,8 +14,10 @@ export default sideEffect(
       routeChanges.location.pathname === '/videos' &&
       routeChanges.location.search.indexOf('q')
     ) {
-      const query = queryString.parse(routeChanges.location.search).q as string;
-      store.dispatch(searchVideosAction(query));
+      const queryParams = queryString.parse(routeChanges.location.search);
+      const query = queryParams.q as string;
+      const pageNumber = +queryParams.pageNumber;
+      store.dispatch(searchVideosAction({ query, pageNumber }));
     }
   },
 );

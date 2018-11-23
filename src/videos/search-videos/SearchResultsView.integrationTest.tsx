@@ -9,7 +9,7 @@ import { links, videos } from '../../video-service-responses';
 
 test('search for a video shows results', async () => {
   MockFetchVerify.get(
-    `/v1/videos?pageNumber=1&pageSize=10&query=${encodeURIComponent(
+    `/v1/videos?pageNumber=0&pageSize=10&query=${encodeURIComponent(
       'some video',
     )}`,
     JSON.stringify(videos),

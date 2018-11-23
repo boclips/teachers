@@ -2,6 +2,7 @@ import { MiddlewareAPI } from 'redux';
 import { searchVideosAction } from '../../layout/TopSearchBarLayout';
 import { actionCreatorFactory, sideEffect } from '../../redux/actions';
 import { LinksState, SearchResults } from '../../State';
+import { SearchRequest } from './SearchRequest';
 import searchVideos from './searchVideos';
 
 export const storeSearchResultsAction = actionCreatorFactory<SearchResults>(
@@ -10,9 +11,9 @@ export const storeSearchResultsAction = actionCreatorFactory<SearchResults>(
 
 export function onSearchVideos(
   store: MiddlewareAPI<any, LinksState>,
-  query: string,
+  searchRequest: SearchRequest,
 ) {
-  searchVideos(query, store.getState().links).then(videos => {
+  searchVideos(searchRequest, store.getState().links).then(videos => {
     store.dispatch(storeSearchResultsAction(videos));
   });
 }

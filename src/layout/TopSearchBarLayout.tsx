@@ -10,9 +10,12 @@ import boclipsLogo from '../images/boclips-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import { LoginState } from '../State';
 import SearchBar from '../videos/search-videos/SearchBar';
+import { SearchRequest } from '../videos/search-videos/SearchRequest';
 
 const { Header, Content } = Layout;
-export const searchVideosAction = actionCreatorFactory<string>('SEARCH_VIDEOS');
+export const searchVideosAction = actionCreatorFactory<SearchRequest>(
+  'SEARCH_VIDEOS',
+);
 
 interface Props {
   children: React.ReactNode;

@@ -20,7 +20,10 @@ test('Clears videos and sets loading flag and query on the loading action', () =
     paging: defaultPaging,
   };
 
-  const newState = searchReducer(state, searchVideosAction('donuts'));
+  const newState = searchReducer(
+    state,
+    searchVideosAction({ query: 'donuts', pageNumber: 1 }),
+  );
 
   const expectedState: SearchStateValue = {
     loading: true,

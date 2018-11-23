@@ -101,6 +101,7 @@ class SearchResultsView extends React.PureComponent<
   };
 
   private changePage = (currentPage: number) => {
+    console.log('query', this.props.results.query);
     this.props.onPageChange(currentPage, this.props.results.query);
   };
 }
