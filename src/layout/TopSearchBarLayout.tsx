@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { BoclipsFooter } from '../components/BoclipsFooter';
 import { LogoutButton } from '../components/LogoutButton';
 import boclipsLogo from '../images/boclips-logo.png';
+import boclipsMiniLogo from '../images/boclips-mini-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import { LoginState } from '../State';
 import SearchBar from '../videos/search-videos/SearchBar';
@@ -30,6 +31,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
     return (
       <Link to="/" data-qa="boclips-logo">
         <img className="logo" src={boclipsLogo} />
+        <img className="mini-logo" src={boclipsMiniLogo} />
       </Link>
     );
   }
@@ -40,22 +42,37 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
     }
   }
 
+  public renderMiniLogout(authorized) {
+    if (authorized) {
+      return <LogoutButton mini={true} />;
+    }
+  }
+
   public render() {
     return (
       <Layout>
         <section>
           <Header className="fixed">
             <Row>
-              <Col span={6}>{this.renderLogo()}</Col>
-              <Col span={12}>
+              <Col sm={{ span: 24 }} md={{ span: 6 }}>
+                <section className="logo-logout">
+                  {this.renderLogo()}
+                  {this.renderMiniLogout(this.props.authorized)}
+                </section>
+              </Col>
+              <Col sm={{ span: 24 }} md={{ span: 12 }}>
                 {this.props.authorized ? <SearchBar /> : null}
               </Col>
-              <Col span={6}>{this.renderLogout(this.props.authorized)}</Col>
+              <Col sm={{ span: 12 }} md={{ span: 6 }}>
+                {this.renderLogout(this.props.authorized)}
+              </Col>
             </Row>
           </Header>
           <Content>
             <Row>
-              <Col span={24}>{this.props.children}</Col>
+              <Col sm={{ span: 24 }} md={{ span: 24 }}>
+                {this.props.children}
+              </Col>
             </Row>
           </Content>
           <BoclipsFooter />

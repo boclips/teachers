@@ -17,7 +17,7 @@ export default class SearchResult extends React.PureComponent<Props> {
         <Skeleton
           loading={this.props.loading}
           active={true}
-          title={{ width: '300px' }}
+          title={{ width: '150px' }}
           paragraph={{ rows: 5 }}
           avatar={{ shape: 'square', size: 'large' }}
         >

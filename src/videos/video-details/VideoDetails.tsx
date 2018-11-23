@@ -27,7 +27,7 @@ export default class VideoDetails extends React.PureComponent<Props> {
         <Skeleton
           loading={!video}
           active={true}
-          title={{ width: '300px' }}
+          title={{ width: '150px' }}
           paragraph={{ rows: 5 }}
           avatar={{ shape: 'square', size: 'large' }}
         >

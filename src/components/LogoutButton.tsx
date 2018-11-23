@@ -2,13 +2,23 @@ import { Button, Modal } from 'antd';
 import { logout } from 'boclips-js-security';
 import React, { PureComponent } from 'react';
 
-export class LogoutButton extends PureComponent {
+interface Props {
+  mini?: boolean;
+}
+
+export class LogoutButton extends PureComponent<Props> {
   public render() {
+    const containerClass = this.props.mini
+      ? 'logout-container-mini'
+      : 'logout-container';
     return (
-      <div className="logout-container">
-        <Button className="logout" size="large" onClick={this.showConfirm}>
-          Log out
-        </Button>
+      <div className={containerClass}>
+        {!this.props.mini && (
+          <Button className="logout" size="large" onClick={this.showConfirm}>
+            Log out
+          </Button>
+        )}
+        {this.props.mini && <a onClick={this.showConfirm}>Log out</a>}
       </div>
     );
   }

@@ -7,10 +7,37 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 
-  .ant-skeleton .ant-skeleton-avatar-lg {
-    border-radius: 8px;
-    width: @video-width;
-    height: @video-height;
+  .ant-skeleton {
+    @media (max-width: 768px) {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .ant-skeleton-header {
+        @media (max-width: 768px) {
+          padding: 0px;
+        }
+
+      .ant-skeleton-avatar-lg {
+        border-radius: 8px;
+        @media (min-width: 768px) {
+          width: @video-width;
+          height: @video-height;
+        }
+
+        @media (max-width: 768px) {
+          width: 100%;
+          height: 200px;
+        }
+      }
+    }
+
+    .ant-skeleton-paragraph, .ant-skeleton-title {
+      @media (max-width: 768px) {
+        margin: 12px;
+      }
+    }
   }
 
   .ant-card-body {
