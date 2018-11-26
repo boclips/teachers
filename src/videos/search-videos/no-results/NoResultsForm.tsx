@@ -21,7 +21,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class AddNoResultsForm extends React.PureComponent<Props & FormComponentProps> {
+class NoResultsForm extends React.PureComponent<Props & FormComponentProps> {
   constructor(props: Props & FormComponentProps) {
     super(props);
   }
@@ -123,4 +123,4 @@ class AddNoResultsForm extends React.PureComponent<Props & FormComponentProps> {
   }
 }
 
-export default Form.create<Props>()(AddNoResultsForm);
+export default Form.create<Props>()(NoResultsForm);

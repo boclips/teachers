@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { RouterState } from '../../State';
+import { RouterState } from '../../../State';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {
@@ -18,7 +18,7 @@ export class SearchBar extends React.Component<StateProps & DispatchProps> {
   public render() {
     return (
       <StatefulSearchBar
-        onQuerySubmitted={this.props.onQuerySubmitted}
+        onSubmit={this.props.onQuerySubmitted}
         value={this.props.query}
       />
     );

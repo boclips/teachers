@@ -4,7 +4,7 @@ import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { BoclipsFooter } from '../components/BoclipsFooter';
 import boclipsLogo from '../images/boclips-logo.png';
-import SearchBar from './search-videos/SearchBar';
+import SearchBar from './search-videos/search-bar/SearchBar';
 
 const { Content } = Layout;
 export default class HomeView extends PureComponent {

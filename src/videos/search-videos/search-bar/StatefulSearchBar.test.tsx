@@ -1,19 +1,16 @@
 import Mock = jest.Mock;
-import Search from 'antd/lib/input/Search';
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import StatefulSearchBar from './StatefulSearchBar';
 
-let onSearch: Mock;
 let onQuerySubmitted: Mock;
 
 let wrapper: ReactWrapper;
 
 beforeEach(() => {
-  onSearch = jest.fn();
   onQuerySubmitted = jest.fn();
   wrapper = mount(
-    <StatefulSearchBar onQuerySubmitted={onQuerySubmitted} value={'bears'} />,
+    <StatefulSearchBar onSubmit={onQuerySubmitted} value={'bears'} />,
   );
 });
 
@@ -27,15 +24,9 @@ test('initializes input with value prop', () => {
 });
 
 test('does not invoke the search callback after mounting when value not specified', () => {
-  onSearch.mockClear();
-  mount(<StatefulSearchBar onQuerySubmitted={onQuerySubmitted} />);
-  expect(onSearch).not.toHaveBeenCalled();
-});
-
-test('invokes query submit callback when query is submitted', () => {
-  wrapper.find(Search).prop('onSearch')('polar bears');
-
-  expect(onQuerySubmitted).toHaveBeenCalledWith('polar bears');
+  onQuerySubmitted.mockClear();
+  mount(<StatefulSearchBar onSubmit={onQuerySubmitted} />);
+  expect(onQuerySubmitted).not.toHaveBeenCalled();
 });
 
 describe('when value prop changes', () => {

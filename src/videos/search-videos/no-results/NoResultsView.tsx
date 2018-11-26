@@ -1,10 +1,10 @@
 import React from 'react';
-import noResultsIllustration from '../../images/no-results-illustration.png';
+import noResultsIllustration from '../../../images/no-results-illustration.png';
 
 import { message } from 'antd';
 import axios from 'axios';
-import { Links } from '../../links/Links';
-import AddNoResultsForm from './AddNoResultsForm';
+import { Links } from '../../../links/Links';
+import NoResultsForm from './NoResultsForm';
 import NoResultsFormSubmitted from './NoResultsFormSubmitted';
 
 interface Props {
@@ -16,7 +16,7 @@ interface State {
   isFormSubmitted: boolean;
 }
 
-export default class ZeroResultsView extends React.Component<Props, State> {
+export default class NoResultsView extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -58,7 +58,7 @@ export default class ZeroResultsView extends React.Component<Props, State> {
             </div>
           )}
           {!this.state.isFormSubmitted && (
-            <AddNoResultsForm
+            <NoResultsForm
               onSuccessfulSubmit={this.renderFormSubmittedView}
               query={this.props.query}
             />

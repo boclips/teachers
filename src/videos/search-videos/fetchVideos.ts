@@ -4,7 +4,7 @@ import { SearchResults } from '../../State';
 import { parseVideosResponse } from './parseVideosResponse';
 import { SearchRequest } from './SearchRequest';
 
-export default function searchVideos(
+export default function fetchVideos(
   searchRequest: SearchRequest,
   links: Links,
 ): Promise<SearchResults> {

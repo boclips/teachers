@@ -4,11 +4,11 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Links } from '../../links/Links';
-import State, { SearchResults } from '../../State';
-import { Video } from '../Video';
+import { Links } from '../../../links/Links';
+import State, { SearchResults } from '../../../State';
+import { Video } from '../../Video';
+import NoResultsView from '../no-results/NoResultsView';
 import SearchResult from './SearchResult';
-import ZeroResultsView from './ZeroResultsView';
 
 interface StateProps {
   loading: boolean;
@@ -96,7 +96,7 @@ class SearchResultsView extends React.PureComponent<
 
   public renderZeroResultsMessage() {
     return (
-      <ZeroResultsView
+      <NoResultsView
         links={this.props.links}
         query={this.props.results.query}
       />

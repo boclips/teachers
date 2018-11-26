@@ -3,7 +3,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStore } from 'redux-mock-store';
-import { RouterState } from '../../State';
+import { RouterState } from '../../../State';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
 
@@ -41,7 +41,7 @@ test('Extracts query string from the path', () => {
 
 test('dispatches a navigation action when query submitted callback invoked', () => {
   const query = 'the meaning of life';
-  statefulSearchBar.prop('onQuerySubmitted')(query);
+  statefulSearchBar.prop('onSubmit')(query);
 
   expect(store.getActions()).toContainEqual(
     push(`/videos?pageNumber=1&q=${encodeURIComponent(query)}`),

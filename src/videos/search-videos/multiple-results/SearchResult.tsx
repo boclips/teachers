@@ -1,8 +1,8 @@
 import Card from 'antd/lib/card';
 import Skeleton from 'antd/lib/skeleton';
 import React from 'react';
-import VideoPreview from '../components/VideoPreview';
-import { Video } from '../Video';
+import VideoPreview from '../../components/VideoPreview';
+import { Video } from '../../Video';
 
 interface Props {
   loading: boolean;

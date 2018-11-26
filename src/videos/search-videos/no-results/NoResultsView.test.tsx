@@ -2,29 +2,29 @@ import { message } from 'antd';
 import axios from 'axios';
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
-import eventually from '../../../test-support/eventually';
-import { LinksFactory } from '../../../test-support/factories';
-import { Link } from '../../links/Link';
-import AddNoResultsForm from './AddNoResultsForm';
-import { NoResultsFormPage } from './AddNoResultsForm.test';
+import eventually from '../../../../test-support/eventually';
+import { LinksFactory } from '../../../../test-support/factories';
+import { NoResultsFormPage } from '../../../../test-support/page-objects/NoResultsFormPage';
+import { Link } from '../../../links/Link';
+import AddNoResultsForm from './NoResultsForm';
 import Mock = jest.Mock;
 import NoResultsFormSubmitted from './NoResultsFormSubmitted';
-import ZeroResultsView from './ZeroResultsView';
+import NoResultsView from './NoResultsView';
 
 describe('when form is submitted', () => {
-  let zeroResultsView: ReactWrapper;
+  let noResultsView: ReactWrapper;
   let form: NoResultsFormPage;
 
   beforeEach(() => {
-    zeroResultsView = mount(
-      <ZeroResultsView
+    noResultsView = mount(
+      <NoResultsView
         query={'noresult'}
         links={LinksFactory.sample({
           createNoSearchResultsEvent: new Link({ href: '/events/xxx' }),
         })}
       />,
     );
-    form = NoResultsFormPage.fromWrapper(zeroResultsView);
+    form = NoResultsFormPage.fromWrapper(noResultsView);
   });
 
   it('renders confirmation message', async () => {
@@ -33,9 +33,9 @@ describe('when form is submitted', () => {
     form.submit();
 
     await eventually(() => {
-      zeroResultsView.update();
-      expect(zeroResultsView.find(AddNoResultsForm)).not.toExist();
-      expect(zeroResultsView.find(NoResultsFormSubmitted)).toExist();
+      noResultsView.update();
+      expect(noResultsView.find(AddNoResultsForm)).not.toExist();
+      expect(noResultsView.find(NoResultsFormSubmitted)).toExist();
     });
   });
 
@@ -48,7 +48,7 @@ describe('when form is submitted', () => {
       form.submit();
 
       await eventually(() => {
-        zeroResultsView.update();
+        noResultsView.update();
         expect(message.error).toHaveBeenCalled();
       });
     });

@@ -10,7 +10,7 @@ import boclipsLogo from '../images/boclips-logo.png';
 import boclipsMiniLogo from '../images/boclips-mini-logo.png';
 import { actionCreatorFactory } from '../redux/actions';
 import { LoginState } from '../State';
-import SearchBar from '../videos/search-videos/SearchBar';
+import SearchBar from '../videos/search-videos/search-bar/SearchBar';
 import { SearchRequest } from '../videos/search-videos/SearchRequest';
 
 const { Header, Content } = Layout;

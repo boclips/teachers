@@ -1,9 +1,9 @@
 import Search from 'antd/lib/input/Search';
 import React from 'react';
-import logo from '../../images/search-icon.png';
+import logo from '../../../images/search-icon.png';
 
 interface Props {
-  onQuerySubmitted: (query: string) => void;
+  onSubmit: (query: string) => void;
   value?: string;
 }
 
@@ -17,18 +17,12 @@ class FreshSearchOnValueChange extends React.Component<Props> {
         type="text"
         data-qa="search-input"
         aria-label="search"
-        onSearch={this.props.onQuerySubmitted}
+        onSearch={this.props.onSubmit}
         enterButton="Search"
         size="large"
       />
     );
   }
-
-  // public componentDidMount() {
-  //   if (this.props.value) {
-  //     this.props.onSearch(this.props.value);
-  //   }
-  // }
 }
 
 export default class StatefulSearchBar extends React.Component<Props> {
@@ -36,8 +30,7 @@ export default class StatefulSearchBar extends React.Component<Props> {
     return [
       <FreshSearchOnValueChange
         key={this.props.value || ''}
-        // onSearch={this.props.onSearch}
-        onQuerySubmitted={this.props.onQuerySubmitted}
+        onSubmit={this.props.onSubmit}
         value={this.props.value}
       />,
     ];

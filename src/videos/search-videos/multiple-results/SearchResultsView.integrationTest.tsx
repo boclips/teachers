@@ -1,4 +1,4 @@
-import { SearchPage } from '../../../test-support/SearchPage';
+import { SearchPage } from '../../../../test-support/page-objects/SearchPage';
 
 test('search for a video shows results', async () => {
   const searchPage = await SearchPage.load('some video');

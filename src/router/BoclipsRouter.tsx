@@ -8,7 +8,7 @@ import TopSearchBarLayout from '../layout/TopSearchBarLayout';
 import LoggedOutView from '../public/LoggedOutView';
 import { RouterState } from '../State';
 import HomeView from '../videos/HomeView';
-import SearchResultsView from '../videos/search-videos/SearchResultsView';
+import SearchResultsView from '../videos/search-videos/multiple-results/SearchResultsView';
 import VideoDetailsView from '../videos/video-details/VideoDetailsView';
 import PrivateRoute from './PrivateRoute';
 

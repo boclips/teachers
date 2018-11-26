@@ -3,10 +3,10 @@ import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import AppConfig from '../../AppConfig';
 import tickIcon from '../../images/green-check.png';
+import VideoPlayer from '../player/VideoPlayer';
 import { Video } from '../Video';
 import DateFormatter from './DateFormatter';
 import DurationFormatter from './DurationFormatter';
-import VideoPlayer from './VideoPlayer';
 
 interface Props {
   video: Video;
