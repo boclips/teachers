@@ -27,9 +27,24 @@ class SearchResultsView extends React.PureComponent<
   public render() {
     return (
       <section className={'search-results-container'} data-qa="search-page">
+        {this.renderResultCount()}
         {this.renderResults()}
         {this.renderPagination()}
       </section>
+    );
+  }
+
+  private renderResultCount() {
+    const totalElements = this.props.results.paging.totalElements;
+    return (
+      !this.props.loading && (
+        <div className="results-count">
+          <span className={'count'} data-qa="search-count">
+            {totalElements}
+          </span>
+          result(s) found
+        </div>
+      )
     );
   }
 

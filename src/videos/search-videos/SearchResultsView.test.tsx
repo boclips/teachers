@@ -56,6 +56,12 @@ test('shows search results when there are any', () => {
   expect(firstVideo.find(VideoPlayer)).toHaveProp('searchId', 's123');
 });
 
+test('shows total count of videos', () => {
+  const store = mockStore(createStore('donuts'));
+  const wrapper = mountWith(store);
+  expect(wrapper.find(By.dataQa('search-count'))).toHaveText('1111');
+});
+
 const mockStore = configureStore<SearchState & LinksState & RouterState>();
 
 function onPageChange() {}
@@ -77,7 +83,7 @@ function createStore(query: string, isLoading = false) {
       query,
       searchId: 's123',
       paging: {
-        totalElements: 0,
+        totalElements: 1111,
         totalPages: 0,
         number: 0,
         size: 10,
