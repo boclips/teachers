@@ -35,13 +35,15 @@ beforeEach(() => {
   statefulSearchBar = wrapper.find(StatefulSearchBar);
 });
 
-test('Extracts query string from the router state', () => {
+test('Extracts query string from the path', () => {
   expect(statefulSearchBar).toHaveProp('value', 'eggs');
 });
 
 test('dispatches a navigation action when query submitted callback invoked', () => {
-  statefulSearchBar.prop('onQuerySubmitted')('the meaning of life');
+  const query = 'the meaning of life';
+  statefulSearchBar.prop('onQuerySubmitted')(query);
+
   expect(store.getActions()).toContainEqual(
-    push('/videos?pageNumber=1&q=the%20meaning%20of%20life'),
+    push(`/videos?pageNumber=1&q=${encodeURIComponent(query)}`),
   );
 });

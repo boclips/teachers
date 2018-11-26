@@ -6,11 +6,8 @@ import { Store } from 'redux';
 import { RouterActionType } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { findAll, findOne } from '../../../test-support/enzymeHelpers';
-import { LinksFactory, VideoFactory } from '../../../test-support/factories';
+import { LinksFactory } from '../../../test-support/factories';
 import { LinksState, RouterState, SearchState } from '../../State';
-import VideoPlayer from '../components/VideoPlayer';
-import { Video } from '../Video';
 import SearchResultsView from './SearchResultsView';
 
 test('shows placeholders when results are loading', () => {
@@ -40,26 +37,6 @@ test('does not show a no results message when search query is empty', () => {
   const message = wrapper.find(By.dataQa('search-zero-results'));
 
   expect(message).not.toExist();
-});
-
-test('shows search results when there are any', () => {
-  const video1: Video = VideoFactory.sample({ title: 'first video title' });
-  const video2: Video = VideoFactory.sample({ title: 'second video title' });
-  const store = createStore('donuts');
-  store.search.videos = [video1, video2];
-
-  const results = findAll(mountWith(mockStore(store)), 'search-result');
-  expect(results).toHaveLength(2);
-
-  const firstVideo = results.at(0);
-  expect(findOne(firstVideo, 'video-title')).toHaveText('first video title');
-  expect(firstVideo.find(VideoPlayer)).toHaveProp('searchId', 's123');
-});
-
-test('shows total count of videos', () => {
-  const store = mockStore(createStore('donuts'));
-  const wrapper = mountWith(store);
-  expect(wrapper.find(By.dataQa('search-count'))).toHaveText('1111');
 });
 
 const mockStore = configureStore<SearchState & LinksState & RouterState>();

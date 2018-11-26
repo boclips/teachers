@@ -1,21 +1,7 @@
-import { mount, ReactWrapper } from 'enzyme';
-import createMemoryHistory from 'history/createMemoryHistory';
-import React from 'react';
-import { findAll, findOne } from '../../../test-support/enzymeHelpers';
-import eventually from '../../../test-support/eventually';
-import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import App from '../../App';
-import { links, videos } from '../../video-service-responses';
+import { SearchPage } from '../../../test-support/SearchPage';
 
 test('search for a video shows results', async () => {
-  MockFetchVerify.get(
-    `/v1/videos?pageNumber=0&pageSize=10&query=${encodeURIComponent(
-      'some video',
-    )}`,
-    JSON.stringify(videos),
-  );
-
-  const searchPage = await SearchPage.mount();
+  const searchPage = await SearchPage.load('some video');
 
   expect(searchPage.getVideoResults()).toHaveLength(2);
   expect(searchPage.getVideoResults()[0]).toEqual({
@@ -28,49 +14,8 @@ test('search for a video shows results', async () => {
   });
 });
 
-export class SearchPage {
-  constructor(public wrapper: ReactWrapper) {}
+test('shows total count of videos', async () => {
+  const searchPage = await SearchPage.load('some video');
 
-  public static async mount() {
-    MockFetchVerify.get('/v1/', JSON.stringify(links));
-    const page = new SearchPage(
-      mount(
-        <App
-          history={createMemoryHistory({
-            initialEntries: ['/videos?pageNumber=1&q=some%20video'],
-          })}
-        />,
-      ),
-    );
-    await page.hasLoaded();
-    await this.hasResults();
-    return page;
-  }
-
-  public async hasLoaded() {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      findOne(this.wrapper, 'search-page');
-    });
-  }
-
-  public async hasResults() {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      this.getVideoResults();
-    });
-  }
-
-  public getVideoResults() {
-    return findAll(this.wrapper, 'search-result').map(el => ({
-      title: findOne(el, 'video-title').text(),
-      description: findOne(el, 'video-description').text(),
-      contentProvider: findOne(el, 'video-content-provider').text(),
-      duration: findOne(el, 'video-duration').text(),
-      releasedOn: findOne(el, 'video-released-on').text(),
-      thumbnailUrl: findOne(el, 'video-thumbnail').prop('src'),
-    }));
-  }
-
-  private static hasResults() {}
-}
+  expect(searchPage.getCount()).toBe(2);
+});
