@@ -6,13 +6,17 @@
   margin-top: 46px;
 
   .ant-skeleton .ant-skeleton-avatar-lg {
-    width: @video-width;
-    height: @video-height;
+    @media (min-width: 768px) {
+      width: @video-width;
+      height: @video-height;
+    }
   }
 
   .boclips-player {
-    width: @video-width;
-    height: @video-height;
+    @media (min-width: 768px) {
+      width: @video-width;
+      height: @video-height;
+    }
   }
 
 }

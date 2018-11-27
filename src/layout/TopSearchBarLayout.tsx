@@ -55,7 +55,12 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
           <Header className="fixed">
             <Row>
               <Col sm={{ span: 24 }} md={{ span: 6 }}>
-                <section className="logo-logout">
+                <section
+                  className={
+                    'logo-logout' +
+                    (this.props.authorized ? '' : ' unauthenticated')
+                  }
+                >
                   {this.renderLogo()}
                   {this.renderMiniLogout(this.props.authorized)}
                 </section>

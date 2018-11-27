@@ -44,8 +44,14 @@
     .logo-logout {
         @media (max-width: 768px) {
           height: 36px;
+          &.unauthenticated {
+            height: 50px;
+          }
           display: flex;
           margin-top: -12px;
+          >* {
+            padding-bottom: 12px;
+          }
           justify-content: space-between;
         }
 
