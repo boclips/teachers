@@ -13,6 +13,7 @@ import { linksReducer } from './links/linksReducer';
 import { Icon } from 'antd';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
+import onLinksFetchedMiddleware from './links/onLinksFetchedMiddleware';
 import onUrlChangeMiddleware from './onUrlChangeMiddleware';
 import BoclipsRouter, { defaultHistory } from './router/BoclipsRouter';
 import { loginReducer } from './router/PrivateRoute';
@@ -45,6 +46,7 @@ export default class App extends PureComponent<Props> {
         searchVideosMiddleware,
         videoDetailsMiddleware,
         onUrlChangeMiddleware,
+        onLinksFetchedMiddleware,
       ),
     ),
   );

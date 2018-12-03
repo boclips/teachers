@@ -1,6 +1,7 @@
 import moment = require('moment');
 import { Link } from '../src/links/Link';
 import { Links } from '../src/links/Links';
+import { RawLinks } from '../src/links/RawLinks';
 import { StreamPlayback, Video } from '../src/videos/Video';
 
 export class VideoFactory {
@@ -19,6 +20,7 @@ export class VideoFactory {
     });
   }
 }
+
 export class LinksFactory {
   public static sample(arg: Partial<Links> = {}): Links {
     return Object.freeze({
@@ -28,6 +30,25 @@ export class LinksFactory {
         arg.createPlaybackEvent || new Link({ href: '/events' }),
       createNoSearchResultsEvent:
         arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
+      activate: arg.activate,
+      profile: arg.profile,
+    });
+  }
+}
+
+export class LinksResponseFactory {
+  public static sample(arg: Partial<RawLinks> = {}): any {
+    return Object.freeze({
+      _links: {
+        search: arg.search || { href: '/videos' },
+        video: arg.video || { href: '/videos/{id}', templated: true },
+        createPlaybackEvent: arg.createPlaybackEvent || { href: '/events' },
+        createNoSearchResultsEvent: arg.createNoSearchResultsEvent || {
+          href: '/events/xxx',
+        },
+        activate: arg.activate,
+        profile: arg.profile,
+      },
     });
   }
 }

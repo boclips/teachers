@@ -51,7 +51,7 @@ export class Link {
   }
 }
 
-interface RawLink {
+export interface RawLink {
   href: string;
   templated?: boolean;
 }
