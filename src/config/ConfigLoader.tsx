@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import fetchLinks from '../links/fetchLinks';
 import { Links } from '../links/Links';
-import { actionCreatorFactory } from '../redux/actions';
+import {
+  actionCreatorFactory,
+  actionCreatorFactoryVoid,
+} from '../redux/actions';
 import { LinksState } from '../State';
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 }
 
 export const storeLinksAction = actionCreatorFactory<Links>('STORE_LINKS');
+export const fetchLinksAction = actionCreatorFactoryVoid('FETCH_LINKS');
 
 class ConfigLoader extends React.PureComponent<Props> {
   public componentDidMount(): void {
@@ -37,10 +40,7 @@ function mapStateToProps(state: LinksState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    requestConfig: () =>
-      fetchLinks()
-        .then(storeLinksAction)
-        .then(dispatch),
+    requestConfig: () => dispatch(fetchLinksAction()),
   };
 }
 

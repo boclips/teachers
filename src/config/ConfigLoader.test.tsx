@@ -11,7 +11,7 @@ import eventually from '../../test-support/eventually';
 import { LinksFactory } from '../../test-support/factories';
 import fetchLinks from '../links/fetchLinks';
 import { LinksState } from '../State';
-import ConfigLoader, { storeLinksAction } from './ConfigLoader';
+import ConfigLoader, { fetchLinksAction } from './ConfigLoader';
 
 const loading = () => <span id="loading" />;
 const mockStore = configureStore<LinksState>();
@@ -27,16 +27,14 @@ const fetchLinksMock = fetchLinks as Mock;
 
 describe('when component mounts', () => {
   describe('when links fetched', () => {
-    test('dispatches STORE_LINKS action', async () => {
+    test('dispatches FETCH_LINKS action', async () => {
       fetchLinksMock.mockReturnValue(Promise.resolve(LinksFactory.sample()));
       const store = mockStore({ links: null });
 
       mountConfigLoader(store);
 
       await eventually(() =>
-        expect(store.getActions()).toContainEqual(
-          storeLinksAction(LinksFactory.sample()),
-        ),
+        expect(store.getActions()).toContainEqual(fetchLinksAction()),
       );
     });
   });
