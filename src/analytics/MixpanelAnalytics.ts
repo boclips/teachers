@@ -5,14 +5,18 @@ export default class MixpanelAnalytics implements Analytics {
   private static instance: MixpanelAnalytics;
 
   private mixpanelInstance: Mixpanel;
-  private stagingHost = '.staging-boclips.com';
-  private productionHost = '.boclips.com';
-  private testingToken = '70f2ae29eaa67a0e93513c2f0d86c94b';
-  private stagingToken = '4290d60e0956507222103ffd8cdfad35';
-  private productionToken = '5695e44d19f62e9c99c37d6ea0e11d85';
+  private static stagingHost = '.staging-boclips.com';
+  private static productionHost = '.boclips.com';
+  public static testingToken = '70f2ae29eaa67a0e93513c2f0d86c94b';
+  public static stagingToken = '4290d60e0956507222103ffd8cdfad35';
+  public static productionToken = '5695e44d19f62e9c99c37d6ea0e11d85';
 
   private constructor() {
-    mixpanel.init(this.selectToken(), {}, 'educators');
+    mixpanel.init(
+      MixpanelAnalytics.selectToken(window.location.hostname.toLowerCase()),
+      {},
+      'educators',
+    );
     this.mixpanelInstance = mixpanel.educators;
   }
 
@@ -20,12 +24,11 @@ export default class MixpanelAnalytics implements Analytics {
     return this.instance || (this.instance = new this());
   }
 
-  private selectToken() {
-    const hostname = window.location.hostname.toLowerCase();
+  public static selectToken(hostname: string) {
     let mixpanelToken;
-    if (hostname.search(this.stagingHost) >= 0) {
+    if (hostname.indexOf(this.stagingHost) !== -1) {
       mixpanelToken = this.stagingToken;
-    } else if (hostname.search(this.productionHost) >= 0) {
+    } else if (hostname.indexOf(this.productionHost) !== -1) {
       mixpanelToken = this.productionToken;
     } else {
       mixpanelToken = this.testingToken;
