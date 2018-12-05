@@ -2,7 +2,7 @@ import mixpanel from 'mixpanel-browser';
 import Analytics, { EventTypes } from './Analytics';
 
 export default class MixpanelAnalytics implements Analytics {
-  private static _instance: MixpanelAnalytics;
+  private static instance: MixpanelAnalytics;
 
   private mixpanelInstance: Mixpanel;
   private stagingHost = '.staging-boclips.com';
@@ -16,7 +16,7 @@ export default class MixpanelAnalytics implements Analytics {
   }
 
   public static getInstance(): MixpanelAnalytics {
-    return this._instance || (this._instance = new this());
+    return this.instance || (this.instance = new this());
   }
 
   private selectToken() {
