@@ -12,7 +12,8 @@ export default class MixpanelAnalytics implements Analytics {
   private productionToken = '5695e44d19f62e9c99c37d6ea0e11d85';
 
   private constructor() {
-    this.mixpanelInstance = mixpanel.init(this.selectToken());
+    mixpanel.init(this.selectToken(), {}, 'educators');
+    this.mixpanelInstance = mixpanel.educators;
   }
 
   public static getInstance(): MixpanelAnalytics {
