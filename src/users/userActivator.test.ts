@@ -14,7 +14,7 @@ const links = LinksFactory.sample({
   activate: new Link({ href: '/activate' }),
 });
 
-const analytics: Analytics = { publish: jest.fn() };
+const analytics: Analytics = { publish: jest.fn(), setUserId: jest.fn() };
 analyticsFactoryMock.getInstance = jest.fn(() => analytics);
 
 describe('when activate link present', () => {

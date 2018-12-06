@@ -39,4 +39,8 @@ export default class MixpanelAnalytics implements Analytics {
   public publish(event: EventTypes) {
     this.mixpanelInstance.track(event.toString());
   }
+
+  public setUserId(userId: string) {
+    this.mixpanelInstance.identify(userId);
+  }
 }

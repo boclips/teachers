@@ -40,6 +40,10 @@ interface Props {
 }
 
 export default class App extends PureComponent<Props> {
+  public getStore() {
+    return this.store;
+  }
+
   private store = createStore<State, any, any, any>(
     connectRouter(defaultHistory)(rootReducer),
     composeEnhancers(
