@@ -19,3 +19,9 @@ test('shows total count of videos', async () => {
 
   expect(searchPage.getCount()).toBe(2);
 });
+
+test('redirects when clicking on first title', async () => {
+  const searchPage = await SearchPage.load('some video');
+  searchPage.clickOnFirstTitle();
+  await searchPage.isOnDetailsPage();
+});

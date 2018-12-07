@@ -1,7 +1,7 @@
 import { Skeleton } from 'antd';
 import React from 'react';
-import VideoPreview from '../components/VideoPreview';
 import { Video } from '../Video';
+import VideoDetailCard from './VideoDetailCard';
 
 interface Props {
   video: Video | null;
@@ -14,7 +14,7 @@ function RenderVideoDetails({ video }: Props) {
 
   return (
     <section>
-      <VideoPreview video={video} searchId={null} />
+      <VideoDetailCard video={video} searchId={null} />
     </section>
   );
 }

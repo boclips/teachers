@@ -17,7 +17,6 @@
       width: @video-width;
       height: @video-height;
     }
-    border-radius: 3px;
 
     video {
       width: 100%;
@@ -50,6 +49,10 @@
       padding: 12px;
     }
 
+    .no-underline {
+      text-decoration: none;
+    }
+
     .video-header {
       display: flex;
       justify-content: space-between;
@@ -59,13 +62,15 @@
         font-size: 16px;
         font-weight: bold;
         line-height: 25px;
-        max-height: 50px;
         margin-bottom: 0px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
+        .clamp-2-lines {
+          max-height: 50px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+        }
       }
 
       .duration {
@@ -78,6 +83,9 @@
     }
 
     .subtitle {
+      .video-content-provider-link {
+        color: #848FBB;
+      }
       font-size: 14px;
       color: #848FBB;
       font-weight: bold;
@@ -90,12 +98,14 @@
       margin-top: 16px;
 
       @media (min-width: 768px) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        max-height: 72px;
+        .clamp-3-lines {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          max-height: 72px;
+        }
       }
 
     }
