@@ -12,6 +12,12 @@
     flex-direction: column;
   }
 
+  .video-preview-thumbnail {
+    .boclips-player--preview-container{
+      border-radius: 4px;
+    }
+  }
+
   .boclips-player {
     @media (min-width: 768px) {
       width: @video-width;
@@ -30,7 +36,6 @@
     }
 
     .boclips-player--preview-container {
-      border-radius: 4px;
       @media (max-width: 768px) {
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
@@ -42,7 +47,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-left: 16px;
+    margin: 8px 0px 0px 24px;
 
     @media (max-width: 768px) {
       margin-left: 0px;
