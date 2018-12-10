@@ -25,13 +25,16 @@ class SearchResultsView extends React.PureComponent<
   StateProps & DispatchProps
 > {
   public render() {
-    return (
-      <section className={'search-results-container'} data-qa="search-page">
-        {this.renderResultCount()}
-        {this.renderResults()}
-        {this.renderPagination()}
-      </section>
-    );
+    if (this.props.loading) {
+      return this.renderResultPlaceholders();
+    }
+    if (this.props.results.videos.length > 0) {
+      return this.renderResults();
+    }
+    if (this.props.results.query.length > 0) {
+      return this.renderZeroResultsMessage();
+    }
+    return null;
   }
 
   private renderResultCount() {
@@ -49,16 +52,13 @@ class SearchResultsView extends React.PureComponent<
   }
 
   public renderResults() {
-    if (this.props.loading) {
-      return this.renderResultPlaceholders();
-    }
-    if (this.props.results.videos.length > 0) {
-      return this.renderVideos();
-    }
-    if (this.props.results.query.length > 0) {
-      return this.renderZeroResultsMessage();
-    }
-    return null;
+    return (
+      <section className={'search-results-container'} data-qa="search-page">
+        {this.renderResultCount()}
+        {this.renderVideos()}
+        {this.renderPagination()}
+      </section>
+    );
   }
 
   public renderPagination() {
