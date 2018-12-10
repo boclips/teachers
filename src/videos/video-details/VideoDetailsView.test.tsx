@@ -37,7 +37,9 @@ test('renders video details when the video has loaded', () => {
   );
 
   expect(wrapper.find(By.dataQa('video-details'))).toExist();
-  expect(wrapper.find(By.dataQa('video-title'))).toHaveText('my video title');
+  expect(wrapper.find(By.dataQa('video-details-title'))).toHaveText(
+    'my video title',
+  );
   expect(wrapper.find(By.dataQa('video-description'))).toHaveText(
     'my video description',
   );
