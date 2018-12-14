@@ -72,6 +72,7 @@ export default class VideoPreview extends React.PureComponent<Props> {
               data-qa="copy-link"
               size={'large'}
               className={'secondary copy-link-button'}
+              tabIndex={0}
             >
               Copy link
             </Button>
@@ -84,14 +85,19 @@ export default class VideoPreview extends React.PureComponent<Props> {
   private showCopiedNotification(url: string) {
     notification.success({
       message: url,
-      description: `has been copied to your clipboard. Paste link to your tool of choice.`,
+      description: (
+        <div role="alert">
+          `has been copied to your clipboard. Paste link to your tool of
+          choice.`
+        </div>
+      ),
       placement: 'bottomRight',
       icon: <img src={tickIcon} />,
       style: {
         background: '#008F52',
         color: '#FFFFFF',
       },
-      duration: 5,
+      duration: 6,
     });
   }
 }
