@@ -3,7 +3,7 @@ import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/App';
 import { links, video177, videos } from '../../src/video-service-responses';
-import { findOne, search } from '../enzymeHelpers';
+import { findAll, findOne, search } from '../enzymeHelpers';
 import eventually from '../eventually';
 import MockFetchVerify from '../MockFetchVerify';
 
@@ -40,6 +40,7 @@ export class VideoDetailsPage {
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: findOne(el, 'video-thumbnail').prop('src'),
+      subjects: findAll(el, 'video-details-subject').map(tag => tag.text()),
     }))[0];
   }
 

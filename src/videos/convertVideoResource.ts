@@ -23,5 +23,6 @@ export default function convertVideoResource(resource: any): Video {
     contentProvider: resource.contentProvider,
     thumbnailUrl: resource.playback.thumbnailUrl,
     playback: getPlaybackProperties(resource),
+    subjects: resource.subjects,
   };
 }

@@ -2,6 +2,7 @@ import { Icon } from 'antd';
 import React from 'react';
 import DateFormatter from '../components/DateFormatter';
 import DurationFormatter from '../components/DurationFormatter';
+import SubjectTag from '../components/SubjectTag';
 import VideoPlayer from '../player/VideoPlayer';
 import { Video } from '../Video';
 
@@ -39,6 +40,11 @@ export default class VideoDetailCard extends React.PureComponent<Props> {
           <p data-qa="video-duration" className={'subtitle duration'}>
             <Icon type="clock-circle" />{' '}
             <DurationFormatter duration={this.props.video.duration} />
+          </p>
+          <p>
+            {this.props.video.subjects.map(subject => (
+              <SubjectTag subject={subject} key={subject} />
+            ))}
           </p>
           <p data-qa="video-description" className="description">
             {this.props.video.description}

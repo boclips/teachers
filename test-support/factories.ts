@@ -14,6 +14,7 @@ export class VideoFactory {
       duration: arg.duration || moment.duration(2, 'minutes'),
       releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',
+      subjects: arg.subjects || ['Maths'],
       playback:
         (arg.playback as StreamPlayback) ||
         new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),

@@ -13,7 +13,7 @@ test('converts a video with stream playback', () => {
   expect(video.releasedOn).toEqual(new Date(Date.UTC(2018, 1, 11)));
   expect(video.contentProvider).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
-
+  expect(video.subjects).toEqual(['Maths', 'Physics']);
   expect(video.playback instanceof StreamPlayback).toBeTruthy();
   expect((video.playback as StreamPlayback).getUrl()).toEqual(
     'https://cdn.kaltura.com/stream/147.mpd',
