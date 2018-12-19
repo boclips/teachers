@@ -1,4 +1,4 @@
-import Tag from 'antd/lib/Tag';
+import { Tag } from 'antd';
 import React from 'react';
 
 interface Props {
