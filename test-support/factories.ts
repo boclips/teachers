@@ -10,7 +10,7 @@ export class VideoFactory {
       id: arg.id || '123',
       title: arg.title || 'my video title',
       description: arg.description || 'my video description',
-      contentProvider: arg.contentProvider || 'Bodevs Productions',
+      contentPartner: arg.contentPartner || 'Bodevs Productions',
       duration: arg.duration || moment.duration(2, 'minutes'),
       releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',

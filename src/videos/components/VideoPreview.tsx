@@ -53,7 +53,7 @@ export default class VideoPreview extends React.PureComponent<Props> {
               </span>{' '}
               by{' '}
               <span data-qa="video-content-provider">
-                {this.props.video.contentProvider}
+                {this.props.video.contentPartner}
               </span>
             </p>
             <p

@@ -11,7 +11,7 @@ test('converts a video with stream playback', () => {
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
   expect(video.releasedOn).toEqual(new Date(Date.UTC(2018, 1, 11)));
-  expect(video.contentProvider).toEqual('cp1');
+  expect(video.contentPartner).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
   expect(video.subjects).toEqual(['Maths', 'Physics']);
   expect(video.playback instanceof StreamPlayback).toBeTruthy();
@@ -27,7 +27,7 @@ test('converts a video with youtube playback', () => {
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
   expect(video.releasedOn).toEqual(new Date(Date.UTC(2018, 1, 11)));
-  expect(video.contentProvider).toEqual('cp1');
+  expect(video.contentPartner).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
   expect(video.playback instanceof YoutubePlayback).toBeTruthy();
   expect((video.playback as YoutubePlayback).getId()).toEqual('youtubeId');

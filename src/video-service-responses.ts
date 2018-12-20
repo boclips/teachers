@@ -20,7 +20,7 @@ export const video177 = Object.freeze({
   title: 'KS3/4 Science: Demonstrating Chemistry',
   description: 'Matthew Tosh shows us the science.',
   releasedOn: '2018-02-11',
-  contentProvider: 'cp1',
+  contentPartner: 'cp1',
   subjects: ['Maths', 'Physics'],
   playback: {
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
@@ -34,7 +34,7 @@ const video147 = Object.freeze({
   title: 'KS3/4 Science: Big Screen Science',
   description: 'The winners of the North West round.',
   releasedOn: '2018-02-12',
-  contentProvider: 'cp2',
+  contentPartner: 'cp2',
   subjects: [],
   playback: {
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/147.jpg',
@@ -60,7 +60,7 @@ export const youtubeVideo1 = {
   title: 'A youtube video',
   description: 'Matthew Tosh shows us the science.',
   releasedOn: '2018-02-11',
-  contentProvider: 'cp1',
+  contentPartner: 'cp1',
   subjects: [],
   playback: {
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',

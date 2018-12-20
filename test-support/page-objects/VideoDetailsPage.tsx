@@ -36,7 +36,7 @@ export class VideoDetailsPage {
     return findOne(this.wrapper, 'video-details').map(el => ({
       title: findOne(el, 'video-details-title').text(),
       description: findOne(el, 'video-description').text(),
-      contentProvider: findOne(el, 'video-content-provider').text(),
+      contentPartner: findOne(el, 'video-content-partner').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: findOne(el, 'video-thumbnail').prop('src'),

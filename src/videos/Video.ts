@@ -6,7 +6,7 @@ export interface Video {
   description: string;
   duration: Duration;
   releasedOn: Date;
-  contentProvider: string;
+  contentPartner: string;
   subjects: string[];
   playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;

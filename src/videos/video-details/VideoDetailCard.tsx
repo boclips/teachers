@@ -33,8 +33,8 @@ export default class VideoDetailCard extends React.PureComponent<Props> {
               <DateFormatter date={this.props.video.releasedOn} />
             </span>{' '}
             by{' '}
-            <span data-qa="video-content-provider">
-              {this.props.video.contentProvider}
+            <span data-qa="video-content-partner">
+              {this.props.video.contentPartner}
             </span>
           </p>
           <p data-qa="video-duration" className={'subtitle duration'}>
