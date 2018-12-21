@@ -4,13 +4,13 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import TopSearchBarLayout from '../layout/TopSearchBarLayout';
-import PrivateRoute from '../login/PrivateRoute';
-import LoggedOutView from '../public/LoggedOutView';
-import { RouterState } from '../State';
-import HomeView from '../videos/HomeView';
-import SearchResultsView from '../videos/search-videos/multiple-results/SearchResultsView';
-import VideoDetailsView from '../videos/video-details/VideoDetailsView';
+import PrivateRoute from '../components/login/PrivateRoute';
+import TopSearchBarLayout from '../components/searchBar/TopSearchBarLayout';
+import { RouterState } from '../redux/State';
+import HomeView from '../views/home/HomeView';
+import LoggedOutView from '../views/loggedout/LoggedOutView';
+import SearchResultsView from '../views/searchResults/SearchResultsView';
+import VideoDetailsView from '../views/videoDetails/VideoDetailsView';
 
 export const defaultHistory = createBrowserHistory();
 

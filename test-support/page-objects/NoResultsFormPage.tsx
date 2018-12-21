@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import NoResultsForm from '../../src/videos/search-videos/no-results/NoResultsForm';
+import NoResultsForm from '../../src/components/searchResults/no-results/NoResultsForm';
 import { By } from '../By';
 import EventSimulator from '../EventSimulator';
 

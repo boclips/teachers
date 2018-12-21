@@ -1,11 +1,11 @@
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
-import App from '../../src/App';
-import { links, video177, videos } from '../../src/video-service-responses';
+import App from '../../src/app/App';
 import { findAll, findOne, search } from '../enzymeHelpers';
 import eventually from '../eventually';
 import MockFetchVerify from '../MockFetchVerify';
+import { links, video177, videos } from '../video-service-responses';
 
 export class VideoDetailsPage {
   constructor(private wrapper: ReactWrapper) {}

@@ -1,14 +1,11 @@
-import {
-  RouterActionType,
-  RouterState as ReactRouterState,
-} from 'connected-react-router';
+import { RouterActionType } from 'connected-react-router';
+import { RouterState as ReactRouterState } from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import LoggedOutView from '../public/LoggedOutView';
 import {
   LoginState,
   RouterState,
@@ -16,10 +13,11 @@ import {
   SearchStateValue,
   VideoDetailsState,
   VideoStateValue,
-} from '../State';
-import HomeView from '../videos/HomeView';
-import SearchResultsView from '../videos/search-videos/multiple-results/SearchResultsView';
-import { VideoDetailsView } from '../videos/video-details/VideoDetailsView';
+} from '../redux/State';
+import HomeView from '../views/home/HomeView';
+import LoggedOutView from '../views/loggedout/LoggedOutView';
+import SearchResultsView from '../views/searchResults/SearchResultsView';
+import VideoDetailsView from '../views/videoDetails/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
 
 const mockStore = configureStore<

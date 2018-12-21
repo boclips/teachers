@@ -1,12 +1,12 @@
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
-import App from '../../src/App';
-import { links, video177, videos } from '../../src/video-service-responses';
+import App from '../../src/app/App';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 import MockFetchVerify from '../MockFetchVerify';
+import { links, video177, videos } from '../video-service-responses';
 
 export class SearchPage {
   constructor(public wrapper: ReactWrapper) {}
