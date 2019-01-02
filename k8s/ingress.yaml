@@ -14,3 +14,11 @@ spec:
         backend:
           serviceName: educators
           servicePort: http
+
+  - host: teachers.${DOMAIN}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: educators
+          servicePort: http
