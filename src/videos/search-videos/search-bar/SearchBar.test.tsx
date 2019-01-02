@@ -44,6 +44,6 @@ test('dispatches a navigation action when query submitted callback invoked', () 
   statefulSearchBar.prop('onSubmit')(query);
 
   expect(store.getActions()).toContainEqual(
-    push(`/videos?pageNumber=1&q=${encodeURIComponent(query)}`),
+    push(`/videos?page=1&q=${encodeURIComponent(query)}`),
   );
 });

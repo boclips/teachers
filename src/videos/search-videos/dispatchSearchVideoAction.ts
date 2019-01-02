@@ -14,7 +14,7 @@ export const dispatchSearchVideoAction = (store: Store<State>) => {
   ) {
     const queryParams = queryString.parse(location.search);
     const query = queryParams.q as string;
-    const pageNumber = +queryParams.pageNumber;
-    store.dispatch(searchVideosAction({ query, pageNumber }));
+    const page = +queryParams.page;
+    store.dispatch(searchVideosAction({ query, page }));
   }
 };

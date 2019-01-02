@@ -18,7 +18,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onPageChange: (pageNumber: number, query: string) => void;
+  onPageChange: (page: number, query: string) => void;
 }
 
 class SearchResultsView extends React.PureComponent<
@@ -126,16 +126,16 @@ function mapStateToProps({ search, links, router }: State): StateProps {
     loading: search.loading,
     results: search,
     links,
-    currentPage: +queryString.parse(router.location.search).pageNumber || 1,
+    currentPage: +queryString.parse(router.location.search).page || 1,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onPageChange: (pageNumber: number, query: string) => {
+    onPageChange: (page: number, query: string) => {
       const queryParams = queryString.stringify({
         q: query,
-        pageNumber,
+        page,
       });
       dispatch(push(`/videos?${queryParams}`));
     },

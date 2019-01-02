@@ -17,7 +17,7 @@ export class SearchPage {
     MockFetchVerify.get('/v1/', JSON.stringify(links));
     MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
     MockFetchVerify.get(
-      `/v1/videos?pageNumber=0&pageSize=10&query=${escapedQuery}`,
+      `/v1/videos?page=0&query=${escapedQuery}&size=10`,
       JSON.stringify(videos),
     );
 
@@ -25,7 +25,7 @@ export class SearchPage {
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: [`/videos?pageNumber=1&q=${escapedQuery}`],
+            initialEntries: [`/videos?page=1&q=${escapedQuery}`],
           })}
         />,
       ),

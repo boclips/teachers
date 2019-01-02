@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     onQuerySubmitted: (query: string) => {
       const queryParams = queryString.stringify({
         q: query,
-        pageNumber: 1,
+        page: 1,
       });
       dispatch(push(`/videos?${queryParams}`));
     },

@@ -10,14 +10,14 @@ describe('templated link', () => {
   test('can interpolate query params', () => {
     const link = new Link({
       href:
-        'https://teachers.testing-boclips.com/v1/videos?query={query}&pageSize={pageSize}&pageNumber={pageNumber}',
+        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}',
       templated: true,
     });
 
     expect(
-      link.getTemplatedLink({ query: 'perro', pageSize: 10, pageNumber: 0 }),
+      link.getTemplatedLink({ query: 'perro', size: 10, page: 0 }),
     ).toEqual(
-      'https://teachers.testing-boclips.com/v1/videos?pageNumber=0&pageSize=10&query=perro',
+      'https://teachers.testing-boclips.com/v1/videos?page=0&query=perro&size=10',
     );
   });
 

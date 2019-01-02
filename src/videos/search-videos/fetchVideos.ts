@@ -10,8 +10,8 @@ export default function fetchVideos(
 ): Promise<SearchResults> {
   const url = links.videos.getTemplatedLink({
     query: searchRequest.query,
-    pageSize: 10,
-    pageNumber: searchRequest.pageNumber - 1,
+    size: 10,
+    page: searchRequest.page - 1,
   });
   return axios
     .get(url)

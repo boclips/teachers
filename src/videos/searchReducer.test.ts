@@ -22,7 +22,7 @@ test('Clears videos and sets loading flag and query on the loading action', () =
 
   const newState = searchReducer(
     state,
-    searchVideosAction({ query: 'donuts', pageNumber: 1 }),
+    searchVideosAction({ query: 'donuts', page: 1 }),
   );
 
   const expectedState: SearchStateValue = {
