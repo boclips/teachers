@@ -5,6 +5,9 @@ metadata:
   name: educators
   annotations:
     kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-regex: ^https?://educators.${DOMAIN}/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://teachers.${DOMAIN}/$1
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
 spec:
   rules:
   - host: educators.${DOMAIN}
