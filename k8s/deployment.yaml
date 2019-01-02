@@ -2,25 +2,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: educators
+  name: teachers
   labels:
-    app: educators
+    app: teachers
 spec:
   replicas: ${REPLICAS}
   selector:
     matchLabels:
-      app: educators
+      app: teachers
   template:
     metadata:
       labels:
-        app: educators
+        app: teachers
     spec:
       $REQUIRE_NONCRITICAL_EXCEPT_PRODUCTION
       $TOLERATE_NONCRITICAL_EXCEPT_PRODUCTION
 
       containers:
-      - name: educators
-        image: eu.gcr.io/boclips-prod/boclips/educators:${VERSION}
+      - name: teachers
+        image: eu.gcr.io/boclips-prod/boclips/teachers:${VERSION}
         ports:
         - name: http
           containerPort: 80

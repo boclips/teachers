@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: educators
+  name: teachers
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/redirect-regex: ^https?://educators.${DOMAIN}/(.*)
@@ -15,7 +15,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: educators
+          serviceName: teachers
           servicePort: http
 
   - host: teachers.${DOMAIN}
@@ -23,5 +23,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: educators
+          serviceName: teachers
           servicePort: http
