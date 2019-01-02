@@ -28,8 +28,8 @@ module.exports = merge(common, {
   },
   performance: {
     hints: 'error',
-    maxAssetSize: 3 * oneMegaByte,
-    maxEntrypointSize: 3 * oneMegaByte
+    maxAssetSize: 4 * oneMegaByte,
+    maxEntrypointSize: 4 * oneMegaByte
   },
   plugins: [
     new HtmlWebpackPlugin({
