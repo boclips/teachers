@@ -7,7 +7,7 @@ import { LinksFactory } from '../../../../test-support/factories';
 import { NoResultsFormPage } from '../../../../test-support/page-objects/NoResultsFormPage';
 import AddNoResultsForm from '../../../components/searchResults/no-results/NoResultsForm';
 import NoResultsFormSubmitted from '../../../components/searchResults/no-results/NoResultsFormSubmitted';
-import { Link } from '../../../services/links/Link';
+import { Link } from '../../../types/Link';
 import Mock = jest.Mock;
 import NoResultsView from './NoResultsView';
 

@@ -2,11 +2,11 @@ import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { actionCreatorFactory } from '../../app/redux/actions';
 import LoginProvider from '../../components/login/LoginProvider';
 import VideoDetails from '../../components/video/details/VideoDetails';
-import { actionCreatorFactory } from '../../redux/actions';
-import { VideoDetailsState } from '../../redux/State';
-import { Video } from '../../services/types/Video';
+import { VideoDetailsState } from '../../types/State';
+import { Video } from '../../types/Video';
 
 export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
 

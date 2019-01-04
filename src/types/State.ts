@@ -1,7 +1,7 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
-import { Links } from '../services/links/Links';
-import PageSpec from '../services/types/PageSpec';
-import { Video } from '../services/types/Video';
+import { Links } from './Links';
+import PageSpec from './PageSpec';
+import { Video } from './Video';
 
 export interface LinksState {
   links: Links;

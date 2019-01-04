@@ -1,9 +1,9 @@
 import eventually from '../../../test-support/eventually';
 import { LinksFactory } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { Link } from '../../types/Link';
 import Analytics, { EventTypes } from '../analytics/Analytics';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
-import { Link } from '../links/Link';
 import activateUser from './userActivator';
 
 jest.mock('../analytics/AnalyticsFactory');

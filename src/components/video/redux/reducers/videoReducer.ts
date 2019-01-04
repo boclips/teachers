@@ -1,7 +1,9 @@
 import { Reducer } from 'redux';
-import createReducer, { actionHandler } from '../../../../redux/createReducer';
-import { VideoStateValue } from '../../../../redux/State';
-import { Video } from '../../../../services/types/Video';
+import createReducer, {
+  actionHandler,
+} from '../../../../app/redux/createReducer';
+import { VideoStateValue } from '../../../../types/State';
+import { Video } from '../../../../types/Video';
 import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
 import { storeVideoAction } from '../actions/storeVideoAction';
 

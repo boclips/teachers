@@ -3,12 +3,12 @@ import { BoclipsPlayer, TrackerConfig } from 'boclips-react-player';
 import { PlaybackConfig } from 'boclips-react-player/dist/src/PlaybackConfig';
 import React from 'react';
 import { connect } from 'react-redux';
-import { LinksState } from '../../../../redux/State';
+import { LinksState } from '../../../../types/State';
 import {
   StreamPlayback,
   Video,
   YoutubePlayback,
-} from '../../../../services/types/Video';
+} from '../../../../types/Video';
 interface OwnProps {
   video: Video;
   searchId: string;

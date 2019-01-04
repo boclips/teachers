@@ -1,5 +1,5 @@
 import { VideoFactory } from '../../../../../test-support/factories';
-import { SearchResults, SearchStateValue } from '../../../../redux/State';
+import { SearchResults, SearchStateValue } from '../../../../types/State';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
 import { searchReducer } from './searchReducer';

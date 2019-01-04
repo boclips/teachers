@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
-import State from '../../../redux/State';
+import State from '../../../types/State';
 import { searchVideosAction } from './actions/searchVideosActions';
 
 export const dispatchSearchVideoAction = (store: Store<State>) => {

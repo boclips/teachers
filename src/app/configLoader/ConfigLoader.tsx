@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { LinksState } from '../../redux/State';
-import { fetchLinksAction } from '../../services/links/redux/actions/fetchLinksAction';
+import { LinksState } from '../../types/State';
+import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
 
 interface Props {
   loadingComponent: React.ComponentType;

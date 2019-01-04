@@ -14,15 +14,15 @@ import onStoreLoginMiddleware from '../components/login/redux/middleware/onStore
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
+import onUrlChangeMiddleware from '../components/video/redux/middleware/fetchVideosOnLocationChangeMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
-import onUrlChangeMiddleware from '../onUrlChangeMiddleware';
-import State from '../redux/State';
-import BoclipsRouter, { defaultHistory } from '../router/BoclipsRouter';
-import fetchLinksMiddleware from '../services/links/redux/middleware/fetchLinksMiddleware';
-import onLinksFetchedMiddleware from '../services/links/redux/middleware/onLinksFetchedMiddleware';
-import { linksReducer } from '../services/links/redux/reducers/linksReducer';
+import State from '../types/State';
+import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import ConfigLoader from './configLoader/ConfigLoader';
+import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
+import onLinksFetchedMiddleware from './redux/links/middleware/onLinksFetchedMiddleware';
+import { linksReducer } from './redux/links/reducers/linksReducer';
 
 const composeEnhancers =
   window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line

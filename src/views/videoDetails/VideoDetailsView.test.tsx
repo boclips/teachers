@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { LinksFactory, VideoFactory } from '../../../test-support/factories';
-import { LinksState, VideoDetailsState } from '../../redux/State';
+import { LinksState, VideoDetailsState } from '../../types/State';
 import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
 
 const mockStore = configureStore<VideoDetailsState & LinksState>();

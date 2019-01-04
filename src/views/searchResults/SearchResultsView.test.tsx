@@ -7,7 +7,7 @@ import { RouterActionType } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { LinksFactory } from '../../../test-support/factories';
-import { LinksState, RouterState, SearchState } from '../../redux/State';
+import { LinksState, RouterState, SearchState } from '../../types/State';
 import SearchResultsView from './SearchResultsView';
 
 test('shows placeholders when results are loading', () => {

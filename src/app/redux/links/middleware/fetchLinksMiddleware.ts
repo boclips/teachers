@@ -1,6 +1,6 @@
 import { Store } from 'redux';
-import { sideEffect } from '../../../../redux/actions';
-import fetchLinks from '../../../api/fetchLinks';
+import fetchLinks from '../../../../services/links/fetchLinks';
+import { sideEffect } from '../../actions';
 import { fetchLinksAction } from '../actions/fetchLinksAction';
 import { storeLinksAction } from '../actions/storeLinksAction';
 

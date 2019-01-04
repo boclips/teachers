@@ -1,8 +1,8 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../redux/actions';
-import { LinksState } from '../../../../redux/State';
-import fetchVideos from '../../../../services/api/fetchVideos';
-import { SearchRequest } from '../../../../services/types/SearchRequest';
+import { sideEffect } from '../../../../app/redux/actions';
+import fetchVideos from '../../../../services/videos/fetchVideos';
+import { SearchRequest } from '../../../../types/SearchRequest';
+import { LinksState } from '../../../../types/State';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
 

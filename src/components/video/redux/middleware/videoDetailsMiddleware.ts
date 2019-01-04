@@ -1,7 +1,7 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../redux/actions';
-import { LinksState } from '../../../../redux/State';
-import fetchVideo from '../../../../services/api/fetchVideo';
+import { sideEffect } from '../../../../app/redux/actions';
+import fetchVideo from '../../../../services/videos/fetchVideo';
+import { LinksState } from '../../../../types/State';
 import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
 import { storeVideoAction } from '../actions/storeVideoAction';
 

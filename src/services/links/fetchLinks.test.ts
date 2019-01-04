@@ -1,6 +1,6 @@
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { Link } from '../links/Link';
-import { Links } from '../links/Links';
+import { Link } from '../../types/Link';
+import { Links } from '../../types/Links';
 import fetchLinks from './fetchLinks';
 
 describe('when anonymous user', () => {

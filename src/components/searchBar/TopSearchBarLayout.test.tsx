@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
-import { LoginState } from '../../redux/State';
+import { LoginState } from '../../types/State';
 import { LogoutButton } from '../common/LogoutButton';
 import TopSearchBarLayout from './TopSearchBarLayout';
 

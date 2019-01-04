@@ -7,11 +7,11 @@ import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import eventually from '../../../test-support/eventually';
 import { LinksFactory } from '../../../test-support/factories';
-import { LinksState } from '../../redux/State';
-import fetchLinks from '../../services/api/fetchLinks';
-import { fetchLinksAction } from '../../services/links/redux/actions/fetchLinksAction';
+import fetchLinks from '../../services/links/fetchLinks';
+import { LinksState } from '../../types/State';
+import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
 import ConfigLoader from './ConfigLoader';
-jest.mock('../../services/api/fetchLinks');
+jest.mock('../../services/links/fetchLinks');
 
 const loading = () => <span id="loading" />;
 const mockStore = configureStore<LinksState>();

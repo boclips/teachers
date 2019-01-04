@@ -1,8 +1,8 @@
 import moment = require('moment');
-import { Link } from '../src/services/links/Link';
-import { Links } from '../src/services/links/Links';
-import { RawLinks } from '../src/services/links/RawLinks';
-import { StreamPlayback, Video } from '../src/services/types/Video';
+import { Link } from '../src/types/Link';
+import { Links } from '../src/types/Links';
+import { RawLinks } from '../src/types/RawLinks';
+import { StreamPlayback, Video } from '../src/types/Video';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {

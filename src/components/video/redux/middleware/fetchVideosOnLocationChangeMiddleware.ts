@@ -1,8 +1,11 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { Store } from 'redux';
-import { dispatchSearchVideoAction } from './components/searchBar/redux/dispatchSearchVideoAction';
-import { actionCreatorFactory, sideEffect } from './redux/actions';
-import State from './redux/State';
+import {
+  actionCreatorFactory,
+  sideEffect,
+} from '../../../../app/redux/actions';
+import State from '../../../../types/State';
+import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSearchVideoAction';
 
 export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 

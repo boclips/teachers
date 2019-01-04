@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { SearchResults } from '../../redux/State';
-import { Links } from '../links/Links';
-import { SearchRequest } from '../types/SearchRequest';
-import { parseVideosResponse } from '../utils/parseVideosResponse';
+import { Links } from '../../types/Links';
+import { SearchRequest } from '../../types/SearchRequest';
+import { SearchResults } from '../../types/State';
+import { parseVideosResponse } from './parseVideosResponse';
 
 export default function fetchVideos(
   searchRequest: SearchRequest,

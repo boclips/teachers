@@ -13,11 +13,11 @@ import {
   SearchStateValue,
   VideoDetailsState,
   VideoStateValue,
-} from '../redux/State';
-import HomeView from '../views/home/HomeView';
-import LoggedOutView from '../views/loggedout/LoggedOutView';
-import SearchResultsView from '../views/searchResults/SearchResultsView';
-import VideoDetailsView from '../views/videoDetails/VideoDetailsView';
+} from '../../types/State';
+import HomeView from '../home/HomeView';
+import LoggedOutView from '../loggedout/LoggedOutView';
+import SearchResultsView from '../searchResults/SearchResultsView';
+import VideoDetailsView from '../videoDetails/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
 
 const mockStore = configureStore<

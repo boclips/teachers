@@ -1,6 +1,6 @@
 import { Icon } from 'antd';
 import React from 'react';
-import { Video } from '../../../../services/types/Video';
+import { Video } from '../../../../types/Video';
 import DateFormatter from '../../components/dateFormatter/DateFormatter';
 import DurationFormatter from '../../components/durationForammter/DurationFormatter';
 import VideoPlayer from '../../components/player/VideoPlayer';

@@ -3,11 +3,11 @@ import Mock = jest.Mock;
 import configureStore from 'redux-mock-store';
 import eventually from '../../../../../test-support/eventually';
 import { VideoFactory } from '../../../../../test-support/factories';
-import fetchVideo from '../../../../services/api/fetchVideo';
+import fetchVideo from '../../../../services/videos/fetchVideo';
 import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
 import { storeVideoAction } from '../actions/storeVideoAction';
 import videoDetailsMiddleware from './videoDetailsMiddleware';
-jest.mock('../../../../services/api/fetchVideo');
+jest.mock('../../../../services/videos/fetchVideo');
 
 const fetchVideoMock = fetchVideo as Mock;
 

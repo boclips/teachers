@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import boclipsLogo from '../../../resources/images/boclips-logo.png';
 import boclipsMiniLogo from '../../../resources/images/boclips-mini-logo.png';
-import { LoginState } from '../../redux/State';
+import { LoginState } from '../../types/State';
 import { BoclipsFooter } from '../common/BoclipsFooter';
 import { LogoutButton } from '../common/LogoutButton';
 import SearchBar from './SearchBar';

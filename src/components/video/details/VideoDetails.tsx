@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
 import React from 'react';
-import { Video } from '../../../services/types/Video';
+import { Video } from '../../../types/Video';
 import VideoDetailCard from '../components/card/VideoDetailCard';
 
 interface Props {

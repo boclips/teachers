@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { RouterState } from '../../redux/State';
+import { RouterState } from '../../types/State';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { StreamPlayback, Video, YoutubePlayback } from '../types/Video';
+import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
 
 function getPlaybackProperties(
   resource: any,

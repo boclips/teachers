@@ -1,8 +1,10 @@
 import { Reducer } from 'redux';
-import createReducer, { actionHandler } from '../../../../redux/createReducer';
-import { SearchResults, SearchStateValue } from '../../../../redux/State';
-import PageSpec from '../../../../services/types/PageSpec';
-import { SearchRequest } from '../../../../services/types/SearchRequest';
+import createReducer, {
+  actionHandler,
+} from '../../../../app/redux/createReducer';
+import PageSpec from '../../../../types/PageSpec';
+import { SearchRequest } from '../../../../types/SearchRequest';
+import { SearchResults, SearchStateValue } from '../../../../types/State';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
 

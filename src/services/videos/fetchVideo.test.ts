@@ -1,7 +1,7 @@
 import { LinksFactory } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { video177 } from '../../../test-support/video-service-responses';
-import { Link } from '../../services/links/Link';
+import { Link } from '../../types/Link';
 import fetchVideo from './fetchVideo';
 
 test('resolves with a video object when successfuly fetched', async () => {

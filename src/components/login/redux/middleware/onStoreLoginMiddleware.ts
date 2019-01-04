@@ -1,8 +1,8 @@
 import { KeycloakInstance } from 'keycloak-js';
 import { Store } from 'redux';
-import { sideEffect } from '../../../../redux/actions';
+import { sideEffect } from '../../../../app/redux/actions';
+import { fetchLinksAction } from '../../../../app/redux/links/actions/fetchLinksAction';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { fetchLinksAction } from '../../../../services/links/redux/actions/fetchLinksAction';
 import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSearchVideoAction';
 import { storeLogin } from '../actions/storeLoginAction';
 

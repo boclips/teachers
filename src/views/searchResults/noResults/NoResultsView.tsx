@@ -4,7 +4,7 @@ import React from 'react';
 import noResultsIllustration from '../../../../resources/images/no-results-illustration.png';
 import NoResultsForm from '../../../components/searchResults/no-results/NoResultsForm';
 import NoResultsFormSubmitted from '../../../components/searchResults/no-results/NoResultsFormSubmitted';
-import { Links } from '../../../services/links/Links';
+import { Links } from '../../../types/Links';
 
 interface Props {
   query: string | null;

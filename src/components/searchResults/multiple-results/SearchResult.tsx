@@ -1,7 +1,7 @@
 import Card from 'antd/lib/card';
 import Skeleton from 'antd/lib/skeleton';
 import React from 'react';
-import { Video } from '../../../services/types/Video';
+import { Video } from '../../../types/Video';
 import VideoPreview from '../../video/preview/VideoPreview';
 
 interface Props {

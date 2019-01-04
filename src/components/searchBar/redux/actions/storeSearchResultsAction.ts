@@ -1,5 +1,5 @@
-import { actionCreatorFactory } from '../../../../redux/actions';
-import { SearchResults } from '../../../../redux/State';
+import { actionCreatorFactory } from '../../../../app/redux/actions';
+import { SearchResults } from '../../../../types/State';
 
 export const storeSearchResultsAction = actionCreatorFactory<SearchResults>(
   'STORE_VIDEOS',

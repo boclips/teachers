@@ -1,5 +1,5 @@
 import AppConfig from '../../app/AppConfig';
-import { SearchResults } from '../../redux/State';
+import { SearchResults } from '../../types/State';
 import convertVideoResource from './convertVideoResource';
 
 export function parseVideosResponse(

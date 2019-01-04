@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Link } from 'react-router-dom';
 import tickIcon from '../../../../resources/images/green-check.png';
 import AppConfig from '../../../app/AppConfig';
-import { Video } from '../../../services/types/Video';
+import { Video } from '../../../types/Video';
 import DateFormatter from '../components/dateFormatter/DateFormatter';
 import DurationFormatter from '../components/durationForammter/DurationFormatter';
 import VideoPlayer from '../components/player/VideoPlayer';

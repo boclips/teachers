@@ -5,9 +5,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import SearchResult from '../../components/searchResults/multiple-results/SearchResult';
-import State, { SearchResults } from '../../redux/State';
-import { Links } from '../../services/links/Links';
-import { Video } from '../../services/types/Video';
+import { Links } from '../../types/Links';
+import State, { SearchResults } from '../../types/State';
+import { Video } from '../../types/Video';
 import NoResultsView from './noResults/NoResultsView';
 
 interface StateProps {

@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
-import createReducer, { actionHandler } from '../../../../redux/createReducer';
-import { Links } from '../../Links';
+import { Links } from '../../../../types/Links';
+import createReducer, { actionHandler } from '../../createReducer';
 import { storeLinksAction } from '../actions/storeLinksAction';
 
 export const linksReducer: Reducer<Links> = createReducer(

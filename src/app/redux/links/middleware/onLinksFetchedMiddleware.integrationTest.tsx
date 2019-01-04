@@ -4,12 +4,12 @@ import React from 'react';
 import eventually from '../../../../../test-support/eventually';
 import { LinksResponseFactory } from '../../../../../test-support/factories';
 import MockFetchVerify from '../../../../../test-support/MockFetchVerify';
-import App from '../../../../app/App';
-import activateUser from '../../../users/userActivator';
+import activateUser from '../../../../services/users/userActivator';
 import Mock = jest.Mock;
-import { Links } from '../../Links';
+import { Links } from '../../../../types/Links';
+import App from '../../../App';
 
-jest.mock('../../../users/userActivator');
+jest.mock('../../../../services/users/userActivator');
 
 const linksWithActivate = LinksResponseFactory.sample({
   activate: { href: '/v1/activate' },

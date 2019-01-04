@@ -3,7 +3,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStore } from 'redux-mock-store';
-import { RouterState } from '../../redux/State';
+import { RouterState } from '../../types/State';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
 

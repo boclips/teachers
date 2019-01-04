@@ -8,7 +8,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { LoginState } from '../../redux/State';
+import { LoginState } from '../../types/State';
 import { storeLogin } from './redux/actions/storeLoginAction';
 
 export interface RouterComponentProps<TParams>

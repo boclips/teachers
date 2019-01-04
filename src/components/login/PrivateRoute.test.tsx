@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { LoginState } from '../../redux/State';
+import { LoginState } from '../../types/State';
 import PrivateRoute from './PrivateRoute';
 
 const mockStore = configureStore<LoginState>();
