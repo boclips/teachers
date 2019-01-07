@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import { Link } from './Link';
 
 test('returns link when not templated', () => {
@@ -10,14 +11,27 @@ describe('templated link', () => {
   test('can interpolate query params', () => {
     const link = new Link({
       href:
-        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}',
+        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}{&use_case}',
       templated: true,
     });
 
-    expect(
-      link.getTemplatedLink({ query: 'perro', size: 10, page: 0 }),
-    ).toEqual(
-      'https://teachers.testing-boclips.com/v1/videos?page=0&query=perro&size=10',
+    const url = link.getTemplatedLink({ query: 'perro', size: 10, page: 0 });
+    const queryParams = queryString.parse(url.split('?')[1]);
+
+    expect(queryParams.query).toEqual('perro');
+    expect(queryParams.page).toEqual('0');
+    expect(queryParams.size).toEqual('10');
+  });
+
+  test('can interpolate optional query params', () => {
+    const link = new Link({
+      href:
+        'https://teachers.testing-boclips.com/v1/videos?query={query}{&use_case}',
+      templated: true,
+    });
+
+    expect(link.getTemplatedLink({ query: 'perro', use_case: 'foo' })).toEqual(
+      'https://teachers.testing-boclips.com/v1/videos?query=perro&use_case=foo',
     );
   });
 
@@ -40,17 +54,6 @@ describe('templated link', () => {
 
     expect(link.getTemplatedLink({ id: 'andrew-was-crying' })).toEqual(
       'https://teachers.testing-boclips.com/v1/videos/andrew-was-crying',
-    );
-  });
-
-  test('throws error when missing param', () => {
-    const link = new Link({
-      href: 'a-link?search={search}',
-      templated: true,
-    });
-
-    expect(() => link.getTemplatedLink({})).toThrowError(
-      'Templated link requires missing param search',
     );
   });
 });

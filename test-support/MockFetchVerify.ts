@@ -5,7 +5,7 @@ const axiosMock = new MockAdapter(axios);
 
 export default class MockFetchVerify {
   public static get(
-    matcher: string,
+    matcher: string | RegExp,
     responseBody?: any,
     status: number = 200,
     responseHeaders: any = {},

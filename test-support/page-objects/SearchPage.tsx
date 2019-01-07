@@ -17,7 +17,7 @@ export class SearchPage {
     MockFetchVerify.get('/v1/', JSON.stringify(links));
     MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
     MockFetchVerify.get(
-      `/v1/videos?page=0&query=${escapedQuery}&size=10`,
+      new RegExp(`/v1/videos?.*query=${escapedQuery}`),
       JSON.stringify(videos),
     );
 
