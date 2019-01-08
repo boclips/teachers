@@ -14,7 +14,8 @@ beforeEach(async () => {
 
   const links = LinksFactory.sample({
     videos: new Link({
-      href: '/v1/videos?query={query}&size={size}&page={page}{&use_case}',
+      href:
+        '/v1/videos?query={query}&size={size}&page={page}&category={category}',
       templated: true,
     }),
   });
@@ -35,5 +36,5 @@ test('includes page and size params in the request', () => {
 });
 
 test('only requests content for the classroom', () => {
-  expect(queryParams.use_case).toEqual('classroom');
+  expect(queryParams.category).toEqual('classroom');
 });

@@ -12,7 +12,7 @@ export default function fetchVideos(
     query: searchRequest.query,
     size: 10,
     page: searchRequest.page - 1,
-    use_case: 'classroom',
+    category: 'classroom',
   });
   return axios
     .get(url)
