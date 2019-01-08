@@ -6,9 +6,7 @@ import { videos } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
 import fetchVideos from './fetchVideos';
 
-let queryParams = null;
-
-beforeEach(async () => {
+test('includes the page and size params in the request', async () => {
   const axiosMock = new MockAdapter(axios);
   axiosMock.onGet().reply(200, JSON.stringify(videos), {});
 
@@ -22,18 +20,9 @@ beforeEach(async () => {
   await fetchVideos({ query: 'foo', page: 1 }, links);
 
   const url = axiosMock.history.get[0].url;
-  queryParams = queryString.parse(url.split('?')[1]);
-});
+  const queryParams = queryString.parse(url.split('?')[1]);
 
-test('requests the correct search query', () => {
-  expect(queryParams.query).toEqual('foo');
-});
-
-test('includes page and size params in the request', () => {
   expect(queryParams.page).toEqual('0');
   expect(queryParams.size).not.toHaveLength(0);
-});
-
-test('only requests content for the classroom', () => {
-  expect(queryParams.use_case).toEqual('classroom');
+  expect(queryParams.query).toEqual('foo');
 });

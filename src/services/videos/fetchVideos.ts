@@ -12,7 +12,6 @@ export default function fetchVideos(
     query: searchRequest.query,
     size: 10,
     page: searchRequest.page - 1,
-    use_case: 'classroom',
   });
   return axios
     .get(url)
