@@ -11,7 +11,7 @@ describe('templated link', () => {
   test('can interpolate query params', () => {
     const link = new Link({
       href:
-        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}{&use_case}',
+        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}{&category}',
       templated: true,
     });
 
@@ -21,17 +21,18 @@ describe('templated link', () => {
     expect(queryParams.query).toEqual('perro');
     expect(queryParams.page).toEqual('0');
     expect(queryParams.size).toEqual('10');
+    expect(queryParams.category).toBeUndefined();
   });
 
   test('can interpolate optional query params', () => {
     const link = new Link({
       href:
-        'https://teachers.testing-boclips.com/v1/videos?query={query}{&use_case}',
+        'https://teachers.testing-boclips.com/v1/videos?query={query}{&category}',
       templated: true,
     });
 
-    expect(link.getTemplatedLink({ query: 'perro', use_case: 'foo' })).toEqual(
-      'https://teachers.testing-boclips.com/v1/videos?query=perro&use_case=foo',
+    expect(link.getTemplatedLink({ query: 'perro', category: 'foo' })).toEqual(
+      'https://teachers.testing-boclips.com/v1/videos?query=perro&category=foo',
     );
   });
 
