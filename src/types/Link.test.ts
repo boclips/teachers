@@ -11,7 +11,7 @@ describe('templated link', () => {
   test('can interpolate query params', () => {
     const link = new Link({
       href:
-        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}{&category}',
+        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}{&include_tag}',
       templated: true,
     });
 
@@ -21,18 +21,20 @@ describe('templated link', () => {
     expect(queryParams.query).toEqual('perro');
     expect(queryParams.page).toEqual('0');
     expect(queryParams.size).toEqual('10');
-    expect(queryParams.category).toBeUndefined();
+    expect(queryParams.include_tag).toBeUndefined();
   });
 
   test('can interpolate optional query params', () => {
     const link = new Link({
       href:
-        'https://teachers.testing-boclips.com/v1/videos?query={query}{&category}',
+        'https://teachers.testing-boclips.com/v1/videos?query={query}{&include_tag}',
       templated: true,
     });
 
-    expect(link.getTemplatedLink({ query: 'perro', category: 'foo' })).toEqual(
-      'https://teachers.testing-boclips.com/v1/videos?query=perro&category=foo',
+    expect(
+      link.getTemplatedLink({ query: 'perro', include_tag: 'foo' }),
+    ).toEqual(
+      'https://teachers.testing-boclips.com/v1/videos?query=perro&include_tag=foo',
     );
   });
 
