@@ -13,6 +13,7 @@ export default function fetchVideos(
     size: 10,
     page: searchRequest.page - 1,
     include_tag: 'classroom',
+    exclude_tag: 'news',
   });
   return axios
     .get(url)

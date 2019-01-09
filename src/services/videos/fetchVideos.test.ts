@@ -15,7 +15,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}&include_tag={include_tag}',
+        '/v1/videos?query={query}&size={size}&page={page}{&include_tag,exclude_tag}',
       templated: true,
     }),
   });
@@ -37,4 +37,8 @@ test('includes page and size params in the request', () => {
 
 test('only requests content for the classroom', () => {
   expect(queryParams.include_tag).toEqual('classroom');
+});
+
+test('excludes news by default', () => {
+  expect(queryParams.exclude_tag).toEqual('news');
 });
