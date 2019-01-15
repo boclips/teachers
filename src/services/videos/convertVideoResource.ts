@@ -4,10 +4,10 @@ import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
 function getPlaybackProperties(
   resource: any,
 ): StreamPlayback | YoutubePlayback {
-  if (resource.playback.streamUrl) {
+  if (resource.playback.type === 'STREAM') {
     return new StreamPlayback(resource.playback.streamUrl);
-  } else if (resource.playback.youtubeId) {
-    return new YoutubePlayback(resource.playback.youtubeId);
+  } else if (resource.playback.type === 'YOUTUBE') {
+    return new YoutubePlayback(resource.playback.id);
   } else {
     throw Error(`No valid playback object found on resource: ${resource}`);
   }

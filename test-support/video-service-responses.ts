@@ -22,6 +22,7 @@ export const video177 = Object.freeze({
   contentPartner: 'cp1',
   subjects: ['Maths', 'Physics'],
   playback: {
+    type: 'STREAM',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
     streamUrl: 'https://cdn.kaltura.com/stream/147.mpd',
     duration: 'PT1M2S',
@@ -36,6 +37,7 @@ const video147 = Object.freeze({
   contentPartner: 'cp2',
   subjects: [],
   playback: {
+    type: 'STREAM',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/147.jpg',
     streamUrl: 'https://cdn.kaltura.com/stream/147.mpd',
     duration: 'PT1M3S',
@@ -62,8 +64,9 @@ export const youtubeVideo1 = {
   contentPartner: 'cp1',
   subjects: [],
   playback: {
+    type: 'YOUTUBE',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
-    youtubeId: 'youtubeId',
+    id: 'youtubeId',
     duration: 'PT1M2S',
   },
 };
