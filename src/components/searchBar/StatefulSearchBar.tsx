@@ -10,17 +10,19 @@ interface Props {
 class FreshSearchOnValueChange extends React.Component<Props> {
   public render() {
     return (
-      <Search
-        defaultValue={this.props.value}
-        prefix={<img src={logo} />}
-        placeholder="Enter your search term"
-        type="text"
-        data-qa="search-input"
-        aria-label="search"
-        onSearch={this.props.onSubmit}
-        enterButton="Search"
-        size="large"
-      />
+      <form action="">
+        <Search
+          defaultValue={this.props.value}
+          prefix={<img src={logo} />}
+          placeholder="Enter your search term"
+          type="search"
+          data-qa="search-input"
+          aria-label="search"
+          onSearch={this.props.onSubmit}
+          enterButton="Search"
+          size="large"
+        />
+      </form>
     );
   }
 }
