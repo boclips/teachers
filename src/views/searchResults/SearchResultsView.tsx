@@ -1,16 +1,16 @@
-import { Col, Row } from 'antd';
+import {Col, Row} from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
-import { push } from 'connected-react-router';
+import {push} from 'connected-react-router';
 import * as queryString from 'querystring';
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import SearchResult from '../../components/searchResults/multiple-results/SearchResult';
-import { NewsBoxHeader } from '../../components/searchResults/NewsBoxHeader';
-import { NewsBoxSidePanel } from '../../components/searchResults/NewsBoxSidePanel';
-import { Links } from '../../types/Links';
-import State, { SearchResults } from '../../types/State';
-import { Video } from '../../types/Video';
+import {NewsBoxHeader} from '../../components/searchResults/NewsBoxHeader';
+import {NewsBoxSidePanel} from '../../components/searchResults/NewsBoxSidePanel';
+import {Links} from '../../types/Links';
+import State, {SearchResults} from '../../types/State';
+import {Video} from '../../types/Video';
 import NoResultsView from './noResults/NoResultsView';
 
 interface StateProps {
@@ -25,9 +25,7 @@ interface DispatchProps {
   onPageChange: (page: number, query: string, isNewsMode: boolean) => void;
 }
 
-class SearchResultsView extends React.PureComponent<
-  StateProps & DispatchProps
-> {
+class SearchResultsView extends React.PureComponent<StateProps & DispatchProps> {
   public render() {
     if (this.props.loading) {
       return this.renderResultPlaceholders();
@@ -96,8 +94,10 @@ class SearchResultsView extends React.PureComponent<
       </React.Fragment>
     ) : (
       <Row>
-        <Col span={18}>{this.props.results.videos.map(this.renderVideo)}</Col>
-        <Col span={6}>
+        <Col xs={{ span: 24 }} md={{ span: 18 }}>
+          {this.props.results.videos.map(this.renderVideo)}
+        </Col>
+        <Col xs={{ span: 0 }} md={{ span: 6 }}>
           <NewsBoxSidePanel
             onButtonClick={this.goToNewsResults}
             resultsQuery={this.props.results.query}
@@ -110,12 +110,12 @@ class SearchResultsView extends React.PureComponent<
   public renderResultPlaceholders() {
     return (
       <section data-qa="search-results-placeholders">
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
+        <SearchResult loading={true} searchId={null} video={null}/>
+        <SearchResult loading={true} searchId={null} video={null}/>
+        <SearchResult loading={true} searchId={null} video={null}/>
+        <SearchResult loading={true} searchId={null} video={null}/>
+        <SearchResult loading={true} searchId={null} video={null}/>
+        <SearchResult loading={true} searchId={null} video={null}/>
       </section>
     );
   }
@@ -158,7 +158,7 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({ search, links, router }: State): StateProps {
+function mapStateToProps({search, links, router}: State): StateProps {
   return {
     loading: search.loading,
     results: search,
