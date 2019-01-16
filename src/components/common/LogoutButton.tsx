@@ -14,7 +14,12 @@ export class LogoutButton extends PureComponent<Props> {
     return (
       <div className={containerClass}>
         {!this.props.mini && (
-          <Button className="logout" size="large" onClick={this.showConfirm}>
+          <Button
+            data-qa="logout-button"
+            className="logout"
+            size="large"
+            onClick={this.showConfirm}
+          >
             Log out
           </Button>
         )}
