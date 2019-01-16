@@ -26,9 +26,11 @@ export const NewsBoxSidePanel = React.memo((props: NewBoxSidePanelPropls) => (
           </div>
         </Col>
       </Row>
-      <Button onClick={props.onButtonClick} size="large">
-        View News
-      </Button>
+      <Row type="flex" justify="center">
+        <Button onClick={props.onButtonClick} size="large">
+          View News
+        </Button>
+      </Row>
     </section>
   </Row>
 ));
