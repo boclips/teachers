@@ -13,7 +13,7 @@
   }
 
   .video-preview-thumbnail {
-    .boclips-player--preview-container{
+    .boclips-player--preview-container {
       border-radius: 4px;
     }
   }
@@ -68,6 +68,7 @@
         font-weight: bold;
         line-height: 25px;
         margin-bottom: 0px;
+
         &.clamp-2-lines {
           max-height: 50px;
           text-overflow: ellipsis;
@@ -79,7 +80,9 @@
       }
 
       .duration {
-        text-align: right;
+        @media (min-width: 768px) {
+          text-align: right;
+        }
       }
 
       @media (max-width: 768px) {
@@ -91,6 +94,7 @@
       .video-content-provider-link {
         color: #848FBB;
       }
+
       font-size: 14px;
       color: #848FBB;
       font-weight: bold;
@@ -110,6 +114,17 @@
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           max-height: 72px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        &.clamp-3-lines {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 5;
+          -webkit-box-orient: vertical;
+          max-height: 120px;
         }
       }
 
