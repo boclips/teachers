@@ -20,7 +20,14 @@ beforeEach(async () => {
     }),
   });
 
-  await fetchVideos({ query: 'foo', page: 1 }, links);
+  await fetchVideos(
+    {
+      query: 'foo',
+      page: 1,
+      filters: { includeTags: ['classroom'], excludeTags: ['news'] },
+    },
+    links,
+  );
 
   const url = axiosMock.history.get[0].url;
   queryParams = queryString.parse(url.split('?')[1]);

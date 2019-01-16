@@ -1,7 +1,27 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
+import { RequestFilters } from '../../../types/SearchRequest';
 import State from '../../../types/State';
 import { searchVideosAction } from './actions/searchVideosActions';
+
+const getFilters = (mode: string): RequestFilters => {
+  let includeTags = [];
+  let excludeTags = [];
+
+  if (mode === 'news') {
+    includeTags = ['classroom', 'news'];
+  } else {
+    includeTags = ['classroom'];
+    excludeTags = ['news'];
+  }
+
+  const filters = {
+    includeTags,
+    excludeTags,
+  };
+
+  return filters;
+};
 
 export const dispatchSearchVideoAction = (store: Store<State>) => {
   const { login, router } = store.getState();
@@ -15,6 +35,10 @@ export const dispatchSearchVideoAction = (store: Store<State>) => {
     const queryParams = queryString.parse(location.search);
     const query = queryParams.q as string;
     const page = +queryParams.page;
-    store.dispatch(searchVideosAction({ query, page }));
+    const mode = queryParams.mode as string;
+
+    const filters = getFilters(mode);
+
+    store.dispatch(searchVideosAction({ query, page, filters }));
   }
 };

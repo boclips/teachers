@@ -8,6 +8,12 @@ import eventually from '../eventually';
 import MockFetchVerify from '../MockFetchVerify';
 import { links, video177, videos } from '../video-service-responses';
 
+jest.mock('react', () => {
+  const r = jest.requireActual('react');
+
+  return { ...r, memo: x => x };
+});
+
 export class SearchPage {
   constructor(public wrapper: ReactWrapper) {}
 
@@ -26,6 +32,32 @@ export class SearchPage {
         <App
           history={createMemoryHistory({
             initialEntries: [`/videos?page=1&q=${escapedQuery}`],
+          })}
+        />,
+      ),
+    );
+
+    await page.hasLoaded();
+    return page;
+  }
+
+  public static async loadNews(query: string) {
+    const escapedQuery = encodeURIComponent(query);
+
+    MockFetchVerify.get('/v1/', JSON.stringify(links));
+    MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
+    MockFetchVerify.get(
+      new RegExp(
+        `/v1/videos?.*query=${escapedQuery}?.*&include_tag=classroom,news`,
+      ),
+      JSON.stringify(videos),
+    );
+
+    const page = new SearchPage(
+      mount(
+        <App
+          history={createMemoryHistory({
+            initialEntries: [`/videos?page=1&q=${escapedQuery}&mode=news`],
           })}
         />,
       ),

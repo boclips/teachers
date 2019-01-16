@@ -1,3 +1,5 @@
+import Button from 'antd/lib/button/button';
+import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 
 test('search for a video shows results', async () => {
@@ -12,6 +14,31 @@ test('search for a video shows results', async () => {
     releasedOn: 'Feb 11, 2018',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
   });
+});
+
+test('shows news-only view with news header', async () => {
+  const searchPage = await SearchPage.loadNews('some news');
+
+  expect(searchPage.getVideoResults().length).toBeGreaterThan(0);
+  const newsBox = searchPage.wrapper.find(By.dataQa('news-header'));
+
+  expect(newsBox.text()).toContain('some news');
+
+  const button = newsBox.find(Button);
+
+  expect(button).toExist();
+  expect(button.text()).toContain('Back');
+});
+
+test('should render news box', async () => {
+  const searchPage = await SearchPage.load('some video');
+  const newsBox = searchPage.wrapper.find(By.dataQa('news-side-panel'));
+
+  expect(newsBox.text()).toContain('some video');
+
+  const button = newsBox.find(Button);
+  expect(button).toExist();
+  expect(button.text()).toContain('View News');
 });
 
 test('shows total count of videos', async () => {

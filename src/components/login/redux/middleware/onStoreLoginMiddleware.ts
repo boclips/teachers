@@ -8,9 +8,7 @@ import { storeLogin } from '../actions/storeLoginAction';
 
 const onLogin = (store: Store, keycloak: KeycloakInstance) => {
   dispatchFetchLinks(store);
-
   setupAnalyticsForUser(keycloak);
-
   dispatchSearchVideoAction(store);
 };
 

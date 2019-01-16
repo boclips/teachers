@@ -1,3 +1,4 @@
+import { Col, Row } from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
 import { push } from 'connected-react-router';
 import * as queryString from 'querystring';
@@ -5,6 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import SearchResult from '../../components/searchResults/multiple-results/SearchResult';
+import { NewsBoxHeader } from '../../components/searchResults/NewsBoxHeader';
+import { NewsBoxSidePanel } from '../../components/searchResults/NewsBoxSidePanel';
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
@@ -15,10 +18,11 @@ interface StateProps {
   results: SearchResults;
   links: Links;
   currentPage: number;
+  isNewsMode: boolean;
 }
 
 interface DispatchProps {
-  onPageChange: (page: number, query: string) => void;
+  onPageChange: (page: number, query: string, isNewsMode: boolean) => void;
 }
 
 class SearchResultsView extends React.PureComponent<
@@ -78,7 +82,29 @@ class SearchResultsView extends React.PureComponent<
   }
 
   public renderVideos() {
-    return this.props.results.videos.map(this.renderVideo);
+    const isNewsMode = this.props.isNewsMode;
+
+    return isNewsMode ? (
+      <React.Fragment>
+        <Row>
+          <NewsBoxHeader
+            onButtonClick={this.goFromNewsToSearchResults}
+            resultsQuery={this.props.results.query}
+          />
+        </Row>
+        <Row>{this.props.results.videos.map(this.renderVideo)}</Row>
+      </React.Fragment>
+    ) : (
+      <Row>
+        <Col span={18}>{this.props.results.videos.map(this.renderVideo)}</Col>
+        <Col span={6}>
+          <NewsBoxSidePanel
+            onButtonClick={this.goToNewsResults}
+            resultsQuery={this.props.results.query}
+          />
+        </Col>
+      </Row>
+    );
   }
 
   public renderResultPlaceholders() {
@@ -116,8 +142,19 @@ class SearchResultsView extends React.PureComponent<
   };
 
   private changePage = (currentPage: number) => {
-    console.log('query', this.props.results.query);
-    this.props.onPageChange(currentPage, this.props.results.query);
+    this.props.onPageChange(
+      currentPage,
+      this.props.results.query,
+      this.props.isNewsMode,
+    );
+  };
+
+  private goFromNewsToSearchResults = () => {
+    this.props.onPageChange(1, this.props.results.query, false);
+  };
+
+  private goToNewsResults = () => {
+    this.props.onPageChange(1, this.props.results.query, true);
   };
 }
 
@@ -127,15 +164,18 @@ function mapStateToProps({ search, links, router }: State): StateProps {
     results: search,
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
+    isNewsMode:
+      queryString.parse(router.location.search).mode === 'news' || false,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onPageChange: (page: number, query: string) => {
+    onPageChange: (page: number, query: string, isNewsMode: boolean) => {
       const queryParams = queryString.stringify({
         q: query,
         page,
+        mode: isNewsMode ? 'news' : undefined,
       });
       dispatch(push(`/videos?${queryParams}`));
     },

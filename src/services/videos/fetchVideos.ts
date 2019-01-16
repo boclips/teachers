@@ -12,8 +12,8 @@ export default function fetchVideos(
     query: searchRequest.query,
     size: 10,
     page: searchRequest.page - 1,
-    include_tag: 'classroom',
-    exclude_tag: 'news',
+    include_tag: searchRequest.filters.includeTags,
+    exclude_tag: searchRequest.filters.excludeTags,
   });
   return axios
     .get(url)
