@@ -27,6 +27,10 @@ export default class VideoDetailCard extends React.PureComponent<Props> {
               {this.props.video.title}
             </h1>
           </section>
+          <p data-qa="video-duration" className={'subtitle duration'}>
+            <Icon type="clock-circle" />{' '}
+            <DurationFormatter duration={this.props.video.duration} />
+          </p>
           <p className={'subtitle'}>
             Released on{' '}
             <span data-qa="video-released-on">
@@ -36,10 +40,6 @@ export default class VideoDetailCard extends React.PureComponent<Props> {
             <span data-qa="video-content-partner">
               {this.props.video.contentPartner}
             </span>
-          </p>
-          <p data-qa="video-duration" className={'subtitle duration'}>
-            <Icon type="clock-circle" />{' '}
-            <DurationFormatter duration={this.props.video.duration} />
           </p>
           <p>
             {this.props.video.subjects.map(subject => (
