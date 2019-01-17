@@ -24,14 +24,10 @@ const getFilters = (mode: string): RequestFilters => {
 };
 
 export const dispatchSearchVideoAction = (store: Store<State>) => {
-  const { login, router } = store.getState();
+  const { router } = store.getState();
   const location = router.location;
 
-  if (
-    location.pathname === '/videos' &&
-    location.search.indexOf('q') &&
-    login
-  ) {
+  if (location.pathname === '/videos' && location.search.indexOf('q')) {
     const queryParams = queryString.parse(location.search);
     const query = queryParams.q as string;
     const page = +queryParams.page;
