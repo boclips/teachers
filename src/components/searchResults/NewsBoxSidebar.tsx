@@ -4,7 +4,7 @@ import newsLogo from '../../../resources/images/news-logo.png';
 import './NewsBox.less';
 import { NewsBoxProps } from './NewsBoxProps';
 
-export const NewsBoxSidePanel = React.memo((props: NewBoxSidePanelPropls) => (
+export const NewsBoxSidebar = React.memo((props: NewBoxSidePanelPropls) => (
   <Row type="flex" justify="center">
     <section
       data-qa="news-side-panel"

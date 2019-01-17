@@ -1,4 +1,3 @@
-import { Col, Row } from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
 import { push } from 'connected-react-router';
 import * as queryString from 'querystring';
@@ -6,11 +5,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import SearchResult from '../../components/searchResults/multiple-results/SearchResult';
-import { NewsBoxHeader } from '../../components/searchResults/NewsBoxHeader';
-import { NewsBoxSidePanel } from '../../components/searchResults/NewsBoxSidePanel';
+import SearchResultsCount from '../../components/searchResults/multiple-results/SearchResultsCount';
+import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
+import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
-import { Video } from '../../types/Video';
 import NoResultsView from './noResults/NoResultsView';
 
 interface StateProps {
@@ -41,25 +40,30 @@ class SearchResultsView extends React.PureComponent<
     return null;
   }
 
-  private renderResultCount() {
-    const totalElements = this.props.results.paging.totalElements;
-    return (
-      !this.props.loading && (
-        <div className="results-count">
-          <span className={'count'} data-qa="search-count">
-            {totalElements}
-          </span>
-          result(s) found
-        </div>
-      )
-    );
-  }
-
   public renderResults() {
+    const isNewsMode = this.props.isNewsMode;
     return (
       <section className={'search-results-container'} data-qa="search-page">
-        {this.renderResultCount()}
-        {this.renderVideos()}
+        {!this.props.loading && (
+          <SearchResultsCount count={this.props.results.paging.totalElements} />
+        )}
+
+        {isNewsMode ? (
+          <SearchResultsWithHeader
+            query={this.props.results.query}
+            searchId={this.props.results.searchId}
+            videos={this.props.results.videos}
+            onNavigate={this.goFromNewsToSearchResults}
+          />
+        ) : (
+          <SearchResultsWithSidebar
+            query={this.props.results.query}
+            searchId={this.props.results.searchId}
+            videos={this.props.results.videos}
+            onNavigate={this.goToNewsResults}
+          />
+        )}
+
         {this.renderPagination()}
       </section>
     );
@@ -78,34 +82,6 @@ class SearchResultsView extends React.PureComponent<
           />
         </section>
       )
-    );
-  }
-
-  public renderVideos() {
-    const isNewsMode = this.props.isNewsMode;
-
-    return isNewsMode ? (
-      <React.Fragment>
-        <Row>
-          <NewsBoxHeader
-            onButtonClick={this.goFromNewsToSearchResults}
-            resultsQuery={this.props.results.query}
-          />
-        </Row>
-        <Row>{this.props.results.videos.map(this.renderVideo)}</Row>
-      </React.Fragment>
-    ) : (
-      <Row>
-        <Col xs={{ span: 24 }} md={{ span: 18 }}>
-          {this.props.results.videos.map(this.renderVideo)}
-        </Col>
-        <Col xs={{ span: 0 }} md={{ span: 6 }}>
-          <NewsBoxSidePanel
-            onButtonClick={this.goToNewsResults}
-            resultsQuery={this.props.results.query}
-          />
-        </Col>
-      </Row>
     );
   }
 
@@ -130,18 +106,6 @@ class SearchResultsView extends React.PureComponent<
       />
     );
   }
-
-  public renderVideo = (video: Video, index: number) => {
-    return (
-      <section key={index} data-qa="search-result">
-        <SearchResult
-          loading={false}
-          video={video}
-          searchId={this.props.results.searchId}
-        />
-      </section>
-    );
-  };
 
   private changePage = (currentPage: number) => {
     this.props.onPageChange(
