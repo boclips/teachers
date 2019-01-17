@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
 import { LinksFactory } from '../../../test-support/factories';
 import { videos } from '../../../test-support/video-service-responses';
+import { Constants } from '../../app/Constants';
 import { Link } from '../../types/Link';
 import fetchVideos from './fetchVideos';
 
@@ -24,7 +25,10 @@ beforeEach(async () => {
     {
       query: 'foo',
       page: 1,
-      filters: { includeTags: ['classroom'], excludeTags: ['news'] },
+      filters: {
+        includeTags: [Constants.CLASSROOM],
+        excludeTags: [Constants.NEWS],
+      },
     },
     links,
   );
@@ -43,9 +47,9 @@ test('includes page and size params in the request', () => {
 });
 
 test('only requests content for the classroom', () => {
-  expect(queryParams.include_tag).toEqual('classroom');
+  expect(queryParams.include_tag).toEqual(Constants.CLASSROOM);
 });
 
 test('excludes news by default', () => {
-  expect(queryParams.exclude_tag).toEqual('news');
+  expect(queryParams.exclude_tag).toEqual(Constants.NEWS);
 });

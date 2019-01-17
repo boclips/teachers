@@ -1,5 +1,6 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
+import { Constants } from '../../../app/Constants';
 import { RequestFilters } from '../../../types/SearchRequest';
 import State from '../../../types/State';
 import { searchVideosAction } from './actions/searchVideosActions';
@@ -8,11 +9,11 @@ const getFilters = (mode: string): RequestFilters => {
   let includeTags = [];
   let excludeTags = [];
 
-  if (mode === 'news') {
-    includeTags = ['classroom', 'news'];
+  if (mode === Constants.NEWS) {
+    includeTags = [Constants.CLASSROOM, Constants.NEWS];
   } else {
-    includeTags = ['classroom'];
-    excludeTags = ['news'];
+    includeTags = [Constants.CLASSROOM];
+    excludeTags = [Constants.NEWS];
   }
 
   const filters = {

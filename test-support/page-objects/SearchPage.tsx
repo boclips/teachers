@@ -2,6 +2,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
+import { Constants } from '../../src/app/Constants';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
@@ -48,7 +49,9 @@ export class SearchPage {
     MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
     MockFetchVerify.get(
       new RegExp(
-        `/v1/videos?.*query=${escapedQuery}?.*&include_tag=classroom,news`,
+        `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${
+          Constants.CLASSROOM
+        },${Constants.NEWS}`,
       ),
       JSON.stringify(videos),
     );
