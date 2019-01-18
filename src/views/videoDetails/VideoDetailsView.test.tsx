@@ -1,3 +1,4 @@
+import { BoclipsPlayer } from 'boclips-react-player';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -50,8 +51,8 @@ test('renders video details when the video has loaded', () => {
   expect(wrapper.find(By.dataQa('video-released-on'))).toHaveText(
     'Jun 20, 2018',
   );
-  expect(wrapper.find(By.dataQa('video-thumbnail'))).toHaveProp(
-    'src',
+  expect(wrapper.find(BoclipsPlayer)).toHaveProp(
+    'thumbnail',
     'http://cdn.kaltura.com/thumbnail.jpg',
   );
 });

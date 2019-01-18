@@ -1,3 +1,4 @@
+import { BoclipsPlayer } from 'boclips-react-player';
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
@@ -39,7 +40,7 @@ export class VideoDetailsPage {
       contentPartner: findOne(el, 'video-content-partner').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
-      thumbnailUrl: findOne(el, 'video-thumbnail').prop('src'),
+      thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       subjects: findAll(el, 'video-details-subject').map(tag => tag.text()),
     }))[0];
   }

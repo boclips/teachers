@@ -4,12 +4,17 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
 import { JSDOM } from 'jsdom';
+import * as React from 'react';
 import MockFetchVerify from './test-support/MockFetchVerify';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
 const { window } = jsdom;
+
+jest.mock('boclips-react-player', () => ({
+  BoclipsPlayer: () => <div id="a-player" />,
+}));
 
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)

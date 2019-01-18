@@ -39,6 +39,6 @@ module.exports = {
     '^.+\\.(ts|tsx)$': 'ts-jest'
   },
 
-  setupTestFrameworkScriptFile: './testSetup.ts'
+  setupTestFrameworkScriptFile: './testSetup.tsx'
 
 };
