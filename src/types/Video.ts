@@ -10,6 +10,7 @@ export interface Video {
   subjects: string[];
   playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;
+  badges: string[];
 }
 
 export class StreamPlayback {

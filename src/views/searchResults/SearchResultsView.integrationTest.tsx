@@ -13,6 +13,7 @@ test('search for a video shows results', async () => {
     duration: ' 1m 2s',
     releasedOn: 'Feb 11, 2018',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
+    badgeAlt: 'Ad free',
   });
 });
 

@@ -79,6 +79,7 @@ export class SearchPage {
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
+      badgeAlt: el.find('.video-badge').prop('alt'),
     }));
   }
 

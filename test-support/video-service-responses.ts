@@ -28,6 +28,7 @@ export const video177 = Object.freeze({
     streamUrl: 'https://cdn.kaltura.com/stream/147.mpd',
     duration: 'PT1M2S',
   },
+  badges: ['ad-free'],
 });
 
 const video147 = Object.freeze({
@@ -43,6 +44,7 @@ const video147 = Object.freeze({
     streamUrl: 'https://cdn.kaltura.com/stream/147.mpd',
     duration: 'PT1M3S',
   },
+  badges: ['ad-free'],
 });
 
 export const videos = {
@@ -70,4 +72,5 @@ export const youtubeVideo1 = {
     id: 'youtubeId',
     duration: 'PT1M2S',
   },
+  badges: ['youtube'],
 };

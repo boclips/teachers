@@ -8,6 +8,7 @@ import { Video } from '../../../types/Video';
 import DateFormatter from '../components/dateFormatter/DateFormatter';
 import DurationFormatter from '../components/durationForammter/DurationFormatter';
 import VideoPlayer from '../components/player/VideoPlayer';
+import VideoPreviewBadge from './VideoPreviewBadge';
 
 interface Props {
   video: Video;
@@ -36,11 +37,12 @@ export default class VideoPreview extends React.PureComponent<Props> {
               <h1 className="title clamp-2-lines" data-qa="video-title">
                 {this.props.video.title}
               </h1>
+              <VideoPreviewBadge video={this.props.video} />
               <p
                 data-qa="video-duration"
                 aria-hidden={true}
                 tabIndex={-1}
-                className={'subtitle duration'}
+                className={'duration'}
               >
                 <Icon type="clock-circle" />{' '}
                 <DurationFormatter duration={this.props.video.duration} />

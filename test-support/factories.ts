@@ -18,6 +18,7 @@ export class VideoFactory {
       playback:
         (arg.playback as StreamPlayback) ||
         new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
+      badges: arg.badges || [],
     });
   }
 }
