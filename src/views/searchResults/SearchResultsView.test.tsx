@@ -43,15 +43,10 @@ const mockStore = configureStore<SearchState & LinksState & RouterState>();
 
 function onPageChange() {}
 
-function onToggleInDefaultCollection() {}
-
 function mountWith(store: Store) {
   return mount(
     <Provider store={store}>
-      <SearchResultsView
-        onPageChange={onPageChange}
-        onToggleInDefaultCollection={onToggleInDefaultCollection}
-      />
+      <SearchResultsView onPageChange={onPageChange} />
     </Provider>,
   );
 }

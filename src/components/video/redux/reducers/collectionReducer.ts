@@ -4,9 +4,9 @@ import createReducer, {
 } from '../../../../app/redux/createReducer';
 import { Link } from '../../../../types/Link';
 import { Video } from '../../../../types/Video';
+import { addToDefaultCollectionAction } from '../../../searchResults/VideoCard';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { VideoCollection } from './../../../../types/VideoCollection';
-import { addToDefaultCollectionAction } from './../../../../views/searchResults/SearchResultsView';
 
 const initialState: VideoCollection = {
   videos: [],

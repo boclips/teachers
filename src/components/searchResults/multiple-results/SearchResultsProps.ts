@@ -5,4 +5,5 @@ export default interface SearchResultsProps {
   videos: Video[];
   searchId: string;
   onNavigate: () => void;
+  collectionVideoIds: string[];
 }

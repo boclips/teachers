@@ -1,8 +1,8 @@
+import { addToDefaultCollectionAction } from '../../../searchResults/VideoCard';
 import {
   VideoCollectionFactory,
   VideoFactory,
 } from './../../../../../test-support/factories';
-import { addToDefaultCollectionAction } from './../../../../views/searchResults/SearchResultsView';
 import { collectionReducer } from './collectionReducer';
 
 test('adding a video to default collection', () => {

@@ -1,9 +1,9 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../../app/redux/actions';
 import addToCollection from '../../../../../services/collections/addToCollection';
+import { addToDefaultCollectionAction } from '../../../VideoCard';
 import { CollectionState } from './../../../../../types/State';
 import { Video } from './../../../../../types/Video';
-import { addToDefaultCollectionAction } from './../../../../../views/searchResults/SearchResultsView';
 
 export function onAddToCollection(
   store: MiddlewareAPI<any, CollectionState>,

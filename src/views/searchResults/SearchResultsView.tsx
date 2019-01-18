@@ -4,7 +4,6 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { actionCreatorFactory } from '../../app/redux/actions';
 import SearchResultsCount from '../../components/searchResults/multiple-results/SearchResultsCount';
 import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
@@ -12,16 +11,7 @@ import SearchResultsWithSidebar from '../../components/searchResults/multiple-re
 
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
-import { Video } from '../../types/Video';
 import NoResultsView from './noResults/NoResultsView';
-
-export const addToDefaultCollectionAction = actionCreatorFactory<Video>(
-  'ADD_TO_DEFAULT_COLLECTION',
-);
-
-export const removeFromDefaultCollectionAction = actionCreatorFactory<Video>(
-  'REMOVE_FROM_DEFAULT_COLLECTION',
-);
 
 interface StateProps {
   loading: boolean;
@@ -34,10 +24,6 @@ interface StateProps {
 
 interface DispatchProps {
   onPageChange: (page: number, query: string, isNewsMode: boolean) => void;
-  onToggleInDefaultCollection: (
-    video: Video,
-    inDefaultCollection: boolean,
-  ) => void;
 }
 
 class SearchResultsView extends React.PureComponent<
@@ -70,6 +56,7 @@ class SearchResultsView extends React.PureComponent<
             searchId={this.props.results.searchId}
             videos={this.props.results.videos}
             onNavigate={this.goFromNewsToSearchResults}
+            collectionVideoIds={this.props.collectionVideoIds}
           />
         ) : (
           <SearchResultsWithSidebar
@@ -77,6 +64,7 @@ class SearchResultsView extends React.PureComponent<
             searchId={this.props.results.searchId}
             videos={this.props.results.videos}
             onNavigate={this.goToNewsResults}
+            collectionVideoIds={this.props.collectionVideoIds}
           />
         )}
 
@@ -161,9 +149,6 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
         mode: isNewsMode ? 'news' : undefined,
       });
       dispatch(push(`/videos?${queryParams}`));
-    },
-    onToggleInDefaultCollection: (video: Video) => {
-      dispatch(addToDefaultCollectionAction(video));
     },
   };
 }

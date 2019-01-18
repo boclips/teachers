@@ -1,7 +1,7 @@
 import Row from 'antd/lib/grid/row';
 import React from 'react';
 import { NewsBoxHeader } from '../NewsBoxHeader';
-import VideoCard from '../VideoCard';
+import { VideoCardList } from '../VideoCardList';
 import SearchResultsProps from './SearchResultsProps';
 
 export default class SearchResultsWithHeader extends React.PureComponent<
@@ -17,15 +17,11 @@ export default class SearchResultsWithHeader extends React.PureComponent<
           />
         </Row>
         <Row>
-          {this.props.videos.map(video => {
-            return (
-              <VideoCard
-                key={video.id}
-                video={video}
-                searchId={this.props.searchId}
-              />
-            );
-          })}
+          <VideoCardList
+            videos={this.props.videos}
+            searchId={this.props.searchId}
+            collectionVideoIds={this.props.collectionVideoIds}
+          />
         </Row>
       </React.Fragment>
     );
