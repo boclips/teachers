@@ -4,13 +4,24 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import SearchResult from '../../components/searchResults/multiple-results/SearchResult';
+import { actionCreatorFactory } from '../../app/redux/actions';
 import SearchResultsCount from '../../components/searchResults/multiple-results/SearchResultsCount';
+import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
+
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
+import { Video } from '../../types/Video';
 import NoResultsView from './noResults/NoResultsView';
+
+export const addToDefaultCollectionAction = actionCreatorFactory<Video>(
+  'ADD_TO_DEFAULT_COLLECTION',
+);
+
+export const removeFromDefaultCollectionAction = actionCreatorFactory<Video>(
+  'REMOVE_FROM_DEFAULT_COLLECTION',
+);
 
 interface StateProps {
   loading: boolean;
@@ -18,10 +29,15 @@ interface StateProps {
   links: Links;
   currentPage: number;
   isNewsMode: boolean;
+  collectionVideoIds: string[];
 }
 
 interface DispatchProps {
   onPageChange: (page: number, query: string, isNewsMode: boolean) => void;
+  onToggleInDefaultCollection: (
+    video: Video,
+    inDefaultCollection: boolean,
+  ) => void;
 }
 
 class SearchResultsView extends React.PureComponent<
@@ -88,12 +104,7 @@ class SearchResultsView extends React.PureComponent<
   public renderResultPlaceholders() {
     return (
       <section data-qa="search-results-placeholders">
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
-        <SearchResult loading={true} searchId={null} video={null} />
+        <SearchResultsPlaceholders />
       </section>
     );
   }
@@ -124,7 +135,12 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({ search, links, router }: State): StateProps {
+function mapStateToProps({
+  search,
+  links,
+  router,
+  videoCollection,
+}: State): StateProps {
   return {
     loading: search.loading,
     results: search,
@@ -132,6 +148,7 @@ function mapStateToProps({ search, links, router }: State): StateProps {
     currentPage: +queryString.parse(router.location.search).page || 1,
     isNewsMode:
       queryString.parse(router.location.search).mode === 'news' || false,
+    collectionVideoIds: videoCollection.videos.map(video => video.id),
   };
 }
 
@@ -144,6 +161,9 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
         mode: isNewsMode ? 'news' : undefined,
       });
       dispatch(push(`/videos?${queryParams}`));
+    },
+    onToggleInDefaultCollection: (video: Video) => {
+      dispatch(addToDefaultCollectionAction(video));
     },
   };
 }

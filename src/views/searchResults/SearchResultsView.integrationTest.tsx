@@ -6,7 +6,7 @@ test('search for a video shows results', async () => {
   const searchPage = await SearchPage.load('some video');
 
   expect(searchPage.getVideoResults()).toHaveLength(2);
-  expect(searchPage.getVideoResults()[0]).toEqual({
+  expect(searchPage.getVideoResults()[0]).toMatchObject({
     title: 'KS3/4 Science: Demonstrating Chemistry',
     description: 'Matthew Tosh shows us the science.',
     contentProvider: 'cp1',
@@ -52,4 +52,31 @@ test('redirects when clicking on first title', async () => {
   const searchPage = await SearchPage.load('some video');
   searchPage.clickOnFirstTitle();
   await searchPage.isOnDetailsPage();
+});
+
+test('indicates if video is in your default collection', async () => {
+  const searchPage = await SearchPage.load('some video');
+  const videos = searchPage.getVideoResults();
+
+  expect(videos).toHaveLength(2);
+
+  expect(videos[0].title).toEqual('KS3/4 Science: Demonstrating Chemistry');
+  expect(videos[0].isSaved).toBeTruthy();
+
+  expect(videos[1].title).toEqual('KS3/4 Science: Big Screen Science');
+  expect(videos[1].isSaved).toBeFalsy();
+});
+
+test('can toggle whether a video is in the default collection', async () => {
+  const searchPage = await SearchPage.load('some video');
+  const firstResult = searchPage.getVideoCard(1);
+
+  const toggleCollectionButton = firstResult
+    .find(By.dataQa('default-collection-toggle'))
+    .first();
+
+  expect(toggleCollectionButton).toHaveText('Save');
+
+  toggleCollectionButton.simulate('click');
+  expect(toggleCollectionButton).toHaveText('Saved');
 });

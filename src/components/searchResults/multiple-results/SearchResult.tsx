@@ -8,6 +8,8 @@ interface Props {
   loading: boolean;
   video: Video | null;
   searchId: string | null;
+  isInCollection: boolean;
+  onToggleInDefaultCollection: (inDefaultCollection: boolean) => void;
 }
 
 export default class SearchResult extends React.PureComponent<Props> {
@@ -25,6 +27,10 @@ export default class SearchResult extends React.PureComponent<Props> {
             <VideoPreview
               video={this.props.video}
               searchId={this.props.searchId}
+              isInCollection={this.props.isInCollection}
+              onToggleInDefaultCollection={
+                this.props.onToggleInDefaultCollection
+              }
             />
           ) : null}
         </Skeleton>

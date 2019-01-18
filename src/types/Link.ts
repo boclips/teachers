@@ -12,7 +12,9 @@ export class Link {
     return this.link.href;
   }
 
-  public getTemplatedLink(paramKeysValues: any): string {
+  public getTemplatedLink(paramKeysValues: {
+    [paramName: string]: string;
+  }): string {
     return URI.expand(this.link.href, paramKeysValues).href();
   }
 }

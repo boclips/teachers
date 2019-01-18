@@ -14,8 +14,10 @@ import onStoreLoginMiddleware from '../components/login/redux/middleware/onStore
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
+import addToCollectionMiddleware from '../components/searchResults/multiple-results/redux/middleware/addToCollectionMiddleware';
 import onUrlChangeMiddleware from '../components/video/redux/middleware/fetchVideosOnLocationChangeMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
+import { collectionReducer } from '../components/video/redux/reducers/collectionReducer';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
@@ -32,6 +34,7 @@ const rootReducer: Reducer<any> = combineReducers({
   links: linksReducer,
   video: videoReducer,
   login: loginReducer,
+  videoCollection: collectionReducer,
 });
 
 interface Props {
@@ -54,6 +57,7 @@ export default class App extends PureComponent<Props> {
         fetchLinksMiddleware,
         onLinksFetchedMiddleware,
         onStoreLoginMiddleware,
+        addToCollectionMiddleware,
       ),
     ),
   );

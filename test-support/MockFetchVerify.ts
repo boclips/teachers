@@ -17,6 +17,15 @@ export default class MockFetchVerify {
     axiosMock.onPost(matcher, requestBody).reply(status);
   }
 
+  public static put(
+    matcher: string | RegExp,
+    responseBody?: any,
+    status: number = 200,
+    responseHeaders: any = {},
+  ): void {
+    axiosMock.onPut(matcher).reply(status, responseBody, responseHeaders);
+  }
+
   public static clear() {
     axiosMock.reset();
   }

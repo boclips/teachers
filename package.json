@@ -5,6 +5,7 @@
   "main": "index.tsx",
   "scripts": {
     "test": "jest",
+    "test:watch": "jest --watch",
     "dev": "webpack-dev-server --config webpack-config/webpack.dev.js",
     "build": "webpack --config webpack-config/webpack.prod.js",
     "compile": "tsc -p . --noEmit",

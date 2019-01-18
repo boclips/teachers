@@ -2,6 +2,7 @@ import { RouterState as ReactRouterState } from 'connected-react-router';
 import { Links } from './Links';
 import PageSpec from './PageSpec';
 import { Video } from './Video';
+import { VideoCollection } from './VideoCollection';
 
 export interface LinksState {
   links: Links;
@@ -39,9 +40,14 @@ export interface LoginState {
   login: boolean;
 }
 
+export interface CollectionState {
+  videoCollection: VideoCollection;
+}
+
 export default interface State
   extends LinksState,
     SearchState,
     LoginState,
     VideoDetailsState,
-    RouterState {}
+    RouterState,
+    CollectionState {}

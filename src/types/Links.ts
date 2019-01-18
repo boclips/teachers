@@ -5,6 +5,7 @@ export interface Links {
   video: Link;
   createPlaybackEvent: Link;
   createNoSearchResultsEvent: Link;
+  defaultCollection: Link;
   activate?: Link;
   profile?: Link;
 }

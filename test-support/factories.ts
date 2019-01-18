@@ -3,6 +3,7 @@ import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
 import { StreamPlayback, Video } from '../src/types/Video';
+import { VideoCollection } from './../src/types/VideoCollection';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
@@ -23,6 +24,20 @@ export class VideoFactory {
   }
 }
 
+export class VideoCollectionFactory {
+  public static sample(arg: Partial<VideoCollection> = {}): VideoCollection {
+    return Object.freeze({
+      videos: arg.videos || [],
+      links: arg.links || {
+        addVideo: new Link({
+          href: '/v1/collections/default/videos/{video_id}',
+          templated: true,
+        }),
+      },
+    });
+  }
+}
+
 export class LinksFactory {
   public static sample(arg: Partial<Links> = {}): Links {
     return Object.freeze({
@@ -34,6 +49,8 @@ export class LinksFactory {
         arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
       activate: arg.activate,
       profile: arg.profile,
+      defaultCollection:
+        arg.defaultCollection || new Link({ href: '/collections/xxx' }),
     });
   }
 }
@@ -50,6 +67,9 @@ export class LinksResponseFactory {
         },
         activate: arg.activate,
         profile: arg.profile,
+        defaultCollection: arg.defaultCollection || {
+          href: '/collections/xxx',
+        },
       },
     });
   }

@@ -12,6 +12,9 @@ export const links = {
     createPlaybackEvent: {
       href: '/v1/events',
     },
+    userDefaultCollection: {
+      href: '/v1/collections/default',
+    },
   },
 };
 
@@ -56,6 +59,16 @@ export const videos = {
     totalElements: 2,
     totalPages: 1,
     number: 0,
+  },
+};
+
+export const usersVideoCollection = {
+  videos: [video177],
+  _links: {
+    addVideo: {
+      href: 'v1/collections/default/videos/{video_id}',
+      templated: true,
+    },
   },
 };
 

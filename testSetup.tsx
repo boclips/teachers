@@ -40,3 +40,9 @@ beforeEach(() => {
   (axios.interceptors.request as any).handlers = [];
   MockFetchVerify.clear();
 });
+
+jest.mock('react', () => {
+  const r = jest.requireActual('react');
+
+  return { ...r, memo: x => x };
+});

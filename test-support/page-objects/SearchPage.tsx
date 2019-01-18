@@ -8,13 +8,12 @@ import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 import MockFetchVerify from '../MockFetchVerify';
-import { links, video177, videos } from '../video-service-responses';
-
-jest.mock('react', () => {
-  const r = jest.requireActual('react');
-
-  return { ...r, memo: x => x };
-});
+import {
+  links,
+  usersVideoCollection,
+  video177,
+  videos,
+} from '../video-service-responses';
 
 export class SearchPage {
   constructor(public wrapper: ReactWrapper) {}
@@ -28,6 +27,7 @@ export class SearchPage {
       new RegExp(`/v1/videos?.*query=${escapedQuery}`),
       JSON.stringify(videos),
     );
+    MockFetchVerify.get(`/v1/collections/default`, usersVideoCollection);
 
     const page = new SearchPage(
       mount(
@@ -56,6 +56,8 @@ export class SearchPage {
       ),
       JSON.stringify(videos),
     );
+    MockFetchVerify.get(`/v1/collections/default`, usersVideoCollection);
+    MockFetchVerify.put('v1/collections/default/videos/**', true);
 
     const page = new SearchPage(
       mount(
@@ -80,7 +82,13 @@ export class SearchPage {
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
+      isSaved:
+        findOne(el, 'default-collection-toggle', 'button').text() === 'Saved',
     }));
+  }
+
+  public getVideoCard(index: number) {
+    return findAll(this.wrapper, 'search-result').at(index);
   }
 
   public getCount(): number {

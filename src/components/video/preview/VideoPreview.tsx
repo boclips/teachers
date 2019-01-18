@@ -1,18 +1,20 @@
-import { Button, Icon, notification } from 'antd';
+import { Icon } from 'antd';
 import React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import { Link } from 'react-router-dom';
-import tickIcon from '../../../../resources/images/green-check.png';
-import AppConfig from '../../../app/AppConfig';
+
 import { Video } from '../../../types/Video';
 import DateFormatter from '../components/dateFormatter/DateFormatter';
 import DurationFormatter from '../components/durationForammter/DurationFormatter';
 import VideoPlayer from '../components/player/VideoPlayer';
 import VideoPreviewBadge from './VideoPreviewBadge';
+import { VideoPreviewButtonsContainer } from './VideoPreviewButtonsContainer';
 
 interface Props {
   video: Video;
   searchId: string | null;
+  isInCollection: boolean;
+  onToggleInDefaultCollection: (inDefaultCollection: boolean) => void;
 }
 
 export default class VideoPreview extends React.PureComponent<Props> {
@@ -65,41 +67,13 @@ export default class VideoPreview extends React.PureComponent<Props> {
               {this.props.video.description}
             </p>
           </Link>
-          <CopyToClipboard
-            text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
-            onCopy={this.showCopiedNotification}
-            options={{ debug: true }}
-          >
-            <Button
-              data-qa="copy-link"
-              size={'large'}
-              className={'secondary copy-link-button'}
-              tabIndex={0}
-            >
-              Copy link
-            </Button>
-          </CopyToClipboard>
+          <VideoPreviewButtonsContainer
+            isInCollection={this.props.isInCollection}
+            onToggleInDefaultCollection={this.props.onToggleInDefaultCollection}
+            video={this.props.video}
+          />
         </section>
       </section>
     );
-  }
-
-  private showCopiedNotification(url: string) {
-    notification.success({
-      message: url,
-      description: (
-        <div role="alert">
-          `has been copied to your clipboard. Paste link to your tool of
-          choice.`
-        </div>
-      ),
-      placement: 'bottomRight',
-      icon: <img src={tickIcon} />,
-      style: {
-        background: '#008F52',
-        color: '#FFFFFF',
-      },
-      duration: 6,
-    });
   }
 }
