@@ -77,7 +77,7 @@ export class SearchPage {
     return findAll(this.wrapper, 'search-result').map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
-      contentProvider: findOne(el, 'video-content-provider').text(),
+      contentPartner: findOne(el, 'video-content-partner').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
@@ -105,7 +105,7 @@ export class SearchPage {
   public async isOnDetailsPage() {
     await eventually(() => {
       this.wrapper = this.wrapper.update();
-      expect(this.wrapper.find(By.dataQa('video-details-title'))).toExist();
+      expect(this.wrapper.find(By.dataQa('video-title'))).toExist();
     });
   }
 

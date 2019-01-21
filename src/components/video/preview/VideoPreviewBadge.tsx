@@ -16,14 +16,12 @@ export default class VideoPreviewBadge extends React.PureComponent<Props> {
   public render() {
     const badge = badges[this.props.video.badges[0]];
 
-    if (badge) {
-      return (
-        <img
-          src={badge.src}
-          className={`video-badge ${badge.class}`}
-          alt={badge.alt}
-        />
-      );
-    }
+    return badge ? (
+      <img
+        src={badge.src}
+        className={`video-badge ${badge.class}`}
+        alt={badge.alt}
+      />
+    ) : null;
   }
 }

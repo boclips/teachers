@@ -33,7 +33,7 @@ export class CollectionPage {
     return findAll(this.wrapper, 'collection-video').map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
-      contentProvider: findOne(el, 'video-content-provider').text(),
+      contentPartner: findOne(el, 'video-content-partner').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),

@@ -1,15 +1,11 @@
-import { Icon } from 'antd';
 import React from 'react';
 
 import { Link } from 'react-router-dom';
 
 import { Video } from '../../../types/Video';
-import DateFormatter from '../components/dateFormatter/DateFormatter';
-import DurationFormatter from '../components/durationForammter/DurationFormatter';
 import VideoPlayer from '../components/player/VideoPlayer';
-import VideoPreviewBadge from './VideoPreviewBadge';
-import { VideoPreviewButtonsContainer } from './VideoPreviewButtonsContainer';
 import { VideoHeader } from '../components/VideoHeader';
+import { VideoPreviewButtonsContainer } from './VideoPreviewButtonsContainer';
 
 interface Props {
   video: Video;
