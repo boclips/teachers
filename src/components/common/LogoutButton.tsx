@@ -1,6 +1,7 @@
 import { Dropdown, Menu, Modal } from 'antd';
 import { logout } from 'boclips-js-security';
 import React, { PureComponent, SyntheticEvent } from 'react';
+import { Link } from 'react-router-dom';
 import myAccountImg from '../../../resources/images/my-account.svg';
 
 interface Props {
@@ -11,11 +12,20 @@ interface AccountMenuProps {
   onLogout: (SyntheticEvent) => void;
 }
 
+const CollectionVideoLink = () => (
+  <Link to={'/collections/default'} data-qa="video-collection">
+    My video collection
+  </Link>
+);
+
 class AccountMenu extends PureComponent<AccountMenuProps> {
   public render() {
     const menu = (
       <Menu>
         <Menu.Item key="0">
+          <CollectionVideoLink />
+        </Menu.Item>
+        <Menu.Item key="1">
           <a
             data-qa="logout-button"
             className="logout"
@@ -38,6 +48,19 @@ class AccountMenu extends PureComponent<AccountMenuProps> {
   }
 }
 
+class MobileNavigation extends PureComponent<AccountMenuProps> {
+  public render() {
+    return (
+      <section>
+        <CollectionVideoLink />
+        <a onClick={this.props.onLogout} style={{ paddingLeft: '1em' }}>
+          Log out
+        </a>
+      </section>
+    );
+  }
+}
+
 export class LogoutButton extends PureComponent<Props> {
   public render() {
     const containerClass = this.props.mini
@@ -46,7 +69,7 @@ export class LogoutButton extends PureComponent<Props> {
     return (
       <div className={containerClass}>
         {!this.props.mini && <AccountMenu onLogout={this.confirmLogout} />}
-        {this.props.mini && <a onClick={this.confirmLogout}>Log out</a>}
+        {this.props.mini && <MobileNavigation onLogout={this.confirmLogout} />}
       </div>
     );
   }
