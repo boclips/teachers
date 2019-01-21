@@ -53,6 +53,10 @@
     .plyr__poster {
       background-size: cover;
     }
+
+    video {
+      max-height: @video-height;
+    }
   }
 
   .plyr--video {
@@ -60,6 +64,38 @@
       border-radius: @video-border-radius @video-border-radius 0px 0px;
     }
   }
+}
+
+*:fullscreen video {
+  max-height: none !important;
+}
+
+*:fullscreen .plyr__video-wrapper {
+  max-height: none !important;
+}
+
+*:-webkit-full-screen video {
+  max-height: none !important;
+}
+
+*:-webkit-full-screen .plyr__video-wrapper {
+  max-height: none !important;
+}
+
+*:-ms-fullscreen video {
+  max-height: none !important;
+}
+
+*:-ms-fullscreen .plyr__video-wrapper {
+  max-height: none !important;
+}
+
+*:-moz-full-screen video {
+  max-height: none !important;
+}
+
+*:-moz-full-screen .plyr__video-wrapper {
+  max-height: none !important;
 }
 
 .video-content {
