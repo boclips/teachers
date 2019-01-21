@@ -30,7 +30,7 @@ class AccountMenu extends PureComponent<AccountMenuProps> {
 
     return (
       <Dropdown overlay={menu} trigger={['click']}>
-        <a className="ant-dropdown-link" href="#">
+        <a className="ant-dropdown-link" href="#" data-qa="account-menu-open">
           <img src={myAccountImg} />
         </a>
       </Dropdown>
