@@ -52,8 +52,14 @@ class VideoCard extends React.PureComponent<Props & DispatchProps> {
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
-    onToggleInDefaultCollection: (video: Video) => {
-      dispatch(addToDefaultCollectionAction(video));
+    onToggleInDefaultCollection: (
+      video: Video,
+      inDefaultCollection: boolean,
+    ) => {
+      const action = inDefaultCollection
+        ? addToDefaultCollectionAction
+        : removeFromDefaultCollectionAction;
+      dispatch(action(video));
     },
   };
 };
