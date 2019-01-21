@@ -9,8 +9,9 @@ interface Props {
 
 class FreshSearchOnValueChange extends React.Component<Props> {
   public render() {
+    const onsubmit = e => e.preventDefault();
     return (
-      <form action="">
+      <form action="" onSubmit={onsubmit}>
         <Search
           defaultValue={this.props.value}
           prefix={<img src={logo} />}
