@@ -16,11 +16,11 @@ export default class VideoDetailCard extends React.PureComponent<Props> {
         <VideoPlayer video={this.props.video} searchId={this.props.searchId} />
         <section className="video-details">
           <VideoHeader video={this.props.video} />
-          <p>
+          <div className="subjects-container">
             {this.props.video.subjects.map(subject => (
               <SubjectTag subject={subject} key={subject} />
             ))}
-          </p>
+          </div>
           <p data-qa="video-description" className="description">
             {this.props.video.description}
           </p>
