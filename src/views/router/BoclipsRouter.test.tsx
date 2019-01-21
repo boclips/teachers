@@ -16,6 +16,7 @@ import {
   VideoDetailsState,
   VideoStateValue,
 } from '../../types/State';
+import CollectionView from '../collection/CollectionView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
@@ -66,6 +67,19 @@ describe('when authorised', () => {
     const videoDetailsView = wrapper.find(HomeView);
     expect(videoDetailsView).toExist();
   });
+
+  test('shows default collection view on /collections/default', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/collections/default')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const videoDetailsView = wrapper.find(CollectionView);
+    expect(videoDetailsView).toExist();
+  });
 });
 
 describe('when not authorised', () => {
@@ -92,6 +106,19 @@ describe('when not authorised', () => {
     );
 
     const videoDetailsView = wrapper.find(HomeView);
+    expect(videoDetailsView).not.toExist();
+  });
+
+  test('does not show default collection view', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/collections/default', '', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const videoDetailsView = wrapper.find(CollectionView);
     expect(videoDetailsView).not.toExist();
   });
 

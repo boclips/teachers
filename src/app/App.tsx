@@ -10,6 +10,7 @@ import {
   createStore,
   Reducer,
 } from 'redux';
+import fetchCollectionMiddleware from '../components/collection/redux/middleware/fetchCollectionMiddleware';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onStoreLoginMiddleware';
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
@@ -58,6 +59,7 @@ export default class App extends PureComponent<Props> {
         onLinksFetchedMiddleware,
         onStoreLoginMiddleware,
         addToCollectionMiddleware,
+        fetchCollectionMiddleware,
       ),
     ),
   );
