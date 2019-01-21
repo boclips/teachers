@@ -3,6 +3,7 @@ import { Video } from './Video';
 
 export interface VideoCollectionLinks {
   addVideo: Link;
+  removeVideo: Link;
 }
 
 export interface VideoCollection {

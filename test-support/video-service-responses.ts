@@ -69,6 +69,10 @@ export const usersVideoCollection = {
       href: 'v1/collections/default/videos/{video_id}',
       templated: true,
     },
+    removeVideo: {
+      href: 'v1/collections/default/videos/{video_id}',
+      templated: true,
+    },
   },
 };
 

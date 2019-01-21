@@ -3,6 +3,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
+import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 import MockFetchVerify from '../MockFetchVerify';
@@ -30,7 +31,7 @@ export class CollectionPage {
   }
 
   public getVideos() {
-    return findAll(this.wrapper, 'collection-video').map(el => ({
+    return this.wrapper.find(By.dataQa('collection-video')).map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
       contentPartner: findOne(el, 'video-content-partner').text(),
@@ -41,6 +42,10 @@ export class CollectionPage {
       isSaved:
         findOne(el, 'default-collection-toggle', 'button').text() === 'Saved',
     }));
+  }
+
+  public getVideoCard(index: number) {
+    return findAll(this.wrapper, 'collection-video').at(index);
   }
 
   private async hasLoaded() {

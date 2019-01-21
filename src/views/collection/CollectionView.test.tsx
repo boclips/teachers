@@ -18,6 +18,7 @@ function render(videos: Video[]) {
       videos,
       links: {
         addVideo: new Link({ href: '' }),
+        removeVideo: new Link({ href: '' }),
       },
     },
     router: {

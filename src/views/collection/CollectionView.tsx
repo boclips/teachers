@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { actionCreatorFactoryVoid } from '../../app/redux/actions';
-import { CollectionItems } from '../../components/collection/CollectionItems';
+import CollectionItems from '../../components/collection/CollectionItems';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionState } from '../../types/State';
 import { Video } from '../../types/Video';

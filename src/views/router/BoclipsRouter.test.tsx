@@ -181,6 +181,9 @@ function buildStore(
       addVideo: new Link({
         href: 'string',
       }),
+      removeVideo: new Link({
+        href: 'string',
+      }),
     },
   };
 

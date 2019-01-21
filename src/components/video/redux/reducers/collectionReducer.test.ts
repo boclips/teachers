@@ -1,4 +1,7 @@
-import { addToDefaultCollectionAction } from '../../../searchResults/VideoCard';
+import {
+  addToDefaultCollectionAction,
+  removeFromDefaultCollectionAction,
+} from '../../../searchResults/VideoCard';
 import {
   VideoCollectionFactory,
   VideoFactory,
@@ -31,4 +34,21 @@ test('adding a duplicate video to default collection does not readd it', () => {
   const stateAfter = collectionReducer(stateBefore, action);
 
   expect(stateAfter.videos).toHaveLength(1);
+});
+
+test('removing a video from a default collection', () => {
+  const stateBefore = VideoCollectionFactory.sample({
+    videos: [
+      VideoFactory.sample({ id: '123' }),
+      VideoFactory.sample({ id: '124' }),
+    ],
+  });
+
+  const videoToRemove = VideoFactory.sample({ id: '123' });
+  const action = removeFromDefaultCollectionAction(videoToRemove);
+
+  const stateAfter = collectionReducer(stateBefore, action);
+
+  expect(stateAfter.videos).toHaveLength(1);
+  expect(stateAfter.videos[0].id).toEqual('124');
 });

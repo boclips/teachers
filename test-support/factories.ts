@@ -33,6 +33,10 @@ export class VideoCollectionFactory {
           href: '/v1/collections/default/videos/{video_id}',
           templated: true,
         }),
+        removeVideo: new Link({
+          href: '/v1/collections/default/videos/{video_id}',
+          templated: true,
+        }),
       },
     });
   }
