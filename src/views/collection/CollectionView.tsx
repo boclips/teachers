@@ -1,11 +1,15 @@
+import Col from 'antd/lib/grid/col';
+import Row from 'antd/lib/grid/row';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { actionCreatorFactoryVoid } from '../../app/redux/actions';
 import { CollectionItems } from '../../components/collection/CollectionItems';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionState } from '../../types/State';
 import { Video } from '../../types/Video';
+import './CollectionView.less';
 
 export const fetchCollectionAction = actionCreatorFactoryVoid(
   'FETCH_COLLECTION',
@@ -21,16 +25,38 @@ interface DispatchProps {
 
 export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   public render() {
-    return <TopSearchBarLayout>{this.renderContent()}</TopSearchBarLayout>;
+    return (
+      <TopSearchBarLayout>
+        <section data-qa="collection-page">{this.renderContent()}</section>
+      </TopSearchBarLayout>
+    );
   }
 
   public renderContent() {
+    if (!this.props.videos) {
+      return null;
+    }
+    if (this.props.videos.length === 0) {
+      return this.renderEmptyCollection();
+    }
+
+    return this.props.videos && <CollectionItems videos={this.props.videos} />;
+  }
+
+  private renderEmptyCollection() {
     return (
-      this.props.videos && (
-        <section data-qa="collection-page">
-          <CollectionItems videos={this.props.videos} />
-        </section>
-      )
+      <Row className="collection-view-empty">
+        <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
+          <img src={emptyCollection} />
+          <h1 data-qa="collection-empty-title">
+            This video collection is empty
+          </h1>
+          <p>
+            You can add videos by searching for a topic and then clicking the
+            Save button on your favorite videos
+          </p>
+        </Col>
+      </Row>
     );
   }
 
