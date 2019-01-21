@@ -8,8 +8,8 @@ interface Props {
 }
 
 const badges = {
-  youtube: { src: badgeYoutube, alt: 'YouTube' },
-  'ad-free': { src: badgeAdFree, alt: 'Ad free' },
+  youtube: { src: badgeYoutube, alt: 'YouTube', class: 'youtube' },
+  'ad-free': { src: badgeAdFree, alt: 'Ad free', class: 'adfree' },
 };
 
 export default class VideoPreviewBadge extends React.PureComponent<Props> {
@@ -17,7 +17,13 @@ export default class VideoPreviewBadge extends React.PureComponent<Props> {
     const badge = badges[this.props.video.badges[0]];
 
     if (badge) {
-      return <img src={badge.src} className={'video-badge'} alt={badge.alt} />;
+      return (
+        <img
+          src={badge.src}
+          className={`video-badge ${badge.class}`}
+          alt={badge.alt}
+        />
+      );
     }
   }
 }

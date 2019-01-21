@@ -1,39 +1,84 @@
-.video-details {
-
+.video-details-page {
   @video-width: 488px;
   @video-height: 356px;
 
   margin-top: 46px;
-
-  .ant-skeleton .ant-skeleton-avatar-lg {
-    @media (min-width: 768px) {
-      width: @video-width;
-      height: @video-height;
+  .video-content {
+    .ant-skeleton .ant-skeleton-avatar-lg {
+      @media (min-width: 768px) {
+        width: @video-width;
+        height: @video-height;
+      }
     }
-  }
 
-  .boclips-player {
-    @media (min-width: 768px) {
-      width: @video-width;
+    .boclips-player {
+      @media (min-width: 768px) {
+        width: @video-width;
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
     }
-  }
 
-  .ant-tag {
-    height: 32px;
-    padding: 8px;
-    border-radius: 8px;
-    background-color: #E8EFFF;
-    color: #434656;
-    border: none;
-    font-size: 14px;
-    line-height: 16px;
+    .video-details {
+      @description-left-margin: 24px;
 
-    .tag-type {
-      color: #0051BC;
-      &::after {
-        content: " ";
+      @media (min-width: 768px) {
+        margin: 8px 0px 0px @description-left-margin;
+        width: calc(100% - (@video-width + @description-left-margin));
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+        margin-left: 0px;
+        padding: 12px;
+        padding-left: 0px;
+      }
+
+      .video-header {
+        padding: 0px;
+        @media (max-width: 768px) {
+          order: 1;
+        }
+      }
+
+      .description {
+        @media (max-width: 768px) {
+          order: 3;
+        }
+      }
+
+      .subject {
+        @media (max-width: 768px) {
+          order: 2;
+        }
+      }
+    }
+
+    .ant-tag {
+      height: 32px;
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #e8efff;
+      color: #434656;
+      border: none;
+      font-size: 14px;
+      line-height: 16px;
+
+      .tag-type {
+        color: #0051bc;
+        &::after {
+          content: ' ';
+        }
+      }
+    }
+
+    .plyr__video-wrapper {
+      max-height: @video-height;
+      .plyr__poster {
+        background-size: cover;
       }
     }
   }
-
 }
