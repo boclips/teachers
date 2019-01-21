@@ -1,9 +1,41 @@
-import { Button, Modal } from 'antd';
+import { Dropdown, Menu, Modal } from 'antd';
 import { logout } from 'boclips-js-security';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, SyntheticEvent } from 'react';
+import myAccountImg from '../../../resources/images/my-account.svg';
 
 interface Props {
   mini?: boolean;
+}
+
+interface AccountMenuProps {
+  onLogout: (SyntheticEvent) => void;
+}
+
+class AccountMenu extends PureComponent<AccountMenuProps> {
+  public render() {
+    const menu = (
+      <Menu>
+        <Menu.Item key="0">
+          <a
+            data-qa="logout-button"
+            className="logout"
+            onClick={this.props.onLogout}
+            href="#"
+          >
+            Log out
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+
+    return (
+      <Dropdown overlay={menu} trigger={['click']}>
+        <a className="ant-dropdown-link" href="#">
+          <img src={myAccountImg} />
+        </a>
+      </Dropdown>
+    );
+  }
 }
 
 export class LogoutButton extends PureComponent<Props> {
@@ -13,22 +45,15 @@ export class LogoutButton extends PureComponent<Props> {
       : 'logout-container';
     return (
       <div className={containerClass}>
-        {!this.props.mini && (
-          <Button
-            data-qa="logout-button"
-            className="logout"
-            size="large"
-            onClick={this.showConfirm}
-          >
-            Log out
-          </Button>
-        )}
-        {this.props.mini && <a onClick={this.showConfirm}>Log out</a>}
+        {!this.props.mini && <AccountMenu onLogout={this.confirmLogout} />}
+        {this.props.mini && <a onClick={this.confirmLogout}>Log out</a>}
       </div>
     );
   }
 
-  private showConfirm() {
+  private confirmLogout(e: SyntheticEvent) {
+    e.preventDefault();
+
     const confirm = Modal.confirm;
 
     confirm({
