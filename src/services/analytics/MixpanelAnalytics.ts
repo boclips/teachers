@@ -1,5 +1,7 @@
 import mixpanel from 'mixpanel-browser';
 import Analytics, { EventTypes } from './Analytics';
+import { SearchRequest } from '../../types/SearchRequest';
+import { SearchResults } from '../../types/State';
 
 export default class MixpanelAnalytics implements Analytics {
   private static instance: MixpanelAnalytics;
@@ -34,8 +36,8 @@ export default class MixpanelAnalytics implements Analytics {
     return mixpanelToken;
   }
 
-  public publish(event: EventTypes) {
-    this.mixpanelInstance.track(event.toString());
+  public publish(event: EventTypes, properties?: { [index: string]: any }) {
+    this.mixpanelInstance.track(event.toString(), properties);
   }
 
   public setUserId(userId: string) {
@@ -49,6 +51,30 @@ export default class MixpanelAnalytics implements Analytics {
       $first_name: userProfile.firstName,
       $last_name: userProfile.lastName,
       $created: new Date(),
+    });
+  }
+
+  public trackSearch(
+    searchRequest: SearchRequest,
+    searchResults: SearchResults,
+  ) {
+    let type;
+    const isNewsExcluded = searchRequest.filters.excludeTags.find(item => {
+      return item.toLowerCase() === 'news';
+    });
+    if (isNewsExcluded) {
+      type = 'INSTRUCTIONAL';
+    } else {
+      type = 'NEWS';
+    }
+
+    this.mixpanelInstance.track(EventTypes.VIDEO_SEARCH, {
+      [`${EventTypes.VIDEO_SEARCH}_query`.toLowerCase()]: searchResults.query,
+      [`${EventTypes.VIDEO_SEARCH}_number_of_results`.toLowerCase()]:
+        searchResults.videos && searchResults.videos.length,
+      [`${EventTypes.VIDEO_SEARCH}_page_number`.toLowerCase()]: searchResults
+        .paging.number,
+      [`${EventTypes.VIDEO_SEARCH}_type`.toLowerCase()]: type,
     });
   }
 }
