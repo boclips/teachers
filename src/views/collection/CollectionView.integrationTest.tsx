@@ -25,10 +25,8 @@ test('allows removing videos from the default collection', async () => {
   const firstResult = collectionPage.getVideoCard(0);
 
   const toggleCollectionButton = firstResult
-    .find(By.dataQa('default-collection-toggle'))
+    .find(By.dataQa('remove-from-default-collection'))
     .first();
-
-  expect(toggleCollectionButton).toHaveText('Remove');
 
   toggleCollectionButton.simulate('click');
 

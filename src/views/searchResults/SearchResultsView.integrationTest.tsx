@@ -72,7 +72,7 @@ test('can toggle whether a video is in the default collection', async () => {
   const firstResult = searchPage.getVideoCard(1);
 
   const toggleCollectionButton = firstResult
-    .find(By.dataQa('default-collection-toggle'))
+    .find(By.dataQa('add-to-default-collection'))
     .first();
 
   expect(toggleCollectionButton).toHaveText('Save');

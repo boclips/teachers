@@ -16,7 +16,7 @@ export default class VideoPreviewDefaultCollectionButton extends React.PureCompo
     return (
       <Button
         className="toggle-collection-button"
-        data-qa="default-collection-toggle"
+        data-qa={this.dataQa()}
         onClick={this.onClick}
         size={'large'}
       >
@@ -27,7 +27,7 @@ export default class VideoPreviewDefaultCollectionButton extends React.PureCompo
 
   private content() {
     return (
-      <span data-qa={this.dataQa()}>
+      <span>
         {this.icon()}
         {this.text()}
       </span>

@@ -40,7 +40,7 @@ export class CollectionPage {
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved:
-        findOne(el, 'default-collection-toggle', 'button').text() === 'Saved',
+        el.find(By.dataQa('remove-from-default-collection')).length === 1,
     }));
   }
 

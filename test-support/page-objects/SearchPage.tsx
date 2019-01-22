@@ -82,8 +82,7 @@ export class SearchPage {
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
-      isSaved:
-        findOne(el, 'default-collection-toggle', 'button').text() === 'Saved',
+      isSaved: el.find(By.dataQa('remove-from-default-collection')).length > 1,
     }));
   }
 
