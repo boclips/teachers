@@ -12,11 +12,14 @@ interface AccountMenuProps {
   onLogout: (SyntheticEvent) => void;
 }
 
-const CollectionVideoLink = () => (
-  <Link to={'/collections/default'} data-qa="video-collection">
-    My video collection
-  </Link>
-);
+const CollectionVideoLink = ({ noDataQa }: { noDataQa?: boolean }) => {
+  const dataQa = noDataQa === true ? undefined : 'video-collection';
+  return (
+    <Link to={'/collections/default'} data-qa={dataQa}>
+      My video collection
+    </Link>
+  );
+};
 
 class AccountMenu extends PureComponent<AccountMenuProps> {
   public render() {
@@ -52,7 +55,7 @@ class MobileNavigation extends PureComponent<AccountMenuProps> {
   public render() {
     return (
       <section>
-        <CollectionVideoLink />
+        <CollectionVideoLink noDataQa={true} />
         <a onClick={this.props.onLogout} style={{ paddingLeft: '1em' }}>
           Log out
         </a>
