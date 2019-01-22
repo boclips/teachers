@@ -14,10 +14,8 @@ export default class MixpanelAnalytics implements Analytics {
   private constructor() {
     mixpanel.init(
       MixpanelAnalytics.selectToken(window.location.hostname.toLowerCase()),
-      {},
-      'teachers',
     );
-    this.mixpanelInstance = mixpanel.teachers;
+    this.mixpanelInstance = mixpanel;
   }
 
   public static getInstance(): MixpanelAnalytics {
