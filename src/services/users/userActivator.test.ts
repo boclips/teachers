@@ -5,7 +5,7 @@ import {
 } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
-import Analytics, { EventTypes } from '../analytics/Analytics';
+import Analytics from '../analytics/Analytics';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import activateUser from './userActivator';
 
@@ -24,7 +24,8 @@ const userProfile = UserProfileFactory.sample({
 });
 
 const analytics: Analytics = {
-  publish: jest.fn(),
+  trackAccountActivation: jest.fn(),
+  trackSearch: jest.fn(),
   setUserId: jest.fn(),
   createUserProfile: jest.fn(),
 };
@@ -40,9 +41,7 @@ describe('when activate link present', () => {
     it('registers activation complete event', async () => {
       activateUser(links, userProfile);
       await eventually(() => {
-        expect(analytics.publish).toHaveBeenCalledWith(
-          EventTypes.ACTIVATION_COMPLETE,
-        );
+        expect(analytics.trackAccountActivation).toHaveBeenCalled();
       });
     });
 
@@ -62,7 +61,7 @@ describe('when user cannot be activated', () => {
 
   it('does not publish event to web analytics', () => {
     activateUser(links, userProfile);
-    expect(analytics.publish).not.toHaveBeenCalled();
+    expect(analytics.trackAccountActivation).not.toHaveBeenCalled();
   });
 });
 

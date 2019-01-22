@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Links } from '../../types/Links';
-import { EventTypes } from '../analytics/Analytics';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import { UserProfile } from '../analytics/MixpanelAnalytics';
 
@@ -12,7 +11,7 @@ export default function activateUser(links: Links, userProfile: UserProfile) {
   }
 
   axios.post(links.activate.getOriginalLink()).then(() => {
-    analytics.publish(EventTypes.ACTIVATION_COMPLETE);
+    analytics.trackAccountActivation();
     analytics.createUserProfile(userProfile);
   });
 }

@@ -12,7 +12,8 @@ jest.mock('../../../../services/analytics/AnalyticsFactory');
 const analyticsFactoryMock = AnalyticsFactory;
 
 const analytics: Analytics = {
-  publish: jest.fn(),
+  trackAccountActivation: jest.fn(),
+  trackSearch: jest.fn(),
   setUserId: jest.fn(),
   createUserProfile: jest.fn(),
 };

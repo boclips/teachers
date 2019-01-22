@@ -1,7 +1,7 @@
 import mixpanel from 'mixpanel-browser';
-import Analytics, { EventTypes } from './Analytics';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
+import Analytics from './Analytics';
 
 export default class MixpanelAnalytics implements Analytics {
   private static instance: MixpanelAnalytics;
@@ -36,10 +36,6 @@ export default class MixpanelAnalytics implements Analytics {
     return mixpanelToken;
   }
 
-  public publish(event: EventTypes, properties?: { [index: string]: any }) {
-    this.mixpanelInstance.track(event.toString(), properties);
-  }
-
   public setUserId(userId: string) {
     this.mixpanelInstance.identify(userId);
   }
@@ -52,6 +48,10 @@ export default class MixpanelAnalytics implements Analytics {
       $last_name: userProfile.lastName,
       $created: new Date(),
     });
+  }
+
+  public trackAccountActivation() {
+    this.mixpanelInstance.track(EventTypes.ACTIVATION_COMPLETE);
   }
 
   public trackSearch(
@@ -77,6 +77,10 @@ export default class MixpanelAnalytics implements Analytics {
       [`${EventTypes.VIDEO_SEARCH}_type`.toLowerCase()]: type,
     });
   }
+}
+enum EventTypes {
+  ACTIVATION_COMPLETE = 'ACTIVATION_COMPLETE',
+  VIDEO_SEARCH = 'VIDEO_SEARCH',
 }
 
 export interface UserProfile {
