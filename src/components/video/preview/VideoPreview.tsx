@@ -1,17 +1,15 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
-
 import { Video } from '../../../types/Video';
 import VideoPlayer from '../components/player/VideoPlayer';
 import { VideoHeader } from '../components/VideoHeader';
-import { VideoPreviewButtonsContainer } from './VideoPreviewButtonsContainer';
+import VideoPreviewButtonsContainer from './VideoPreviewButtonsContainer';
 
 interface Props {
   video: Video;
   searchId: string | null;
   isInCollection: boolean;
-  onToggleInDefaultCollection: (inDefaultCollection: boolean) => void;
+  style: 'search' | 'collection';
 }
 
 export default class VideoPreview extends React.PureComponent<Props> {
@@ -44,8 +42,8 @@ export default class VideoPreview extends React.PureComponent<Props> {
           </Link>
           <VideoPreviewButtonsContainer
             isInCollection={this.props.isInCollection}
-            onToggleInDefaultCollection={this.props.onToggleInDefaultCollection}
             video={this.props.video}
+            style={this.props.style}
           />
         </section>
       </section>

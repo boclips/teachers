@@ -28,7 +28,7 @@ test('allows removing videos from the default collection', async () => {
     .find(By.dataQa('default-collection-toggle'))
     .first();
 
-  expect(toggleCollectionButton).toHaveText('Saved');
+  expect(toggleCollectionButton).toHaveText('Remove');
 
   toggleCollectionButton.simulate('click');
 

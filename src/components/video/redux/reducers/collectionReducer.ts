@@ -7,7 +7,7 @@ import { Video } from '../../../../types/Video';
 import {
   addToDefaultCollectionAction,
   removeFromDefaultCollectionAction,
-} from '../../../searchResults/VideoCard';
+} from '../../preview/VideoPreviewButtonsContainer';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { VideoCollection } from './../../../../types/VideoCollection';
 

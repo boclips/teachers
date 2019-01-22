@@ -1,7 +1,7 @@
 import {
   addToDefaultCollectionAction,
   removeFromDefaultCollectionAction,
-} from '../../../searchResults/VideoCard';
+} from '../../preview/VideoPreviewButtonsContainer';
 import {
   VideoCollectionFactory,
   VideoFactory,

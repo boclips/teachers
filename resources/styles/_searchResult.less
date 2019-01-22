@@ -55,7 +55,8 @@
       max-height: @video-height;
     }
 
-    video, iframe {
+    video,
+    iframe {
       max-height: @video-height;
     }
   }
@@ -80,25 +81,33 @@
 }
 
 *:fullscreen {
-  video, iframe, .plyr__video-wrapper {
+  video,
+  iframe,
+  .plyr__video-wrapper {
     max-height: none !important;
   }
 }
 
 *:-webkit-full-screen {
-  video, iframe, .plyr__video-wrapper {
+  video,
+  iframe,
+  .plyr__video-wrapper {
     max-height: none !important;
   }
 }
 
 *:-ms-fullscreen {
-  video, iframe, .plyr__video-wrapper {
+  video,
+  iframe,
+  .plyr__video-wrapper {
     max-height: none !important;
   }
 }
 
 *:-moz-full-screen {
-  video, iframe, .plyr__video-wrapper {
+  video,
+  iframe,
+  .plyr__video-wrapper {
     max-height: none !important;
   }
 }
@@ -188,6 +197,10 @@
 
     .toggle-collection-button {
       margin-top: 4px;
+
+      img {
+        margin-right: 4px;
+      }
     }
 
     .buttons-row {

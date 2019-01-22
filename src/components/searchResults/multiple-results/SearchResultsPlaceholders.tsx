@@ -7,7 +7,6 @@ const SearchResultsPlaceholder = React.memo(() => (
     searchId={null}
     video={null}
     isInCollection={false}
-    onToggleInDefaultCollection={null}
   />
 ));
 

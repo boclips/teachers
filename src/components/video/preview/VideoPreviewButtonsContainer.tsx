@@ -1,16 +1,36 @@
 import { Button, notification, Row } from 'antd';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import tickIcon from '../../../../resources/images/green-check.png';
 import AppConfig from '../../../app/AppConfig';
+import { actionCreatorFactory } from '../../../app/redux/actions';
 import { Video } from '../../../types/Video';
+import VideoPreviewDefaultCollectionButton from './VideoPreviewDefaultCollectionButton';
 
-interface Props {
+export const addToDefaultCollectionAction = actionCreatorFactory<Video>(
+  'ADD_TO_DEFAULT_COLLECTION',
+);
+
+export const removeFromDefaultCollectionAction = actionCreatorFactory<Video>(
+  'REMOVE_FROM_DEFAULT_COLLECTION',
+);
+
+interface OwnProps {
   isInCollection: boolean;
-  onToggleInDefaultCollection: (inDefaultCollection: boolean) => void;
   video: Video;
+  style: 'search' | 'collection';
 }
-export class VideoPreviewButtonsContainer extends React.PureComponent<Props> {
+
+interface DispatchProps {
+  onAddToDefaultCollection: () => {};
+  onRemoveFromDefaultCollection: () => {};
+}
+
+class VideoPreviewButtonsContainer extends React.PureComponent<
+  OwnProps & DispatchProps
+> {
   private showCopiedNotification = (url: string) => {
     notification.success({
       message: url,
@@ -30,10 +50,6 @@ export class VideoPreviewButtonsContainer extends React.PureComponent<Props> {
     });
   };
 
-  private toggleInDefaultCollection = () => {
-    this.props.onToggleInDefaultCollection(!this.props.isInCollection);
-  };
-
   public render() {
     return (
       <Row className="buttons-row">
@@ -51,15 +67,32 @@ export class VideoPreviewButtonsContainer extends React.PureComponent<Props> {
             Copy link
           </Button>
         </CopyToClipboard>
-        <Button
-          className="toggle-collection-button"
-          data-qa="default-collection-toggle"
-          onClick={this.toggleInDefaultCollection}
-          size={'large'}
-        >
-          {this.props.isInCollection ? 'Saved' : 'Save'}
-        </Button>
+        <VideoPreviewDefaultCollectionButton
+          isInDefaultCollection={this.props.isInCollection}
+          style={this.props.style}
+          onAddToDefaultCollection={this.props.onAddToDefaultCollection}
+          onRemoveFromDefaultCollection={
+            this.props.onRemoveFromDefaultCollection
+          }
+        />
       </Row>
     );
   }
 }
+
+function mapDispatchToProps(
+  dispatch: Dispatch,
+  props: OwnProps,
+): DispatchProps {
+  return {
+    onAddToDefaultCollection: () =>
+      dispatch(addToDefaultCollectionAction(props.video)),
+    onRemoveFromDefaultCollection: () =>
+      dispatch(removeFromDefaultCollectionAction(props.video)),
+  };
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(VideoPreviewButtonsContainer);
