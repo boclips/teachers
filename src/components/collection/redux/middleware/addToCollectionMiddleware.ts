@@ -4,7 +4,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import addToCollection from '../../../../services/collections/addToCollection';
 import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
-import { addToDefaultCollectionAction } from '../../../video/preview/VideoPreviewButtonsContainer';
+import { addToDefaultCollectionAction } from '../../../video/card/VideoCardButtons';
 
 export function onAddToCollection(
   store: MiddlewareAPI<any, CollectionState>,

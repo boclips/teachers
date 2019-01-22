@@ -1,6 +1,6 @@
 import React from 'react';
 import { Video } from '../../types/Video';
-import VideoCard from './VideoCard';
+import VideoCard from '../video/card/VideoCard';
 
 interface Props {
   videos: Video[];
@@ -23,6 +23,8 @@ export class VideoCardList extends React.PureComponent<Props> {
               video={video}
               searchId={this.props.searchId}
               isInCollection={this.isVideoInCollection(video)}
+              style="search"
+              dataQa="search-result"
             />
           );
         })}

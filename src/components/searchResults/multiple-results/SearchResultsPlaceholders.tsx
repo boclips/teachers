@@ -1,12 +1,12 @@
 import React from 'react';
-import SearchResult from './SearchResult';
+import VideoCard from '../../video/card/VideoCard';
 
 const SearchResultsPlaceholder = React.memo(() => (
-  <SearchResult
-    loading={true}
+  <VideoCard
     searchId={null}
     video={null}
     isInCollection={false}
+    style="search"
   />
 ));
 

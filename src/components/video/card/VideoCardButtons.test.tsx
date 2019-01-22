@@ -6,8 +6,8 @@ import { VideoFactory } from '../../../../test-support/factories';
 import VideoPreviewButtonsContainer, {
   addToDefaultCollectionAction,
   removeFromDefaultCollectionAction,
-} from './VideoPreviewButtonsContainer';
-import VideoPreviewDefaultCollectionButton from './VideoPreviewDefaultCollectionButton';
+} from './VideoCardButtons';
+import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
 
 const mockStore = configureStore<{}>();
 

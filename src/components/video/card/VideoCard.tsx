@@ -1,19 +1,41 @@
+import { Card, Skeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import VideoPlayer from '../components/player/VideoPlayer';
 import { VideoHeader } from '../components/VideoHeader';
-import VideoPreviewButtonsContainer from './VideoPreviewButtonsContainer';
+import VideoPreviewButtonsContainer from './VideoCardButtons';
 
 interface Props {
-  video: Video;
+  video: Video | null;
   searchId: string | null;
   isInCollection: boolean;
   style: 'search' | 'collection';
+  dataQa?: string;
 }
 
-export default class VideoPreview extends React.PureComponent<Props> {
+export default class VideoCard extends React.PureComponent<Props> {
   public render() {
+    return (
+      <Card className="search-result" bordered={false}>
+        <Skeleton
+          loading={this.props.video === null}
+          active={true}
+          title={{ width: '150px' }}
+          paragraph={{ rows: 5 }}
+          avatar={{ shape: 'square', size: 'large' }}
+        >
+          <section data-qa={this.props.dataQa}>{this.renderContent()}</section>
+        </Skeleton>
+      </Card>
+    );
+  }
+
+  public renderContent() {
+    if (this.props.video === null) {
+      return null;
+    }
+
     return (
       <section className="video-content">
         <VideoHeader video={this.props.video} />

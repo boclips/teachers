@@ -8,7 +8,7 @@ import AppConfig from '../../../app/AppConfig';
 import { actionCreatorFactory } from '../../../app/redux/actions';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
-import VideoPreviewDefaultCollectionButton from './VideoPreviewDefaultCollectionButton';
+import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
 
 export const addToDefaultCollectionAction = actionCreatorFactory<Video>(
   'ADD_TO_DEFAULT_COLLECTION',

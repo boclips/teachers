@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { VideoFactory } from '../../../../test-support/factories';
-import VideoPreviewBadge from './VideoPreviewBadge';
+import VideoPreviewBadge from './VideoBadge';
 
 test("renders nothing when there's no badge", () => {
   const video = VideoFactory.sample({ badges: [] });

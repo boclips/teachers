@@ -1,7 +1,7 @@
 import { Icon } from 'antd';
 import React from 'react';
 import { Video } from '../../../types/Video';
-import VideoPreviewBadge from '../preview/VideoPreviewBadge';
+import VideoPreviewBadge from '../card/VideoBadge';
 import DateFormatter from './dateFormatter/DateFormatter';
 import DurationFormatter from './durationForammter/DurationFormatter';
 import './VideoHeader.less';

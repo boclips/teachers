@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import VideoPreviewDefaultCollectionButton, {
   Props,
-} from './VideoPreviewDefaultCollectionButton';
+} from './VideoDefaultCollectionButton';
 
 function render(props: Partial<Props> = {}) {
   const defaultProps: Props = {
