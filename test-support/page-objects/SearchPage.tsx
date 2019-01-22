@@ -50,9 +50,7 @@ export class SearchPage {
     MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
     MockFetchVerify.get(
       new RegExp(
-        `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${
-          Constants.CLASSROOM
-        },${Constants.NEWS}`,
+        `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${Constants.NEWS}`,
       ),
       JSON.stringify(videos),
     );
