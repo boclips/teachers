@@ -3,6 +3,7 @@ import { BoclipsPlayer, TrackerConfig } from 'boclips-react-player';
 import { PlaybackConfig } from 'boclips-react-player/dist/src/PlaybackConfig';
 import React from 'react';
 import { connect } from 'react-redux';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { LinksState } from '../../../../types/State';
 import {
   StreamPlayback,
@@ -22,7 +23,10 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
   public render() {
     const { video, searchId, trackingEndpoint } = this.props;
     const trackerConfig: TrackerConfig = {
-      onSegmentWatched: event => axios.post(trackingEndpoint, event),
+      onSegmentWatched: event => {
+        axios.post(trackingEndpoint, event);
+        AnalyticsFactory.getInstance().trackVideoPlayback(video, event);
+      },
       eventExtraData: {
         searchId,
         videoId: video.id,

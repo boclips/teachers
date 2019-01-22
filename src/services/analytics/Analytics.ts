@@ -1,3 +1,4 @@
+import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
@@ -13,4 +14,5 @@ export default interface Analytics {
   trackDefaultCollectionVisited(): void;
   trackVideoVisited(video: Video): void;
   trackVideoLinkCopied(video: Video): void;
+  trackVideoPlayback(video: Video, segmentWatched: SegmentWatchedEvent): void;
 }

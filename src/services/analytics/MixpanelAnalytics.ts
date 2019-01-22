@@ -1,3 +1,4 @@
+import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
 import mixpanel from 'mixpanel-browser';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
@@ -109,6 +110,16 @@ export default class MixpanelAnalytics implements Analytics {
     });
   }
 
+  public trackVideoPlayback(
+    video: Video,
+    watchedSegment: SegmentWatchedEvent,
+  ): void {
+    this.mixpanelInstance.track(EventTypes.VIDEO_PLAYBACK, {
+      ...this.toMixpanelVideo(video),
+      ...this.toMixpanelSegment(watchedSegment),
+    });
+  }
+
   private toMixpanelVideo(video: Video) {
     return {
       video_id: video.id,
@@ -122,6 +133,14 @@ export default class MixpanelAnalytics implements Analytics {
       video_badges: video.badges.join(', '),
     };
   }
+
+  private toMixpanelSegment(watchedSegment: SegmentWatchedEvent) {
+    return {
+      playback_segment_start_seconds: watchedSegment.segmentStartSeconds,
+      playback_segment_end_seconds: watchedSegment.segmentEndSeconds,
+      playback_video_duration_seconds: watchedSegment.videoDurationSeconds,
+    };
+  }
 }
 
 enum EventTypes {
@@ -132,6 +151,7 @@ enum EventTypes {
   VIDEO_ADDED_TO_COLLECTION = 'COLLECTION_VIDEO_ADDED',
   VIDEO_REMOVED_FROM_COLLECTION = 'COLLECTION_VIDEO_REMOVED',
   DEFAULT_COLLECTION_VISITED = 'COLLECTION_VISITED',
+  VIDEO_PLAYBACK = 'VIDEO_PLAYBACK',
 }
 
 export interface UserProfile {
