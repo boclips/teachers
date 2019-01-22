@@ -1,8 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
+import { analyticsMock } from '../../../../../test-support/getAnalyticsMock';
 import KeycloakInstanceFake from '../../../../../test-support/KeycloakInstanceFake';
 import App from '../../../../app/App';
-import Analytics from '../../../../services/analytics/Analytics';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSearchVideoAction';
 import { storeLogin } from '../actions/storeLoginAction';
@@ -11,13 +11,7 @@ jest.mock('../../../../services/analytics/AnalyticsFactory');
 
 const analyticsFactoryMock = AnalyticsFactory;
 
-const analytics: Analytics = {
-  trackAccountActivation: jest.fn(),
-  trackSearch: jest.fn(),
-  setUserId: jest.fn(),
-  createUserProfile: jest.fn(),
-};
-analyticsFactoryMock.getInstance = jest.fn(() => analytics);
+analyticsFactoryMock.getInstance = jest.fn(() => analyticsMock);
 const appWrapper = mount(<App />);
 const app = appWrapper.instance() as App;
 
@@ -27,7 +21,7 @@ describe('on store login', () => {
   });
 
   it('sets user identity for web analytics', () => {
-    expect(analytics.setUserId).toHaveBeenCalledWith('my user id');
+    expect(analyticsMock.setUserId).toHaveBeenCalledWith('my user id');
   });
 
   it("tries to search once we've log in", () => {

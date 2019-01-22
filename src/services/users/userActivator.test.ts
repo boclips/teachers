@@ -3,9 +3,9 @@ import {
   LinksFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
+import { analyticsMock } from '../../../test-support/getAnalyticsMock';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
-import Analytics from '../analytics/Analytics';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import activateUser from './userActivator';
 
@@ -23,14 +23,7 @@ const userProfile = UserProfileFactory.sample({
   lastName: 'boclips',
 });
 
-const analytics: Analytics = {
-  trackAccountActivation: jest.fn(),
-  trackSearch: jest.fn(),
-  setUserId: jest.fn(),
-  createUserProfile: jest.fn(),
-};
-
-analyticsFactoryMock.getInstance = jest.fn(() => analytics);
+analyticsFactoryMock.getInstance = jest.fn(() => analyticsMock);
 
 describe('when activate link present', () => {
   describe('when user activated successfully', () => {
@@ -41,14 +34,16 @@ describe('when activate link present', () => {
     it('registers activation complete event', async () => {
       activateUser(links, userProfile);
       await eventually(() => {
-        expect(analytics.trackAccountActivation).toHaveBeenCalled();
+        expect(analyticsMock.trackAccountActivation).toHaveBeenCalled();
       });
     });
 
     it('creates user profile in analytics', async () => {
       activateUser(links, userProfile);
       await eventually(() => {
-        expect(analytics.createUserProfile).toHaveBeenCalledWith(userProfile);
+        expect(analyticsMock.createUserProfile).toHaveBeenCalledWith(
+          userProfile,
+        );
       });
     });
   });
@@ -61,7 +56,7 @@ describe('when user cannot be activated', () => {
 
   it('does not publish event to web analytics', () => {
     activateUser(links, userProfile);
-    expect(analytics.trackAccountActivation).not.toHaveBeenCalled();
+    expect(analyticsMock.trackAccountActivation).not.toHaveBeenCalled();
   });
 });
 

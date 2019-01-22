@@ -1,5 +1,6 @@
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
+import { Video } from '../../types/Video';
 import { UserProfile } from './MixpanelAnalytics';
 
 export default interface Analytics {
@@ -10,4 +11,5 @@ export default interface Analytics {
   trackVideoAddedToDefaultCollection(): void;
   trackVideoRemovedFromDefaultCollection(): void;
   trackDefaultCollectionVisited(): void;
+  trackVideoVisited(video: Video): void;
 }

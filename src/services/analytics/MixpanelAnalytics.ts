@@ -1,6 +1,7 @@
 import mixpanel from 'mixpanel-browser';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
+import { Video } from '../../types/Video';
 import Analytics from './Analytics';
 
 export default class MixpanelAnalytics implements Analytics {
@@ -95,11 +96,18 @@ export default class MixpanelAnalytics implements Analytics {
       collection_id: 'DEFAULT',
     });
   }
+
+  public trackVideoVisited(video: Video): void {
+    this.mixpanelInstance.track(EventTypes.VIDEO_VISITED, {
+      [`${EventTypes.VIDEO_VISITED}_video`.toLowerCase()]: video,
+    });
+  }
 }
 
 enum EventTypes {
   ACTIVATION_COMPLETE = 'ACTIVATION_COMPLETE',
   VIDEO_SEARCH = 'VIDEO_SEARCH',
+  VIDEO_VISITED = 'VIDEO_VISITED',
   VIDEO_ADDED_TO_COLLECTION = 'COLLECTION_VIDEO_ADDED',
   VIDEO_REMOVED_FROM_COLLECTION = 'COLLECTION_VIDEO_REMOVED',
   DEFAULT_COLLECTION_VISITED = 'COLLECTION_VISITED',
