@@ -12,4 +12,5 @@ export default interface Analytics {
   trackVideoRemovedFromDefaultCollection(): void;
   trackDefaultCollectionVisited(): void;
   trackVideoVisited(video: Video): void;
+  trackVideoLinkCopied(video: Video): void;
 }

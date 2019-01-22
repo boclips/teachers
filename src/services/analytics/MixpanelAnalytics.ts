@@ -81,26 +81,46 @@ export default class MixpanelAnalytics implements Analytics {
 
   public trackDefaultCollectionVisited(): void {
     this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, {
-      collection_id: 'DEFAULT',
+      video_collection_id: 'DEFAULT',
     });
   }
 
   public trackVideoAddedToDefaultCollection(): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, {
-      collection_id: 'DEFAULT',
+      video_collection_id: 'DEFAULT',
     });
   }
 
   public trackVideoRemovedFromDefaultCollection(): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_REMOVED_FROM_COLLECTION, {
-      collection_id: 'DEFAULT',
+      video_collection_id: 'DEFAULT',
     });
   }
 
   public trackVideoVisited(video: Video): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_VISITED, {
-      [`${EventTypes.VIDEO_VISITED}_video`.toLowerCase()]: video,
+      ...this.toMixpanelVideo(video),
     });
+  }
+
+  public trackVideoLinkCopied(video: Video): void {
+    this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, {
+      ...this.toMixpanelVideo(video),
+    });
+  }
+
+  private toMixpanelVideo(video: Video) {
+    return {
+      video_id: video.id,
+      video_title: video.title,
+      video_description: video.description,
+      video_duration: video.duration.toISOString(),
+      video_releasedOn: video.releasedOn.toISOString(),
+      video_contentPartner: video.contentPartner,
+      video_subjects: video.subjects.join(', '),
+      video_playback: video.playback,
+      video_badges: video.badges.join(', '),
+    };
   }
 }
 
@@ -108,6 +128,7 @@ enum EventTypes {
   ACTIVATION_COMPLETE = 'ACTIVATION_COMPLETE',
   VIDEO_SEARCH = 'VIDEO_SEARCH',
   VIDEO_VISITED = 'VIDEO_VISITED',
+  VIDEO_LINK_COPIED = 'VIDEO_LINK_COPIED',
   VIDEO_ADDED_TO_COLLECTION = 'COLLECTION_VIDEO_ADDED',
   VIDEO_REMOVED_FROM_COLLECTION = 'COLLECTION_VIDEO_REMOVED',
   DEFAULT_COLLECTION_VISITED = 'COLLECTION_VISITED',

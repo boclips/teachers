@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import tickIcon from '../../../../resources/images/green-check.png';
 import AppConfig from '../../../app/AppConfig';
 import { actionCreatorFactory } from '../../../app/redux/actions';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import VideoPreviewDefaultCollectionButton from './VideoPreviewDefaultCollectionButton';
 
@@ -31,7 +32,8 @@ interface DispatchProps {
 class VideoPreviewButtonsContainer extends React.PureComponent<
   OwnProps & DispatchProps
 > {
-  private showCopiedNotification = (url: string) => {
+  private showCopiedNotification = (video: Video) => (url: string) => {
+    AnalyticsFactory.getInstance().trackVideoLinkCopied(video);
     notification.success({
       message: url,
       description: (
@@ -55,7 +57,7 @@ class VideoPreviewButtonsContainer extends React.PureComponent<
       <Row className="buttons-row">
         <CopyToClipboard
           text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
-          onCopy={this.showCopiedNotification}
+          onCopy={this.showCopiedNotification(this.props.video)}
           options={{ debug: true }}
         >
           <Button
