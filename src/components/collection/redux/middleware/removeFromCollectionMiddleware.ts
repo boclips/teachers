@@ -1,5 +1,6 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import removeFromCollection from '../../../../services/collections/removeFromCollection';
 import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
@@ -10,6 +11,7 @@ export function onRemoveFromCollection(
   video: Video,
 ) {
   removeFromCollection(video, store.getState().videoCollection);
+  AnalyticsFactory.getInstance().trackVideoRemovedFromDefaultCollection();
 }
 
 export default sideEffect(

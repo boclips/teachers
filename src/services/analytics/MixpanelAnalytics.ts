@@ -77,10 +77,32 @@ export default class MixpanelAnalytics implements Analytics {
       [`${EventTypes.VIDEO_SEARCH}_type`.toLowerCase()]: type,
     });
   }
+
+  public trackDefaultCollectionVisited(): void {
+    this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, {
+      collection_id: 'DEFAULT',
+    });
+  }
+
+  public trackVideoAddedToDefaultCollection(): void {
+    this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, {
+      collection_id: 'DEFAULT',
+    });
+  }
+
+  public trackVideoRemovedFromDefaultCollection(): void {
+    this.mixpanelInstance.track(EventTypes.VIDEO_REMOVED_FROM_COLLECTION, {
+      collection_id: 'DEFAULT',
+    });
+  }
 }
+
 enum EventTypes {
   ACTIVATION_COMPLETE = 'ACTIVATION_COMPLETE',
   VIDEO_SEARCH = 'VIDEO_SEARCH',
+  VIDEO_ADDED_TO_COLLECTION = 'COLLECTION_VIDEO_ADDED',
+  VIDEO_REMOVED_FROM_COLLECTION = 'COLLECTION_VIDEO_REMOVED',
+  DEFAULT_COLLECTION_VISITED = 'COLLECTION_VISITED',
 }
 
 export interface UserProfile {
