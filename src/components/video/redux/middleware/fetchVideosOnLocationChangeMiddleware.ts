@@ -10,7 +10,7 @@ import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSear
 export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 
 export default sideEffect(onLocationChanged, (store: Store<State>) => {
-  if (store.getState().login) {
+  if (store.getState().user && store.getState().user.authenticated) {
     dispatchSearchVideoAction(store);
   }
 });

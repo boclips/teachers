@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
+import { UserProfileFactory } from '../../../test-support/factories';
 import { LoginState } from '../../types/State';
 import PrivateRoute from './PrivateRoute';
 
@@ -31,7 +32,7 @@ describe('when not logged in', () => {
   test('does not render component', () => {
     const wrapper = render(
       mockStore({
-        login: null,
+        user: null,
       }),
     );
 
@@ -42,19 +43,19 @@ describe('when not logged in', () => {
 
 describe('when logged in', () => {
   test('Renders component', () => {
-    const login = true;
+    const user = UserProfileFactory.sample({ authenticated: true });
 
-    const wrapper = render(mockStore({ login }));
+    const wrapper = render(mockStore({ user }));
 
     const content = wrapper.find(By.dataQa('restricted-content'));
     expect(content).toExist();
   });
 
   test('Renders children', () => {
-    const login = true;
+    const user = UserProfileFactory.sample({ authenticated: true });
 
     const wrapper = mount(
-      <Provider store={mockStore({ login })}>
+      <Provider store={mockStore({ user })}>
         <MemoryRouter initialEntries={['/']}>
           <PrivateRoute path="/">
             <TestComponent />

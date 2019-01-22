@@ -3,12 +3,13 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
+import { UserProfileFactory } from '../../../test-support/factories';
 import { LoginState } from '../../types/State';
 import { LogoutButton } from '../common/LogoutButton';
 import TopSearchBarLayout from './TopSearchBarLayout';
 
 const mockStore = configureStore<LoginState>();
-const login = true;
+const user = UserProfileFactory.sample({ authenticated: true });
 
 describe('when authenticated', () => {
   test('renders search bar', () => {
@@ -34,7 +35,7 @@ describe('when authenticated', () => {
       <TopSearchBarLayout>
         <div>hi</div>
       </TopSearchBarLayout>,
-      mockStore({ login }),
+      mockStore({ user }),
     ).dive();
   }
 });
@@ -57,7 +58,7 @@ describe('when not authenticated', () => {
       <TopSearchBarLayout>
         <div>hi</div>
       </TopSearchBarLayout>,
-      mockStore({ login: undefined }),
+      mockStore({ user: undefined }),
     ).dive();
   }
 });

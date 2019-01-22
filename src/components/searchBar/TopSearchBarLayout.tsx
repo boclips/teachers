@@ -84,7 +84,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
 
 function mapStateToProps(state: LoginState): StateProps {
   return {
-    authorized: state.login,
+    authorized: state.user && state.user.authenticated,
   };
 }
 

@@ -41,4 +41,21 @@ export default class MixpanelAnalytics implements Analytics {
   public setUserId(userId: string) {
     this.mixpanelInstance.identify(userId);
   }
+
+  public createUserProfile(userProfile: UserProfile) {
+    this.mixpanelInstance.people.set({
+      $email: userProfile.email,
+      $last_login: new Date(),
+      $first_name: userProfile.firstName,
+      $last_name: userProfile.lastName,
+      $created: new Date(),
+    });
+  }
+}
+
+export interface UserProfile {
+  authenticated: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
 }

@@ -73,7 +73,7 @@ class PrivateRoute extends React.Component<
 
 function mapStateToProps(state: LoginState): StateProps {
   return {
-    authorized: state.login,
+    authorized: state.user && state.user.authenticated,
   };
 }
 

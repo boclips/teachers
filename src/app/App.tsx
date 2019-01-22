@@ -35,7 +35,7 @@ const rootReducer: Reducer<any> = combineReducers({
   search: searchReducer,
   links: linksReducer,
   video: videoReducer,
-  login: loginReducer,
+  user: loginReducer,
   videoCollection: collectionReducer,
 });
 

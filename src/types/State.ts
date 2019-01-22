@@ -1,4 +1,5 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
+import { UserProfile } from '../services/analytics/MixpanelAnalytics';
 import { Links } from './Links';
 import PageSpec from './PageSpec';
 import { Video } from './Video';
@@ -37,7 +38,7 @@ export interface RouterState {
 }
 
 export interface LoginState {
-  login: boolean;
+  user?: UserProfile;
 }
 
 export interface CollectionState {

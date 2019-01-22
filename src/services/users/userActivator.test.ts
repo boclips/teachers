@@ -1,5 +1,8 @@
 import eventually from '../../../test-support/eventually';
-import { LinksFactory } from '../../../test-support/factories';
+import {
+  LinksFactory,
+  UserProfileFactory,
+} from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
 import Analytics, { EventTypes } from '../analytics/Analytics';
@@ -14,7 +17,18 @@ const links = LinksFactory.sample({
   activate: new Link({ href: '/activate' }),
 });
 
-const analytics: Analytics = { publish: jest.fn(), setUserId: jest.fn() };
+const userProfile = UserProfileFactory.sample({
+  email: 'joe@boclips.com',
+  firstName: 'joe',
+  lastName: 'boclips',
+});
+
+const analytics: Analytics = {
+  publish: jest.fn(),
+  setUserId: jest.fn(),
+  createUserProfile: jest.fn(),
+};
+
 analyticsFactoryMock.getInstance = jest.fn(() => analytics);
 
 describe('when activate link present', () => {
@@ -23,12 +37,19 @@ describe('when activate link present', () => {
       MockFetchVerify.post('/activate', undefined, 201);
     });
 
-    it('registers event in mixpanel', async () => {
-      activateUser(links);
+    it('registers activation complete event', async () => {
+      activateUser(links, userProfile);
       await eventually(() => {
         expect(analytics.publish).toHaveBeenCalledWith(
           EventTypes.ACTIVATION_COMPLETE,
         );
+      });
+    });
+
+    it('creates user profile in analytics', async () => {
+      activateUser(links, userProfile);
+      await eventually(() => {
+        expect(analytics.createUserProfile).toHaveBeenCalledWith(userProfile);
       });
     });
   });
@@ -40,13 +61,15 @@ describe('when user cannot be activated', () => {
   });
 
   it('does not publish event to web analytics', () => {
-    activateUser(links);
+    activateUser(links, userProfile);
     expect(analytics.publish).not.toHaveBeenCalled();
   });
 });
 
 describe('when no activate link', () => {
   it('does not throw', () => {
-    expect(() => activateUser(LinksFactory.sample())).not.toThrow();
+    expect(() =>
+      activateUser(LinksFactory.sample(), userProfile),
+    ).not.toThrow();
   });
 });

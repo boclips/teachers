@@ -17,7 +17,7 @@ class TestComponent extends PureComponent {
 
 test('Renders children', () => {
   const wrapper = mount(
-    <Provider store={mockStore({ login: undefined })}>
+    <Provider store={mockStore({ user: undefined })}>
       <LoginProvider>
         <TestComponent />
       </LoginProvider>

@@ -1,4 +1,5 @@
 import moment = require('moment');
+import { UserProfile } from '../src/services/analytics/MixpanelAnalytics';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
@@ -55,6 +56,17 @@ export class LinksFactory {
       profile: arg.profile,
       defaultCollection:
         arg.defaultCollection || new Link({ href: '/collections/xxx' }),
+    });
+  }
+}
+
+export class UserProfileFactory {
+  public static sample(arg: Partial<UserProfile> = {}): UserProfile {
+    return Object.freeze({
+      authenticated: arg.authenticated || true,
+      email: arg.email || 'joe@boclips.com',
+      firstName: arg.firstName || 'joe',
+      lastName: arg.lastName || 'boclips',
     });
   }
 }

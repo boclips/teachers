@@ -11,7 +11,11 @@ jest.mock('../../../../services/analytics/AnalyticsFactory');
 
 const analyticsFactoryMock = AnalyticsFactory;
 
-const analytics: Analytics = { publish: jest.fn(), setUserId: jest.fn() };
+const analytics: Analytics = {
+  publish: jest.fn(),
+  setUserId: jest.fn(),
+  createUserProfile: jest.fn(),
+};
 analyticsFactoryMock.getInstance = jest.fn(() => analytics);
 const appWrapper = mount(<App />);
 const app = appWrapper.instance() as App;

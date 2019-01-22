@@ -169,10 +169,10 @@ function buildStore(
     },
   };
 
-  let login = null;
+  let user = null;
   if (authorised) {
-    login = Keycloak();
-    login.authenticated = true;
+    user = Keycloak();
+    user.authenticated = true;
   }
 
   const videoCollection = {
@@ -191,7 +191,7 @@ function buildStore(
     router,
     video,
     search,
-    login,
+    user,
     videoCollection,
   });
   return store;
