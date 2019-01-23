@@ -8,7 +8,6 @@ import SearchResultsCount from '../../components/searchResults/multiple-results/
 import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
-
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
 import NoResultsView from './noResults/NoResultsView';
@@ -44,6 +43,11 @@ class SearchResultsView extends React.PureComponent<
 
   public renderResults() {
     const isNewsMode = this.props.isNewsMode;
+
+    const isVideoInCollection = (videoId: string): boolean => {
+      return this.props.collectionVideoIds.indexOf(videoId) > -1;
+    };
+
     return (
       <section className={'search-results-container'} data-qa="search-page">
         {!this.props.loading && (
@@ -56,7 +60,7 @@ class SearchResultsView extends React.PureComponent<
             searchId={this.props.results.searchId}
             videos={this.props.results.videos}
             onNavigate={this.goFromNewsToSearchResults}
-            collectionVideoIds={this.props.collectionVideoIds}
+            isInCollection={isVideoInCollection}
           />
         ) : (
           <SearchResultsWithSidebar
@@ -64,7 +68,7 @@ class SearchResultsView extends React.PureComponent<
             searchId={this.props.results.searchId}
             videos={this.props.results.videos}
             onNavigate={this.goToNewsResults}
-            collectionVideoIds={this.props.collectionVideoIds}
+            isInCollection={isVideoInCollection}
           />
         )}
 

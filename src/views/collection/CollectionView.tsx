@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { actionCreatorFactoryVoid } from '../../app/redux/actions';
-import CollectionItems from '../../components/collection/CollectionItems';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
+import { CollectionVideoCardList } from '../../components/searchResults/VideoCardList';
 import { CollectionState } from '../../types/State';
 import { Video } from '../../types/Video';
 import './CollectionView.less';
@@ -40,7 +40,17 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
       return this.renderEmptyCollection();
     }
 
-    return this.props.videos && <CollectionItems videos={this.props.videos} />;
+    const isInCollection = () => true;
+
+    return (
+      this.props.videos && (
+        <CollectionVideoCardList
+          videos={this.props.videos}
+          searchId={null}
+          isInCollection={isInCollection}
+        />
+      )
+    );
   }
 
   private renderEmptyCollection() {

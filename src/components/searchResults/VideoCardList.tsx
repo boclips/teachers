@@ -4,15 +4,16 @@ import VideoCard from '../video/card/VideoCard';
 
 interface Props {
   videos: Video[];
-  collectionVideoIds: string[];
+  isInCollection: (videoId: string) => boolean;
   searchId: string;
 }
 
-export class VideoCardList extends React.PureComponent<Props> {
-  private isVideoInCollection = (video: Video) => {
-    return this.props.collectionVideoIds.indexOf(video.id) > -1;
-  };
+interface GenericProps extends Props {
+  style: 'collection' | 'search';
+  dataQa: string;
+}
 
+class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
       <React.Fragment>
@@ -22,13 +23,37 @@ export class VideoCardList extends React.PureComponent<Props> {
               key={video.id}
               video={video}
               searchId={this.props.searchId}
-              isInCollection={this.isVideoInCollection(video)}
-              style="search"
-              dataQa="search-result"
+              isInCollection={this.props.isInCollection(video.id)}
+              style={this.props.style}
+              dataQa={this.props.dataQa}
             />
           );
         })}
       </React.Fragment>
+    );
+  }
+}
+
+export class SearchVideoCardList extends React.PureComponent<Props> {
+  public render() {
+    return (
+      <GenericVideoCardList
+        style="search"
+        dataQa="search-result"
+        {...this.props}
+      />
+    );
+  }
+}
+
+export class CollectionVideoCardList extends React.PureComponent<Props> {
+  public render() {
+    return (
+      <GenericVideoCardList
+        style="collection"
+        dataQa="collection-video"
+        {...this.props}
+      />
     );
   }
 }
