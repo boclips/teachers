@@ -20,4 +20,13 @@ describe('MixpanelAnalytics', () => {
     const token = MixpanelAnalytics.selectToken('localhost');
     expect(token).toBe(MixpanelAnalytics.testingToken);
   });
+
+  it('resetting mixpanel generates a new id', () => {
+    const mixpanelInstance = MixpanelAnalytics.getInstance();
+    const oldId = mixpanelInstance.getCurrentUserId();
+    mixpanelInstance.reset();
+    const newId = mixpanelInstance.getCurrentUserId();
+
+    expect(newId).not.toEqual(oldId);
+  });
 });

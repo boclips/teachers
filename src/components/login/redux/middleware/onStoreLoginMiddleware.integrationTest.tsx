@@ -17,11 +17,18 @@ const app = appWrapper.instance() as App;
 
 describe('on store login', () => {
   beforeEach(() => {
-    app.getStore().dispatch(storeLogin(new KeycloakInstanceFake('my user id')));
+    app.getStore().dispatch(
+      storeLogin(
+        new KeycloakInstanceFake({
+          userId: 'my user id',
+          mixpanelDistinctId: '123',
+        }),
+      ),
+    );
   });
 
   it('sets user identity for web analytics', () => {
-    expect(analyticsMock.setUserId).toHaveBeenCalledWith('my user id');
+    expect(analyticsMock.setUserId).toHaveBeenCalledWith('123');
   });
 
   it("tries to search once we've log in", () => {

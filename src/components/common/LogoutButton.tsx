@@ -3,6 +3,7 @@ import { logout } from 'boclips-js-security';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import myAccountImg from '../../../resources/images/my-account.svg';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
 interface Props {
   mini?: boolean;
@@ -85,6 +86,7 @@ export class LogoutButton extends PureComponent<Props> {
     confirm({
       title: 'Are you sure you want to log out?',
       onOk() {
+        AnalyticsFactory.getInstance().reset();
         logout({ redirectUri: `${window.location.origin}/bye` });
       },
       okText: 'Log out',

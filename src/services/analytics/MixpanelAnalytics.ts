@@ -42,6 +42,14 @@ export default class MixpanelAnalytics implements Analytics {
     this.mixpanelInstance.identify(userId);
   }
 
+  public reset() {
+    this.mixpanelInstance.reset();
+  }
+
+  public getCurrentUserId(): string {
+    return this.mixpanelInstance.get_distinct_id();
+  }
+
   public createUserProfile(userProfile: UserProfile) {
     this.mixpanelInstance.people.set({
       $email: userProfile.email,

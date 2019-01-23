@@ -5,15 +5,25 @@ import {
   KeycloakLoginOptions,
   KeycloakProfile,
   KeycloakPromise,
+  KeycloakPromiseCallback,
   KeycloakTokenParsed,
 } from 'keycloak-js';
+
+interface KeycloakInstanceFakeOptions {
+  userId: string;
+  mixpanelDistinctId: string;
+}
 
 export default class KeycloakInstanceFake implements KeycloakInstance {
   public tokenParsed?: KeycloakTokenParsed;
   public authenticated = true;
+  private mixpanelDistinctId: string;
 
-  constructor(userId: string) {
+  constructor(options: KeycloakInstanceFakeOptions) {
+    const { userId, mixpanelDistinctId } = options;
+
     this.tokenParsed = { sub: userId };
+    this.mixpanelDistinctId = mixpanelDistinctId;
   }
 
   public init(
@@ -74,8 +84,22 @@ export default class KeycloakInstanceFake implements KeycloakInstance {
     return null;
   }
 
-  public loadUserProfile(): KeycloakPromise<KeycloakProfile, void> {
-    return null;
+  public loadUserProfile(): KeycloakPromise<any, void> {
+    return {
+      success: (callback: KeycloakPromiseCallback<any>) => {
+        callback({
+          attributes: {
+            mixpanelDistinctId: [this.mixpanelDistinctId],
+          },
+        });
+        return {
+          success: (): KeycloakPromise<KeycloakProfile, void> =>
+            this.loadUserProfile(),
+          error: () => this.loadUserProfile(),
+        };
+      },
+      error: () => this.loadUserProfile(),
+    };
   }
 
   public loadUserInfo(): KeycloakPromise<{}, void> {

@@ -42,7 +42,8 @@ const setupAnalyticsForUser = (keycloak: KeycloakInstance): Promise<void> => {
       .success(profile => {
         if (!userProfileIsValid(profile)) {
           reject(
-            `${couldNotSetUpAnalyticsError} invalid user profile attributes`,
+            `${couldNotSetUpAnalyticsError} invalid user profile attributes. Profile: 
+              ${JSON.stringify(profile)}`,
           );
         }
 

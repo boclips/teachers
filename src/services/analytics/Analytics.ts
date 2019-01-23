@@ -15,4 +15,6 @@ export default interface Analytics {
   trackVideoVisited(video: Video): void;
   trackVideoLinkCopied(video: Video): void;
   trackVideoPlayback(video: Video, segmentWatched: SegmentWatchedEvent): void;
+  reset(): void;
+  getCurrentUserId(): string;
 }
