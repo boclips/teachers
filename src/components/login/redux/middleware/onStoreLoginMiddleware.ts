@@ -7,20 +7,55 @@ import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSear
 import { storeLogin } from '../actions/storeLoginAction';
 
 const onLogin = (store: Store, keycloak: KeycloakInstance) => {
-  dispatchFetchLinks(store);
-  setupAnalyticsForUser(keycloak);
-  dispatchSearchVideoAction(store);
+  setupAnalyticsForUser(keycloak)
+    .then(() => {
+      dispatchFetchLinks(store);
+      dispatchSearchVideoAction(store);
+    })
+    .catch(error => {
+      console.warn(error);
+      dispatchFetchLinks(store);
+      dispatchSearchVideoAction(store);
+    });
 };
 
 const dispatchFetchLinks = (store: Store) => {
   store.dispatch(fetchLinksAction());
 };
 
-const setupAnalyticsForUser = (keycloak: KeycloakInstance) => {
-  if (keycloak && keycloak.tokenParsed && keycloak.tokenParsed.sub) {
-    const analytics = AnalyticsFactory.getInstance();
-    analytics.setUserId(keycloak.tokenParsed.sub);
-  }
+const userProfileIsValid = profile =>
+  /* tslint:disable:no-string-literal */
+  profile &&
+  profile['attributes'] &&
+  profile['attributes']['mixpanelDistinctId'] &&
+  profile['attributes']['mixpanelDistinctId'][0];
+
+const setupAnalyticsForUser = (keycloak: KeycloakInstance): Promise<void> => {
+  const couldNotSetUpAnalyticsError = 'Could not set up analytics for user:';
+  return new Promise((resolve, reject) => {
+    if (!keycloak) {
+      reject(`${couldNotSetUpAnalyticsError} error with keycloak`);
+    }
+
+    keycloak
+      .loadUserProfile()
+      .success(profile => {
+        if (!userProfileIsValid(profile)) {
+          reject(
+            `${couldNotSetUpAnalyticsError} invalid user profile attributes`,
+          );
+        }
+
+        AnalyticsFactory.getInstance().setUserId(
+          profile['attributes']['mixpanelDistinctId'][0],
+        );
+
+        resolve();
+      })
+      .error(() => {
+        reject(`${couldNotSetUpAnalyticsError} could not load user profile`);
+      });
+  });
 };
 
 export default sideEffect(storeLogin, onLogin);
