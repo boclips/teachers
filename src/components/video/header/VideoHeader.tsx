@@ -2,8 +2,8 @@ import { Icon } from 'antd';
 import React from 'react';
 import { Video } from '../../../types/Video';
 import VideoPreviewBadge from '../card/VideoBadge';
-import DateFormatter from './dateFormatter/DateFormatter';
-import DurationFormatter from './durationForammter/DurationFormatter';
+import DateFormatter from '../formatters/DateFormatter';
+import DurationFormatter from '../formatters/DurationFormatter';
 import './VideoHeader.less';
 
 interface Props {

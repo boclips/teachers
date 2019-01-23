@@ -1,6 +1,6 @@
 import React from 'react';
-import { Video } from '../../types/Video';
-import VideoCard from '../video/card/VideoCard';
+import { Video } from '../../../types/Video';
+import VideoCard from '../card/VideoCard';
 
 interface Props {
   videos: Video[];

@@ -2,8 +2,8 @@ import { Card, Skeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
-import VideoPlayer from '../components/player/VideoPlayer';
-import { VideoHeader } from '../components/VideoHeader';
+import { VideoHeader } from '../header/VideoHeader';
+import VideoPlayer from '../player/VideoPlayer';
 import VideoPreviewButtonsContainer from './VideoCardButtons';
 
 interface Props {

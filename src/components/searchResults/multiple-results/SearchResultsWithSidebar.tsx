@@ -1,8 +1,8 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React from 'react';
+import { SearchVideoCardList } from '../../video/list/VideoCardList';
 import { NewsBoxSidebar } from '../NewsBoxSidebar';
-import { SearchVideoCardList } from '../VideoCardList';
 import SearchResultsProps from './SearchResultsProps';
 
 export default class SearchResultsWithSidebar extends React.PureComponent<

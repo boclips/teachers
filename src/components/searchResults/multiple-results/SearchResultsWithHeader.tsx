@@ -1,7 +1,7 @@
 import Row from 'antd/lib/grid/row';
 import React from 'react';
+import { SearchVideoCardList } from '../../video/list/VideoCardList';
 import { NewsBoxHeader } from '../NewsBoxHeader';
-import { SearchVideoCardList } from '../VideoCardList';
 import SearchResultsProps from './SearchResultsProps';
 
 export default class SearchResultsWithHeader extends React.PureComponent<

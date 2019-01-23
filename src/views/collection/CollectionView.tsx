@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { actionCreatorFactoryVoid } from '../../app/redux/actions';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
-import { CollectionVideoCardList } from '../../components/searchResults/VideoCardList';
+import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
 import { Video } from '../../types/Video';
 import './CollectionView.less';

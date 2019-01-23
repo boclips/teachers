@@ -1,7 +1,7 @@
 import { BoclipsPlayer } from 'boclips-react-player';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoFactory } from '../../../../../test-support/factories';
+import { VideoFactory } from '../../../../test-support/factories';
 import { VideoPlayer } from './VideoPlayer';
 
 test('configures event tracker', () => {
