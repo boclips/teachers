@@ -11,13 +11,12 @@ interface Props {
   searchId: string | null;
   isInCollection: boolean;
   style: 'search' | 'collection';
-  dataQa?: string;
 }
 
 export default class VideoCard extends React.PureComponent<Props> {
   public render() {
     return (
-      <Card className="search-result" bordered={false}>
+      <Card className="video-card" bordered={false}>
         <Skeleton
           loading={this.props.video === null}
           active={true}
@@ -25,7 +24,7 @@ export default class VideoCard extends React.PureComponent<Props> {
           paragraph={{ rows: 5 }}
           avatar={{ shape: 'square', size: 'large' }}
         >
-          <section data-qa={this.props.dataQa}>{this.renderContent()}</section>
+          <section data-qa="video-card">{this.renderContent()}</section>
         </Skeleton>
       </Card>
     );

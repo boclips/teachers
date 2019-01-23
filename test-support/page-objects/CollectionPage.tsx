@@ -31,7 +31,7 @@ export class CollectionPage {
   }
 
   public getVideos() {
-    return this.wrapper.find(By.dataQa('collection-video')).map(el => ({
+    return this.wrapper.find(By.dataQa('video-card')).map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
       contentPartner: findOne(el, 'video-content-partner').text(),
@@ -45,7 +45,7 @@ export class CollectionPage {
   }
 
   public getVideoCard(index: number) {
-    return findAll(this.wrapper, 'collection-video').at(index);
+    return findAll(this.wrapper, 'video-card').at(index);
   }
 
   private async hasLoaded() {

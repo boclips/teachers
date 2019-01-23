@@ -72,7 +72,7 @@ export class SearchPage {
   }
 
   public getVideoResults() {
-    return findAll(this.wrapper, 'search-result').map(el => ({
+    return findAll(this.wrapper, 'video-card').map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
       contentPartner: findOne(el, 'video-content-partner').text(),
@@ -85,7 +85,7 @@ export class SearchPage {
   }
 
   public getVideoCard(index: number) {
-    return findAll(this.wrapper, 'search-result').at(index);
+    return findAll(this.wrapper, 'video-card').at(index);
   }
 
   public getCount(): number {
