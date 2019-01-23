@@ -1,5 +1,9 @@
 .search-results-container {
   padding-bottom: 24px;
+  padding-top: 42px;
+  @media (max-width: 768px) {
+    padding-top: 20px;
+  }
 }
 
 .ant-skeleton-paragraph {
@@ -14,7 +18,7 @@
   }
 
   .alert-message-invalid {
-    color: #D70000;
+    color: #d70000;
     font-size: 13px;
     line-height: 24px;
   }
@@ -27,7 +31,7 @@
   .form-title {
     margin: 0px 0px 0px 2px;
     span {
-      color: #848FBB;
+      color: #848fbb;
       font-size: 14px;
       line-height: 24px;
       padding-left: 8px;
@@ -36,7 +40,7 @@
 
   em {
     font-style: normal;
-    color: #0051BC;
+    color: #0051bc;
   }
 
   .ant-btn {
@@ -59,7 +63,6 @@
     -webkit-box-shadow: 0 0 0 30px white inset;
     transition: background-color 5000s ease-in-out 0s;
   }
-
 }
 
 .results-pagination {
@@ -70,39 +73,40 @@
 .ant-pagination-item,
 .ant-pagination-next .ant-pagination-item-link,
 .ant-pagination-prev .ant-pagination-item-link {
-  border: 2px solid #848FBB;
+  border: 2px solid #848fbb;
   border-radius: 8px;
   a {
-    color: #848FBB;
+    color: #848fbb;
     font-size: 16px;
     font-weight: bold;
   }
 
   &:hover {
-    border-color: #0051BC;
-    color: #0051BC;
+    border-color: #0051bc;
+    color: #0051bc;
     a {
-      color: #0051BC;
+      color: #0051bc;
     }
   }
 }
 
 .anticon {
   vertical-align: 0px;
-  &:hover{
-    color: #0051BC;
+  &:hover {
+    color: #0051bc;
   }
 }
 
-.ant-pagination-item-active, .ant-pagination-item-active:hover {
-  border-color: #4189FF;
+.ant-pagination-item-active,
+.ant-pagination-item-active:hover {
+  border-color: #4189ff;
   a {
-    color: #4189FF;
+    color: #4189ff;
   }
 }
 
 .ant-pagination-disabled .ant-pagination-item-link,
-.ant-pagination-disabled:hover .ant-pagination-item-link{
+.ant-pagination-disabled:hover .ant-pagination-item-link {
   border-color: #d9d9d9;
   color: #d9d9d9;
   a {
@@ -111,9 +115,7 @@
 }
 
 .results-count {
-  margin: 42px 0px 0px;
-
   & .count:after {
-    content: " ";
+    content: ' ';
   }
 }

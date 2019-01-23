@@ -4,7 +4,6 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import SearchResultsCount from '../../components/searchResults/multiple-results/SearchResultsCount';
 import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
@@ -50,23 +49,15 @@ class SearchResultsView extends React.PureComponent<
 
     return (
       <section className={'search-results-container'} data-qa="search-page">
-        {!this.props.loading && (
-          <SearchResultsCount count={this.props.results.paging.totalElements} />
-        )}
-
         {isNewsMode ? (
           <SearchResultsWithHeader
-            query={this.props.results.query}
-            searchId={this.props.results.searchId}
-            videos={this.props.results.videos}
+            results={this.props.results}
             onNavigate={this.goFromNewsToSearchResults}
             isInCollection={isVideoInCollection}
           />
         ) : (
           <SearchResultsWithSidebar
-            query={this.props.results.query}
-            searchId={this.props.results.searchId}
-            videos={this.props.results.videos}
+            results={this.props.results}
             onNavigate={this.goToNewsResults}
             isInCollection={isVideoInCollection}
           />

@@ -9,19 +9,21 @@ export default class SearchResultsWithSidebar extends React.PureComponent<
   SearchResultsProps
 > {
   public render() {
+    const { videos, searchId, paging, query } = this.props.results;
     return (
       <Row>
         <Col xs={{ span: 24 }} md={{ span: 18 }}>
           <SearchVideoCardList
-            videos={this.props.videos}
-            searchId={this.props.searchId}
+            totalElements={paging && paging.totalElements}
+            videos={videos}
+            searchId={searchId}
             isInCollection={this.props.isInCollection}
           />
         </Col>
         <Col xs={{ span: 0 }} md={{ span: 6 }}>
           <NewsBoxSidebar
             onButtonClick={this.props.onNavigate}
-            resultsQuery={this.props.query}
+            resultsQuery={query}
           />
         </Col>
       </Row>

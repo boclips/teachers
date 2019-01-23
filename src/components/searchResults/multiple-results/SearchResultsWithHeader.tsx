@@ -8,18 +8,20 @@ export default class SearchResultsWithHeader extends React.PureComponent<
   SearchResultsProps
 > {
   public render() {
+    const { videos, searchId, paging, query } = this.props.results;
     return (
       <React.Fragment>
         <Row>
           <NewsBoxHeader
             onButtonClick={this.props.onNavigate}
-            resultsQuery={this.props.query}
+            resultsQuery={query}
           />
         </Row>
         <Row>
           <SearchVideoCardList
-            videos={this.props.videos}
-            searchId={this.props.searchId}
+            totalElements={paging && paging.totalElements}
+            videos={videos}
+            searchId={searchId}
             isInCollection={this.props.isInCollection}
           />
         </Row>

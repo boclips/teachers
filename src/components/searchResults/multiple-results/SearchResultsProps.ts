@@ -1,9 +1,7 @@
-import { Video } from '../../../types/Video';
+import { SearchResults } from '../../../types/State';
 
 export default interface SearchResultsProps {
-  query: string;
-  videos: Video[];
-  searchId: string;
+  results: SearchResults;
   onNavigate: () => void;
   isInCollection: (videoId: string) => boolean;
 }
