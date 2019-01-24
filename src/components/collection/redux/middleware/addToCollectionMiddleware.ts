@@ -5,12 +5,20 @@ import addToCollection from '../../../../services/collections/addToCollection';
 import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { addToDefaultCollectionAction } from '../../../video/card/VideoCardButtons';
+import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 
 export function onAddToCollection(
   store: MiddlewareAPI<any, CollectionState>,
   video: Video,
 ) {
-  addToCollection(video, store.getState().videoCollection);
+  addToCollection(video, store.getState().videoCollection).then(success => {
+    store.dispatch(
+      addToCollectionResultAction({
+        video,
+        success,
+      }),
+    );
+  });
   AnalyticsFactory.getInstance().trackVideoAddedToDefaultCollection();
 }
 

@@ -1,13 +1,15 @@
-import { Button, notification, Row } from 'antd';
+import { Button, Row } from 'antd';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import tickIcon from '../../../../resources/images/green-check.png';
 import { Constants } from '../../../app/AppConstants';
+import AppConfig from '../../../app/AppConfig';
 import { actionCreatorFactory } from '../../../app/redux/actions';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
+import NotificationFactory from '../../common/NotificationFactory';
 import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
 
 export const addToDefaultCollectionAction = actionCreatorFactory<Video>(
@@ -34,21 +36,10 @@ class VideoPreviewButtonsContainer extends React.PureComponent<
 > {
   private showCopiedNotification = (video: Video) => (url: string) => {
     AnalyticsFactory.getInstance().trackVideoLinkCopied(video);
-    notification.success({
+    NotificationFactory.success({
       message: url,
-      description: (
-        <div role="alert">
-          `has been copied to your clipboard. Paste link to your tool of
-          choice.`
-        </div>
-      ),
-      placement: 'bottomRight',
-      icon: <img src={tickIcon} />,
-      style: {
-        background: '#008F52',
-        color: '#FFFFFF',
-      },
-      duration: 6,
+      description:
+        'has been copied to your clipboard. Paste link to your tool of choice.',
     });
   };
 
