@@ -5,10 +5,8 @@ import createReducer, {
 import { Link } from '../../../../types/Link';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import {
-  addToDefaultCollectionAction,
-  removeFromDefaultCollectionAction,
-} from '../../../video/card/VideoCardButtons';
+import { addToDefaultCollectionAction } from '../actions/addToDefaultCollectionAction';
+import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 
 const initialState: VideoCollection = {

@@ -6,19 +6,12 @@ import { Dispatch } from 'redux';
 import tickIcon from '../../../../resources/images/green-check.png';
 import { Constants } from '../../../app/AppConstants';
 import AppConfig from '../../../app/AppConfig';
-import { actionCreatorFactory } from '../../../app/redux/actions';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
+import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
+import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
 import NotificationFactory from '../../common/NotificationFactory';
 import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
-
-export const addToDefaultCollectionAction = actionCreatorFactory<Video>(
-  'ADD_TO_DEFAULT_COLLECTION',
-);
-
-export const removeFromDefaultCollectionAction = actionCreatorFactory<Video>(
-  'REMOVE_FROM_DEFAULT_COLLECTION',
-);
 
 interface OwnProps {
   isInCollection: boolean;

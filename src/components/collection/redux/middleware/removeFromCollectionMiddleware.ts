@@ -4,7 +4,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import removeFromCollection from '../../../../services/collections/removeFromCollection';
 import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
-import { removeFromDefaultCollectionAction } from '../../../video/card/VideoCardButtons';
+import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
 
 export function onRemoveFromCollection(
   store: MiddlewareAPI<any, CollectionState>,

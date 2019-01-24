@@ -2,8 +2,8 @@ import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { Video } from '../../../../types/Video';
 import NotificationFactory from '../../../common/NotificationFactory';
-import { removeFromDefaultCollectionAction } from '../../../video/card/VideoCardButtons';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
+import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
 
 export const SUCCESS_DESCRIPTION = 'has been saved to your video collection';
 export const ERROR_DESCRIPTION = 'could not be added to the collection';

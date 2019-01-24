@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import NotificationFactory from '../../../common/NotificationFactory';
-import { removeFromDefaultCollectionAction } from '../../../video/card/VideoCardButtons';
+import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
 import { VideoFactory } from './../../../../../test-support/factories';
 import {
   ERROR_DESCRIPTION,
