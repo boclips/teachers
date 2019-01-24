@@ -1,11 +1,11 @@
 import {
-  addToDefaultCollectionAction,
-  removeFromDefaultCollectionAction,
-} from '../../card/VideoCardButtons';
-import {
   VideoCollectionFactory,
   VideoFactory,
-} from './../../../../../test-support/factories';
+} from '../../../../../test-support/factories';
+import {
+  addToDefaultCollectionAction,
+  removeFromDefaultCollectionAction,
+} from '../../../video/card/VideoCardButtons';
 import { collectionReducer } from './collectionReducer';
 
 test('adding a video to default collection', () => {

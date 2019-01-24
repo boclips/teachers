@@ -4,12 +4,12 @@ import createReducer, {
 } from '../../../../app/redux/createReducer';
 import { Link } from '../../../../types/Link';
 import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import {
   addToDefaultCollectionAction,
   removeFromDefaultCollectionAction,
-} from '../../card/VideoCardButtons';
+} from '../../../video/card/VideoCardButtons';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
-import { VideoCollection } from './../../../../types/VideoCollection';
 
 const initialState: VideoCollection = {
   videos: [],

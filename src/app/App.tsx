@@ -11,13 +11,13 @@ import {
   Reducer,
 } from 'redux';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
+import { collectionReducer } from '../components/collection/redux/reducers/collectionReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onStoreLoginMiddleware';
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
 import onUrlChangeMiddleware from '../components/video/redux/middleware/fetchVideosOnLocationChangeMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
-import { collectionReducer } from '../components/video/redux/reducers/collectionReducer';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';

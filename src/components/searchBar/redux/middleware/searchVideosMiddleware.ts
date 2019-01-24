@@ -5,7 +5,7 @@ import { fetchCollection } from '../../../../services/collections/fetchCollectio
 import fetchVideos from '../../../../services/videos/fetchVideos';
 import { SearchRequest } from '../../../../types/SearchRequest';
 import { LinksState } from '../../../../types/State';
-import { storeCollectionAction } from '../../../video/redux/actions/storeCollectionAction';
+import { storeCollectionAction } from '../../../collection/redux/actions/storeCollectionAction';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
 
