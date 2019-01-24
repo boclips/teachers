@@ -9,12 +9,32 @@ import MockFetchVerify from './test-support/MockFetchVerify';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
-const { window } = jsdom;
-
 jest.mock('boclips-react-player', () => ({
   BoclipsPlayer: () => <div id="a-player" />,
 }));
+
+const jsdom = new JSDOM('<!doctype html><html><body></body></html>');
+const { window } = jsdom;
+
+global['window'] = window;
+global['document'] = window.document;
+global['navigator'] = {
+  userAgent: 'node.js',
+};
+
+const location = JSON.stringify(global['window'].location);
+delete window.location;
+
+Object.defineProperty(window, 'location', {
+  value: JSON.parse(location),
+});
+
+Object.defineProperty(window.location, 'hostname', {
+  value: 'http://teachers.testing-boclips.com/',
+  configurable: true,
+});
+
+copyProps(window, global);
 
 function copyProps(src, target) {
   const props = Object.getOwnPropertyNames(src)
@@ -29,13 +49,6 @@ function copyProps(src, target) {
   Object.defineProperties(target, props);
 }
 
-global['window'] = window;
-global['document'] = window.document;
-global['navigator'] = {
-  userAgent: 'node.js',
-};
-copyProps(window, global);
-
 beforeEach(() => {
   (axios.interceptors.request as any).handlers = [];
   MockFetchVerify.clear();
@@ -43,6 +56,5 @@ beforeEach(() => {
 
 jest.mock('react', () => {
   const r = jest.requireActual('react');
-
   return { ...r, memo: x => x };
 });

@@ -3,7 +3,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
-import { Constants } from '../../src/app/Constants';
+import { Constants } from '../../src/app/AppConstants';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';

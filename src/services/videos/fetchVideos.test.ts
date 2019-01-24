@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
 import { LinksFactory } from '../../../test-support/factories';
 import { videos } from '../../../test-support/video-service-responses';
-import { Constants } from '../../app/Constants';
+import { Constants } from '../../app/AppConstants';
 import { Link } from '../../types/Link';
 import fetchVideos from './fetchVideos';
 

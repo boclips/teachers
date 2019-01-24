@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Links } from '../../types/Links';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
-import { UserProfile } from '../analytics/MixpanelAnalytics';
+import { UserProfile } from '../analytics/UserProfile';
 
 export default function activateUser(links: Links, userProfile: UserProfile) {
   const analytics = AnalyticsFactory.getInstance();

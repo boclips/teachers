@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
-import { UserProfile } from '../../../../services/analytics/MixpanelAnalytics';
+import { UserProfile } from '../../../../services/analytics/UserProfile';
 import { storeLogin } from '../actions/storeLoginAction';
 
 export const loginReducer: Reducer<UserProfile> = createReducer(

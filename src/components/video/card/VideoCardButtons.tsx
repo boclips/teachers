@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import tickIcon from '../../../../resources/images/green-check.png';
-import AppConfig from '../../../app/AppConfig';
+import { Constants } from '../../../app/AppConstants';
 import { actionCreatorFactory } from '../../../app/redux/actions';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
@@ -56,7 +56,7 @@ class VideoPreviewButtonsContainer extends React.PureComponent<
     return (
       <Row className="buttons-row">
         <CopyToClipboard
-          text={`${AppConfig.getHost()}/videos/${this.props.video.id}`}
+          text={`${Constants.HOST}/videos/${this.props.video.id}`}
           onCopy={this.showCopiedNotification(this.props.video)}
           options={{ debug: true }}
         >

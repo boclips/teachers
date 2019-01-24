@@ -1,5 +1,5 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
-import { UserProfile } from '../services/analytics/MixpanelAnalytics';
+import { UserProfile } from '../services/analytics/UserProfile';
 import { Links } from './Links';
 import PageSpec from './PageSpec';
 import { Video } from './Video';

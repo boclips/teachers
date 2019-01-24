@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
-import { Constants } from '../../../app/Constants';
+import { Constants } from '../../../app/AppConstants';
 import { RequestFilters } from '../../../types/SearchRequest';
 import State from '../../../types/State';
 import { searchVideosAction } from './actions/searchVideosActions';

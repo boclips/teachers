@@ -1,41 +1,29 @@
 import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
 import mixpanel from 'mixpanel-browser';
+import { Constants } from '../../app/AppConstants';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
 import Analytics from './Analytics';
+import EventTypes from './EventTypes';
+import { UserProfile } from './UserProfile';
 
 export default class MixpanelAnalytics implements Analytics {
   private static instance: MixpanelAnalytics;
 
   private mixpanelInstance: Mixpanel;
-  private static stagingHost = '.staging-boclips.com';
-  private static productionHost = '.boclips.com';
+
   public static testingToken = '70f2ae29eaa67a0e93513c2f0d86c94b';
   public static stagingToken = '4290d60e0956507222103ffd8cdfad35';
   public static productionToken = '5695e44d19f62e9c99c37d6ea0e11d85';
 
   private constructor() {
-    mixpanel.init(
-      MixpanelAnalytics.selectToken(window.location.hostname.toLowerCase()),
-    );
+    mixpanel.init(MixpanelAnalytics.selectToken());
     this.mixpanelInstance = mixpanel;
   }
 
   public static getInstance(): MixpanelAnalytics {
     return this.instance || (this.instance = new this());
-  }
-
-  public static selectToken(hostname: string) {
-    let mixpanelToken;
-    if (hostname.indexOf(this.stagingHost) !== -1) {
-      mixpanelToken = this.stagingToken;
-    } else if (hostname.indexOf(this.productionHost) !== -1) {
-      mixpanelToken = this.productionToken;
-    } else {
-      mixpanelToken = this.testingToken;
-    }
-    return mixpanelToken;
   }
 
   public setUserId(userId: string) {
@@ -149,22 +137,19 @@ export default class MixpanelAnalytics implements Analytics {
       playback_video_duration_seconds: watchedSegment.videoDurationSeconds,
     };
   }
-}
 
-enum EventTypes {
-  ACTIVATION_COMPLETE = 'ACTIVATION_COMPLETE',
-  VIDEO_SEARCH = 'VIDEO_SEARCH',
-  VIDEO_VISITED = 'VIDEO_VISITED',
-  VIDEO_LINK_COPIED = 'VIDEO_LINK_COPIED',
-  VIDEO_ADDED_TO_COLLECTION = 'COLLECTION_VIDEO_ADDED',
-  VIDEO_REMOVED_FROM_COLLECTION = 'COLLECTION_VIDEO_REMOVED',
-  DEFAULT_COLLECTION_VISITED = 'COLLECTION_VISITED',
-  VIDEO_PLAYBACK = 'VIDEO_PLAYBACK',
-}
-
-export interface UserProfile {
-  authenticated: boolean;
-  email: string;
-  firstName: string;
-  lastName: string;
+  private static selectToken() {
+    switch (Constants.ENVIRONMENT) {
+      case 'STAGING':
+        return this.stagingToken;
+      case 'PRODUCTION':
+        return this.productionToken;
+      case 'TESTING':
+        return this.testingToken;
+      default:
+        throw Error(
+          `No MixPanel token found for environment ${Constants.ENVIRONMENT}`,
+        );
+    }
+  }
 }

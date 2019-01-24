@@ -2,7 +2,7 @@ import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEve
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
-import { UserProfile } from './MixpanelAnalytics';
+import { UserProfile } from './UserProfile';
 
 export default interface Analytics {
   setUserId(userId: string): void;

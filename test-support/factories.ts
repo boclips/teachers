@@ -1,5 +1,5 @@
 import moment = require('moment');
-import { UserProfile } from '../src/services/analytics/MixpanelAnalytics';
+import { UserProfile } from '../src/services/analytics/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
