@@ -22,7 +22,7 @@ export const video177 = Object.freeze({
   id: '177',
   title: 'KS3/4 Science: Demonstrating Chemistry',
   description: 'Matthew Tosh shows us the science.',
-  releasedOn: '2018-02-11',
+  releasedOn: '2018-02-11T10:12:33Z',
   contentPartner: 'cp1',
   subjects: ['Maths', 'Physics'],
   playback: {
@@ -38,7 +38,7 @@ const video147 = Object.freeze({
   id: '147',
   title: 'KS3/4 Science: Big Screen Science',
   description: 'The winners of the North West round.',
-  releasedOn: '2018-02-12',
+  releasedOn: '2018-02-12T10:12:33Z',
   contentPartner: 'cp2',
   subjects: [],
   playback: {
@@ -80,7 +80,7 @@ export const youtubeVideo1 = {
   id: '1',
   title: 'A youtube video',
   description: 'Matthew Tosh shows us the science.',
-  releasedOn: '2018-02-11',
+  releasedOn: '2018-02-11T10:12:33Z',
   contentPartner: 'cp1',
   subjects: [],
   playback: {

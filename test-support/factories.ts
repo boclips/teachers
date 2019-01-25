@@ -14,7 +14,7 @@ export class VideoFactory {
       description: arg.description || 'my video description',
       contentPartner: arg.contentPartner || 'Bodevs Productions',
       duration: arg.duration || moment.duration(2, 'minutes'),
-      releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33'),
+      releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33Z'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',
       subjects: arg.subjects || ['Maths'],
       playback:

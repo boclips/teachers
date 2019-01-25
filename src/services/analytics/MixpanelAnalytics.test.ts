@@ -105,13 +105,13 @@ describe('MixpanelAnalytics', () => {
       video_duration: 'PT2M',
       video_id: '123',
       video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
-      video_releasedOn: '2018-06-20T09:12:33.000Z',
+      video_releasedOn: '2018-06-20T10:12:33.000Z',
       video_subjects: 'Maths',
       video_title: 'my video title',
     });
   });
 
-  it('tracks video removed from collection', () => {
+  it('tracks playback of videos', () => {
     mixpanelAnalytics.trackVideoPlayback(
       VideoFactory.sample(),
       {} as SegmentWatchedEvent,
@@ -127,7 +127,7 @@ describe('MixpanelAnalytics', () => {
       video_duration: 'PT2M',
       video_id: '123',
       video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
-      video_releasedOn: '2018-06-20T09:12:33.000Z',
+      video_releasedOn: '2018-06-20T10:12:33.000Z',
       video_subjects: 'Maths',
       video_title: 'my video title',
     });

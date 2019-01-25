@@ -4,7 +4,7 @@ import DateFormatter from './DateFormatter';
 
 test('Formats date', () => {
   const formatter = mount(
-    <DateFormatter date={new Date('2018-10-13T10:12:13')} />,
+    <DateFormatter date={new Date('2018-10-13T10:12:13Z')} />,
   );
 
   expect(formatter).toHaveText('Oct 13, 2018');
