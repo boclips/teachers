@@ -16,6 +16,18 @@ describe('AppConstants', () => {
   });
 
   describe('obtain environment information', () => {
+    it('determine local environment', () => {
+      const appConfig = new AppConstants({
+        location: {
+          hostname: 'localhost',
+          protocol: 'https:',
+          port: '123',
+        },
+      } as Window);
+
+      expect(appConfig.ENVIRONMENT).toBe('TESTING');
+    });
+
     it('determine testing environment', () => {
       const appConfig = new AppConstants({
         location: {

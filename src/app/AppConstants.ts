@@ -15,7 +15,8 @@ export class AppConstants {
   }
 
   get ENVIRONMENT(): 'STAGING' | 'TESTING' | 'PRODUCTION' {
-    const localHost = '.local-boclips.com';
+    const localHost = 'localhost';
+    const localBoclips = '.local-boclips.com';
     const testingHost = '.testing-boclips.com';
     const stagingHost = '.staging-boclips.com';
     const productionHost = '.boclips.com';
@@ -25,6 +26,8 @@ export class AppConstants {
     } else if (this.window.location.hostname.indexOf(productionHost) !== -1) {
       return 'PRODUCTION';
     } else if (this.window.location.hostname.indexOf(testingHost) !== -1) {
+      return 'TESTING';
+    } else if (this.window.location.hostname.indexOf(localBoclips) !== -1) {
       return 'TESTING';
     } else if (this.window.location.hostname.indexOf(localHost) !== -1) {
       return 'TESTING';
