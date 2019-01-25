@@ -1,8 +1,10 @@
 import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
 import { Mixpanel } from 'mixpanel-browser';
+import moment = require('moment');
 import { VideoFactory } from '../../../test-support/factories';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
+import { StreamPlayback } from '../../types/Video';
 import MixpanelAnalytics from './MixpanelAnalytics';
 import { UserProfile } from './UserProfile';
 
@@ -96,7 +98,19 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks video link copied', () => {
-    mixpanelAnalytics.trackVideoLinkCopied(VideoFactory.sample());
+    const video = VideoFactory.sample({
+      badges: ['ad-free'],
+      contentPartner: 'Bodevs Productions',
+      description: 'my video description',
+      duration: moment.duration(2, 'minutes'),
+      id: '123',
+      playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
+      releasedOn: new Date('2018-06-20T10:12:33Z'),
+      subjects: ['Maths'],
+      title: 'my video title',
+    });
+
+    mixpanelAnalytics.trackVideoLinkCopied(video);
 
     expect(mock.track).toHaveBeenCalledWith('VIDEO_LINK_COPIED', {
       video_badges: 'ad-free',
@@ -112,10 +126,19 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks playback of videos', () => {
-    mixpanelAnalytics.trackVideoPlayback(
-      VideoFactory.sample(),
-      {} as SegmentWatchedEvent,
-    );
+    const video = VideoFactory.sample({
+      badges: ['ad-free'],
+      contentPartner: 'Bodevs Productions',
+      description: 'my video description',
+      duration: moment.duration(2, 'minutes'),
+      id: '123',
+      playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
+      releasedOn: new Date('2018-06-20T10:12:33Z'),
+      subjects: ['Maths'],
+      title: 'my video title',
+    });
+
+    mixpanelAnalytics.trackVideoPlayback(video, {} as SegmentWatchedEvent);
 
     expect(mock.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
       playback_segment_end_seconds: undefined,
