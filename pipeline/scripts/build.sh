@@ -2,6 +2,7 @@
 
 set -x -e
 
+npm audit
 npm install
 npm run lint
 npm run compile
