@@ -1,29 +1,21 @@
 import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
-import mixpanel from 'mixpanel-browser';
-import { Constants } from '../../app/AppConstants';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
-import Analytics from './Analytics';
 import EventTypes from './EventTypes';
+import { toMixpanelSegment } from './toMixpanelSegment';
+import { toMixpanelVideo } from './toMixpanelVideo';
 import { UserProfile } from './UserProfile';
 
-export default class MixpanelAnalytics implements Analytics {
-  private static instance: MixpanelAnalytics;
-
+export default class MixpanelAnalytics {
   private mixpanelInstance: Mixpanel;
 
-  public static testingToken = '70f2ae29eaa67a0e93513c2f0d86c94b';
-  public static stagingToken = '4290d60e0956507222103ffd8cdfad35';
-  public static productionToken = '5695e44d19f62e9c99c37d6ea0e11d85';
+  public constructor(mixpanel: Mixpanel) {
+    if (mixpanel === undefined) {
+      throw Error('Mixpanel is undefined');
+    }
 
-  private constructor() {
-    mixpanel.init(MixpanelAnalytics.selectToken());
     this.mixpanelInstance = mixpanel;
-  }
-
-  public static getInstance(): MixpanelAnalytics {
-    return this.instance || (this.instance = new this());
   }
 
   public setUserId(userId: string) {
@@ -32,10 +24,6 @@ export default class MixpanelAnalytics implements Analytics {
 
   public reset() {
     this.mixpanelInstance.reset();
-  }
-
-  public getCurrentUserId(): string {
-    return this.mixpanelInstance.get_distinct_id();
   }
 
   public createUserProfile(userProfile: UserProfile) {
@@ -96,13 +84,13 @@ export default class MixpanelAnalytics implements Analytics {
 
   public trackVideoVisited(video: Video): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_VISITED, {
-      ...this.toMixpanelVideo(video),
+      ...toMixpanelVideo(video),
     });
   }
 
   public trackVideoLinkCopied(video: Video): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, {
-      ...this.toMixpanelVideo(video),
+      ...toMixpanelVideo(video),
     });
   }
 
@@ -111,45 +99,8 @@ export default class MixpanelAnalytics implements Analytics {
     watchedSegment: SegmentWatchedEvent,
   ): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_PLAYBACK, {
-      ...this.toMixpanelVideo(video),
-      ...this.toMixpanelSegment(watchedSegment),
+      ...toMixpanelVideo(video),
+      ...toMixpanelSegment(watchedSegment),
     });
-  }
-
-  private toMixpanelVideo(video: Video) {
-    return {
-      video_id: video.id,
-      video_title: video.title,
-      video_description: video.description,
-      video_duration: video.duration.toISOString(),
-      video_releasedOn: video.releasedOn.toISOString(),
-      video_contentPartner: video.contentPartner,
-      video_subjects: video.subjects.join(', '),
-      video_playback: video.playback,
-      video_badges: video.badges.join(', '),
-    };
-  }
-
-  private toMixpanelSegment(watchedSegment: SegmentWatchedEvent) {
-    return {
-      playback_segment_start_seconds: watchedSegment.segmentStartSeconds,
-      playback_segment_end_seconds: watchedSegment.segmentEndSeconds,
-      playback_video_duration_seconds: watchedSegment.videoDurationSeconds,
-    };
-  }
-
-  private static selectToken() {
-    switch (Constants.ENVIRONMENT) {
-      case 'STAGING':
-        return this.stagingToken;
-      case 'PRODUCTION':
-        return this.productionToken;
-      case 'TESTING':
-        return this.testingToken;
-      default:
-        throw Error(
-          `No MixPanel token found for environment ${Constants.ENVIRONMENT}`,
-        );
-    }
   }
 }
