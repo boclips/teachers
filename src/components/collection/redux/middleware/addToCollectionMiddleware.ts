@@ -6,11 +6,13 @@ import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { addToDefaultCollectionAction } from '../actions/addToDefaultCollectionAction';
+import { storeVideoInDefaultCollectionAction } from '../actions/storeVideoInDefaultCollectionAction';
 
 export function onAddToCollection(
   store: MiddlewareAPI<any, CollectionState>,
   video: Video,
 ) {
+  store.dispatch(storeVideoInDefaultCollectionAction(video));
   addToCollection(video, store.getState().videoCollection).then(success => {
     store.dispatch(
       addToCollectionResultAction({

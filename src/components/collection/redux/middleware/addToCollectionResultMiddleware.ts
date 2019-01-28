@@ -3,19 +3,19 @@ import { sideEffect } from '../../../../app/redux/actions';
 import { Video } from '../../../../types/Video';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
-import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
+import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoInDefaultCollectionAction';
 
 export const SUCCESS_DESCRIPTION = 'has been saved to your video collection';
 export const ERROR_DESCRIPTION = 'could not be added to the collection';
 
-export interface AddToCollectionResult {
+export interface UpdateCollectionResult {
   video: Video;
   success: boolean;
 }
 
 export const onAddToCollectionResult = (
   store: MiddlewareAPI<any, {}>,
-  payload: AddToCollectionResult,
+  payload: UpdateCollectionResult,
 ) => {
   if (payload.success) {
     NotificationFactory.success({
@@ -28,7 +28,7 @@ export const onAddToCollectionResult = (
       description: ERROR_DESCRIPTION,
     });
 
-    store.dispatch(removeFromDefaultCollectionAction(payload.video));
+    store.dispatch(unstoreVideoInDefaultCollectionAction(payload.video));
   }
 };
 

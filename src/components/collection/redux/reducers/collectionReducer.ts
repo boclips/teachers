@@ -5,9 +5,9 @@ import createReducer, {
 import { Link } from '../../../../types/Link';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addToDefaultCollectionAction } from '../actions/addToDefaultCollectionAction';
-import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
+import { storeVideoInDefaultCollectionAction } from '../actions/storeVideoInDefaultCollectionAction';
+import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoInDefaultCollectionAction';
 
 const initialState: VideoCollection = {
   videos: [],
@@ -48,6 +48,6 @@ const onRemoveVideoAction = (
 export const collectionReducer: Reducer<VideoCollection> = createReducer(
   initialState,
   actionHandler(storeCollectionAction, onStoreCollectionAction),
-  actionHandler(addToDefaultCollectionAction, onAddVideoAction),
-  actionHandler(removeFromDefaultCollectionAction, onRemoveVideoAction),
+  actionHandler(storeVideoInDefaultCollectionAction, onAddVideoAction),
+  actionHandler(unstoreVideoInDefaultCollectionAction, onRemoveVideoAction),
 );

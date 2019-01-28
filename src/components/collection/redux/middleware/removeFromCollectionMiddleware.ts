@@ -5,12 +5,24 @@ import removeFromCollection from '../../../../services/collections/removeFromCol
 import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
+import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoInDefaultCollectionAction';
+import { removeFromCollectionResultAction } from './../actions/removeFromCollectionResultAction';
 
 export function onRemoveFromCollection(
   store: MiddlewareAPI<any, CollectionState>,
   video: Video,
 ) {
-  removeFromCollection(video, store.getState().videoCollection);
+  store.dispatch(unstoreVideoInDefaultCollectionAction(video));
+  removeFromCollection(video, store.getState().videoCollection).then(
+    success => {
+      store.dispatch(
+        removeFromCollectionResultAction({
+          video,
+          success,
+        }),
+      );
+    },
+  );
   AnalyticsFactory.getInstance().trackVideoRemovedFromDefaultCollection();
 }
 

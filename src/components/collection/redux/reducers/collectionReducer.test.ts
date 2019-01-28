@@ -2,8 +2,8 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
-import { addToDefaultCollectionAction } from '../actions/addToDefaultCollectionAction';
-import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
+import { storeVideoInDefaultCollectionAction } from '../actions/storeVideoInDefaultCollectionAction';
+import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoInDefaultCollectionAction';
 import { collectionReducer } from './collectionReducer';
 
 test('adding a video to default collection', () => {
@@ -12,7 +12,7 @@ test('adding a video to default collection', () => {
   });
 
   const newVideo = VideoFactory.sample({ id: '124' });
-  const action = addToDefaultCollectionAction(newVideo);
+  const action = storeVideoInDefaultCollectionAction(newVideo);
 
   const stateAfter = collectionReducer(stateBefore, action);
 
@@ -25,7 +25,7 @@ test('adding a duplicate video to default collection does not readd it', () => {
     videos: [VideoFactory.sample({ id: '123' })],
   });
 
-  const action = addToDefaultCollectionAction(
+  const action = storeVideoInDefaultCollectionAction(
     VideoFactory.sample({ id: '123' }),
   );
 
@@ -43,7 +43,7 @@ test('removing a video from a default collection', () => {
   });
 
   const videoToRemove = VideoFactory.sample({ id: '123' });
-  const action = removeFromDefaultCollectionAction(videoToRemove);
+  const action = unstoreVideoInDefaultCollectionAction(videoToRemove);
 
   const stateAfter = collectionReducer(stateBefore, action);
 

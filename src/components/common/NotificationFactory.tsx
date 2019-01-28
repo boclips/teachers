@@ -28,6 +28,10 @@ export default class NotificationFactory {
       description: <div role="alert">{options.description}</div>,
       placement: 'bottomRight',
       duration: 6,
+      style: {
+        background: '	#db0000',
+        color: '#FFFFFF',
+      },
     });
   }
 }

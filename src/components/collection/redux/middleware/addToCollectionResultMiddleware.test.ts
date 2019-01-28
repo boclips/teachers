@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import NotificationFactory from '../../../common/NotificationFactory';
-import { removeFromDefaultCollectionAction } from '../actions/removeFromDefaultCollectionAction';
+import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoInDefaultCollectionAction';
 import { VideoFactory } from './../../../../../test-support/factories';
 import {
   ERROR_DESCRIPTION,
@@ -51,6 +51,6 @@ test('failing to add to collection creates a remove from collection action', () 
 
   expect(store.getActions().length).toBeGreaterThan(0);
   expect(store.getActions()[store.getActions().length - 1]).toEqual(
-    removeFromDefaultCollectionAction(video),
+    unstoreVideoInDefaultCollectionAction(video),
   );
 });

@@ -3,10 +3,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStore } from 'redux-mock-store';
 import { VideoFactory } from '../../../../test-support/factories';
-import VideoPreviewButtonsContainer, {
-  addToDefaultCollectionAction,
-  removeFromDefaultCollectionAction,
-} from './VideoCardButtons';
+import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
+import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
+import VideoPreviewButtonsContainer from './VideoCardButtons';
 import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
 
 const mockStore = configureStore<{}>();
