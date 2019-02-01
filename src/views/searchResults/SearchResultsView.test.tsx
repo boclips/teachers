@@ -1,9 +1,8 @@
+import { RouterActionType } from 'connected-react-router';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-
-import { RouterActionType } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { LinksFactory } from '../../../test-support/factories';
@@ -41,12 +40,10 @@ test('does not show a no results message when search query is empty', () => {
 
 const mockStore = configureStore<SearchState & LinksState & RouterState>();
 
-function onPageChange() {}
-
 function mountWith(store: Store) {
   return mount(
     <Provider store={store}>
-      <SearchResultsView onPageChange={onPageChange} />
+      <SearchResultsView />
     </Provider>,
   );
 }

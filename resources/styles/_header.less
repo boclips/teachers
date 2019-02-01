@@ -1,6 +1,5 @@
 @header-height: 64px;
-@mobile-header-height: 92px;
-
+@mobile-header-height: 144px;
 
 .ant-layout-header {
   background-color: white;
@@ -42,18 +41,18 @@
     }
 
     .logo-logout {
-        @media (max-width: 768px) {
-          height: 36px;
-          &.unauthenticated {
-            height: 50px;
-          }
-          display: flex;
-          margin-top: -12px;
-          >* {
-            padding-bottom: 12px;
-          }
-          justify-content: space-between;
+      @media (max-width: 768px) {
+        height: 36px;
+        &.unauthenticated {
+          height: 50px;
         }
+        display: flex;
+        margin-top: -12px;
+        > * {
+          padding-bottom: 12px;
+        }
+        justify-content: space-between;
+      }
 
       .logout-container-mini {
         @media (min-width: 768px) {
@@ -71,9 +70,6 @@
   }
 
   .ant-input {
-    background-color: #FAFAFF;
+    background-color: #fafaff;
   }
 }
-
-
-

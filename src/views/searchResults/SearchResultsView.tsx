@@ -4,6 +4,9 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import withNewsNavigation, {
+  NewsNavigationProps,
+} from '../../components/common/higerOrderComponents/withNewsNavigation';
 import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
@@ -16,7 +19,6 @@ interface StateProps {
   results: SearchResults;
   links: Links;
   currentPage: number;
-  isNewsMode: boolean;
   collectionVideoIds: string[];
 }
 
@@ -25,7 +27,7 @@ interface DispatchProps {
 }
 
 class SearchResultsView extends React.PureComponent<
-  StateProps & DispatchProps
+  StateProps & DispatchProps & NewsNavigationProps
 > {
   public render() {
     if (this.props.loading) {
@@ -52,13 +54,13 @@ class SearchResultsView extends React.PureComponent<
         {isNewsMode ? (
           <SearchResultsWithHeader
             results={this.props.results}
-            onNavigate={this.goFromNewsToSearchResults}
+            onNavigate={this.props.goToSearchResults}
             isInCollection={isVideoInCollection}
           />
         ) : (
           <SearchResultsWithSidebar
             results={this.props.results}
-            onNavigate={this.goToNewsResults}
+            onNavigate={this.props.goToNewsResults}
             isInCollection={isVideoInCollection}
           />
         )}
@@ -108,14 +110,6 @@ class SearchResultsView extends React.PureComponent<
       this.props.isNewsMode,
     );
   };
-
-  private goFromNewsToSearchResults = () => {
-    this.props.onPageChange(1, this.props.results.query, false);
-  };
-
-  private goToNewsResults = () => {
-    this.props.onPageChange(1, this.props.results.query, true);
-  };
 }
 
 function mapStateToProps({
@@ -129,8 +123,6 @@ function mapStateToProps({
     results: search,
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
-    isNewsMode:
-      queryString.parse(router.location.search).mode === 'news' || false,
     collectionVideoIds: videoCollection.videos.map(video => video.id),
   };
 }
@@ -148,7 +140,9 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-export default connect<StateProps, {}, {}>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SearchResultsView);
+export default withNewsNavigation(
+  connect<StateProps, {}, {}>(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(SearchResultsView),
+);

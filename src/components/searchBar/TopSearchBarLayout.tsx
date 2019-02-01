@@ -10,6 +10,7 @@ import { LoginState } from '../../types/State';
 import { BoclipsFooter } from '../common/BoclipsFooter';
 import { LogoutButton } from '../common/LogoutButton';
 import SearchBar from './SearchBar';
+import ConnectedTabsContainer from './tabs/TabsContainer';
 
 const { Header, Content } = Layout;
 
@@ -67,6 +68,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
                 {this.renderLogout(this.props.authorized)}
               </Col>
             </Row>
+            <ConnectedTabsContainer />
           </Header>
           <Content>
             <Row>
