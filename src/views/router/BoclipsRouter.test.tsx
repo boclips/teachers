@@ -1,11 +1,14 @@
-import { RouterActionType } from 'connected-react-router';
-import { RouterState as ReactRouterState } from 'connected-react-router';
+import {
+  RouterActionType,
+  RouterState as ReactRouterState,
+} from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import ConnectedTabsContainer from '../../components/searchBar/tabs/TabsContainer';
 import { Link } from '../../types/Link';
 import {
   CollectionState,
@@ -55,6 +58,32 @@ describe('when authorised', () => {
     expect(videoDetailsView).toExist();
   });
 
+  test('shows navigation tabs on /videos', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/videos', 'q=earthquakes')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const tabs = wrapper.find(ConnectedTabsContainer);
+    expect(tabs).toExist();
+  });
+
+  test('does not show navigation tabs on /videos', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/videos', 'q=earthquakes')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const tabs = wrapper.find(ConnectedTabsContainer);
+    expect(tabs).toExist();
+  });
+
   test('shows home page on /', () => {
     const history = createMemoryHistory();
 
@@ -79,6 +108,19 @@ describe('when authorised', () => {
 
     const videoDetailsView = wrapper.find(CollectionView);
     expect(videoDetailsView).toExist();
+  });
+
+  test('does not show navigation tabs on /collections', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/collections/default')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const tabs = wrapper.find(ConnectedTabsContainer);
+    expect(tabs).not.toExist();
   });
 });
 

@@ -16,6 +16,7 @@ const { Header, Content } = Layout;
 
 interface Props {
   children: React.ReactNode;
+  showTabs: boolean;
 }
 
 interface StateProps {
@@ -23,6 +24,10 @@ interface StateProps {
 }
 
 class TopSearchBarLayout extends PureComponent<Props & StateProps> {
+  public static defaultProps = {
+    showTabs: false,
+  };
+
   public renderLogo() {
     return (
       <Link to="/" data-qa="boclips-logo">
@@ -68,7 +73,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
                 {this.renderLogout(this.props.authorized)}
               </Col>
             </Row>
-            <ConnectedTabsContainer />
+            {this.props.showTabs && <ConnectedTabsContainer />}
           </Header>
           <Content>
             <Row>

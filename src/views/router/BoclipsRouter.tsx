@@ -19,14 +19,20 @@ function videoDetailsView(props: RouteComponentProps<{ videoId: string }>) {
   return <VideoDetailsView videoId={props.match.params.videoId} />;
 }
 
-class BoclipsRouter extends Component<{ history: History }> {
+interface StateProps {
+  pathname: string;
+  search: string;
+  isSearchView: boolean;
+}
+
+class BoclipsRouter extends Component<{ history: History } & StateProps> {
   public render() {
     return (
       <ConnectedRouter history={this.props.history || defaultHistory}>
         <Switch>
           <Route path="/bye" component={LoggedOutView} />
           <Route path="/videos">
-            <TopSearchBarLayout>
+            <TopSearchBarLayout showTabs={this.props.isSearchView}>
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
                 <PrivateRoute path="/videos" component={SearchResultsView} />
@@ -44,10 +50,15 @@ class BoclipsRouter extends Component<{ history: History }> {
   }
 }
 
-function mapStateToProps(state: RouterState): {} {
+function mapStateToProps(state: RouterState): StateProps {
+  const location = state.router.location;
   return {
-    pathname: state.router.location.pathname,
-    search: state.router.location.search,
+    pathname: location.pathname,
+    search: location.search,
+    isSearchView:
+      location.pathname &&
+      location.pathname.indexOf('videos') !== -1 &&
+      location.search != null,
   };
 }
 
