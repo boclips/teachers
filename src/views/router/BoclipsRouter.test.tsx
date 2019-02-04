@@ -75,13 +75,13 @@ describe('when authorised', () => {
     const history = createMemoryHistory();
 
     const wrapper = mount(
-      <Provider store={buildStore('/videos', 'q=earthquakes')}>
+      <Provider store={buildStore('/videos')}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
 
     const tabs = wrapper.find(ConnectedTabsContainer);
-    expect(tabs).toExist();
+    expect(tabs).not.toExist();
   });
 
   test('shows home page on /', () => {
