@@ -1,4 +1,4 @@
-import Row from 'antd/lib/grid/row';
+import { Col, Row } from 'antd';
 import React from 'react';
 import { SearchVideoCardList } from '../../video/list/VideoCardList';
 import { NewsBoxHeader } from '../NewsBoxHeader';
@@ -12,10 +12,12 @@ export default class SearchResultsWithHeader extends React.PureComponent<
     return (
       <React.Fragment>
         <Row>
-          <NewsBoxHeader
-            onButtonClick={this.props.onNavigate}
-            resultsQuery={query}
-          />
+          <Col md={24} span={0}>
+            <NewsBoxHeader
+              onButtonClick={this.props.onNavigate}
+              resultsQuery={query}
+            />
+          </Col>
         </Row>
         <Row>
           <SearchVideoCardList
