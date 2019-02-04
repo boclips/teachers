@@ -1,0 +1,20 @@
+app: teachers
+port: 80
+scale: Tiny
+environments:
+  production:
+    replicas: 3
+    urls:
+      - teachers.boclips.com
+  staging:
+    replicas: 3
+    urls:
+      - teachers.staging-boclips.com
+  testing:
+    replicas: 1
+    urls:
+      - teachers.testing-boclips.com
+  local:
+    replicas: 1
+    urls:
+      - teachers.local-boclips.com
