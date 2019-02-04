@@ -13,6 +13,16 @@ export enum TabNames {
   NEWS = 'News',
 }
 
+interface TabElementProps {
+  text: string;
+}
+
+const TabElement = React.memo((props: TabElementProps) => (
+  <span data-qa="tab" data-state={props.text}>
+    {props.text}
+  </span>
+));
+
 export const TabsComponent = React.memo((props: Props) => (
   <Row>
     <Col span={24} md={0}>
@@ -23,7 +33,7 @@ export const TabsComponent = React.memo((props: Props) => (
         activeKey={props.isNewsMode ? TabNames.NEWS : TabNames.MAIN}
       >
         {props.tabs.map(tab => (
-          <Tabs.TabPane tab={tab} key={tab} />
+          <Tabs.TabPane tab={<TabElement text={tab} />} key={tab} />
         ))}
       </Tabs>
     </Col>
