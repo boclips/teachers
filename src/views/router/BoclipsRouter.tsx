@@ -1,5 +1,5 @@
 import { ConnectedRouter } from 'connected-react-router';
-import { History } from 'history';
+import { History, Location } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -50,15 +50,20 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
   }
 }
 
+function isSearchView(location: Location): boolean {
+  return !!(
+    location.pathname &&
+    location.pathname.indexOf('videos') !== -1 &&
+    location.search
+  );
+}
+
 function mapStateToProps(state: RouterState): StateProps {
   const location = state.router.location;
   return {
     pathname: location.pathname,
     search: location.search,
-    isSearchView:
-      location.pathname &&
-      location.pathname.indexOf('videos') !== -1 &&
-      location.search != null,
+    isSearchView: isSearchView(location),
   };
 }
 
