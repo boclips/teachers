@@ -90,5 +90,8 @@
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.6",
     "webpack-merge": "^4.1.4"
+  },
+  "dependencies": {
+    "stackdriver-errors-js": "^0.5.0"
   }
 }
