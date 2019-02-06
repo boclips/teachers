@@ -80,13 +80,13 @@ function mapStateToProps(state: LoginState): StateProps {
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     authenticate: () => {
-      keycloakAuthenticate(
-        keycloak => {
+      keycloakAuthenticate({
+        onLogin: keycloak => {
           dispatch(storeLogin(keycloak));
         },
-        'boclips',
-        'teachers',
-      );
+        realm: 'boclips',
+        clientId: 'teachers',
+      });
     },
   };
 }

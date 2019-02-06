@@ -35,14 +35,14 @@ function mapStateToProps(state: LoginState): StateProps {
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     authenticateIfLoggedIn: () => {
-      keycloakAuthenticate(
-        keycloak => {
+      keycloakAuthenticate({
+        onLogin: keycloak => {
           dispatch(storeLogin(keycloak));
         },
-        'boclips',
-        'teachers',
-        'check-sso',
-      );
+        realm: 'boclips',
+        clientId: 'teachers',
+        mode: 'check-sso',
+      });
     },
   };
 }

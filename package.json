@@ -46,7 +46,7 @@
     "antd": "^3.9.1",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.15.0",
-    "boclips-js-security": "^1.0.35",
+    "boclips-js-security": "^1.0.39",
     "boclips-react-player": "^10.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "connected-react-router": "^4.4.1",

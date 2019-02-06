@@ -1,7 +1,7 @@
 const mock = jest.genMockFromModule('boclips-js-security');
 
-mock.authenticate = (callback) => {
-  callback({authenticated :true});
+mock.authenticate = options => {
+  options.onLogin({ authenticated: true });
 };
 
 module.exports = mock;
