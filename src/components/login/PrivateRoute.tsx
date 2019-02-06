@@ -84,7 +84,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
         keycloak => {
           dispatch(storeLogin(keycloak));
         },
-        'teachers',
+        'boclips',
         'teachers',
       );
     },
