@@ -70,15 +70,17 @@ export default class MixpanelAnalytics {
     });
   }
 
-  public trackVideoAddedToDefaultCollection(): void {
+  public trackVideoAddedToDefaultCollection(video: Video): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, {
       video_collection_id: 'DEFAULT',
+      video_title: video.title,
     });
   }
 
-  public trackVideoRemovedFromDefaultCollection(): void {
+  public trackVideoRemovedFromDefaultCollection(video: Video): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_REMOVED_FROM_COLLECTION, {
       video_collection_id: 'DEFAULT',
+      video_title: video.title,
     });
   }
 

@@ -23,7 +23,7 @@ export function onRemoveFromCollection(
       );
     },
   );
-  AnalyticsFactory.getInstance().trackVideoRemovedFromDefaultCollection();
+  AnalyticsFactory.getInstance().trackVideoRemovedFromDefaultCollection(video);
 }
 
 export default sideEffect(

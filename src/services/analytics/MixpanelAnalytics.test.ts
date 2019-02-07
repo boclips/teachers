@@ -82,18 +82,22 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks video added to collection', () => {
-    mixpanelAnalytics.trackVideoAddedToDefaultCollection();
+    const video = VideoFactory.sample({ title: 'gangnam style' });
+    mixpanelAnalytics.trackVideoAddedToDefaultCollection(video);
 
     expect(mock.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
       video_collection_id: 'DEFAULT',
+      video_title: 'gangnam style',
     });
   });
 
   it('tracks video removed from collection', () => {
-    mixpanelAnalytics.trackVideoRemovedFromDefaultCollection();
+    const video = VideoFactory.sample({ title: 'gangnam style' });
+    mixpanelAnalytics.trackVideoRemovedFromDefaultCollection(video);
 
     expect(mock.track).toHaveBeenCalledWith('COLLECTION_VIDEO_REMOVED', {
       video_collection_id: 'DEFAULT',
+      video_title: 'gangnam style',
     });
   });
 

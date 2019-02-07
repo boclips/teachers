@@ -21,7 +21,7 @@ export function onAddToCollection(
       }),
     );
   });
-  AnalyticsFactory.getInstance().trackVideoAddedToDefaultCollection();
+  AnalyticsFactory.getInstance().trackVideoAddedToDefaultCollection(video);
 }
 
 export default sideEffect(addToDefaultCollectionAction, onAddToCollection);
