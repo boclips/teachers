@@ -32,6 +32,10 @@ export const video177 = Object.freeze({
     duration: 'PT1M2S',
   },
   badges: ['ad-free'],
+  type: {
+    name: 'educational',
+    id: 1,
+  },
 });
 
 const video147 = Object.freeze({
@@ -48,6 +52,10 @@ const video147 = Object.freeze({
     duration: 'PT1M3S',
   },
   badges: ['ad-free'],
+  type: {
+    name: 'educational',
+    id: 1,
+  },
 });
 
 export const videos = {
@@ -90,4 +98,8 @@ export const youtubeVideo1 = {
     duration: 'PT1M2S',
   },
   badges: ['youtube'],
+  type: {
+    name: 'educational',
+    id: 1,
+  },
 };

@@ -25,5 +25,6 @@ export default function convertVideoResource(resource: any): Video {
     playback: getPlaybackProperties(resource),
     subjects: resource.subjects,
     badges: resource.badges,
+    type: { name: resource.type.name },
   };
 }

@@ -11,6 +11,11 @@ export interface Video {
   playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;
   badges: string[];
+  type: VideoType;
+}
+
+export interface VideoType {
+  name: string;
 }
 
 export class StreamPlayback {
