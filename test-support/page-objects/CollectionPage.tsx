@@ -41,6 +41,7 @@ export class CollectionPage {
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved:
         el.find(By.dataQa('remove-from-default-collection')).length === 1,
+      subjects: el.find(By.dataQa('video-subject')).map(tag => tag.text()),
     }));
   }
 

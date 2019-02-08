@@ -1,76 +1,76 @@
-@import "_antd-theme";
+@import '_antd-theme';
 
 .ant-btn {
-  border: 2px solid #4189FF;
+  border: 2px solid #4189ff;
   border-radius: 8px;
-  color: #4189FF;
+  color: #4189ff;
   font-size: 16px;
   font-weight: bold;
   line-height: 24px;
   min-width: 120px;
 
   &:hover {
-    border-color: #0051BC;
-    color: #0051BC;
+    border-color: #0051bc;
+    color: #0051bc;
   }
 
   &:disabled {
-    color: #D3DCF5;
+    color: #d3dcf5;
   }
 
   &:focus {
-    border-color: #4189FF;
-    box-shadow: 0 0 4px 1px #4189FF;
-    color: #4189FF;
+    border-color: #4189ff;
+    box-shadow: 0 0 4px 1px #4189ff;
+    color: #4189ff;
   }
 
   &:active {
-    border-color: #00217D;
-    color: #00217D;
+    border-color: #00217d;
+    color: #00217d;
   }
 
   &-primary {
     border: none;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   &.ant-btn-primary {
     &:hover {
-      background-color: #0051BC;
-      color: #FFFFFF;
+      background-color: #0051bc;
+      color: #ffffff;
     }
 
     &:disabled {
-      background-color: #E8EFFF;
+      background-color: #e8efff;
     }
 
     &:focus {
-      background-color: #4189FF;
-      box-shadow: 0 0 4px 1px #4189FF;
-      color: #FFFFFF;
+      background-color: #4189ff;
+      box-shadow: 0 0 4px 1px #4189ff;
+      color: #ffffff;
     }
 
     &:active {
-      background-color: #00217D;
-      color: #FFFFFF;
+      background-color: #00217d;
+      color: #ffffff;
     }
   }
 }
 
 .ant-input {
-  border: 2px solid #E8EFFF;
+  border: 2px solid #e8efff;
   border-radius: 8px;
   font-size: 14px;
   line-height: 24px;
 
   &:disabled {
-    border-color: #E8EFFF;
+    border-color: #e8efff;
   }
 
   &:focus {
-    border-color: #E8EFFF;
-    box-shadow: 0 0 4px 1px #4189FF;
-    color: #3D4564;
+    border-color: #e8efff;
+    box-shadow: 0 0 4px 1px #4189ff;
+    color: #3d4564;
   }
 
   &.ant-input-lg {
@@ -132,7 +132,6 @@
     .anticon {
       color: @primary-color;
     }
-
   }
 }
 
@@ -140,16 +139,37 @@
   height: auto;
 }
 
-.ant-form-explain, .ant-form-extra {
+.ant-form-explain,
+.ant-form-extra {
   padding-left: 12px;
 }
 
-.ant-layout-content, .ant-layout-header, .ant-layout-footer {
+.ant-layout-content,
+.ant-layout-header,
+.ant-layout-footer {
   padding-left: 16px;
   padding-right: 16px;
 
   @media (min-width: 768px) {
     padding-left: 50px;
     padding-right: 50px;
+  }
+}
+
+.ant-tag {
+  height: 32px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #e8efff;
+  color: #434656;
+  border: none;
+  font-size: 14px;
+  line-height: 16px;
+
+  .tag-type {
+    color: #0051bc;
+    &::after {
+      content: ' ';
+    }
   }
 }

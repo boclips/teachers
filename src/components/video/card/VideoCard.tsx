@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
+import SubjectTag from '../tags/SubjectTag';
 import VideoPreviewButtonsContainer from './VideoCardButtons';
 
 interface Props {
@@ -49,6 +50,12 @@ export default class VideoCard extends React.PureComponent<Props> {
         </section>
 
         <section className="video-details">
+          <div className="subjects-container">
+            {this.props.video.subjects.map(subject => (
+              <SubjectTag subject={subject} key={subject} />
+            ))}
+          </div>
+
           <Link
             className="no-underline"
             to={`/videos/${this.props.video.id}`}
