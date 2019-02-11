@@ -9,9 +9,7 @@ export interface Props {
   onRemoveFromDefaultCollection: () => void;
 }
 
-export default class VideoPreviewDefaultCollectionButton extends React.PureComponent<
-  Props
-> {
+export default class VideoCollectionButton extends React.PureComponent<Props> {
   public render() {
     return (
       <Button

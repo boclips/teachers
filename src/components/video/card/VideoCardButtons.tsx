@@ -9,7 +9,7 @@ import { Video } from '../../../types/Video';
 import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
 import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
 import NotificationFactory from '../../common/NotificationFactory';
-import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
+import VideoCollectionButton from './videoCollectionButton/VideoCollectionButton';
 
 interface OwnProps {
   isInCollection: boolean;
@@ -51,7 +51,7 @@ class VideoPreviewButtonsContainer extends React.PureComponent<
             Copy link
           </Button>
         </CopyToClipboard>
-        <VideoPreviewDefaultCollectionButton
+        <VideoCollectionButton
           isInDefaultCollection={this.props.isInCollection}
           style={this.props.style}
           onAddToDefaultCollection={this.props.onAddToDefaultCollection}

@@ -1,8 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import VideoPreviewDefaultCollectionButton, {
-  Props,
-} from './VideoDefaultCollectionButton';
+import VideoCollectionButton, { Props } from './VideoCollectionButton';
 
 function render(props: Partial<Props> = {}) {
   const defaultProps: Props = {
@@ -12,9 +10,7 @@ function render(props: Partial<Props> = {}) {
     onRemoveFromDefaultCollection: jest.fn(),
   };
 
-  return mount(
-    <VideoPreviewDefaultCollectionButton {...defaultProps} {...props} />,
-  );
+  return mount(<VideoCollectionButton {...defaultProps} {...props} />);
 }
 
 it('Says `Save` without icon when video not in collection', () => {

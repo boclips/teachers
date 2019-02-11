@@ -6,7 +6,7 @@ import { VideoFactory } from '../../../../test-support/factories';
 import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
 import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
 import VideoPreviewButtonsContainer from './VideoCardButtons';
-import VideoPreviewDefaultCollectionButton from './VideoDefaultCollectionButton';
+import VideoCollectionButton from './videoCollectionButton/VideoCollectionButton';
 
 const mockStore = configureStore<{}>();
 
@@ -30,7 +30,7 @@ beforeEach(() => {
 
 test('dispatches when add to collection clicked', () => {
   wrapper
-    .find(VideoPreviewDefaultCollectionButton)
+    .find(VideoCollectionButton)
     .props()
     .onAddToDefaultCollection();
 
@@ -41,7 +41,7 @@ test('dispatches when add to collection clicked', () => {
 
 test('dispatches when remove from collection clicked', () => {
   wrapper
-    .find(VideoPreviewDefaultCollectionButton)
+    .find(VideoCollectionButton)
     .props()
     .onRemoveFromDefaultCollection();
 
