@@ -14,14 +14,14 @@ function render(props: Partial<Props> = {}) {
 }
 
 it('Says `Save` without icon when video not in collection', () => {
-  const wrapper = render({ isInDefaultCollection: false });
+  const wrapper = render({ isInDefaultCollection: false, style: 'search' });
 
   expect(wrapper).toHaveText('Save');
   expect(wrapper.find('img')).not.toExist();
 });
 
-it('Says `Remove` without icon when video is in collection and style is collection', () => {
-  const wrapper = render({ isInDefaultCollection: true, style: 'collection' });
+it('Says `Remove` without icon when video is in collection', () => {
+  const wrapper = render({ style: 'collection' });
 
   expect(wrapper).toHaveText('Remove');
 });
@@ -33,12 +33,13 @@ it('Says `Saved` with icon when video is in collection and style is search', () 
   expect(wrapper.find('img')).toExist();
 });
 
-it('Invokes callback when clicked while not in default collection', () => {
+it('Invokes add callback when clicked while not in default collection', () => {
   const onAddToDefaultCollection = jest.fn();
   const onRemoveFromDefaultCollection = jest.fn();
 
   render({
     isInDefaultCollection: false,
+    style: 'search',
     onAddToDefaultCollection,
     onRemoveFromDefaultCollection,
   })
@@ -55,6 +56,7 @@ it('Invokes callback when clicked while in default collection', () => {
 
   render({
     isInDefaultCollection: true,
+    style: 'search',
     onAddToDefaultCollection,
     onRemoveFromDefaultCollection,
   })
