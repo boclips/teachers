@@ -41,14 +41,17 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
   private toPlayerConfiguration(
     playback: StreamPlayback | YoutubePlayback,
   ): PlaybackConfig {
+    const durationSeconds = this.props.video.duration.asSeconds();
     if (playback instanceof StreamPlayback) {
       return {
         type: 'STREAM',
+        durationSeconds,
         stream: (playback as StreamPlayback).getUrl(),
       };
     } else if (playback instanceof YoutubePlayback) {
       return {
         type: 'YOUTUBE',
+        durationSeconds,
         youtubeId: (playback as YoutubePlayback).getId(),
       };
     }

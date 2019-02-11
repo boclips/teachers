@@ -1,5 +1,7 @@
 import { BoclipsPlayer } from 'boclips-react-player';
+import { PlaybackConfig } from 'boclips-react-player/dist/src/PlaybackConfig';
 import { shallow } from 'enzyme';
+import moment = require('moment');
 import React from 'react';
 import { VideoFactory } from '../../../../test-support/factories';
 import { VideoPlayer } from './VideoPlayer';
@@ -21,4 +23,20 @@ test('configures event tracker', () => {
 
   expect(trackerConfig.eventExtraData.searchId).toEqual('search-id');
   expect(trackerConfig.eventExtraData.videoId).toEqual('video-id');
+});
+
+test('sets duration in playback', () => {
+  const video = VideoFactory.sample({
+    duration: moment.duration(2, 'minutes'),
+  });
+
+  const wrapper = shallow(
+    <VideoPlayer video={video} searchId={null} trackingEndpoint={null} />,
+  );
+
+  const boclipsPlayer = wrapper.find(BoclipsPlayer);
+
+  const playbackConfig: PlaybackConfig = boclipsPlayer.prop('playbackConfig');
+
+  expect(playbackConfig.durationSeconds).toEqual(120);
 });
