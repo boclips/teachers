@@ -3,18 +3,13 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
-import { findAll, findOne, search } from '../enzymeHelpers';
+import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
-import MockFetchVerify from '../MockFetchVerify';
-import { links, video177, videos } from '../video-service-responses';
 
 export class VideoDetailsPage {
   constructor(private wrapper: ReactWrapper) {}
 
   public static async load() {
-    MockFetchVerify.get('/v1/', JSON.stringify(links));
-    MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
-
     const page = new VideoDetailsPage(
       mount(
         <App
@@ -43,19 +38,5 @@ export class VideoDetailsPage {
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       subjects: findAll(el, 'video-subject').map(tag => tag.text()),
     }))[0];
-  }
-
-  public async search(query: string) {
-    MockFetchVerify.get(`/v1/videos?query=${query}`, JSON.stringify(videos));
-    search(query);
-
-    await this.hasNavigatedToSearchResults();
-  }
-
-  public async hasNavigatedToSearchResults() {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      findOne(this.wrapper, 'search-page');
-    });
   }
 }

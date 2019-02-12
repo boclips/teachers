@@ -1,6 +1,9 @@
+import ApiStub from '../../../test-support/ApiStub';
 import { VideoDetailsPage } from '../../../test-support/page-objects/VideoDetailsPage';
 
 test('video details shows data', async () => {
+  new ApiStub().links().singleVideo();
+
   const videoDetailsPage = await VideoDetailsPage.load();
 
   expect(videoDetailsPage.getVideoDetails()).toEqual({
