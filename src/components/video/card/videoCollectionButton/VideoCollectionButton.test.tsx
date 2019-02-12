@@ -13,22 +13,22 @@ function render(props: Partial<Props> = {}) {
   return mount(<VideoCollectionButton {...defaultProps} {...props} />);
 }
 
-it('Says `Save` without icon when video not in collection', () => {
+it('Says Save without icon when video not in collection', () => {
   const wrapper = render({ isInDefaultCollection: false, style: 'search' });
 
-  expect(wrapper).toHaveText('Save');
+  expect(wrapper).toIncludeText('Save');
   expect(wrapper.find('img')).not.toExist();
 });
 
-it('Says `Remove` without icon when video is in collection', () => {
+it('Says Remove without icon when video is in collection', () => {
   const wrapper = render({ style: 'collection' });
 
   expect(wrapper).toHaveText('Remove');
 });
 
-it('Says `Saved` with icon when video is in collection and style is search', () => {
+it('Says Saved with icon when video is in collection and style is search', () => {
   const wrapper = render({ isInDefaultCollection: true, style: 'search' });
 
-  expect(wrapper).toHaveText('Saved');
+  expect(wrapper).toIncludeText('Saved');
   expect(wrapper.find('img')).toExist();
 });

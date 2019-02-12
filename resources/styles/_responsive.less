@@ -1,0 +1,15 @@
+.display-mobile {
+  display: inherit;
+
+  @media (min-width: @screen-md) {
+    display: none;
+  }
+}
+
+.display-tablet-and-desktop {
+  display: none;
+
+  @media (min-width: @screen-md) {
+    display: inherit;
+  }
+}

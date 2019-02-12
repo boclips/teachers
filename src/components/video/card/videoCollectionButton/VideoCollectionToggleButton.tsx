@@ -1,4 +1,4 @@
-import { Button, Checkbox, Dropdown, Menu } from 'antd';
+import { Button, Checkbox, Drawer, Dropdown, Menu } from 'antd';
 import React from 'react';
 import savedImg from '../../../../../resources/images/saved.svg';
 
@@ -8,35 +8,75 @@ interface Props {
   onRemove: () => void;
 }
 
+interface State {
+  drawerVisible: boolean;
+}
+
 export default class VideoCollectionToggleButton extends React.PureComponent<
-  Props
+  Props,
+  State
 > {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      drawerVisible: false,
+    };
+  }
+
   public render() {
     return (
-      <Dropdown overlay={this.menu()} trigger={['click']}>
-        <Button
-          className="toggle-collection-button"
-          data-qa={'video-collection-menu'}
-          size={'large'}
-        >
-          {this.content()}
-        </Button>
-      </Dropdown>
+      <span>
+        <span className="display-tablet-and-desktop">
+          <Dropdown overlay={this.menu()} trigger={['click']}>
+            {this.saveButton()}
+          </Dropdown>
+        </span>
+        <span className="display-mobile">
+          {this.saveButton(this.showDrawer)}
+          <Drawer
+            title="Select collection"
+            placement={'bottom'}
+            closable={true}
+            onClose={this.onClose}
+            visible={this.state.drawerVisible}
+          >
+            {this.collectionItem()}
+          </Drawer>
+        </span>
+      </span>
+    );
+  }
+
+  private saveButton(onClick?: () => void) {
+    return (
+      <Button
+        className="toggle-collection-button"
+        data-qa={'video-collection-menu'}
+        size={'large'}
+        onClick={onClick}
+      >
+        {this.content()}
+      </Button>
+    );
+  }
+
+  private collectionItem() {
+    return (
+      <Checkbox
+        defaultChecked={this.props.isInDefaultCollection}
+        data-qa={this.dataQa()}
+        onChange={this.onClick}
+      >
+        My Video Collection
+      </Checkbox>
     );
   }
 
   private menu() {
     return (
       <Menu>
-        <Menu.Item>
-          <Checkbox
-            defaultChecked={this.props.isInDefaultCollection}
-            data-qa={this.dataQa()}
-            onChange={this.onClick}
-          >
-            My Video Collection
-          </Checkbox>
-        </Menu.Item>
+        <Menu.Item>{this.collectionItem()}</Menu.Item>
       </Menu>
     );
   }
@@ -63,10 +103,24 @@ export default class VideoCollectionToggleButton extends React.PureComponent<
   }
 
   private onClick = () => {
+    this.onClose();
+
     if (this.props.isInDefaultCollection) {
       this.props.onRemove();
     } else {
       this.props.onAdd();
     }
+  };
+
+  private showDrawer = () => {
+    this.setState({
+      drawerVisible: true,
+    });
+  };
+
+  private onClose = () => {
+    this.setState({
+      drawerVisible: false,
+    });
   };
 }
