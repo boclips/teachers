@@ -10,18 +10,13 @@ test('configures event tracker', () => {
   const video = VideoFactory.sample({ id: 'video-id' });
 
   const wrapper = shallow(
-    <VideoPlayer
-      trackingEndpoint={'https://bla.bla/bla'}
-      video={video}
-      searchId={'search-id'}
-    />,
+    <VideoPlayer trackingEndpoint={'https://bla.bla/bla'} video={video} />,
   );
 
   const boclipsPlayer = wrapper.find(BoclipsPlayer);
 
   const trackerConfig = boclipsPlayer.prop('trackerConfig');
 
-  expect(trackerConfig.eventExtraData.searchId).toEqual('search-id');
   expect(trackerConfig.eventExtraData.videoId).toEqual('video-id');
 });
 
@@ -31,7 +26,7 @@ test('sets duration in playback', () => {
   });
 
   const wrapper = shallow(
-    <VideoPlayer video={video} searchId={null} trackingEndpoint={null} />,
+    <VideoPlayer video={video} trackingEndpoint={null} />,
   );
 
   const boclipsPlayer = wrapper.find(BoclipsPlayer);

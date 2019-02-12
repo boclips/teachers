@@ -16,7 +16,6 @@ test('Clears videos and sets loading flag and query on the loading action', () =
     loading: false,
     videos: [VideoFactory.sample({ title: 'my video' })],
     query: '',
-    searchId: null,
     paging: defaultPaging,
   };
 
@@ -36,7 +35,6 @@ test('Clears videos and sets loading flag and query on the loading action', () =
     loading: true,
     videos: [],
     query: 'donuts',
-    searchId: null,
     paging: defaultPaging,
   };
 
@@ -48,13 +46,11 @@ test('Sets videos and clears loading flag on the store action', () => {
     loading: true,
     videos: [],
     query: 'pancakes',
-    searchId: 'whatever',
     paging: defaultPaging,
   };
 
   const searchResults: SearchResults = {
     videos: [VideoFactory.sample({ title: 'dog video' })],
-    searchId: 's4',
     query: 'dogs',
     paging: defaultPaging,
   };
@@ -68,7 +64,6 @@ test('Sets videos and clears loading flag on the store action', () => {
     loading: false,
     videos: [VideoFactory.sample({ title: 'dog video' })],
     query: 'dogs',
-    searchId: 's4',
     paging: defaultPaging,
   };
 

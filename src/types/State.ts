@@ -10,7 +10,6 @@ export interface LinksState {
 }
 
 export interface SearchResults {
-  searchId: string;
   query: string;
   videos: Video[];
   paging: PageSpec;

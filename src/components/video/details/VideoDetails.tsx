@@ -19,7 +19,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
 
     return (
       <section className="video-content">
-        <VideoPlayer video={this.props.video} searchId={null} />
+        <VideoPlayer video={this.props.video} />
         <section className="video-details">
           <VideoHeader video={this.props.video} />
           <div className="subjects-container">

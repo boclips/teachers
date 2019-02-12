@@ -19,7 +19,6 @@ const store = mockStore({
   },
   search: {
     loading: false,
-    searchId: 'string',
     query: 'string',
     videos: null,
     paging: null,

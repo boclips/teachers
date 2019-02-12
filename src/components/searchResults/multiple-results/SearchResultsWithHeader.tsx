@@ -8,7 +8,7 @@ export default class SearchResultsWithHeader extends React.PureComponent<
   SearchResultsProps
 > {
   public render() {
-    const { videos, searchId, paging, query } = this.props.results;
+    const { videos, paging, query } = this.props.results;
     return (
       <React.Fragment>
         <Row>
@@ -23,7 +23,6 @@ export default class SearchResultsWithHeader extends React.PureComponent<
           <SearchVideoCardList
             totalElements={paging && paging.totalElements}
             videos={videos}
-            searchId={searchId}
             isInCollection={this.props.isInCollection}
           />
         </Row>

@@ -9,7 +9,6 @@ import { StreamPlayback, Video, YoutubePlayback } from '../../../types/Video';
 
 interface OwnProps {
   video: Video;
-  searchId: string;
 }
 
 interface Props {
@@ -18,14 +17,13 @@ interface Props {
 
 export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
   public render() {
-    const { video, searchId, trackingEndpoint } = this.props;
+    const { video, trackingEndpoint } = this.props;
     const trackerConfig: TrackerConfig = {
       onSegmentWatched: event => {
         axios.post(trackingEndpoint, event);
         AnalyticsFactory.getInstance().trackVideoPlayback(video, event);
       },
       eventExtraData: {
-        searchId,
         videoId: video.id,
       },
     };

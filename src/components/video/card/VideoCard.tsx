@@ -9,7 +9,6 @@ import VideoPreviewButtonsContainer from './VideoCardButtons';
 
 interface Props {
   video: Video | null;
-  searchId: string | null;
   isInCollection: boolean;
   style: 'search' | 'collection';
 }
@@ -42,10 +41,7 @@ export default class VideoCard extends React.PureComponent<Props> {
 
         <section className={'video-preview'}>
           <div aria-label={'video player'} tabIndex={0}>
-            <VideoPlayer
-              video={this.props.video}
-              searchId={this.props.searchId}
-            />
+            <VideoPlayer video={this.props.video} />
           </div>
         </section>
 

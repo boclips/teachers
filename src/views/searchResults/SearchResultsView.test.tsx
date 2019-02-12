@@ -55,7 +55,6 @@ function createStore(query: string, isLoading = false) {
       videos: [],
       loading: isLoading,
       query,
-      searchId: 's123',
       paging: {
         totalElements: 1111,
         totalPages: 0,

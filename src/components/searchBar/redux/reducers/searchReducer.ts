@@ -19,7 +19,6 @@ const initialState: SearchStateValue = {
   videos: [],
   loading: false,
   query: '',
-  searchId: null,
   paging: defaultPaging,
 };
 
@@ -30,7 +29,6 @@ function onSearchVideosAction(
   return {
     videos: [],
     query: searchRequest.query,
-    searchId: null,
     loading: true,
     paging: defaultPaging,
   };

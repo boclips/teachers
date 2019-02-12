@@ -36,10 +36,6 @@ export class AppConstants {
     }
   }
 
-  get CORRELATION_ID_HEADER_FIELD(): string {
-    return 'x-correlation-id';
-  }
-
   get NEWS(): string {
     return 'news';
   }

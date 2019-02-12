@@ -46,7 +46,6 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
       this.props.videos && (
         <CollectionVideoCardList
           videos={this.props.videos}
-          searchId={null}
           isInCollection={isInCollection}
         />
       )

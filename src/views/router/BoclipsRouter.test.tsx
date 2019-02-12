@@ -201,7 +201,6 @@ function buildStore(
   const search: SearchStateValue = {
     loading: false,
     query: '',
-    searchId: '',
     videos: [],
     paging: {
       totalElements: 0,
