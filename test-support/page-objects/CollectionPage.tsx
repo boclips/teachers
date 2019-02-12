@@ -6,16 +6,11 @@ import App from '../../src/app/App';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
-import MockFetchVerify from '../MockFetchVerify';
-import { links } from '../video-service-responses';
 
 export class CollectionPage {
   constructor(public wrapper: ReactWrapper) {}
 
-  public static async load(videoCollection: any) {
-    MockFetchVerify.get('/v1/', JSON.stringify(links));
-    MockFetchVerify.get(`/v1/collections/default`, videoCollection);
-
+  public static async load() {
     const page = new CollectionPage(
       mount(
         <App

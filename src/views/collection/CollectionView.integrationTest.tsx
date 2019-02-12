@@ -1,9 +1,12 @@
+import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
 import { usersVideoCollection } from '../../../test-support/video-service-responses';
 
 test('displays default collection', async () => {
-  const collectionPage = await CollectionPage.load(usersVideoCollection);
+  new ApiStub().links().fetchCollection('default', usersVideoCollection);
+
+  const collectionPage = await CollectionPage.load();
 
   expect(collectionPage.getVideos()).toHaveLength(1);
   expect(collectionPage.getVideos()[0]).toMatchObject({
@@ -19,7 +22,9 @@ test('displays default collection', async () => {
 });
 
 test('allows removing videos from the default collection', async () => {
-  const collectionPage = await CollectionPage.load(usersVideoCollection);
+  new ApiStub().links().fetchCollection('default', usersVideoCollection);
+
+  const collectionPage = await CollectionPage.load();
 
   expect(collectionPage.getVideos()).toHaveLength(1);
 

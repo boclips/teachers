@@ -27,8 +27,11 @@ export default class ApiStub {
     return this;
   }
 
-  public fetchCollection(collection: string = 'default') {
-    MockFetchVerify.get(`/v1/collections/${collection}`, usersVideoCollection);
+  public fetchCollection(
+    collectionName: string = 'default',
+    collection: any = usersVideoCollection,
+  ) {
+    MockFetchVerify.get(`/v1/collections/${collectionName}`, collection);
     return this;
   }
 
