@@ -18,13 +18,14 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
     return (
       <React.Fragment>
         <SearchResultsCount count={this.props.totalElements} />
-        {this.props.videos.map(video => {
+        {this.props.videos.map((video, index) => {
           return (
             <VideoCard
               key={video.id}
               video={video}
               isInCollection={this.props.isInCollection(video.id)}
               style={this.props.style}
+              videoIndex={index}
             />
           );
         })}

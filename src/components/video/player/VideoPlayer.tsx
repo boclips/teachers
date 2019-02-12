@@ -9,6 +9,7 @@ import { StreamPlayback, Video, YoutubePlayback } from '../../../types/Video';
 
 interface OwnProps {
   video: Video;
+  videoIndex?: number;
 }
 
 interface Props {
@@ -25,6 +26,7 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
       },
       eventExtraData: {
         videoId: video.id,
+        videoIndex: this.props.videoIndex,
       },
     };
     return (
