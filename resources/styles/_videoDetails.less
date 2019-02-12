@@ -5,18 +5,18 @@
   margin-top: 46px;
   .video-content {
     .ant-skeleton .ant-skeleton-avatar-lg {
-      @media (min-width: 768px) {
+      @media (min-width: @screen-md) {
         width: @video-width;
         height: @video-height;
       }
     }
 
     .boclips-player {
-      @media (min-width: 768px) {
+      @media (min-width: @screen-md) {
         width: @video-width;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: @screen-md) {
         width: 100%;
       }
     }
@@ -24,12 +24,12 @@
     .video-details {
       @description-left-margin: 24px;
 
-      @media (min-width: 768px) {
+      @media (min-width: @screen-md) {
         margin: 8px 0px 0px @description-left-margin;
         width: calc(100% - (@video-width + @description-left-margin));
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: @screen-md) {
         width: 100%;
         margin-left: 0px;
         padding: 12px;
@@ -38,19 +38,19 @@
 
       .video-header {
         padding: 0px;
-        @media (max-width: 768px) {
+        @media (max-width: @screen-md) {
           order: 1;
         }
       }
 
       .description {
-        @media (max-width: 768px) {
+        @media (max-width: @screen-md) {
           order: 3;
         }
       }
 
       .subjects-container {
-        @media (max-width: 768px) {
+        @media (max-width: @screen-md) {
           order: 2;
         }
 

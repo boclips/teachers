@@ -13,7 +13,7 @@
     .logo {
       width: 110px;
       position: relative;
-      @media (max-width: 768px) {
+      @media (max-width: @screen-md) {
         display: none;
       }
     }
@@ -21,7 +21,7 @@
     .mini-logo {
       width: 60px;
       position: relative;
-      @media (min-width: 768px) {
+      @media (min-width: @screen-md) {
         display: none;
       }
     }
@@ -32,7 +32,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      @media (max-width: 768px) {
+      @media (max-width: @screen-md) {
         display: none;
       }
       button {
@@ -41,7 +41,7 @@
     }
 
     .logo-logout {
-      @media (max-width: 768px) {
+      @media (max-width: @screen-md) {
         height: 36px;
         &.unauthenticated {
           height: 50px;
@@ -55,7 +55,7 @@
       }
 
       .logout-container-mini {
-        @media (min-width: 768px) {
+        @media (min-width: @screen-md) {
           display: none;
         }
       }
@@ -63,7 +63,7 @@
 
     & + .ant-layout-content {
       padding-top: @header-height;
-      @media (max-width: 768px) {
+      @media (max-width: @screen-md) {
         padding-top: @mobile-header-height;
       }
     }
