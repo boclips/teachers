@@ -3,8 +3,10 @@ import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import {
+  userCollectionResponse,
   video177,
   videos as results,
+  videosResponse,
 } from '../../../test-support/video-service-responses';
 import { findElement, waitForElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
@@ -22,7 +24,7 @@ beforeEach(() => {
 });
 test('search for a video shows results', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollection({});
+  new ApiStub().queryVideos({ query, results }).fetchCollection();
 
   const searchPage = await SearchPage.load(query);
 
@@ -112,8 +114,8 @@ test('indicates if video is in your default collection', async () => {
 test('removing a video to default collection', async () => {
   const query = 'some video';
   new ApiStub()
-    .queryVideos({ query, results })
-    .fetchCollection()
+    .queryVideos({ query, results: videosResponse([video177]) })
+    .fetchCollection({ collection: userCollectionResponse([video177]) })
     .removeFromCollection();
 
   const searchPage = await SearchPage.load(query);
@@ -142,15 +144,15 @@ test('removing a video to default collection', async () => {
 test('adding a video to default collection', async () => {
   const query = 'some video';
   new ApiStub()
-    .queryVideos({ query, results })
-    .fetchCollection()
+    .queryVideos({ query, results: videosResponse([video177]) })
+    .fetchCollection({ collection: userCollectionResponse([]) })
     .addToCollection();
 
   const searchPage = await SearchPage.load(query);
 
   const collectionMenuButton = searchPage.wrapper
     .find(By.dataQa('video-collection-menu'))
-    .last();
+    .first();
 
   expect(collectionMenuButton).toHaveText('Save');
 

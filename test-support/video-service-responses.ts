@@ -58,32 +58,6 @@ const video147 = Object.freeze({
   },
 });
 
-export const videos = {
-  _embedded: {
-    videos: [video177, video147],
-  },
-  page: {
-    size: 10,
-    totalElements: 2,
-    totalPages: 1,
-    number: 0,
-  },
-};
-
-export const usersVideoCollection = {
-  videos: [video177],
-  _links: {
-    addVideo: {
-      href: '/v1/collections/default/videos/{video_id}',
-      templated: true,
-    },
-    removeVideo: {
-      href: '/v1/collections/default/videos/{video_id}',
-      templated: true,
-    },
-  },
-};
-
 export const youtubeVideo1 = {
   id: '1',
   title: 'A youtube video',
@@ -103,3 +77,35 @@ export const youtubeVideo1 = {
     id: 1,
   },
 };
+
+export const videos = videosResponse([video177, video147]);
+
+export function videosResponse(data: any[]) {
+  return {
+    _embedded: {
+      videos: data,
+    },
+    page: {
+      size: 10,
+      totalElements: 2,
+      totalPages: 1,
+      number: 0,
+    },
+  };
+}
+
+export function userCollectionResponse(data: any[]) {
+  return {
+    videos: data,
+    _links: {
+      addVideo: {
+        href: '/v1/collections/default/videos/{video_id}',
+        templated: true,
+      },
+      removeVideo: {
+        href: '/v1/collections/default/videos/{video_id}',
+        templated: true,
+      },
+    },
+  };
+}

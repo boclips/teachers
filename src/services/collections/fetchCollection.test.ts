@@ -1,7 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { LinksFactory } from '../../../test-support/factories';
-import { usersVideoCollection } from '../../../test-support/video-service-responses';
+import {
+  userCollectionResponse,
+  video177,
+} from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
 import { fetchCollection } from './fetchCollection';
 
@@ -9,7 +12,9 @@ let collection = null;
 
 beforeEach(async () => {
   const axiosMock = new MockAdapter(axios);
-  axiosMock.onGet().reply(200, JSON.stringify(usersVideoCollection), {});
+  axiosMock
+    .onGet()
+    .reply(200, JSON.stringify(userCollectionResponse([video177])), {});
 
   const links = LinksFactory.sample({
     defaultCollection: new Link({

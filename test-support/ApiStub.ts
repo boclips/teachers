@@ -1,9 +1,13 @@
 import MockFetchVerify from './MockFetchVerify';
-import { links, usersVideoCollection } from './video-service-responses';
+import {
+  links,
+  userCollectionResponse,
+  video177,
+} from './video-service-responses';
 
 interface FetchCollectionOptions {
-  name?: string;
-  collection?: any;
+  name: string;
+  collection: any;
 }
 
 interface VideoQueryOptions {
@@ -45,7 +49,7 @@ export default class ApiStub {
 
   public fetchCollection(options: Partial<FetchCollectionOptions> = {}) {
     const collectionName = options.name || 'default';
-    const collection = options.collection || usersVideoCollection;
+    const collection = options.collection || userCollectionResponse([video177]);
 
     MockFetchVerify.get(`/v1/collections/${collectionName}`, collection);
     return this;

@@ -1,12 +1,15 @@
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
-import { usersVideoCollection } from '../../../test-support/video-service-responses';
+import {
+  userCollectionResponse,
+  video177,
+} from '../../../test-support/video-service-responses';
 
 test('displays default collection', async () => {
   new ApiStub().fetchCollection({
     name: 'default',
-    collection: usersVideoCollection,
+    collection: userCollectionResponse([video177]),
   });
 
   const collectionPage = await CollectionPage.load();
@@ -27,7 +30,7 @@ test('displays default collection', async () => {
 test('allows removing videos from the default collection', async () => {
   new ApiStub().fetchCollection({
     name: 'default',
-    collection: usersVideoCollection,
+    collection: userCollectionResponse([video177]),
   });
 
   const collectionPage = await CollectionPage.load();
