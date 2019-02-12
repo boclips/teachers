@@ -4,9 +4,10 @@ import { CollectionPage } from '../../../test-support/page-objects/CollectionPag
 import { usersVideoCollection } from '../../../test-support/video-service-responses';
 
 test('displays default collection', async () => {
-  new ApiStub()
-    .links()
-    .fetchCollection({ name: 'default', collection: usersVideoCollection });
+  new ApiStub().fetchCollection({
+    name: 'default',
+    collection: usersVideoCollection,
+  });
 
   const collectionPage = await CollectionPage.load();
 
@@ -24,9 +25,10 @@ test('displays default collection', async () => {
 });
 
 test('allows removing videos from the default collection', async () => {
-  new ApiStub()
-    .links()
-    .fetchCollection({ name: 'default', collection: usersVideoCollection });
+  new ApiStub().fetchCollection({
+    name: 'default',
+    collection: usersVideoCollection,
+  });
 
   const collectionPage = await CollectionPage.load();
 

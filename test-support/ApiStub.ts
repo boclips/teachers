@@ -21,9 +21,8 @@ interface SingleVideoOptions {
 }
 
 export default class ApiStub {
-  public links() {
+  constructor() {
     MockFetchVerify.get('/v1/', JSON.stringify(links));
-    return this;
   }
 
   public queryVideos(options: VideoQueryOptions) {
