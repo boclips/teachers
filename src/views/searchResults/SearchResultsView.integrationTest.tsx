@@ -1,7 +1,9 @@
 import Button from 'antd/lib/button/button';
+import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import { findElement, waitForElement } from '../../../testSetup';
+import { Constants } from '../../app/AppConstants';
 
 beforeEach(() => {
   try {
@@ -15,7 +17,13 @@ beforeEach(() => {
   }
 });
 test('search for a video shows results', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection();
+
+  const searchPage = await SearchPage.load(query);
 
   expect(searchPage.getVideoResults()).toHaveLength(2);
   expect(searchPage.getVideoResults()[0]).toMatchObject({
@@ -31,12 +39,18 @@ test('search for a video shows results', async () => {
 });
 
 test('shows news-only view with news header', async () => {
-  const searchPage = await SearchPage.loadNews('some news');
+  const query = 'some news';
+  new ApiStub()
+    .links()
+    .videoQuery(query, Constants.NEWS)
+    .fetchCollection();
+
+  const searchPage = await SearchPage.loadNews(query);
 
   expect(searchPage.getVideoResults().length).toBeGreaterThan(0);
   const newsBox = searchPage.wrapper.find(By.dataQa('news-header'));
 
-  expect(newsBox.text()).toContain('some news');
+  expect(newsBox.text()).toContain(query);
 
   const button = newsBox.find(Button);
 
@@ -45,10 +59,16 @@ test('shows news-only view with news header', async () => {
 });
 
 test('should render news box', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection();
+
+  const searchPage = await SearchPage.load(query);
   const newsBox = searchPage.wrapper.find(By.dataQa('news-side-panel'));
 
-  expect(newsBox.text()).toContain('some video');
+  expect(newsBox.text()).toContain(query);
 
   const button = newsBox.find(Button);
   expect(button).toExist();
@@ -56,19 +76,38 @@ test('should render news box', async () => {
 });
 
 test('shows total count of videos', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection();
+
+  const searchPage = await SearchPage.load(query);
 
   expect(searchPage.getCount()).toBe(2);
 });
 
 test('redirects when clicking on first title', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection()
+    .singleVideo();
+
+  const searchPage = await SearchPage.load(query);
   searchPage.clickOnFirstTitle();
   await searchPage.isOnDetailsPage();
 });
 
 test('indicates if video is in your default collection', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection();
+
+  const searchPage = await SearchPage.load(query);
   const videos = searchPage.getVideoResults();
 
   expect(videos).toHaveLength(2);
@@ -81,7 +120,14 @@ test('indicates if video is in your default collection', async () => {
 });
 
 test('removing a video to default collection', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection()
+    .removeFromCollection();
+
+  const searchPage = await SearchPage.load(query);
 
   const collectionMenuButton = searchPage.wrapper
     .find(By.dataQa('video-collection-menu'))
@@ -105,7 +151,14 @@ test('removing a video to default collection', async () => {
   expect(notification.textContent).toMatch('Removed from collection');
 });
 test('adding a video to default collection', async () => {
-  const searchPage = await SearchPage.load('some video');
+  const query = 'some video';
+  new ApiStub()
+    .links()
+    .videoQuery(query)
+    .fetchCollection()
+    .addToCollection();
+
+  const searchPage = await SearchPage.load(query);
 
   const collectionMenuButton = searchPage.wrapper
     .find(By.dataQa('video-collection-menu'))
