@@ -1,10 +1,24 @@
 import MockFetchVerify from './MockFetchVerify';
-import {
-  links,
-  usersVideoCollection,
-  video177,
-  videos,
-} from './video-service-responses';
+import { links, usersVideoCollection } from './video-service-responses';
+
+interface FetchCollectionOptions {
+  name?: string;
+  collection?: any;
+}
+
+interface VideoQueryOptions {
+  query: string;
+  tag?: string;
+  results: any;
+}
+
+interface CollectionOptions {
+  name: string;
+}
+
+interface SingleVideoOptions {
+  video: any;
+}
 
 export default class ApiStub {
   public links() {
@@ -12,41 +26,46 @@ export default class ApiStub {
     return this;
   }
 
-  public videoQuery(query: string, tag?: string) {
-    const escapedQuery = encodeURIComponent(query);
-    const url = tag
-      ? `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${tag}`
+  public queryVideos(options: VideoQueryOptions) {
+    const escapedQuery = encodeURIComponent(options.query);
+    const url = options.tag
+      ? `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${options.tag}`
       : `/v1/videos?.*query=${escapedQuery}`;
 
-    MockFetchVerify.get(new RegExp(url), JSON.stringify(videos));
+    MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
     return this;
   }
 
-  public singleVideo() {
-    MockFetchVerify.get(`/v1/videos/${video177.id}`, JSON.stringify(video177));
+  public fetchVideo(options: SingleVideoOptions) {
+    MockFetchVerify.get(
+      `/v1/videos/${options.video.id}`,
+      JSON.stringify(options.video),
+    );
     return this;
   }
 
-  public fetchCollection(
-    collectionName: string = 'default',
-    collection: any = usersVideoCollection,
-  ) {
+  public fetchCollection(options: Partial<FetchCollectionOptions> = {}) {
+    const collectionName = options.name || 'default';
+    const collection = options.collection || usersVideoCollection;
+
     MockFetchVerify.get(`/v1/collections/${collectionName}`, collection);
     return this;
   }
 
-  public addToCollection(collection: string = 'default') {
+  public addToCollection(options: CollectionOptions = { name: 'default' }) {
     MockFetchVerify.put(
-      new RegExp(`/v1/collections/${collection}/videos/.*`),
+      new RegExp(`/v1/collections/${options.name}/videos/.*`),
       JSON.stringify({}),
       204,
     );
     return this;
   }
 
-  public removeFromCollection(collection: string = 'default') {
+  public removeFromCollection(
+    options: CollectionOptions = { name: 'default' },
+  ) {
     MockFetchVerify.destroy(
-      new RegExp(`/v1/collections/${collection}/videos/.*`),
+      new RegExp(`/v1/collections/${options.name}/videos/.*`),
       JSON.stringify({}),
       204,
     );

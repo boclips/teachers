@@ -2,6 +2,10 @@ import Button from 'antd/lib/button/button';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
+import {
+  video177,
+  videos as results,
+} from '../../../test-support/video-service-responses';
 import { findElement, waitForElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
 
@@ -20,8 +24,8 @@ test('search for a video shows results', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
-    .fetchCollection();
+    .queryVideos({ query, results })
+    .fetchCollection({});
 
   const searchPage = await SearchPage.load(query);
 
@@ -42,7 +46,7 @@ test('shows news-only view with news header', async () => {
   const query = 'some news';
   new ApiStub()
     .links()
-    .videoQuery(query, Constants.NEWS)
+    .queryVideos({ query, results, tag: Constants.NEWS })
     .fetchCollection();
 
   const searchPage = await SearchPage.loadNews(query);
@@ -62,7 +66,7 @@ test('should render news box', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
+    .queryVideos({ query, results })
     .fetchCollection();
 
   const searchPage = await SearchPage.load(query);
@@ -79,7 +83,7 @@ test('shows total count of videos', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
+    .queryVideos({ query, results })
     .fetchCollection();
 
   const searchPage = await SearchPage.load(query);
@@ -91,9 +95,9 @@ test('redirects when clicking on first title', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
+    .queryVideos({ query, results })
     .fetchCollection()
-    .singleVideo();
+    .fetchVideo({ video: video177 });
 
   const searchPage = await SearchPage.load(query);
   searchPage.clickOnFirstTitle();
@@ -104,7 +108,7 @@ test('indicates if video is in your default collection', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
+    .queryVideos({ query, results })
     .fetchCollection();
 
   const searchPage = await SearchPage.load(query);
@@ -123,7 +127,7 @@ test('removing a video to default collection', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
+    .queryVideos({ query, results })
     .fetchCollection()
     .removeFromCollection();
 
@@ -154,7 +158,7 @@ test('adding a video to default collection', async () => {
   const query = 'some video';
   new ApiStub()
     .links()
-    .videoQuery(query)
+    .queryVideos({ query, results })
     .fetchCollection()
     .addToCollection();
 

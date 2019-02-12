@@ -1,8 +1,9 @@
 import ApiStub from '../../../test-support/ApiStub';
 import { VideoDetailsPage } from '../../../test-support/page-objects/VideoDetailsPage';
+import { video177 } from '../../../test-support/video-service-responses';
 
 test('video details shows data', async () => {
-  new ApiStub().links().singleVideo();
+  new ApiStub().links().fetchVideo({ video: video177 });
 
   const videoDetailsPage = await VideoDetailsPage.load();
 
