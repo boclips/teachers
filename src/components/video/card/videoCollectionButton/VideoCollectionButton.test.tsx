@@ -32,37 +32,3 @@ it('Says `Saved` with icon when video is in collection and style is search', () 
   expect(wrapper).toHaveText('Saved');
   expect(wrapper.find('img')).toExist();
 });
-
-it('Invokes add callback when clicked while not in default collection', () => {
-  const onAddToDefaultCollection = jest.fn();
-  const onRemoveFromDefaultCollection = jest.fn();
-
-  render({
-    isInDefaultCollection: false,
-    style: 'search',
-    onAddToDefaultCollection,
-    onRemoveFromDefaultCollection,
-  })
-    .find('Button')
-    .simulate('click');
-
-  expect(onAddToDefaultCollection).toHaveBeenCalled();
-  expect(onRemoveFromDefaultCollection).not.toHaveBeenCalled();
-});
-
-it('Invokes callback when clicked while in default collection', () => {
-  const onAddToDefaultCollection = jest.fn();
-  const onRemoveFromDefaultCollection = jest.fn();
-
-  render({
-    isInDefaultCollection: true,
-    style: 'search',
-    onAddToDefaultCollection,
-    onRemoveFromDefaultCollection,
-  })
-    .find('Button')
-    .simulate('click');
-
-  expect(onRemoveFromDefaultCollection).toHaveBeenCalled();
-  expect(onAddToDefaultCollection).not.toHaveBeenCalled();
-});

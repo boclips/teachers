@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Checkbox, Dropdown, Menu } from 'antd';
 import React from 'react';
 import savedImg from '../../../../../resources/images/saved.svg';
 
@@ -13,14 +13,31 @@ export default class VideoCollectionToggleButton extends React.PureComponent<
 > {
   public render() {
     return (
-      <Button
-        className="toggle-collection-button"
-        data-qa={this.dataQa()}
-        onClick={this.onClick}
-        size={'large'}
-      >
-        {this.content()}
-      </Button>
+      <Dropdown overlay={this.menu()} trigger={['click']}>
+        <Button
+          className="toggle-collection-button"
+          data-qa={'video-collection-menu'}
+          size={'large'}
+        >
+          {this.content()}
+        </Button>
+      </Dropdown>
+    );
+  }
+
+  private menu() {
+    return (
+      <Menu>
+        <Menu.Item>
+          <Checkbox
+            defaultChecked={this.props.isInDefaultCollection}
+            data-qa={this.dataQa()}
+            onChange={this.onClick}
+          >
+            My Video Collection
+          </Checkbox>
+        </Menu.Item>
+      </Menu>
     );
   }
 

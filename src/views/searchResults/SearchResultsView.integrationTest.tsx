@@ -1,7 +1,19 @@
 import Button from 'antd/lib/button/button';
 import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
+import { findElement, waitForElement } from '../../../testSetup';
 
+beforeEach(() => {
+  try {
+    const notification = findElement('.ant-notification-notice');
+
+    if (notification) {
+      notification.remove();
+    }
+  } catch (e) {
+    // swallow
+  }
+});
 test('search for a video shows results', async () => {
   const searchPage = await SearchPage.load('some video');
 
@@ -68,16 +80,51 @@ test('indicates if video is in your default collection', async () => {
   expect(videos[1].isSaved).toBeFalsy();
 });
 
-test('can toggle whether a video is in the default collection', async () => {
+test('removing a video to default collection', async () => {
   const searchPage = await SearchPage.load('some video');
-  const firstResult = searchPage.getVideoCard(1);
 
-  const toggleCollectionButton = firstResult
-    .find(By.dataQa('add-to-default-collection'))
+  const collectionMenuButton = searchPage.wrapper
+    .find(By.dataQa('video-collection-menu'))
     .first();
 
-  expect(toggleCollectionButton).toHaveText('Save');
+  expect(collectionMenuButton).toHaveText('Saved');
 
-  toggleCollectionButton.simulate('click');
-  expect(toggleCollectionButton).toHaveText('Saved');
+  collectionMenuButton.simulate('click');
+
+  const removeFromDefaultCollection = await waitForElement(
+    "[data-qa='remove-from-default-collection']",
+  );
+
+  expect(removeFromDefaultCollection.checked).toBeTruthy();
+  removeFromDefaultCollection.click();
+
+  const notification = await waitForElement(
+    '.ant-notification-notice-description',
+  );
+
+  expect(notification.textContent).toMatch('Removed from collection');
+});
+test('adding a video to default collection', async () => {
+  const searchPage = await SearchPage.load('some video');
+
+  const collectionMenuButton = searchPage.wrapper
+    .find(By.dataQa('video-collection-menu'))
+    .last();
+
+  expect(collectionMenuButton).toHaveText('Save');
+
+  collectionMenuButton.simulate('click');
+
+  const addToDefaultCollection = await waitForElement(
+    "[data-qa='add-to-default-collection']",
+  );
+
+  expect(addToDefaultCollection.checked).toBeFalsy();
+  addToDefaultCollection.click();
+
+  const notification = await waitForElement(
+    '.ant-notification-notice-description',
+  );
+
+  expect(notification.textContent).toMatch('has been saved');
 });

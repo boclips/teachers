@@ -29,6 +29,18 @@ export class SearchPage {
     );
     MockFetchVerify.get(`/v1/collections/default`, usersVideoCollection);
 
+    // TODO Move to test which needs this?
+    MockFetchVerify.put(
+      new RegExp(`/v1/collections/default/videos/.*`),
+      JSON.stringify({}),
+      204,
+    );
+    MockFetchVerify.destroy(
+      new RegExp(`/v1/collections/default/videos/.*`),
+      JSON.stringify({}),
+      204,
+    );
+
     const page = new SearchPage(
       mount(
         <App
@@ -55,7 +67,6 @@ export class SearchPage {
       JSON.stringify(videos),
     );
     MockFetchVerify.get(`/v1/collections/default`, usersVideoCollection);
-    MockFetchVerify.put('v1/collections/default/videos/**', true);
 
     const page = new SearchPage(
       mount(
@@ -80,7 +91,9 @@ export class SearchPage {
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
-      isSaved: el.find(By.dataQa('remove-from-default-collection')).length > 1,
+      isSaved: el
+        .find('VideoCollectionToggleButton')
+        .prop('isInDefaultCollection'),
       subjects: el.find(By.dataQa('video-subject')).map(tag => tag.text()),
     }));
   }
