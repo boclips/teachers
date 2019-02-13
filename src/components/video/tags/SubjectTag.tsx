@@ -1,5 +1,5 @@
-import { Tag } from 'antd';
 import React from 'react';
+import './SubjectTag.less';
 
 interface Props {
   subject: string;
@@ -8,10 +8,10 @@ interface Props {
 export default class SubjectTag extends React.Component<Props> {
   public render() {
     return (
-      <Tag>
+      <div className="subject-tag">
         <span className="tag-type">Subject:</span>
         <span data-qa="video-subject">{this.props.subject}</span>
-      </Tag>
+      </div>
     );
   }
 }
