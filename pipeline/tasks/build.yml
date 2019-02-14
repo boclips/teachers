@@ -16,3 +16,7 @@ outputs:
 run:
   path: pipeline/scripts/build.sh
   dir: source
+
+caches:
+  - path: ../../../../root/.cache
+  - path: ../../../../root/.npm
