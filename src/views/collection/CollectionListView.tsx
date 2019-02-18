@@ -9,7 +9,7 @@ import { CollectionCardList } from '../../components/collection/CollectionCardLi
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionState } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
-import './CollectionView.less';
+import './CollectionListView.less';
 
 export const fetchCollectionsAction = actionCreatorFactoryVoid(
   'FETCH_COLLECTIONS',
@@ -27,7 +27,9 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   public render() {
     return (
       <TopSearchBarLayout>
-        <section data-qa="collection-list-page">{this.renderContent()}</section>
+        <section className="collection-list" data-qa="collection-list-page">
+          {this.renderContent()}
+        </section>
       </TopSearchBarLayout>
     );
   }
