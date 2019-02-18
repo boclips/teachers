@@ -2,7 +2,8 @@
 
 set -x -e
 
-npm audit
+npm -v
+npm audit --audit-level moderate
 npm install
 npm run lint
 npm run compile
