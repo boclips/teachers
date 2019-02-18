@@ -15,6 +15,9 @@ export const links = {
     userDefaultCollection: {
       href: '/v1/collections/default',
     },
+    userCollections: {
+      href: '/v1/collections',
+    },
   },
 };
 
@@ -115,6 +118,7 @@ export function userCollectionsResponse() {
     _embedded: {
       collections: [
         {
+          id: 'id',
           owner: 'teacher@gmail.com',
           title: 'funky collection',
           videos: [video177],

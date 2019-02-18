@@ -12,7 +12,7 @@ beforeEach(async () => {
   axiosMock.onGet().reply(200, JSON.stringify(userCollectionsResponse()), {});
 
   const links = LinksFactory.sample({
-    defaultCollection: new Link({
+    collections: new Link({
       href: '/v1/collections',
     }),
   });
@@ -21,6 +21,7 @@ beforeEach(async () => {
 });
 
 test('returns available collections', () => {
+  expect(collections[0].id).toEqual('id');
   expect(collections[0].title).toEqual('funky collection');
   expect(collections[0].videos).toHaveLength(1);
   expect(collections[0].videos[0].id).toEqual('177');

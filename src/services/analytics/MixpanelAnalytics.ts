@@ -70,6 +70,10 @@ export default class MixpanelAnalytics {
     });
   }
 
+  public trackMyCollectionsVisited(): void {
+    this.mixpanelInstance.track(EventTypes.MY_COLLECTIONS_VISITED);
+  }
+
   public trackVideoAddedToDefaultCollection(video: Video): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, {
       video_collection_id: 'DEFAULT',

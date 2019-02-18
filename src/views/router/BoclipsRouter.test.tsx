@@ -19,6 +19,7 @@ import {
   VideoDetailsState,
   VideoStateValue,
 } from '../../types/State';
+import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
@@ -97,6 +98,19 @@ describe('when authorised', () => {
     expect(videoDetailsView).toExist();
   });
 
+  test('shows collections view on /collections', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/collections')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(CollectionListView);
+    expect(collectionsView).toExist();
+  });
+
   test('shows default collection view on /collections/default', () => {
     const history = createMemoryHistory();
 
@@ -149,6 +163,19 @@ describe('when not authorised', () => {
 
     const videoDetailsView = wrapper.find(HomeView);
     expect(videoDetailsView).not.toExist();
+  });
+
+  test('does not show collections view', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/collections', '', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(CollectionListView);
+    expect(collectionsView).not.toExist();
   });
 
   test('does not show default collection view', () => {
@@ -217,6 +244,7 @@ function buildStore(
   }
 
   const videoCollection = {
+    id: '',
     title: '',
     videos: [],
     links: {
@@ -229,12 +257,15 @@ function buildStore(
     },
   };
 
+  const collections = [];
+
   const store = mockStore({
     router,
     video,
     search,
     user,
     videoCollection,
+    collections,
   });
   return store;
 }

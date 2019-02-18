@@ -29,6 +29,7 @@ export class VideoFactory {
 export class VideoCollectionFactory {
   public static sample(arg: Partial<VideoCollection> = {}): VideoCollection {
     return Object.freeze({
+      id: arg.id || '',
       title: arg.title || '',
       videos: arg.videos || [],
       links: arg.links || {

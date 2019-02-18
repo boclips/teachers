@@ -5,6 +5,6 @@ import { parseCollectionsResponse } from './collectionParser';
 
 export const fetchCollections = (links: Links): Promise<VideoCollection[]> => {
   return axios
-    .get(links.defaultCollection.getOriginalLink())
+    .get(links.collections.getOriginalLink())
     .then(response => parseCollectionsResponse(response));
 };

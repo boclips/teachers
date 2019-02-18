@@ -10,6 +10,7 @@ import { storeVideoInDefaultCollectionAction } from '../actions/storeVideoInDefa
 import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoInDefaultCollectionAction';
 
 const initialState: VideoCollection = {
+  id: '',
   title: '',
   videos: [],
   links: {

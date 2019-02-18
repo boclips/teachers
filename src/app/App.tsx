@@ -12,6 +12,7 @@ import {
 } from 'redux';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import { collectionReducer } from '../components/collection/redux/reducers/collectionReducer';
+import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onStoreLoginMiddleware';
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
@@ -35,6 +36,7 @@ const rootReducer: Reducer<any> = combineReducers({
   video: videoReducer,
   user: loginReducer,
   videoCollection: collectionReducer,
+  collections: collectionsReducer,
 });
 
 interface Props {

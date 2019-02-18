@@ -55,6 +55,11 @@ export default class ApiStub {
     return this;
   }
 
+  public fetchCollections(collection) {
+    MockFetchVerify.get('/v1/collections', collection);
+    return this;
+  }
+
   public addToCollection(options: CollectionOptions = { name: 'default' }) {
     MockFetchVerify.put(
       new RegExp(`/v1/collections/${options.name}/videos/.*`),

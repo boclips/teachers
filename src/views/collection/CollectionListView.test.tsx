@@ -7,18 +7,19 @@ import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { Link } from '../../types/Link';
 import { CollectionState, RouterState } from '../../types/State';
-import { Video } from '../../types/Video';
-import CollectionView, { fetchCollectionAction } from './CollectionView';
+import CollectionListView, {
+  fetchCollectionsAction,
+} from './CollectionListView';
 
 const mockStore = configureStore<CollectionState & RouterState>();
 
-function render(videos: Video[]) {
+function render() {
   const store = mockStore({
     collections: [],
     videoCollection: {
       id: '',
       title: '',
-      videos,
+      videos: [],
       links: {
         addVideo: new Link({ href: '' }),
         removeVideo: new Link({ href: '' }),
@@ -38,7 +39,7 @@ function render(videos: Video[]) {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedRouter history={createMemoryHistory()}>
-        <CollectionView />
+        <CollectionListView />
       </ConnectedRouter>
     </Provider>,
   );
@@ -46,15 +47,15 @@ function render(videos: Video[]) {
   return { store, wrapper };
 }
 
-test('dispatches FETCH_COLLECTION when mounted', () => {
-  const { store } = render([]);
-  expect(store.getActions()).toContainEqual(fetchCollectionAction());
+test('dispatches FETCH_COLLECTIONS when mounted', () => {
+  const { store } = render();
+  expect(store.getActions()).toContainEqual(fetchCollectionsAction());
 });
 
-test('displays an empty state when the collection is empty', () => {
-  const { wrapper } = render([]);
+test('displays an empty state when no collections', () => {
+  const { wrapper } = render();
 
-  expect(wrapper.find(By.dataQa('collection-empty-title'))).toHaveText(
-    'This video collection is empty',
+  expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(
+    'You have no collections',
   );
 });
