@@ -7,6 +7,7 @@ export interface VideoCollectionLinks {
 }
 
 export interface VideoCollection {
+  title: string;
   videos: Video[];
   links: VideoCollectionLinks;
 }

@@ -15,6 +15,7 @@ const mockStore = configureStore<CollectionState & RouterState>();
 function render(videos: Video[]) {
   const store = mockStore({
     videoCollection: {
+      title: '',
       videos,
       links: {
         addVideo: new Link({ href: '' }),

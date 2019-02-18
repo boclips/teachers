@@ -109,3 +109,28 @@ export function userCollectionResponse(data: any[]) {
     },
   };
 }
+
+export function userCollectionsResponse() {
+  return {
+    _embedded: {
+      collections: [
+        {
+          owner: 'teacher@gmail.com',
+          title: 'funky collection',
+          videos: [video177],
+          _links: {
+            addVideo: {
+              href: '/v1/collections/default/videos/{video_id}',
+              templated: true,
+            },
+            removeVideo: {
+              href: '/v1/collections/default/videos/{video_id}',
+              templated: true,
+            },
+          },
+        },
+      ],
+    },
+    _links: { self: { href: 'http://localhost/v1/collections/' } },
+  };
+}

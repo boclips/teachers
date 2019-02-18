@@ -6,6 +6,7 @@ export interface Links {
   createPlaybackEvent: Link;
   createNoSearchResultsEvent: Link;
   defaultCollection: Link;
+  collections: Link;
   activate?: Link;
   profile?: Link;
 }

@@ -29,6 +29,7 @@ export class VideoFactory {
 export class VideoCollectionFactory {
   public static sample(arg: Partial<VideoCollection> = {}): VideoCollection {
     return Object.freeze({
+      title: arg.title || '',
       videos: arg.videos || [],
       links: arg.links || {
         addVideo: new Link({
@@ -55,6 +56,7 @@ export class LinksFactory {
         arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
       activate: arg.activate,
       profile: arg.profile,
+      collections: arg.collections || new Link({ href: '/collections' }),
       defaultCollection:
         arg.defaultCollection || new Link({ href: '/collections/xxx' }),
     });

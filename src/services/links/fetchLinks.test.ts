@@ -12,6 +12,7 @@ describe('when anonymous user', () => {
         createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         userDefaultCollection: { href: '/default-collection' },
+        userCollections: { href: '/collections' },
       },
     });
 
@@ -25,6 +26,7 @@ describe('when anonymous user', () => {
         href: '/events/no-search-results',
       }),
       defaultCollection: new Link({ href: '/default-collection' }),
+      collections: new Link({ href: '/collections' }),
     };
 
     expect(links).toEqual(expectedLinks);
@@ -41,6 +43,7 @@ describe('when active link available', () => {
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         activate: { href: '/users', templated: false },
         userDefaultCollection: { href: '/default-collection' },
+        userCollections: { href: '/collections' },
       },
     });
 
@@ -55,6 +58,7 @@ describe('when active link available', () => {
       }),
       activate: new Link({ href: '/users', templated: false }),
       defaultCollection: new Link({ href: '/default-collection' }),
+      collections: new Link({ href: '/collections' }),
     };
 
     expect(links).toEqual(expectedLinks);
@@ -71,6 +75,7 @@ describe('when profile link available', () => {
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         profile: { href: '/users/{id}', templated: true },
         userDefaultCollection: { href: '/default-collection' },
+        userCollections: { href: '/collections' },
       },
     });
 
@@ -85,6 +90,7 @@ describe('when profile link available', () => {
       }),
       profile: new Link({ href: '/users/{id}', templated: true }),
       defaultCollection: new Link({ href: '/default-collection' }),
+      collections: new Link({ href: '/collections' }),
     };
 
     expect(links).toEqual(expectedLinks);

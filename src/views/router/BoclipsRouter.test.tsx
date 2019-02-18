@@ -217,6 +217,7 @@ function buildStore(
   }
 
   const videoCollection = {
+    title: '',
     videos: [],
     links: {
       addVideo: new Link({
