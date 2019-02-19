@@ -12,8 +12,9 @@ export const links = {
     createPlaybackEvent: {
       href: '/v1/events',
     },
-    userDefaultCollection: {
-      href: '/v1/collections/default',
+    userCollection: {
+      href: '/v1/collections/{id}',
+      templated: true,
     },
     userCollections: {
       href: '/v1/collections',
@@ -99,6 +100,7 @@ export function videosResponse(data: any[]) {
 
 export function userCollectionResponse(data: any[]) {
   return {
+    id: 'default',
     videos: data,
     _links: {
       addVideo: {

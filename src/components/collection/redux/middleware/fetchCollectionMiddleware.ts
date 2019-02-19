@@ -6,9 +6,12 @@ import { LinksState } from '../../../../types/State';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { fetchCollectionAction } from './../../../../views/collection/CollectionView';
 
-export function onFetchCollection(store: MiddlewareAPI<any, LinksState>) {
+export function onFetchCollection(
+  store: MiddlewareAPI<any, LinksState>,
+  collectionId: string,
+) {
   const links = store.getState().links;
-  fetchCollection(links).then(collection => {
+  fetchCollection(links, collectionId).then(collection => {
     store.dispatch(storeCollectionAction(collection));
     AnalyticsFactory.getInstance().trackDefaultCollectionVisited();
   });

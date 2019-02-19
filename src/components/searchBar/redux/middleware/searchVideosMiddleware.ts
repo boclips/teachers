@@ -14,15 +14,16 @@ export function onSearchVideos(
   searchRequest: SearchRequest,
 ) {
   const links = store.getState().links;
-  Promise.all([fetchVideos(searchRequest, links), fetchCollection(links)]).then(
-    results => {
-      const [searchResults, collection] = results;
-      store.dispatch(storeSearchResultsAction(searchResults));
-      store.dispatch(storeCollectionAction(collection));
+  Promise.all([
+    fetchVideos(searchRequest, links),
+    fetchCollection(links, 'default'),
+  ]).then(results => {
+    const [searchResults, collection] = results;
+    store.dispatch(storeSearchResultsAction(searchResults));
+    store.dispatch(storeCollectionAction(collection));
 
-      AnalyticsFactory.getInstance().trackSearch(searchRequest, searchResults);
-    },
-  );
+    AnalyticsFactory.getInstance().trackSearch(searchRequest, searchResults);
+  });
 }
 
 export default sideEffect(searchVideosAction, onSearchVideos);

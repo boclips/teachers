@@ -11,7 +11,7 @@ describe('when anonymous user', () => {
         video: { href: '/videos/{id}', templated: true },
         createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
-        userDefaultCollection: { href: '/default-collection' },
+        userCollection: { href: '/default-collection', templated: true },
         userCollections: { href: '/collections' },
       },
     });
@@ -25,7 +25,7 @@ describe('when anonymous user', () => {
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
-      defaultCollection: new Link({ href: '/default-collection' }),
+      collection: new Link({ href: '/default-collection', templated: true }),
       collections: new Link({ href: '/collections' }),
     };
 
@@ -42,7 +42,7 @@ describe('when active link available', () => {
         createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         activate: { href: '/users', templated: false },
-        userDefaultCollection: { href: '/default-collection' },
+        userCollection: { href: '/default-collection', templated: true },
         userCollections: { href: '/collections' },
       },
     });
@@ -57,7 +57,7 @@ describe('when active link available', () => {
         href: '/events/no-search-results',
       }),
       activate: new Link({ href: '/users', templated: false }),
-      defaultCollection: new Link({ href: '/default-collection' }),
+      collection: new Link({ href: '/default-collection', templated: true }),
       collections: new Link({ href: '/collections' }),
     };
 
@@ -74,7 +74,7 @@ describe('when profile link available', () => {
         createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         profile: { href: '/users/{id}', templated: true },
-        userDefaultCollection: { href: '/default-collection' },
+        userCollection: { href: '/default-collection', templated: true },
         userCollections: { href: '/collections' },
       },
     });
@@ -89,7 +89,7 @@ describe('when profile link available', () => {
         href: '/events/no-search-results',
       }),
       profile: new Link({ href: '/users/{id}', templated: true }),
-      defaultCollection: new Link({ href: '/default-collection' }),
+      collection: new Link({ href: '/default-collection', templated: true }),
       collections: new Link({ href: '/collections' }),
     };
 

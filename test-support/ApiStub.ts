@@ -6,7 +6,7 @@ import {
 } from './video-service-responses';
 
 interface FetchCollectionOptions {
-  name: string;
+  collectionId: string;
   collection: any;
 }
 
@@ -48,7 +48,7 @@ export default class ApiStub {
   }
 
   public fetchCollection(options: Partial<FetchCollectionOptions> = {}) {
-    const collectionName = options.name || 'default';
+    const collectionName = options.collectionId || 'default';
     const collection = options.collection || userCollectionResponse([video177]);
 
     MockFetchVerify.get(`/v1/collections/${collectionName}`, collection);

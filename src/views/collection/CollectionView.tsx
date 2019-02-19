@@ -4,16 +4,20 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
-import { actionCreatorFactoryVoid } from '../../app/redux/actions';
+import { actionCreatorFactory } from '../../app/redux/actions';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
 import { Video } from '../../types/Video';
 import './CollectionView.less';
 
-export const fetchCollectionAction = actionCreatorFactoryVoid(
+export const fetchCollectionAction = actionCreatorFactory<string>(
   'FETCH_COLLECTION',
 );
+
+interface OwnProps {
+  collectionId: string;
+}
 
 interface StateProps {
   videos: Video[];
@@ -80,13 +84,17 @@ function mapStateToProps(state: CollectionState): StateProps {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+function mapDispatchToProps(
+  dispatch: Dispatch,
+  ownProps: OwnProps,
+): DispatchProps {
   return {
-    fetchCollection: () => dispatch(fetchCollectionAction()),
+    fetchCollection: () =>
+      dispatch(fetchCollectionAction(ownProps.collectionId)),
   };
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(CollectionView);

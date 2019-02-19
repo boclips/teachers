@@ -11,7 +11,7 @@ import { Dispatch } from 'redux';
 import { LoginState } from '../../types/State';
 import { storeLogin } from './redux/actions/storeLoginAction';
 
-export interface RouterComponentProps<TParams>
+export interface PrivateRouteComponentProps<TParams>
   extends RouteComponentProps<any> {
   computedMatch: {
     params: TParams;
@@ -19,7 +19,9 @@ export interface RouterComponentProps<TParams>
 }
 
 interface Props {
-  component?: ComponentType<RouterComponentProps<any>> | ComponentType<any>;
+  component?:
+    | ComponentType<PrivateRouteComponentProps<any>>
+    | ComponentType<any>;
 }
 
 interface StateProps {

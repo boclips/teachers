@@ -4,7 +4,9 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import PrivateRoute from '../../components/login/PrivateRoute';
+import PrivateRoute, {
+  PrivateRouteComponentProps,
+} from '../../components/login/PrivateRoute';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { RouterState } from '../../types/State';
 import CollectionListView from '../collection/CollectionListView';
@@ -18,6 +20,14 @@ export const defaultHistory = createBrowserHistory();
 
 function videoDetailsView(props: RouteComponentProps<{ videoId: string }>) {
   return <VideoDetailsView videoId={props.match.params.videoId} />;
+}
+
+function collectionView(
+  props: PrivateRouteComponentProps<{ collectionId: string }>,
+) {
+  return (
+    <CollectionView collectionId={props.computedMatch.params.collectionId} />
+  );
 }
 
 interface StateProps {
@@ -46,8 +56,8 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             exact={true}
           />
           <PrivateRoute
-            path="/collections/default"
-            component={CollectionView}
+            path="/collections/:collectionId"
+            component={collectionView}
           />
           <PrivateRoute path="/" component={HomeView} />
         </Switch>

@@ -6,9 +6,9 @@ import {
   video177,
 } from '../../../test-support/video-service-responses';
 
-test('displays default collection', async () => {
+test('displays video collection', async () => {
   new ApiStub().fetchCollection({
-    name: 'default',
+    collectionId: 'default',
     collection: userCollectionResponse([video177]),
   });
 
@@ -27,9 +27,9 @@ test('displays default collection', async () => {
   });
 });
 
-test('allows removing videos from the default collection', async () => {
+test('allows removing videos from video collection', async () => {
   new ApiStub().fetchCollection({
-    name: 'default',
+    collectionId: 'default',
     collection: userCollectionResponse([video177]),
   });
 

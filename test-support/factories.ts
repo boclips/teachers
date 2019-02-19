@@ -58,8 +58,7 @@ export class LinksFactory {
       activate: arg.activate,
       profile: arg.profile,
       collections: arg.collections || new Link({ href: '/collections' }),
-      defaultCollection:
-        arg.defaultCollection || new Link({ href: '/collections/xxx' }),
+      collection: arg.collection || new Link({ href: '/collections/xxx' }),
     });
   }
 }
@@ -87,7 +86,7 @@ export class LinksResponseFactory {
         },
         activate: arg.activate,
         profile: arg.profile,
-        defaultCollection: arg.defaultCollection || {
+        collection: arg.collection || {
           href: '/collections/xxx',
         },
       },

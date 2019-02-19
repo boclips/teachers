@@ -17,15 +17,15 @@ beforeEach(async () => {
     .reply(200, JSON.stringify(userCollectionResponse([video177])), {});
 
   const links = LinksFactory.sample({
-    defaultCollection: new Link({
-      href: '/v1/users/me/collections/default',
+    collection: new Link({
+      href: '/v1/users/me/collections/{id}',
     }),
   });
 
-  collection = await fetchCollection(links);
+  collection = await fetchCollection(links, 'default');
 });
 
-test('returns default collection', () => {
+test('returns a concrete collection', () => {
   expect(collection.videos).toHaveLength(1);
   expect(collection.videos[0].id).toEqual('177');
 });

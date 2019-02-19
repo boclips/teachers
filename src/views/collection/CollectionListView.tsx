@@ -23,7 +23,9 @@ interface DispatchProps {
   fetchCollection: () => void;
 }
 
-export class CollectionView extends PureComponent<StateProps & DispatchProps> {
+export class CollectionListView extends PureComponent<
+  StateProps & DispatchProps
+> {
   public render() {
     return (
       <TopSearchBarLayout>
@@ -84,4 +86,4 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CollectionView);
+)(CollectionListView);

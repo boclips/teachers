@@ -38,7 +38,7 @@ function render(videos: Video[]) {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedRouter history={createMemoryHistory()}>
-        <CollectionView />
+        <CollectionView collectionId="default" />
       </ConnectedRouter>
     </Provider>,
   );
@@ -48,7 +48,7 @@ function render(videos: Video[]) {
 
 test('dispatches FETCH_COLLECTION when mounted', () => {
   const { store } = render([]);
-  expect(store.getActions()).toContainEqual(fetchCollectionAction());
+  expect(store.getActions()).toContainEqual(fetchCollectionAction('default'));
 });
 
 test('displays an empty state when the collection is empty', () => {
