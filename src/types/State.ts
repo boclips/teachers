@@ -42,7 +42,12 @@ export interface LoginState {
 
 export interface CollectionState {
   videoCollection: VideoCollection;
-  collections: VideoCollection[];
+  collections: CollectionsStateValue;
+}
+
+export interface CollectionsStateValue {
+  loading: boolean;
+  items: VideoCollection[];
 }
 
 export default interface State

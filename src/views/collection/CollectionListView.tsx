@@ -17,6 +17,7 @@ export const fetchCollectionsAction = actionCreatorFactoryVoid(
 
 interface StateProps {
   collections: VideoCollection[];
+  loading: boolean;
 }
 
 interface DispatchProps {
@@ -40,13 +41,16 @@ export class CollectionListView extends PureComponent<
     if (!this.props.collections) {
       return null;
     }
-    if (this.props.collections.length === 0) {
+    if (!this.props.loading && this.props.collections.length === 0) {
       return this.renderEmptyCollection();
     }
 
     return (
       this.props.collections && (
-        <CollectionCardList collections={this.props.collections} />
+        <CollectionCardList
+          collections={this.props.collections}
+          loading={this.props.loading}
+        />
       )
     );
   }
@@ -73,7 +77,8 @@ export class CollectionListView extends PureComponent<
 
 function mapStateToProps(state: CollectionState): StateProps {
   return {
-    collections: state.collections,
+    collections: state.collections.items,
+    loading: state.collections.loading,
   };
 }
 

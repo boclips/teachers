@@ -5,6 +5,7 @@ import { CollectionCard } from './CollectionCard';
 
 interface Props {
   collections: VideoCollection[];
+  loading: boolean;
 }
 
 export class CollectionCardList extends React.PureComponent<Props> {
@@ -15,10 +16,18 @@ export class CollectionCardList extends React.PureComponent<Props> {
           {' '}
           <img src={collections} /> My video collections
         </h1>
-        {this.props.collections.map(collection => {
-          return <CollectionCard key={collection.id} collection={collection} />;
-        })}
+        {this.props.loading
+          ? this.renderLoading()
+          : this.props.collections.map(collection => {
+              return (
+                <CollectionCard key={collection.id} collection={collection} />
+              );
+            })}
       </React.Fragment>
     );
+  }
+
+  public renderLoading() {
+    return <CollectionCard.Skeleton />;
   }
 }

@@ -14,7 +14,7 @@ const mockStore = configureStore<CollectionState & RouterState>();
 
 function render(videos: Video[]) {
   const store = mockStore({
-    collections: [],
+    collections: { loading: true, items: [] },
     videoCollection: {
       id: '',
       title: '',

@@ -257,7 +257,7 @@ function buildStore(
     },
   };
 
-  const collections = [];
+  const collections = { loading: true, items: [] };
 
   const store = mockStore({
     router,
