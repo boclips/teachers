@@ -3,9 +3,13 @@ import Search from 'antd/lib/input/Search';
 import React from 'react';
 import logo from '../../../resources/images/search-icon.png';
 import { completionsFor } from './completions';
-import listOfCompletions from './completions.json';
+import completionsContentPartners from './completionsContentPartners.json';
+import completionsTopics from './completionsTopics.json';
 
-const getCompletions = completionsFor(listOfCompletions);
+const getCompletions = completionsFor([
+  ...completionsTopics,
+  ...completionsContentPartners,
+]);
 
 interface Props {
   onSubmit: (query: string) => void;
