@@ -21,6 +21,8 @@ interface State {
 }
 
 class FreshSearchOnValueChange extends React.Component<Props, State> {
+  private submittedText = '';
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -36,14 +38,24 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
       });
     };
 
+    const submit = (value: string) => {
+      if (this.submittedText === value) {
+        return;
+      }
+      this.submittedText = value;
+      this.props.onSubmit(value);
+    };
+
     return (
       <form action="" onSubmit={onsubmit}>
         <AutoComplete
+          defaultActiveFirstOption={false}
+          backfill={true}
           dropdownClassName="search-completions"
           dataSource={this.state.completions}
           defaultValue={this.props.value}
           onSearch={setDataSource}
-          onSelect={this.props.onSubmit}
+          onSelect={submit}
           optionLabelProp="text"
           size="large"
           style={{ width: '100%' }}
@@ -54,7 +66,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
             type="search"
             data-qa="search-input"
             aria-label="search"
-            onSearch={this.props.onSubmit}
+            onSearch={submit}
             enterButton="Search"
             size="large"
           />
