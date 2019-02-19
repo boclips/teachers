@@ -35,7 +35,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     return (
       <form action="" onSubmit={onsubmit}>
         <AutoComplete
-          className="global-search"
+          className="search-completions"
           dataSource={this.state.completions}
           defaultValue={this.props.value}
           onSearch={setDataSource}
