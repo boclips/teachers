@@ -1,12 +1,15 @@
+require('dotenv').config({path: '.env.dev'});
 const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const merge = require("webpack-merge");
 const common = require("./webpack.common.js");
+const webpack = require("webpack");
 
 const googleAnalyticsId = "does-not-matter";
-const stagingUrl = "https://api.testing-boclips.com";
+const teachersApi = `https://api.${process.env.ENVIRONMENT_DOMAIN}`;
+
 const srcPath = path.resolve(__dirname, "../src");
 const localPort = 8081;
 
@@ -18,7 +21,7 @@ module.exports = merge(common, {
     port: localPort,
     proxy: {
       "/v1/**": {
-        target: stagingUrl,
+        target: teachersApi,
         changeOrigin: true,
         onProxyRes: function (proxyRes, req, res) {
           var originalBody = Buffer.from([]);
@@ -28,7 +31,7 @@ module.exports = merge(common, {
           });
 
           proxyRes.on('end', function () {
-            var apiUrlPattern = 'https:\\/\\/api\\.testing-boclips\\.com\\/v1\\/';
+            var apiUrlPattern = `https:\\/\\/api\\.${process.env.ENVIRONMENT_DOMAIN.replace('.', '\\.')}\\/v1\\/`;
             var proxiedApiUrl = `http://localhost:${localPort}/v1/`;
             const bodyWithRewrittenLinks =
               originalBody.toString('UTF-8').replace(new RegExp(apiUrlPattern, 'gm'), proxiedApiUrl);
@@ -46,6 +49,7 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       template: path.resolve(srcPath, "index.html"),
       ga: googleAnalyticsId
-    })
+    }),
+    new webpack.EnvironmentPlugin(['ENVIRONMENT_DOMAIN'])
   ]
 });

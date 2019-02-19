@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { LoginState } from '../../types/State';
+import { defaultAuthEndpoint } from './authEndpoint';
 import { storeLogin } from './redux/actions/storeLoginAction';
 
 interface StateProps {
@@ -42,6 +43,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
         realm: 'boclips',
         clientId: 'teachers',
         mode: 'check-sso',
+        authEndpoint: defaultAuthEndpoint,
       });
     },
   };

@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { LoginState } from '../../types/State';
+import { defaultAuthEndpoint } from './authEndpoint';
 import { storeLogin } from './redux/actions/storeLoginAction';
 
 export interface PrivateRouteComponentProps<TParams>
@@ -88,6 +89,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
         },
         realm: 'boclips',
         clientId: 'teachers',
+        authEndpoint: defaultAuthEndpoint,
       });
     },
   };
