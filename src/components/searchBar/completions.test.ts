@@ -30,3 +30,8 @@ test('matches in the middle of a sentence', () => {
     'the lazy dog',
   ]);
 });
+
+test('matches with whitespace present', () => {
+  expect(completionsFor(['andrew', 'jacek'])('   and')).toEqual(['andrew']);
+  expect(completionsFor([' andrew ', 'jacek'])('and')).toEqual(['andrew']);
+});
