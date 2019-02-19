@@ -35,3 +35,14 @@ test('matches with whitespace present', () => {
   expect(completionsFor(['andrew', 'jacek'])('   and')).toEqual(['andrew']);
   expect(completionsFor([' andrew ', 'jacek'])('and')).toEqual(['andrew']);
 });
+
+test('prioritises matches in the beginning', () => {
+  expect(completionsFor(['aaa bbb', 'bbb ccc'])('bbb')).toEqual([
+    'bbb ccc',
+    'aaa bbb',
+  ]);
+});
+
+test('prioritises shorter matches over longer ones', () => {
+  expect(completionsFor(['aaaa', 'aaa'])('aaa')).toEqual(['aaa', 'aaaa']);
+});
