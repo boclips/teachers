@@ -3,8 +3,7 @@ import Search from 'antd/lib/input/Search';
 import React from 'react';
 import logo from '../../../resources/images/search-icon.png';
 import { completionsFor } from './completions';
-
-const listOfCompletions = [];
+import listOfCompletions from './completions.json';
 
 const getCompletions = completionsFor(listOfCompletions);
 
