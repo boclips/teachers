@@ -8,7 +8,8 @@
     "exclude": [
       "webpack-config/*.js",
       "node_modules/**/*.ts",
-      "boclips-react-player/**/*"
+      "boclips-react-player/**/*",
+      "**/*.json"
     ]
   },
   "rulesDirectory": ["tslint-plugin-prettier"],
