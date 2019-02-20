@@ -2,9 +2,12 @@ import { AutoComplete } from 'antd';
 import Search from 'antd/lib/input/Search';
 import React from 'react';
 import logo from '../../../resources/images/search-icon.png';
-import { completionsFor } from './completions';
+import { Completion, CompletionChunk, completionsFor } from './completions';
 import completionsContentPartners from './completionsContentPartners.json';
 import completionsTopics from './completionsTopics.json';
+import './StatefulSearchBar.less';
+
+const { Option } = AutoComplete;
 
 const getCompletions = completionsFor([
   ...completionsTopics,
@@ -17,7 +20,19 @@ interface Props {
 }
 
 interface State {
-  completions: string[];
+  completions: Completion[];
+}
+
+class AutocompleteOption extends React.Component<{
+  children: CompletionChunk[];
+}> {
+  public render() {
+    return this.props.children.map((chunk, i) => (
+      <span className={chunk.matches ? '' : 'completion-affix'} key={i + ''}>
+        {chunk.text}
+      </span>
+    ));
+  }
 }
 
 class FreshSearchOnValueChange extends React.Component<Props, State> {
@@ -28,6 +43,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     this.state = {
       completions: [],
     };
+    this.submit = this.submit.bind(this);
   }
 
   public render() {
@@ -38,24 +54,16 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
       });
     };
 
-    const submit = (value: string) => {
-      if (this.submittedText === value) {
-        return;
-      }
-      this.submittedText = value;
-      this.props.onSubmit(value);
-    };
-
     return (
       <form action="" onSubmit={onsubmit}>
         <AutoComplete
           defaultActiveFirstOption={false}
           backfill={true}
           dropdownClassName="search-completions"
-          dataSource={this.state.completions}
+          dataSource={this.renderOptions()}
           defaultValue={this.props.value}
           onSearch={setDataSource}
-          onSelect={submit}
+          onSelect={this.submit}
           optionLabelProp="text"
           size="large"
           style={{ width: '100%' }}
@@ -66,13 +74,29 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
             type="search"
             data-qa="search-input"
             aria-label="search"
-            onSearch={submit}
+            onSearch={this.submit}
             enterButton="Search"
             size="large"
           />
         </AutoComplete>
       </form>
     );
+  }
+
+  private renderOptions() {
+    return this.state.completions.map(completion => (
+      <Option key={completion.text} value={completion.text}>
+        <AutocompleteOption>{completion.textWithHighlights}</AutocompleteOption>
+      </Option>
+    ));
+  }
+
+  private submit(value: string) {
+    if (this.submittedText === value) {
+      return;
+    }
+    this.submittedText = value;
+    this.props.onSubmit(value);
   }
 }
 
