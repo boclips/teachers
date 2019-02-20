@@ -19,7 +19,6 @@ interface StateProps {
   results: SearchResults;
   links: Links;
   currentPage: number;
-  collectionVideoIds: string[];
 }
 
 interface DispatchProps {
@@ -45,23 +44,17 @@ class SearchResultsView extends React.PureComponent<
   public renderResults() {
     const isNewsMode = this.props.isNewsMode;
 
-    const isVideoInCollection = (videoId: string): boolean => {
-      return this.props.collectionVideoIds.indexOf(videoId) > -1;
-    };
-
     return (
       <section className={'search-results-container'} data-qa="search-page">
         {isNewsMode ? (
           <SearchResultsWithHeader
             results={this.props.results}
             onNavigate={this.props.goToSearchResults}
-            isInCollection={isVideoInCollection}
           />
         ) : (
           <SearchResultsWithSidebar
             results={this.props.results}
             onNavigate={this.props.goToNewsResults}
-            isInCollection={isVideoInCollection}
           />
         )}
 
@@ -112,18 +105,12 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({
-  search,
-  links,
-  router,
-  videoCollection,
-}: State): StateProps {
+function mapStateToProps({ search, links, router }: State): StateProps {
   return {
     loading: search.loading,
     results: search,
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
-    collectionVideoIds: videoCollection.videos.map(video => video.id),
   };
 }
 

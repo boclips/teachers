@@ -44,14 +44,9 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
       return this.renderEmptyCollection();
     }
 
-    const isInCollection = () => true;
-
     return (
       this.props.videos && (
-        <CollectionVideoCardList
-          videos={this.props.videos}
-          isInCollection={isInCollection}
-        />
+        <CollectionVideoCardList videos={this.props.videos} />
       )
     );
   }

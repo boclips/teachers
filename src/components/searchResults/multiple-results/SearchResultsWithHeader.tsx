@@ -23,7 +23,6 @@ export default class SearchResultsWithHeader extends React.PureComponent<
           <SearchVideoCardList
             totalElements={paging && paging.totalElements}
             videos={videos}
-            isInCollection={this.props.isInCollection}
           />
         </Row>
       </React.Fragment>

@@ -11,7 +11,6 @@ import VideoPreviewButtonsContainer from './SaveToCollectionButton';
 interface Props {
   video: Video | null;
   videoIndex: number | null;
-  isInCollection: boolean;
   style: 'search' | 'collection';
 }
 
@@ -73,7 +72,6 @@ export default class VideoCard extends React.PureComponent<Props> {
           <Row className="buttons-row">
             <CopyLinkButton video={this.props.video} />
             <VideoPreviewButtonsContainer
-              isInCollection={this.props.isInCollection}
               video={this.props.video}
               style={this.props.style}
             />

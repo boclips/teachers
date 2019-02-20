@@ -5,7 +5,6 @@ import VideoCard from '../card/VideoCard';
 
 interface Props {
   videos: Video[];
-  isInCollection: (videoId: string) => boolean;
   totalElements?: number;
 }
 
@@ -23,7 +22,6 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
             <VideoCard
               key={video.id}
               video={video}
-              isInCollection={this.props.isInCollection(video.id)}
               style={this.props.style}
               videoIndex={index}
             />

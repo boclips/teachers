@@ -2,7 +2,10 @@ import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore, { MockStore } from 'redux-mock-store';
-import { VideoFactory } from '../../../../test-support/factories';
+import {
+  VideoCollectionFactory,
+  VideoFactory,
+} from '../../../../test-support/factories';
 import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
 import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
 import VideoPreviewButtonsContainer from './SaveToCollectionButton';
@@ -16,14 +19,10 @@ let store: MockStore<{}> = null;
 let wrapper: ReactWrapper = null;
 
 beforeEach(() => {
-  store = mockStore({});
+  store = mockStore({ videoCollection: VideoCollectionFactory.sample() });
   wrapper = mount(
     <Provider store={store}>
-      <VideoPreviewButtonsContainer
-        video={video}
-        isInCollection={true}
-        style="search"
-      />
+      <VideoPreviewButtonsContainer video={video} style="search" />
     </Provider>,
   );
 });
