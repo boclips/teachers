@@ -70,7 +70,7 @@ export class CollectionCard extends React.PureComponent<Props> {
       >
         <section className="video-container">
           <section className="video-container-inner">
-            <VideoPlayer video={video} />
+            <VideoPlayer video={video} controls="thumbnail" />
           </section>
         </section>
         <section className="title clamp-2-lines">{video.title}</section>

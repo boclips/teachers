@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BoclipsPlayer, TrackerConfig } from 'boclips-react-player';
 import { PlaybackConfig } from 'boclips-react-player/dist/src/PlaybackConfig';
+import { PlayerControls } from 'boclips-react-player/dist/src/Player';
 import React from 'react';
 import { connect } from 'react-redux';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
@@ -10,6 +11,7 @@ import { StreamPlayback, Video, YoutubePlayback } from '../../../types/Video';
 interface OwnProps {
   video: Video;
   videoIndex?: number;
+  controls?: 'default' | 'thumbnail';
 }
 
 interface Props {
@@ -34,8 +36,17 @@ export class VideoPlayer extends React.PureComponent<OwnProps & Props> {
         playbackConfig={this.toPlayerConfiguration(video.playback)}
         thumbnail={video.thumbnailUrl}
         trackerConfig={trackerConfig}
+        controls={this.getControls(this.props.controls)}
       />
     );
+  }
+
+  private getControls(mode: 'default' | 'thumbnail') {
+    if (!mode || mode === 'default') {
+      return PlayerControls.DEFAULT;
+    } else {
+      return PlayerControls.BIG_PLAY_ONLY;
+    }
   }
 
   private toPlayerConfiguration(
