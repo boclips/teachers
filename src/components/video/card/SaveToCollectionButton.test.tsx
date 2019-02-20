@@ -5,7 +5,7 @@ import configureStore, { MockStore } from 'redux-mock-store';
 import { VideoFactory } from '../../../../test-support/factories';
 import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
 import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
-import VideoPreviewButtonsContainer from './VideoCardButtons';
+import VideoPreviewButtonsContainer from './SaveToCollectionButton';
 import VideoCollectionButton from './videoCollectionButton/VideoCollectionButton';
 
 const mockStore = configureStore<{}>();

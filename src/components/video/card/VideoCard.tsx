@@ -1,11 +1,12 @@
-import { Card, Skeleton } from 'antd';
+import { Card, Row, Skeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
-import VideoPreviewButtonsContainer from './VideoCardButtons';
+import { CopyLinkButton } from './CopyLinkButton';
+import VideoPreviewButtonsContainer from './SaveToCollectionButton';
 
 interface Props {
   video: Video | null;
@@ -68,11 +69,15 @@ export default class VideoCard extends React.PureComponent<Props> {
               {this.props.video.description}
             </p>
           </Link>
-          <VideoPreviewButtonsContainer
-            isInCollection={this.props.isInCollection}
-            video={this.props.video}
-            style={this.props.style}
-          />
+
+          <Row className="buttons-row">
+            <CopyLinkButton video={this.props.video} />
+            <VideoPreviewButtonsContainer
+              isInCollection={this.props.isInCollection}
+              video={this.props.video}
+              style={this.props.style}
+            />
+          </Row>
         </section>
       </section>
     );
