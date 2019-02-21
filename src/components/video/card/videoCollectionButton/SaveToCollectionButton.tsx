@@ -1,24 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import State from '../../../types/State';
-import { Video } from '../../../types/Video';
-import { addToDefaultCollectionAction } from '../../collection/redux/actions/addToDefaultCollectionAction';
-import { removeFromDefaultCollectionAction } from '../../collection/redux/actions/removeFromDefaultCollectionAction';
-import VideoCollectionButton from './videoCollectionButton/VideoCollectionButton';
+import State from '../../../../types/State';
+import { Video } from '../../../../types/Video';
+import { addToDefaultCollectionAction } from '../../../collection/redux/actions/addToDefaultCollectionAction';
+import { removeFromDefaultCollectionAction } from '../../../collection/redux/actions/removeFromDefaultCollectionAction';
+import { VideoCollectionRemoveButton } from './VideoCollectionRemoveButton';
+import VideoCollectionToggleButton from './VideoCollectionToggleButton';
 
 interface StateProps {
   collectionVideoIds: string[];
 }
 
-interface OwnProps {
+export interface OwnProps {
   video: Video;
   style: 'search' | 'collection';
 }
 
 interface DispatchProps {
-  onAddToDefaultCollection: () => {};
-  onRemoveFromDefaultCollection: () => {};
+  onAddToCollection: () => {};
+  onRemoveFromCollection: () => {};
 }
 
 class SaveToCollectionButton extends React.PureComponent<
@@ -28,12 +29,15 @@ class SaveToCollectionButton extends React.PureComponent<
     const isVideoInCollection =
       this.props.collectionVideoIds.indexOf(this.props.video.id) > -1;
 
-    return (
-      <VideoCollectionButton
+    return this.props.style === 'collection' ? (
+      <VideoCollectionRemoveButton
+        onRemove={this.props.onRemoveFromCollection}
+      />
+    ) : (
+      <VideoCollectionToggleButton
+        onRemove={this.props.onRemoveFromCollection}
+        onAdd={this.props.onAddToCollection}
         isInDefaultCollection={isVideoInCollection}
-        style={this.props.style}
-        onAddToDefaultCollection={this.props.onAddToDefaultCollection}
-        onRemoveFromDefaultCollection={this.props.onRemoveFromDefaultCollection}
       />
     );
   }
@@ -44,9 +48,9 @@ function mapDispatchToProps(
   props: OwnProps,
 ): DispatchProps {
   return {
-    onAddToDefaultCollection: () =>
+    onAddToCollection: () =>
       dispatch(addToDefaultCollectionAction(props.video)),
-    onRemoveFromDefaultCollection: () =>
+    onRemoveFromCollection: () =>
       dispatch(removeFromDefaultCollectionAction(props.video)),
   };
 }

@@ -40,7 +40,7 @@ test('allows removing videos from video collection', async () => {
   const firstResult = collectionPage.getVideoCard(0);
 
   const toggleCollectionButton = firstResult
-    .find(By.dataQa('remove-from-default-collection'))
+    .find(By.dataQa('remove-from-collection'))
     .first();
 
   toggleCollectionButton.simulate('click');

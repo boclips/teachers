@@ -96,7 +96,7 @@ export default class VideoCollectionToggleButton extends React.PureComponent<
 
   private dataQa() {
     if (this.props.isInDefaultCollection) {
-      return 'remove-from-default-collection';
+      return 'remove-from-collection';
     } else {
       return 'add-to-default-collection';
     }

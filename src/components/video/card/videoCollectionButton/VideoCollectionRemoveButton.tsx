@@ -8,7 +8,7 @@ interface Props {
 export const VideoCollectionRemoveButton = React.memo((props: Props) => (
   <Button
     className="toggle-collection-button"
-    data-qa="remove-from-default-collection"
+    data-qa="remove-from-collection"
     onClick={props.onRemove}
     size={'large'}
   >

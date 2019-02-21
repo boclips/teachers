@@ -34,8 +34,7 @@ export class CollectionPage {
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
-      isSaved:
-        el.find(By.dataQa('remove-from-default-collection')).length === 1,
+      isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
       subjects: el.find(By.dataQa('video-subject')).map(tag => tag.text()),
     }));
   }

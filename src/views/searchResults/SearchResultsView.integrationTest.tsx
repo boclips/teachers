@@ -129,7 +129,7 @@ test('removing a video to default collection', async () => {
   collectionMenuButton.simulate('click');
 
   const removeFromDefaultCollection = await waitForElement(
-    "[data-qa='remove-from-default-collection']",
+    "[data-qa='remove-from-collection']",
   );
 
   expect(removeFromDefaultCollection.checked).toBeTruthy();

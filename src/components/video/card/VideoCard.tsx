@@ -6,7 +6,7 @@ import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
 import { CopyLinkButton } from './CopyLinkButton';
-import VideoPreviewButtonsContainer from './SaveToCollectionButton';
+import SaveToCollectionButton from './videoCollectionButton/SaveToCollectionButton';
 
 interface Props {
   video: Video | null;
@@ -71,7 +71,7 @@ export default class VideoCard extends React.PureComponent<Props> {
 
           <Row className="buttons-row">
             <CopyLinkButton video={this.props.video} />
-            <VideoPreviewButtonsContainer
+            <SaveToCollectionButton
               video={this.props.video}
               style={this.props.style}
             />
