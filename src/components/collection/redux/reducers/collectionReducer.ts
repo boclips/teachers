@@ -12,6 +12,7 @@ import { unstoreVideoInDefaultCollectionAction } from '../actions/unstoreVideoIn
 const initialState: VideoCollection = {
   id: '',
   title: '',
+  updatedAt: '',
   videos: [],
   links: {
     addVideo: new Link({ href: '' }),

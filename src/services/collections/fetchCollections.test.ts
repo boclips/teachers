@@ -23,6 +23,7 @@ beforeEach(async () => {
 test('returns available collections', () => {
   expect(collections[0].id).toEqual('id');
   expect(collections[0].title).toEqual('funky collection');
+  expect(collections[0].updatedAt).toEqual('2019-01-16T12:00:00.870Z');
   expect(collections[0].videos).toHaveLength(1);
   expect(collections[0].videos[0].id).toEqual('177');
 });

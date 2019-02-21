@@ -5,6 +5,7 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../test-support/factories';
+import DateFormatter from '../common/formatters/DateFormatter';
 import { CollectionCard } from './CollectionCard';
 
 describe('CollectionCard', () => {
@@ -13,6 +14,7 @@ describe('CollectionCard', () => {
   beforeEach(() => {
     const collection = VideoCollectionFactory.sample({
       title: 'a collection',
+      updatedAt: '2018-12-25T12:00:00.870Z',
       videos: [VideoFactory.sample(), VideoFactory.sample()],
     });
     wrapper = shallow(<CollectionCard collection={collection} />);
@@ -21,6 +23,12 @@ describe('CollectionCard', () => {
   test('renders collection title', () => {
     expect(wrapper.find(By.dataQa('collection-title')).text()).toEqual(
       'a collection',
+    );
+  });
+
+  test('renders updated at', () => {
+    expect(wrapper.find(DateFormatter).prop('date')).toEqual(
+      '2018-12-25T12:00:00.870Z',
     );
   });
 

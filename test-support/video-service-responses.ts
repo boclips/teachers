@@ -124,6 +124,7 @@ export function userCollectionsResponse() {
           owner: 'teacher@gmail.com',
           title: 'funky collection',
           videos: [video177],
+          updatedAt: '2019-01-16T12:00:00.870Z',
           _links: {
             addVideo: {
               href: '/v1/collections/default/videos/{video_id}',

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
+import DateFormatter from '../common/formatters/DateFormatter';
 import DurationFormatter from '../common/formatters/DurationFormatter';
 import VideoPlayer from '../video/player/VideoPlayer';
 import './CollectionCard.less';
@@ -21,10 +22,13 @@ export class CollectionCard extends React.PureComponent<Props> {
           {this.props.collection.title}
         </h1>
         <span className="highlight">
-          <span data-qa="collection-number-of-videos">
-            {this.props.collection.videos.length}
-          </span>{' '}
-          videos
+          <span>
+            <span data-qa="collection-number-of-videos">
+              {this.props.collection.videos.length}
+            </span>{' '}
+            videos
+          </span>
+          {this.renderUpdatedAt(this.props.collection.updatedAt)}
         </span>
         <section className="collection-video-previews">
           {this.renderVideoPreviews()}
@@ -35,6 +39,17 @@ export class CollectionCard extends React.PureComponent<Props> {
           </Link>
         </h3>
       </section>
+    );
+  }
+
+  private renderUpdatedAt(updatedAt: string) {
+    return (
+      <span>
+        {` · Last updated: `}
+        <span data-qa="collection-updated-at">
+          <DateFormatter date={updatedAt} />
+        </span>
+      </span>
     );
   }
 

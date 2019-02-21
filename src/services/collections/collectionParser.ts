@@ -20,6 +20,7 @@ export const parseCollectionsResponse = (response: any): VideoCollection[] => {
 const doParseCollectionResponse = (data: any): VideoCollection => {
   const id = data.id;
   const title = data.title;
+  const updatedAt = data.updatedAt;
   const videos = data.videos.map(convertVideoResource);
   const addVideoUrl = data._links.addVideo;
   const removeVideoUrl = data._links.removeVideo;
@@ -28,6 +29,7 @@ const doParseCollectionResponse = (data: any): VideoCollection => {
     id,
     title,
     videos,
+    updatedAt,
     links: {
       addVideo: new Link(addVideoUrl),
       removeVideo: new Link(removeVideoUrl),

@@ -2,7 +2,7 @@ import moment from 'moment';
 import * as React from 'react';
 
 interface Props {
-  date: Date;
+  date: Date | string;
 }
 
 export default class DateFormatter extends React.PureComponent<Props> {
@@ -11,7 +11,13 @@ export default class DateFormatter extends React.PureComponent<Props> {
       return null;
     }
 
-    const formattedDate = moment(this.props.date).format('MMM D, YYYY');
+    const parsedDate = moment(this.props.date);
+
+    if (!parsedDate.isValid()) {
+      return null;
+    }
+
+    const formattedDate = parsedDate.format('MMM D, YYYY');
     return <span>{formattedDate}</span>;
   }
 }

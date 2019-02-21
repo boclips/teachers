@@ -31,6 +31,7 @@ export class VideoCollectionFactory {
     return Object.freeze({
       id: arg.id || '',
       title: arg.title || '',
+      updatedAt: arg.updatedAt || '',
       videos: arg.videos || [],
       links: arg.links || {
         addVideo: new Link({
