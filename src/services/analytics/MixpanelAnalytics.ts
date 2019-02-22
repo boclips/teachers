@@ -2,6 +2,7 @@ import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEve
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
+import { VideoCollection } from '../../types/VideoCollection';
 import EventTypes from './EventTypes';
 import { toMixpanelSegment } from './toMixpanelSegment';
 import { toMixpanelVideo } from './toMixpanelVideo';
@@ -74,16 +75,24 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance.track(EventTypes.MY_COLLECTIONS_VISITED);
   }
 
-  public trackVideoAddedToDefaultCollection(video: Video): void {
+  public trackVideoAddedToCollection(
+    video: Video,
+    collection: VideoCollection,
+  ): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, {
-      video_collection_id: 'DEFAULT',
+      video_collection_title: collection.title,
+      video_collection_id: collection.id,
       video_title: video.title,
     });
   }
 
-  public trackVideoRemovedFromDefaultCollection(video: Video): void {
+  public trackVideoRemovedFromCollection(
+    video: Video,
+    collection: VideoCollection,
+  ): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_REMOVED_FROM_COLLECTION, {
-      video_collection_id: 'DEFAULT',
+      video_collection_title: collection.title,
+      video_collection_id: collection.id,
       video_title: video.title,
     });
   }

@@ -1,11 +1,11 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { fetchCollection } from '../../../../services/collections/fetchCollection';
+import { fetchCollections } from '../../../../services/collections/fetchCollections';
 import fetchVideos from '../../../../services/videos/fetchVideos';
 import { SearchRequest } from '../../../../types/SearchRequest';
 import { LinksState } from '../../../../types/State';
-import { storeCollectionAction } from '../../../collection/redux/actions/storeCollectionAction';
+import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
 
@@ -16,11 +16,11 @@ export function onSearchVideos(
   const links = store.getState().links;
   Promise.all([
     fetchVideos(searchRequest, links),
-    fetchCollection(links, 'default'),
+    fetchCollections(links),
   ]).then(results => {
-    const [searchResults, collection] = results;
+    const [searchResults, collections] = results;
     store.dispatch(storeSearchResultsAction(searchResults));
-    store.dispatch(storeCollectionAction(collection));
+    store.dispatch(storeCollectionsAction(collections));
 
     AnalyticsFactory.getInstance().trackSearch(searchRequest, searchResults);
   });

@@ -2,16 +2,18 @@ import { Card, Row, Skeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
 import { CopyLinkButton } from './CopyLinkButton';
 import SaveToCollectionButton from './videoCollectionButton/SaveToCollectionButton';
+import VideoCollectionRemoveButton from './videoCollectionButton/VideoCollectionRemoveButton';
 
 interface Props {
   video: Video | null;
   videoIndex: number | null;
-  style: 'search' | 'collection';
+  currentCollection?: VideoCollection;
 }
 
 export default class VideoCard extends React.PureComponent<Props> {
@@ -71,10 +73,14 @@ export default class VideoCard extends React.PureComponent<Props> {
 
           <Row className="buttons-row">
             <CopyLinkButton video={this.props.video} />
-            <SaveToCollectionButton
-              video={this.props.video}
-              style={this.props.style}
-            />
+            {this.props.currentCollection ? (
+              <VideoCollectionRemoveButton
+                video={this.props.video}
+                collection={this.props.currentCollection}
+              />
+            ) : (
+              <SaveToCollectionButton video={this.props.video} />
+            )}
           </Row>
         </section>
       </section>

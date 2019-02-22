@@ -4,27 +4,23 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
-import { actionCreatorFactory } from '../../app/redux/actions';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
-import { Video } from '../../types/Video';
+import { VideoCollection } from '../../types/VideoCollection';
+import { fetchCollectionsAction } from './CollectionListView';
 import './CollectionView.less';
-
-export const fetchCollectionAction = actionCreatorFactory<string>(
-  'FETCH_COLLECTION',
-);
 
 interface OwnProps {
   collectionId: string;
 }
 
 interface StateProps {
-  videos: Video[];
+  collection?: VideoCollection;
 }
 
 interface DispatchProps {
-  fetchCollection: () => void;
+  fetchCollections: () => void;
 }
 
 export class CollectionView extends PureComponent<StateProps & DispatchProps> {
@@ -37,16 +33,19 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 
   public renderContent() {
-    if (!this.props.videos) {
+    if (!this.props.collection || !this.props.collection.videos) {
       return null;
     }
-    if (this.props.videos.length === 0) {
+    if (this.props.collection.videos.length === 0) {
       return this.renderEmptyCollection();
     }
 
     return (
-      this.props.videos && (
-        <CollectionVideoCardList videos={this.props.videos} />
+      this.props.collection.videos && (
+        <CollectionVideoCardList
+          videos={this.props.collection.videos}
+          currentCollection={this.props.collection}
+        />
       )
     );
   }
@@ -69,23 +68,24 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 
   public componentDidMount() {
-    this.props.fetchCollection();
+    this.props.fetchCollections();
   }
 }
 
-function mapStateToProps(state: CollectionState): StateProps {
+function mapStateToProps(
+  state: CollectionState,
+  ownProps: OwnProps,
+): StateProps {
   return {
-    videos: state.videoCollection.videos,
+    collection: state.collections.items.find(
+      c => c.id === ownProps.collectionId,
+    ),
   };
 }
 
-function mapDispatchToProps(
-  dispatch: Dispatch,
-  ownProps: OwnProps,
-): DispatchProps {
+function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    fetchCollection: () =>
-      dispatch(fetchCollectionAction(ownProps.collectionId)),
+    fetchCollections: () => dispatch(fetchCollectionsAction()),
   };
 }
 

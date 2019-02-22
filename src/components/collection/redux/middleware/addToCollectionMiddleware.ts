@@ -2,26 +2,28 @@ import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import addToCollection from '../../../../services/collections/addToCollection';
-import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
-import { addToDefaultCollectionAction } from '../actions/addToDefaultCollectionAction';
-import { storeVideoInDefaultCollectionAction } from '../actions/storeVideoInDefaultCollectionAction';
 
 export function onAddToCollection(
-  store: MiddlewareAPI<any, CollectionState>,
-  video: Video,
+  store: MiddlewareAPI,
+  request: { video: Video; collection: VideoCollection },
 ) {
-  store.dispatch(storeVideoInDefaultCollectionAction(video));
-  addToCollection(video, store.getState().videoCollection).then(success => {
+  addToCollection(request.video, request.collection).then(success => {
     store.dispatch(
       addToCollectionResultAction({
-        video,
+        collection: request.collection,
+        video: request.video,
         success,
       }),
     );
   });
-  AnalyticsFactory.getInstance().trackVideoAddedToDefaultCollection(video);
+  AnalyticsFactory.getInstance().trackVideoAddedToCollection(
+    request.video,
+    request.collection,
+  );
 }
 
-export default sideEffect(addToDefaultCollectionAction, onAddToCollection);
+export default sideEffect(addToCollectionAction, onAddToCollection);

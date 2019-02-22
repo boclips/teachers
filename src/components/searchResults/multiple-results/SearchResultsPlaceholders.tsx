@@ -2,7 +2,7 @@ import React from 'react';
 import VideoCard from '../../video/card/VideoCard';
 
 const SearchResultsPlaceholder = React.memo(() => (
-  <VideoCard video={null} videoIndex={null} style="search" />
+  <VideoCard video={null} videoIndex={null} />
 ));
 
 export const SearchResultsPlaceholders = React.memo(() => (

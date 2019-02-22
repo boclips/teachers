@@ -11,7 +11,6 @@ import {
   Reducer,
 } from 'redux';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
-import { collectionReducer } from '../components/collection/redux/reducers/collectionReducer';
 import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onStoreLoginMiddleware';
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
@@ -35,7 +34,6 @@ const rootReducer: Reducer<any> = combineReducers({
   links: linksReducer,
   video: videoReducer,
   user: loginReducer,
-  videoCollection: collectionReducer,
   collections: collectionsReducer,
 });
 

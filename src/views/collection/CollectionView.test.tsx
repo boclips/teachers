@@ -8,22 +8,27 @@ import { By } from '../../../test-support/By';
 import { Link } from '../../types/Link';
 import { CollectionState, RouterState } from '../../types/State';
 import { Video } from '../../types/Video';
-import CollectionView, { fetchCollectionAction } from './CollectionView';
+import { fetchCollectionsAction } from './CollectionListView';
+import CollectionView from './CollectionView';
 
 const mockStore = configureStore<CollectionState & RouterState>();
 
 function render(videos: Video[]) {
   const store = mockStore({
-    collections: { loading: true, items: [] },
-    videoCollection: {
-      id: '',
-      title: '',
-      updatedAt: '',
-      videos,
-      links: {
-        addVideo: new Link({ href: '' }),
-        removeVideo: new Link({ href: '' }),
-      },
+    collections: {
+      loading: true,
+      items: [
+        {
+          id: 'default',
+          title: '',
+          updatedAt: '',
+          videos,
+          links: {
+            addVideo: new Link({ href: '' }),
+            removeVideo: new Link({ href: '' }),
+          },
+        },
+      ],
     },
     router: {
       location: {
@@ -47,9 +52,9 @@ function render(videos: Video[]) {
   return { store, wrapper };
 }
 
-test('dispatches FETCH_COLLECTION when mounted', () => {
+test('dispatches FETCH_COLLECTIONS when mounted', () => {
   const { store } = render([]);
-  expect(store.getActions()).toContainEqual(fetchCollectionAction('default'));
+  expect(store.getActions()).toContainEqual(fetchCollectionsAction());
 });
 
 test('displays an empty state when the collection is empty', () => {

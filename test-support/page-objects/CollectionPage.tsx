@@ -15,7 +15,7 @@ export class CollectionPage {
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: [`/collections/default`],
+            initialEntries: [`/collections/id`],
           })}
         />,
       ),

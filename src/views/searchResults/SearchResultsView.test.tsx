@@ -71,8 +71,5 @@ function createStore(query: string, isLoading = false) {
       },
       action: 'PUSH' as RouterActionType,
     },
-    videoCollection: {
-      videos: [],
-    },
   };
 }

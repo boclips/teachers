@@ -5,7 +5,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { Link } from '../../types/Link';
 import { CollectionState, RouterState } from '../../types/State';
 import CollectionListView, {
   fetchCollectionsAction,
@@ -16,16 +15,6 @@ const mockStore = configureStore<CollectionState & RouterState>();
 function render() {
   const store = mockStore({
     collections: { loading: false, items: [] },
-    videoCollection: {
-      id: '',
-      title: '',
-      updatedAt: '',
-      videos: [],
-      links: {
-        addVideo: new Link({ href: '' }),
-        removeVideo: new Link({ href: '' }),
-      },
-    },
     router: {
       location: {
         pathname: '',

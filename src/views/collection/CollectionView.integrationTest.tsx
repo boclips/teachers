@@ -1,16 +1,8 @@
 import ApiStub from '../../../test-support/ApiStub';
-import { By } from '../../../test-support/By';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
-import {
-  userCollectionResponse,
-  video177,
-} from '../../../test-support/video-service-responses';
 
 test('displays video collection', async () => {
-  new ApiStub().fetchCollection({
-    collectionId: 'default',
-    collection: userCollectionResponse([video177]),
-  });
+  new ApiStub().fetchCollections();
 
   const collectionPage = await CollectionPage.load();
 
@@ -25,25 +17,4 @@ test('displays video collection', async () => {
     badgeAlt: 'Ad free',
     subjects: ['Maths', 'Physics'],
   });
-});
-
-test('allows removing videos from video collection', async () => {
-  new ApiStub().fetchCollection({
-    collectionId: 'default',
-    collection: userCollectionResponse([video177]),
-  });
-
-  const collectionPage = await CollectionPage.load();
-
-  expect(collectionPage.getVideos()).toHaveLength(1);
-
-  const firstResult = collectionPage.getVideoCard(0);
-
-  const toggleCollectionButton = firstResult
-    .find(By.dataQa('remove-from-collection'))
-    .first();
-
-  toggleCollectionButton.simulate('click');
-
-  expect(collectionPage.getVideos()).toHaveLength(0);
 });

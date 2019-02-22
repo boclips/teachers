@@ -1,14 +1,5 @@
 import MockFetchVerify from './MockFetchVerify';
-import {
-  links,
-  userCollectionResponse,
-  video177,
-} from './video-service-responses';
-
-interface FetchCollectionOptions {
-  collectionId: string;
-  collection: any;
-}
+import { links, userCollectionsResponse } from './video-service-responses';
 
 interface VideoQueryOptions {
   query: string;
@@ -47,16 +38,15 @@ export default class ApiStub {
     return this;
   }
 
-  public fetchCollection(options: Partial<FetchCollectionOptions> = {}) {
-    const collectionName = options.collectionId || 'default';
-    const collection = options.collection || userCollectionResponse([video177]);
-
-    MockFetchVerify.get(`/v1/collections/${collectionName}`, collection);
-    return this;
-  }
-
-  public fetchCollections(collection) {
-    MockFetchVerify.get('/v1/collections', collection);
+  public fetchCollections(
+    collections = userCollectionsResponse(),
+    once = false,
+  ) {
+    if (once) {
+      MockFetchVerify.getOnce('/v1/collections', collections);
+    } else {
+      MockFetchVerify.get('/v1/collections', collections);
+    }
     return this;
   }
 

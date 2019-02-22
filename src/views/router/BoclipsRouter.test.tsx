@@ -9,7 +9,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import ConnectedTabsContainer from '../../components/searchBar/tabs/TabsContainer';
-import { Link } from '../../types/Link';
 import {
   CollectionState,
   LoginState,
@@ -243,21 +242,6 @@ function buildStore(
     user.authenticated = true;
   }
 
-  const videoCollection = {
-    id: '',
-    title: '',
-    updatedAt: '',
-    videos: [],
-    links: {
-      addVideo: new Link({
-        href: 'string',
-      }),
-      removeVideo: new Link({
-        href: 'string',
-      }),
-    },
-  };
-
   const collections = { loading: true, items: [] };
 
   const store = mockStore({
@@ -265,7 +249,6 @@ function buildStore(
     video,
     search,
     user,
-    videoCollection,
     collections,
   });
   return store;

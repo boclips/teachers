@@ -1,7 +1,10 @@
 import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
 import { Mixpanel } from 'mixpanel-browser';
 import moment = require('moment');
-import { VideoFactory } from '../../../test-support/factories';
+import {
+  VideoCollectionFactory,
+  VideoFactory,
+} from '../../../test-support/factories';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { StreamPlayback } from '../../types/Video';
@@ -83,20 +86,30 @@ describe('MixpanelAnalytics', () => {
 
   it('tracks video added to collection', () => {
     const video = VideoFactory.sample({ title: 'gangnam style' });
-    mixpanelAnalytics.trackVideoAddedToDefaultCollection(video);
+    const collection = VideoCollectionFactory.sample({
+      title: 'style',
+      id: 'doggy',
+    });
+    mixpanelAnalytics.trackVideoAddedToCollection(video, collection);
 
     expect(mock.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
-      video_collection_id: 'DEFAULT',
+      video_collection_id: 'doggy',
+      video_collection_title: 'style',
       video_title: 'gangnam style',
     });
   });
 
   it('tracks video removed from collection', () => {
     const video = VideoFactory.sample({ title: 'gangnam style' });
-    mixpanelAnalytics.trackVideoRemovedFromDefaultCollection(video);
+    const collection = VideoCollectionFactory.sample({
+      title: 'style',
+      id: 'doggy',
+    });
+    mixpanelAnalytics.trackVideoRemovedFromCollection(video, collection);
 
     expect(mock.track).toHaveBeenCalledWith('COLLECTION_VIDEO_REMOVED', {
-      video_collection_id: 'DEFAULT',
+      video_collection_id: 'doggy',
+      video_collection_title: 'style',
       video_title: 'gangnam style',
     });
   });

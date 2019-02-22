@@ -1,5 +1,6 @@
 import React from 'react';
 import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import SearchResultsCount from '../../searchResults/multiple-results/SearchResultsCount';
 import VideoCard from '../card/VideoCard';
 
@@ -9,7 +10,10 @@ interface Props {
 }
 
 interface GenericProps extends Props {
-  style: 'collection' | 'search';
+  currentCollection?: VideoCollection;
+}
+interface CollectionProps extends Props {
+  currentCollection: VideoCollection;
 }
 
 class GenericVideoCardList extends React.PureComponent<GenericProps> {
@@ -22,7 +26,7 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
             <VideoCard
               key={video.id}
               video={video}
-              style={this.props.style}
+              currentCollection={this.props.currentCollection}
               videoIndex={index}
             />
           );
@@ -34,12 +38,19 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
 
 export class SearchVideoCardList extends React.PureComponent<Props> {
   public render() {
-    return <GenericVideoCardList style="search" {...this.props} />;
+    return <GenericVideoCardList {...this.props} />;
   }
 }
 
-export class CollectionVideoCardList extends React.PureComponent<Props> {
+export class CollectionVideoCardList extends React.PureComponent<
+  CollectionProps
+> {
   public render() {
-    return <GenericVideoCardList style="collection" {...this.props} />;
+    return (
+      <GenericVideoCardList
+        currentCollection={this.props.currentCollection}
+        {...this.props}
+      />
+    );
   }
 }

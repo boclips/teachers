@@ -1,11 +1,13 @@
 import { Button, Checkbox, Drawer, Dropdown, Menu } from 'antd';
 import React from 'react';
-import savedImg from '../../../../../resources/images/saved.svg';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 
 interface Props {
-  isInDefaultCollection: boolean;
-  onAdd: () => void;
-  onRemove: () => void;
+  video: Video;
+  collections: VideoCollection[];
+  onAdd: (collection: VideoCollection) => () => void;
+  onRemove: (collection: VideoCollection) => () => void;
 }
 
 interface State {
@@ -41,7 +43,9 @@ export default class VideoCollectionToggleButton extends React.PureComponent<
             onClose={this.onClose}
             visible={this.state.drawerVisible}
           >
-            {this.collectionItem()}
+            {this.props.collections.map(collection =>
+              this.collectionItem(collection, this.props.video),
+            )}
           </Drawer>
         </span>
       </span>
@@ -56,17 +60,19 @@ export default class VideoCollectionToggleButton extends React.PureComponent<
         size={'large'}
         onClick={onClick}
       >
-        {this.content()}
+        Save
       </Button>
     );
   }
 
-  private collectionItem() {
+  private collectionItem(videoCollection: VideoCollection, video: Video) {
+    const alreadyInCollection =
+      videoCollection.videos.find(v => v.id === video.id) !== undefined;
     return (
       <Checkbox
-        defaultChecked={this.props.isInDefaultCollection}
-        data-qa={this.dataQa()}
-        onChange={this.onClick}
+        defaultChecked={alreadyInCollection}
+        data-qa={this.dataQa(alreadyInCollection)}
+        onChange={this.onClick(alreadyInCollection, videoCollection)}
       >
         My Video Collection
       </Checkbox>
@@ -76,39 +82,33 @@ export default class VideoCollectionToggleButton extends React.PureComponent<
   private menu() {
     return (
       <Menu>
-        <Menu.Item>{this.collectionItem()}</Menu.Item>
+        {this.props.collections.map(collection => (
+          <Menu.Item>
+            {this.collectionItem(collection, this.props.video)}
+          </Menu.Item>
+        ))}
       </Menu>
     );
   }
 
-  private content() {
-    if (this.props.isInDefaultCollection) {
-      return (
-        <span>
-          <img src={savedImg} alt="" />
-          Saved
-        </span>
-      );
-    } else {
-      return <span>Save</span>;
-    }
-  }
-
-  private dataQa() {
-    if (this.props.isInDefaultCollection) {
+  private dataQa(alreadyInCollection: boolean) {
+    if (alreadyInCollection) {
       return 'remove-from-collection';
     } else {
       return 'add-to-default-collection';
     }
   }
 
-  private onClick = () => {
+  private onClick = (
+    alreadyInCollection: boolean,
+    collection: VideoCollection,
+  ) => () => {
     this.onClose();
 
-    if (this.props.isInDefaultCollection) {
-      this.props.onRemove();
+    if (alreadyInCollection) {
+      this.props.onRemove(collection)();
     } else {
-      this.props.onAdd();
+      this.props.onAdd(collection)();
     }
   };
 

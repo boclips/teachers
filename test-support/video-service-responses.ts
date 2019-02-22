@@ -115,7 +115,7 @@ export function userCollectionResponse(data: any[]) {
   };
 }
 
-export function userCollectionsResponse() {
+export function userCollectionsResponse(videosWithin: any[] = [video177]) {
   return {
     _embedded: {
       collections: [
@@ -123,7 +123,7 @@ export function userCollectionsResponse() {
           id: 'id',
           owner: 'teacher@gmail.com',
           title: 'funky collection',
-          videos: [video177],
+          videos: videosWithin,
           updatedAt: '2019-01-16T12:00:00.870Z',
           _links: {
             addVideo: {

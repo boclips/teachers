@@ -3,7 +3,7 @@ import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import {
-  userCollectionResponse,
+  userCollectionsResponse,
   video177,
   videos as results,
   videosResponse,
@@ -24,7 +24,7 @@ beforeEach(() => {
 });
 test('search for a video shows results', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollection();
+  new ApiStub().queryVideos({ query, results }).fetchCollections();
 
   const searchPage = await SearchPage.load(query);
 
@@ -45,7 +45,7 @@ test('shows news-only view with news header', async () => {
   const query = 'some news';
   new ApiStub()
     .queryVideos({ query, results, tag: Constants.NEWS })
-    .fetchCollection();
+    .fetchCollections();
 
   const searchPage = await SearchPage.loadNews(query);
 
@@ -62,7 +62,7 @@ test('shows news-only view with news header', async () => {
 
 test('should render news box', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollection();
+  new ApiStub().queryVideos({ query, results }).fetchCollections();
 
   const searchPage = await SearchPage.load(query);
   const newsBox = searchPage.wrapper.find(By.dataQa('news-side-panel'));
@@ -76,7 +76,7 @@ test('should render news box', async () => {
 
 test('shows total count of videos', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollection();
+  new ApiStub().queryVideos({ query, results }).fetchCollections();
 
   const searchPage = await SearchPage.load(query);
 
@@ -87,7 +87,7 @@ test('redirects when clicking on first title', async () => {
   const query = 'some video';
   new ApiStub()
     .queryVideos({ query, results })
-    .fetchCollection()
+    .fetchCollections()
     .fetchVideo({ video: video177 });
 
   const searchPage = await SearchPage.load(query);
@@ -95,27 +95,11 @@ test('redirects when clicking on first title', async () => {
   await searchPage.isOnDetailsPage();
 });
 
-test('indicates if video is in your default collection', async () => {
-  const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollection();
-
-  const searchPage = await SearchPage.load(query);
-  const videos = searchPage.getVideoResults();
-
-  expect(videos).toHaveLength(2);
-
-  expect(videos[0].title).toEqual('KS3/4 Science: Demonstrating Chemistry');
-  expect(videos[0].isSaved).toBeTruthy();
-
-  expect(videos[1].title).toEqual('KS3/4 Science: Big Screen Science');
-  expect(videos[1].isSaved).toBeFalsy();
-});
-
 test('removing a video to default collection', async () => {
   const query = 'some video';
   new ApiStub()
     .queryVideos({ query, results: videosResponse([video177]) })
-    .fetchCollection({ collection: userCollectionResponse([video177]) })
+    .fetchCollections()
     .removeFromCollection();
 
   const searchPage = await SearchPage.load(query);
@@ -123,8 +107,6 @@ test('removing a video to default collection', async () => {
   const collectionMenuButton = searchPage.wrapper
     .find(By.dataQa('video-collection-menu'))
     .first();
-
-  expect(collectionMenuButton).toHaveText('Saved');
 
   collectionMenuButton.simulate('click');
 
@@ -145,7 +127,7 @@ test('adding a video to default collection', async () => {
   const query = 'some video';
   new ApiStub()
     .queryVideos({ query, results: videosResponse([video177]) })
-    .fetchCollection({ collection: userCollectionResponse([]) })
+    .fetchCollections(userCollectionsResponse([]))
     .addToCollection();
 
   const searchPage = await SearchPage.load(query);

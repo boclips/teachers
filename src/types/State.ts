@@ -41,7 +41,6 @@ export interface LoginState {
 }
 
 export interface CollectionState {
-  videoCollection: VideoCollection;
   collections: CollectionsStateValue;
 }
 

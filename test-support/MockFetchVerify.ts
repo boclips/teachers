@@ -12,6 +12,14 @@ export default class MockFetchVerify {
   ): void {
     axiosMock.onGet(matcher).reply(status, responseBody, responseHeaders);
   }
+  public static getOnce(
+    matcher: string | RegExp,
+    responseBody?: any,
+    status: number = 200,
+    responseHeaders: any = {},
+  ): void {
+    axiosMock.onGet(matcher).replyOnce(status, responseBody, responseHeaders);
+  }
 
   public static post(matcher, requestBody, status) {
     axiosMock.onPost(matcher, requestBody).reply(status);
