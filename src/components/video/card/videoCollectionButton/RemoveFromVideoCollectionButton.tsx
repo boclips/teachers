@@ -5,7 +5,6 @@ import { Dispatch } from 'redux';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { removeFromCollectionAction } from '../../../collection/redux/actions/removeFromCollectionAction';
-import { OwnProps } from './SaveToCollectionButton';
 
 interface Props {
   video: Video;
@@ -16,7 +15,7 @@ interface DispatchProps {
   onRemoveFromCollection: () => {};
 }
 
-class VideoCollectionRemoveButton extends React.PureComponent<
+class RemoveFromVideoCollectionButton extends React.PureComponent<
   DispatchProps & Props
 > {
   public render() {
@@ -45,7 +44,7 @@ function mapDispatchToProps(dispatch: Dispatch, props: Props): DispatchProps {
   };
 }
 
-export default connect<{}, DispatchProps, OwnProps>(
+export default connect<{}, DispatchProps, Props>(
   null,
   mapDispatchToProps,
-)(VideoCollectionRemoveButton);
+)(RemoveFromVideoCollectionButton);

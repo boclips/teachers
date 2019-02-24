@@ -52,7 +52,7 @@ export class SearchPage {
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved: el
-        .find('VideoCollectionToggleButton')
+        .find('ManageVideoCollectionsButton')
         .prop('isInDefaultCollection'),
       subjects: el.find(By.dataQa('video-subject')).map(tag => tag.text()),
     }));

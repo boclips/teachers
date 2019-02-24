@@ -7,8 +7,8 @@ import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
 import { CopyLinkButton } from './CopyLinkButton';
-import SaveToCollectionButton from './videoCollectionButton/SaveToCollectionButton';
-import VideoCollectionRemoveButton from './videoCollectionButton/VideoCollectionRemoveButton';
+import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
+import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
 
 interface Props {
   video: Video | null;
@@ -74,12 +74,12 @@ export default class VideoCard extends React.PureComponent<Props> {
           <Row className="buttons-row">
             <CopyLinkButton video={this.props.video} />
             {this.props.currentCollection ? (
-              <VideoCollectionRemoveButton
+              <RemoveFromVideoCollectionButton
                 video={this.props.video}
                 collection={this.props.currentCollection}
               />
             ) : (
-              <SaveToCollectionButton video={this.props.video} />
+              <ManageVideoCollectionsButton video={this.props.video} />
             )}
           </Row>
         </section>
