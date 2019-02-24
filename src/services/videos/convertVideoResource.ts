@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Link } from '../../types/Link';
 import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
 
 function getPlaybackProperties(
@@ -26,5 +27,6 @@ export default function convertVideoResource(resource: any): Video {
     subjects: resource.subjects,
     badges: resource.badges,
     type: { name: resource.type.name },
+    links: { self: new Link(resource._links.self) },
   };
 }

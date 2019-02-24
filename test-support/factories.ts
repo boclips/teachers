@@ -22,6 +22,9 @@ export class VideoFactory {
         new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
       badges: arg.badges || ['ad-free'],
       type: arg.type || { name: 'educational' },
+      links: arg.links || {
+        self: new Link({ href: '/v1/videos/123' }),
+      },
     });
   }
 }

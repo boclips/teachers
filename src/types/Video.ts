@@ -1,4 +1,9 @@
 import { Duration } from 'moment';
+import { Link } from './Link';
+
+export interface VideoLinks {
+  self: Link;
+}
 
 export interface Video {
   id: string;
@@ -12,6 +17,7 @@ export interface Video {
   thumbnailUrl: string;
   badges: string[];
   type: VideoType;
+  links: VideoLinks;
 }
 
 export interface VideoType {

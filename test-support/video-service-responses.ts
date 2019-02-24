@@ -40,6 +40,7 @@ export const video177 = Object.freeze({
     name: 'educational',
     id: 1,
   },
+  _links: { self: { href: 'http://localhost/v1/videos/177' } },
 });
 
 const video147 = Object.freeze({
@@ -60,6 +61,7 @@ const video147 = Object.freeze({
     name: 'educational',
     id: 1,
   },
+  _links: { self: { href: 'http://localhost/v1/videos/147' } },
 });
 
 export const youtubeVideo1 = {
@@ -80,6 +82,7 @@ export const youtubeVideo1 = {
     name: 'educational',
     id: 1,
   },
+  _links: { self: { href: 'http://localhost/v1/videos/177' } },
 };
 
 export const videos = videosResponse([video177, video147]);
