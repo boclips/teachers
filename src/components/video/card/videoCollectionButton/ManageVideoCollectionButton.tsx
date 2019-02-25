@@ -50,6 +50,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       <span>
         <span className="display-tablet-and-desktop">
           <Popover
+            title="Save to:"
             overlayClassName="manage-video-collection-button__popover"
             autoAdjustOverflow={false}
             content={this.menu()}
