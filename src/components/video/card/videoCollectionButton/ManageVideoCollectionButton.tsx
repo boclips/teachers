@@ -26,7 +26,8 @@ interface DispatchProps {
 }
 
 interface InternalState {
-  drawerVisible: boolean;
+  collectionDrawerVisible: boolean;
+  collectionPopoverVisible: boolean;
   createCollectionVisible: boolean;
   newCollectionTitle?: string;
 }
@@ -39,7 +40,8 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     super(props);
 
     this.state = {
-      drawerVisible: false,
+      collectionDrawerVisible: false,
+      collectionPopoverVisible: false,
       createCollectionVisible: false,
     };
   }
@@ -53,9 +55,10 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             content={this.menu()}
             placement="bottom"
             trigger="click"
-            onVisibleChange={this.onDropdownToggle}
+            onVisibleChange={this.onPopoverToggle}
+            visible={this.state.collectionPopoverVisible}
           >
-            {this.saveButton()}
+            {this.saveButton(this.showPopover)}
           </Popover>
         </span>
         <span className="display-mobile">
@@ -66,7 +69,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             placement={'bottom'}
             closable={true}
             onClose={this.onClose}
-            visible={this.state.drawerVisible}
+            visible={this.state.collectionDrawerVisible}
           >
             {this.menu()}
           </Drawer>
@@ -162,15 +165,13 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     return <Menu>{menuEntries}</Menu>;
   }
 
-  private onDropdownToggle = (visible: boolean) => {
-    if (!visible) {
-      this.setState({
-        ...this.state,
-        drawerVisible: false,
-        createCollectionVisible: false,
-        newCollectionTitle: undefined,
-      });
-    }
+  private onPopoverToggle = (visible: boolean) => {
+    this.setState({
+      ...this.state,
+      collectionPopoverVisible: visible,
+      createCollectionVisible: false,
+      newCollectionTitle: undefined,
+    });
   };
 
   private setTitle = e => {
@@ -201,7 +202,14 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   private showDrawer = () => {
     this.setState({
       ...this.state,
-      drawerVisible: true,
+      collectionDrawerVisible: true,
+    });
+  };
+
+  private showPopover = () => {
+    this.setState({
+      ...this.state,
+      collectionPopoverVisible: true,
     });
   };
 
@@ -210,6 +218,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       title: this.state.newCollectionTitle,
       videos: [this.props.video],
     });
+    this.onClose();
   };
 
   private showCreateCollection = e => {
@@ -223,7 +232,8 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   private onClose = () => {
     this.setState({
       ...this.state,
-      drawerVisible: false,
+      collectionPopoverVisible: false,
+      collectionDrawerVisible: false,
       createCollectionVisible: false,
       newCollectionTitle: undefined,
     });
