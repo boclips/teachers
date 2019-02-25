@@ -45,6 +45,8 @@ const setupAnalyticsForUser = (keycloak: KeycloakInstance): Promise<void> => {
             `${couldNotSetUpAnalyticsError} invalid user profile attributes. Profile: 
               ${JSON.stringify(profile)}`,
           );
+
+          return;
         }
 
         AnalyticsFactory.getInstance().setUserId(
