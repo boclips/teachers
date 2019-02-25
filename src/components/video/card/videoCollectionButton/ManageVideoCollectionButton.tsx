@@ -154,6 +154,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         ) : (
           <section
             data-qa="create-collection"
+            className="manage-video-collection-button__create-collection"
             onClick={this.showCreateCollection}
           >
             <Icon type="plus" />
@@ -162,7 +163,11 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         )}
       </Menu.Item>,
     );
-    return <Menu>{menuEntries}</Menu>;
+    return (
+      <Menu className="manage-video-collection-button__menu-container">
+        {menuEntries}
+      </Menu>
+    );
   }
 
   private onPopoverToggle = (visible: boolean) => {

@@ -1,3 +1,5 @@
+@import '../../../../../resources/styles/_antd-theme.less';
+
 .manage-video-collection-button {
   &__popover {
     .ant-popover-inner-content {
@@ -14,13 +16,28 @@
     }
   }
 
+  &__menu-container {
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    .ant-menu-item-selected {
+      background-color: inherit !important;
+    }
+
+    &,
+    .ant-checkbox-wrapper {
+      color: @primary-color !important;
+    }
+  }
+
   &__menu-item {
     min-width: 400px;
     display: inline-block;
+  }
 
-    .ant-menu-item-selected {
-      background-color: inherit;
-    }
+  &__create-collection {
+    font-weight: bold;
   }
 
   &__collection-entry {
@@ -29,10 +46,11 @@
   }
 
   &__title-input {
-    width: 237px !important;
+    width: calc(100% - 88px) !important;
     margin-right: 10px !important;
   }
 
   &__create-collection-button {
+    min-width: 60px !important;
   }
 }
