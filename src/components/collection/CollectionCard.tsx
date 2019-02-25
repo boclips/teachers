@@ -34,7 +34,11 @@ export class CollectionCard extends React.PureComponent<Props> {
           {this.renderVideoPreviews()}
         </section>
         <h3 className="view-collection">
-          <Link to={'/collections/' + this.props.collection.id}>
+          <Link
+            data-state={this.props.collection.title}
+            data-qa="view-collection"
+            to={'/collections/' + this.props.collection.id}
+          >
             View collection
           </Link>
         </h3>

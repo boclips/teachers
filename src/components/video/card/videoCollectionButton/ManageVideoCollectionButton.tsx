@@ -61,15 +61,14 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         <span className="display-mobile">
           {this.saveButton(this.showDrawer)}
           <Drawer
-            title="Select collection"
+            wrapClassName="manage-video-collection-button__drawer"
+            title="Save to:"
             placement={'bottom'}
             closable={true}
             onClose={this.onClose}
             visible={this.state.drawerVisible}
           >
-            {this.props.collections.map(collection =>
-              this.collectionItem(collection, this.props.video),
-            )}
+            {this.menu()}
           </Drawer>
         </span>
       </span>
@@ -96,6 +95,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       <Checkbox
         defaultChecked={alreadyInCollection}
         data-qa={this.dataQa(alreadyInCollection)}
+        data-state={videoCollection.title}
         onChange={this.onClick(alreadyInCollection, videoCollection)}
       >
         <span className="manage-video-collection-button__collection-entry">

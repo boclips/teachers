@@ -14,8 +14,8 @@ interface AccountMenuProps {
 }
 
 const CollectionVideoLink = () => (
-  <Link to={'/collections/default'} data-qa="video-collection">
-    My video collection
+  <Link to={'/collections'} data-qa="video-collection">
+    My video collections
   </Link>
 );
 
