@@ -21,7 +21,7 @@ module.exports = merge(common, {
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
-        sourceMap: false
+        sourceMap: true,
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
@@ -37,5 +37,6 @@ module.exports = merge(common, {
       ga: googleAnalyticsId
     }),
     new CleanWebpackPlugin([distPath], {root: path.resolve(__dirname, '..')}),
-  ]
+  ],
+  devtool: 'source-map',
 });
