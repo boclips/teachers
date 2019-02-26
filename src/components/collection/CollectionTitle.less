@@ -1,3 +1,5 @@
+@import '../../../resources/styles/_antd-theme.less';
+
 .collection-title__ {
   &container {
     display: flex;
@@ -24,6 +26,10 @@
     .ant-btn {
       margin-left: 8px;
       min-width: 80px;
+
+      @media (max-width: @screen-md) {
+        display: none;
+      }
 
       &.empty {
         border: 0;
