@@ -44,7 +44,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
     }
 
     return (
-      <section>
+      <section className="collection-view__collection-details">
         <CollectionTitle
           title={this.props.collection.title}
           onEdit={this.props.onRenameCollection(this.props.collection)}

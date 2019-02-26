@@ -1,5 +1,6 @@
-import { Button, Input } from 'antd';
+import { Button, Icon, Input } from 'antd';
 import React from 'react';
+import './CollectionTitle.less';
 
 export interface Props {
   title: string;
@@ -25,10 +26,12 @@ export class CollectionTitle extends React.Component<Props, State> {
 
   private renderInViewingState() {
     return (
-      <section>
-        <h2 data-qa="collection-name">{this.state.title}</h2>
+      <section className="collection-title__container">
+        <h1 data-qa="collection-name" className="text--secondary">
+          {this.state.title}
+        </h1>
         <span data-qa="collection-name-edit" onClick={this.handleOnEditClick}>
-          edit
+          <Icon className="collection-title__edit" theme="filled" type="edit" />
         </span>
       </section>
     );
@@ -36,14 +39,17 @@ export class CollectionTitle extends React.Component<Props, State> {
 
   private renderInEditingState() {
     return (
-      <section>
+      <section className="collection-title__input-container">
         <Input
           data-qa="collection-name-edit-input"
+          className="collection-title__input"
           value={this.state.title}
           onChange={this.handleInputChange}
+          onPressEnter={this.handleOnDoneClick}
           alt="Rename this collection"
         />
         <Button
+          className="empty"
           data-qa="collection-name-edit-cancel"
           onClick={this.handleOnCancelClick}
         >
@@ -59,7 +65,7 @@ export class CollectionTitle extends React.Component<Props, State> {
     );
   }
 
-  private handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private handleInputChange = event => {
     if (event && event.target) {
       const value = event.target.value;
       this.setState(() => ({ title: value }));
