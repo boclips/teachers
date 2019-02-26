@@ -4,6 +4,7 @@ import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { CreateCollectionRequest } from '../collections/createCollection';
+import { RenameCollectionRequest } from '../collections/renameCollection';
 import EventTypes from './EventTypes';
 import { toMixpanelSegment } from './toMixpanelSegment';
 import { toMixpanelVideo } from './toMixpanelVideo';
@@ -90,6 +91,13 @@ export default class MixpanelAnalytics {
   public trackCollectionCreated(request: CreateCollectionRequest): void {
     this.mixpanelInstance.track(EventTypes.COLLECTION_CREATED, {
       collection_title: request.title,
+    });
+  }
+
+  public trackCollectionRenamed(request: RenameCollectionRequest): void {
+    this.mixpanelInstance.track(EventTypes.COLLECTION_RENAMED, {
+      collection_title: request.title,
+      collection_id: request.originalCollection.id,
     });
   }
 

@@ -4,6 +4,7 @@ import createCollectionMiddleware from './createCollectionMiddleware';
 import fetchCollectionsMiddleware from './fetchCollectionsMiddleware';
 import removeFromCollectionMiddleware from './removeFromCollectionMiddleware';
 import removeFromCollectionResultMiddleware from './removeFromCollectionResultMiddleware';
+import renameCollectionMiddleware from './renameCollectionMiddleware';
 
 export default [
   fetchCollectionsMiddleware,
@@ -12,4 +13,5 @@ export default [
   removeFromCollectionMiddleware,
   removeFromCollectionResultMiddleware,
   createCollectionMiddleware,
+  renameCollectionMiddleware,
 ];
