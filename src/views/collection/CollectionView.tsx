@@ -4,6 +4,8 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
+import { CollectionTitle } from '../../components/collection/CollectionTitle';
+import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
@@ -21,6 +23,7 @@ interface StateProps {
 
 interface DispatchProps {
   fetchCollections: () => void;
+  onRenameCollection: (collection: VideoCollection) => (title: string) => void;
 }
 
 export class CollectionView extends PureComponent<StateProps & DispatchProps> {
@@ -41,12 +44,18 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
     }
 
     return (
-      this.props.collection.videos && (
-        <CollectionVideoCardList
-          videos={this.props.collection.videos}
-          currentCollection={this.props.collection}
+      <section>
+        <CollectionTitle
+          title={this.props.collection.title}
+          onEdit={this.props.onRenameCollection(this.props.collection)}
         />
-      )
+        {this.props.collection.videos && (
+          <CollectionVideoCardList
+            videos={this.props.collection.videos}
+            currentCollection={this.props.collection}
+          />
+        )}
+      </section>
     );
   }
 
@@ -86,6 +95,10 @@ function mapStateToProps(
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     fetchCollections: () => dispatch(fetchCollectionsAction()),
+    onRenameCollection: (collection: VideoCollection) => (title: string) =>
+      dispatch(
+        renameCollectionAction({ title, originalCollection: collection }),
+      ),
   };
 }
 

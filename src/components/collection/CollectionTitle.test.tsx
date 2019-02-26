@@ -1,46 +1,58 @@
-import { shallow } from 'enzyme';
+import { mount, ReactWrapper, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import { By } from '../../../test-support/By';
 import { CollectionTitle } from './CollectionTitle';
 
 let callback;
-let component;
+let title;
 
-const getDisplayedText = () =>
-  component
-    .update()
-    .find(By.dataQa('collection-name'))
-    .text();
+export class CollectionTitleHelper {
+  constructor(public component: ShallowWrapper | ReactWrapper) {}
 
-const clickEdit = () =>
-  component.find(By.dataQa('collection-name-edit')).simulate('click');
+  public getDisplayedText = () =>
+    this.component
+      .update()
+      .find(By.dataQa('collection-name'))
+      .text();
 
-const typeText = (text: string) =>
-  component
-    .update()
-    .find(By.dataQa('collection-name-edit-input'))
-    .simulate('change', { target: { value: text } });
+  public clickEdit = () =>
+    this.component.find(By.dataQa('collection-name-edit')).simulate('click');
+
+  public typeText = (text: string) =>
+    this.component
+      .update()
+      .find(By.dataQa('collection-name-edit-input', 'input'))
+      .simulate('change', { target: { value: text } });
+
+  public clickCancel = () =>
+    this.component
+      .update()
+      .find(By.dataQa('collection-name-edit-cancel', 'button'))
+      .simulate('click');
+
+  public submit = () =>
+    this.component
+      .update()
+      .find(By.dataQa('collection-name-edit-submit', 'button'))
+      .simulate('click');
+}
 
 beforeEach(() => {
   callback = jest.fn();
-  component = shallow(
-    <CollectionTitle title="Title of Collection" onEdit={callback} />,
+  title = new CollectionTitleHelper(
+    mount(<CollectionTitle title="Title of Collection" onEdit={callback} />),
   );
 });
 
 it('Renders an element with the title in', () => {
-  expect(getDisplayedText()).toEqual('Title of Collection');
+  expect(title.getDisplayedText()).toEqual('Title of Collection');
 });
 
 describe('When title is edited', () => {
   beforeEach(() => {
-    clickEdit();
-    typeText('New title');
-
-    component
-      .update()
-      .find(By.dataQa('collection-name-edit-submit'))
-      .simulate('click');
+    title.clickEdit();
+    title.typeText('New title');
+    title.submit();
   });
 
   test('Invokes callback', () => {
@@ -48,18 +60,15 @@ describe('When title is edited', () => {
   });
 
   test('Goes back to view state', () => {
-    expect(getDisplayedText()).toEqual('New title');
+    expect(title.getDisplayedText()).toEqual('New title');
   });
 });
 
 describe('When edit cancelled', () => {
   beforeEach(() => {
-    clickEdit();
-    typeText('bla bla bla');
-    component
-      .update()
-      .find(By.dataQa('collection-name-edit-cancel'))
-      .simulate('click');
+    title.clickEdit();
+    title.typeText('bla bla bla');
+    title.clickCancel();
   });
 
   it('Does not invoke the callback', () => {
@@ -67,6 +76,6 @@ describe('When edit cancelled', () => {
   });
 
   it('Renders non editable title', () => {
-    expect(getDisplayedText()).toEqual('Title of Collection');
+    expect(title.getDisplayedText()).toEqual('Title of Collection');
   });
 });
