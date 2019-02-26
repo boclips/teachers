@@ -26,6 +26,7 @@ function render(videos: Video[]) {
           links: {
             addVideo: new Link({ href: '' }),
             removeVideo: new Link({ href: '' }),
+            self: new Link({ href: '' }),
           },
         },
       ],

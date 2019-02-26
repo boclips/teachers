@@ -66,7 +66,7 @@ describe('When edit cancelled', () => {
     expect(callback).not.toHaveBeenCalled();
   });
 
-  it('Goes back to the view state', () => {
+  it('Renders non editable title', () => {
     expect(getDisplayedText()).toEqual('Title of Collection');
   });
 });

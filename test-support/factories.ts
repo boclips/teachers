@@ -4,7 +4,10 @@ import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
 import { StreamPlayback, Video } from '../src/types/Video';
-import { VideoCollection } from './../src/types/VideoCollection';
+import {
+  VideoCollection,
+  VideoCollectionLinks,
+} from './../src/types/VideoCollection';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
@@ -36,16 +39,34 @@ export class VideoCollectionFactory {
       title: arg.title || '',
       updatedAt: arg.updatedAt || '',
       videos: arg.videos || [],
-      links: arg.links || {
-        addVideo: new Link({
+      links: arg.links || VideoCollectionLinksFactory.sample(),
+    });
+  }
+}
+
+export class VideoCollectionLinksFactory {
+  public static sample(
+    arg: Partial<VideoCollectionLinks> = {},
+  ): VideoCollectionLinks {
+    return Object.freeze({
+      addVideo:
+        arg.addVideo ||
+        new Link({
           href: '/v1/collections/default/videos/{video_id}',
           templated: true,
         }),
-        removeVideo: new Link({
+      removeVideo:
+        arg.removeVideo ||
+        new Link({
           href: '/v1/collections/default/videos/{video_id}',
           templated: true,
         }),
-      },
+      self:
+        arg.self ||
+        new Link({
+          href: '/v1/collections/default',
+          templated: false,
+        }),
     });
   }
 }

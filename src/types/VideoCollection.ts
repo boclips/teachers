@@ -4,6 +4,7 @@ import { Video } from './Video';
 export interface VideoCollectionLinks {
   addVideo: Link;
   removeVideo: Link;
+  self: Link;
 }
 
 export interface VideoCollection {

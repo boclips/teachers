@@ -22,17 +22,15 @@ const doParseCollectionResponse = (data: any): VideoCollection => {
   const title = data.title;
   const updatedAt = data.updatedAt;
   const videos = data.videos.map(convertVideoResource);
-  const addVideoUrl = data._links.addVideo;
-  const removeVideoUrl = data._links.removeVideo;
-
   return {
     id,
     title,
     videos,
     updatedAt,
     links: {
-      addVideo: new Link(addVideoUrl),
-      removeVideo: new Link(removeVideoUrl),
+      addVideo: new Link(data._links.addVideo),
+      removeVideo: new Link(data._links.removeVideo),
+      self: new Link(data._links.self),
     },
   };
 };
