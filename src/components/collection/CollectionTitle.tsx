@@ -60,7 +60,10 @@ export class CollectionTitle extends React.Component<Props, State> {
   }
 
   private handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState(() => ({ title: event.target.value }));
+    if (event && event.target) {
+      const value = event.target.value;
+      this.setState(() => ({ title: value }));
+    }
   };
 
   private handleOnEditClick = () => {
