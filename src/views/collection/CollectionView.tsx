@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
+import { CollectionSubtitle } from '../../components/collection/CollectionSubtitle';
 import { CollectionTitle } from '../../components/collection/CollectionTitle';
 import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
@@ -49,6 +50,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
           title={this.props.collection.title}
           onEdit={this.props.onRenameCollection(this.props.collection)}
         />
+        <CollectionSubtitle collection={this.props.collection} />
         {this.props.collection.videos && (
           <CollectionVideoCardList
             videos={this.props.collection.videos}
