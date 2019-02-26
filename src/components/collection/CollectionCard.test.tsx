@@ -5,14 +5,16 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../test-support/factories';
-import DateFormatter from '../common/formatters/DateFormatter';
+import { VideoCollection } from '../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
+import { CollectionSubtitle } from './CollectionSubtitle';
 
 describe('CollectionCard', () => {
   let wrapper;
+  let collection: VideoCollection;
 
   beforeEach(() => {
-    const collection = VideoCollectionFactory.sample({
+    collection = VideoCollectionFactory.sample({
       title: 'a collection',
       updatedAt: '2018-12-25T12:00:00.870Z',
       videos: [VideoFactory.sample(), VideoFactory.sample()],
@@ -26,16 +28,10 @@ describe('CollectionCard', () => {
     );
   });
 
-  test('renders updated at', () => {
-    expect(wrapper.find(DateFormatter).prop('date')).toEqual(
-      '2018-12-25T12:00:00.870Z',
+  test('renders collection subtitle', () => {
+    expect(wrapper.find(CollectionSubtitle).prop('collection')).toEqual(
+      collection,
     );
-  });
-
-  test('renders video count', () => {
-    expect(
-      wrapper.find(By.dataQa('collection-number-of-videos')).text(),
-    ).toEqual('2');
   });
 
   test('renders video previews', () => {
@@ -50,7 +46,7 @@ describe('CollectionCard', () => {
 
   describe('when more than 4 videos', () => {
     beforeEach(() => {
-      const collection = VideoCollectionFactory.sample({
+      collection = VideoCollectionFactory.sample({
         videos: [
           VideoFactory.sample(),
           VideoFactory.sample(),
@@ -77,7 +73,7 @@ describe('CollectionCard', () => {
 
   describe('when exactly 4 videos', () => {
     beforeEach(() => {
-      const collection = VideoCollectionFactory.sample({
+      collection = VideoCollectionFactory.sample({
         videos: [
           VideoFactory.sample(),
           VideoFactory.sample(),
