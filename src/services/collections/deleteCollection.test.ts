@@ -4,19 +4,18 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
 } from './../../../test-support/factories';
-import { renameCollection } from './renameCollection';
+import { deleteCollection } from './deleteCollection';
 
-test('rename collection', async () => {
-  MockFetchVerify.patch('/v1/collections/the-id', { title: 'avideo' }, 204);
+test('delete collection', async () => {
+  MockFetchVerify.delete('/v1/collections/the-id', { title: 'avideo' }, 204);
 
-  const success = await renameCollection({
-    title: 'avideo',
-    originalCollection: VideoCollectionFactory.sample({
+  const success = await deleteCollection(
+    VideoCollectionFactory.sample({
       links: VideoCollectionLinksFactory.sample({
         self: new Link({ href: '/v1/collections/the-id' }),
       }),
     }),
-  });
+  );
 
   expect(success).toEqual(true);
 });
