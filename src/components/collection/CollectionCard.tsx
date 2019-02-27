@@ -18,7 +18,11 @@ const NUMBER_OF_PREVIEWS = 4;
 export class CollectionCard extends React.PureComponent<Props> {
   public render() {
     return (
-      <section className="collection-card" data-qa="collection-card">
+      <section
+        className="collection-card"
+        data-qa="collection-card"
+        data-state={this.props.collection.title}
+      >
         <h1 className="collection-title" data-qa="collection-title">
           {this.props.collection.title}
         </h1>
