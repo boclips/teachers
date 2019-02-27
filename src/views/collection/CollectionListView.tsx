@@ -57,7 +57,7 @@ export class CollectionListView extends PureComponent<
 
   private renderEmptyCollection() {
     return (
-      <Row className="collections-view-empty">
+      <Row className="collections-view-empty" data-qa="collections-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
           <img src={emptyCollection} />
           <h1 data-qa="no-collections">You have no collections</h1>
