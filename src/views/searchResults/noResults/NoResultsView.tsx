@@ -1,4 +1,4 @@
-import { message } from 'antd';
+import { Col, message, Row } from 'antd';
 import axios from 'axios';
 import React from 'react';
 import noResultsIllustration from '../../../../resources/images/no-results-illustration.png';
@@ -39,31 +39,33 @@ export default class NoResultsView extends React.Component<Props, State> {
   public render() {
     return (
       <section className="ant-layout-content zero-results">
-        <div className="ant-col-12">
-          <img className="ant-col-20" src={noResultsIllustration} />
-        </div>
-        <div className="ant-col-12">
-          {!this.state.isFormSubmitted && (
-            <div>
-              <h1 data-qa="search-zero-results">
-                Oops, we couldn’t find any results that matched your search for{' '}
-                <em>{this.props.query}</em>
-              </h1>
-              <p className="description" data-qa="description">
-                We’d love to help you find the perfect videos to use in class.
-                Let us know what you are looking for and we’ll get back to you
-                with some suggestions.
-              </p>
-            </div>
-          )}
-          {!this.state.isFormSubmitted && (
-            <NoResultsForm
-              onSuccessfulSubmit={this.renderFormSubmittedView}
-              query={this.props.query}
-            />
-          )}
-          {this.state.isFormSubmitted && <NoResultsFormSubmitted />}
-        </div>
+        <Row>
+          <Col xs={{ span: 16, push: 4 }} md={12}>
+            <img className="ant-col-20" src={noResultsIllustration} />
+          </Col>
+          <Col xs={24} md={12}>
+            {!this.state.isFormSubmitted && (
+              <div>
+                <h1 data-qa="search-zero-results">
+                  Oops, we couldn’t find any results that matched your search
+                  for <em>{this.props.query}</em>
+                </h1>
+                <p className="description" data-qa="description">
+                  We’d love to help you find the perfect videos to use in class.
+                  Let us know what you are looking for and we’ll get back to you
+                  with some suggestions.
+                </p>
+              </div>
+            )}
+            {!this.state.isFormSubmitted && (
+              <NoResultsForm
+                onSuccessfulSubmit={this.renderFormSubmittedView}
+                query={this.props.query}
+              />
+            )}
+            {this.state.isFormSubmitted && <NoResultsFormSubmitted />}
+          </Col>
+        </Row>
       </section>
     );
   }

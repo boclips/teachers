@@ -141,6 +141,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
               placeholder="Enter collection name"
               onChange={this.setTitle}
               data-qa="new-collection-title"
+              onPressEnter={this.createCollection}
             />
             <Button
               htmlType="button"
