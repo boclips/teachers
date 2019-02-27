@@ -57,7 +57,6 @@ export class RemoveCollectionButtonInner extends PureComponent<
           marginRight: '12px',
         },
       },
-      width: '340px',
     });
   };
   public doggy() {}
