@@ -15,9 +15,6 @@ export function onRenameCollection(
 ) {
   renameCollection(request)
     .then(() => {
-      NotificationFactory.success({
-        description: `Your collection "${request.title}" has been renamed.`,
-      });
       store.dispatch(fetchCollectionsAction());
     })
     .catch(() => {
