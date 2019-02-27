@@ -11,7 +11,11 @@ export default class NotificationFactory {
   public static success(options: NotificationOptions) {
     notification.success({
       message: options.message,
-      description: <div role="alert">{options.description}</div>,
+      description: (
+        <div role="alert" data-qa="success-notification">
+          {options.description}
+        </div>
+      ),
       placement: 'bottomRight',
       icon: <img src={tickIcon} />,
       style: {
@@ -25,7 +29,11 @@ export default class NotificationFactory {
   public static error(options: NotificationOptions) {
     notification.error({
       message: options.message,
-      description: <div role="alert">{options.description}</div>,
+      description: (
+        <div role="alert" data-qa="error-notification">
+          {options.description}
+        </div>
+      ),
       placement: 'bottomRight',
       duration: 6,
       style: {

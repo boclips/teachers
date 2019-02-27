@@ -7,6 +7,7 @@ import DurationFormatter from '../common/formatters/DurationFormatter';
 import VideoPlayer from '../video/player/VideoPlayer';
 import './CollectionCard.less';
 import { CollectionSubtitle } from './CollectionSubtitle';
+import RemoveCollectionButton from './RemoveCollectionButton';
 
 interface Props {
   collection: VideoCollection;
@@ -22,6 +23,7 @@ export class CollectionCard extends React.PureComponent<Props> {
           {this.props.collection.title}
         </h1>
         <CollectionSubtitle collection={this.props.collection} />
+        <RemoveCollectionButton collection={this.props.collection} />
         <section className="collection-video-previews">
           {this.renderVideoPreviews()}
         </section>

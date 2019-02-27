@@ -2,6 +2,8 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
+import { RemoveCollectionButtonInner } from '../../src/components/collection/RemoveCollectionButton';
+import NotificationFactory from '../../src/components/common/NotificationFactory';
 import { By } from '../By';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
@@ -10,6 +12,7 @@ export class CollectionListPage {
   constructor(public wrapper: ReactWrapper) {}
 
   public static async load() {
+    jest.spyOn(NotificationFactory, 'success');
     const page = new CollectionListPage(
       mount(
         <App
@@ -30,6 +33,26 @@ export class CollectionListPage {
       numberOfVideos: Number(findOne(el, 'collection-number-of-videos').text()),
       updatedAt: findOne(el, 'collection-updated-at').text(),
     }));
+  }
+
+  public deleteCollection(index: number) {
+    const reactWrapper = this.wrapper
+      .find(By.dataQa('collection-card'))
+      .at(index)
+      .find(RemoveCollectionButtonInner);
+    const component = reactWrapper.instance();
+
+    // @ts-ignore
+    component.confirmRemoveCollection();
+  }
+
+  public async assertNotification(message) {
+    await eventually(() => {
+      this.wrapper = this.wrapper.update();
+      expect(NotificationFactory.success).toHaveBeenCalledWith({
+        description: message,
+      });
+    });
   }
 
   private async hasLoaded() {

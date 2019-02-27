@@ -14,3 +14,15 @@ test('displays collections list', async () => {
     updatedAt: 'Jan 16, 2019',
   });
 });
+
+test('shows notification after deleting collections', async () => {
+  new ApiStub().fetchCollections(userCollectionsResponse());
+  new ApiStub().deleteCollection('/v1/collections/default');
+
+  const collectionsPage = await CollectionListPage.load();
+
+  collectionsPage.deleteCollection(0);
+  await collectionsPage.assertNotification(
+    'Your collection "funky collection" has been deleted',
+  );
+});

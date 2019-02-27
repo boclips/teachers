@@ -101,6 +101,13 @@ export default class MixpanelAnalytics {
     });
   }
 
+  public trackCollectionRemoved(collection: VideoCollection): void {
+    this.mixpanelInstance.track(EventTypes.COLLECTION_REMOVED, {
+      collection_title: collection.title,
+      collection_id: collection.id,
+    });
+  }
+
   public trackVideoRemovedFromCollection(
     video: Video,
     collection: VideoCollection,

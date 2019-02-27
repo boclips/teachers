@@ -62,11 +62,16 @@ export default class ApiStub {
   public removeFromCollection(
     options: CollectionOptions = { name: 'default' },
   ) {
-    MockFetchVerify.destroy(
+    MockFetchVerify.delete(
       new RegExp(`/v1/collections/${options.name}/videos/.*`),
       JSON.stringify({}),
       204,
     );
+    return this;
+  }
+
+  public deleteCollection(url: string) {
+    MockFetchVerify.delete(url, JSON.stringify({}), 204);
     return this;
   }
 }

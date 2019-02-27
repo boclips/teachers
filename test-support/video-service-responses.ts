@@ -137,6 +137,10 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
               href: '/v1/collections/default/videos/{video_id}',
               templated: true,
             },
+            self: {
+              href: '/v1/collections/default',
+              templated: false,
+            },
           },
         },
       ],

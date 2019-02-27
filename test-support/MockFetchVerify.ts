@@ -29,10 +29,6 @@ export default class MockFetchVerify {
     axiosMock.onPatch(matcher, requestBody).reply(status);
   }
 
-  public static delete(matcher, requestBody, status) {
-    axiosMock.onDelete(matcher, requestBody).reply(status);
-  }
-
   public static put(
     matcher: string | RegExp,
     responseBody?: any,
@@ -42,7 +38,7 @@ export default class MockFetchVerify {
     axiosMock.onPut(matcher).reply(status, responseBody, responseHeaders);
   }
 
-  public static destroy(
+  public static delete(
     matcher: string | RegExp,
     responseBody?: any,
     status: number = 200,
