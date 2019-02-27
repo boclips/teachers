@@ -39,7 +39,7 @@
       grid-row-gap: (@preview-gutter / 4);
       grid-template-columns: repeat(
         auto-fill,
-        minmax(@min-preview-width, calc(50% - @preview-gutter / 2))
+        minmax(@min-preview-width, calc(50% - (@preview-gutter / 4) / 2))
       );
       grid-template-rows: repeat(2, auto);
     }
