@@ -1,8 +1,10 @@
 import React from 'react';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import SearchResultsCount from '../../searchResults/multiple-results/SearchResultsCount';
 import VideoCard from '../card/VideoCard';
+import './VideoCardList.less';
 
 interface Props {
   videos: Video[];
@@ -21,16 +23,19 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
     return (
       <React.Fragment>
         <SearchResultsCount count={this.props.totalElements} />
-        {this.props.videos.map((video, index) => {
-          return (
-            <VideoCard
-              key={video.id}
-              video={video}
-              currentCollection={this.props.currentCollection}
-              videoIndex={index}
-            />
-          );
-        })}
+        <TransitionGroup exit={true}>
+          {this.props.videos.map((video, index) => {
+            return (
+              <CSSTransition key={video.id} classNames="fade" timeout={300}>
+                <VideoCard
+                  video={video}
+                  currentCollection={this.props.currentCollection}
+                  videoIndex={index}
+                />
+              </CSSTransition>
+            );
+          })}
+        </TransitionGroup>
       </React.Fragment>
     );
   }

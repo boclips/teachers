@@ -1,3 +1,4 @@
+import { Col } from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
 import { push } from 'connected-react-router';
 import * as queryString from 'querystring';
@@ -10,12 +11,11 @@ import withNewsNavigation, {
 import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
+import { NewsBoxSidebar } from '../../components/searchResults/NewsBoxSidebar';
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';
-import { Col } from 'antd';
-import { NewsBoxSidebar } from '../../components/searchResults/NewsBoxSidebar';
 
 interface StateProps {
   loading: boolean;
