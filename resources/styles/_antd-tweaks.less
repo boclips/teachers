@@ -128,7 +128,6 @@
 }
 
 .ant-modal {
-
   @media (max-width: @screen-md) {
     margin: 0 auto;
   }
@@ -157,5 +156,55 @@
   @media (min-width: 768px) {
     padding-left: 50px;
     padding-right: 50px;
+  }
+}
+
+.ant-skeleton-paragraph {
+  padding: 0px;
+}
+
+.ant-pagination {
+  .ant-pagination-item,
+  .ant-pagination-next .ant-pagination-item-link,
+  .ant-pagination-prev .ant-pagination-item-link {
+    border: 2px solid #848fbb;
+    border-radius: 8px;
+    a {
+      color: #848fbb;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    &:hover {
+      border-color: #0051bc;
+      color: #0051bc;
+      a {
+        color: #0051bc;
+      }
+    }
+  }
+
+  .anticon {
+    vertical-align: 0px;
+    &:hover {
+      color: #0051bc;
+    }
+  }
+
+  .ant-pagination-item-active,
+  .ant-pagination-item-active:hover {
+    border-color: #4189ff;
+    a {
+      color: #4189ff;
+    }
+  }
+
+  .ant-pagination-disabled .ant-pagination-item-link,
+  .ant-pagination-disabled:hover .ant-pagination-item-link {
+    border-color: #d9d9d9;
+    color: #d9d9d9;
+    a {
+      color: #d9d9d9;
+    }
   }
 }

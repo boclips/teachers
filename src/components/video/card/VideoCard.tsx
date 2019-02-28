@@ -7,6 +7,7 @@ import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
 import { CopyLinkButton } from './CopyLinkButton';
+import './videoCard.less';
 import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
 import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
 

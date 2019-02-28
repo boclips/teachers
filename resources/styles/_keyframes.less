@@ -17,3 +17,10 @@
     transform: translateY(0);
   }
 }
+
+.animation-delay(@n, @i: 1) when (@i =< @n) {
+  &:nth-child(@{i}) {
+    animation-delay: .1s * @i;
+  }
+  .animation-delay(@n, (@i + 1));
+}

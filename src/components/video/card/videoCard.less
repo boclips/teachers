@@ -1,8 +1,14 @@
+@import "../../../../resources/styles/_keyframes";
+@import "../../../../resources/styles/_antd-theme";
+
 @video-width: 304px;
 @video-height: 228px;
 @video-border-radius: 8px;
 
-.video-card {
+.ant-card.video-card {
+  animation: slide-in 0.5s 0s both;
+
+  .animation-delay(10);
 
   &:nth-of-type(1) {
     margin-top: 20px;
@@ -60,6 +66,7 @@
 
   .plyr__video-wrapper {
     max-height: @video-height;
+
     .plyr__poster {
       background-size: cover;
       max-height: @video-height;
@@ -75,6 +82,7 @@
     height: auto;
     padding-bottom: 0px !important;
     position: relative;
+
     iframe {
       border: 0;
       left: 0;

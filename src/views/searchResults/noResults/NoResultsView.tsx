@@ -5,6 +5,7 @@ import noResultsIllustration from '../../../../resources/images/no-results-illus
 import NoResultsForm from '../../../components/searchResults/no-results/NoResultsForm';
 import NoResultsFormSubmitted from '../../../components/searchResults/no-results/NoResultsFormSubmitted';
 import { Links } from '../../../types/Links';
+import './NoResultsView.less';
 
 interface Props {
   query: string | null;
@@ -40,7 +41,7 @@ export default class NoResultsView extends React.Component<Props, State> {
     return (
       <section className="ant-layout-content zero-results">
         <Row>
-          <Col xs={{ span: 16, push: 4 }} md={12}>
+          <Col xs={{ span: 16, push: 4 }} md={{ span: 12, push: 0 }}>
             <img className="ant-col-20" src={noResultsIllustration} />
           </Col>
           <Col xs={24} md={12}>
