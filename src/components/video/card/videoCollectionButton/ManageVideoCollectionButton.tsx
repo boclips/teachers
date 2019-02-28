@@ -65,7 +65,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         <span className="display-mobile">
           {this.saveButton(this.showDrawer)}
           <Drawer
-            wrapClassName="manage-video-collection-button__drawer"
+            className="manage-video-collection-button__drawer"
             title="Save to:"
             placement={'bottom'}
             closable={true}
@@ -125,7 +125,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       </Menu.Item>
     ));
     if (menuEntries.length) {
-      menuEntries.push(<Menu.Divider />);
+      menuEntries.push(<Menu.Divider key="lovely-divider" />);
     }
     menuEntries.push(
       <Menu.Item

@@ -90,7 +90,7 @@ export class CollectionCard extends React.PureComponent<Props> {
 
   private renderVideoPreviewCount(totalNumberOfVideos: number) {
     return (
-      <section className="video-container">
+      <section key="preview-count" className="video-container">
         <section className="video-container-inner">
           <section className="video-counter" key="count">
             <span>
