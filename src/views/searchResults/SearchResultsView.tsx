@@ -13,6 +13,9 @@ import SearchResultsWithSidebar from '../../components/searchResults/multiple-re
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
 import NoResultsView from './noResults/NoResultsView';
+import './SearchResultsView.less';
+import { Col } from 'antd';
+import { NewsBoxSidebar } from '../../components/searchResults/NewsBoxSidebar';
 
 interface StateProps {
   loading: boolean;
@@ -80,9 +83,21 @@ class SearchResultsView extends React.PureComponent<
   }
 
   public renderResultPlaceholders() {
+    const isNewsMode = this.props.isNewsMode;
+
     return (
-      <section data-qa="search-results-placeholders">
-        <SearchResultsPlaceholders />
+      <section
+        className="search-results-placeholders"
+        data-qa="search-results-placeholders"
+      >
+        <Col xs={{ span: 24 }} md={{ span: isNewsMode ? 24 : 18 }}>
+          <SearchResultsPlaceholders />
+        </Col>
+        {!isNewsMode && (
+          <Col xs={{ span: 0 }} md={{ span: 5, push: 1 }}>
+            <NewsBoxSidebar.Skeleton />
+          </Col>
+        )}
       </section>
     );
   }

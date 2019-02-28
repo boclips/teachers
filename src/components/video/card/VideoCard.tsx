@@ -21,15 +21,7 @@ export default class VideoCard extends React.PureComponent<Props> {
   public render() {
     return (
       <Card className="video-card" bordered={false}>
-        <Skeleton
-          loading={this.props.video === null}
-          active={true}
-          title={{ width: '150px' }}
-          paragraph={{ rows: 5 }}
-          avatar={{ shape: 'square', size: 'large' }}
-        >
-          <section data-qa="video-card">{this.renderContent()}</section>
-        </Skeleton>
+        <section data-qa="video-card">{this.renderContent()}</section>
       </Card>
     );
   }
@@ -87,4 +79,16 @@ export default class VideoCard extends React.PureComponent<Props> {
       </section>
     );
   }
+
+  public static Skeleton = () => (
+    <Card className="video-card" bordered={false}>
+      <Skeleton
+        loading={true}
+        active={true}
+        title={{ width: '150px' }}
+        paragraph={{ rows: 5 }}
+        avatar={{ shape: 'square', size: 'large' }}
+      />
+    </Card>
+  );
 }
