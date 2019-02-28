@@ -28,6 +28,10 @@ export class CollectionCardList extends React.PureComponent<Props> {
   }
 
   public renderLoading() {
-    return <CollectionCard.Skeleton />;
+    return [
+      <CollectionCard.Skeleton key={1} />,
+      <CollectionCard.Skeleton key={2} />,
+      <CollectionCard.Skeleton key={3} />,
+    ];
   }
 }
