@@ -4,6 +4,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import addToCollection from '../../../../services/collections/addToCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
+import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 
@@ -12,6 +13,7 @@ export function onAddToCollection(
   request: { video: Video; collection: VideoCollection },
 ) {
   addToCollection(request.video, request.collection).then(success => {
+    store.dispatch(fetchCollectionsAction());
     store.dispatch(
       addToCollectionResultAction({
         collection: request.collection,

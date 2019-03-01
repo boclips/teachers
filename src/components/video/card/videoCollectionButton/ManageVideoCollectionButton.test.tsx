@@ -28,9 +28,9 @@ describe('when existing collections', () => {
       .first()
       .simulate('click');
 
-    expect(
-      wrapper.find(By.dataQa('add-to-default-collection', 'input')),
-    ).toHaveLength(2);
+    expect(wrapper.find(By.dataQa('add-to-collection', 'input'))).toHaveLength(
+      2,
+    );
   });
 
   test('renders checked checkboxes for collections containing video', () => {
@@ -48,9 +48,9 @@ describe('when existing collections', () => {
       .first()
       .simulate('click');
 
-    expect(
-      wrapper.find(By.dataQa('add-to-default-collection', 'input')),
-    ).toHaveLength(1);
+    expect(wrapper.find(By.dataQa('add-to-collection', 'input'))).toHaveLength(
+      1,
+    );
     expect(
       wrapper.find(By.dataQa('remove-from-collection', 'input')),
     ).toHaveLength(1);

@@ -95,7 +95,7 @@ test('redirects when clicking on first title', async () => {
   await searchPage.isOnDetailsPage();
 });
 
-test('removing a video to default collection', async () => {
+test('removing a video from collection', async () => {
   const query = 'some video';
   new ApiStub()
     .queryVideos({ query, results: videosResponse([video177]) })
@@ -110,20 +110,15 @@ test('removing a video to default collection', async () => {
 
   collectionMenuButton.simulate('click');
 
-  const removeFromDefaultCollection = await waitForElement(
+  const removeFromCollection = await waitForElement(
     "[data-qa='remove-from-collection']",
   );
 
-  expect(removeFromDefaultCollection.checked).toBeTruthy();
-  removeFromDefaultCollection.click();
-
-  const notification = await waitForElement(
-    '.ant-notification-notice-description',
-  );
-
-  expect(notification.textContent).toMatch('Removed from collection');
+  expect(removeFromCollection.checked).toBeTruthy();
+  removeFromCollection.click();
 });
-test('adding a video to default collection', async () => {
+
+test('adding a video to a collection', async () => {
   const query = 'some video';
   new ApiStub()
     .queryVideos({ query, results: videosResponse([video177]) })
@@ -140,12 +135,10 @@ test('adding a video to default collection', async () => {
 
   collectionMenuButton.simulate('click');
 
-  const addToDefaultCollection = await waitForElement(
-    "[data-qa='add-to-default-collection']",
-  );
+  const addToCollection = await waitForElement("[data-qa='add-to-collection']");
 
-  expect(addToDefaultCollection.checked).toBeFalsy();
-  addToDefaultCollection.click();
+  expect(addToCollection.checked).toBeFalsy();
+  addToCollection.click();
 
   const notification = await waitForElement(
     '.ant-notification-notice-description',

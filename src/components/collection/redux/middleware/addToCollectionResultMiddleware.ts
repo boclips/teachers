@@ -2,7 +2,6 @@ import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 
@@ -16,11 +15,10 @@ export interface UpdateCollectionResult {
 }
 
 export const onAddToCollectionResult = (
-  store: MiddlewareAPI<any, {}>,
+  _: MiddlewareAPI<any, {}>,
   payload: UpdateCollectionResult,
 ) => {
   if (payload.success) {
-    store.dispatch(fetchCollectionsAction());
     NotificationFactory.success({
       message: payload.video.title,
       description: SUCCESS_DESCRIPTION,

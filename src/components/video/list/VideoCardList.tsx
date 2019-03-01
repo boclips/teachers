@@ -26,7 +26,11 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
         <TransitionGroup exit={true}>
           {this.props.videos.map((video, index) => {
             return (
-              <CSSTransition key={video.id} classNames="fade" timeout={300}>
+              <CSSTransition
+                key={video.id}
+                classNames="collection-video"
+                timeout={500}
+              >
                 <VideoCard
                   video={video}
                   currentCollection={this.props.currentCollection}

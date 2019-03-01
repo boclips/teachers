@@ -189,7 +189,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     if (alreadyInCollection) {
       return 'remove-from-collection';
     } else {
-      return 'add-to-default-collection';
+      return 'add-to-collection';
     }
   }
 
