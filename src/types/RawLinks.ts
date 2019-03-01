@@ -7,5 +7,6 @@ export interface RawLinks {
   createNoSearchResultsEvent: RawLink;
   activate?: RawLink;
   profile?: RawLink;
-  collection: RawLink;
+  userCollection: RawLink;
+  userCollections: RawLink;
 }

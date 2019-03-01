@@ -3,7 +3,7 @@ import { VideoDetailsPage } from '../../../test-support/page-objects/VideoDetail
 import { video177 } from '../../../test-support/video-service-responses';
 
 test('video details shows data', async () => {
-  new ApiStub().fetchVideo({ video: video177 });
+  new ApiStub().fetchVideo({ video: video177 }).fetchCollections();
 
   const videoDetailsPage = await VideoDetailsPage.load();
 

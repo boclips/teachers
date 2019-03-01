@@ -95,7 +95,7 @@ test('redirects when clicking on first title', async () => {
   await searchPage.isOnDetailsPage();
 });
 
-test('removing a video from collection', async () => {
+test('removing a video from a collection', async () => {
   const query = 'some video';
   new ApiStub()
     .queryVideos({ query, results: videosResponse([video177]) })

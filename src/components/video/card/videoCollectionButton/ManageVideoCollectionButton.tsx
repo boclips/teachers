@@ -13,6 +13,7 @@ import './manage-video-collection-button.less';
 
 interface StateProps {
   collections: VideoCollection[];
+  loading: boolean;
 }
 
 export interface OwnProps {
@@ -50,7 +51,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       <span>
         <span className="display-tablet-and-desktop">
           <Popover
-            title="Save to:"
+            title={this.props.loading ? 'Loading collections...' : 'Save to:'}
             overlayClassName="manage-video-collection-button__popover"
             autoAdjustOverflow={false}
             content={this.menu()}
@@ -116,6 +117,16 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   }
 
   private menu() {
+    if (this.props.loading) {
+      return (
+        <section
+          data-qa="loading-collections"
+          className="manage-video-collection-button__loading-collections"
+        >
+          <Icon type="loading" />
+        </section>
+      );
+    }
     const menuEntries = this.props.collections.map(collection => (
       <Menu.Item
         key={collection.id}
@@ -262,9 +273,7 @@ function mapDispatchToProps(
 }
 
 function mapStateToProps({ collections }: State): StateProps {
-  return {
-    collections: collections.items,
-  };
+  return { collections: collections.items, loading: collections.loading };
 }
 
 export default connect<StateProps, DispatchProps, OwnProps>(

@@ -16,6 +16,19 @@ import ManageVideoCollectionsButton from './ManageVideoCollectionButton';
 const mockStore = configureStore<CollectionState>();
 let store: MockStore;
 
+describe('when loading collections', () => {
+  test('renders loading thingy', () => {
+    const wrapper = mountWith(null, null, true);
+
+    wrapper
+      .find(By.dataQa('video-collection-menu', 'button'))
+      .first()
+      .simulate('click');
+
+    expect(wrapper.find(By.dataQa('loading-collections'))).toExist();
+  });
+});
+
 describe('when existing collections', () => {
   test('renders checkboxes for empty collections', () => {
     const wrapper = mountWith([
@@ -88,11 +101,12 @@ describe('when existing collections', () => {
 const mountWith = (
   collections: VideoCollection[] = [VideoCollectionFactory.sample()],
   video: Video = VideoFactory.sample(),
+  loading: boolean = false,
 ) => {
   store = mockStore({
     collections: {
       items: collections,
-      loading: false,
+      loading,
     },
   });
   return mountWithStore(<ManageVideoCollectionsButton video={video} />, store);
