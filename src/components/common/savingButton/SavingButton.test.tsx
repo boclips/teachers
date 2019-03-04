@@ -29,5 +29,27 @@ describe('when saving', () => {
     expect(wrapper.find('.saving-button__tick-container')).toHaveClassName(
       'saving',
     );
+    expect(wrapper.find('.saving-button__tick-container')).not.toHaveClassName(
+      'saved',
+    );
+  });
+
+  describe('when saved', () => {
+    test('renders button saving class', () => {
+      const onclick = () => {};
+      const wrapper = mount(
+        <SavingButton data-qa="sometin" onClick={onclick} saving={true} />,
+      );
+
+      wrapper.setProps({ saving: false });
+      wrapper.update();
+
+      expect(
+        wrapper.find('.saving-button__tick-container'),
+      ).not.toHaveClassName('saving');
+      expect(wrapper.find('.saving-button__tick-container')).toHaveClassName(
+        'saved',
+      );
+    });
   });
 });

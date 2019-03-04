@@ -11,6 +11,7 @@ import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
+import SavingButton from '../../../common/savingButton/SavingButton';
 import ManageVideoCollectionsButton from './ManageVideoCollectionButton';
 
 const mockStore = configureStore<CollectionState>();
@@ -95,6 +96,47 @@ describe('when existing collections', () => {
     expect(store.getActions()).toContainEqual(
       createCollectionAction({ title: 'a collection', videos: [video] }),
     );
+  });
+});
+
+describe('when updating collections', () => {
+  test('doesnt show saving spinner by default', () => {
+    const wrapper = mountWith(
+      [VideoCollectionFactory.sample()],
+      null,
+      false,
+      true,
+    );
+
+    expect(wrapper.find(SavingButton).first()).toHaveProp('saving', false);
+    expect(wrapper.find(SavingButton).last()).toHaveProp('saving', false);
+  });
+
+  test('shows the spinner after saving/removing/creating', () => {
+    const wrapper = mountWith(
+      [VideoCollectionFactory.sample()],
+      null,
+      false,
+      true,
+    );
+
+    wrapper
+      .find(By.dataQa('video-collection-menu', 'button'))
+      .first()
+      .simulate('click');
+
+    wrapper.find(By.dataQa('create-collection')).simulate('click');
+
+    wrapper
+      .find(By.dataQa('new-collection-title', 'input'))
+      .simulate('change', { target: { value: 'a collection' } });
+
+    wrapper
+      .find(By.dataQa('create-collection-button', 'button'))
+      .simulate('click');
+
+    expect(wrapper.find(SavingButton).first()).toHaveProp('saving', true);
+    expect(wrapper.find(SavingButton).last()).toHaveProp('saving', true);
   });
 });
 
