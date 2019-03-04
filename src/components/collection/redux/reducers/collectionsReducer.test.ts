@@ -17,6 +17,7 @@ test('adding a video to a collection', () => {
     videos: [VideoFactory.sample({ id: '333' })],
   });
   const stateBefore: CollectionsStateValue = {
+    updating: false,
     loading: false,
     items: [otherCollection, targetCollection],
   };
@@ -29,6 +30,7 @@ test('adding a video to a collection', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
+  expect(stateAfter.updating).toEqual(true);
   expect(stateAfter.items[0]).toEqual(otherCollection);
   expect(stateAfter.items[1]).not.toEqual(targetCollection);
   expect(stateAfter.items[1].videos).toHaveLength(2);
@@ -42,6 +44,7 @@ test('adding a duplicate video to a collection does not re-add it', () => {
     videos: [video],
   });
   const stateBefore: CollectionsStateValue = {
+    updating: false,
     loading: false,
     items: [collection],
   };
@@ -53,6 +56,7 @@ test('adding a duplicate video to a collection does not re-add it', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
+  expect(stateAfter.updating).toEqual(false);
   expect(stateAfter.items[0].videos).toHaveLength(1);
 });
 
@@ -66,6 +70,7 @@ test('removing a video from a collection', () => {
   });
 
   const stateBefore: CollectionsStateValue = {
+    updating: false,
     loading: false,
     items: [collection],
   };
@@ -78,6 +83,7 @@ test('removing a video from a collection', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
+  expect(stateAfter.updating).toEqual(true);
   expect(stateAfter.items[0].videos).toHaveLength(1);
   expect(stateAfter.items[0].videos[0].id).toEqual('124');
 });

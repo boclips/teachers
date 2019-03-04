@@ -102,11 +102,13 @@ const mountWith = (
   collections: VideoCollection[] = [VideoCollectionFactory.sample()],
   video: Video = VideoFactory.sample(),
   loading: boolean = false,
+  updating: boolean = false,
 ) => {
   store = mockStore({
     collections: {
       items: collections,
       loading,
+      updating,
     },
   });
   return mountWithStore(<ManageVideoCollectionsButton video={video} />, store);

@@ -18,12 +18,7 @@ export const onAddToCollectionResult = (
   _: MiddlewareAPI<any, {}>,
   payload: UpdateCollectionResult,
 ) => {
-  if (payload.success) {
-    NotificationFactory.success({
-      message: payload.video.title,
-      description: SUCCESS_DESCRIPTION,
-    });
-  } else {
+  if (!payload.success) {
     NotificationFactory.error({
       message: payload.video.title,
       description: ERROR_DESCRIPTION,

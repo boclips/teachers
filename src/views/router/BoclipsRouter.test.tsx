@@ -242,7 +242,7 @@ function buildStore(
     user.authenticated = true;
   }
 
-  const collections = { loading: true, items: [] };
+  const collections = { loading: true, updating: false, items: [] };
 
   const store = mockStore({
     router,

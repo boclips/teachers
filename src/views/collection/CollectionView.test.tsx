@@ -31,6 +31,7 @@ function render(videos: Video[]) {
   const store = mockStore({
     collections: {
       loading: true,
+      updating: false,
       items: [collection],
     },
     router: {

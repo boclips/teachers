@@ -8,6 +8,7 @@ import {
 import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
+import { createCollectionResultAction } from '../actions/createCollectionResultAction';
 
 export function onCreateCollection(
   store: MiddlewareAPI,
@@ -16,9 +17,7 @@ export function onCreateCollection(
   const links = store.getState().links;
   createCollection(links, request)
     .then(() => {
-      NotificationFactory.success({
-        description: `Your collection "${request.title}" has been created.`,
-      });
+      store.dispatch(createCollectionResultAction());
       store.dispatch(fetchCollectionsAction());
     })
     .catch(() => {

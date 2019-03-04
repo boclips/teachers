@@ -46,6 +46,7 @@ export interface CollectionState {
 
 export interface CollectionsStateValue {
   loading: boolean;
+  updating: boolean;
   items: VideoCollection[];
 }
 

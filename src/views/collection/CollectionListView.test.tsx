@@ -14,7 +14,7 @@ const mockStore = configureStore<CollectionState & RouterState>();
 
 function render() {
   const store = mockStore({
-    collections: { loading: false, items: [] },
+    collections: { loading: false, updating: false, items: [] },
     router: {
       location: {
         pathname: '',

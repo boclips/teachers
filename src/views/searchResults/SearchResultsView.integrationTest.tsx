@@ -139,10 +139,4 @@ test('adding a video to a collection', async () => {
 
   expect(addToCollection.checked).toBeFalsy();
   addToCollection.click();
-
-  const notification = await waitForElement(
-    '.ant-notification-notice-description',
-  );
-
-  expect(notification.textContent).toMatch('has been saved');
 });

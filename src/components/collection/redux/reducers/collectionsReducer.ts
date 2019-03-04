@@ -6,16 +6,25 @@ import { CollectionsStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
+import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
+import { createCollectionAction } from '../actions/createCollectionAction';
+import { createCollectionResultAction } from '../actions/createCollectionResultAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
+import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
+import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 
-const initialState: CollectionsStateValue = { items: [], loading: true };
+const initialState: CollectionsStateValue = {
+  items: [],
+  loading: true,
+  updating: false,
+};
 
 const onStoreCollectionsAction = (
   _: CollectionsStateValue,
   videoCollections: VideoCollection[],
 ): CollectionsStateValue => {
-  return { items: videoCollections, loading: false };
+  return { items: videoCollections, loading: false, updating: false };
 };
 
 function getIndexOfCollection(
@@ -44,7 +53,7 @@ const onAddVideoAction = (
     ...items[indexOfCollection],
     videos: [...items[indexOfCollection].videos, request.video],
   };
-  return { ...state, items };
+  return { ...state, items, updating: true };
 };
 
 const onRemoveVideoAction = (
@@ -59,7 +68,20 @@ const onRemoveVideoAction = (
       v => v.id !== request.video.id,
     ),
   };
-  return { ...state, items };
+  return { ...state, items, updating: true };
+};
+
+const collectionUpdated = (
+  state: CollectionsStateValue,
+  _: UpdateCollectionResult,
+): CollectionsStateValue => {
+  return { ...state, updating: false };
+};
+
+const onCreateCollection = (
+  state: CollectionsStateValue,
+): CollectionsStateValue => {
+  return { ...state, updating: true };
 };
 
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
@@ -67,4 +89,9 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
   actionHandler(addToCollectionAction, onAddVideoAction),
   actionHandler(removeFromCollectionAction, onRemoveVideoAction),
+  actionHandler(createCollectionAction, onCreateCollection),
+
+  actionHandler(removeFromCollectionResultAction, collectionUpdated),
+  actionHandler(addToCollectionResultAction, collectionUpdated),
+  actionHandler(createCollectionResultAction, collectionUpdated),
 );
