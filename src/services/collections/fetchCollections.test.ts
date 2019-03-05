@@ -12,8 +12,8 @@ beforeEach(async () => {
   axiosMock.onGet().reply(200, JSON.stringify(userCollectionsResponse()), {});
 
   const links = LinksFactory.sample({
-    collections: new Link({
-      href: '/v1/collections',
+    collectionsDetails: new Link({
+      href: '/v1/collections?projection=details',
     }),
   });
 

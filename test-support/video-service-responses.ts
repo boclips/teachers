@@ -17,6 +17,12 @@ export const links = {
       templated: true,
     },
     userCollectionsDetails: {
+      href: '/v1/collections?projection=details',
+    },
+    userCollectionsList: {
+      href: '/v1/collections?projection=list',
+    },
+    userCollections: {
       href: '/v1/collections',
     },
   },

@@ -43,9 +43,12 @@ export default class ApiStub {
     once = false,
   ) {
     if (once) {
-      MockFetchVerify.getOnce('/v1/collections', collections);
+      MockFetchVerify.getOnce(
+        '/v1/collections?projection=details',
+        collections,
+      );
     } else {
-      MockFetchVerify.get('/v1/collections', collections);
+      MockFetchVerify.get('/v1/collections?projection=details', collections);
     }
     return this;
   }
