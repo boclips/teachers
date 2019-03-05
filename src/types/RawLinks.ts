@@ -8,5 +8,5 @@ export interface RawLinks {
   activate?: RawLink;
   profile?: RawLink;
   userCollection: RawLink;
-  userCollections: RawLink;
+  userCollectionsDetails: RawLink;
 }

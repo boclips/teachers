@@ -15,7 +15,7 @@ export default function fetchLinks() {
           createNoSearchResultsEvent: new Link(
             body._links.createNoSearchResultsEvent,
           ),
-          collections: new Link(body._links.userCollections),
+          collections: new Link(body._links.userCollectionsDetails),
           collection: new Link(body._links.userCollection),
         };
 

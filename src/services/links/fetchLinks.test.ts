@@ -12,7 +12,7 @@ describe('when anonymous user', () => {
         createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         userCollection: { href: '/default-collection', templated: true },
-        userCollections: { href: '/collections' },
+        userCollectionsDetails: { href: '/collections' },
       },
     });
 
@@ -43,7 +43,7 @@ describe('when active link available', () => {
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         activate: { href: '/users', templated: false },
         userCollection: { href: '/default-collection', templated: true },
-        userCollections: { href: '/collections' },
+        userCollectionsDetails: { href: '/collections' },
       },
     });
 
@@ -75,7 +75,7 @@ describe('when profile link available', () => {
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         profile: { href: '/users/{id}', templated: true },
         userCollection: { href: '/default-collection', templated: true },
-        userCollections: { href: '/collections' },
+        userCollectionsDetails: { href: '/collections' },
       },
     });
 

@@ -114,7 +114,7 @@ export class LinksResponseFactory {
         userCollection: arg.userCollection || {
           href: '/collections/xxx',
         },
-        userCollections: arg.userCollections || {
+        userCollections: arg.userCollectionsDetails || {
           href: '/collections',
         },
       },

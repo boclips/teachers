@@ -16,7 +16,7 @@ export const links = {
       href: '/v1/collections/{id}',
       templated: true,
     },
-    userCollections: {
+    userCollectionsDetails: {
       href: '/v1/collections',
     },
   },
