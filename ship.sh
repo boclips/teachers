@@ -12,4 +12,3 @@ npm run test
 npm run build
 
 git push
-say 'shipity ship' -v "$(say -v '?' | shuf -n 1 | cut -d' ' -f1)"
