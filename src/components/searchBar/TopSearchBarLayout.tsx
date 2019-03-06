@@ -17,6 +17,7 @@ const { Header, Content } = Layout;
 interface Props {
   children: React.ReactNode;
   showTabs: boolean;
+  showSearchBar?: boolean;
 }
 
 interface StateProps {
@@ -26,6 +27,7 @@ interface StateProps {
 class TopSearchBarLayout extends PureComponent<Props & StateProps> {
   public static defaultProps = {
     showTabs: false,
+    showSearchBar: true,
   };
 
   public renderLogo() {
@@ -67,7 +69,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
                 </section>
               </Col>
               <Col sm={{ span: 24 }} md={{ span: 12 }}>
-                {this.props.authorized ? <SearchBar /> : null}
+                {this.showSearchBar() ? <SearchBar /> : null}
               </Col>
               <Col sm={{ span: 12 }} md={{ span: 6 }}>
                 {this.renderLogout(this.props.authorized)}
@@ -86,6 +88,10 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
         </section>
       </Layout>
     );
+  }
+
+  private showSearchBar(): boolean {
+    return this.props.authorized && this.props.showSearchBar;
   }
 }
 

@@ -2,8 +2,6 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
-import boclipsLogo from '../../../resources/images/boclips-logo.png';
-import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import SearchBar from '../../components/searchBar/SearchBar';
 
 const { Content } = Layout;
@@ -19,11 +17,6 @@ export default class HomeView extends PureComponent {
               xl={{ span: 14, offset: 5 }}
             >
               <section className="home-search">
-                <section className="home-logo">
-                  <img className="logo" src={boclipsLogo} />
-                </section>
-
-                <hr className="home-divider" />
                 <section className="home-searchbar">
                   <label>I'm looking for:</label>
                   <SearchBar />
@@ -32,7 +25,6 @@ export default class HomeView extends PureComponent {
             </Col>
           </Row>
         </Content>
-        <BoclipsFooter />
       </Layout>
     );
   }

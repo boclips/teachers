@@ -18,6 +18,12 @@ describe('when authenticated', () => {
     expect(wrapper.find('Connect(SearchBar)')).toExist();
   });
 
+  test('does not render search bar when configured appropriately', () => {
+    const wrapper = mountAuthenticatedLayoutWithoutSearch();
+
+    expect(wrapper.find('Connect(SearchBar)')).not.toExist();
+  });
+
   test('renders Link in logo', () => {
     const wrapper = mountAuthenticatedLayout();
 
@@ -33,6 +39,15 @@ describe('when authenticated', () => {
   function mountAuthenticatedLayout() {
     return shallowWithStore(
       <TopSearchBarLayout>
+        <div>hi</div>
+      </TopSearchBarLayout>,
+      mockStore({ user }),
+    ).dive();
+  }
+
+  function mountAuthenticatedLayoutWithoutSearch() {
+    return shallowWithStore(
+      <TopSearchBarLayout showSearchBar={false}>
         <div>hi</div>
       </TopSearchBarLayout>,
       mockStore({ user }),
