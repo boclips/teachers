@@ -4,7 +4,9 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import PrivateRoute, { PrivateRouteComponentProps } from '../../components/login/PrivateRoute';
+import PrivateRoute, {
+  PrivateRouteComponentProps,
+} from '../../components/login/PrivateRoute';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { RouterState } from '../../types/State';
 import CollectionListView from '../collection/CollectionListView';
@@ -58,7 +60,10 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             component={collectionView}
           />
           <PrivateRoute path="/">
-            <TopSearchBarLayout showTabs={this.props.isSearchView} showSearchBar={this.props.isSearchView}>
+            <TopSearchBarLayout
+              showTabs={this.props.isSearchView}
+              showSearchBar={this.props.isSearchView}
+            >
               <HomeView />
             </TopSearchBarLayout>
           </PrivateRoute>
