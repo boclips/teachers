@@ -50,6 +50,14 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       createCollectionVisible: false,
     };
   }
+
+  public static getDerivedStateFromProps(
+    props: StateProps,
+    state: InternalState,
+  ): InternalState {
+    return { ...state, isSaving: !props.updating ? false : state.isSaving };
+  }
+
   public render() {
     return (
       <span>
