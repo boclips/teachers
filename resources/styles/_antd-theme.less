@@ -1,5 +1,6 @@
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 @import "~antd/lib/style/color/colors";
+@import "_colours";
 
 // The prefix to use on all css classes from ant.
 @ant-prefix: ant;
@@ -84,7 +85,7 @@
 @iconfont-css-prefix: anticon;
 
 // LINK
-@link-color: #4189FF;
+@link-color: @cta-blue;
 @link-hover-color: #0051BC;
 @link-active-color: #00217D;
 @link-decoration: underline;
@@ -140,7 +141,7 @@
 @btn-border-radius-sm: @border-radius-base;
 
 @btn-primary-color: #fff;
-@btn-primary-bg: #4189FF;
+@btn-primary-bg: @cta-blue;
 
 @btn-default-color: @text-color;
 @btn-default-bg: transparent;
