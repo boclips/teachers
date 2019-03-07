@@ -25,8 +25,8 @@
   }
 
   &:active {
-    border-color: #00217d;
-    color: #00217d;
+    border-color: @dark-blue;
+    color: @dark-blue;
   }
 
   &-primary {
@@ -41,7 +41,7 @@
     }
 
     &:disabled {
-      background-color: #e8efff;
+      background-color: @shade-2;
     }
 
     &:focus {
@@ -51,24 +51,24 @@
     }
 
     &:active {
-      background-color: #00217d;
+      background-color: @dark-blue;
       color: #ffffff;
     }
   }
 }
 
 .ant-input {
-  border: 2px solid #e8efff;
+  border: 2px solid @shade-2;
   border-radius: 8px;
   font-size: 14px;
   line-height: 24px;
 
   &:disabled {
-    border-color: #e8efff;
+    border-color: @shade-2;
   }
 
   &:focus {
-    border-color: #e8efff;
+    border-color: @shade-2;
     box-shadow: 0 0 4px 1px @cta-blue;
     color: #3d4564;
   }

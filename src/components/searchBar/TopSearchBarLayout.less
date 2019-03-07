@@ -5,6 +5,30 @@
 
 .top-search-bar {
   background-color: white;
+  @media (max-width: @screen-md) {
+    background-color: @cta-blue;
+    .ant-select-selection {
+      background-color: transparent;
+
+      .ant-input {
+        background-color: @shade-2;
+      }
+    }
+
+    .tabs .ant-tabs-nav {
+      color: @dark-blue;
+      font-weight: bold;
+
+      .ant-tabs-ink-bar {
+        background-color: @shade-2;
+      }
+
+      .ant-tabs-tab-active {
+        font-weight: bold;
+        color: @shade-2;
+      }
+    }
+  }
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 
   &.fixed {
@@ -30,6 +54,7 @@
       @media (max-width: @screen-md) {
         display: none;
       }
+
       button {
         min-width: 84px;
       }
@@ -41,11 +66,13 @@
         &.unauthenticated {
           height: 50px;
         }
+
         display: flex;
         margin-top: -12px;
         > * {
           padding-bottom: 12px;
         }
+
         justify-content: space-between;
       }
 
@@ -65,6 +92,6 @@
   }
 
   .ant-input {
-    background-color: #fafaff;
+    background-color: @shade-1;
   }
 }
