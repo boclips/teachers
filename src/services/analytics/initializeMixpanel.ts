@@ -19,6 +19,8 @@ const selectToken = (environment: string): string => {
 
 export const initializeMixpanel = (environment: string): Mixpanel => {
   const token = selectToken(environment);
-  const mixpanelInstance = mixpanel.init(token, {}, {});
+  const gatewayMixpanelProxy = '/v1/mp';
+  const config = { api_host: gatewayMixpanelProxy };
+  const mixpanelInstance = mixpanel.init(token, config, {});
   return mixpanelInstance;
 };
