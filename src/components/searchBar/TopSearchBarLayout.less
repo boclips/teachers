@@ -1,7 +1,9 @@
+@import '../../../resources/styles/_antd-theme.less';
+
 @header-height: 64px;
 @mobile-header-height: 92px;
 
-.ant-layout-header {
+.top-search-bar {
   background-color: white;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 
@@ -15,14 +17,6 @@
       width: 110px;
       position: relative;
       @media (max-width: @screen-md) {
-        display: none;
-      }
-    }
-
-    .mini-logo {
-      width: 60px;
-      position: relative;
-      @media (min-width: @screen-md) {
         display: none;
       }
     }

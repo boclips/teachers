@@ -5,12 +5,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import boclipsLogo from '../../../resources/images/boclips-logo.png';
-import boclipsMiniLogo from '../../../resources/images/boclips-mini-logo.png';
 import { LoginState } from '../../types/State';
 import { BoclipsFooter } from '../common/BoclipsFooter';
 import { LogoutButton } from '../common/LogoutButton';
 import SearchBar from './SearchBar';
 import ConnectedTabsContainer from './tabs/TabsContainer';
+import './TopSearchBarLayout.less';
 
 const { Header, Content } = Layout;
 
@@ -34,7 +34,6 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
     return (
       <Link to="/" data-qa="boclips-logo">
         <img className="logo" src={boclipsLogo} />
-        <img className="mini-logo" src={boclipsMiniLogo} />
       </Link>
     );
   }
@@ -55,7 +54,7 @@ class TopSearchBarLayout extends PureComponent<Props & StateProps> {
     return (
       <Layout>
         <section>
-          <Header className="fixed">
+          <Header className="top-search-bar fixed">
             <Row>
               <Col sm={{ span: 24 }} md={{ span: 6 }}>
                 <section

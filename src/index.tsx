@@ -1,8 +1,9 @@
+import './index.less';
+
 import * as Sentry from '@sentry/browser';
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './app/App';
-import './index.less';
 
 const environment = process.env.NODE_ENV;
 
