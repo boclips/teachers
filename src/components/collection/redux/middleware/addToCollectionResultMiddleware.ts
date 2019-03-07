@@ -5,7 +5,6 @@ import { VideoCollection } from '../../../../types/VideoCollection';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 
-export const SUCCESS_DESCRIPTION = 'has been saved to your video collection';
 export const ERROR_DESCRIPTION = 'could not be added to the collection';
 
 export interface UpdateCollectionResult {
