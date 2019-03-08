@@ -5,6 +5,7 @@ import {
 } from '../../../../../test-support/factories';
 import { CollectionsStateValue } from '../../../../types/State';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
+import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { collectionsReducer } from './collectionsReducer';
@@ -168,4 +169,20 @@ describe('fetch video for collection', () => {
     expect(stateAfter.items[0].videos[video.id].id).toEqual(video.id);
     expect(stateAfter.items[0].videoIds).toHaveLength(1);
   });
+});
+
+test('remove a collection', () => {
+  const collection = VideoCollectionFactory.sample();
+
+  const stateBefore: CollectionsStateValue = {
+    updating: false,
+    loading: false,
+    items: [collection],
+  };
+
+  const action = onCollectionRemovedAction(collection);
+
+  const stateAfter = collectionsReducer(stateBefore, action);
+
+  expect(stateAfter.items).toHaveLength(0);
 });
