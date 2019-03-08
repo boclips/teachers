@@ -31,6 +31,14 @@ class CollectionCardContainer extends React.PureComponent<
   }
 
   public componentDidMount() {
+    this.fetchVideosIfNeeded();
+  }
+
+  public componentDidUpdate() {
+    this.fetchVideosIfNeeded();
+  }
+
+  private fetchVideosIfNeeded() {
     if (this.shouldFetchVideosForCollection()) {
       this.props.fetchVideosForCollection({
         collection: this.props.collection,
