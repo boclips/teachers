@@ -5,6 +5,11 @@ export interface VideoLinks {
   self: Link;
 }
 
+export interface VideoId {
+  id: string;
+  links: VideoLinks;
+}
+
 export interface Video {
   id: string;
   title: string;

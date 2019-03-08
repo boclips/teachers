@@ -3,7 +3,7 @@ import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { CollectionsStateValue } from '../../../../types/State';
-import { Video } from '../../../../types/Video';
+import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
@@ -12,7 +12,9 @@ import { createCollectionResultAction } from '../actions/createCollectionResultA
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
+import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
+import { VideoMap } from './../../../../types/VideoCollection';
 
 const initialState: CollectionsStateValue = {
   items: [],
@@ -43,17 +45,39 @@ const onAddVideoAction = (
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(state, request);
   const videos = state.items[indexOfCollection].videos;
+  const videoIds = state.items[indexOfCollection].videoIds;
 
-  if (videos.find(v => v.id === request.video.id)) {
+  const alreadyHaveVideoId =
+    videoIds.find(v => v.id === request.video.id) != null;
+  const alreadyHaveVideo = videos[request.video.id];
+
+  if (alreadyHaveVideo && alreadyHaveVideoId) {
     return state;
   }
+
+  const videoId = {
+    id: request.video.id,
+    links: request.video.links,
+  };
 
   const items = [...state.items];
   items[indexOfCollection] = {
     ...items[indexOfCollection],
-    videos: [...items[indexOfCollection].videos, request.video],
+    videos: {
+      ...videos,
+      [request.video.id]: request.video,
+    },
+    videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
   };
   return { ...state, items, updating: true };
+};
+
+const getUpdateVideoIds = (
+  videoIds: VideoId[],
+  videoId: VideoId,
+  alreadyHaveVideoId: boolean,
+): VideoId[] => {
+  return alreadyHaveVideoId ? [...videoIds] : [...videoIds, videoId];
 };
 
 const onRemoveVideoAction = (
@@ -62,13 +86,21 @@ const onRemoveVideoAction = (
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(state, request);
   const items = [...state.items];
+
+  const collection = items[indexOfCollection];
+
   items[indexOfCollection] = {
     ...items[indexOfCollection],
-    videos: items[indexOfCollection].videos.filter(
-      v => v.id !== request.video.id,
-    ),
+    videos: removeVideo(request.video.id, collection.videos),
+    videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
   };
+
   return { ...state, items, updating: true };
+};
+
+const removeVideo = (videoIdToRemove: string, videos: VideoMap): VideoMap => {
+  const { [videoIdToRemove]: _, ...updatedVideos } = videos;
+  return updatedVideos;
 };
 
 const collectionUpdated = (
@@ -84,6 +116,30 @@ const onCreateCollection = (
   return { ...state, updating: true };
 };
 
+const onStoreVideosForCollectionAction = (
+  state: CollectionsStateValue,
+  request: { video: Video; collection: VideoCollection },
+): CollectionsStateValue => {
+  const indexOfCollection = getIndexOfCollection(state, request);
+  const items = [...state.items];
+
+  const videos = state.items[indexOfCollection].videos;
+
+  if (videos[request.video.id] != null) {
+    return state;
+  }
+
+  items[indexOfCollection] = {
+    ...items[indexOfCollection],
+    videos: {
+      ...videos,
+      [request.video.id]: request.video,
+    },
+  };
+
+  return { ...state, updating: true, items };
+};
+
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
@@ -94,4 +150,9 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(removeFromCollectionResultAction, collectionUpdated),
   actionHandler(addToCollectionResultAction, collectionUpdated),
   actionHandler(createCollectionResultAction, collectionUpdated),
+
+  actionHandler(
+    storeVideoForCollectionAction,
+    onStoreVideosForCollectionAction,
+  ),
 );

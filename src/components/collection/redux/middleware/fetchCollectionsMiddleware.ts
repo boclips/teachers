@@ -3,7 +3,7 @@ import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { fetchCollections } from '../../../../services/collections/fetchCollections';
 import { LinksState } from '../../../../types/State';
-import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
+import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 
 export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {

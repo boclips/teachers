@@ -6,7 +6,9 @@ import {
 import removeFromCollection from './removeFromCollection';
 
 const video = VideoFactory.sample({ id: '123' });
-const collection = VideoCollectionFactory.sample({ videos: [video] });
+const collection = VideoCollectionFactory.sample({
+  videos: VideoCollectionFactory.sampleVideos([video]),
+});
 
 test('remove from collection', async () => {
   MockFetchVerify.delete('/v1/collections/default/videos/123', '', 200);

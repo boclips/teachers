@@ -33,8 +33,13 @@ describe('when loading collections', () => {
 describe('when existing collections', () => {
   test('renders checkboxes for empty collections', () => {
     const wrapper = mountWith([
-      VideoCollectionFactory.sample({ videos: [], id: 'asdfa' }),
-      VideoCollectionFactory.sample({ videos: [] }),
+      VideoCollectionFactory.sample({
+        videos: VideoCollectionFactory.sampleVideos([]),
+        id: 'asdfa',
+      }),
+      VideoCollectionFactory.sample({
+        videos: VideoCollectionFactory.sampleVideos([]),
+      }),
     ]);
 
     wrapper
@@ -51,8 +56,13 @@ describe('when existing collections', () => {
     const video = VideoFactory.sample();
     const wrapper = mountWith(
       [
-        VideoCollectionFactory.sample({ videos: [video], id: 'asdfa' }),
-        VideoCollectionFactory.sample({ videos: [] }),
+        VideoCollectionFactory.sample({
+          videos: VideoCollectionFactory.sampleVideos([video]),
+          id: 'asdfa',
+        }),
+        VideoCollectionFactory.sample({
+          videos: VideoCollectionFactory.sampleVideos([]),
+        }),
       ],
       video,
     );

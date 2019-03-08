@@ -9,6 +9,8 @@ import { VideoCollection } from '../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
 import { CollectionSubtitle } from './CollectionSubtitle';
 
+const NUMBER_OF_PREVIEWS = 4;
+
 describe('CollectionCard', () => {
   let wrapper;
   let collection: VideoCollection;
@@ -17,9 +19,18 @@ describe('CollectionCard', () => {
     collection = VideoCollectionFactory.sample({
       title: 'a collection',
       updatedAt: '2018-12-25T12:00:00.870Z',
-      videos: [VideoFactory.sample(), VideoFactory.sample()],
+      videos: VideoCollectionFactory.sampleVideos([
+        VideoFactory.sample({ id: '1' }),
+        VideoFactory.sample({ id: '2' }),
+      ]),
     });
-    wrapper = shallow(<CollectionCard collection={collection} />);
+
+    wrapper = shallow(
+      <CollectionCard
+        collection={collection}
+        numberOfPreviews={NUMBER_OF_PREVIEWS}
+      />,
+    );
   });
 
   test('renders collection title', () => {
@@ -47,15 +58,20 @@ describe('CollectionCard', () => {
   describe('when more than 4 videos', () => {
     beforeEach(() => {
       collection = VideoCollectionFactory.sample({
-        videos: [
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-        ],
+        videos: VideoCollectionFactory.sampleVideos([
+          VideoFactory.sample({ id: '1' }),
+          VideoFactory.sample({ id: '2' }),
+          VideoFactory.sample({ id: '3' }),
+          VideoFactory.sample({ id: '4' }),
+          VideoFactory.sample({ id: '5' }),
+        ]),
       });
-      wrapper = shallow(<CollectionCard collection={collection} />);
+      wrapper = shallow(
+        <CollectionCard
+          collection={collection}
+          numberOfPreviews={NUMBER_OF_PREVIEWS}
+        />,
+      );
     });
 
     test('renders 3 video previews', () => {
@@ -74,14 +90,19 @@ describe('CollectionCard', () => {
   describe('when exactly 4 videos', () => {
     beforeEach(() => {
       collection = VideoCollectionFactory.sample({
-        videos: [
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-          VideoFactory.sample(),
-        ],
+        videos: VideoCollectionFactory.sampleVideos([
+          VideoFactory.sample({ id: '1' }),
+          VideoFactory.sample({ id: '2' }),
+          VideoFactory.sample({ id: '3' }),
+          VideoFactory.sample({ id: '4' }),
+        ]),
       });
-      wrapper = shallow(<CollectionCard collection={collection} />);
+      wrapper = shallow(
+        <CollectionCard
+          collection={collection}
+          numberOfPreviews={NUMBER_OF_PREVIEWS}
+        />,
+      );
     });
 
     test('renders 4 video previews', () => {

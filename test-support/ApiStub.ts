@@ -1,5 +1,9 @@
 import MockFetchVerify from './MockFetchVerify';
-import { links, userCollectionsResponse } from './video-service-responses';
+import {
+  links,
+  userCollectionsResponse,
+  video177Slim,
+} from './video-service-responses';
 
 interface VideoQueryOptions {
   query: string;
@@ -40,6 +44,7 @@ export default class ApiStub {
 
   public fetchCollections(
     collections = userCollectionsResponse(),
+    collectionsList = userCollectionsResponse([video177Slim]),
     once = false,
   ) {
     if (once) {
@@ -47,8 +52,15 @@ export default class ApiStub {
         '/v1/collections?projection=details',
         collections,
       );
+
+      MockFetchVerify.getOnce(
+        '/v1/collections?projection=list',
+        collectionsList,
+      );
     } else {
       MockFetchVerify.get('/v1/collections?projection=details', collections);
+
+      MockFetchVerify.get('/v1/collections?projection=list', collectionsList);
     }
     return this;
   }

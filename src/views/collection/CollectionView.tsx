@@ -6,12 +6,17 @@ import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { CollectionSubtitle } from '../../components/collection/CollectionSubtitle';
 import { CollectionTitle } from '../../components/collection/CollectionTitle';
+import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
+import {
+  fetchVideosForCollectionAction,
+  VideosForCollectionRequest,
+} from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
 import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
+import { VideoId } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
-import { fetchCollectionsAction } from './CollectionListView';
 import './CollectionView.less';
 
 interface OwnProps {
@@ -25,6 +30,7 @@ interface StateProps {
 interface DispatchProps {
   fetchCollections: () => void;
   onRenameCollection: (collection: VideoCollection) => (title: string) => void;
+  fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
 }
 
 export class CollectionView extends PureComponent<StateProps & DispatchProps> {
@@ -40,9 +46,11 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
     if (!this.props.collection || !this.props.collection.videos) {
       return null;
     }
-    if (this.props.collection.videos.length === 0) {
+    if (this.props.collection.videoIds.length === 0) {
       return this.renderEmptyCollection();
     }
+
+    const videos = this.props.collection.videos;
 
     return (
       <section className="collection-view__collection-details">
@@ -53,7 +61,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
         <CollectionSubtitle collection={this.props.collection} />
         {this.props.collection.videos && (
           <CollectionVideoCardList
-            videos={this.props.collection.videos}
+            videos={Object.keys(videos).map(id => videos[id])}
             currentCollection={this.props.collection}
           />
         )}
@@ -80,6 +88,32 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
 
   public componentDidMount() {
     this.props.fetchCollections();
+
+    if (this.props.collection) {
+      this.props.fetchVideosForCollection({
+        videos: this.videoIdsToFetch(),
+        collection: this.props.collection,
+      });
+    }
+  }
+
+  public componentDidUpdate() {
+    if (this.props.collection) {
+      this.props.fetchVideosForCollection({
+        videos: this.videoIdsToFetch(),
+        collection: this.props.collection,
+      });
+    }
+  }
+
+  private videoIdsToFetch(): VideoId[] {
+    if (!this.props.collection) {
+      return [];
+    }
+
+    const { videos, videoIds } = this.props.collection;
+
+    return videoIds.filter(videoId => videos[videoId.id] == null);
   }
 }
 
@@ -97,6 +131,8 @@ function mapStateToProps(
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     fetchCollections: () => dispatch(fetchCollectionsAction()),
+    fetchVideosForCollection: (request: VideosForCollectionRequest) =>
+      dispatch(fetchVideosForCollectionAction(request)),
     onRenameCollection: (collection: VideoCollection) => (title: string) =>
       dispatch(
         renameCollectionAction({ title, originalCollection: collection }),

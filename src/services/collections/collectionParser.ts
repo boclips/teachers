@@ -1,18 +1,20 @@
 import { Link } from '../../types/Link';
-import convertVideoResource from '../videos/convertVideoResource';
+import { VideoId } from '../../types/Video';
 import { VideoCollection } from './../../types/VideoCollection';
 
 export const parseCollectionResponse = (response: any): VideoCollection => {
   return doParseCollectionResponse(response.data);
 };
 
-export const parseCollectionsResponse = (response: any): VideoCollection[] => {
+export const parseCollectionsListResponse = (
+  response: any,
+): VideoCollection[] => {
   return (
     (response &&
       response.data &&
       response.data._embedded &&
       response.data._embedded.collections &&
-      response.data._embedded.collections.map(doParseCollectionResponse)) ||
+      response.data._embedded.collections.map(parseCollectionListResponse)) ||
     []
   );
 };
@@ -21,16 +23,38 @@ const doParseCollectionResponse = (data: any): VideoCollection => {
   const id = data.id;
   const title = data.title;
   const updatedAt = data.updatedAt;
-  const videos = data.videos.map(convertVideoResource);
   return {
     id,
     title,
-    videos,
+    videos: {},
+    videoIds: [],
     updatedAt,
-    links: {
-      addVideo: new Link(data._links.addVideo),
-      removeVideo: new Link(data._links.removeVideo),
-      self: new Link(data._links.self),
-    },
+    links: getLinks(data),
+  };
+};
+
+const parseCollectionListResponse = (data: any): VideoCollection => {
+  const videoIds: VideoId[] = data.videos.map(
+    (videoData: any): VideoId => ({
+      id: videoData.id,
+      links: { self: new Link(videoData._links.self) },
+    }),
+  );
+
+  return {
+    id: data.id,
+    title: data.title,
+    updatedAt: data.updatedAt,
+    videos: {},
+    videoIds,
+    links: getLinks(data),
+  };
+};
+
+const getLinks = (data: any) => {
+  return {
+    addVideo: new Link(data._links.addVideo),
+    removeVideo: new Link(data._links.removeVideo),
+    self: new Link(data._links.self),
   };
 };

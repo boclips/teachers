@@ -1,7 +1,7 @@
 import { Icon } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Video } from '../../types/Video';
+import { VideoId } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import DurationFormatter from '../common/formatters/DurationFormatter';
 import VideoPlayer from '../video/player/VideoPlayer';
@@ -11,9 +11,8 @@ import RemoveCollectionButton from './RemoveCollectionButton';
 
 interface Props {
   collection: VideoCollection;
+  numberOfPreviews: number;
 }
-
-const NUMBER_OF_PREVIEWS = 4;
 
 export class CollectionCard extends React.PureComponent<Props> {
   public render() {
@@ -46,45 +45,48 @@ export class CollectionCard extends React.PureComponent<Props> {
 
   private renderVideoPreviews() {
     const previews = [];
-    if (this.props.collection.videos.length === NUMBER_OF_PREVIEWS) {
+    if (this.props.collection.videoIds.length === this.props.numberOfPreviews) {
       previews.push(
-        this.props.collection.videos
-          .slice(0, NUMBER_OF_PREVIEWS)
-          .map(this.renderVideoPreview),
+        this.props.collection.videoIds
+          .slice(0, this.props.numberOfPreviews)
+          .map(videoId => this.renderVideoPreview(videoId)),
       );
     } else {
       previews.push(
-        this.props.collection.videos
-          .slice(0, NUMBER_OF_PREVIEWS - 1)
-          .map(this.renderVideoPreview),
+        this.props.collection.videoIds
+          .slice(0, this.props.numberOfPreviews - 1)
+          .map(videoId => this.renderVideoPreview(videoId)),
       );
     }
-    if (this.props.collection.videos.length > NUMBER_OF_PREVIEWS) {
+    if (this.props.collection.videoIds.length > this.props.numberOfPreviews) {
       previews.push(
-        this.renderVideoPreviewCount(this.props.collection.videos.length),
+        this.renderVideoPreviewCount(this.props.collection.videoIds.length),
       );
     }
     return previews;
   }
 
-  private renderVideoPreview(video: Video) {
+  private renderVideoPreview(videoId: VideoId) {
+    const video = this.props.collection.videos[videoId.id];
     return (
-      <section
-        key={video.id}
-        className="collection-video-preview"
-        data-qa="collection-video-preview"
-      >
-        <section className="video-container">
-          <section className="video-container-inner">
-            <VideoPlayer video={video} controls="thumbnail" />
+      video && (
+        <section
+          key={video.id}
+          className="collection-video-preview"
+          data-qa="collection-video-preview"
+        >
+          <section className="video-container">
+            <section className="video-container-inner">
+              <VideoPlayer video={video} controls="thumbnail" />
+            </section>
+          </section>
+          <section className="title clamp-2-lines">{video.title}</section>
+          <section data-qa="video-duration" className={'subtitle duration'}>
+            <Icon type="clock-circle" />{' '}
+            <DurationFormatter duration={video.duration} />
           </section>
         </section>
-        <section className="title clamp-2-lines">{video.title}</section>
-        <section data-qa="video-duration" className={'subtitle duration'}>
-          <Icon type="clock-circle" />{' '}
-          <DurationFormatter duration={video.duration} />
-        </section>
-      </section>
+      )
     );
   }
 
@@ -96,7 +98,7 @@ export class CollectionCard extends React.PureComponent<Props> {
             <span>
               +
               <span data-qa="collection-video-preview-counter">
-                {totalNumberOfVideos - (NUMBER_OF_PREVIEWS - 1)}
+                {totalNumberOfVideos - (this.props.numberOfPreviews - 1)}
               </span>
             </span>
             <section className="label">videos</section>

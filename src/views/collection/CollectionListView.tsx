@@ -4,16 +4,12 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
-import { actionCreatorFactoryVoid } from '../../app/redux/actions';
 import { CollectionCardList } from '../../components/collection/CollectionCardList';
+import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
 import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
 import { CollectionState } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
 import './CollectionListView.less';
-
-export const fetchCollectionsAction = actionCreatorFactoryVoid(
-  'FETCH_COLLECTIONS',
-);
 
 interface StateProps {
   collections: VideoCollection[];

@@ -3,9 +3,9 @@ import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { deleteCollection } from '../../../../services/collections/deleteCollection';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { deleteCollectionAction } from '../actions/deleteCollectionAction';
+import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 
 export function onDeleteCollection(
   store: MiddlewareAPI,

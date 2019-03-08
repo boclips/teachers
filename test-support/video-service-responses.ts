@@ -28,8 +28,13 @@ export const links = {
   },
 };
 
-export const video177 = Object.freeze({
+export const video177Slim = Object.freeze({
   id: '177',
+  _links: { self: { href: '/v1/videos/177' } },
+});
+
+export const video177 = Object.freeze({
+  ...video177Slim,
   title: 'KS3/4 Science: Demonstrating Chemistry',
   description: 'Matthew Tosh shows us the science.',
   releasedOn: '2018-02-11T10:12:33Z',
@@ -46,7 +51,6 @@ export const video177 = Object.freeze({
     name: 'educational',
     id: 1,
   },
-  _links: { self: { href: 'http://localhost/v1/videos/177' } },
 });
 
 const video147 = Object.freeze({

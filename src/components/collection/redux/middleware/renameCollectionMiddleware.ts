@@ -5,8 +5,8 @@ import {
   renameCollection,
   RenameCollectionRequest,
 } from '../../../../services/collections/renameCollection';
-import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
 import NotificationFactory from '../../../common/NotificationFactory';
+import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { renameCollectionAction } from '../actions/renameCollectionAction';
 
 export function onRenameCollection(

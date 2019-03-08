@@ -1,13 +1,14 @@
-import moment = require('moment');
 import { UserProfile } from '../src/services/analytics/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
-import { StreamPlayback, Video } from '../src/types/Video';
+import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import {
   VideoCollection,
   VideoCollectionLinks,
+  VideoMap,
 } from './../src/types/VideoCollection';
+import moment = require('moment');
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
@@ -32,15 +33,42 @@ export class VideoFactory {
   }
 }
 
+export class VideoIdFactory {
+  public static sample(arg: Partial<VideoId> = {}): VideoId {
+    return Object.freeze({
+      id: arg.id || '123',
+      links: arg.links || {
+        self: new Link({ href: '/v1/videos/123' }),
+      },
+    });
+  }
+}
+
 export class VideoCollectionFactory {
   public static sample(arg: Partial<VideoCollection> = {}): VideoCollection {
+    const videos = arg.videos || {};
     return Object.freeze({
       id: arg.id || '',
       title: arg.title || '',
       updatedAt: arg.updatedAt || '',
-      videos: arg.videos || [],
+      videos,
+      videoIds:
+        arg.videoIds ||
+        Object.keys(videos)
+          .map(videoId => videos[videoId])
+          .map(video => ({
+            id: video.id,
+            links: video.links,
+          })),
       links: arg.links || VideoCollectionLinksFactory.sample(),
     });
+  }
+
+  public static sampleVideos(videos: Video[]): VideoMap {
+    return videos.reduce((map, video) => {
+      map[video.id] = video;
+      return map;
+    }, {});
   }
 }
 

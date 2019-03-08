@@ -2,6 +2,7 @@ import React from 'react';
 import collections from '../../../resources/images/collections.png';
 import { VideoCollection } from '../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
+import CollectionCardContainer from './CollectionCardContainer';
 
 interface Props {
   collections: VideoCollection[];
@@ -20,7 +21,10 @@ export class CollectionCardList extends React.PureComponent<Props> {
           ? this.renderLoading()
           : this.props.collections.map(collection => {
               return (
-                <CollectionCard key={collection.id} collection={collection} />
+                <CollectionCardContainer
+                  key={collection.id}
+                  collection={collection}
+                />
               );
             })}
       </React.Fragment>

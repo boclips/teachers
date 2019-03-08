@@ -5,10 +5,10 @@ import {
   createCollection,
   CreateCollectionRequest,
 } from '../../../../services/collections/createCollection';
-import { fetchCollectionsAction } from '../../../../views/collection/CollectionListView';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
+import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 
 export function onCreateCollection(
   store: MiddlewareAPI,
