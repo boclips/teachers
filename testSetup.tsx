@@ -1,5 +1,6 @@
 /* tslint:disable:no-string-literal */
 import axios from 'axios';
+import AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
@@ -15,6 +16,8 @@ jest.mock('boclips-react-player', () => ({
 
 beforeEach(() => {
   (axios.interceptors.request as any).handlers = [];
+  (axios.interceptors.request as any).use(AxiosLogger.requestLogger);
+
   MockFetchVerify.clear();
 });
 
