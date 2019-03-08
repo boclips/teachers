@@ -1,3 +1,4 @@
+import moment = require('moment');
 import { UserProfile } from '../src/services/analytics/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
@@ -8,7 +9,6 @@ import {
   VideoCollectionLinks,
   VideoMap,
 } from './../src/types/VideoCollection';
-import moment = require('moment');
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {

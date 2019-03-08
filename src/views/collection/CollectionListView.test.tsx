@@ -5,7 +5,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
 import { CollectionState, RouterState } from '../../types/State';
 import CollectionListView from './CollectionListView';
 
@@ -35,16 +34,6 @@ function render(collection) {
 
   return { store, wrapper };
 }
-
-test('dispatches FETCH_COLLECTIONS when mounted', () => {
-  const { store } = render({});
-  expect(store.getActions()).toContainEqual(fetchCollectionsAction());
-});
-
-test('does not dispatch FETCH_COLLECTIONS when mounted and collection already reloaded', () => {
-  const { store } = render({ loading: false, updating: false, items: [] });
-  expect(store.getActions()).not.toContainEqual(fetchCollectionsAction());
-});
 
 test('displays an empty state when no collections', () => {
   const { wrapper } = render({ loading: false, updating: false, items: [] });

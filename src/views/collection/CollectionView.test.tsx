@@ -17,7 +17,6 @@ import {
   video177Slim,
 } from '../../../test-support/video-service-responses';
 import { CollectionTitleHelper } from '../../components/collection/CollectionTitle.test';
-import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
 import { fetchVideosForCollectionAction } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
 import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
 import { Link } from '../../types/Link';
@@ -75,25 +74,6 @@ function render(videos: VideoMap, videoIds: VideoId[]) {
 
   return renderCollectionView([collection]);
 }
-
-test('dispatches FETCH_COLLECTIONS when mounted', () => {
-  const { store } = render({}, []);
-  expect(store.getActions()).toContainEqual(fetchCollectionsAction());
-});
-
-test('fetches videos when mounted', () => {
-  const videoNotLoaded = VideoFactory.sample();
-  const { store } = render({}, [
-    { id: videoNotLoaded.id, links: videoNotLoaded.links },
-  ]);
-
-  expect(store.getActions()).toContainEqual(
-    fetchVideosForCollectionAction({
-      collection,
-      videos: [{ id: videoNotLoaded.id, links: videoNotLoaded.links }],
-    }),
-  );
-});
 
 test('fetch all videos when collection is not loaded', () => {
   const { store } = renderCollectionView([]);

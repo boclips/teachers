@@ -65,12 +65,6 @@ export class CollectionListView extends PureComponent<
       </Row>
     );
   }
-
-  public componentDidMount() {
-    if (!this.props.collections) {
-      this.props.fetchCollection();
-    }
-  }
 }
 
 function mapStateToProps(state: CollectionState): StateProps {
