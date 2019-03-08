@@ -32,10 +32,10 @@ const onStoreCollectionsAction = (
 
 function getIndexOfCollection(
   state: CollectionsStateValue,
-  request: { video: Video; collection: VideoCollection },
+  collection: VideoCollection,
 ) {
   const indexOfCollection = state.items.findIndex(
-    col => col.id === request.collection.id,
+    col => col.id === collection.id,
   );
   return indexOfCollection;
 }
@@ -44,7 +44,7 @@ const onAddVideoAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(state, request);
+  const indexOfCollection = getIndexOfCollection(state, request.collection);
   const videos = state.items[indexOfCollection].videos;
   const videoIds = state.items[indexOfCollection].videoIds;
 
@@ -85,7 +85,7 @@ const onRemoveVideoAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(state, request);
+  const indexOfCollection = getIndexOfCollection(state, request.collection);
   const items = [...state.items];
 
   const collection = items[indexOfCollection];
@@ -119,22 +119,27 @@ const onCreateCollection = (
 
 const onStoreVideosForCollectionAction = (
   state: CollectionsStateValue,
-  request: { video: Video; collection: VideoCollection },
+  request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(state, request);
+  const indexOfCollection = getIndexOfCollection(state, request.collection);
   const items = [...state.items];
 
   const videos = state.items[indexOfCollection].videos;
 
-  if (videos[request.video.id] != null) {
+  if (request.videos.map(v => v.id).every(id => videos[id] !== undefined)) {
     return state;
   }
+
+  const videoMapToUpdate: VideoMap = request.videos.reduce((map, video) => {
+    map[video.id] = video;
+    return map;
+  }, {});
 
   items[indexOfCollection] = {
     ...items[indexOfCollection],
     videos: {
       ...videos,
-      [request.video.id]: request.video,
+      ...videoMapToUpdate,
     },
   };
 
@@ -146,6 +151,7 @@ const onCollectionRemoved = (
   removedCollection: VideoCollection,
 ): CollectionsStateValue => {
   return {
+    updating: false,
     ...state,
     items: state.items.filter(
       collection => collection.id !== removedCollection.id,

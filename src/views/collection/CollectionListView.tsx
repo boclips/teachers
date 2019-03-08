@@ -67,7 +67,9 @@ export class CollectionListView extends PureComponent<
   }
 
   public componentDidMount() {
-    this.props.fetchCollection();
+    if (!this.props.collections) {
+      this.props.fetchCollection();
+    }
   }
 }
 

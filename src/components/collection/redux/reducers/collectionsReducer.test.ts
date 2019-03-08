@@ -157,7 +157,7 @@ describe('fetch video for collection', () => {
     };
 
     const action = storeVideoForCollectionAction({
-      video,
+      videos: [video],
       collection,
     });
 

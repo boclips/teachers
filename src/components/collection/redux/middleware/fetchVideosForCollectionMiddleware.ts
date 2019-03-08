@@ -10,15 +10,15 @@ export function onFetchVideosForCollection(
   store: MiddlewareAPI<Dispatch, LinksState>,
   request: VideosForCollectionRequest,
 ) {
-  request.videos.map(videoId =>
-    fetchVideoFromSelfLink(videoId.links.self)
-      .then(video =>
-        storeVideoForCollectionAction({
-          video,
-          collection: request.collection,
-        }),
-      )
-      .then(store.dispatch),
+  Promise.all(
+    request.videos.map(videoId => fetchVideoFromSelfLink(videoId.links.self)),
+  ).then(videos =>
+    store.dispatch(
+      storeVideoForCollectionAction({
+        videos,
+        collection: request.collection,
+      }),
+    ),
   );
 }
 

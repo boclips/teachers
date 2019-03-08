@@ -32,7 +32,7 @@ test('dispatches a store action per successfully fetched video', async () => {
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      storeVideoForCollectionAction({ video, collection }),
+      storeVideoForCollectionAction({ videos: [video], collection }),
     );
   });
 });

@@ -11,9 +11,9 @@ import CollectionListView from './CollectionListView';
 
 const mockStore = configureStore<CollectionState & RouterState>();
 
-function render() {
+function render(collection) {
   const store = mockStore({
-    collections: { loading: false, updating: false, items: [] },
+    collections: collection,
     router: {
       location: {
         pathname: '',
@@ -37,12 +37,17 @@ function render() {
 }
 
 test('dispatches FETCH_COLLECTIONS when mounted', () => {
-  const { store } = render();
+  const { store } = render({});
   expect(store.getActions()).toContainEqual(fetchCollectionsAction());
 });
 
+test('does not dispatch FETCH_COLLECTIONS when mounted and collection already reloaded', () => {
+  const { store } = render({ loading: false, updating: false, items: [] });
+  expect(store.getActions()).not.toContainEqual(fetchCollectionsAction());
+});
+
 test('displays an empty state when no collections', () => {
-  const { wrapper } = render();
+  const { wrapper } = render({ loading: false, updating: false, items: [] });
 
   expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(
     'You have no collections',
