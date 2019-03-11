@@ -36,10 +36,6 @@ export default class AccountMenuMobile extends React.PureComponent<
     });
   };
 
-  private onLogoutButtonClick = (e: SyntheticEvent) => {
-    this.props.onLogout(e);
-  };
-
   public render() {
     return (
       <div className="display-mobile">
@@ -73,12 +69,7 @@ export default class AccountMenuMobile extends React.PureComponent<
             </Menu.Item>
             <Menu.Divider key="lovely-divider" />
             <Menu.Item key="2" className="account-menu-mobile__menu-item">
-              <a
-                data-qa="logout-button"
-                className="logout"
-                onClick={this.onLogoutButtonClick}
-                href="#"
-              >
+              <a data-qa="logout-button" onClick={this.props.onLogout} href="#">
                 <img src={logooutIcon} className="account-menu-mobile__image" />
                 Log out
               </a>

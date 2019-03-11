@@ -15,12 +15,7 @@ const menu = (props: Props) => (
       </Link>
     </Menu.Item>
     <Menu.Item key="2">
-      <a
-        data-qa="logout-button"
-        className="logout"
-        onClick={props.onLogout}
-        href="#"
-      >
+      <a data-qa="logout-button" onClick={props.onLogout} href="#">
         Log out
       </a>
     </Menu.Item>
