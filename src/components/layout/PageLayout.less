@@ -51,35 +51,9 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      @media (max-width: @screen-md) {
-        display: none;
-      }
 
       button {
         min-width: 84px;
-      }
-    }
-
-    .logo-logout {
-      @media (max-width: @screen-md) {
-        height: 36px;
-        &.unauthenticated {
-          height: 50px;
-        }
-
-        display: flex;
-        margin-top: -12px;
-        > * {
-          padding-bottom: 12px;
-        }
-
-        justify-content: space-between;
-      }
-
-      .logout-container-mini {
-        @media (min-width: @screen-md) {
-          display: none;
-        }
       }
     }
 

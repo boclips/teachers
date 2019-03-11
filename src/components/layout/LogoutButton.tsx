@@ -49,28 +49,11 @@ class AccountMenu extends PureComponent<AccountMenuProps> {
   }
 }
 
-class MobileNavigation extends PureComponent<AccountMenuProps> {
-  public render() {
-    return (
-      <section>
-        <CollectionVideoLink />
-        <a onClick={this.props.onLogout} style={{ paddingLeft: '1em' }}>
-          Log out
-        </a>
-      </section>
-    );
-  }
-}
-
 export class LogoutButton extends PureComponent<Props> {
   public render() {
-    const containerClass = this.props.mini
-      ? 'logout-container-mini'
-      : 'logout-container';
     return (
-      <div className={containerClass}>
-        {!this.props.mini && <AccountMenu onLogout={this.confirmLogout} />}
-        {this.props.mini && <MobileNavigation onLogout={this.confirmLogout} />}
+      <div className={'logout-container'}>
+        <AccountMenu onLogout={this.confirmLogout} />
       </div>
     );
   }

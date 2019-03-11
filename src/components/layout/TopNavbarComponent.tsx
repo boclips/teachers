@@ -15,21 +15,16 @@ const TopNavbarComponent = React.memo((props: Props) => (
   <React.Fragment>
     <Row>
       <Col sm={{ span: 24 }} md={{ span: 6 }}>
-        <section
-          className={
-            'logo-logout' + (props.authorized ? '' : ' unauthenticated')
-          }
-        >
+        <section>
           <Link to="/" data-qa="boclips-logo">
             <img className="logo" src={boclipsLogo} />
           </Link>
-          {props.authorized && <LogoutButton mini={true} />}
         </section>
       </Col>
-      <Col sm={{ span: 24 }} md={{ span: 12 }}>
+      <Col xs={{ span: 19 }} sm={{ span: 20 }} md={{ span: 12 }}>
         {props.showSearchBar ? <SearchBar /> : null}
       </Col>
-      <Col sm={{ span: 12 }} md={{ span: 6 }}>
+      <Col xs={{ span: 5 }} sm={{ span: 4 }} md={{ span: 6 }}>
         {props.authorized && <LogoutButton />}
       </Col>
     </Row>
