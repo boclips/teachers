@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { UserProfileFactory } from '../../../test-support/factories';
 import { LoginState } from '../../types/State';
-import { LogoutButton } from './LogoutButton';
+import { AccountMenuContainer } from './accountMenu/AccountMenuContainer';
 import TopNavbarContainer from './TopNavbarContainer';
 
 const mockStore = configureStore<LoginState>();
@@ -46,7 +46,7 @@ describe('when authenticated', () => {
   test('renders logout button', () => {
     const wrapper = mountAuthenticatedLayout();
 
-    expect(wrapper.find(LogoutButton)).toExist();
+    expect(wrapper.find(AccountMenuContainer)).toExist();
   });
 
   function mountAuthenticatedLayout() {
@@ -84,7 +84,7 @@ describe('when not authenticated', () => {
   test('renders logout button', () => {
     const wrapper = mountAnonymousLayout();
 
-    expect(wrapper.find(LogoutButton)).not.toExist();
+    expect(wrapper.find(AccountMenuContainer)).not.toExist();
   });
 
   function mountAnonymousLayout() {

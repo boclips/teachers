@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import boclipsLogo from '../../../resources/images/boclips-logo.png';
 import SearchBar from '../searchBar/SearchBar';
-import { LogoutButton } from './LogoutButton';
+import { AccountMenuContainer } from './accountMenu/AccountMenuContainer';
 import ConnectedTabsContainer from './tabs/TabsContainer';
 
 interface Props {
@@ -25,7 +25,7 @@ const TopNavbarComponent = React.memo((props: Props) => (
         {props.showSearchBar ? <SearchBar /> : null}
       </Col>
       <Col xs={{ span: 5 }} sm={{ span: 4 }} md={{ span: 6 }}>
-        {props.authorized && <LogoutButton />}
+        {props.authorized && <AccountMenuContainer />}
       </Col>
     </Row>
     {props.showTabs && <ConnectedTabsContainer data-qa="navbar-tabs" />}
