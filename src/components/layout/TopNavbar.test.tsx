@@ -3,10 +3,11 @@ import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
+import { By } from '../../../test-support/By';
 import { UserProfileFactory } from '../../../test-support/factories';
 import { LoginState } from '../../types/State';
 import { LogoutButton } from './LogoutButton';
-import NavBar from './NavBar';
+import TopNavbarContainer from './TopNavbarContainer';
 
 const mockStore = configureStore<LoginState>();
 const user = UserProfileFactory.sample({ authenticated: true });
@@ -16,6 +17,18 @@ describe('when authenticated', () => {
     const wrapper = mountAuthenticatedLayout();
 
     expect(wrapper.find('Connect(SearchBar)')).toExist();
+  });
+
+  test('renders tabs', () => {
+    const wrapper = mountAuthenticatedLayoutWithTabs();
+
+    expect(wrapper.find(By.dataQa('navbar-tabs'))).toExist();
+  });
+
+  test('does not render tabs', () => {
+    const wrapper = mountAuthenticatedLayout();
+
+    expect(wrapper.find(By.dataQa('navbar-tabs'))).not.toExist();
   });
 
   test('does not render search bar when configured appropriately', () => {
@@ -37,21 +50,27 @@ describe('when authenticated', () => {
   });
 
   function mountAuthenticatedLayout() {
-    return shallowWithStore(
-      <NavBar>
-        <div>hi</div>
-      </NavBar>,
-      mockStore({ user }),
-    ).dive();
+    return shallowWithStore(<TopNavbarContainer />, mockStore({ user }))
+      .dive()
+      .dive();
   }
 
   function mountAuthenticatedLayoutWithoutSearch() {
     return shallowWithStore(
-      <NavBar showSearchBar={false}>
-        <div>hi</div>
-      </NavBar>,
+      <TopNavbarContainer showSearchBar={false} />,
       mockStore({ user }),
-    ).dive();
+    )
+      .dive()
+      .dive();
+  }
+
+  function mountAuthenticatedLayoutWithTabs() {
+    return shallowWithStore(
+      <TopNavbarContainer showTabs={true} />,
+      mockStore({ user }),
+    )
+      .dive()
+      .dive();
   }
 });
 
@@ -70,11 +89,11 @@ describe('when not authenticated', () => {
 
   function mountAnonymousLayout() {
     return shallowWithStore(
-      <NavBar>
-        <div>hi</div>
-      </NavBar>,
+      <TopNavbarContainer />,
       mockStore({ user: undefined }),
-    ).dive();
+    )
+      .dive()
+      .dive();
   }
 });
 

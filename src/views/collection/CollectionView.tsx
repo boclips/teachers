@@ -12,7 +12,7 @@ import {
   VideosForCollectionRequest,
 } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
 import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
-import NavBar from '../../components/topNavbar/NavBar';
+import PageLayout from '../../components/layout/PageLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
 import { VideoId } from '../../types/Video';
@@ -36,9 +36,9 @@ interface DispatchProps {
 export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   public render() {
     return (
-      <NavBar>
+      <PageLayout>
         <section data-qa="collection-page">{this.renderContent()}</section>
-      </NavBar>
+      </PageLayout>
     );
   }
 

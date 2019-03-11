@@ -4,10 +4,10 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
+import PageLayout from '../../components/layout/PageLayout';
 import PrivateRoute, {
   PrivateRouteComponentProps,
 } from '../../components/login/PrivateRoute';
-import NavBar from '../../components/topNavbar/NavBar';
 import { RouterState } from '../../types/State';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
@@ -43,12 +43,12 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
         <Switch>
           <Route path="/bye" component={LoggedOutView} />
           <Route path="/videos">
-            <NavBar showTabs={this.props.isSearchView}>
+            <PageLayout showTabs={this.props.isSearchView}>
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
                 <PrivateRoute path="/videos" component={SearchResultsView} />
               </Switch>
-            </NavBar>
+            </PageLayout>
           </Route>
           <PrivateRoute
             path="/collections"
@@ -60,12 +60,12 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             component={collectionView}
           />
           <PrivateRoute path="/">
-            <NavBar
+            <PageLayout
               showTabs={this.props.isSearchView}
               showSearchBar={this.props.isSearchView}
             >
               <HomeView />
-            </NavBar>
+            </PageLayout>
           </PrivateRoute>
         </Switch>
       </ConnectedRouter>
