@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 import boclipsLogo from '../../../resources/images/boclips-logo.png';
 import { LoginState } from '../../types/State';
 import { BoclipsFooter } from '../common/BoclipsFooter';
-import { LogoutButton } from '../common/LogoutButton';
-import SearchBar from './SearchBar';
+import SearchBar from '../searchBar/SearchBar';
+import { LogoutButton } from './LogoutButton';
+import './NavBar.less';
 import ConnectedTabsContainer from './tabs/TabsContainer';
-import './TopSearchBarLayout.less';
 
 const { Header, Content } = Layout;
 
@@ -24,7 +24,7 @@ interface StateProps {
   authorized: boolean;
 }
 
-class TopSearchBarLayout extends PureComponent<Props & StateProps> {
+class NavBar extends PureComponent<Props & StateProps> {
   public static defaultProps = {
     showTabs: false,
     showSearchBar: true,
@@ -100,4 +100,4 @@ function mapStateToProps(state: LoginState): StateProps {
   };
 }
 
-export default connect(mapStateToProps)(TopSearchBarLayout);
+export default connect(mapStateToProps)(NavBar);

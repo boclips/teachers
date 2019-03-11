@@ -5,8 +5,8 @@ import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import { UserProfileFactory } from '../../../test-support/factories';
 import { LoginState } from '../../types/State';
-import { LogoutButton } from '../common/LogoutButton';
-import TopSearchBarLayout from './TopSearchBarLayout';
+import { LogoutButton } from './LogoutButton';
+import NavBar from './NavBar';
 
 const mockStore = configureStore<LoginState>();
 const user = UserProfileFactory.sample({ authenticated: true });
@@ -38,18 +38,18 @@ describe('when authenticated', () => {
 
   function mountAuthenticatedLayout() {
     return shallowWithStore(
-      <TopSearchBarLayout>
+      <NavBar>
         <div>hi</div>
-      </TopSearchBarLayout>,
+      </NavBar>,
       mockStore({ user }),
     ).dive();
   }
 
   function mountAuthenticatedLayoutWithoutSearch() {
     return shallowWithStore(
-      <TopSearchBarLayout showSearchBar={false}>
+      <NavBar showSearchBar={false}>
         <div>hi</div>
-      </TopSearchBarLayout>,
+      </NavBar>,
       mockStore({ user }),
     ).dive();
   }
@@ -70,9 +70,9 @@ describe('when not authenticated', () => {
 
   function mountAnonymousLayout() {
     return shallowWithStore(
-      <TopSearchBarLayout>
+      <NavBar>
         <div>hi</div>
-      </TopSearchBarLayout>,
+      </NavBar>,
       mockStore({ user: undefined }),
     ).dive();
   }

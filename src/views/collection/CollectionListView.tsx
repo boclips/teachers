@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { CollectionCardList } from '../../components/collection/CollectionCardList';
 import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
-import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
+import NavBar from '../../components/topNavbar/NavBar';
 import { CollectionState } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
 import './CollectionListView.less';
@@ -25,11 +25,11 @@ export class CollectionListView extends PureComponent<
 > {
   public render() {
     return (
-      <TopSearchBarLayout>
+      <NavBar>
         <section className="collection-list" data-qa="collection-list-page">
           {this.renderContent()}
         </section>
-      </TopSearchBarLayout>
+      </NavBar>
     );
   }
 

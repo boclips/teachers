@@ -3,13 +3,13 @@ import Row from 'antd/lib/grid/row';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import wavingHand from '../../../resources/images/waving-hand.png';
-import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
+import NavBar from '../../components/topNavbar/NavBar';
 
 export default class LoggedOutView extends React.PureComponent {
   public render() {
     const fixedHeight = { minHeight: '230px' };
     return (
-      <TopSearchBarLayout>
+      <NavBar>
         <section className="illustrated-page">
           <Row>
             <Col sm={{ span: 24 }} md={{ span: 8 }}>
@@ -31,7 +31,7 @@ export default class LoggedOutView extends React.PureComponent {
             </Col>
           </Row>
         </section>
-      </TopSearchBarLayout>
+      </NavBar>
     );
   }
 }

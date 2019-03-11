@@ -7,7 +7,7 @@ import { Route, RouteComponentProps, Switch } from 'react-router';
 import PrivateRoute, {
   PrivateRouteComponentProps,
 } from '../../components/login/PrivateRoute';
-import TopSearchBarLayout from '../../components/searchBar/TopSearchBarLayout';
+import NavBar from '../../components/topNavbar/NavBar';
 import { RouterState } from '../../types/State';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
@@ -43,12 +43,12 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
         <Switch>
           <Route path="/bye" component={LoggedOutView} />
           <Route path="/videos">
-            <TopSearchBarLayout showTabs={this.props.isSearchView}>
+            <NavBar showTabs={this.props.isSearchView}>
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
                 <PrivateRoute path="/videos" component={SearchResultsView} />
               </Switch>
-            </TopSearchBarLayout>
+            </NavBar>
           </Route>
           <PrivateRoute
             path="/collections"
@@ -60,12 +60,12 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             component={collectionView}
           />
           <PrivateRoute path="/">
-            <TopSearchBarLayout
+            <NavBar
               showTabs={this.props.isSearchView}
               showSearchBar={this.props.isSearchView}
             >
               <HomeView />
-            </TopSearchBarLayout>
+            </NavBar>
           </PrivateRoute>
         </Switch>
       </ConnectedRouter>
