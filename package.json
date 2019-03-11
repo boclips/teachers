@@ -49,7 +49,7 @@
     "axios-logger": "^1.0.0",
     "axios-mock-adapter": "^1.15.0",
     "boclips-js-security": "^1.0.52",
-    "boclips-react-player": "^13.0.0",
+    "boclips-react-player": "^14.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "connected-react-router": "^4.4.1",
     "copy-webpack-plugin": "^4.5.2",
