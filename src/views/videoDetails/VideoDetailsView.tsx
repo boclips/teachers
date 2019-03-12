@@ -1,8 +1,8 @@
-import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { actionCreatorFactory } from '../../app/redux/actions';
+import PageLayout from '../../components/layout/PageLayout';
 import LoginProvider from '../../components/login/LoginProvider';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import { VideoDetailsState } from '../../types/State';
@@ -28,13 +28,13 @@ export class VideoDetailsView extends PureComponent<
   public render() {
     return (
       <LoginProvider>
-        <Layout>
+        <PageLayout>
           <section data-qa="video-details-page">
             <section className="video-details-page" data-qa="video-details">
               <VideoDetails video={this.props.video} />
             </section>
           </section>
-        </Layout>
+        </PageLayout>
       </LoginProvider>
     );
   }

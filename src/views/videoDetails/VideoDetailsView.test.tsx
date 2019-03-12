@@ -2,6 +2,7 @@ import { BoclipsPlayer } from 'boclips-react-player';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
 import { LinksFactory, VideoFactory } from '../../../test-support/factories';
@@ -18,7 +19,9 @@ test('dispatches FETCH_VIDEO when mounted', () => {
 
   mount(
     <Provider store={store}>
-      <VideoDetailsView videoId="123" />
+      <MemoryRouter>
+        <VideoDetailsView videoId="123" />
+      </MemoryRouter>
     </Provider>,
   );
 
@@ -33,7 +36,9 @@ test('renders video details when the video has loaded', () => {
 
   const wrapper = mount(
     <Provider store={store}>
-      <VideoDetailsView videoId="123" />
+      <MemoryRouter>
+        <VideoDetailsView videoId="123" />
+      </MemoryRouter>
     </Provider>,
   );
 

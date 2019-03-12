@@ -2,13 +2,14 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
 
 const { Content } = Layout;
 export default class HomeView extends PureComponent {
   public render() {
     return (
-      <Layout data-qa="home-page">
+      <PageLayout data-qa="home-page" showSearchBar={false}>
         <Content>
           <Row>
             <Col
@@ -25,7 +26,7 @@ export default class HomeView extends PureComponent {
             </Col>
           </Row>
         </Content>
-      </Layout>
+      </PageLayout>
     );
   }
 }

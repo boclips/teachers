@@ -1,10 +1,9 @@
 import { ConnectedRouter } from 'connected-react-router';
-import { History, Location } from 'history';
+import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import PageLayout from '../../components/layout/PageLayout';
 import PrivateRoute, {
   PrivateRouteComponentProps,
 } from '../../components/login/PrivateRoute';
@@ -33,7 +32,6 @@ function collectionView(
 interface StateProps {
   pathname: string;
   search: string;
-  isSearchView: boolean;
 }
 
 class BoclipsRouter extends Component<{ history: History } & StateProps> {
@@ -43,12 +41,10 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
         <Switch>
           <Route path="/bye" component={LoggedOutView} />
           <Route path="/videos">
-            <PageLayout showTabs={this.props.isSearchView}>
-              <Switch>
-                <Route path="/videos/:videoId" component={videoDetailsView} />
-                <PrivateRoute path="/videos" component={SearchResultsView} />
-              </Switch>
-            </PageLayout>
+            <Switch>
+              <Route path="/videos/:videoId" component={videoDetailsView} />
+              <PrivateRoute path="/videos" component={SearchResultsView} />
+            </Switch>
           </Route>
           <PrivateRoute
             path="/collections"
@@ -60,12 +56,7 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             component={collectionView}
           />
           <PrivateRoute path="/">
-            <PageLayout
-              showTabs={this.props.isSearchView}
-              showSearchBar={this.props.isSearchView}
-            >
-              <HomeView />
-            </PageLayout>
+            <HomeView />
           </PrivateRoute>
         </Switch>
       </ConnectedRouter>
@@ -73,20 +64,11 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
   }
 }
 
-function isSearchView(location: Location): boolean {
-  return !!(
-    location.pathname &&
-    location.pathname.indexOf('videos') !== -1 &&
-    location.search
-  );
-}
-
 function mapStateToProps(state: RouterState): StateProps {
   const location = state.router.location;
   return {
     pathname: location.pathname,
     search: location.search,
-    isSearchView: isSearchView(location),
   };
 }
 

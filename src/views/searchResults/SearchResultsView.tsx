@@ -8,6 +8,7 @@ import { Dispatch } from 'redux';
 import withNewsNavigation, {
   NewsNavigationProps,
 } from '../../components/common/higerOrderComponents/withNewsNavigation';
+import PageLayout from '../../components/layout/PageLayout';
 import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
@@ -32,6 +33,10 @@ class SearchResultsView extends React.PureComponent<
   StateProps & DispatchProps & NewsNavigationProps
 > {
   public render() {
+    return <PageLayout showTabs={true}>{this.renderContent()}</PageLayout>;
+  }
+
+  private renderContent() {
     if (this.props.loading) {
       return this.renderResultPlaceholders();
     }

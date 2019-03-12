@@ -2,6 +2,7 @@ import { RouterActionType } from 'connected-react-router';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
@@ -43,7 +44,9 @@ const mockStore = configureStore<SearchState & LinksState & RouterState>();
 function mountWith(store: Store) {
   return mount(
     <Provider store={store}>
-      <SearchResultsView />
+      <MemoryRouter>
+        <SearchResultsView />
+      </MemoryRouter>
     </Provider>,
   );
 }

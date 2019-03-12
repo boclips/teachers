@@ -75,7 +75,7 @@ describe('when authorised', () => {
     const history = createMemoryHistory();
 
     const wrapper = mount(
-      <Provider store={buildStore('/videos')}>
+      <Provider store={buildStore('/videos/123')}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
