@@ -133,10 +133,13 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     fetchCollections: () => dispatch(fetchCollectionsAction()),
     fetchVideosForCollection: (request: VideosForCollectionRequest) =>
       dispatch(fetchVideosForCollectionAction(request)),
-    onRenameCollection: (collection: VideoCollection) => (title: string) =>
-      dispatch(
-        renameCollectionAction({ title, originalCollection: collection }),
-      ),
+    onRenameCollection: (collection: VideoCollection) =>
+      collection.links.edit
+        ? (title: string) =>
+            dispatch(
+              renameCollectionAction({ title, originalCollection: collection }),
+            )
+        : undefined,
   };
 }
 

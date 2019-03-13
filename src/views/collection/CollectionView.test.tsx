@@ -28,55 +28,6 @@ import CollectionView from './CollectionView';
 const mockStore = configureStore<CollectionState & RouterState & LinksState>();
 let collection: VideoCollection;
 
-const renderCollectionView = (collectionsToRender: VideoCollection[]) => {
-  const store = mockStore({
-    collections: {
-      loading: true,
-      updating: false,
-      items: collectionsToRender,
-    },
-    router: {
-      location: {
-        pathname: '',
-        search: `?q=${''}`,
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
-    links: LinksFactory.sample(),
-  });
-
-  const wrapper = mount(
-    <Provider store={store}>
-      <ConnectedRouter history={createMemoryHistory()}>
-        <CollectionView collectionId="default" />
-      </ConnectedRouter>
-    </Provider>,
-  );
-
-  return { store, wrapper };
-};
-
-function render(videos: VideoMap, videoIds: VideoId[]) {
-  collection = {
-    id: 'default',
-    title: '',
-    updatedAt: '',
-    videos,
-    videoIds,
-    links: {
-      addVideo: new Link({ href: '' }),
-      removeVideo: new Link({ href: '' }),
-      edit: new Link({ href: '' }),
-      remove: new Link({ href: '' }),
-      self: new Link({ href: '' }),
-    },
-  };
-
-  return renderCollectionView([collection]);
-}
-
 test('fetch all videos when collection is not loaded', () => {
   const { store } = renderCollectionView([]);
 
@@ -111,7 +62,7 @@ test('fetch only necessary videos', () => {
 
   const videoAlreadyLoaded = someVideos[0];
 
-  const { store } = render(
+  const { store } = renderEditableCollection(
     { [videoAlreadyLoaded.id]: videoAlreadyLoaded },
     someVideos.map(v => ({ id: v.id, links: v.links })),
   );
@@ -127,26 +78,114 @@ test('fetch only necessary videos', () => {
 });
 
 test('displays an empty state when the collection is empty', () => {
-  const { wrapper } = render({}, []);
+  const { wrapper } = renderEditableCollection({}, []);
 
   expect(wrapper.find(By.dataQa('collection-empty-title'))).toHaveText(
     'This video collection is empty',
   );
 });
 
-test('dispatches RENAME_COLLECTION when title edited', () => {
-  const video = VideoFactory.sample();
-  const { store, wrapper } = render(
-    VideoCollectionFactory.sampleVideos([video]),
-    [{ id: video.id, links: video.links }],
-  );
-  const collectionTitle = new CollectionTitleHelper(wrapper);
+describe('when editable collection', () => {
+  test('renders edit collection button', () => {
+    const video = VideoFactory.sample();
+    const { wrapper } = renderEditableCollection(
+      VideoCollectionFactory.sampleVideos([video]),
+      [{ id: video.id, links: video.links }],
+    );
 
-  collectionTitle.clickEdit();
-  collectionTitle.typeText('doggy');
-  collectionTitle.submit();
+    const collectionTitle = new CollectionTitleHelper(wrapper);
 
-  expect(store.getActions()).toContainEqual(
-    renameCollectionAction({ title: 'doggy', originalCollection: collection }),
-  );
+    expect(collectionTitle.isEditable()).toBeTruthy();
+  });
+
+  test('dispatches RENAME_COLLECTION when title edited', () => {
+    const video = VideoFactory.sample();
+    const { store, wrapper } = renderEditableCollection(
+      VideoCollectionFactory.sampleVideos([video]),
+      [{ id: video.id, links: video.links }],
+    );
+    const collectionTitle = new CollectionTitleHelper(wrapper);
+
+    collectionTitle.clickEdit();
+    collectionTitle.typeText('doggy');
+    collectionTitle.submit();
+
+    expect(store.getActions()).toContainEqual(
+      renameCollectionAction({
+        title: 'doggy',
+        originalCollection: collection,
+      }),
+    );
+  });
 });
+
+describe('when collection cannot be edited', () => {
+  test('does not render edit collection button', () => {
+    const video = VideoFactory.sample();
+    const { wrapper } = renderNonEditableCollection(
+      VideoCollectionFactory.sampleVideos([video]),
+      [{ id: video.id, links: video.links }],
+    );
+
+    const collectionTitle = new CollectionTitleHelper(wrapper);
+
+    expect(collectionTitle.isEditable()).toBeFalsy();
+  });
+});
+
+function renderNonEditableCollection(videos: VideoMap, videoIds: VideoId[]) {
+  return render(videos, videoIds, false);
+}
+
+function renderEditableCollection(videos: VideoMap, videoIds: VideoId[]) {
+  return render(videos, videoIds, true);
+}
+
+function render(videos: VideoMap, videoIds: VideoId[], editable: boolean) {
+  collection = {
+    id: 'default',
+    title: '',
+    updatedAt: '',
+    videos,
+    videoIds,
+    links: {
+      addVideo: new Link({ href: '' }),
+      removeVideo: new Link({ href: '' }),
+      edit: editable ? new Link({ href: '' }) : undefined,
+      remove: new Link({ href: '' }),
+      self: new Link({ href: '' }),
+    },
+  };
+
+  return renderCollectionView([collection]);
+}
+
+const renderCollectionView = (collectionsToRender: VideoCollection[]) => {
+  const store = mockStore({
+    collections: {
+      loading: true,
+      updating: false,
+      items: collectionsToRender,
+    },
+    router: {
+      location: {
+        pathname: '',
+        search: `?q=${''}`,
+        hash: '',
+        state: null,
+      },
+      action: 'PUSH' as RouterActionType,
+    },
+    links: LinksFactory.sample(),
+  });
+
+  const wrapper = mount(
+    <Provider store={store}>
+      <ConnectedRouter history={createMemoryHistory()}>
+        <CollectionView collectionId="default" />
+      </ConnectedRouter>
+    </Provider>,
+  );
+
+  return { store, wrapper };
+};
