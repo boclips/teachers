@@ -75,6 +75,7 @@ export default class CollectionEditButton extends React.PureComponent<
       <React.Fragment>
         <Button
           type="primary"
+          size="large"
           onClick={this.showModal}
           data-qa="collection-edit-button"
         >

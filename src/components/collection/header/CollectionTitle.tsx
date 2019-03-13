@@ -15,10 +15,14 @@ export class CollectionTitle extends React.Component<Props> {
 
   public render() {
     return (
-      <section className="collection-title__container">
+      <section className="collection-title">
         <h1 data-qa="collection-name" className="text--secondary">
           {this.props.title}
-          <img src={this.getLogo()} data-qa="collection-visibility" />
+          <img
+            src={this.getLogo()}
+            className="collection-title__logo"
+            data-qa="collection-visibility"
+          />
         </h1>
       </section>
     );

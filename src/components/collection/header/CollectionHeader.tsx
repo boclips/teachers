@@ -13,7 +13,7 @@ export default class CollectionHeader extends React.PureComponent<Props> {
   public render() {
     return (
       <React.Fragment>
-        <Row>
+        <Row type="flex" justify="space-between">
           <Col>
             <CollectionTitle
               title={this.props.collection.title}
