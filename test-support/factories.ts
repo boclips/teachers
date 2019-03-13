@@ -61,6 +61,7 @@ export class VideoCollectionFactory {
             links: video.links,
           })),
       links: arg.links || VideoCollectionLinksFactory.sample(),
+      isPublic: arg.isPublic || false,
     });
   }
 

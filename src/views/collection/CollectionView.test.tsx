@@ -16,9 +16,7 @@ import {
   userCollectionsResponse,
   video177Slim,
 } from '../../../test-support/video-service-responses';
-import { CollectionTitleHelper } from '../../components/collection/CollectionTitle.test';
 import { fetchVideosForCollectionAction } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
-import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
 import { Link } from '../../types/Link';
 import { CollectionState, LinksState, RouterState } from '../../types/State';
 import { VideoId } from '../../types/Video';
@@ -93,29 +91,7 @@ describe('when editable collection', () => {
       [{ id: video.id, links: video.links }],
     );
 
-    const collectionTitle = new CollectionTitleHelper(wrapper);
-
-    expect(collectionTitle.isEditable()).toBeTruthy();
-  });
-
-  test('dispatches RENAME_COLLECTION when title edited', () => {
-    const video = VideoFactory.sample();
-    const { store, wrapper } = renderEditableCollection(
-      VideoCollectionFactory.sampleVideos([video]),
-      [{ id: video.id, links: video.links }],
-    );
-    const collectionTitle = new CollectionTitleHelper(wrapper);
-
-    collectionTitle.clickEdit();
-    collectionTitle.typeText('doggy');
-    collectionTitle.submit();
-
-    expect(store.getActions()).toContainEqual(
-      renameCollectionAction({
-        title: 'doggy',
-        originalCollection: collection,
-      }),
-    );
+    expect(wrapper.find(By.dataQa('collection-edit-button'))).toExist();
   });
 });
 
@@ -126,10 +102,7 @@ describe('when collection cannot be edited', () => {
       VideoCollectionFactory.sampleVideos([video]),
       [{ id: video.id, links: video.links }],
     );
-
-    const collectionTitle = new CollectionTitleHelper(wrapper);
-
-    expect(collectionTitle.isEditable()).toBeFalsy();
+    expect(wrapper.find(By.dataQa('collection-edit-button'))).not.toExist();
   });
 });
 
@@ -155,6 +128,7 @@ function render(videos: VideoMap, videoIds: VideoId[], editable: boolean) {
       remove: new Link({ href: '' }),
       self: new Link({ href: '' }),
     },
+    isPublic: false,
   };
 
   return renderCollectionView([collection]);

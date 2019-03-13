@@ -4,8 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
-import { CollectionSubtitle } from '../../components/collection/CollectionSubtitle';
-import { CollectionTitle } from '../../components/collection/CollectionTitle';
+import CollectionHeader from '../../components/collection/header/CollectionHeader';
 import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
 import {
   fetchVideosForCollectionAction,
@@ -56,11 +55,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
 
     return (
       <section className="collection-view__collection-details">
-        <CollectionTitle
-          title={this.props.collection.title}
-          onEdit={this.props.onRenameCollection(this.props.collection)}
-        />
-        <CollectionSubtitle collection={this.props.collection} />
+        <CollectionHeader collection={this.props.collection} />
         {this.props.collection.videos && (
           <CollectionVideoCardList
             videos={videos}
