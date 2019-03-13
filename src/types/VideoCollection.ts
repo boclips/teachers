@@ -2,8 +2,9 @@ import { Link } from './Link';
 import { Video, VideoId } from './Video';
 
 export interface VideoCollectionLinks {
-  addVideo: Link;
-  removeVideo: Link;
+  addVideo?: Link;
+  removeVideo?: Link;
+  edit?: Link;
   self: Link;
 }
 

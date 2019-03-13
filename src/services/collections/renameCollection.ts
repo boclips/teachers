@@ -10,7 +10,7 @@ export const renameCollection = (
   request: RenameCollectionRequest,
 ): Promise<boolean> => {
   return axios
-    .patch(request.originalCollection.links.self.getOriginalLink(), {
+    .patch(request.originalCollection.links.edit.getOriginalLink(), {
       title: request.title,
     })
     .then(() => true);

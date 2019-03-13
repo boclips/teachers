@@ -55,6 +55,7 @@ const getLinks = (data: any) => {
   return {
     addVideo: new Link(data._links.addVideo),
     removeVideo: new Link(data._links.removeVideo),
+    edit: new Link(data._links.edit),
     self: new Link(data._links.self),
   };
 };

@@ -13,7 +13,7 @@ test('rename collection', async () => {
     title: 'avideo',
     originalCollection: VideoCollectionFactory.sample({
       links: VideoCollectionLinksFactory.sample({
-        self: new Link({ href: '/v1/collections/the-id' }),
+        edit: new Link({ href: '/v1/collections/the-id' }),
       }),
     }),
   });

@@ -95,6 +95,12 @@ export class VideoCollectionLinksFactory {
           href: '/v1/collections/default',
           templated: false,
         }),
+      edit:
+        arg.edit ||
+        new Link({
+          href: '/v1/collections/default',
+          templated: false,
+        }),
     });
   }
 }
