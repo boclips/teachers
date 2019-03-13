@@ -13,7 +13,7 @@ import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromV
 
 interface Props {
   video: Video | null;
-  videoIndex: number | null;
+  videoIndex?: number;
   currentCollection?: VideoCollection;
 }
 
@@ -66,17 +66,22 @@ export default class VideoCard extends React.PureComponent<Props> {
 
           <Row className="buttons-row">
             <CopyLinkButton video={this.props.video} />
-            {this.props.currentCollection ? (
-              <RemoveFromVideoCollectionButton
-                video={this.props.video}
-                collection={this.props.currentCollection}
-              />
-            ) : (
-              <ManageVideoCollectionsButton video={this.props.video} />
-            )}
+            {this.renderVideoManagementButton()}
           </Row>
         </section>
       </section>
+    );
+  }
+
+  private renderVideoManagementButton() {
+    return this.props.currentCollection &&
+      this.props.currentCollection.links.removeVideo ? (
+      <RemoveFromVideoCollectionButton
+        video={this.props.video}
+        collection={this.props.currentCollection}
+      />
+    ) : (
+      <ManageVideoCollectionsButton video={this.props.video} />
     );
   }
 

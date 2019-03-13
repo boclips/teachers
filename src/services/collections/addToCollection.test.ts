@@ -1,13 +1,21 @@
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { Link } from '../../types/Link';
 import {
   VideoCollectionFactory,
+  VideoCollectionLinksFactory,
   VideoFactory,
 } from './../../../test-support/factories';
 import addToCollection from './addToCollection';
 
 const video = VideoFactory.sample({ id: '123' });
 
-const collection = VideoCollectionFactory.sample();
+const collection = VideoCollectionFactory.sample({
+  links: VideoCollectionLinksFactory.sample({
+    addVideo: new Link({
+      href: '/v1/collections/default/videos/{video_id}',
+    }),
+  }),
+});
 
 test('add to collection', async () => {
   MockFetchVerify.put('/v1/collections/default/videos/123', '', 200);

@@ -77,30 +77,15 @@ export class VideoCollectionLinksFactory {
     arg: Partial<VideoCollectionLinks> = {},
   ): VideoCollectionLinks {
     return Object.freeze({
-      addVideo:
-        arg.addVideo ||
-        new Link({
-          href: '/v1/collections/default/videos/{video_id}',
-          templated: true,
-        }),
-      removeVideo:
-        arg.removeVideo ||
-        new Link({
-          href: '/v1/collections/default/videos/{video_id}',
-          templated: true,
-        }),
       self:
         arg.self ||
         new Link({
           href: '/v1/collections/default',
           templated: false,
         }),
-      edit:
-        arg.edit ||
-        new Link({
-          href: '/v1/collections/default',
-          templated: false,
-        }),
+      addVideo: arg.addVideo || undefined,
+      removeVideo: arg.removeVideo || undefined,
+      edit: arg.edit || undefined,
     });
   }
 }

@@ -1,6 +1,8 @@
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { Link } from '../../types/Link';
 import {
   VideoCollectionFactory,
+  VideoCollectionLinksFactory,
   VideoFactory,
 } from './../../../test-support/factories';
 import removeFromCollection from './removeFromCollection';
@@ -8,6 +10,11 @@ import removeFromCollection from './removeFromCollection';
 const video = VideoFactory.sample({ id: '123' });
 const collection = VideoCollectionFactory.sample({
   videos: VideoCollectionFactory.sampleVideos([video]),
+  links: VideoCollectionLinksFactory.sample({
+    removeVideo: new Link({
+      href: '/v1/collections/default/videos/{video_id}',
+    }),
+  }),
 });
 
 test('remove from collection', async () => {
