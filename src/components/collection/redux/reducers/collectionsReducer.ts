@@ -9,6 +9,7 @@ import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
+import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
@@ -159,6 +160,24 @@ const onCollectionRemoved = (
   };
 };
 
+const onCollectionEdited = (
+  state: CollectionsStateValue,
+  editedCollection: VideoCollection,
+): CollectionsStateValue => {
+  const indexOfCollection = getIndexOfCollection(state, editedCollection);
+
+  const items = [...state.items];
+  items[indexOfCollection] = {
+    ...items[indexOfCollection],
+    ...editedCollection,
+  };
+
+  return {
+    ...state,
+    items,
+  };
+};
+
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
@@ -174,4 +193,5 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
     storeVideoForCollectionAction,
     onStoreVideosForCollectionAction,
   ),
+  actionHandler(onCollectionEditedAction, onCollectionEdited),
 );

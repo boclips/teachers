@@ -10,7 +10,6 @@ import {
   fetchVideosForCollectionAction,
   VideosForCollectionRequest,
 } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
-import { renameCollectionAction } from '../../components/collection/redux/actions/renameCollectionAction';
 import PageLayout from '../../components/layout/PageLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState } from '../../types/State';
@@ -28,7 +27,6 @@ interface StateProps {
 
 interface DispatchProps {
   fetchCollections: () => void;
-  onRenameCollection: (collection: VideoCollection) => (title: string) => void;
   fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
 }
 
@@ -128,13 +126,6 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     fetchCollections: () => dispatch(fetchCollectionsAction()),
     fetchVideosForCollection: (request: VideosForCollectionRequest) =>
       dispatch(fetchVideosForCollectionAction(request)),
-    onRenameCollection: (collection: VideoCollection) =>
-      collection.links.edit
-        ? (title: string) =>
-            dispatch(
-              renameCollectionAction({ title, originalCollection: collection }),
-            )
-        : undefined,
   };
 }
 

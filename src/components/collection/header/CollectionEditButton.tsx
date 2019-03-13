@@ -1,11 +1,12 @@
 import { Button, Modal } from 'antd';
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
 import CollectionEditForm from './CollectionEditForm';
 
 interface Props {
   collection: VideoCollection;
-  onUpdate: (videoCollection: VideoCollection) => void;
+  onUpdate: (request: EditCollectionRequest) => void;
 }
 
 interface State {
@@ -36,8 +37,7 @@ export default class CollectionEditButton extends React.PureComponent<
     values.title !== this.props.collection.title ||
     values.isPublic !== this.props.collection.isPublic;
 
-  public handleOk = (e: SyntheticEvent) => {
-    console.log(e);
+  public handleOk = () => {
     const form = this.formRef.props.form;
     form.validateFields((err, values) => {
       if (err) {
@@ -48,9 +48,13 @@ export default class CollectionEditButton extends React.PureComponent<
 
       if (this.hasFieldsChanged(values)) {
         this.props.onUpdate({
-          ...this.props.collection,
-          title: values.title,
-          isPublic: values.isPublic,
+          originalCollection: this.props.collection,
+          title:
+            values.title !== this.props.collection.title ? values.title : null,
+          isPublic:
+            values.isPublic !== this.props.collection.isPublic
+              ? values.isPublic
+              : null,
         });
       }
 
@@ -58,8 +62,7 @@ export default class CollectionEditButton extends React.PureComponent<
     });
   };
 
-  public handleCancel = (e: SyntheticEvent) => {
-    console.log(e);
+  public handleCancel = () => {
     this.setState({ visible: false });
   };
 

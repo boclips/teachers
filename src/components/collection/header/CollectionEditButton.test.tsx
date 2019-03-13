@@ -10,7 +10,7 @@ import {
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { patchCollectionAction } from '../redux/actions/patchCollectionAction';
+import { editCollectionAction } from '../redux/actions/editCollectionAction';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 
 const mockStore = configureStore<{}>();
@@ -32,7 +32,11 @@ describe('when can edit collection', () => {
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      patchCollectionAction({ ...collection, title: 'test' }),
+      editCollectionAction({
+        originalCollection: collection,
+        title: 'test',
+        isPublic: null,
+      }),
     );
   });
 
@@ -56,7 +60,11 @@ describe('when can edit collection', () => {
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      patchCollectionAction({ ...collection, isPublic: true }),
+      editCollectionAction({
+        originalCollection: collection,
+        isPublic: true,
+        title: null,
+      }),
     );
   });
 

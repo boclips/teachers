@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { patchCollectionAction } from '../redux/actions/patchCollectionAction';
+import {
+  editCollectionAction,
+  EditCollectionRequest,
+} from '../redux/actions/editCollectionAction';
 import CollectionEditButton from './CollectionEditButton';
 
 interface Props {
@@ -10,7 +13,7 @@ interface Props {
 }
 
 interface DispatchProps {
-  patchCollection: (request: VideoCollection) => void;
+  patchCollection: (request: EditCollectionRequest) => void;
 }
 
 class CollectionEditButtonContainer extends React.PureComponent<
@@ -27,8 +30,8 @@ class CollectionEditButtonContainer extends React.PureComponent<
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  patchCollection: (request: VideoCollection) =>
-    dispatch(patchCollectionAction(request)),
+  patchCollection: (request: EditCollectionRequest) =>
+    dispatch(editCollectionAction(request)),
 });
 
 export default connect(

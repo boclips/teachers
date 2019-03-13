@@ -9,11 +9,6 @@ export interface Props {
 }
 
 export class CollectionTitle extends React.Component<Props> {
-  public state = {
-    editing: false,
-    title: this.props.title,
-  };
-
   private getLogo() {
     return this.props.isPublic ? publicLogo : privateLogo;
   }
@@ -22,7 +17,7 @@ export class CollectionTitle extends React.Component<Props> {
     return (
       <section className="collection-title__container">
         <h1 data-qa="collection-name" className="text--secondary">
-          {this.state.title}
+          {this.props.title}
           <img src={this.getLogo()} data-qa="collection-visibility" />
         </h1>
       </section>

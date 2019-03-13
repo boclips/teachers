@@ -1,10 +1,10 @@
 import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
+import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { CreateCollectionRequest } from '../collections/createCollection';
-import { RenameCollectionRequest } from '../collections/renameCollection';
 import EventTypes from './EventTypes';
 import { toMixpanelSegment } from './toMixpanelSegment';
 import { toMixpanelVideo } from './toMixpanelVideo';
@@ -94,9 +94,16 @@ export default class MixpanelAnalytics {
     });
   }
 
-  public trackCollectionRenamed(request: RenameCollectionRequest): void {
+  public trackCollectionRenamed(request: EditCollectionRequest): void {
     this.mixpanelInstance.track(EventTypes.COLLECTION_RENAMED, {
       collection_title: request.title,
+      collection_id: request.originalCollection.id,
+    });
+  }
+
+  public trackCollectionVisiblityChange(request: EditCollectionRequest): void {
+    this.mixpanelInstance.track(EventTypes.VISIBILITY_CHANGED, {
+      collection_visibility: request.isPublic,
       collection_id: request.originalCollection.id,
     });
   }

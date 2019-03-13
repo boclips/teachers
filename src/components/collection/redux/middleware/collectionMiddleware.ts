@@ -1,12 +1,12 @@
 import addToCollectionMiddleware from './addToCollectionMiddleware';
 import addToCollectionResultMiddleware from './addToCollectionResultMiddleware';
 import createCollectionMiddleware from './createCollectionMiddleware';
+import editCollectionMiddleware from './editCollectionMiddleware';
 import fetchCollectionsMiddleware from './fetchCollectionsMiddleware';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
 import removeCollectionMiddleware from './removeCollectionMiddleware';
 import removeFromCollectionMiddleware from './removeFromCollectionMiddleware';
 import removeFromCollectionResultMiddleware from './removeFromCollectionResultMiddleware';
-import renameCollectionMiddleware from './renameCollectionMiddleware';
 
 export default [
   fetchCollectionsMiddleware,
@@ -15,7 +15,7 @@ export default [
   removeFromCollectionMiddleware,
   removeFromCollectionResultMiddleware,
   createCollectionMiddleware,
-  renameCollectionMiddleware,
+  editCollectionMiddleware,
   removeCollectionMiddleware,
   fetchVideosForCollectionMiddleware,
 ];
