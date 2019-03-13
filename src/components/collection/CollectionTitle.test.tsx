@@ -15,6 +15,9 @@ export class CollectionTitleHelper {
       .find(By.dataQa('collection-name'))
       .text();
 
+  public isEditable = () =>
+    this.component.find(By.dataQa('collection-name-edit')).length > 0;
+
   public clickEdit = () =>
     this.component.find(By.dataQa('collection-name-edit')).simulate('click');
 
@@ -37,45 +40,68 @@ export class CollectionTitleHelper {
       .simulate('click');
 }
 
-beforeEach(() => {
-  callback = jest.fn();
-  title = new CollectionTitleHelper(
-    mount(<CollectionTitle title="Title of Collection" onEdit={callback} />),
-  );
-});
-
-it('Renders an element with the title in', () => {
-  expect(title.getDisplayedText()).toEqual('Title of Collection');
-});
-
-describe('When title is edited', () => {
+describe('When cannot edit collection', () => {
   beforeEach(() => {
-    title.clickEdit();
-    title.typeText('New title');
-    title.submit();
+    callback = jest.fn();
+    title = new CollectionTitleHelper(
+      mount(<CollectionTitle title="Title of Collection" onEdit={undefined} />),
+    );
   });
 
-  test('Invokes callback', () => {
-    expect(callback).toHaveBeenCalledWith('New title');
-  });
-
-  test('Goes back to view state', () => {
-    expect(title.getDisplayedText()).toEqual('New title');
-  });
-});
-
-describe('When edit cancelled', () => {
-  beforeEach(() => {
-    title.clickEdit();
-    title.typeText('bla bla bla');
-    title.clickCancel();
-  });
-
-  it('Does not invoke the callback', () => {
-    expect(callback).not.toHaveBeenCalled();
-  });
-
-  it('Renders non editable title', () => {
+  it('Renders an element with the title in', () => {
     expect(title.getDisplayedText()).toEqual('Title of Collection');
+  });
+
+  it('Renders no edit button', () => {
+    expect(title.isEditable()).toBeFalsy();
+  });
+});
+
+describe('When editable collection', () => {
+  beforeEach(() => {
+    callback = jest.fn();
+    title = new CollectionTitleHelper(
+      mount(<CollectionTitle title="Title of Collection" onEdit={callback} />),
+    );
+  });
+
+  it('Renders an element with the title in', () => {
+    expect(title.getDisplayedText()).toEqual('Title of Collection');
+  });
+
+  it('Renders edit button', () => {
+    expect(title.isEditable()).toBeTruthy();
+  });
+
+  describe('When title is edited', () => {
+    beforeEach(() => {
+      title.clickEdit();
+      title.typeText('New title');
+      title.submit();
+    });
+
+    test('Invokes callback', () => {
+      expect(callback).toHaveBeenCalledWith('New title');
+    });
+
+    test('Goes back to view state', () => {
+      expect(title.getDisplayedText()).toEqual('New title');
+    });
+  });
+
+  describe('When edit cancelled', () => {
+    beforeEach(() => {
+      title.clickEdit();
+      title.typeText('bla bla bla');
+      title.clickCancel();
+    });
+
+    it('Does not invoke the callback', () => {
+      expect(callback).not.toHaveBeenCalled();
+    });
+
+    it('Renders non editable title', () => {
+      expect(title.getDisplayedText()).toEqual('Title of Collection');
+    });
   });
 });

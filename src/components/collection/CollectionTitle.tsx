@@ -4,7 +4,7 @@ import './CollectionTitle.less';
 
 export interface Props {
   title: string;
-  onEdit: (title: string) => void;
+  onEdit?: (title: string) => void;
 }
 
 interface State {
@@ -30,9 +30,15 @@ export class CollectionTitle extends React.Component<Props, State> {
         <h1 data-qa="collection-name" className="text--secondary">
           {this.state.title}
         </h1>
-        <span data-qa="collection-name-edit" onClick={this.handleOnEditClick}>
-          <Icon className="collection-title__edit" theme="filled" type="edit" />
-        </span>
+        {this.props.onEdit && (
+          <span data-qa="collection-name-edit" onClick={this.handleOnEditClick}>
+            <Icon
+              className="collection-title__edit"
+              theme="filled"
+              type="edit"
+            />
+          </span>
+        )}
       </section>
     );
   }
