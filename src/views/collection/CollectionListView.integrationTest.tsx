@@ -1,5 +1,4 @@
 import ApiStub from '../../../test-support/ApiStub';
-import eventually from '../../../test-support/eventually';
 import { CollectionListPage } from '../../../test-support/page-objects/CollectionListPage';
 import {
   userCollectionsResponse,
@@ -17,16 +16,8 @@ test('displays collections list', async () => {
   expect(collectionPage.getCollections()).toHaveLength(1);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
-    numberOfVideos: 0,
+    numberOfVideos: 1,
     updatedAt: 'Jan 16, 2019',
-  });
-
-  eventually(() => {
-    expect(collectionPage.getCollections()[0]).toMatchObject({
-      title: 'funky collection',
-      numberOfVideos: 1,
-      updatedAt: 'Jan 16, 2019',
-    });
   });
 });
 

@@ -12,7 +12,7 @@ export class CollectionSubtitle extends React.Component<Props> {
       <span className="highlight">
         <span>
           <span data-qa="collection-number-of-videos">
-            {this.props.collection.videos.length}
+            {this.props.collection.videoIds.length}
           </span>{' '}
           videos
         </span>
