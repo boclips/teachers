@@ -32,4 +32,5 @@ test('returns available collections in skinny format', () => {
   expect(collections[0].videoIds).toHaveLength(1);
   expect(collections[0].videoIds[0].id).toEqual('177');
   expect(collections[0].videos).toEqual({});
+  expect(collections[0].isPublic).toEqual(true);
 });

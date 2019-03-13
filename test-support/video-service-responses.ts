@@ -146,6 +146,7 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
           title: 'funky collection',
           videos: videosWithin,
           updatedAt: '2019-01-16T12:00:00.870Z',
+          public: true,
           _links: {
             edit: {
               href: '/v1/collections/default',

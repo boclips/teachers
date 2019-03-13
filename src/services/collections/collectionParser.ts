@@ -30,6 +30,7 @@ const doParseCollectionResponse = (data: any): VideoCollection => {
     videoIds: [],
     updatedAt,
     links: getLinks(data),
+    isPublic: data.public,
   };
 };
 
@@ -48,6 +49,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     videos: {},
     videoIds,
     links: getLinks(data),
+    isPublic: data.public,
   };
 };
 
