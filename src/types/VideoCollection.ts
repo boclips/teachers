@@ -5,6 +5,7 @@ export interface VideoCollectionLinks {
   addVideo?: Link;
   removeVideo?: Link;
   edit?: Link;
+  remove?: Link;
   self: Link;
 }
 

@@ -120,6 +120,10 @@ export function userCollectionResponse(data: any[]) {
         href: '/v1/collections/default',
         templated: false,
       },
+      remove: {
+        href: '/v1/collections/default',
+        templated: false,
+      },
       addVideo: {
         href: '/v1/collections/default/videos/{video_id}',
         templated: true,
@@ -144,6 +148,10 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
           updatedAt: '2019-01-16T12:00:00.870Z',
           _links: {
             edit: {
+              href: '/v1/collections/default',
+              templated: false,
+            },
+            remove: {
               href: '/v1/collections/default',
               templated: false,
             },

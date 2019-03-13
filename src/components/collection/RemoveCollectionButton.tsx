@@ -19,7 +19,7 @@ export class RemoveCollectionButtonInner extends PureComponent<
   OwnProps & DispatchProps
 > {
   public render() {
-    return (
+    return this.props.collection.links.remove ? (
       <Icon
         data-qa="delete-collection"
         className="delete-collection__icon"
@@ -27,7 +27,7 @@ export class RemoveCollectionButtonInner extends PureComponent<
         type="delete"
         theme="filled"
       />
-    );
+    ) : null;
   }
 
   public removeCollection = (e: SyntheticEvent) => {

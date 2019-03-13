@@ -86,6 +86,7 @@ export class VideoCollectionLinksFactory {
       addVideo: arg.addVideo || undefined,
       removeVideo: arg.removeVideo || undefined,
       edit: arg.edit || undefined,
+      remove: arg.remove || undefined,
     });
   }
 }

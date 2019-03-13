@@ -69,6 +69,7 @@ function render(videos: VideoMap, videoIds: VideoId[]) {
       addVideo: new Link({ href: '' }),
       removeVideo: new Link({ href: '' }),
       edit: new Link({ href: '' }),
+      remove: new Link({ href: '' }),
       self: new Link({ href: '' }),
     },
   };

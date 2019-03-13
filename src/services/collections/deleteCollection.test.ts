@@ -12,7 +12,7 @@ test('delete collection', async () => {
   const success = await deleteCollection(
     VideoCollectionFactory.sample({
       links: VideoCollectionLinksFactory.sample({
-        self: new Link({ href: '/v1/collections/the-id' }),
+        remove: new Link({ href: '/v1/collections/the-id' }),
       }),
     }),
   );
