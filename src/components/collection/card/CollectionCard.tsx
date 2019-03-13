@@ -1,12 +1,12 @@
 import { Icon } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { VideoId } from '../../types/Video';
-import { VideoCollection } from '../../types/VideoCollection';
-import DurationFormatter from '../common/formatters/DurationFormatter';
-import VideoPlayer from '../video/player/VideoPlayer';
+import { VideoId } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
+import DurationFormatter from '../../common/formatters/DurationFormatter';
+import VideoPlayer from '../../video/player/VideoPlayer';
+import { CollectionSubtitle } from '../CollectionSubtitle';
 import './CollectionCard.less';
-import { CollectionSubtitle } from './CollectionSubtitle';
 import RemoveCollectionButton from './RemoveCollectionButton';
 
 interface Props {

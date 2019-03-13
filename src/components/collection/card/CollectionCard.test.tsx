@@ -1,13 +1,13 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from '../../../test-support/By';
+import { By } from '../../../../test-support/By';
 import {
   VideoCollectionFactory,
   VideoFactory,
-} from '../../../test-support/factories';
-import { VideoCollection } from '../../types/VideoCollection';
+} from '../../../../test-support/factories';
+import { VideoCollection } from '../../../types/VideoCollection';
+import { CollectionSubtitle } from '../CollectionSubtitle';
 import { CollectionCard } from './CollectionCard';
-import { CollectionSubtitle } from './CollectionSubtitle';
 
 const NUMBER_OF_PREVIEWS = 4;
 

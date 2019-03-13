@@ -3,16 +3,16 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
-import ApiStub from '../../../test-support/ApiStub';
+import ApiStub from '../../../../test-support/ApiStub';
 import {
   LinksFactory,
   VideoCollectionFactory,
   VideoFactory,
-} from '../../../test-support/factories';
-import { CollectionState, LinksState } from '../../types/State';
-import { VideoCollection } from '../../types/VideoCollection';
+} from '../../../../test-support/factories';
+import { CollectionState, LinksState } from '../../../types/State';
+import { VideoCollection } from '../../../types/VideoCollection';
+import { fetchVideosForCollectionAction } from '../redux/actions/fetchVideosForCollectionAction';
 import CollectionCardContainer from './CollectionCardContainer';
-import { fetchVideosForCollectionAction } from './redux/actions/fetchVideosForCollectionAction';
 
 describe('need to fetch videos scenarios', () => {
   test('fetches videos when no videos are loaded', () => {

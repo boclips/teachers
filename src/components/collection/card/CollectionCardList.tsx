@@ -1,6 +1,6 @@
 import React from 'react';
-import collections from '../../../resources/images/collections.png';
-import { VideoCollection } from '../../types/VideoCollection';
+import collections from '../../../../resources/images/collections.png';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardContainer from './CollectionCardContainer';
 

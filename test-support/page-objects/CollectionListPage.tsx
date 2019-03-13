@@ -2,7 +2,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
-import { RemoveCollectionButtonInner } from '../../src/components/collection/RemoveCollectionButton';
+import { RemoveCollectionButtonInner } from '../../src/components/collection/card/RemoveCollectionButton';
 import NotificationFactory from '../../src/components/common/NotificationFactory';
 import { By } from '../By';
 import { findOne } from '../enzymeHelpers';

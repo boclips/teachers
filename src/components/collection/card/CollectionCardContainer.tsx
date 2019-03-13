@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { VideoCollection } from '../../types/VideoCollection';
-import { CollectionCard } from './CollectionCard';
+import { VideoCollection } from '../../../types/VideoCollection';
 import {
   fetchVideosForCollectionAction,
   VideosForCollectionRequest,
-} from './redux/actions/fetchVideosForCollectionAction';
+} from '../redux/actions/fetchVideosForCollectionAction';
+import { CollectionCard } from './CollectionCard';
 
 interface Props {
   collection: VideoCollection;

@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
-import { CollectionCardList } from '../../components/collection/CollectionCardList';
+import { CollectionCardList } from '../../components/collection/card/CollectionCardList';
 import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
 import PageLayout from '../../components/layout/PageLayout';
 import { CollectionState } from '../../types/State';
