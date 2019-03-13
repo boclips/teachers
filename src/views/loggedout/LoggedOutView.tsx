@@ -7,18 +7,17 @@ import PageLayout from '../../components/layout/PageLayout';
 
 export default class LoggedOutView extends React.PureComponent {
   public render() {
-    const fixedHeight = { minHeight: '230px' };
     return (
       <PageLayout>
         <section className="illustrated-page">
           <Row>
             <Col sm={{ span: 24 }} md={{ span: 8 }}>
-              <section className="illustration" style={fixedHeight}>
+              <section className="illustration">
                 <img src={wavingHand} />
               </section>
             </Col>
             <Col sm={{ span: 24 }} md={{ span: 16 }}>
-              <section className="message" style={fixedHeight}>
+              <section className="message">
                 <h1 className="big-title">You're now logged out!</h1>
                 <p>
                   We're sorry to see you go but hopefully will see you again

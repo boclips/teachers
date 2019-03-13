@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
+import sadTeacher from '../../../resources/images/sad-teacher.svg';
 import CollectionHeader from '../../components/collection/header/CollectionHeader';
 import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
 import {
@@ -41,7 +42,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
 
   public renderContent() {
     if (!this.props.collection || !this.props.collection.videos) {
-      return null;
+      return this.renderCollectionNotFound();
     }
     if (this.props.collection.videoIds.length === 0) {
       return this.renderEmptyCollection();
@@ -78,6 +79,26 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
           </p>
         </Col>
       </Row>
+    );
+  }
+
+  private renderCollectionNotFound() {
+    return (
+      <section className="illustrated-page" data-qa="collection-not-found">
+        <Row>
+          <Col sm={{ span: 24 }} md={{ span: 8 }}>
+            <section className="illustration">
+              <img src={sadTeacher} />
+            </section>
+          </Col>
+          <Col sm={{ span: 24 }} md={{ span: 16 }}>
+            <section className="message">
+              <h1 className="big-title">Oops!!</h1>
+              <p>The collection you tried to access is not available.</p>
+            </section>
+          </Col>
+        </Row>
+      </section>
     );
   }
 
