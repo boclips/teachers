@@ -1,0 +1,32 @@
+.link--secondary {
+  // Colors
+  &:link {
+    color: #00217d;
+  }
+
+  &:visited {
+    color: #848fbb;
+  }
+
+  &:hover,
+  &:focus {
+    color: #0051bc;
+  }
+
+  &:active {
+    color: #001550;
+  }
+
+  // Underline states
+  &:link {
+    text-decoration: none;
+  }
+
+  // N.B. We can't style the text-decoration of :visited links:
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/Privacy_and_the_:visited_selector#Limits_to_visited_link_styles
+  &:active,
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}

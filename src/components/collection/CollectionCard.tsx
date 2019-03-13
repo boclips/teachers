@@ -80,7 +80,12 @@ export class CollectionCard extends React.PureComponent<Props> {
               <VideoPlayer video={video} controls="thumbnail" />
             </section>
           </section>
-          <section className="title clamp-2-lines">{video.title}</section>
+          <Link
+            to={`/videos/${video.id}`}
+            className="title clamp-2-lines link--secondary"
+          >
+            {video.title}
+          </Link>
           <section data-qa="video-duration" className={'subtitle duration'}>
             <Icon type="clock-circle" />{' '}
             <DurationFormatter duration={video.duration} />
