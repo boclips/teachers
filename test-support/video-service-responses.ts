@@ -111,25 +111,33 @@ export function videosResponse(data: any[]) {
   };
 }
 
-export function userCollectionResponse(data: any[]) {
+export function userCollectionResponse(videosWithin: any[] = [video177]) {
   return {
-    id: 'default',
-    videos: data,
+    id: 'id',
+    owner: 'teacher@gmail.com',
+    title: 'funky collection',
+    videos: videosWithin,
+    updatedAt: '2019-01-16T12:00:00.870Z',
+    public: true,
     _links: {
+      self: {
+        href: '/v1/collections/id',
+        templated: false,
+      },
       edit: {
-        href: '/v1/collections/default',
+        href: '/v1/collections/id',
         templated: false,
       },
       remove: {
-        href: '/v1/collections/default',
+        href: '/v1/collections/id',
         templated: false,
       },
       addVideo: {
-        href: '/v1/collections/default/videos/{video_id}',
+        href: '/v1/collections/id/videos/{video_id}',
         templated: true,
       },
       removeVideo: {
-        href: '/v1/collections/default/videos/{video_id}',
+        href: '/v1/collections/id/videos/{video_id}',
         templated: true,
       },
     },

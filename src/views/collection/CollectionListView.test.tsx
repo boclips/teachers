@@ -36,7 +36,11 @@ function render(collection) {
 }
 
 test('displays an empty state when no collections', () => {
-  const { wrapper } = render({ loading: false, updating: false, items: [] });
+  const { wrapper } = render({
+    loading: false,
+    updating: false,
+    userCollections: [],
+  });
 
   expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(
     'You have no collections',

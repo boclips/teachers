@@ -67,9 +67,10 @@ export default class MixpanelAnalytics {
     });
   }
 
-  public trackDefaultCollectionVisited(): void {
+  public trackCollectionVisited(collection: VideoCollection): void {
     this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, {
-      video_collection_id: 'DEFAULT',
+      video_collection_title: collection.title,
+      video_collection_id: collection.id,
     });
   }
 

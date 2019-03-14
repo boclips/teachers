@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import sadTeacher from '../../../resources/images/sad-teacher.svg';
 import CollectionHeader from '../../components/collection/header/CollectionHeader';
-import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
+import { fetchCollectionAction } from '../../components/collection/redux/actions/fetchCollectionAction';
 import {
   fetchVideosForCollectionAction,
   VideosForCollectionRequest,
@@ -27,7 +27,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  fetchCollections: () => void;
+  fetchCollection: () => void;
   fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
 }
 
@@ -103,6 +103,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 
   public componentDidMount() {
+    this.props.fetchCollection();
     if (this.props.collection) {
       this.props.fetchVideosForCollection({
         videos: this.videoIdsToFetch(),
@@ -131,20 +132,19 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 }
 
-function mapStateToProps(
-  state: CollectionState,
-  ownProps: OwnProps,
-): StateProps {
+function mapStateToProps(state: CollectionState): StateProps {
   return {
-    collection: state.collections.items.find(
-      c => c.id === ownProps.collectionId,
-    ),
+    collection: state.collections.collectionDetails,
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+function mapDispatchToProps(
+  dispatch: Dispatch,
+  ownProps: OwnProps,
+): DispatchProps {
   return {
-    fetchCollections: () => dispatch(fetchCollectionsAction()),
+    fetchCollection: () =>
+      dispatch(fetchCollectionAction(ownProps.collectionId)),
     fetchVideosForCollection: (request: VideosForCollectionRequest) =>
       dispatch(fetchVideosForCollectionAction(request)),
   };

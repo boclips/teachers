@@ -4,7 +4,7 @@ import eventually from '../../../test-support/eventually';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
 import {
-  userCollectionsResponse,
+  userCollectionResponse,
   video177,
   video177Slim,
 } from '../../../test-support/video-service-responses';
@@ -16,7 +16,7 @@ import {
 
 test('displays video collection', async () => {
   new ApiStub()
-    .fetchCollections(userCollectionsResponse([video177Slim]))
+    .fetchCollection(userCollectionResponse([video177Slim]))
     .fetchVideo({ video: video177 });
 
   const collectionPage = await CollectionPage.load();
@@ -36,12 +36,12 @@ test('displays video collection', async () => {
 
 test('can edit collection', async () => {
   new ApiStub()
-    .fetchCollections(userCollectionsResponse([video177Slim]))
+    .fetchCollection(userCollectionResponse([video177Slim]))
     .fetchVideo({ video: video177 });
 
   const newTitle = 'this is a shiny new title';
   MockFetchVerify.patch(
-    '/v1/collections/default',
+    '/v1/collections/id',
     { title: newTitle, isPublic: null },
     204,
   );

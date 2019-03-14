@@ -1,6 +1,7 @@
 import MockFetchVerify from './MockFetchVerify';
 import {
   links,
+  userCollectionResponse,
   userCollectionsResponse,
   video177Slim,
 } from './video-service-responses';
@@ -59,8 +60,16 @@ export default class ApiStub {
       );
     } else {
       MockFetchVerify.get('/v1/collections?projection=details', collections);
-
       MockFetchVerify.get('/v1/collections?projection=list', collectionsList);
+    }
+    return this;
+  }
+
+  public fetchCollection(collection = userCollectionResponse(), once = false) {
+    if (once) {
+      MockFetchVerify.getOnce(`/v1/collections/${collection.id}`, collection);
+    } else {
+      MockFetchVerify.get(`/v1/collections/${collection.id}`, collection);
     }
     return this;
   }

@@ -146,7 +146,7 @@ const createMockStore = (collection: VideoCollection) => {
   const mockStore = configureStore<CollectionState & LinksState>();
   return mockStore({
     collections: {
-      items: [collection],
+      userCollections: [collection],
       loading: false,
       updating: false,
     },

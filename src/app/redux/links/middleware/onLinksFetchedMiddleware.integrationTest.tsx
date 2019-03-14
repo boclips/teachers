@@ -27,7 +27,9 @@ describe('when activate link present', () => {
 
   describe('and app mounted', () => {
     beforeEach(() => {
-      fetchCollectionsMock.mockReturnValue({ then: () => {} });
+      fetchCollectionsMock.mockReturnValue({
+        then: () => ({ catch: () => {} }),
+      });
       mount(<App history={createMemoryHistory({ initialEntries: [`/`] })} />);
     });
 

@@ -3,7 +3,7 @@ import { VideoId } from '../../types/Video';
 import { VideoCollection } from './../../types/VideoCollection';
 
 export const parseCollectionResponse = (response: any): VideoCollection => {
-  return doParseCollectionResponse(response.data);
+  return parseCollectionListResponse(response.data);
 };
 
 export const parseCollectionsListResponse = (
@@ -17,21 +17,6 @@ export const parseCollectionsListResponse = (
       response.data._embedded.collections.map(parseCollectionListResponse)) ||
     []
   );
-};
-
-const doParseCollectionResponse = (data: any): VideoCollection => {
-  const id = data.id;
-  const title = data.title;
-  const updatedAt = data.updatedAt;
-  return {
-    id,
-    title,
-    videos: {},
-    videoIds: [],
-    updatedAt,
-    links: getLinks(data),
-    isPublic: data.public,
-  };
 };
 
 const parseCollectionListResponse = (data: any): VideoCollection => {
@@ -55,10 +40,12 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
 
 const getLinks = (data: any) => {
   return {
-    addVideo: new Link(data._links.addVideo),
-    removeVideo: new Link(data._links.removeVideo),
-    edit: new Link(data._links.edit),
-    remove: new Link(data._links.remove),
-    self: new Link(data._links.self),
+    addVideo: data._links.addVideo ? new Link(data._links.addVideo) : undefined,
+    removeVideo: data._links.removeVideo
+      ? new Link(data._links.removeVideo)
+      : undefined,
+    edit: data._links.edit ? new Link(data._links.edit) : undefined,
+    remove: data._links.remove ? new Link(data._links.remove) : undefined,
+    self: data._links.self ? new Link(data._links.self) : undefined,
   };
 };

@@ -36,10 +36,16 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks default collection visited', () => {
-    mixpanelAnalytics.trackDefaultCollectionVisited();
+    const collection = VideoCollectionFactory.sample({
+      title: 'style',
+      id: 'doggy',
+    });
+
+    mixpanelAnalytics.trackCollectionVisited(collection);
 
     expect(mock.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
-      video_collection_id: 'DEFAULT',
+      video_collection_id: 'doggy',
+      video_collection_title: 'style',
     });
   });
 

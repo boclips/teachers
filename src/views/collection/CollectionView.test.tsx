@@ -13,7 +13,7 @@ import {
   VideoFactory,
 } from '../../../test-support/factories';
 import {
-  userCollectionsResponse,
+  userCollectionResponse,
   video177Slim,
 } from '../../../test-support/video-service-responses';
 import { fetchVideosForCollectionAction } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
@@ -39,7 +39,7 @@ test('fetch all videos when collection is not loaded', async () => {
     },
   ]);
 
-  new ApiStub().fetchCollections(userCollectionsResponse([video177Slim]));
+  new ApiStub().fetchCollection(userCollectionResponse([video177Slim]));
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
@@ -141,15 +141,16 @@ function render(videos: VideoMap, videoIds: VideoId[], editable: boolean) {
     isPublic: false,
   };
 
-  return renderCollectionView([collection]);
+  return renderCollectionView(collection);
 }
 
-const renderCollectionView = (collectionsToRender: VideoCollection[]) => {
+const renderCollectionView = (collectionsToRender: VideoCollection) => {
   const store = mockStore({
     collections: {
       loading: true,
       updating: false,
-      items: collectionsToRender,
+      userCollections: [],
+      collectionDetails: collectionsToRender,
     },
     router: {
       location: {
