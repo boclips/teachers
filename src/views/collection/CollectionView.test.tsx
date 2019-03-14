@@ -27,7 +27,17 @@ const mockStore = configureStore<CollectionState & RouterState & LinksState>();
 let collection: VideoCollection;
 
 test('fetch all videos when collection is not loaded', async () => {
-  const { store } = renderCollectionView([]);
+  const { store } = renderEditableCollection({}, [
+    {
+      id: video177Slim.id,
+      links: {
+        self: new Link({
+          href: video177Slim._links.self.href,
+          templated: false,
+        }),
+      },
+    },
+  ]);
 
   new ApiStub().fetchCollections(userCollectionsResponse([video177Slim]));
 
