@@ -127,7 +127,7 @@ export class CollectionEditModalHelper {
 
   public static confirmModal(wrapper) {
     const events = new EventSimulator(wrapper);
-    events.click(wrapper.findWhere(n => n.text() === 'OK').find('Button'));
+    events.click(wrapper.findWhere(n => n.text() === 'Save').find('Button'));
     return wrapper;
   }
 }

@@ -1,8 +1,10 @@
-import { Button, Modal } from 'antd';
+import { Button } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import Bodal from '../../common/Bodal';
 import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
-import CollectionEditForm from './CollectionEditForm';
+import CollectionEditForm, { EditableFields } from './CollectionEditForm';
+import './CollectionEditForm.less';
 
 interface Props {
   collection: VideoCollection;
@@ -33,13 +35,13 @@ export default class CollectionEditButton extends React.PureComponent<
     });
   };
 
-  private hasFieldsChanged = values =>
+  private hasFieldsChanged = (values: EditableFields) =>
     values.title !== this.props.collection.title ||
     values.isPublic !== this.props.collection.isPublic;
 
   public handleOk = () => {
     const form = this.formRef.props.form;
-    form.validateFields((err, values) => {
+    form.validateFields((err, values: EditableFields) => {
       if (err) {
         return;
       }
@@ -81,18 +83,23 @@ export default class CollectionEditButton extends React.PureComponent<
         >
           Edit Collection
         </Button>
-        <Modal
+        <Bodal
           title="Edit Collection"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          okButtonProps={{ size: 'large' }}
+          okText="Save"
+          cancelButtonProps={{ size: 'large' }}
+          closable={false}
+          width={655}
         >
           <CollectionEditForm
             title={this.props.collection.title}
             isPublic={this.props.collection.isPublic}
             wrappedComponentRef={this.saveFormRef}
           />
-        </Modal>
+        </Bodal>
       </React.Fragment>
     );
   }
