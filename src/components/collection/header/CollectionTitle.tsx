@@ -22,6 +22,7 @@ export class CollectionTitle extends React.Component<Props> {
             src={this.getLogo()}
             className="collection-title__logo"
             data-qa="collection-visibility"
+            data-state={this.props.isPublic + ''}
           />
         </h1>
       </section>
