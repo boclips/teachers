@@ -60,32 +60,67 @@ const onAddVideoAction = (
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(state, request.collection);
-  const videos = state.userCollections[indexOfCollection].videos;
-  const videoIds = state.userCollections[indexOfCollection].videoIds;
+  const userCollections = [...state.userCollections];
 
-  const alreadyHaveVideoId =
-    videoIds.find(v => v.id === request.video.id) != null;
-  const alreadyHaveVideo = videos[request.video.id];
+  if (indexOfCollection > -1) {
+    const videos = state.userCollections[indexOfCollection].videos;
+    const videoIds = state.userCollections[indexOfCollection].videoIds;
 
-  if (alreadyHaveVideo && alreadyHaveVideoId) {
-    return state;
+    const alreadyHaveVideoId =
+      videoIds.find(v => v.id === request.video.id) != null;
+    const alreadyHaveVideo = videos[request.video.id];
+
+    if (alreadyHaveVideo && alreadyHaveVideoId) {
+      return state;
+    }
+
+    const videoId = {
+      id: request.video.id,
+      links: request.video.links,
+    };
+
+    userCollections[indexOfCollection] = {
+      ...userCollections[indexOfCollection],
+      videos: {
+        ...videos,
+        [request.video.id]: request.video,
+      },
+      videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
+    };
   }
 
-  const videoId = {
-    id: request.video.id,
-    links: request.video.links,
-  };
+  let collectionDetails = state.collectionDetails;
+  if (
+    state.collectionDetails &&
+    state.collectionDetails.id === request.collection.id
+  ) {
+    const videos = state.collectionDetails.videos;
+    const videoIds = state.collectionDetails.videoIds;
 
-  const userCollections = [...state.userCollections];
-  userCollections[indexOfCollection] = {
-    ...userCollections[indexOfCollection],
-    videos: {
-      ...videos,
-      [request.video.id]: request.video,
-    },
-    videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
-  };
-  return { ...state, userCollections, updating: true };
+    const alreadyHaveVideoId =
+      videoIds.find(v => v.id === request.video.id) != null;
+    const alreadyHaveVideo = videos[request.video.id];
+
+    if (alreadyHaveVideo && alreadyHaveVideoId) {
+      return state;
+    }
+
+    const videoId = {
+      id: request.video.id,
+      links: request.video.links,
+    };
+
+    collectionDetails = {
+      ...collectionDetails,
+      videos: {
+        ...videos,
+        [request.video.id]: request.video,
+      },
+      videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
+    };
+  }
+
+  return { ...state, userCollections, collectionDetails, updating: true };
 };
 
 const getUpdateVideoIds = (
@@ -100,18 +135,34 @@ const onRemoveVideoAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(state, request.collection);
   const userCollections = [...state.userCollections];
+  const indexOfCollection = getIndexOfCollection(state, request.collection);
 
-  const collection = userCollections[indexOfCollection];
+  if (indexOfCollection > -1) {
+    const collection = userCollections[indexOfCollection];
 
-  userCollections[indexOfCollection] = {
-    ...userCollections[indexOfCollection],
-    videos: removeVideo(request.video.id, collection.videos),
-    videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
-  };
+    userCollections[indexOfCollection] = {
+      ...userCollections[indexOfCollection],
+      videos: removeVideo(request.video.id, collection.videos),
+      videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
+    };
+  }
 
-  return { ...state, userCollections, updating: true };
+  let collectionDetails = state.collectionDetails;
+  if (
+    state.collectionDetails &&
+    state.collectionDetails.id === request.collection.id
+  ) {
+    collectionDetails = {
+      ...collectionDetails,
+      videos: removeVideo(request.video.id, collectionDetails.videos),
+      videoIds: collectionDetails.videoIds.filter(
+        v => v.id !== request.video.id,
+      ),
+    };
+  }
+
+  return { ...state, userCollections, collectionDetails, updating: true };
 };
 
 const removeVideo = (videoIdToRemove: string, videos: VideoMap): VideoMap => {

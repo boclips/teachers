@@ -12,7 +12,7 @@ import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectio
 import { collectionsReducer } from './collectionsReducer';
 
 describe('adding video to collection', () => {
-  test('adding a video to a collection', () => {
+  test('adding a video to a collection reduces user collections', () => {
     const targetCollection = VideoCollectionFactory.sample({
       id: 'target',
       videos: VideoCollectionFactory.sampleVideos([
@@ -29,6 +29,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [otherCollection, targetCollection],
+      collectionDetails: targetCollection,
     };
 
     const newVideo = VideoFactory.sample({ id: '124' });
@@ -46,6 +47,14 @@ describe('adding video to collection', () => {
     expect(stateAfter.userCollections[1].videos['124']).toEqual(newVideo);
     expect(stateAfter.userCollections[1].videoIds).toHaveLength(2);
     expect(stateAfter.userCollections[1].videoIds.map(id => id.id)).toContain(
+      '124',
+    );
+
+    expect(stateAfter.collectionDetails).not.toEqual(targetCollection);
+    expect(Object.keys(stateAfter.collectionDetails.videos)).toHaveLength(2);
+    expect(stateAfter.collectionDetails.videos['124']).toEqual(newVideo);
+    expect(stateAfter.collectionDetails.videoIds).toHaveLength(2);
+    expect(stateAfter.collectionDetails.videoIds.map(id => id.id)).toContain(
       '124',
     );
   });
@@ -119,6 +128,7 @@ describe('removing videos from a colleciton', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
+      collectionDetails: collection,
     };
 
     const videoToRemove = VideoFactory.sample({ id: '123' });
@@ -134,6 +144,11 @@ describe('removing videos from a colleciton', () => {
     expect(stateAfter.userCollections[0].videos['124'].id).toEqual('124');
     expect(stateAfter.userCollections[0].videoIds).toHaveLength(1);
     expect(stateAfter.userCollections[0].videoIds[0].id).toEqual('124');
+
+    expect(Object.keys(stateAfter.collectionDetails.videos)).toHaveLength(1);
+    expect(stateAfter.collectionDetails.videos['124'].id).toEqual('124');
+    expect(stateAfter.collectionDetails.videoIds).toHaveLength(1);
+    expect(stateAfter.collectionDetails.videoIds[0].id).toEqual('124');
   });
 });
 
