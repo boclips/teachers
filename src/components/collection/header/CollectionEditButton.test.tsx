@@ -25,10 +25,9 @@ describe('when can edit collection', () => {
     const store = mockStore({});
     const wrapper = mountComponent(collection, store);
 
-    openModal(wrapper);
-    const events = new EventSimulator(wrapper);
-    events.setText('test', wrapper.find(By.dataQa('title-edit', 'input')));
-    confirmModal(wrapper);
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionFormHelper.editCollectionText(wrapper, 'test');
+    CollectionEditModalHelper.confirmModal(wrapper);
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
@@ -50,13 +49,9 @@ describe('when can edit collection', () => {
     const store = mockStore({});
     const wrapper = mountComponent(collection, store);
 
-    openModal(wrapper);
-    wrapper
-      .find(By.dataQa('visibility-edit'))
-      .find('input')
-      .first()
-      .simulate('change', { target: { checked: true } });
-    confirmModal(wrapper);
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionFormHelper.editVisiblity(wrapper, true);
+    CollectionEditModalHelper.confirmModal(wrapper);
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
@@ -78,22 +73,11 @@ describe('when can edit collection', () => {
     const store = mockStore({});
     const wrapper = mountComponent(collection, store);
 
-    openModal(wrapper);
-    confirmModal(wrapper);
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionEditModalHelper.confirmModal(wrapper);
 
     expect(store.getActions()).toHaveLength(0);
   });
-
-  const openModal = wrapper => {
-    wrapper.find('Button').simulate('click');
-    return wrapper;
-  };
-
-  const confirmModal = wrapper => {
-    const events = new EventSimulator(wrapper);
-    events.click(wrapper.findWhere(n => n.text() === 'OK').find('Button'));
-    return wrapper;
-  };
 });
 
 describe('When cannot edit collection', () => {
@@ -117,3 +101,33 @@ const mountComponent = (collection: VideoCollection, store) =>
       </span>
     </Provider>,
   );
+
+export class CollectionFormHelper {
+  public static editCollectionText(wrapper, text: string) {
+    const events = new EventSimulator(wrapper);
+    events.setText(text, wrapper.find(By.dataQa('title-edit', 'input')));
+  }
+
+  public static editVisiblity(wrapper, visiblity) {
+    wrapper
+      .find(By.dataQa('visibility-edit'))
+      .find('input')
+      .first()
+      .simulate('change', { target: { checked: visiblity } });
+  }
+}
+export class CollectionEditModalHelper {
+  public static openModal(wrapper) {
+    wrapper
+      .find(By.dataQa('collection-edit-button'))
+      .find('Button')
+      .simulate('click');
+    return wrapper;
+  }
+
+  public static confirmModal(wrapper) {
+    const events = new EventSimulator(wrapper);
+    events.click(wrapper.findWhere(n => n.text() === 'OK').find('Button'));
+    return wrapper;
+  }
+}

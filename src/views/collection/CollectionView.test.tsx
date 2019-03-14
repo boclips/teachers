@@ -26,12 +26,12 @@ import CollectionView from './CollectionView';
 const mockStore = configureStore<CollectionState & RouterState & LinksState>();
 let collection: VideoCollection;
 
-test('fetch all videos when collection is not loaded', () => {
+test('fetch all videos when collection is not loaded', async () => {
   const { store } = renderCollectionView([]);
 
   new ApiStub().fetchCollections(userCollectionsResponse([video177Slim]));
 
-  eventually(() => {
+  await eventually(() => {
     expect(store.getActions()).toContainEqual(
       fetchVideosForCollectionAction({
         collection,
