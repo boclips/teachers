@@ -139,9 +139,11 @@ export class CollectionCard extends React.PureComponent<Props> {
   );
 
   public static VideoPreviewSkeleton = () => (
-    <section className="collection-video-preview skeleton ant-skeleton ant-skeleton-active">
-      <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
-        <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+    <section className="collection-video-preview skeleton">
+      <section className="video-container" />
+      <section className={'subtitle duration'}>
+        <section className={'title'} />
+        <section className={'subtitle'} />
       </section>
     </section>
   );

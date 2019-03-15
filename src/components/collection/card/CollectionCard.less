@@ -1,5 +1,5 @@
 @import '../../../../resources/styles/_antd-theme.less';
-@import "../../../../resources/styles/_keyframes";
+@import '../../../../resources/styles/_keyframes';
 
 @min-preview-width: 140px;
 @preview-gutter: 20px;
@@ -106,6 +106,27 @@
       .boclips-player {
         width: 100%;
       }
+
+      &.skeleton {
+        .video-container {
+          padding-top: 66.5%;
+          background-color: #d3dcf5;
+        }
+
+        .title {
+          background-color: #d3dcf5;
+          margin-top: 16px;
+          height: 24px;
+          width: 150px;
+        }
+
+        .subtitle {
+          background-color: #d3dcf5;
+          margin-top: 16px;
+          height: 24px;
+          width: 100px;
+        }
+      }
     }
 
     .video-counter {
@@ -142,7 +163,6 @@
 
     .collection-video-preview {
       display: flex;
-
     }
   }
 }
