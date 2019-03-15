@@ -68,30 +68,30 @@ export class CollectionCard extends React.PureComponent<Props> {
 
   private renderVideoPreview(videoId: VideoId) {
     const video = this.props.collection.videos[videoId.id];
-    return (
-      video && (
-        <section
-          key={video.id}
-          className="collection-video-preview"
-          data-qa="collection-video-preview"
-        >
-          <section className="video-container">
-            <section className="video-container-inner">
-              <VideoPlayer video={video} controls="thumbnail" />
-            </section>
-          </section>
-          <Link
-            to={`/videos/${video.id}`}
-            className="title clamp-2-lines link--secondary"
-          >
-            {video.title}
-          </Link>
-          <section data-qa="video-duration" className={'subtitle duration'}>
-            <Icon type="clock-circle" />{' '}
-            <DurationFormatter duration={video.duration} />
+    return video ? (
+      <section
+        key={video.id}
+        className="collection-video-preview"
+        data-qa="collection-video-preview"
+      >
+        <section className="video-container">
+          <section className="video-container-inner">
+            <VideoPlayer video={video} controls="thumbnail" />
           </section>
         </section>
-      )
+        <Link
+          to={`/videos/${video.id}`}
+          className="title clamp-2-lines link--secondary"
+        >
+          {video.title}
+        </Link>
+        <section data-qa="video-duration" className={'subtitle duration'}>
+          <Icon type="clock-circle" />{' '}
+          <DurationFormatter duration={video.duration} />
+        </section>
+      </section>
+    ) : (
+      <CollectionCard.VideoPreviewSkeleton />
     );
   }
 
@@ -134,6 +134,14 @@ export class CollectionCard extends React.PureComponent<Props> {
             <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
           </section>
         </section>
+      </section>
+    </section>
+  );
+
+  public static VideoPreviewSkeleton = () => (
+    <section className="collection-video-preview skeleton ant-skeleton ant-skeleton-active">
+      <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
+        <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
       </section>
     </section>
   );
