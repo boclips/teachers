@@ -3,6 +3,7 @@ import {
   links,
   userCollectionResponse,
   userCollectionsResponse,
+  video177,
   video177Slim,
 } from './video-service-responses';
 
@@ -13,7 +14,7 @@ interface VideoQueryOptions {
 }
 
 interface CollectionOptions {
-  name: string;
+  collectionId: string;
 }
 
 interface SingleVideoOptions {
@@ -35,7 +36,7 @@ export default class ApiStub {
     return this;
   }
 
-  public fetchVideo(options: SingleVideoOptions) {
+  public fetchVideo(options: SingleVideoOptions = { video: video177 }) {
     MockFetchVerify.get(
       `/v1/videos/${options.video.id}`,
       JSON.stringify(options.video),
@@ -74,9 +75,9 @@ export default class ApiStub {
     return this;
   }
 
-  public addToCollection(options: CollectionOptions = { name: 'default' }) {
+  public addToCollection(options: CollectionOptions = { collectionId: 'id' }) {
     MockFetchVerify.put(
-      new RegExp(`/v1/collections/${options.name}/videos/.*`),
+      new RegExp(`/v1/collections/${options.collectionId}/videos/.*`),
       JSON.stringify({}),
       204,
     );
@@ -84,18 +85,24 @@ export default class ApiStub {
   }
 
   public removeFromCollection(
-    options: CollectionOptions = { name: 'default' },
+    options: CollectionOptions = { collectionId: 'id' },
   ) {
     MockFetchVerify.delete(
-      new RegExp(`/v1/collections/${options.name}/videos/.*`),
+      new RegExp(`/v1/collections/${options.collectionId}/videos/.*`),
       JSON.stringify({}),
       204,
     );
     return this;
   }
 
-  public deleteCollection(url: string) {
-    MockFetchVerify.delete(url, JSON.stringify({}), 204);
+  public deleteCollection(
+    collectionOptions: CollectionOptions = { collectionId: 'id' },
+  ) {
+    MockFetchVerify.delete(
+      `/v1/collections/${collectionOptions.collectionId}`,
+      JSON.stringify({}),
+      204,
+    );
     return this;
   }
 }

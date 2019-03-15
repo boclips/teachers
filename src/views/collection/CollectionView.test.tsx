@@ -1,176 +1,112 @@
-import { ConnectedRouter, RouterActionType } from 'connected-react-router';
-import { mount } from 'enzyme';
-import createMemoryHistory from 'history/createMemoryHistory';
-import React from 'react';
-import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import eventually from '../../../test-support/eventually';
-import {
-  LinksFactory,
-  VideoCollectionFactory,
-  VideoFactory,
-} from '../../../test-support/factories';
+import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
 import {
   userCollectionResponse,
   video177Slim,
 } from '../../../test-support/video-service-responses';
-import { fetchVideosForCollectionAction } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
-import { Link } from '../../types/Link';
-import { CollectionState, LinksState, RouterState } from '../../types/State';
-import { VideoId } from '../../types/Video';
-import { VideoCollection, VideoMap } from '../../types/VideoCollection';
-import CollectionView from './CollectionView';
+import CollectionEditButton from '../../components/collection/header/CollectionEditButton';
+import {
+  CollectionEditModalHelper,
+  CollectionFormHelper,
+} from '../../components/collection/header/CollectionEditButton.test';
 
-const mockStore = configureStore<CollectionState & RouterState & LinksState>();
-let collection: VideoCollection;
+test('displays video collection with videos', async () => {
+  new ApiStub().fetchCollections().fetchVideo();
 
-test('fetch all videos when collection is not loaded', async () => {
-  const { store } = renderEditableCollection({}, [
-    {
-      id: video177Slim.id,
-      links: {
-        self: new Link({
-          href: video177Slim._links.self.href,
-          templated: false,
-        }),
-      },
-    },
-  ]);
+  const collectionPage = await CollectionPage.load();
 
-  new ApiStub().fetchCollection(userCollectionResponse([video177Slim]));
-
-  await eventually(() => {
-    expect(store.getActions()).toContainEqual(
-      fetchVideosForCollectionAction({
-        collection,
-        videos: [
-          {
-            id: video177Slim.id,
-            links: {
-              self: new Link({
-                href: video177Slim._links.self.href,
-                templated: false,
-              }),
-            },
-          },
-        ],
-      }),
-    );
+  expect(collectionPage.isEmptyCollection()).toBeFalsy();
+  expect(collectionPage.getVideos()).toHaveLength(1);
+  expect(collectionPage.getVideos()[0]).toMatchObject({
+    title: 'KS3/4 Science: Demonstrating Chemistry',
+    description: 'Matthew Tosh shows us the science.',
+    contentPartner: 'cp1',
+    duration: ' 1m 2s',
+    releasedOn: 'Feb 11, 2018',
+    thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
+    badgeAlt: 'Ad free',
+    subjects: ['Maths', 'Physics'],
   });
 });
 
-test('fetch only necessary videos', () => {
-  const someVideos = [
-    VideoFactory.sample({ id: '1' }),
-    VideoFactory.sample({ id: '2' }),
-    VideoFactory.sample({ id: '3' }),
-  ];
+describe('when empty collection', () => {
+  new ApiStub().fetchCollections().fetchVideo();
 
-  const videoAlreadyLoaded = someVideos[0];
+  test('displays beautiful illustration', async () => {
+    new ApiStub()
+      .fetchCollections()
+      .fetchCollection(userCollectionResponse([], 'empty'))
+      .fetchVideo();
 
-  const { store } = renderEditableCollection(
-    { [videoAlreadyLoaded.id]: videoAlreadyLoaded },
-    someVideos.map(v => ({ id: v.id, links: v.links })),
-  );
+    const collectionPage = await CollectionPage.load('empty');
 
-  someVideos.splice(0, 1);
-
-  expect(store.getActions()).toContainEqual(
-    fetchVideosForCollectionAction({
-      collection,
-      videos: someVideos.map((v): VideoId => ({ id: v.id, links: v.links })),
-    }),
-  );
-});
-
-test('displays an empty state when the collection is empty', () => {
-  const { wrapper } = renderEditableCollection({}, []);
-
-  expect(wrapper.find(By.dataQa('collection-empty-title'))).toHaveText(
-    'This video collection is empty',
-  );
+    await eventually(() => {
+      expect(collectionPage.isEmptyCollection()).toBeTruthy();
+    });
+  });
 });
 
 describe('when editable collection', () => {
-  test('renders edit collection button', () => {
-    const video = VideoFactory.sample();
-    const { wrapper } = renderEditableCollection(
-      VideoCollectionFactory.sampleVideos([video]),
-      [{ id: video.id, links: video.links }],
+  test('can edit collection', async () => {
+    new ApiStub().fetchCollections().fetchVideo();
+
+    const newTitle = 'this is a shiny new title';
+    MockFetchVerify.patch(
+      '/v1/collections/id',
+      { title: newTitle, isPublic: null },
+      204,
     );
 
-    expect(wrapper.find(By.dataQa('collection-edit-button'))).toExist();
+    const collectionPage = await CollectionPage.load();
+    const wrapper = collectionPage.wrapper;
+
+    expect(collectionPage.isEditable()).toBeTruthy();
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionFormHelper.editCollectionText(
+      wrapper,
+      'this is a shiny new title',
+    );
+    CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
+
+    await eventually(() => {
+      expect(wrapper.find(By.dataQa('collection-name')).text()).toEqual(
+        newTitle,
+      );
+    });
+  });
+
+  test('can remove a video', async () => {
+    new ApiStub()
+      .fetchCollections()
+      .fetchVideo()
+      .removeFromCollection();
+
+    const collectionPage = await CollectionPage.load();
+    expect(collectionPage.getVideos()).toHaveLength(1);
+
+    collectionPage.removeVideo(0);
+
+    await eventually(() => {
+      expect(collectionPage.getVideos()).toHaveLength(0);
+    });
   });
 });
 
-describe('when collection cannot be edited', () => {
-  test('does not render edit collection button', () => {
-    const video = VideoFactory.sample();
-    const { wrapper } = renderNonEditableCollection(
-      VideoCollectionFactory.sampleVideos([video]),
-      [{ id: video.id, links: video.links }],
-    );
-    expect(wrapper.find(By.dataQa('collection-edit-button'))).not.toExist();
+describe('when non editable collection', () => {
+  test('does not render edit collection button', async () => {
+    new ApiStub()
+      .fetchCollections()
+      .fetchCollection(
+        userCollectionResponse([video177Slim], 'non-editable', false),
+      )
+      .fetchVideo();
+
+    const collectionPage = await CollectionPage.load('non-editable');
+
+    expect(collectionPage.getVideos()).toHaveLength(1);
+    expect(collectionPage.isEditable()).toBeFalsy();
   });
 });
-
-function renderNonEditableCollection(videos: VideoMap, videoIds: VideoId[]) {
-  return render(videos, videoIds, false);
-}
-
-function renderEditableCollection(videos: VideoMap, videoIds: VideoId[]) {
-  return render(videos, videoIds, true);
-}
-
-function render(videos: VideoMap, videoIds: VideoId[], editable: boolean) {
-  collection = {
-    id: 'default',
-    title: '',
-    updatedAt: '',
-    videos,
-    videoIds,
-    links: {
-      addVideo: new Link({ href: '' }),
-      removeVideo: new Link({ href: '' }),
-      edit: editable ? new Link({ href: '' }) : undefined,
-      remove: new Link({ href: '' }),
-      self: new Link({ href: '' }),
-    },
-    isPublic: false,
-  };
-
-  return renderCollectionView(collection);
-}
-
-const renderCollectionView = (collectionsToRender: VideoCollection) => {
-  const store = mockStore({
-    collections: {
-      loading: true,
-      updating: false,
-      userCollections: [],
-      collectionDetails: collectionsToRender,
-    },
-    router: {
-      location: {
-        pathname: '',
-        search: `?q=${''}`,
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
-    links: LinksFactory.sample(),
-  });
-
-  const wrapper = mount(
-    <Provider store={store}>
-      <ConnectedRouter history={createMemoryHistory()}>
-        <CollectionView collectionId="default" />
-      </ConnectedRouter>
-    </Provider>,
-  );
-
-  return { store, wrapper };
-};

@@ -10,12 +10,12 @@ import eventually from '../eventually';
 export class CollectionPage {
   constructor(public wrapper: ReactWrapper) {}
 
-  public static async load() {
+  public static async load(collectionId: string = 'id') {
     const page = new CollectionPage(
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: [`/collections/id`],
+            initialEntries: [`/collections/${collectionId}`],
           })}
         />,
       ),
@@ -39,8 +39,31 @@ export class CollectionPage {
     }));
   }
 
+  public isEmptyCollection() {
+    return this.wrapper.find(By.dataQa('collection-view-empty')).length > 0;
+  }
+
+  public isEditable() {
+    return this.wrapper.find(By.dataQa('collection-edit-button')).length > 0;
+  }
+
   public getVideoCard(index: number) {
     return findAll(this.wrapper, 'video-card').at(index);
+  }
+
+  public removeVideo(index: number) {
+    return findAll(this.wrapper, 'video-card')
+      .at(index)
+      .find(By.dataQa('remove-from-collection', 'button'))
+      .simulate('click');
+  }
+
+  public isRemovableVideo(index: number) {
+    return (
+      findAll(this.wrapper, 'video-card')
+        .at(index)
+        .find(By.dataQa('remove-from-collection', 'button')).length > 0
+    );
   }
 
   private async hasLoaded() {

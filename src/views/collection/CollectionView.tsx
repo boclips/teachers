@@ -13,7 +13,7 @@ import {
 } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
 import PageLayout from '../../components/layout/PageLayout';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
-import { CollectionState } from '../../types/State';
+import { CollectionState, getIndexOfCollection } from '../../types/State';
 import { VideoId } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import './CollectionView.less';
@@ -24,6 +24,7 @@ interface OwnProps {
 
 interface StateProps {
   collection?: VideoCollection;
+  loading: boolean;
 }
 
 interface DispatchProps {
@@ -41,7 +42,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 
   public renderContent() {
-    if (!this.props.collection || !this.props.collection.videos) {
+    if (!this.props.collection) {
       return this.renderCollectionNotFound();
     }
     if (this.props.collection.videoIds.length === 0) {
@@ -67,7 +68,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
 
   private renderEmptyCollection() {
     return (
-      <Row className="collection-view-empty">
+      <Row data-qa="collection-view-empty" className="collection-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
           <img src={emptyCollection} />
           <h1 data-qa="collection-empty-title">
@@ -102,23 +103,23 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
     );
   }
 
-  public componentDidMount() {
-    this.props.fetchCollection();
+  private fetchCollectionIfNeeded() {
     if (this.props.collection) {
       this.props.fetchVideosForCollection({
         videos: this.videoIdsToFetch(),
         collection: this.props.collection,
       });
+    } else if (!this.props.loading) {
+      this.props.fetchCollection();
     }
   }
 
+  public componentDidMount() {
+    this.fetchCollectionIfNeeded();
+  }
+
   public componentDidUpdate() {
-    if (this.props.collection) {
-      this.props.fetchVideosForCollection({
-        videos: this.videoIdsToFetch(),
-        collection: this.props.collection,
-      });
-    }
+    this.fetchCollectionIfNeeded();
   }
 
   private videoIdsToFetch(): VideoId[] {
@@ -132,9 +133,23 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 }
 
-function mapStateToProps(state: CollectionState): StateProps {
+function mapStateToProps(state: CollectionState, props: OwnProps): StateProps {
+  const indexOfCollection = getIndexOfCollection(
+    state.collections.userCollections,
+    props.collectionId,
+  );
+  if (state.collections.loading) {
+    return { collection: undefined, loading: true };
+  }
+  if (indexOfCollection >= 0) {
+    return {
+      collection: state.collections.userCollections[indexOfCollection],
+      loading: false,
+    };
+  }
   return {
-    collection: state.collections.collectionDetails,
+    collection: state.collections.publicCollectionDetails,
+    loading: false,
   };
 }
 

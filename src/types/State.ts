@@ -48,7 +48,17 @@ export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
   userCollections: VideoCollection[];
-  collectionDetails?: VideoCollection;
+  publicCollectionDetails?: VideoCollection;
+}
+
+export function getIndexOfCollection(
+  userCollections: VideoCollection[],
+  collectionId: string,
+) {
+  const indexOfCollection = userCollections.findIndex(
+    col => col.id === collectionId,
+  );
+  return indexOfCollection;
 }
 
 export default interface State

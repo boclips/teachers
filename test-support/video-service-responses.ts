@@ -111,9 +111,13 @@ export function videosResponse(data: any[]) {
   };
 }
 
-export function userCollectionResponse(videosWithin: any[] = [video177]) {
+export function userCollectionResponse(
+  videosWithin: any[] = [video177Slim],
+  id: string = 'id',
+  editable: boolean = true,
+) {
   return {
-    id: 'id',
+    id,
     owner: 'teacher@gmail.com',
     title: 'funky collection',
     videos: videosWithin,
@@ -121,25 +125,33 @@ export function userCollectionResponse(videosWithin: any[] = [video177]) {
     public: true,
     _links: {
       self: {
-        href: '/v1/collections/id',
+        href: `/v1/collections/${id}`,
         templated: false,
       },
-      edit: {
-        href: '/v1/collections/id',
-        templated: false,
-      },
-      remove: {
-        href: '/v1/collections/id',
-        templated: false,
-      },
-      addVideo: {
-        href: '/v1/collections/id/videos/{video_id}',
-        templated: true,
-      },
-      removeVideo: {
-        href: '/v1/collections/id/videos/{video_id}',
-        templated: true,
-      },
+      edit: editable
+        ? {
+            href: `/v1/collections/${id}`,
+            templated: false,
+          }
+        : undefined,
+      remove: editable
+        ? {
+            href: `/v1/collections/${id}`,
+            templated: false,
+          }
+        : undefined,
+      addVideo: editable
+        ? {
+            href: `/v1/collections/${id}/videos/{video_id}`,
+            templated: true,
+          }
+        : undefined,
+      removeVideo: editable
+        ? {
+            href: `/v1/collections/${id}/videos/{video_id}`,
+            templated: true,
+          }
+        : undefined,
     },
   };
 }
@@ -157,23 +169,23 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
           public: true,
           _links: {
             edit: {
-              href: '/v1/collections/default',
+              href: '/v1/collections/id',
               templated: false,
             },
             remove: {
-              href: '/v1/collections/default',
+              href: '/v1/collections/id',
               templated: false,
             },
             addVideo: {
-              href: '/v1/collections/default/videos/{video_id}',
+              href: '/v1/collections/id/videos/{video_id}',
               templated: true,
             },
             removeVideo: {
-              href: '/v1/collections/default/videos/{video_id}',
+              href: '/v1/collections/id/videos/{video_id}',
               templated: true,
             },
             self: {
-              href: '/v1/collections/default',
+              href: '/v1/collections/id',
               templated: false,
             },
           },

@@ -1,15 +1,8 @@
 import ApiStub from '../../../test-support/ApiStub';
 import { CollectionListPage } from '../../../test-support/page-objects/CollectionListPage';
-import {
-  userCollectionsResponse,
-  video177,
-  video177Slim,
-} from '../../../test-support/video-service-responses';
 
 test('displays collections list', async () => {
-  new ApiStub()
-    .fetchCollections(userCollectionsResponse([video177Slim]))
-    .fetchVideo({ video: video177 });
+  new ApiStub().fetchCollections().fetchVideo();
 
   const collectionPage = await CollectionListPage.load();
 
@@ -23,9 +16,9 @@ test('displays collections list', async () => {
 
 test('shows notification after deleting collections', async () => {
   new ApiStub()
-    .fetchCollections(userCollectionsResponse())
-    .fetchVideo({ video: video177 })
-    .deleteCollection('/v1/collections/default');
+    .fetchCollections()
+    .fetchVideo()
+    .deleteCollection();
 
   const collectionsPage = await CollectionListPage.load();
 
