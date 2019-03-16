@@ -11,15 +11,17 @@ export function onRemoveFromCollection(
   store: MiddlewareAPI,
   request: { video: Video; collection: VideoCollection },
 ) {
-  removeFromCollection(request.video, request.collection).then(success => {
-    store.dispatch(
-      removeFromCollectionResultAction({
-        collection: request.collection,
-        video: request.video,
-        success,
-      }),
-    );
-  });
+  removeFromCollection(request.video, request.collection)
+    .then(success => {
+      store.dispatch(
+        removeFromCollectionResultAction({
+          collection: request.collection,
+          video: request.video,
+          success,
+        }),
+      );
+    })
+    .catch(console.error);
   AnalyticsFactory.getInstance().trackVideoRemovedFromCollection(
     request.video,
     request.collection,

@@ -12,14 +12,16 @@ export function onFetchVideosForCollection(
 ) {
   Promise.all(
     request.videos.map(videoId => fetchVideoFromSelfLink(videoId.links.self)),
-  ).then(videos =>
-    store.dispatch(
-      storeVideoForCollectionAction({
-        videos,
-        collection: request.collection,
-      }),
-    ),
-  );
+  )
+    .then(videos =>
+      store.dispatch(
+        storeVideoForCollectionAction({
+          videos,
+          collection: request.collection,
+        }),
+      ),
+    )
+    .catch(console.error);
 }
 
 export default sideEffect(

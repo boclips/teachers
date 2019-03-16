@@ -48,5 +48,6 @@ export default function fetchLinks() {
 
         return links;
       },
-    );
+    )
+    .catch(console.error);
 }

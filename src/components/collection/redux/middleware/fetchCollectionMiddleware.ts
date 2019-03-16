@@ -11,10 +11,12 @@ export function onFetchCollection(
   collectionId: string,
 ) {
   const links = store.getState().links;
-  fetchCollection(links, collectionId).then(collection => {
-    store.dispatch(storeCollectionAction(collection));
-    AnalyticsFactory.getInstance().trackCollectionVisited(collection);
-  });
+  fetchCollection(links, collectionId)
+    .then(collection => {
+      store.dispatch(storeCollectionAction(collection));
+      AnalyticsFactory.getInstance().trackCollectionVisited(collection);
+    })
+    .catch(console.error);
 }
 
 export default sideEffect(fetchCollectionAction, onFetchCollection);

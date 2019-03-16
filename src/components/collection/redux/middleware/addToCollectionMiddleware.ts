@@ -11,15 +11,17 @@ export function onAddToCollection(
   store: MiddlewareAPI,
   request: { video: Video; collection: VideoCollection },
 ) {
-  addToCollection(request.video, request.collection).then(success => {
-    store.dispatch(
-      addToCollectionResultAction({
-        collection: request.collection,
-        video: request.video,
-        success,
-      }),
-    );
-  });
+  addToCollection(request.video, request.collection)
+    .then(success => {
+      store.dispatch(
+        addToCollectionResultAction({
+          collection: request.collection,
+          video: request.video,
+          success,
+        }),
+      );
+    })
+    .catch(console.error);
   AnalyticsFactory.getInstance().trackVideoAddedToCollection(
     request.video,
     request.collection,

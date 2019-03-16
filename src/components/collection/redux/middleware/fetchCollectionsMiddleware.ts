@@ -8,10 +8,12 @@ import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 
 export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
   const links = store.getState().links;
-  fetchCollections(links).then(collections => {
-    store.dispatch(storeCollectionsAction(collections));
-    AnalyticsFactory.getInstance().trackMyCollectionsVisited();
-  });
+  fetchCollections(links)
+    .then(collections => {
+      store.dispatch(storeCollectionsAction(collections));
+      AnalyticsFactory.getInstance().trackMyCollectionsVisited();
+    })
+    .catch(console.error);
 }
 
 export default sideEffect(fetchCollectionsAction, onFetchCollections);
