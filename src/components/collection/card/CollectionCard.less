@@ -8,8 +8,9 @@
   animation: slide-in 0.5s 0s both;
   .animation-delay(10);
 
+  min-height: 335px;
   margin-top: 32px;
-  padding: 20px;
+  padding: 20px 20px 56px;
   border-radius: 8px;
   background-color: @shade-2;
   position: relative;
@@ -26,9 +27,9 @@
 
   .view-collection {
     font-weight: bold;
-    text-align: right;
-    margin-bottom: 0px;
-    margin-top: 16px;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
   }
 
   .collection-video-previews {
@@ -72,6 +73,8 @@
     }
 
     .collection-video-preview {
+      animation: fade-in 0.6s ease;
+
       .title {
         @media (max-width: @screen-md) {
           display: none !important;
@@ -108,22 +111,26 @@
       }
 
       &.skeleton {
-        .video-container {
-          padding-top: 66.5%;
-          background-color: #d3dcf5;
+
+        * {
+          .loading-blue();
         }
 
         .title {
-          background-color: #d3dcf5;
-          margin-top: 16px;
-          height: 24px;
+          @media (max-width: @screen-md) {
+            display: none;
+          }
+          margin-top: 8px;
+          height: 20px;
           width: 150px;
         }
 
         .subtitle {
-          background-color: #d3dcf5;
-          margin-top: 16px;
-          height: 24px;
+          @media (max-width: @screen-md) {
+            display: none;
+          }
+          margin-top: 8px;
+          height: 20px;
           width: 100px;
         }
       }
