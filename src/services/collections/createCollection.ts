@@ -11,6 +11,9 @@ export const createCollection = (
   links: Links,
   request: CreateCollectionRequest,
 ): Promise<boolean> => {
+  if (!links.collections) {
+    return;
+  }
   return axios
     .post(links.collections.getOriginalLink(), toResource(request))
     .then(() => true);

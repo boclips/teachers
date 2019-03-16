@@ -4,6 +4,9 @@ import { EditCollectionRequest } from '../../components/collection/redux/actions
 export const editCollection = (
   request: EditCollectionRequest,
 ): Promise<boolean> => {
+  if (!request.originalCollection.links.edit) {
+    return;
+  }
   return axios
     .patch(request.originalCollection.links.edit.getOriginalLink(), {
       title: request.title,
