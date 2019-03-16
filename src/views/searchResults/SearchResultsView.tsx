@@ -9,9 +9,9 @@ import withNewsNavigation, {
   NewsNavigationProps,
 } from '../../components/common/higerOrderComponents/withNewsNavigation';
 import PageLayout from '../../components/layout/PageLayout';
-import { SearchResultsPlaceholders } from '../../components/searchResults/multiple-results/SearchResultsPlaceholders';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
+import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { NewsBoxSidebar } from '../../components/searchResults/NewsBoxSidebar';
 import { Links } from '../../types/Links';
 import State, { SearchResults } from '../../types/State';
@@ -96,7 +96,7 @@ class SearchResultsView extends React.PureComponent<
         data-qa="search-results-placeholders"
       >
         <Col xs={{ span: 24 }} md={{ span: isNewsMode ? 24 : 18 }}>
-          <SearchResultsPlaceholders />
+          <VideoCardsPlaceholder />
         </Col>
         {!isNewsMode && (
           <Col xs={{ span: 0 }} md={{ span: 5, push: 1 }}>

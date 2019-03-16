@@ -1,3 +1,4 @@
+import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
@@ -27,7 +28,7 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
           {this.props.videos.map((video, index) => {
             return (
               <CSSTransition
-                key={video.id}
+                key={video ? video.id : uuid()}
                 classNames="collection-video"
                 timeout={500}
               >

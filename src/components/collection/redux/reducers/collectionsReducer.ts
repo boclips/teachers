@@ -12,6 +12,8 @@ import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
+import { fetchCollectionAction } from '../actions/fetchCollectionAction';
+import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
@@ -38,6 +40,15 @@ const onStoreCollectionsAction = (
     userCollections,
     loading: false,
     updating: false,
+  };
+};
+
+const loadingCollections = (
+  state: CollectionsStateValue,
+): CollectionsStateValue => {
+  return {
+    ...state,
+    loading: true,
   };
 };
 
@@ -275,6 +286,8 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(addToCollectionAction, onAddVideoAction),
   actionHandler(removeFromCollectionAction, onRemoveVideoAction),
   actionHandler(createCollectionAction, onCreateCollection),
+  actionHandler(fetchCollectionAction, loadingCollections),
+  actionHandler(fetchCollectionsAction, loadingCollections),
 
   actionHandler(removeFromCollectionResultAction, collectionUpdated),
   actionHandler(addToCollectionResultAction, collectionUpdated),

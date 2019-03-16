@@ -1,8 +1,10 @@
-import { Col, Row } from 'antd';
+import { Card, Col, Row } from 'antd';
+import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
+import './CollectionHeader.less';
 import { CollectionTitle } from './CollectionTitle';
 
 interface Props {
@@ -28,4 +30,18 @@ export default class CollectionHeader extends React.PureComponent<Props> {
       </React.Fragment>
     );
   }
+
+  public static Skeleton = () => (
+    <section className="collection-header__skeleton">
+      <Card className="video-card" bordered={false}>
+        <AntSkeleton
+          loading={true}
+          title={true}
+          paragraph={false}
+          active={true}
+          avatar={{ size: 'small', shape: 'circle' }}
+        />
+      </Card>
+    </section>
+  );
 }

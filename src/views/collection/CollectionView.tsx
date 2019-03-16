@@ -12,6 +12,7 @@ import {
   VideosForCollectionRequest,
 } from '../../components/collection/redux/actions/fetchVideosForCollectionAction';
 import PageLayout from '../../components/layout/PageLayout';
+import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
 import { CollectionState, getIndexOfCollection } from '../../types/State';
 import { VideoId } from '../../types/Video';
@@ -42,6 +43,9 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 
   public renderContent() {
+    if (this.props.loading) {
+      return this.renderCollectionPlaceholders();
+    }
     if (!this.props.collection) {
       return this.renderCollectionNotFound();
     }
@@ -49,9 +53,9 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
       return this.renderEmptyCollection();
     }
 
-    const videos = this.props.collection.videoIds
-      .filter(videoId => this.props.collection.videos[videoId.id] !== undefined)
-      .map(videoId => this.props.collection.videos[videoId.id]);
+    const videos = this.props.collection.videoIds.map(
+      videoId => this.props.collection.videos[videoId.id],
+    );
 
     return (
       <section className="collection-view__collection-details">
@@ -62,6 +66,15 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
             currentCollection={this.props.collection}
           />
         )}
+      </section>
+    );
+  }
+
+  public renderCollectionPlaceholders() {
+    return (
+      <section className="collection-view-placeholders">
+        <CollectionHeader.Skeleton />
+        <VideoCardsPlaceholder />
       </section>
     );
   }

@@ -1,4 +1,4 @@
-import { Card, Row, Skeleton } from 'antd';
+import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
@@ -19,6 +19,10 @@ interface Props {
 
 export default class VideoCard extends React.PureComponent<Props> {
   public render() {
+    if (!this.props.video) {
+      return <VideoCard.Skeleton />;
+    }
+
     return (
       <Card className="video-card" bordered={false}>
         <section data-qa="video-card">{this.renderContent()}</section>
@@ -27,10 +31,6 @@ export default class VideoCard extends React.PureComponent<Props> {
   }
 
   public renderContent() {
-    if (this.props.video === null) {
-      return null;
-    }
-
     return (
       <section className="video-content">
         <VideoHeader video={this.props.video} />
@@ -87,7 +87,7 @@ export default class VideoCard extends React.PureComponent<Props> {
 
   public static Skeleton = () => (
     <Card className="video-card" bordered={false}>
-      <Skeleton
+      <AntSkeleton
         loading={true}
         active={true}
         title={{ width: '150px' }}
