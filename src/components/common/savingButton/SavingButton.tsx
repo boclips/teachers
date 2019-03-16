@@ -32,7 +32,7 @@ export default class SavingButton extends React.PureComponent<Props, State> {
             timeoutId: undefined,
           });
         }.bind(this),
-        3500,
+        3000,
       );
     }
     this.setState({
