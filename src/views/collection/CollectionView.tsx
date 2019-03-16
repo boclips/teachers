@@ -49,9 +49,6 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
     if (!this.props.collection) {
       return this.renderCollectionNotFound();
     }
-    if (this.props.collection.videoIds.length === 0) {
-      return this.renderEmptyCollection();
-    }
 
     const videos = this.props.collection.videoIds.map(
       videoId => this.props.collection.videos[videoId.id],
@@ -60,12 +57,14 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
     return (
       <section className="collection-view__collection-details">
         <CollectionHeader collection={this.props.collection} />
-        {this.props.collection.videos && (
-          <CollectionVideoCardList
-            videos={videos}
-            currentCollection={this.props.collection}
-          />
-        )}
+        {this.props.collection.videoIds.length === 0
+          ? this.renderEmptyCollection()
+          : this.props.collection.videos && (
+              <CollectionVideoCardList
+                videos={videos}
+                currentCollection={this.props.collection}
+              />
+            )}
       </section>
     );
   }
