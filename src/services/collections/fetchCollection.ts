@@ -8,7 +8,7 @@ export const fetchCollection = (
   id: string,
 ): Promise<VideoCollection> => {
   if (!links.collection) {
-    return;
+    return Promise.reject();
   }
   return axios
     .get(links.collection.getTemplatedLink({ id }))

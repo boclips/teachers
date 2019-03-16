@@ -5,7 +5,7 @@ import { UserProfile } from '../analytics/UserProfile';
 
 export default function activateUser(links: Links, userProfile: UserProfile) {
   if (userCannotActivate(links)) {
-    return;
+    return Promise.reject();
   }
 
   axios.post(links.activate.getOriginalLink()).then(() => {

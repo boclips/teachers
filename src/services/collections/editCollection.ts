@@ -5,7 +5,7 @@ export const editCollection = (
   request: EditCollectionRequest,
 ): Promise<boolean> => {
   if (!request.originalCollection.links.edit) {
-    return;
+    return Promise.reject();
   }
   return axios
     .patch(request.originalCollection.links.edit.getOriginalLink(), {

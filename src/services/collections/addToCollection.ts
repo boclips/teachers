@@ -7,7 +7,7 @@ export default function addToCollection(
   collection: VideoCollection,
 ): Promise<boolean> {
   if (!collection.links.addVideo) {
-    return;
+    return Promise.reject();
   }
   const url = collection.links.addVideo.getTemplatedLink({
     video_id: video.id,

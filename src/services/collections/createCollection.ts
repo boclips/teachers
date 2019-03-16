@@ -12,7 +12,7 @@ export const createCollection = (
   request: CreateCollectionRequest,
 ): Promise<boolean> => {
   if (!links.collections) {
-    return;
+    return Promise.reject();
   }
   return axios
     .post(links.collections.getOriginalLink(), toResource(request))

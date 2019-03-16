@@ -7,7 +7,7 @@ export default function removeFromCollection(
   collection: VideoCollection,
 ): Promise<boolean> {
   if (!collection.links.removeVideo) {
-    return;
+    return Promise.reject();
   }
   const url = collection.links.removeVideo.getTemplatedLink({
     video_id: video.id,

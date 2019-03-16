@@ -5,7 +5,7 @@ export const deleteCollection = (
   collection: VideoCollection,
 ): Promise<boolean> => {
   if (!collection.links.remove) {
-    return;
+    return Promise.reject();
   }
   return axios
     .delete(collection.links.remove.getOriginalLink())

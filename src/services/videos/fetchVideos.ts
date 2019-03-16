@@ -9,7 +9,7 @@ export default function fetchVideos(
   links: Links,
 ): Promise<SearchResults> {
   if (!links.videos) {
-    return;
+    return Promise.reject();
   }
   const url = links.videos.getTemplatedLink({
     query: searchRequest.query,
