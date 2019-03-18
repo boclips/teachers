@@ -121,7 +121,7 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
         videos: this.videoIdsToFetch(),
         collection: this.props.collection,
       });
-    } else if (!this.props.loading) {
+    } else if (!this.props.loading && this.props.collection === undefined) {
       this.props.fetchCollection();
     }
   }

@@ -16,7 +16,13 @@ export function onFetchCollection(
       store.dispatch(storeCollectionAction(collection));
       AnalyticsFactory.getInstance().trackCollectionVisited(collection);
     })
-    .catch(console.error);
+    .catch(e => {
+      if (e && e.response && e.response.status === 404) {
+        store.dispatch(storeCollectionAction(null));
+      } else {
+        console.error(e);
+      }
+    });
 }
 
 export default sideEffect(fetchCollectionAction, onFetchCollection);

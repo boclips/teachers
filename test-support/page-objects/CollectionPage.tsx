@@ -43,6 +43,10 @@ export class CollectionPage {
     return this.wrapper.find(By.dataQa('collection-view-empty')).length > 0;
   }
 
+  public isCollectionNotFound() {
+    return this.wrapper.find(By.dataQa('collection-not-found')).length > 0;
+  }
+
   public isEditable() {
     return this.wrapper.find(By.dataQa('collection-edit-button')).length > 0;
   }

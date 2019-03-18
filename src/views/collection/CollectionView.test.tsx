@@ -13,38 +13,49 @@ import {
   CollectionFormHelper,
 } from '../../components/collection/header/CollectionEditButton.test';
 
-test('displays video collection with videos', async () => {
-  new ApiStub().fetchCollections().fetchVideo();
+describe('when video collection', () => {
+  test('displays video collection with videos', async () => {
+    new ApiStub().fetchCollections().fetchVideo();
 
-  const collectionPage = await CollectionPage.load();
+    const collectionPage = await CollectionPage.load();
 
-  expect(collectionPage.isEmptyCollection()).toBeFalsy();
-  expect(collectionPage.getVideos()).toHaveLength(1);
-  expect(collectionPage.getVideos()[0]).toMatchObject({
-    title: 'KS3/4 Science: Demonstrating Chemistry',
-    description: 'Matthew Tosh shows us the science.',
-    contentPartner: 'cp1',
-    duration: ' 1m 2s',
-    releasedOn: 'Feb 11, 2018',
-    thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
-    badgeAlt: 'Ad free',
-    subjects: ['Maths', 'Physics'],
+    expect(collectionPage.isEmptyCollection()).toBeFalsy();
+    expect(collectionPage.getVideos()).toHaveLength(1);
+    expect(collectionPage.getVideos()[0]).toMatchObject({
+      title: 'KS3/4 Science: Demonstrating Chemistry',
+      description: 'Matthew Tosh shows us the science.',
+      contentPartner: 'cp1',
+      duration: ' 1m 2s',
+      releasedOn: 'Feb 11, 2018',
+      thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
+      badgeAlt: 'Ad free',
+      subjects: ['Maths', 'Physics'],
+    });
   });
 });
 
 describe('when empty collection', () => {
-  new ApiStub().fetchCollections().fetchVideo();
-
   test('displays beautiful illustration', async () => {
     new ApiStub()
       .fetchCollections()
-      .fetchCollection(userCollectionResponse([], 'empty'))
-      .fetchVideo();
+      .fetchCollection(userCollectionResponse([], 'empty'));
 
     const collectionPage = await CollectionPage.load('empty');
 
     await eventually(() => {
       expect(collectionPage.isEmptyCollection()).toBeTruthy();
+    });
+  });
+});
+
+describe('when collection not found', () => {
+  test('displays beautiful illustration', async () => {
+    new ApiStub().fetchCollections().fetchCollection();
+
+    const collectionPage = await CollectionPage.load('not-found');
+
+    await eventually(() => {
+      expect(collectionPage.isCollectionNotFound()).toBeTruthy();
     });
   });
 });
