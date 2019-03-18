@@ -32,6 +32,10 @@ export default function fetchLinks() {
           links.userCollectionsList = new Link(body._links.userCollectionsList);
         }
 
+        if (body._links.publicCollections) {
+          links.publicCollections = new Link(body._links.publicCollections);
+        }
+
         if (body._links.activate) {
           links.activate = new Link(body._links.activate);
         }
