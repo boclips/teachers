@@ -104,11 +104,8 @@ export class LinksFactory {
       activate: arg.activate,
       profile: arg.profile,
       collections: arg.collections || new Link({ href: '/collections' }),
-      collectionsDetails:
-        arg.collectionsDetails ||
-        new Link({ href: '/collections?projection=details' }),
-      collectionsList:
-        arg.collectionsList ||
+      userCollectionsList:
+        arg.userCollectionsList ||
         new Link({ href: '/collections?projection=list' }),
       collection: arg.collection || new Link({ href: '/collections/xxx' }),
     });

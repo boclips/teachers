@@ -3,11 +3,24 @@ import { Links } from '../../types/Links';
 import { VideoCollection } from '../../types/VideoCollection';
 import { parseCollectionsListResponse } from './collectionParser';
 
-export const fetchCollections = (links: Links): Promise<VideoCollection[]> => {
-  if (!links.collectionsList) {
+export const fetchUserCollections = (
+  links: Links,
+): Promise<VideoCollection[]> => {
+  if (!links.userCollectionsList) {
     return Promise.reject();
   }
   return axios
-    .get(links.collectionsList.getOriginalLink())
+    .get(links.userCollectionsList.getOriginalLink())
+    .then(response => parseCollectionsListResponse(response));
+};
+
+export const fetchPublicCollections = (
+  links: Links,
+): Promise<VideoCollection[]> => {
+  if (!links.userCollectionsList) {
+    return Promise.reject();
+  }
+  return axios
+    .get(links.userCollectionsList.getOriginalLink())
     .then(response => parseCollectionsListResponse(response));
 };

@@ -6,7 +6,7 @@ import {
   video177Slim,
 } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
-import { fetchCollections } from './fetchCollections';
+import { fetchUserCollections } from './fetchCollections';
 
 let collections = null;
 
@@ -17,12 +17,12 @@ beforeEach(async () => {
     .reply(200, JSON.stringify(userCollectionsResponse([video177Slim])), {});
 
   const links = LinksFactory.sample({
-    collectionsList: new Link({
+    userCollectionsList: new Link({
       href: '/v1/collections?projection=list',
     }),
   });
 
-  collections = await fetchCollections(links);
+  collections = await fetchUserCollections(links);
 });
 
 test('returns available collections in skinny format', () => {

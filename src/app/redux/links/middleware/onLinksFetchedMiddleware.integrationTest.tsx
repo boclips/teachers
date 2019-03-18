@@ -4,7 +4,7 @@ import React from 'react';
 import eventually from '../../../../../test-support/eventually';
 import { LinksResponseFactory } from '../../../../../test-support/factories';
 import MockFetchVerify from '../../../../../test-support/MockFetchVerify';
-import { fetchCollections } from '../../../../services/collections/fetchCollections';
+import { fetchUserCollections } from '../../../../services/collections/fetchCollections';
 import activateUser from '../../../../services/users/userActivator';
 import Mock = jest.Mock;
 import { Links } from '../../../../types/Links';
@@ -18,7 +18,7 @@ const linksWithActivate = LinksResponseFactory.sample({
 });
 
 const activateUserMock = activateUser as Mock;
-const fetchCollectionsMock = fetchCollections as Mock;
+const fetchCollectionsMock = fetchUserCollections as Mock;
 
 describe('when activate link present', () => {
   beforeEach(() => {

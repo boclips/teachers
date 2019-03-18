@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 import { storeCollectionsAction } from '../../../../components/collection/redux/actions/storeCollectionsAction';
-import { fetchCollections } from '../../../../services/collections/fetchCollections';
+import { fetchUserCollections } from '../../../../services/collections/fetchCollections';
 
 export default function initializeState(links, dispatch: Dispatch) {
-  fetchCollections(links)
+  fetchUserCollections(links)
     .then(collections => {
       dispatch(storeCollectionsAction(collections));
     })

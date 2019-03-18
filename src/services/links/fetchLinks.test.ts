@@ -13,7 +13,6 @@ test('parses all links', async () => {
       userCollection: { href: '/default-collection', templated: true },
       userCollections: { href: '/collections' },
       userCollectionsList: { href: '/collections?list' },
-      userCollectionsDetails: { href: '/collections?details' },
     },
   });
 
@@ -28,8 +27,7 @@ test('parses all links', async () => {
     }),
     collection: new Link({ href: '/default-collection', templated: true }),
     collections: new Link({ href: '/collections' }),
-    collectionsDetails: new Link({ href: '/collections?details' }),
-    collectionsList: new Link({ href: '/collections?list' }),
+    userCollectionsList: new Link({ href: '/collections?list' }),
   };
 
   expect(links).toEqual(expectedLinks);

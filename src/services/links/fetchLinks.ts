@@ -29,13 +29,7 @@ export default function fetchLinks() {
         }
 
         if (body._links.userCollectionsList) {
-          links.collectionsList = new Link(body._links.userCollectionsList);
-        }
-
-        if (body._links.userCollectionsDetails) {
-          links.collectionsDetails = new Link(
-            body._links.userCollectionsDetails,
-          );
+          links.userCollectionsList = new Link(body._links.userCollectionsList);
         }
 
         if (body._links.activate) {
