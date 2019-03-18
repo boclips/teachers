@@ -107,6 +107,8 @@ export class LinksFactory {
       userCollectionsList:
         arg.userCollectionsList ||
         new Link({ href: '/collections?projection=list' }),
+      publicCollections:
+        arg.publicCollections || new Link({ href: '/collections?public' }),
       collection: arg.collection || new Link({ href: '/collections/xxx' }),
     });
   }

@@ -17,10 +17,10 @@ export const fetchUserCollections = (
 export const fetchPublicCollections = (
   links: Links,
 ): Promise<VideoCollection[]> => {
-  if (!links.userCollectionsList) {
+  if (!links.publicCollections) {
     return Promise.reject();
   }
   return axios
-    .get(links.userCollectionsList.getOriginalLink())
+    .get(links.publicCollections.getOriginalLink())
     .then(response => parseCollectionsListResponse(response));
 };

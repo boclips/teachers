@@ -8,6 +8,7 @@ export interface Links {
   collection?: Link;
   collections?: Link;
   userCollectionsList?: Link;
+  publicCollections?: Link;
   activate?: Link;
   profile?: Link;
 }
