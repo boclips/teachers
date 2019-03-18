@@ -92,6 +92,11 @@
     }
   }
 
+  // Don't restrict height to video-card container when fullscreen
+  .plyr--fullscreen-enabled .plyr__video-embed {
+    height: inherit;
+  }
+
   .plyr--video {
     @media (max-width: @screen-md) {
       border-radius: @video-border-radius @video-border-radius 0px 0px;
