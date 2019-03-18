@@ -16,7 +16,7 @@ import onStoreLoginMiddleware from '../components/login/redux/middleware/onStore
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
-import onUrlChangeMiddleware from '../components/video/redux/middleware/fetchVideosOnLocationChangeMiddleware';
+import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
 import State from '../types/State';
@@ -53,7 +53,7 @@ export default class App extends PureComponent<Props> {
         routerMiddleware(this.props.history || defaultHistory),
         searchVideosMiddleware,
         videoDetailsMiddleware,
-        onUrlChangeMiddleware,
+        ...fetchVideosMiddleware,
         fetchLinksMiddleware,
         onLinksFetchedMiddleware,
         onStoreLoginMiddleware,
