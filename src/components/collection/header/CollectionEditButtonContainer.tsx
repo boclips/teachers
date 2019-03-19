@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import {
   editCollectionAction,
@@ -12,18 +13,23 @@ interface Props {
   collection: VideoCollection;
 }
 
+interface StateProps {
+  canSave: boolean;
+}
+
 interface DispatchProps {
   patchCollection: (request: EditCollectionRequest) => void;
 }
 
 class CollectionEditButtonContainer extends React.PureComponent<
-  Props & DispatchProps
+  Props & StateProps & DispatchProps
 > {
   public render() {
     return this.props.collection.links.edit ? (
       <CollectionEditButton
         onUpdate={this.props.patchCollection}
         collection={this.props.collection}
+        canSave={this.props.canSave}
       />
     ) : null;
   }
@@ -34,7 +40,12 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     dispatch(editCollectionAction(request)),
 });
 
+function mapStateToProps({ collections }: State): StateProps {
+  return {
+    canSave: !(collections.updating || collections.loading),
+  };
+}
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(CollectionEditButtonContainer);

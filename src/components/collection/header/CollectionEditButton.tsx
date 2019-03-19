@@ -8,6 +8,7 @@ import './CollectionEditForm.less';
 
 interface Props {
   collection: VideoCollection;
+  canSave: boolean;
   onUpdate: (request: EditCollectionRequest) => void;
 }
 
@@ -80,6 +81,7 @@ export default class CollectionEditButton extends React.PureComponent<
           size="large"
           onClick={this.showModal}
           data-qa="collection-edit-button"
+          disabled={!this.props.canSave || this.state.visible}
         >
           Edit Collection
         </Button>
@@ -88,7 +90,11 @@ export default class CollectionEditButton extends React.PureComponent<
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          okButtonProps={{ size: 'large' }}
+          okButtonProps={{
+            size: 'large',
+            loading: !this.props.canSave,
+            disabled: !this.props.canSave,
+          }}
           okText="Save"
           cancelButtonProps={{ size: 'large' }}
           closable={false}
@@ -97,6 +103,7 @@ export default class CollectionEditButton extends React.PureComponent<
           <CollectionEditForm
             title={this.props.collection.title}
             isPublic={this.props.collection.isPublic}
+            canSave={this.props.canSave}
             wrappedComponentRef={this.saveFormRef}
           />
         </Bodal>

@@ -22,7 +22,7 @@ describe('when can edit collection', () => {
         edit: new Link({ href: 'something', templated: false }),
       }),
     });
-    const store = mockStore({});
+    const store = mockStore({ collections: {} });
     const wrapper = mountComponent(collection, store);
 
     CollectionEditModalHelper.openModal(wrapper);
@@ -46,7 +46,8 @@ describe('when can edit collection', () => {
         edit: new Link({ href: 'something', templated: false }),
       }),
     });
-    const store = mockStore({});
+    const store = mockStore({ collections: {} });
+
     const wrapper = mountComponent(collection, store);
 
     CollectionEditModalHelper.openModal(wrapper);
@@ -70,7 +71,8 @@ describe('when can edit collection', () => {
         edit: new Link({ href: 'something', templated: false }),
       }),
     });
-    const store = mockStore({});
+    const store = mockStore({ collections: {} });
+
     const wrapper = mountComponent(collection, store);
 
     CollectionEditModalHelper.openModal(wrapper);
@@ -86,7 +88,8 @@ describe('When cannot edit collection', () => {
       isPublic: false,
       links: VideoCollectionLinksFactory.sample({ edit: null }),
     });
-    const store = mockStore({});
+    const store = mockStore({ collections: {} });
+
     const wrapper = mountComponent(collection, store);
 
     expect(wrapper.find(By.dataQa('collection-edit-button'))).not.toExist();

@@ -7,8 +7,12 @@ export interface EditableFields {
   isPublic: boolean;
 }
 
+export interface OwnProps extends EditableFields {
+  canSave: boolean;
+}
+
 class CollectionEditForm extends React.PureComponent<
-  EditableFields & FormComponentProps
+  OwnProps & FormComponentProps
 > {
   public render() {
     const { getFieldDecorator } = this.props.form;

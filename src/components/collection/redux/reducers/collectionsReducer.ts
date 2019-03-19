@@ -12,6 +12,7 @@ import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
+import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
@@ -153,6 +154,12 @@ const onCreateCollection = (
   return { ...state, updating: true };
 };
 
+const onEditCollection = (
+  state: CollectionsStateValue,
+): CollectionsStateValue => {
+  return { ...state, updating: true };
+};
+
 const onStoreVideosForCollectionAction = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
@@ -206,7 +213,7 @@ const reduceStoreVideoForUserCollections = (
     },
   };
 
-  return { ...state, updating: true, userCollections };
+  return { ...state, userCollections };
 };
 
 const reduceStoreVideoForCollectionDetails = (
@@ -237,7 +244,6 @@ const reduceStoreVideoForCollectionDetails = (
 
   return {
     ...state,
-    updating: true,
     publicCollectionDetails: collectionDetails,
   };
 };
@@ -275,6 +281,7 @@ const onCollectionEdited = (
 
   return {
     ...state,
+    updating: false,
     userCollections,
   };
 };
@@ -286,6 +293,7 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(addToCollectionAction, onAddVideoAction),
   actionHandler(removeFromCollectionAction, onRemoveVideoAction),
   actionHandler(createCollectionAction, onCreateCollection),
+  actionHandler(editCollectionAction, onEditCollection),
   actionHandler(fetchCollectionAction, loadingCollections),
   actionHandler(fetchCollectionsAction, loadingCollections),
 

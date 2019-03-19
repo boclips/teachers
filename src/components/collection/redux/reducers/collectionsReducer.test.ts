@@ -166,7 +166,6 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(stateAfter.updating).toEqual(true);
     expect(Object.keys(stateAfter.userCollections[0].videos)).toHaveLength(1);
     expect(stateAfter.userCollections[0].videos[video.id].title).toEqual(
       video.title,
