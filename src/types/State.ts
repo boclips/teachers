@@ -48,6 +48,7 @@ export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
   userCollections: VideoCollection[];
+  publicCollections: VideoCollection[];
   publicCollectionDetails?: VideoCollection;
 }
 

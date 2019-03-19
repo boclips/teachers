@@ -45,23 +45,28 @@ export default class ApiStub {
   }
 
   public fetchCollections(
-    collections = userCollectionsResponse(),
     collectionsList = userCollectionsResponse([video177Slim]),
     once = false,
   ) {
     if (once) {
       MockFetchVerify.getOnce(
-        '/v1/collections?projection=details',
-        collections,
-      );
-
-      MockFetchVerify.getOnce(
         '/v1/collections?projection=list',
         collectionsList,
       );
     } else {
-      MockFetchVerify.get('/v1/collections?projection=details', collections);
       MockFetchVerify.get('/v1/collections?projection=list', collectionsList);
+    }
+    return this;
+  }
+
+  public fetchPublicCollections(
+    collections = userCollectionsResponse(),
+    once = false,
+  ) {
+    if (once) {
+      MockFetchVerify.getOnce('/v1/collections?public=true', collections);
+    } else {
+      MockFetchVerify.get('/v1/collections?public=true', collections);
     }
     return this;
   }

@@ -4,7 +4,10 @@ import React from 'react';
 import eventually from '../../../../../test-support/eventually';
 import { LinksResponseFactory } from '../../../../../test-support/factories';
 import MockFetchVerify from '../../../../../test-support/MockFetchVerify';
-import { fetchUserCollections } from '../../../../services/collections/fetchCollections';
+import {
+  fetchPublicCollections,
+  fetchUserCollections,
+} from '../../../../services/collections/fetchCollections';
 import activateUser from '../../../../services/users/userActivator';
 import Mock = jest.Mock;
 import { Links } from '../../../../types/Links';
@@ -19,6 +22,7 @@ const linksWithActivate = LinksResponseFactory.sample({
 
 const activateUserMock = activateUser as Mock;
 const fetchCollectionsMock = fetchUserCollections as Mock;
+const fetchPublicCollectionsMock = fetchPublicCollections as Mock;
 
 describe('when activate link present', () => {
   beforeEach(() => {
@@ -28,6 +32,9 @@ describe('when activate link present', () => {
   describe('and app mounted', () => {
     beforeEach(() => {
       fetchCollectionsMock.mockReturnValue({
+        then: () => ({ catch: () => {} }),
+      });
+      fetchPublicCollectionsMock.mockReturnValue({
         then: () => ({ catch: () => {} }),
       });
       mount(<App history={createMemoryHistory({ initialEntries: [`/`] })} />);

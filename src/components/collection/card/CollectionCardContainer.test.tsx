@@ -147,6 +147,7 @@ const createMockStore = (collection: VideoCollection) => {
   return mockStore({
     collections: {
       userCollections: [collection],
+      publicCollections: undefined,
       loading: false,
       updating: false,
     },

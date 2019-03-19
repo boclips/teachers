@@ -20,6 +20,7 @@ import {
 } from '../../types/State';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
+import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
@@ -107,6 +108,19 @@ describe('when authorised', () => {
     );
 
     const collectionsView = wrapper.find(CollectionListView);
+    expect(collectionsView).toExist();
+  });
+
+  test('shows public collections view on /public-collections', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/public-collections')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(PublicCollectionListView);
     expect(collectionsView).toExist();
   });
 
@@ -242,7 +256,12 @@ function buildStore(
     user.authenticated = true;
   }
 
-  const collections = { loading: true, updating: false, userCollections: [] };
+  const collections = {
+    loading: true,
+    updating: false,
+    userCollections: [],
+    publicCollections: undefined,
+  };
 
   const store = mockStore({
     router,

@@ -16,8 +16,8 @@ export const links = {
       href: '/v1/collections/{id}',
       templated: true,
     },
-    userCollectionsDetails: {
-      href: '/v1/collections?projection=details',
+    publicCollections: {
+      href: '/v1/collections?public=true',
     },
     userCollectionsList: {
       href: '/v1/collections?projection=list',

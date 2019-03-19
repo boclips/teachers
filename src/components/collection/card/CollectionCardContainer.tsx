@@ -10,6 +10,7 @@ import { CollectionCard } from './CollectionCard';
 
 interface Props {
   collection: VideoCollection;
+  tiny?: boolean;
 }
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -24,6 +25,8 @@ class CollectionCardContainer extends React.PureComponent<
   public render() {
     return (
       <CollectionCard
+        tiny={this.props.tiny}
+        key={this.props.collection.id}
         collection={this.props.collection}
         numberOfPreviews={NUMBER_OF_PREVIEWS}
       />

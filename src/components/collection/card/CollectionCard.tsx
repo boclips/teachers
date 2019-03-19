@@ -1,4 +1,5 @@
 import { Icon } from 'antd';
+import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { VideoId } from '../../../types/Video';
@@ -12,13 +13,15 @@ import RemoveCollectionButton from './RemoveCollectionButton';
 interface Props {
   collection: VideoCollection;
   numberOfPreviews: number;
+  tiny?: boolean;
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
   public render() {
     return (
       <section
-        className="collection-card"
+        key={this.props.collection.id}
+        className={'collection-card' + (this.props.tiny ? ' tiny' : '')}
         data-qa="collection-card"
         data-state={this.props.collection.title}
       >
@@ -26,19 +29,23 @@ export class CollectionCard extends React.PureComponent<Props> {
           {this.props.collection.title}
         </h1>
         <CollectionSubtitle collection={this.props.collection} />
-        <RemoveCollectionButton collection={this.props.collection} />
+        {!this.props.tiny && (
+          <RemoveCollectionButton collection={this.props.collection} />
+        )}
         <section className="collection-video-previews">
           {this.renderVideoPreviews()}
         </section>
-        <h3 className="view-collection">
-          <Link
-            data-state={this.props.collection.title}
-            data-qa="view-collection"
-            to={'/collections/' + this.props.collection.id}
-          >
-            View collection
-          </Link>
-        </h3>
+        {!this.props.tiny && (
+          <h3 className="view-collection">
+            <Link
+              data-state={this.props.collection.title}
+              data-qa="view-collection"
+              to={'/collections/' + this.props.collection.id}
+            >
+              View collection
+            </Link>
+          </h3>
+        )}
       </section>
     );
   }
@@ -74,11 +81,22 @@ export class CollectionCard extends React.PureComponent<Props> {
         className="collection-video-preview"
         data-qa="collection-video-preview"
       >
-        <section className="video-container">
-          <section className="video-container-inner">
-            <VideoPlayer video={video} controls="thumbnail" />
+        {this.props.tiny ? (
+          <section className="video-container">
+            <section className="video-container-inner">
+              <section
+                className="thumbnail-container"
+                style={{ backgroundImage: `url(${video.thumbnailUrl})` }}
+              />
+            </section>
           </section>
-        </section>
+        ) : (
+          <section className="video-container">
+            <section className="video-container-inner">
+              <VideoPlayer video={video} controls="thumbnail" />
+            </section>
+          </section>
+        )}
         <Link
           to={`/videos/${video.id}`}
           className="title clamp-2-lines link--secondary"
@@ -97,9 +115,9 @@ export class CollectionCard extends React.PureComponent<Props> {
 
   private renderVideoPreviewCount(totalNumberOfVideos: number) {
     return (
-      <section key="preview-count" className="video-container">
+      <section key={uuid()} className="video-container">
         <section className="video-container-inner">
-          <section className="video-counter" key="count">
+          <section className="video-counter">
             <span>
               +
               <span data-qa="collection-video-preview-counter">
@@ -114,7 +132,10 @@ export class CollectionCard extends React.PureComponent<Props> {
   }
 
   public static Skeleton = () => (
-    <section className="collection-card skeleton ant-skeleton ant-skeleton-active">
+    <section
+      key={uuid()}
+      className="collection-card skeleton ant-skeleton ant-skeleton-active"
+    >
       <section className="ant-skeleton-content">
         <h3 className="ant-skeleton-title" />
         <span className="highlight">
@@ -139,7 +160,7 @@ export class CollectionCard extends React.PureComponent<Props> {
   );
 
   public static VideoPreviewSkeleton = () => (
-    <section className="collection-video-preview skeleton">
+    <section key={uuid()} className="collection-video-preview skeleton">
       <section className="video-container" />
       <section className={'title'} />
       <section className={'subtitle'} />

@@ -29,6 +29,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [otherCollection, targetCollection],
+      publicCollections: [],
     };
 
     const newVideo = VideoFactory.sample({ id: '124' });
@@ -60,6 +61,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
+      publicCollections: [],
     };
 
     const action = addToCollectionAction({
@@ -90,6 +92,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
+      publicCollections: [],
     };
 
     const action = addToCollectionAction({
@@ -119,6 +122,7 @@ describe('removing videos from a colleciton', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
+      publicCollections: [],
     };
 
     const videoToRemove = VideoFactory.sample({ id: '123' });
@@ -138,7 +142,7 @@ describe('removing videos from a colleciton', () => {
 });
 
 describe('fetch video for collection', () => {
-  test('can fetch video for collection using ids', () => {
+  test('sets videos in user collections', () => {
     const video = VideoFactory.sample({ id: '123' });
 
     new ApiStub().fetchVideo({ video });
@@ -157,6 +161,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
+      publicCollections: [],
     };
 
     const action = storeVideoForCollectionAction({
@@ -194,6 +199,7 @@ describe('fetch video for collection', () => {
       loading: false,
       publicCollectionDetails: collection,
       userCollections: [],
+      publicCollections: [],
     };
 
     const action = storeVideoForCollectionAction({
@@ -214,6 +220,45 @@ describe('fetch video for collection', () => {
     );
     expect(stateAfter.publicCollectionDetails.videoIds).toHaveLength(1);
   });
+
+  test('sets videos in public collections', () => {
+    const video = VideoFactory.sample({ id: '123' });
+
+    new ApiStub().fetchVideo({ video });
+
+    const collection = VideoCollectionFactory.sample({
+      id: 'target',
+      videoIds: [
+        {
+          id: video.id,
+          links: video.links,
+        },
+      ],
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      publicCollections: [collection],
+      userCollections: [],
+    };
+
+    const action = storeVideoForCollectionAction({
+      videos: [video],
+      collection,
+    });
+
+    const stateAfter = collectionsReducer(stateBefore, action);
+
+    expect(Object.keys(stateAfter.publicCollections[0].videos)).toHaveLength(1);
+    expect(stateAfter.publicCollections[0].videos[video.id].title).toEqual(
+      video.title,
+    );
+    expect(stateAfter.publicCollections[0].videos[video.id].id).toEqual(
+      video.id,
+    );
+    expect(stateAfter.publicCollections[0].videoIds).toHaveLength(1);
+  });
 });
 
 test('remove a collection', () => {
@@ -223,6 +268,7 @@ test('remove a collection', () => {
     updating: false,
     loading: false,
     userCollections: [collection],
+    publicCollections: [],
   };
 
   const action = onCollectionRemovedAction(collection);
@@ -239,6 +285,7 @@ test('editing a collection', () => {
     updating: false,
     loading: false,
     userCollections: [collection],
+    publicCollections: [],
   };
 
   const editedCollection = { ...collection, title: 'changed' };

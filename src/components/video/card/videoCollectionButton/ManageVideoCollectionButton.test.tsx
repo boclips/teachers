@@ -159,6 +159,7 @@ const mountWith = (
   store = mockStore({
     collections: {
       userCollections: collections,
+      publicCollections: undefined,
       loading,
       updating,
     },

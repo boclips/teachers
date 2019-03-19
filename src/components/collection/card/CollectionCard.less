@@ -36,17 +36,25 @@
     display: grid;
     grid-column-gap: @preview-gutter;
     grid-template-columns: repeat(
-      auto-fill,
-      minmax(@min-preview-width, calc(25% - 3 * @preview-gutter / 4))
+            auto-fill,
+            minmax(@min-preview-width, calc(25% - 3 * @preview-gutter / 4))
     );
     @media (max-width: @screen-md) {
       grid-column-gap: (@preview-gutter / 4);
       grid-row-gap: (@preview-gutter / 4);
       grid-template-columns: repeat(
-        auto-fill,
-        minmax(@min-preview-width, calc(50% - (@preview-gutter / 4) / 2))
+              auto-fill,
+              minmax(@min-preview-width, calc(50% - (@preview-gutter / 4) / 2))
       );
       grid-template-rows: repeat(2, auto);
+    }
+
+    .thumbnail-container {
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
     }
 
     .video-container {
@@ -111,7 +119,6 @@
       }
 
       &.skeleton {
-
         * {
           .loading-blue();
         }
@@ -153,6 +160,75 @@
         font-size: 20px;
         font-weight: bold;
         line-height: 25px;
+      }
+    }
+  }
+
+  &.tiny {
+    min-height: 265px;
+    padding: 20px 20px 20px;
+
+    .collection-video-previews {
+      grid-column-gap: (@preview-gutter / 4);
+      grid-row-gap: (@preview-gutter / 4);
+      grid-template-columns: repeat(
+              auto-fill,
+              minmax(20px, calc(50% - (@preview-gutter / 4) / 2))
+      );
+      grid-template-rows: repeat(2, auto);
+
+      .collection-video-preview {
+        .title {
+          display: none !important;
+        }
+
+        .duration {
+          display: none;
+        }
+
+        &.skeleton {
+          * {
+            .loading-blue();
+          }
+
+          .title {
+            @media (max-width: @screen-md) {
+              display: none;
+            }
+            margin-top: 8px;
+            height: 20px;
+            width: 150px;
+          }
+
+          .subtitle {
+            @media (max-width: @screen-md) {
+              display: none;
+            }
+            margin-top: 8px;
+            height: 20px;
+            width: 100px;
+          }
+        }
+      }
+
+      .video-counter {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #d3dcf5;
+        color: #848fbb;
+        font-size: 52px;
+        line-height: 50px;
+        text-align: center;
+        height: 100%;
+
+        .label {
+          color: @shade-1;
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 25px;
+        }
       }
     }
   }

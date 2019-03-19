@@ -44,6 +44,7 @@ export class CollectionListView extends PureComponent<
     return (
       this.props.collections && (
         <CollectionCardList
+          title="My video collections"
           collections={this.props.collections}
           loading={this.props.loading}
         />

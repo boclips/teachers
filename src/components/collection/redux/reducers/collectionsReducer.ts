@@ -15,18 +15,21 @@ import { createCollectionResultAction } from '../actions/createCollectionResultA
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
+import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
+import { storePublicCollectionsAction } from '../actions/storePublicCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import { VideoMap } from './../../../../types/VideoCollection';
 
 const initialState: CollectionsStateValue = {
   userCollections: [],
+  publicCollections: undefined,
   publicCollectionDetails: undefined,
   loading: true,
   updating: false,
@@ -39,6 +42,18 @@ const onStoreCollectionsAction = (
   return {
     ...state,
     userCollections,
+    loading: false,
+    updating: false,
+  };
+};
+
+const onStorePublicCollectionsAction = (
+  state: CollectionsStateValue,
+  publicCollections: VideoCollection[],
+): CollectionsStateValue => {
+  return {
+    ...state,
+    publicCollections,
     loading: false,
     updating: false,
   };
@@ -165,6 +180,7 @@ const onStoreVideosForCollectionAction = (
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
   state = reduceStoreVideoForUserCollections(state, request);
+  state = reduceStoreVideoForPublicCollections(state, request);
   return reduceStoreVideoForCollectionDetails(state, request);
 };
 
@@ -214,6 +230,40 @@ const reduceStoreVideoForUserCollections = (
   };
 
   return { ...state, userCollections };
+};
+
+const reduceStoreVideoForPublicCollections = (
+  state: CollectionsStateValue,
+  request: { videos: Video[]; collection: VideoCollection },
+): CollectionsStateValue => {
+  if (!state.publicCollections) {
+    return state;
+  }
+  const indexOfCollection = getIndexOfCollection(
+    state.publicCollections,
+    request.collection.id,
+  );
+  if (indexOfCollection < 0) {
+    return state;
+  }
+  const publicCollections = [...state.publicCollections];
+  const videos = state.publicCollections[indexOfCollection].videos;
+
+  if (videosAlreadyLoaded(request, videos)) {
+    return state;
+  }
+
+  const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
+
+  publicCollections[indexOfCollection] = {
+    ...publicCollections[indexOfCollection],
+    videos: {
+      ...videos,
+      ...videoMapToUpdate,
+    },
+  };
+
+  return { ...state, publicCollections };
 };
 
 const reduceStoreVideoForCollectionDetails = (
@@ -289,6 +339,7 @@ const onCollectionEdited = (
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
+  actionHandler(storePublicCollectionsAction, onStorePublicCollectionsAction),
   actionHandler(storeCollectionAction, onStoreCollectionAction),
   actionHandler(addToCollectionAction, onAddVideoAction),
   actionHandler(removeFromCollectionAction, onRemoveVideoAction),
@@ -296,6 +347,7 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(editCollectionAction, onEditCollection),
   actionHandler(fetchCollectionAction, loadingCollections),
   actionHandler(fetchCollectionsAction, loadingCollections),
+  actionHandler(fetchPublicCollectionsAction, loadingCollections),
 
   actionHandler(removeFromCollectionResultAction, collectionUpdated),
   actionHandler(addToCollectionResultAction, collectionUpdated),
