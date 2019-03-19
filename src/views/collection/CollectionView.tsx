@@ -129,7 +129,8 @@ export class CollectionView extends PureComponent<
     } else if (
       !this.props.loading &&
       (this.props.collection === undefined ||
-        this.props.collection.id !== this.props.collectionId)
+        (this.props.collection &&
+          this.props.collection.id !== this.props.collectionId))
     ) {
       this.props.fetchCollection();
     }

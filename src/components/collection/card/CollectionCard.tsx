@@ -55,13 +55,13 @@ export class CollectionCard extends React.PureComponent<Props> {
     const previews = [];
     if (this.props.collection.videoIds.length === this.props.numberOfPreviews) {
       previews.push(
-        this.props.collection.videoIds
+        ...this.props.collection.videoIds
           .slice(0, this.props.numberOfPreviews)
           .map(videoId => this.renderVideoPreview(videoId)),
       );
     } else {
       previews.push(
-        this.props.collection.videoIds
+        ...this.props.collection.videoIds
           .slice(0, this.props.numberOfPreviews - 1)
           .map(videoId => this.renderVideoPreview(videoId)),
       );
@@ -70,6 +70,10 @@ export class CollectionCard extends React.PureComponent<Props> {
       previews.push(
         this.renderVideoPreviewCount(this.props.collection.videoIds.length),
       );
+    }
+
+    while (previews.length < this.props.numberOfPreviews) {
+      previews.push(this.renderVideoPreviewPadding());
     }
     return previews;
   }
@@ -128,6 +132,14 @@ export class CollectionCard extends React.PureComponent<Props> {
             <section className="label">videos</section>
           </section>
         </section>
+      </section>
+    );
+  }
+
+  private renderVideoPreviewPadding() {
+    return (
+      <section key={uuid()} className="video-container video-container-padding">
+        <section className="video-container-inner" />
       </section>
     );
   }
