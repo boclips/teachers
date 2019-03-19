@@ -1,4 +1,9 @@
+@import '../../../resources/styles/_antd-theme.less';
+
 .home-page {
+  .search-section .ant-layout {
+    background-color: @shade-2;
+  }
   .home-search {
     margin: 150px 0;
     display: flex;
@@ -19,28 +24,31 @@
 
       label {
         padding-left: 4px;
-        color: #3D4564;
+        color: #3d4564;
         font-size: 20px;
         font-weight: bold;
         line-height: 52px;
       }
     }
     .ant-input {
-      background-color: #FFFFFF;
+      background-color: #ffffff;
     }
   }
 
-  .collection-list-description {
-    font-size: 22px;
-  }
+  .discovery-section {
+    margin-top: 50px;
+    .collection-list-description {
+      font-size: 22px;
+    }
 
-  .home-collections {
-    animation: slide-in 0.5s 1s both;
-  }
+    .home-collections {
+      animation: slide-in 0.5s 1s both;
+    }
 
-  .more-collections {
-    animation: slide-in 0.5s 1.5s both;
-    float: right;
-    margin-top: 20px;
+    .more-collections {
+      animation: slide-in 0.5s 1.5s both;
+      float: right;
+      margin-top: 20px;
+    }
   }
 }

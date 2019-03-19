@@ -12,6 +12,7 @@ interface Props {
   children: React.ReactNode;
   showTabs?: boolean;
   showSearchBar?: boolean;
+  hideFooter?: boolean;
 }
 
 class PageLayout extends PureComponent<Props> {
@@ -32,7 +33,7 @@ class PageLayout extends PureComponent<Props> {
               </Col>
             </Row>
           </Content>
-          <BoclipsFooter />
+          {!this.props.hideFooter && <BoclipsFooter />}
         </section>
       </Layout>
     );

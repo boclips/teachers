@@ -8,28 +8,39 @@ import PublicCollectionsGrid from '../../components/collection/public/PublicColl
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
 import './HomeView.less';
+import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 
 const { Content } = Layout;
 export default class HomeView extends PureComponent {
   public render() {
     return (
       <section className="home-page">
-        <PageLayout data-qa="home-page" showSearchBar={false}>
-          <Content>
-            <Row>
-              <Col
-                xs={{ span: 22, offset: 1 }}
-                md={{ span: 18, offset: 3 }}
-                xl={{ span: 14, offset: 5 }}
-              >
-                <section className="home-search">
-                  <section className="home-searchbar">
-                    <label>I'm looking for:</label>
-                    <SearchBar />
+        <section className="search-section">
+          <PageLayout
+            data-qa="home-page"
+            showSearchBar={false}
+            hideFooter={true}
+          >
+            <Content>
+              <Row>
+                <Col
+                  xs={{ span: 22, offset: 1 }}
+                  md={{ span: 18, offset: 3 }}
+                  xl={{ span: 14, offset: 5 }}
+                >
+                  <section className="home-search">
+                    <section className="home-searchbar">
+                      <label>I'm looking for:</label>
+                      <SearchBar />
+                    </section>
                   </section>
-                </section>
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            </Content>
+          </PageLayout>
+        </section>
+        <section className="discovery-section">
+          <Content>
             <Row>
               <Col>
                 <section className="home-collections">
@@ -52,7 +63,8 @@ export default class HomeView extends PureComponent {
               </Col>
             </Row>
           </Content>
-        </PageLayout>
+        </section>
+        <BoclipsFooter />
       </section>
     );
   }
