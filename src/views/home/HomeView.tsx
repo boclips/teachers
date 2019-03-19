@@ -1,7 +1,9 @@
+import { Button } from 'antd';
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import PublicCollectionsGrid from '../../components/collection/public/PublicCollectionsGrid';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
@@ -32,9 +34,20 @@ export default class HomeView extends PureComponent {
               <Col>
                 <section className="home-collections">
                   <PublicCollectionsGrid
-                    numberOfCollections={6}
+                    maxNumberOfCollections={6}
                     description="Sparkle your students curiosity with teacher made collections"
                   />
+                </section>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <section className="more-collections">
+                  <Link to="/public-collections">
+                    <Button htmlType="button" size="large">
+                      Explore more collections
+                    </Button>
+                  </Link>
                 </section>
               </Col>
             </Row>

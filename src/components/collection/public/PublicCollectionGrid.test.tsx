@@ -24,7 +24,7 @@ test('dispatches fetch public collection if none when mounted', () => {
 
   mount(
     <Provider store={store}>
-      <PublicCollectionsGrid numberOfCollections={1} description="" />
+      <PublicCollectionsGrid maxNumberOfCollections={1} description="" />
     </Provider>,
   );
 
@@ -43,7 +43,7 @@ test('dispatches does not fetch public collection if some when mounted', () => {
   mount(
     <Provider store={store}>
       <MemoryRouter>
-        <PublicCollectionsGrid numberOfCollections={1} description="" />
+        <PublicCollectionsGrid maxNumberOfCollections={1} description="" />
       </MemoryRouter>
     </Provider>,
   );

@@ -7,7 +7,7 @@ import { CollectionCardList } from '../card/CollectionCardList';
 import { fetchPublicCollectionsAction } from '../redux/actions/fetchPublicCollectionsAction';
 
 interface Props {
-  numberOfCollections?: number;
+  maxNumberOfCollections?: number;
   description: string;
 }
 
@@ -31,6 +31,7 @@ class PublicCollectionsGrid extends React.PureComponent<
         tiny={true}
         loading={this.props.loading}
         collections={this.props.publicCollections}
+        maxNumberOfCollections={this.props.maxNumberOfCollections}
       />
     );
   }

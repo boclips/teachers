@@ -11,6 +11,7 @@ interface Props {
   title: string;
   description?: string;
   tiny?: boolean;
+  maxNumberOfCollections?: number;
 }
 
 export class CollectionCardList extends React.PureComponent<Props> {
@@ -30,21 +31,23 @@ export class CollectionCardList extends React.PureComponent<Props> {
           ? this.renderLoading()
           : this.props.collections && (
               <Row gutter={this.props.tiny ? 20 : 0}>
-                {this.props.collections.map(collection => {
-                  return (
-                    <Col
-                      key={collection.id}
-                      xs={{ span: 24 }}
-                      md={{ span: this.props.tiny ? 12 : 24 }}
-                      lg={{ span: this.props.tiny ? 8 : 24 }}
-                    >
-                      <CollectionCardContainer
-                        tiny={this.props.tiny}
-                        collection={collection}
-                      />
-                    </Col>
-                  );
-                })}
+                {this.props.collections
+                  .slice(0, this.props.maxNumberOfCollections)
+                  .map(collection => {
+                    return (
+                      <Col
+                        key={collection.id}
+                        xs={{ span: 24 }}
+                        md={{ span: this.props.tiny ? 12 : 24 }}
+                        lg={{ span: this.props.tiny ? 8 : 24 }}
+                      >
+                        <CollectionCardContainer
+                          tiny={this.props.tiny}
+                          collection={collection}
+                        />
+                      </Col>
+                    );
+                  })}
               </Row>
             )}
       </React.Fragment>
