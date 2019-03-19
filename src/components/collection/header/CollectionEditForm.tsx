@@ -20,7 +20,9 @@ class CollectionEditForm extends React.PureComponent<
     return (
       <Form className="form">
         <Form.Item className="form__item">
-          {getFieldDecorator('title')(<Input data-qa="title-edit" />)}
+          {getFieldDecorator('title', { initialValue: this.props.title })(
+            <Input data-qa="title-edit" />,
+          )}
         </Form.Item>
         <Form.Item className="form__item">
           {getFieldDecorator('isPublic', {
@@ -37,11 +39,4 @@ class CollectionEditForm extends React.PureComponent<
   }
 }
 
-export default Form.create<EditableFields>({
-  mapPropsToFields(props: EditableFields) {
-    return {
-      title: Form.createFormField({ value: props.title }),
-      isPublic: Form.createFormField({ value: props.isPublic }),
-    };
-  },
-})(CollectionEditForm);
+export default Form.create<EditableFields>()(CollectionEditForm);
