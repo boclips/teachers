@@ -86,7 +86,7 @@ export default class VideoCard extends React.PureComponent<Props> {
   }
 
   public static Skeleton = () => (
-    <Card className="video-card" bordered={false}>
+    <Card className="video-card skeleton" bordered={false}>
       <AntSkeleton
         loading={true}
         active={true}

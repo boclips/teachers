@@ -1,5 +1,5 @@
-@import "../../../../resources/styles/_keyframes";
-@import "../../../../resources/styles/_antd-theme";
+@import '../../../../resources/styles/_keyframes';
+@import '../../../../resources/styles/_antd-theme';
 
 @video-width: 304px;
 @video-height: 228px;
@@ -7,9 +7,11 @@
 
 .ant-card.video-card {
   position: relative;
-  animation: slide-in 0.5s 0s both;
-
-  .animation-delay(10);
+  animation: fade-in 0.4s 0s both;
+  &.skeleton {
+    animation: slide-in 0.5s 0s both;
+    .animation-delay(10);
+  }
 
   &:nth-of-type(1) {
     margin-top: 20px;
