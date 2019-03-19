@@ -1,6 +1,5 @@
 import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import SearchResultsCount from '../../searchResults/multiple-results/SearchResultsCount';
@@ -24,23 +23,16 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
     return (
       <React.Fragment>
         <SearchResultsCount count={this.props.totalElements} />
-        <TransitionGroup exit={true}>
-          {this.props.videos.map((video, index) => {
-            return (
-              <CSSTransition
-                key={video ? video.id : uuid()}
-                classNames="collection-video"
-                timeout={500}
-              >
-                <VideoCard
-                  video={video}
-                  currentCollection={this.props.currentCollection}
-                  videoIndex={index}
-                />
-              </CSSTransition>
-            );
-          })}
-        </TransitionGroup>
+        {this.props.videos.map((video, index) => {
+          return (
+            <VideoCard
+              key={video ? video.id : uuid()}
+              video={video}
+              currentCollection={this.props.currentCollection}
+              videoIndex={index}
+            />
+          );
+        })}
       </React.Fragment>
     );
   }

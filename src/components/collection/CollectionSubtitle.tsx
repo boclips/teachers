@@ -23,7 +23,7 @@ export class CollectionSubtitle extends React.Component<Props> {
 
   private renderUpdatedAt(updatedAt: string) {
     return (
-      <span>
+      <span className="last-updated">
         {` · Last updated: `}
         <span data-qa="collection-updated-at">
           <DateFormatter date={updatedAt} />
