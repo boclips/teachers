@@ -14,32 +14,18 @@ interface Props {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
+  onClick?: () => void;
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
   public render() {
-    if (this.props.tiny) {
-      return (
-        <Link
-          data-state={this.props.collection.title}
-          data-qa="view-collection"
-          to={'/collections/' + this.props.collection.id}
-          style={{ textDecoration: 'none' }}
-        >
-          {this.renderCard()}
-        </Link>
-      );
-    }
-    return this.renderCard();
-  }
-
-  private renderCard() {
     return (
       <section
         key={this.props.collection.id}
         className={'collection-card' + (this.props.tiny ? ' tiny' : '')}
         data-qa="collection-card"
         data-state={this.props.collection.title}
+        onClick={this.props.onClick}
       >
         <h1 className="collection-title" data-qa="collection-title">
           {this.props.collection.title}
@@ -65,7 +51,6 @@ export class CollectionCard extends React.PureComponent<Props> {
       </section>
     );
   }
-
   private renderVideoPreviews() {
     const previews = [];
     if (this.props.collection.videoIds.length === this.props.numberOfPreviews) {

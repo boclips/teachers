@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -17,6 +18,7 @@ const NUMBER_OF_PREVIEWS = 4;
 
 interface DispatchProps {
   fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
+  goToCollectionDetails: (collection: VideoCollection) => () => void;
 }
 
 class CollectionCardContainer extends React.PureComponent<
@@ -29,6 +31,7 @@ class CollectionCardContainer extends React.PureComponent<
         key={this.props.collection.id}
         collection={this.props.collection}
         numberOfPreviews={NUMBER_OF_PREVIEWS}
+        onClick={this.props.goToCollectionDetails(this.props.collection)}
       />
     );
   }
@@ -64,6 +67,8 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     fetchVideosForCollection: (request: VideosForCollectionRequest) =>
       dispatch(fetchVideosForCollectionAction(request)),
+    goToCollectionDetails: (collection: VideoCollection) => () =>
+      dispatch(push('/collections/' + collection.id)),
   };
 }
 

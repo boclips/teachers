@@ -33,7 +33,9 @@ interface DispatchProps {
   fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
 }
 
-export class CollectionView extends PureComponent<StateProps & DispatchProps> {
+export class CollectionView extends PureComponent<
+  OwnProps & StateProps & DispatchProps
+> {
   public render() {
     return (
       <PageLayout>
@@ -116,12 +118,19 @@ export class CollectionView extends PureComponent<StateProps & DispatchProps> {
   }
 
   private fetchCollectionIfNeeded() {
-    if (this.props.collection) {
+    if (
+      this.props.collection &&
+      this.props.collection.id === this.props.collectionId
+    ) {
       this.props.fetchVideosForCollection({
         videos: this.videoIdsToFetch(),
         collection: this.props.collection,
       });
-    } else if (!this.props.loading && this.props.collection === undefined) {
+    } else if (
+      !this.props.loading &&
+      (this.props.collection === undefined ||
+        this.props.collection.id !== this.props.collectionId)
+    ) {
       this.props.fetchCollection();
     }
   }
