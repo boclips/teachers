@@ -18,6 +18,22 @@ interface Props {
 
 export class CollectionCard extends React.PureComponent<Props> {
   public render() {
+    if (this.props.tiny) {
+      return (
+        <Link
+          data-state={this.props.collection.title}
+          data-qa="view-collection"
+          to={'/collections/' + this.props.collection.id}
+          style={{ textDecoration: 'none' }}
+        >
+          {this.renderCard()}
+        </Link>
+      );
+    }
+    return this.renderCard();
+  }
+
+  private renderCard() {
     return (
       <section
         key={this.props.collection.id}

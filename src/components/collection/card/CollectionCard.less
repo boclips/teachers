@@ -36,15 +36,15 @@
     display: grid;
     grid-column-gap: @preview-gutter;
     grid-template-columns: repeat(
-            auto-fill,
-            minmax(@min-preview-width, calc(25% - 3 * @preview-gutter / 4))
+      auto-fill,
+      minmax(@min-preview-width, calc(25% - 3 * @preview-gutter / 4))
     );
     @media (max-width: @screen-md) {
       grid-column-gap: (@preview-gutter / 4);
       grid-row-gap: (@preview-gutter / 4);
       grid-template-columns: repeat(
-              auto-fill,
-              minmax(@min-preview-width, calc(50% - (@preview-gutter / 4) / 2))
+        auto-fill,
+        minmax(@min-preview-width, calc(50% - (@preview-gutter / 4) / 2))
       );
       grid-template-rows: repeat(2, auto);
     }
@@ -172,8 +172,8 @@
       grid-column-gap: (@preview-gutter / 4);
       grid-row-gap: (@preview-gutter / 4);
       grid-template-columns: repeat(
-              auto-fill,
-              minmax(20px, calc(50% - (@preview-gutter / 4) / 2))
+        auto-fill,
+        minmax(20px, calc(50% - (@preview-gutter / 4) / 2))
       );
       grid-template-rows: repeat(2, auto);
 
@@ -192,18 +192,14 @@
           }
 
           .title {
-            @media (max-width: @screen-md) {
-              display: none;
-            }
+            display: none;
             margin-top: 8px;
             height: 20px;
             width: 150px;
           }
 
           .subtitle {
-            @media (max-width: @screen-md) {
-              display: none;
-            }
+            display: none;
             margin-top: 8px;
             height: 20px;
             width: 100px;
