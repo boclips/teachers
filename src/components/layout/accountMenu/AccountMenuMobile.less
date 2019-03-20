@@ -1,3 +1,5 @@
+@import '../../../../resources/styles/_colours';
+
 .account-menu-mobile {
   &__drawer {
     .ant-menu-vertical {
@@ -15,13 +17,13 @@
     .ant-menu-item {
       margin: 0px;
       font-size: 16px;
-      color: #4189ff;
+      color: @cta-blue;
     }
 
     .ant-menu-item-divider {
       box-sizing: border-box;
       height: 1px;
-      border: 1px solid #e8efff;
+      border: 1px solid @shade-2;
     }
 
     .ant-menu-item:not(:last-child) {
@@ -31,7 +33,7 @@
 
   &__menu-item {
     > a {
-      color: #4189ff;
+      color: @cta-blue;
       text-decoration: none;
     }
   }

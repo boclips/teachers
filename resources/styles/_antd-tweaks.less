@@ -10,12 +10,12 @@
   min-width: 120px;
 
   &:hover {
-    border-color: #0051bc;
-    color: #0051bc;
+    border-color: @mid-blue;
+    color: @mid-blue;
   }
 
   &:disabled {
-    color: #d3dcf5;
+    color: @shade-3;
   }
 
   &:focus {
@@ -36,7 +36,7 @@
 
   &.ant-btn-primary {
     &:hover {
-      background-color: #0051bc;
+      background-color: @mid-blue;
       color: #ffffff;
     }
 
@@ -70,11 +70,21 @@
   &:focus {
     border-color: @shade-2;
     box-shadow: 0 0 4px 1px @cta-blue;
-    color: #3d4564;
+    color: @shade-6;
   }
 
   &.ant-input-lg {
     font-weight: bold;
+    font-size: 16px;
+  }
+}
+  .ant-input-affix-wrapper .ant-input-lg:not(:first-child) {
+    padding-left: 34px;
+  }
+
+.ant-input-prefix {
+  .anticon {
+    color: @shade-5;
     font-size: 16px;
   }
 }
@@ -167,19 +177,19 @@
   .ant-pagination-item,
   .ant-pagination-next .ant-pagination-item-link,
   .ant-pagination-prev .ant-pagination-item-link {
-    border: 2px solid #848fbb;
+    border: 2px solid @shade-5;
     border-radius: 8px;
     a {
-      color: #848fbb;
+      color: @shade-5;
       font-size: 16px;
       font-weight: bold;
     }
 
     &:hover {
-      border-color: #0051bc;
-      color: #0051bc;
+      border-color: @mid-blue;
+      color: @mid-blue;
       a {
-        color: #0051bc;
+        color: @mid-blue;
       }
     }
   }
@@ -187,7 +197,7 @@
   .anticon {
     vertical-align: 0px;
     &:hover {
-      color: #0051bc;
+      color: @mid-blue;
     }
   }
 

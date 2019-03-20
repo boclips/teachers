@@ -44,6 +44,10 @@ export default function fetchLinks() {
           links.profile = new Link(body._links.profile);
         }
 
+        if (body._links.createAccount) {
+          links.createAccount = new Link(body._links.createAccount);
+        }
+
         return links;
       },
     )

@@ -18,6 +18,7 @@ import {
   VideoDetailsState,
   VideoStateValue,
 } from '../../types/State';
+import { CreateAccountView } from '../account/CreateAccountView';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
@@ -121,6 +122,19 @@ describe('when authorised', () => {
     );
 
     const collectionsView = wrapper.find(PublicCollectionListView);
+    expect(collectionsView).toExist();
+  });
+
+  test('shows new account form on /create-account', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/create-account')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(CreateAccountView);
     expect(collectionsView).toExist();
   });
 

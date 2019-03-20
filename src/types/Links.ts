@@ -11,4 +11,5 @@ export interface Links {
   publicCollections?: Link;
   activate?: Link;
   profile?: Link;
+  createAccount?: Link;
 }

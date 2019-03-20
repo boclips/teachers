@@ -110,6 +110,7 @@ export class LinksFactory {
       publicCollections:
         arg.publicCollections || new Link({ href: '/collections?public' }),
       collection: arg.collection || new Link({ href: '/collections/xxx' }),
+      createAccount: arg.createAccount || new Link({ href: '/users' }),
     });
   }
 }

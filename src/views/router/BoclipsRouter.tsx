@@ -8,6 +8,7 @@ import PrivateRoute, {
   PrivateRouteComponentProps,
 } from '../../components/login/PrivateRoute';
 import { RouterState } from '../../types/State';
+import { CreateAccountView } from '../account/CreateAccountView';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
@@ -41,6 +42,7 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
       <ConnectedRouter history={this.props.history || defaultHistory}>
         <Switch>
           <Route path="/bye" component={LoggedOutView} />
+          <Route path="/create-account" component={CreateAccountView} />
           <Route path="/videos">
             <Switch>
               <Route path="/videos/:videoId" component={videoDetailsView} />
