@@ -252,6 +252,9 @@ class RegistrationForm extends React.Component<
                 Register
               </Button>
             </Form>
+            <p className="create-account-form__existing">
+              Already have an account? <Link to={'/'}>Login</Link>
+            </p>
           </Col>
         </Row>
       </section>
