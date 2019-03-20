@@ -46,7 +46,7 @@ export default class HomeView extends PureComponent {
                 <section className="home-collections">
                   <PublicCollectionsGrid
                     maxNumberOfCollections={6}
-                    description="Sparkle your students curiosity with teacher made collections"
+                    description="Spark your students' curiosity with teacher-made collections"
                   />
                 </section>
               </Col>
