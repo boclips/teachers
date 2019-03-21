@@ -39,8 +39,16 @@ export default class MixpanelAnalytics {
     });
   }
 
+  public getId(): string {
+    return this.mixpanelInstance.get_distinct_id();
+  }
+
   public trackAccountActivation() {
     this.mixpanelInstance.track(EventTypes.ACTIVATION_COMPLETE);
+  }
+
+  public trackAccountRegistration(): any {
+    this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
   }
 
   public trackSearch(

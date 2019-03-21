@@ -8,6 +8,7 @@ import {
   createAccount,
   CreateAccountRequest,
 } from '../../services/account/createAccount';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
 import NotificationFactory from '../common/NotificationFactory';
@@ -88,6 +89,10 @@ class RegistrationForm extends React.Component<
     }
     callback();
   };
+
+  public componentDidMount() {
+    AnalyticsFactory.getInstance().trackAccountRegistration();
+  }
 
   public render() {
     return this.state.showConfirmation
@@ -253,6 +258,12 @@ class RegistrationForm extends React.Component<
                   {getFieldDecorator('referralCode', {
                     rules: [],
                     initialValue: this.props.referralCode,
+                  })(<Input type="text" />)}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('analyticsId', {
+                    rules: [],
+                    initialValue: AnalyticsFactory.getInstance().getId(),
                   })(<Input type="text" />)}
                 </Form.Item>
               </div>
