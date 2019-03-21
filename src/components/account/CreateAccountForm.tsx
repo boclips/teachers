@@ -4,14 +4,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import email from '../../../resources/images/verify-email.svg';
-import { createAccount } from '../../services/account/createAccount';
+import {
+  createAccount,
+  CreateAccountRequest,
+} from '../../services/account/createAccount';
 import { Links } from '../../types/Links';
-import { LinksState } from '../../types/State';
+import State from '../../types/State';
 import NotificationFactory from '../common/NotificationFactory';
 import './CreateAccountForm.less';
+import { extractReferralCode } from './extractReferralCode';
 
 interface StateProps {
   links: Links;
+  referralCode: string;
 }
 
 interface InternalState {
@@ -32,29 +37,31 @@ class RegistrationForm extends React.Component<
 
   private handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.setState({ ...this.state, creating: true });
-        createAccount(this.props.links, values)
-          .then(() => {
-            this.setState({ ...this.state, showConfirmation: true });
-          })
-          .catch(error => {
-            if (error.response.status === 409) {
-              NotificationFactory.error({
-                message: 'This email is already registered',
-                description:
-                  'If you forgot your password, try to reset it instead.',
-              });
-            } else {
-              NotificationFactory.error({
-                message: 'Ooops! Something went wrong...',
-                description: 'Please try again or contact our support team.',
-              });
-            }
-          });
-      }
-    });
+    this.props.form.validateFieldsAndScroll(
+      (err, values: CreateAccountRequest) => {
+        if (!err) {
+          this.setState({ ...this.state, creating: true });
+          createAccount(this.props.links, values)
+            .then(() => {
+              this.setState({ ...this.state, showConfirmation: true });
+            })
+            .catch(error => {
+              if (error.response.status === 409) {
+                NotificationFactory.error({
+                  message: 'This email is already registered',
+                  description:
+                    'If you forgot your password, try to reset it instead.',
+                });
+              } else {
+                NotificationFactory.error({
+                  message: 'Ooops! Something went wrong...',
+                  description: 'Please try again or contact our support team.',
+                });
+              }
+            });
+        }
+      },
+    );
   };
 
   private handleConfirmBlur = e => {
@@ -241,6 +248,15 @@ class RegistrationForm extends React.Component<
                 </Form.Item>
               </section>
 
+              <div style={{ display: 'none' }}>
+                <Form.Item>
+                  {getFieldDecorator('referralCode', {
+                    rules: [],
+                    initialValue: this.props.referralCode,
+                  })(<Input type="text" />)}
+                </Form.Item>
+              </div>
+
               <Button
                 className="create-account-form__submit"
                 size="large"
@@ -262,9 +278,11 @@ class RegistrationForm extends React.Component<
   }
 }
 
-function mapStateToProps(links: LinksState): StateProps {
+function mapStateToProps(state: State): StateProps {
+  const queryParam = state.router.location.search;
   return {
-    links: links.links,
+    links: state.links,
+    referralCode: extractReferralCode(queryParam),
   };
 }
 
