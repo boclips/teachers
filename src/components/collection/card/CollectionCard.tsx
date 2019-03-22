@@ -27,7 +27,10 @@ export class CollectionCard extends React.PureComponent<Props> {
         data-state={this.props.collection.title}
         onClick={this.props.onClick}
       >
-        <h1 className="collection-title" data-qa="collection-title">
+        <h1
+          className="collection-title clamp-2-lines"
+          data-qa="collection-title"
+        >
           {this.props.collection.title}
         </h1>
         <CollectionSubtitle collection={this.props.collection} />

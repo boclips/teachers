@@ -23,6 +23,15 @@
 
   .collection-title {
     margin-bottom: 0px;
+
+    &.clamp-2-lines {
+      max-height: 48px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+    }
   }
 
   .view-collection {
