@@ -1,5 +1,4 @@
 import { Col, Row } from 'antd';
-import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
 import InfiniteScroll = require('react-infinite-scroll-component');
 import collections from '../../../../resources/images/collections.png';
