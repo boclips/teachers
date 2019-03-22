@@ -1,5 +1,6 @@
 import ApiStub from '../../../../../test-support/ApiStub';
 import {
+  PublicCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
@@ -29,7 +30,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [otherCollection, targetCollection],
-      publicCollections: [],
+      publicCollections: PublicCollectionsFactory.sample(),
     };
 
     const newVideo = VideoFactory.sample({ id: '124' });
@@ -61,7 +62,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
-      publicCollections: [],
+      publicCollections: PublicCollectionsFactory.sample(),
     };
 
     const action = addToCollectionAction({
@@ -92,7 +93,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
-      publicCollections: [],
+      publicCollections: PublicCollectionsFactory.sample(),
     };
 
     const action = addToCollectionAction({
@@ -122,7 +123,7 @@ describe('removing videos from a colleciton', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
-      publicCollections: [],
+      publicCollections: PublicCollectionsFactory.sample(),
     };
 
     const videoToRemove = VideoFactory.sample({ id: '123' });
@@ -161,7 +162,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       userCollections: [collection],
-      publicCollections: [],
+      publicCollections: PublicCollectionsFactory.sample(),
     };
 
     const action = storeVideoForCollectionAction({
@@ -199,7 +200,7 @@ describe('fetch video for collection', () => {
       loading: false,
       publicCollectionDetails: collection,
       userCollections: [],
-      publicCollections: [],
+      publicCollections: PublicCollectionsFactory.sample(),
     };
 
     const action = storeVideoForCollectionAction({
@@ -239,7 +240,9 @@ describe('fetch video for collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      publicCollections: [collection],
+      publicCollections: PublicCollectionsFactory.sample({
+        items: [collection],
+      }),
       userCollections: [],
     };
 
@@ -250,14 +253,16 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(Object.keys(stateAfter.publicCollections[0].videos)).toHaveLength(1);
-    expect(stateAfter.publicCollections[0].videos[video.id].title).toEqual(
-      video.title,
-    );
-    expect(stateAfter.publicCollections[0].videos[video.id].id).toEqual(
+    expect(
+      Object.keys(stateAfter.publicCollections.items[0].videos),
+    ).toHaveLength(1);
+    expect(
+      stateAfter.publicCollections.items[0].videos[video.id].title,
+    ).toEqual(video.title);
+    expect(stateAfter.publicCollections.items[0].videos[video.id].id).toEqual(
       video.id,
     );
-    expect(stateAfter.publicCollections[0].videoIds).toHaveLength(1);
+    expect(stateAfter.publicCollections.items[0].videoIds).toHaveLength(1);
   });
 });
 
@@ -268,7 +273,7 @@ test('remove a collection', () => {
     updating: false,
     loading: false,
     userCollections: [collection],
-    publicCollections: [],
+    publicCollections: PublicCollectionsFactory.sample(),
   };
 
   const action = onCollectionRemovedAction(collection);
@@ -285,7 +290,7 @@ test('editing a collection', () => {
     updating: false,
     loading: false,
     userCollections: [collection],
-    publicCollections: [],
+    publicCollections: PublicCollectionsFactory.sample(),
   };
 
   const editedCollection = { ...collection, title: 'changed' };

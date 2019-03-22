@@ -1,10 +1,26 @@
 import { Link } from '../../types/Link';
+import { Scrollable } from '../../types/State';
 import { VideoId } from '../../types/Video';
 import { VideoCollection } from './../../types/VideoCollection';
 
 export const parseCollectionResponse = (response: any): VideoCollection => {
   return parseCollectionListResponse(response.data);
 };
+
+export const parseScrollableCollectionsListResponse = (
+  response: any,
+): Scrollable<VideoCollection> => ({
+  items: parseCollectionsListResponse(response),
+  links: {
+    next:
+      response &&
+      response.data &&
+      response.data._links &&
+      response.data._links.next
+        ? new Link(response.data._links.next)
+        : undefined,
+  },
+});
 
 export const parseCollectionsListResponse = (
   response: any,

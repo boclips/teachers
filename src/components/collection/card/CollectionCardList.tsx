@@ -1,10 +1,16 @@
 import { Col, Row } from 'antd';
+import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
+import InfiniteScroll = require('react-infinite-scroll-component');
 import collections from '../../../../resources/images/collections.png';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardContainer from './CollectionCardContainer';
 
+interface InfiniteScrollProps {
+  next: () => void;
+  hasMore: boolean;
+}
 interface Props {
   collections: VideoCollection[];
   loading: boolean;
@@ -12,6 +18,7 @@ interface Props {
   description?: string;
   tiny?: boolean;
   maxNumberOfCollections?: number;
+  infiniteScroll?: InfiniteScrollProps;
 }
 
 export class CollectionCardList extends React.PureComponent<Props> {
@@ -27,38 +34,57 @@ export class CollectionCardList extends React.PureComponent<Props> {
             {this.props.description}
           </p>
         )}
-        {this.props.loading
-          ? this.renderLoading()
-          : this.props.collections && (
-              <Row gutter={this.props.tiny ? 20 : 0}>
-                {this.props.collections
-                  .slice(0, this.props.maxNumberOfCollections)
-                  .map(collection => {
-                    return (
-                      <Col
-                        key={collection.id}
-                        xs={{ span: 24 }}
-                        md={{ span: this.props.tiny ? 12 : 24 }}
-                        lg={{ span: this.props.tiny ? 8 : 24 }}
-                      >
-                        <CollectionCardContainer
-                          tiny={this.props.tiny}
-                          collection={collection}
-                        />
-                      </Col>
-                    );
-                  })}
-              </Row>
-            )}
+        <Row gutter={20}>
+          {this.props.loading
+            ? this.renderLoading()
+            : this.props.collections &&
+              (this.props.infiniteScroll ? (
+                <InfiniteScroll
+                  dataLength={this.props.collections.length}
+                  next={this.props.infiniteScroll.next}
+                  hasMore={this.props.infiniteScroll.hasMore}
+                  loader={this.renderLoading()}
+                >
+                  {this.renderCollections()}
+                </InfiniteScroll>
+              ) : (
+                this.renderCollections()
+              ))}
+        </Row>
       </React.Fragment>
     );
   }
 
+  private renderCollections() {
+    return this.props.collections
+      .slice(0, this.props.maxNumberOfCollections)
+      .map(collection => {
+        return (
+          <Col
+            key={collection.id}
+            xs={{ span: 24 }}
+            md={{ span: this.props.tiny ? 12 : 24 }}
+            lg={{ span: this.props.tiny ? 8 : 24 }}
+          >
+            <CollectionCardContainer
+              tiny={this.props.tiny}
+              collection={collection}
+            />
+          </Col>
+        );
+      });
+  }
+
   public renderLoading() {
-    return [
-      <CollectionCard.Skeleton key={1} />,
-      <CollectionCard.Skeleton key={2} />,
-      <CollectionCard.Skeleton key={3} />,
-    ];
+    return [0, 1, 2, 3, 4, 5].map(count => (
+      <Col
+        key={`sk-${count}`}
+        xs={{ span: 24 }}
+        md={{ span: this.props.tiny ? 12 : 24 }}
+        lg={{ span: this.props.tiny ? 8 : 24 }}
+      >
+        <CollectionCard.Skeleton tiny={this.props.tiny} />
+      </Col>
+    ));
   }
 }

@@ -5,11 +5,13 @@ import createReducer, {
 import {
   CollectionsStateValue,
   getIndexOfCollection,
+  Scrollable,
 } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
+import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
@@ -49,8 +51,24 @@ const onStoreCollectionsAction = (
 
 const onStorePublicCollectionsAction = (
   state: CollectionsStateValue,
-  publicCollections: VideoCollection[],
+  publicCollections: Scrollable<VideoCollection>,
 ): CollectionsStateValue => {
+  return {
+    ...state,
+    publicCollections,
+    loading: false,
+    updating: false,
+  };
+};
+
+const onAppendPublicCollectionsAction = (
+  state: CollectionsStateValue,
+  publicCollections: Scrollable<VideoCollection>,
+): CollectionsStateValue => {
+  publicCollections = {
+    ...state.publicCollections,
+    items: [...state.publicCollections.items, ...publicCollections.items],
+  };
   return {
     ...state,
     publicCollections,
@@ -240,14 +258,14 @@ const reduceStoreVideoForPublicCollections = (
     return state;
   }
   const indexOfCollection = getIndexOfCollection(
-    state.publicCollections,
+    state.publicCollections.items,
     request.collection.id,
   );
   if (indexOfCollection < 0) {
     return state;
   }
-  const publicCollections = [...state.publicCollections];
-  const videos = state.publicCollections[indexOfCollection].videos;
+  const publicCollectionsItems = [...state.publicCollections.items];
+  const videos = state.publicCollections.items[indexOfCollection].videos;
 
   if (videosAlreadyLoaded(request, videos)) {
     return state;
@@ -255,15 +273,21 @@ const reduceStoreVideoForPublicCollections = (
 
   const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
 
-  publicCollections[indexOfCollection] = {
-    ...publicCollections[indexOfCollection],
+  publicCollectionsItems[indexOfCollection] = {
+    ...publicCollectionsItems[indexOfCollection],
     videos: {
       ...videos,
       ...videoMapToUpdate,
     },
   };
 
-  return { ...state, publicCollections };
+  return {
+    ...state,
+    publicCollections: {
+      ...state.publicCollections,
+      items: publicCollectionsItems,
+    },
+  };
 };
 
 const reduceStoreVideoForCollectionDetails = (
@@ -340,6 +364,7 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
   actionHandler(storePublicCollectionsAction, onStorePublicCollectionsAction),
+  actionHandler(appendPublicCollectionsAction, onAppendPublicCollectionsAction),
   actionHandler(storeCollectionAction, onStoreCollectionAction),
   actionHandler(addToCollectionAction, onAddVideoAction),
   actionHandler(removeFromCollectionAction, onRemoveVideoAction),

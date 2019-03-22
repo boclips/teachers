@@ -1,5 +1,6 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
 import { UserProfile } from '../services/analytics/UserProfile';
+import { Link } from './Link';
 import { Links } from './Links';
 import PageSpec from './PageSpec';
 import { Video } from './Video';
@@ -44,11 +45,18 @@ export interface CollectionState {
   collections: CollectionsStateValue;
 }
 
+export interface Scrollable<T> {
+  items: T[];
+  links: {
+    next?: Link;
+  };
+}
+
 export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
   userCollections: VideoCollection[];
-  publicCollections: VideoCollection[];
+  publicCollections: Scrollable<VideoCollection>;
   publicCollectionDetails?: VideoCollection;
 }
 

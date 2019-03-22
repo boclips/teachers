@@ -13,7 +13,7 @@ import removeFromCollectionResultMiddleware from './removeFromCollectionResultMi
 export default [
   fetchCollectionMiddleware,
   fetchCollectionsMiddleware,
-  fetchPublicCollectionsMiddleware,
+  ...fetchPublicCollectionsMiddleware,
   addToCollectionMiddleware,
   addToCollectionResultMiddleware,
   removeFromCollectionMiddleware,

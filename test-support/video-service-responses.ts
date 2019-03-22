@@ -192,6 +192,9 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
         },
       ],
     },
-    _links: { self: { href: 'http://localhost/v1/collections/' } },
+    _links: {
+      self: { href: 'http://localhost/v1/collections/' },
+      next: { href: 'http://localhost/v1/collections/next' },
+    },
   };
 }

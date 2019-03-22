@@ -3,6 +3,7 @@ import { UserProfile } from '../src/services/analytics/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
+import { Scrollable } from '../src/types/State';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import {
   VideoCollection,
@@ -88,6 +89,17 @@ export class VideoCollectionLinksFactory {
       removeVideo: arg.removeVideo || undefined,
       edit: arg.edit || undefined,
       remove: arg.remove || undefined,
+    });
+  }
+}
+
+export class PublicCollectionsFactory {
+  public static sample(
+    arg: Partial<Scrollable<VideoCollection>> = {},
+  ): Scrollable<VideoCollection> {
+    return Object.freeze({
+      items: arg.items || [],
+      links: { next: (arg.links && arg.links.next) || undefined },
     });
   }
 }

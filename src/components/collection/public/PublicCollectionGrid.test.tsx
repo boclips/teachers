@@ -35,7 +35,12 @@ test('dispatches does not fetch public collection if some when mounted', () => {
   const store = mockStore({
     links: LinksFactory.sample(),
     // @ts-ignore
-    collections: { publicCollections: [VideoCollectionFactory.sample()] },
+    collections: {
+      publicCollections: {
+        items: [VideoCollectionFactory.sample()],
+        links: {},
+      },
+    },
     // @ts-ignore
     router: { location: { search: '' } },
   });

@@ -21,7 +21,7 @@ export class CollectionCard extends React.PureComponent<Props> {
   public render() {
     return (
       <section
-        key={this.props.collection.id}
+        key={`card-${this.props.collection.id}`}
         className={'collection-card' + (this.props.tiny ? ' tiny' : '')}
         data-qa="collection-card"
         data-state={this.props.collection.title}
@@ -147,13 +147,15 @@ export class CollectionCard extends React.PureComponent<Props> {
     );
   }
 
-  public static Skeleton = () => (
+  public static Skeleton = (props: { tiny: boolean }) => (
     <section
-      key={uuid()}
-      className="collection-card skeleton ant-skeleton ant-skeleton-active"
+      className={
+        'collection-card skeleton ant-skeleton ant-skeleton-active' +
+        (props.tiny ? ' tiny' : '')
+      }
     >
       <section className="ant-skeleton-content">
-        <h3 className="ant-skeleton-title" />
+        <h3 className="collection-title ant-skeleton-title" />
         <span className="highlight">
           <span />
         </span>
@@ -176,7 +178,7 @@ export class CollectionCard extends React.PureComponent<Props> {
   );
 
   public static VideoPreviewSkeleton = () => (
-    <section key={uuid()} className="collection-video-preview skeleton">
+    <section className="collection-video-preview skeleton">
       <section className="video-container" />
       <section className={'title'} />
       <section className={'subtitle'} />

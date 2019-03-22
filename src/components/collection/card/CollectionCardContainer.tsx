@@ -28,7 +28,7 @@ class CollectionCardContainer extends React.PureComponent<
     return (
       <CollectionCard
         tiny={this.props.tiny}
-        key={this.props.collection.id}
+        key={`card-container-${this.props.collection.id}`}
         collection={this.props.collection}
         numberOfPreviews={NUMBER_OF_PREVIEWS}
         onClick={
