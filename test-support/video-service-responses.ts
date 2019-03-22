@@ -25,6 +25,10 @@ export const links = {
     userCollections: {
       href: '/v1/collections',
     },
+    profile: {
+      href: '/v1/users/{id}',
+      templated: true,
+    },
   },
 };
 
@@ -196,5 +200,16 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
       self: { href: 'http://localhost/v1/collections/' },
       next: { href: 'http://localhost/v1/collections/next' },
     },
+  };
+}
+
+export function userResponse(id: string = 'user-id') {
+  return {
+    id,
+    firstName: 'Bob',
+    lastName: 'Someone',
+    email: 'bob@someone.com',
+    analyticsId: '123',
+    _links: { self: { href: 'http://localhost/v1/users/user-id' } },
   };
 }

@@ -1,37 +1,38 @@
-import { mount } from 'enzyme';
-import React from 'react';
-import { analyticsMock } from '../../../../../test-support/getAnalyticsMock';
+import configureStore from 'redux-mock-store';
+import ApiStub from '../../../../../test-support/ApiStub';
+import eventually from '../../../../../test-support/eventually';
 import KeycloakInstanceFake from '../../../../../test-support/KeycloakInstanceFake';
-import App from '../../../../app/App';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSearchVideoAction';
+import { userResponse } from '../../../../../test-support/video-service-responses';
+import { registerAnalytics } from '../actions/registerAnalytics';
 import { storeLogin } from '../actions/storeLoginAction';
+import onRegisterAnalyticsMiddleware from './onRegisterAnalyticsMiddleware';
+import onStoreLoginMiddleware from './onStoreLoginMiddleware';
+
 jest.mock('../../../searchBar/redux/dispatchSearchVideoAction');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
 
-const analyticsFactoryMock = AnalyticsFactory;
-
-analyticsFactoryMock.getInstance = jest.fn(() => analyticsMock);
-const appWrapper = mount(<App />);
-const app = appWrapper.instance() as App;
+const mockStore = configureStore<{}>([
+  onStoreLoginMiddleware,
+  onRegisterAnalyticsMiddleware,
+]);
+const store = mockStore({});
 
 describe('on store login', () => {
   beforeEach(() => {
-    app.getStore().dispatch(
+    new ApiStub().fetchUser(userResponse());
+
+    store.dispatch(
       storeLogin(
         new KeycloakInstanceFake({
-          userId: 'my user id',
-          mixpanelDistinctId: '123',
+          userId: 'user-id',
         }),
       ),
     );
   });
 
-  it('sets user identity for web analytics', () => {
-    expect(analyticsMock.setUserId).toHaveBeenCalledWith('123');
-  });
-
-  it("tries to search once we've log in", () => {
-    expect(dispatchSearchVideoAction).toHaveBeenCalled();
+  it('sets user identity for web analytics', async () => {
+    await eventually(() => {
+      expect(store.getActions()).toContainEqual(registerAnalytics('123'));
+    });
   });
 });

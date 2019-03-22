@@ -110,4 +110,9 @@ export default class ApiStub {
     );
     return this;
   }
+
+  public fetchUser(user: any) {
+    MockFetchVerify.get(`/v1/users/${user.id}`, user);
+    return this;
+  }
 }

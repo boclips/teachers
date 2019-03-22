@@ -11,19 +11,20 @@ import {
 
 interface KeycloakInstanceFakeOptions {
   userId: string;
-  mixpanelDistinctId: string;
 }
 
 export default class KeycloakInstanceFake implements KeycloakInstance {
   public tokenParsed?: KeycloakTokenParsed;
-  public authenticated = true;
+  public authenticated: boolean = true;
+  public subject: string;
+
   private mixpanelDistinctId: string;
 
   constructor(options: KeycloakInstanceFakeOptions) {
-    const { userId, mixpanelDistinctId } = options;
+    const { userId } = options;
 
     this.tokenParsed = { sub: userId };
-    this.mixpanelDistinctId = mixpanelDistinctId;
+    this.subject = userId;
   }
 
   public init(

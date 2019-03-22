@@ -12,6 +12,7 @@ import {
 } from 'redux';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
+import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/onRegisterAnalyticsMiddleware';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onStoreLoginMiddleware';
 import { loginReducer } from '../components/login/redux/reducers/loginReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
@@ -57,6 +58,7 @@ export default class App extends PureComponent<Props> {
         fetchLinksMiddleware,
         onLinksFetchedMiddleware,
         onStoreLoginMiddleware,
+        onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,
       ),
     ),

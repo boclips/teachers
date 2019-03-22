@@ -6,7 +6,6 @@ const mock = jest.genMockFromModule('boclips-js-security');
   options.onLogin(
     new KeycloakInstanceFake({
       userId: 'my user id',
-      mixpanelDistinctId: '123',
     }),
   );
 };

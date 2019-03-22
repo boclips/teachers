@@ -8,8 +8,8 @@ import {
 import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { StreamPlayback } from '../../types/Video';
+import { UserProfile } from '../users/UserProfile';
 import MixpanelAnalytics from './MixpanelAnalytics';
-import { UserProfile } from './UserProfile';
 
 let mixpanelAnalytics: MixpanelAnalytics;
 let mock: Mixpanel;

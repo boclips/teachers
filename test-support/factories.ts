@@ -1,10 +1,11 @@
 import moment = require('moment');
-import { UserProfile } from '../src/services/analytics/UserProfile';
+import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import { RawLinks } from '../src/types/RawLinks';
 import { Scrollable } from '../src/types/State';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
+import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
   VideoCollection,
   VideoCollectionLinks,
@@ -104,6 +105,19 @@ export class PublicCollectionsFactory {
   }
 }
 
+export class UserProfileLinksFactory {
+  public static sample(arg: Partial<UserProfileLinks> = {}): UserProfileLinks {
+    return Object.freeze({
+      self:
+        arg.self ||
+        new Link({
+          href: '/v1/users/1',
+          templated: false,
+        }),
+    });
+  }
+}
+
 export class LinksFactory {
   public static sample(arg: Partial<Links> = {}): Links {
     return Object.freeze({
@@ -114,7 +128,8 @@ export class LinksFactory {
       createNoSearchResultsEvent:
         arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
       activate: arg.activate,
-      profile: arg.profile,
+      profile:
+        arg.profile || new Link({ href: '/v1/users/{id}', templated: true }),
       collections: arg.collections || new Link({ href: '/collections' }),
       userCollectionsList:
         arg.userCollectionsList ||
@@ -134,6 +149,9 @@ export class UserProfileFactory {
       email: arg.email || 'joe@boclips.com',
       firstName: arg.firstName || 'joe',
       lastName: arg.lastName || 'boclips',
+      analyticsId: arg.analyticsId || 'mixpanel-123',
+      id: arg.id || '1',
+      links: arg.links || UserProfileLinksFactory.sample(),
     });
   }
 }

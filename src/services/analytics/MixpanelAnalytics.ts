@@ -5,10 +5,10 @@ import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { CreateCollectionRequest } from '../collections/createCollection';
+import { UserProfile } from '../users/UserProfile';
 import EventTypes from './EventTypes';
 import { toMixpanelSegment } from './toMixpanelSegment';
 import { toMixpanelVideo } from './toMixpanelVideo';
-import { UserProfile } from './UserProfile';
 
 export default class MixpanelAnalytics {
   private mixpanelInstance: Mixpanel;
