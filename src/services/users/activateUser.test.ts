@@ -7,7 +7,7 @@ import { analyticsMock } from '../../../test-support/getAnalyticsMock';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
-import activateUser from './userActivator';
+import activateUser from './activateUser';
 
 jest.mock('../analytics/AnalyticsFactory');
 

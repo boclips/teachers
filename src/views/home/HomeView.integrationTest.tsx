@@ -6,6 +6,7 @@ describe('Home page', () => {
 
   beforeEach(async () => {
     new ApiStub()
+      .defaultUser()
       .fetchVideo()
       .fetchPublicCollections()
       .fetchCollections();

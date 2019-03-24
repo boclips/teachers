@@ -10,7 +10,7 @@ import {
 import { Dispatch } from 'redux';
 import { LoginState } from '../../types/State';
 import { defaultAuthEndpoint } from './authEndpoint';
-import { storeLogin } from './redux/actions/storeLoginAction';
+import { userLoggedIn } from './redux/actions/userLoggedIn';
 
 export interface PrivateRouteComponentProps<TParams>
   extends RouteComponentProps<any> {
@@ -85,7 +85,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     authenticate: () => {
       keycloakAuthenticate({
         onLogin: keycloak => {
-          dispatch(storeLogin(keycloak));
+          dispatch(userLoggedIn(keycloak));
         },
         realm: 'boclips',
         clientId: 'teachers',

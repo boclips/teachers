@@ -2,7 +2,10 @@ import ApiStub from '../../../test-support/ApiStub';
 import { CollectionListPage } from '../../../test-support/page-objects/CollectionListPage';
 
 test('displays collections list', async () => {
-  new ApiStub().fetchCollections().fetchVideo();
+  new ApiStub()
+    .defaultUser()
+    .fetchCollections()
+    .fetchVideo();
 
   const collectionPage = await CollectionListPage.load();
 
@@ -16,6 +19,7 @@ test('displays collections list', async () => {
 
 test('shows notification after deleting collections', async () => {
   new ApiStub()
+    .defaultUser()
     .fetchCollections()
     .fetchVideo()
     .deleteCollection();

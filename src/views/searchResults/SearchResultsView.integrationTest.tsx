@@ -22,9 +22,13 @@ beforeEach(() => {
     // swallow
   }
 });
+
 test('search for a video shows results', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollections();
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results })
+    .fetchCollections();
 
   const searchPage = await SearchPage.load(query);
 
@@ -44,6 +48,7 @@ test('search for a video shows results', async () => {
 test('shows news-only view with news header', async () => {
   const query = 'some news';
   new ApiStub()
+    .defaultUser()
     .queryVideos({ query, results, tag: Constants.NEWS })
     .fetchCollections();
 
@@ -62,7 +67,10 @@ test('shows news-only view with news header', async () => {
 
 test('should render news box', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollections();
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results })
+    .fetchCollections();
 
   const searchPage = await SearchPage.load(query);
   const newsBox = searchPage.wrapper.find(By.dataQa('news-side-panel'));
@@ -76,7 +84,10 @@ test('should render news box', async () => {
 
 test('shows total count of videos', async () => {
   const query = 'some video';
-  new ApiStub().queryVideos({ query, results }).fetchCollections();
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results })
+    .fetchCollections();
 
   const searchPage = await SearchPage.load(query);
 
@@ -86,6 +97,7 @@ test('shows total count of videos', async () => {
 test('redirects when clicking on first title', async () => {
   const query = 'some video';
   new ApiStub()
+    .defaultUser()
     .queryVideos({ query, results })
     .fetchCollections()
     .fetchVideo({ video: video177 });
@@ -98,6 +110,7 @@ test('redirects when clicking on first title', async () => {
 test('removing a video from a collection', async () => {
   const query = 'some video';
   new ApiStub()
+    .defaultUser()
     .queryVideos({ query, results: videosResponse([video177]) })
     .fetchCollections()
     .removeFromCollection();
@@ -121,6 +134,7 @@ test('removing a video from a collection', async () => {
 test('adding a video to a collection', async () => {
   const query = 'some video';
   new ApiStub()
+    .defaultUser()
     .queryVideos({ query, results: videosResponse([video177]) })
     .fetchCollections(userCollectionsResponse([]))
     .addToCollection();

@@ -1,5 +1,5 @@
 import { Store } from 'redux';
-import activateUser from '../../../../services/users/userActivator';
+import activateUser from '../../../../services/users/activateUser';
 import { Links } from '../../../../types/Links';
 import { LoginState } from '../../../../types/State';
 import { sideEffect } from '../../actions';

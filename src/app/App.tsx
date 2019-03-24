@@ -12,9 +12,9 @@ import {
 } from 'redux';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
+import onStoreLoginMiddleware from '../components/login/redux/middleware/onLoginMiddleware';
 import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/onRegisterAnalyticsMiddleware';
-import onStoreLoginMiddleware from '../components/login/redux/middleware/onStoreLoginMiddleware';
-import { loginReducer } from '../components/login/redux/reducers/loginReducer';
+import { userDetailsFetchedReducer } from '../components/login/redux/reducers/userDetailsFetchedReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
@@ -34,7 +34,7 @@ const rootReducer: Reducer<any> = combineReducers({
   search: searchReducer,
   links: linksReducer,
   video: videoReducer,
-  user: loginReducer,
+  user: userDetailsFetchedReducer,
   collections: collectionsReducer,
 });
 

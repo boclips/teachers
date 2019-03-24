@@ -4,9 +4,11 @@ import { sideEffect } from '../../../../app/redux/actions';
 import { fetchLinksAction } from '../../../../app/redux/links/actions/fetchLinksAction';
 import fetchLinks from '../../../../services/links/fetchLinks';
 import { fetchUser } from '../../../../services/users/fetchUser';
+import { UserProfile } from '../../../../services/users/UserProfile';
 import { Links } from '../../../../types/Links';
 import { registerAnalytics } from '../actions/registerAnalytics';
-import { storeLogin } from '../actions/storeLoginAction';
+import { userDetailsFetched } from '../actions/userDetailsFetched';
+import { userLoggedIn } from '../actions/userLoggedIn';
 
 const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
   const userId = keycloak.subject;
@@ -19,7 +21,8 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
     .then((links: Links) => {
       return fetchUser(links, userId);
     })
-    .then(user => {
+    .then((user: UserProfile) => {
+      store.dispatch(userDetailsFetched(user));
       store.dispatch(registerAnalytics(user.analyticsId));
     })
     .catch(error => {
@@ -27,4 +30,4 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
     });
 };
 
-export default sideEffect(storeLogin, onLoggedIn);
+export default sideEffect(userLoggedIn, onLoggedIn);

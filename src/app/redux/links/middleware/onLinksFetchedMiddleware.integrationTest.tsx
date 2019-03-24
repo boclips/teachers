@@ -8,12 +8,12 @@ import {
   fetchPublicCollections,
   fetchUserCollections,
 } from '../../../../services/collections/fetchCollections';
-import activateUser from '../../../../services/users/userActivator';
+import activateUser from '../../../../services/users/activateUser';
 import Mock = jest.Mock;
 import { Links } from '../../../../types/Links';
 import App from '../../../App';
 
-jest.mock('../../../../services/users/userActivator');
+jest.mock('../../../../services/users/activateUser');
 jest.mock('../../../../services/collections/fetchCollections');
 
 const linksWithActivate = LinksResponseFactory.sample({

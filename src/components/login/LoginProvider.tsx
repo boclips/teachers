@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { LoginState } from '../../types/State';
 import { defaultAuthEndpoint } from './authEndpoint';
-import { storeLogin } from './redux/actions/storeLoginAction';
+import { userLoggedIn } from './redux/actions/userLoggedIn';
 
 interface StateProps {
   authorized: boolean;
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     authenticateIfLoggedIn: () => {
       keycloakAuthenticate({
         onLogin: keycloak => {
-          dispatch(storeLogin(keycloak));
+          dispatch(userLoggedIn(keycloak));
         },
         realm: 'boclips',
         clientId: 'teachers',

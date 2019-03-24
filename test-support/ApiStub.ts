@@ -3,6 +3,7 @@ import {
   links,
   userCollectionResponse,
   userCollectionsResponse,
+  userResponse,
   video177,
   video177Slim,
 } from './video-service-responses';
@@ -113,6 +114,11 @@ export default class ApiStub {
 
   public fetchUser(user: any) {
     MockFetchVerify.get(`/v1/users/${user.id}`, user);
+    return this;
+  }
+
+  public defaultUser() {
+    this.fetchUser(userResponse('my-user-id'));
     return this;
   }
 }

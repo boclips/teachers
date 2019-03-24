@@ -15,7 +15,10 @@ import {
 
 describe('when video collection', () => {
   test('displays video collection with videos', async () => {
-    new ApiStub().fetchCollections().fetchVideo();
+    new ApiStub()
+      .defaultUser()
+      .fetchCollections()
+      .fetchVideo();
 
     const collectionPage = await CollectionPage.load();
 
@@ -37,6 +40,7 @@ describe('when video collection', () => {
 describe('when empty collection', () => {
   test('displays beautiful illustration', async () => {
     new ApiStub()
+      .defaultUser()
       .fetchCollections()
       .fetchCollection(userCollectionResponse([], 'empty'));
 
@@ -50,7 +54,10 @@ describe('when empty collection', () => {
 
 describe('when collection not found', () => {
   test('displays beautiful illustration', async () => {
-    new ApiStub().fetchCollections().fetchCollection();
+    new ApiStub()
+      .defaultUser()
+      .fetchCollections()
+      .fetchCollection();
 
     const collectionPage = await CollectionPage.load('not-found');
 
@@ -62,7 +69,10 @@ describe('when collection not found', () => {
 
 describe('when editable collection', () => {
   test('can edit collection', async () => {
-    new ApiStub().fetchCollections().fetchVideo();
+    new ApiStub()
+      .defaultUser()
+      .fetchCollections()
+      .fetchVideo();
 
     const newTitle = 'this is a shiny new title';
     MockFetchVerify.patch(
@@ -91,6 +101,7 @@ describe('when editable collection', () => {
 
   test('can remove a video', async () => {
     new ApiStub()
+      .defaultUser()
       .fetchCollections()
       .fetchVideo()
       .removeFromCollection();
@@ -109,6 +120,7 @@ describe('when editable collection', () => {
 describe('when non editable collection', () => {
   test('does not render edit collection button', async () => {
     new ApiStub()
+      .defaultUser()
       .fetchCollections()
       .fetchCollection(
         userCollectionResponse([video177Slim], 'non-editable', false),
