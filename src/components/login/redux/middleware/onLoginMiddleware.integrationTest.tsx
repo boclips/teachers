@@ -2,16 +2,24 @@ import configureStore from 'redux-mock-store';
 import ApiStub from '../../../../../test-support/ApiStub';
 import eventually from '../../../../../test-support/eventually';
 import KeycloakInstanceFake from '../../../../../test-support/KeycloakInstanceFake';
-import { userResponse } from '../../../../../test-support/video-service-responses';
+import {
+  links,
+  userResponse,
+} from '../../../../../test-support/video-service-responses';
+import activateUser from '../../../../services/users/activateUser';
 import { Link, RawLink } from '../../../../types/Link';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
 import onRegisterAnalyticsMiddleware from './onRegisterAnalyticsMiddleware';
+import Mock = jest.Mock;
 
 jest.mock('../../../searchBar/redux/dispatchSearchVideoAction');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
+jest.mock('../../../../services/users/activateUser');
+
+const activateUserMock = activateUser as Mock;
 
 const mockStore = configureStore<{}>([
   onStoreLoginMiddleware,
@@ -21,7 +29,9 @@ const store = mockStore({});
 
 describe('on store login', () => {
   beforeEach(() => {
-    new ApiStub().fetchUser(userResponse());
+    new ApiStub({ ...links, activate: { href: '/v1/activate' } }).fetchUser(
+      userResponse(),
+    );
 
     store.dispatch(
       userLoggedIn(
@@ -55,6 +65,12 @@ describe('on store login', () => {
           },
         }),
       );
+    });
+  });
+
+  it('activates account', async () => {
+    await eventually(() => {
+      expect(activateUserMock).toBeCalled();
     });
   });
 });

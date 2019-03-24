@@ -3,6 +3,7 @@ import { Store } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { fetchLinksAction } from '../../../../app/redux/links/actions/fetchLinksAction';
 import fetchLinks from '../../../../services/links/fetchLinks';
+import activateUser from '../../../../services/users/activateUser';
 import { fetchUser } from '../../../../services/users/fetchUser';
 import { UserProfile } from '../../../../services/users/UserProfile';
 import { Links } from '../../../../types/Links';
@@ -19,7 +20,11 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
       return links;
     })
     .then((links: Links) => {
-      return fetchUser(links, userId);
+      const userProfilePromise = fetchUser(links, userId);
+      userProfilePromise.then((userProfile: UserProfile) => {
+        return activateUser(links, userProfile);
+      });
+      return userProfilePromise;
     })
     .then((user: UserProfile) => {
       store.dispatch(userDetailsFetched(user));

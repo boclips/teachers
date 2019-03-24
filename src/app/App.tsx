@@ -24,7 +24,6 @@ import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import ConfigLoader from './configLoader/ConfigLoader';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
-import onLinksFetchedMiddleware from './redux/links/middleware/onLinksFetchedMiddleware';
 import { linksReducer } from './redux/links/reducers/linksReducer';
 
 const composeEnhancers =
@@ -56,7 +55,6 @@ export default class App extends PureComponent<Props> {
         videoDetailsMiddleware,
         ...fetchVideosMiddleware,
         fetchLinksMiddleware,
-        onLinksFetchedMiddleware,
         onStoreLoginMiddleware,
         onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,
