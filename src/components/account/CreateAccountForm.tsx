@@ -153,6 +153,7 @@ class RegistrationForm extends React.Component<
                     ],
                   })(
                     <Input
+                      data-qa="first-name"
                       size="large"
                       prefix={<Icon type="user" />}
                       placeholder="First name"
@@ -170,6 +171,7 @@ class RegistrationForm extends React.Component<
                     ],
                   })(
                     <Input
+                      data-qa="last-name"
                       size="large"
                       prefix={<Icon type="user" />}
                       placeholder="Last name"
@@ -182,6 +184,7 @@ class RegistrationForm extends React.Component<
                     rules: [],
                   })(
                     <Input
+                      data-qa="subjects"
                       size="large"
                       prefix={<Icon type="book" />}
                       placeholder="Subject(s) taught"
@@ -203,6 +206,7 @@ class RegistrationForm extends React.Component<
                     ],
                   })(
                     <Input
+                      data-qa="email"
                       size="large"
                       prefix={<Icon type="mail" />}
                       placeholder="email"
@@ -223,6 +227,7 @@ class RegistrationForm extends React.Component<
                     ],
                   })(
                     <Input
+                      data-qa="password"
                       size="large"
                       prefix={<Icon type="lock" />}
                       type="password"
@@ -243,6 +248,7 @@ class RegistrationForm extends React.Component<
                     ],
                   })(
                     <Input
+                      data-qa="password-confirm"
                       size="large"
                       prefix={<Icon type="lock" />}
                       type="password"
@@ -269,6 +275,7 @@ class RegistrationForm extends React.Component<
               </div>
 
               <Button
+                data-qa="register-button"
                 className="create-account-form__submit"
                 size="large"
                 type="primary"
