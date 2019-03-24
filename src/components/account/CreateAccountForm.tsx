@@ -59,6 +59,7 @@ class RegistrationForm extends React.Component<
                   description: 'Please try again or contact our support team.',
                 });
               }
+              this.setState({ ...this.state, creating: false });
             });
         }
       },
