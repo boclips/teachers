@@ -1,5 +1,6 @@
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import ReferAFriend from '../ReferAFriend';
 
 const { Footer } = Layout;
 export class BoclipsFooter extends PureComponent {
@@ -15,6 +16,9 @@ export class BoclipsFooter extends PureComponent {
           All trademarks, service marks, trade names, product names and logos
           appearing on the site are the property of their respective owners. Any
           rights not expressly granted herein are reserved.
+        </p>
+        <p>
+          <ReferAFriend text="Refer a friend" />
         </p>
       </Footer>
     );
