@@ -39,6 +39,7 @@ export class CollectionCardList extends React.PureComponent<Props> {
             : this.props.collections &&
               (this.props.infiniteScroll ? (
                 <InfiniteScroll
+                  style={{ overflow: 'hidden' }}
                   dataLength={this.props.collections.length}
                   next={this.props.infiniteScroll.next}
                   hasMore={this.props.infiniteScroll.hasMore}
