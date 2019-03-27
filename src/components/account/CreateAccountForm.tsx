@@ -3,7 +3,7 @@ import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import email from '../../../resources/images/verify-email.svg';
+import wavingHand from '../../../resources/images/waving-hand.png';
 import {
   createAccount,
   CreateAccountRequest,
@@ -107,18 +107,17 @@ class RegistrationForm extends React.Component<
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 8 }}>
             <section className="illustration">
-              <img src={email} />
+              <img src={wavingHand} />
             </section>
           </Col>
           <Col sm={{ span: 24 }} md={{ span: 16 }}>
             <section className="message">
-              <h1 className="big-title">Almost there, just one more step!</h1>
+              <h1 className="big-title">Welcome to Boclips for teachers!</h1>
               <p>
-                Thanks for registering with boclips for teachers. We’ve just
-                sent you an email with a link to verify your account.
+                Thanks for registering. Please login to activate your account.
               </p>
               <p className="action">
-                <Link to={'/'}>Click here if you'd like to log in</Link>
+                <Link to={'/'}>Click here to log in</Link>
               </p>
             </section>
           </Col>
