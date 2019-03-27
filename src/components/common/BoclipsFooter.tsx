@@ -1,9 +1,16 @@
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import State from '../../types/State';
 import ReferAFriend from '../ReferAFriend';
 
 const { Footer } = Layout;
-export class BoclipsFooter extends PureComponent {
+
+interface StateProps {
+  isAuthenticated: boolean;
+}
+
+class BoclipsFooter extends PureComponent<StateProps> {
   private getCurrentYear() {
     return new Date().getFullYear();
   }
@@ -18,9 +25,22 @@ export class BoclipsFooter extends PureComponent {
           rights not expressly granted herein are reserved.
         </p>
         <p>
-          <ReferAFriend text="Refer a friend" />
+          {this.props.isAuthenticated && <ReferAFriend text="Refer a friend" />}
         </p>
       </Footer>
     );
   }
 }
+
+function mapStateToProps(state: State): StateProps {
+  const user = state.user;
+  const isAuthenticated = user ? user.authenticated : false;
+  return {
+    isAuthenticated,
+  };
+}
+
+export default connect<StateProps, {}, {}>(
+  mapStateToProps,
+  null,
+)(BoclipsFooter);

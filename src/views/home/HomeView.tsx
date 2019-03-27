@@ -5,7 +5,7 @@ import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PublicCollectionsGrid from '../../components/collection/public/PublicCollectionsGrid';
-import { BoclipsFooter } from '../../components/common/BoclipsFooter';
+import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
 import './HomeView.less';

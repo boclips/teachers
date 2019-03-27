@@ -2,7 +2,7 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
-import { BoclipsFooter } from '../common/BoclipsFooter';
+import BoclipsFooter from '../common/BoclipsFooter';
 import './PageLayout.less';
 import TopNavbarContainer from './TopNavbarContainer';
 
