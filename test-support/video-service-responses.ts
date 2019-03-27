@@ -127,6 +127,7 @@ export function userCollectionResponse(
     videos: videosWithin,
     updatedAt: '2019-01-16T12:00:00.870Z',
     public: true,
+    createdBy: 'AI',
     _links: {
       self: {
         href: `/v1/collections/${id}`,
@@ -171,6 +172,7 @@ export function userCollectionsResponse(videosWithin: any[] = [video177]) {
           videos: videosWithin,
           updatedAt: '2019-01-16T12:00:00.870Z',
           public: true,
+          createdBy: 'AI',
           _links: {
             edit: {
               href: '/v1/collections/id',

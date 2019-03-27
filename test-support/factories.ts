@@ -64,6 +64,7 @@ export class VideoCollectionFactory {
           })),
       links: arg.links || VideoCollectionLinksFactory.sample(),
       isPublic: arg.isPublic || false,
+      createdBy: 'Le Factory',
     });
   }
 

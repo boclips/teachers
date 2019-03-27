@@ -17,6 +17,7 @@ export interface VideoCollection {
   videoIds: VideoId[];
   links: VideoCollectionLinks;
   isPublic: boolean;
+  createdBy: string;
 }
 
 // tslint:disable-next-line:interface-over-type-literal

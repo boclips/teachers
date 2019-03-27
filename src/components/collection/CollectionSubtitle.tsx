@@ -1,6 +1,7 @@
 import React from 'react';
 import { VideoCollection } from '../../types/VideoCollection';
 import DateFormatter from '../common/formatters/DateFormatter';
+import './CollectionSubtitle.less';
 
 export interface Props {
   collection: VideoCollection;
@@ -15,6 +16,15 @@ export class CollectionSubtitle extends React.Component<Props> {
             {this.props.collection.videoIds.length}
           </span>{' '}
           videos
+        </span>
+        <span>
+          &nbsp;· Created by{' '}
+          <span
+            data-qa="collection-created-by"
+            className="collection-subtitle__created-by"
+          >
+            {this.props.collection.createdBy}
+          </span>
         </span>
         {this.renderUpdatedAt(this.props.collection.updatedAt)}
       </span>
