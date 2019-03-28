@@ -85,7 +85,7 @@ export class CollectionCard extends React.PureComponent<Props> {
     const video = this.props.collection.videos[videoId.id];
     return video ? (
       <section
-        key={video.id}
+        key={'collection-video-preview' + this.props.collection.id + video.id}
         className="collection-video-preview"
         data-qa="collection-video-preview"
       >
@@ -117,7 +117,13 @@ export class CollectionCard extends React.PureComponent<Props> {
         </section>
       </section>
     ) : (
-      <CollectionCard.VideoPreviewSkeleton />
+      <CollectionCard.VideoPreviewSkeleton
+        key={
+          'collection-video-preview-skeleton' +
+          this.props.collection.id +
+          videoId.id
+        }
+      />
     );
   }
 
