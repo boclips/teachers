@@ -26,6 +26,9 @@ jest.mock('react', () => {
   return { ...r, memo: x => x };
 });
 
+// JSDom doesn't implement scrollTo
+window.scrollTo = jest.fn();
+
 export async function waitForElement(selector: string) {
   await eventually(() => {
     expect(findElement(selector)).toBeTruthy();

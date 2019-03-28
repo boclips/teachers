@@ -16,6 +16,7 @@ import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
 import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 export const defaultHistory = createBrowserHistory();
 
@@ -40,33 +41,35 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
   public render() {
     return (
       <ConnectedRouter history={this.props.history || defaultHistory}>
-        <Switch>
-          <Route path="/bye" component={LoggedOutView} />
-          <Route path="/create-account" component={CreateAccountView} />
-          <Route path="/videos">
-            <Switch>
-              <Route path="/videos/:videoId" component={videoDetailsView} />
-              <PrivateRoute path="/videos" component={SearchResultsView} />
-            </Switch>
-          </Route>
-          <PrivateRoute
-            path="/collections"
-            component={CollectionListView}
-            exact={true}
-          />
-          <PrivateRoute
-            path="/public-collections"
-            component={PublicCollectionListView}
-            exact={true}
-          />
-          <PrivateRoute
-            path="/collections/:collectionId"
-            component={collectionView}
-          />
-          <PrivateRoute path="/">
-            <HomeView />
-          </PrivateRoute>
-        </Switch>
+        <ScrollToTopOnForwardNavigation>
+          <Switch>
+            <Route path="/bye" component={LoggedOutView} />
+            <Route path="/create-account" component={CreateAccountView} />
+            <Route path="/videos">
+              <Switch>
+                <Route path="/videos/:videoId" component={videoDetailsView} />
+                <PrivateRoute path="/videos" component={SearchResultsView} />
+              </Switch>
+            </Route>
+            <PrivateRoute
+              path="/collections"
+              component={CollectionListView}
+              exact={true}
+            />
+            <PrivateRoute
+              path="/public-collections"
+              component={PublicCollectionListView}
+              exact={true}
+            />
+            <PrivateRoute
+              path="/collections/:collectionId"
+              component={collectionView}
+            />
+            <PrivateRoute path="/">
+              <HomeView />
+            </PrivateRoute>
+          </Switch>
+        </ScrollToTopOnForwardNavigation>
       </ConnectedRouter>
     );
   }

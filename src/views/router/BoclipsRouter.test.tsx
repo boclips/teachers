@@ -46,6 +46,21 @@ test('shows video details view on /videos/{id}', () => {
   expect(videoDetailsView).toHaveProp('videoId', '123');
 });
 
+test('scrolls to top on navigation', () => {
+  const history = createMemoryHistory();
+  const store = buildStore('/collections');
+
+  mount(
+    <Provider store={store}>
+      <BoclipsRouter history={history} />
+    </Provider>,
+  );
+
+  history.push('/create-account');
+
+  expect(window.scrollTo).toBeCalledWith(0, 0);
+});
+
 describe('when authorised', () => {
   test('shows search results view on /videos', () => {
     const history = createMemoryHistory();
