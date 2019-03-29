@@ -68,6 +68,7 @@ const onAppendPublicCollectionsAction = (
   publicCollections = {
     ...state.publicCollections,
     items: [...state.publicCollections.items, ...publicCollections.items],
+    links: publicCollections.links,
   };
   return {
     ...state,

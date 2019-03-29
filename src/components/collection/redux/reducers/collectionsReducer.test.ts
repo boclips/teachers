@@ -4,8 +4,10 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
+import { Link } from '../../../../types/Link';
 import { CollectionsStateValue } from '../../../../types/State';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
+import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
@@ -301,4 +303,33 @@ test('editing a collection', () => {
 
   expect(stateAfter.userCollections.length).toEqual(1);
   expect(stateAfter.userCollections[0].title).toEqual('changed');
+});
+
+test('append public collections action page', () => {
+  const collection = VideoCollectionFactory.sample();
+
+  const stateBefore: CollectionsStateValue = {
+    updating: false,
+    loading: false,
+    userCollections: [collection],
+    publicCollections: PublicCollectionsFactory.sample(),
+  };
+
+  const nextCollectionLink = new Link({
+    href: 'next',
+    templated: false,
+  });
+
+  const action = appendPublicCollectionsAction(
+    PublicCollectionsFactory.sample({
+      items: stateBefore.userCollections,
+      links: {
+        next: nextCollectionLink,
+      },
+    }),
+  );
+
+  const stateAfter = collectionsReducer(stateBefore, action);
+
+  expect(stateAfter.publicCollections.links.next).toEqual(nextCollectionLink);
 });
