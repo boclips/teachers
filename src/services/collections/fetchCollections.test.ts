@@ -5,7 +5,7 @@ import {
   PublicCollectionsFactory,
 } from '../../../test-support/factories';
 import {
-  userCollectionsResponse,
+  collectionsResponse,
   video177Slim,
 } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
@@ -16,7 +16,7 @@ import {
 } from './fetchCollections';
 
 const links = LinksFactory.sample({
-  userCollectionsList: new Link({
+  myCollections: new Link({
     href: '/v1/collections?projection=list',
   }),
   publicCollections: new Link({
@@ -28,11 +28,7 @@ describe('user collections', () => {
   test('returns available collections in skinny format for user collections list', async () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?projection=list')
-      .replyOnce(
-        200,
-        JSON.stringify(userCollectionsResponse([video177Slim])),
-        {},
-      );
+      .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
 
     const collections = await fetchUserCollections(links);
 
@@ -51,11 +47,7 @@ describe('public collections', () => {
   test('returns available collections in skinny format for user collections list', async () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?public')
-      .replyOnce(
-        200,
-        JSON.stringify(userCollectionsResponse([video177Slim])),
-        {},
-      );
+      .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
     const collections = await fetchPublicCollections(links);
 
     expect(collections.items[0].id).toEqual('id');
@@ -75,11 +67,7 @@ describe('public collections', () => {
   test('returns next collections page', async () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?publicpage')
-      .replyOnce(
-        200,
-        JSON.stringify(userCollectionsResponse([video177Slim])),
-        {},
-      );
+      .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
     const collections = await fetchNextPublicCollections(
       PublicCollectionsFactory.sample({
         links: { next: new Link({ href: '/v1/collections?publicpage' }) },

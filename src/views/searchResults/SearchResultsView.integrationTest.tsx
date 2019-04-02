@@ -3,7 +3,7 @@ import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import {
-  userCollectionsResponse,
+  collectionsResponse,
   video177,
   videos as results,
   videosResponse,
@@ -136,7 +136,7 @@ test('adding a video to a collection', async () => {
   new ApiStub()
     .defaultUser()
     .queryVideos({ query, results: videosResponse([video177]) })
-    .fetchCollections(userCollectionsResponse([]))
+    .fetchCollections(collectionsResponse([]))
     .addToCollection();
 
   const searchPage = await SearchPage.load(query);

@@ -1,8 +1,8 @@
 import MockFetchVerify from './MockFetchVerify';
 import {
+  collectionResponse,
+  collectionsResponse,
   links,
-  userCollectionResponse,
-  userCollectionsResponse,
   userResponse,
   video177,
   video177Slim,
@@ -46,22 +46,25 @@ export default class ApiStub {
   }
 
   public fetchCollections(
-    collectionsList = userCollectionsResponse([video177Slim]),
+    collectionsList = collectionsResponse([video177Slim]),
     once = false,
   ) {
     if (once) {
       MockFetchVerify.getOnce(
-        '/v1/collections?projection=list',
+        '/v1/collections?projection=list&owner=me',
         collectionsList,
       );
     } else {
-      MockFetchVerify.get('/v1/collections?projection=list', collectionsList);
+      MockFetchVerify.get(
+        '/v1/collections?projection=list&owner=me',
+        collectionsList,
+      );
     }
     return this;
   }
 
   public fetchPublicCollections(
-    collections = userCollectionsResponse(),
+    collections = collectionsResponse(),
     once = false,
   ) {
     if (once) {
@@ -72,7 +75,7 @@ export default class ApiStub {
     return this;
   }
 
-  public fetchCollection(collection = userCollectionResponse(), once = false) {
+  public fetchCollection(collection = collectionResponse(), once = false) {
     if (once) {
       MockFetchVerify.getOnce(`/v1/collections/${collection.id}`, collection);
     } else {

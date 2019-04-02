@@ -7,7 +7,7 @@ export interface Links {
   createNoSearchResultsEvent: Link;
   collection?: Link;
   collections?: Link;
-  userCollectionsList?: Link;
+  myCollections?: Link;
   publicCollections?: Link;
   activate?: Link;
   profile?: Link;

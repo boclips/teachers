@@ -10,11 +10,11 @@ import {
 export const fetchUserCollections = (
   links: Links,
 ): Promise<VideoCollection[]> => {
-  if (!links.userCollectionsList) {
+  if (!links.myCollections) {
     return Promise.reject();
   }
   return axios
-    .get(links.userCollectionsList.getOriginalLink())
+    .get(links.myCollections.getOriginalLink())
     .then(response => parseCollectionsListResponse(response));
 };
 

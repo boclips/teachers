@@ -4,7 +4,7 @@ import eventually from '../../../test-support/eventually';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
 import {
-  userCollectionResponse,
+  collectionResponse,
   video177Slim,
 } from '../../../test-support/video-service-responses';
 import CollectionEditButton from '../../components/collection/header/CollectionEditButton';
@@ -42,7 +42,7 @@ describe('when empty collection', () => {
     new ApiStub()
       .defaultUser()
       .fetchCollections()
-      .fetchCollection(userCollectionResponse([], 'empty'));
+      .fetchCollection(collectionResponse([], 'empty'));
 
     const collectionPage = await CollectionPage.load('empty');
 
@@ -123,7 +123,7 @@ describe('when non editable collection', () => {
       .defaultUser()
       .fetchCollections()
       .fetchCollection(
-        userCollectionResponse([video177Slim], 'non-editable', false),
+        collectionResponse([video177Slim], 'non-editable', false),
       )
       .fetchVideo();
 

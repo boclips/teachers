@@ -10,9 +10,9 @@ test('parses all links', async () => {
       video: { href: '/videos/{id}', templated: true },
       createPlaybackEvent: { href: '/events' },
       createNoSearchResultsEvent: { href: '/events/no-search-results' },
-      userCollection: { href: '/default-collection', templated: true },
-      userCollections: { href: '/collections' },
-      userCollectionsList: { href: '/collections?list' },
+      collection: { href: '/collection/{id}', templated: true },
+      collections: { href: '/collections' },
+      myCollections: { href: '/collections?owner=123' },
       publicCollections: { href: '/collections?list=yes&public=true' },
     },
   });
@@ -26,9 +26,9 @@ test('parses all links', async () => {
     createNoSearchResultsEvent: new Link({
       href: '/events/no-search-results',
     }),
-    collection: new Link({ href: '/default-collection', templated: true }),
+    collection: new Link({ href: '/collection/{id}', templated: true }),
+    myCollections: new Link({ href: '/collections?owner=123' }),
     collections: new Link({ href: '/collections' }),
-    userCollectionsList: new Link({ href: '/collections?list' }),
     publicCollections: new Link({
       href: '/collections?list=yes&public=true',
     }),

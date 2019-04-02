@@ -24,12 +24,16 @@ export default function fetchLinks() {
           links.videos = new Link(body._links.search);
         }
 
-        if (body._links.userCollections) {
-          links.collections = new Link(body._links.userCollections);
+        if (body._links.collections) {
+          links.collections = new Link(body._links.collections);
         }
 
-        if (body._links.userCollectionsList) {
-          links.userCollectionsList = new Link(body._links.userCollectionsList);
+        if (body._links.collection) {
+          links.collection = new Link(body._links.collection);
+        }
+
+        if (body._links.myCollections) {
+          links.myCollections = new Link(body._links.myCollections);
         }
 
         if (body._links.publicCollections) {

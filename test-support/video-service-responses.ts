@@ -12,17 +12,17 @@ export const links = {
     createPlaybackEvent: {
       href: '/v1/events',
     },
-    userCollection: {
+    collection: {
       href: '/v1/collections/{id}',
       templated: true,
     },
     publicCollections: {
       href: '/v1/collections?public=true',
     },
-    userCollectionsList: {
-      href: '/v1/collections?projection=list',
+    myCollections: {
+      href: '/v1/collections?projection=list&owner=me',
     },
-    userCollections: {
+    collections: {
       href: '/v1/collections',
     },
     profile: {
@@ -115,7 +115,7 @@ export function videosResponse(data: any[]) {
   };
 }
 
-export function userCollectionResponse(
+export function collectionResponse(
   videosWithin: any[] = [video177Slim],
   id: string = 'id',
   editable: boolean = true,
@@ -161,7 +161,7 @@ export function userCollectionResponse(
   };
 }
 
-export function userCollectionsResponse(videosWithin: any[] = [video177]) {
+export function collectionsResponse(videosWithin: any[] = [video177]) {
   return {
     _embedded: {
       collections: [
