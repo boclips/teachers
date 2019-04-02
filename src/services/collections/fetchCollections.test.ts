@@ -10,9 +10,9 @@ import {
 } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
 import {
+  fetchMyCollections,
   fetchNextPublicCollections,
   fetchPublicCollections,
-  fetchUserCollections,
 } from './fetchCollections';
 
 const links = LinksFactory.sample({
@@ -30,7 +30,7 @@ describe('user collections', () => {
       .onGet('/v1/collections?projection=list')
       .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
 
-    const collections = await fetchUserCollections(links);
+    const collections = await fetchMyCollections(links);
 
     expect(collections[0].id).toEqual('id');
     expect(collections[0].title).toEqual('funky collection');

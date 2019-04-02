@@ -2,7 +2,6 @@ import moment = require('moment');
 import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
-import { RawLinks } from '../src/types/RawLinks';
 import { Scrollable } from '../src/types/State';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import { UserProfileLinks } from './../src/services/users/UserProfile';
@@ -152,29 +151,6 @@ export class UserProfileFactory {
       analyticsId: arg.analyticsId || 'mixpanel-123',
       id: arg.id || '1',
       links: arg.links || UserProfileLinksFactory.sample(),
-    });
-  }
-}
-
-export class LinksResponseFactory {
-  public static sample(arg: Partial<RawLinks> = {}): any {
-    return Object.freeze({
-      _links: {
-        search: arg.search || { href: '/videos' },
-        video: arg.video || { href: '/videos/{id}', templated: true },
-        createPlaybackEvent: arg.createPlaybackEvent || { href: '/events' },
-        createNoSearchResultsEvent: arg.createNoSearchResultsEvent || {
-          href: '/events/xxx',
-        },
-        activate: arg.activate,
-        profile: arg.profile,
-        userCollection: arg.userCollection || {
-          href: '/collections/xxx',
-        },
-        userCollections: arg.userCollectionsDetails || {
-          href: '/collections',
-        },
-      },
     });
   }
 }

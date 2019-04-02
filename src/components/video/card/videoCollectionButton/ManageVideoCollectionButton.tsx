@@ -288,7 +288,7 @@ function mapDispatchToProps(
 
 function mapStateToProps({ collections }: State): StateProps {
   return {
-    collections: collections.userCollections,
+    collections: collections.myCollections,
     loading: collections.loading,
     updating: collections.updating,
   };

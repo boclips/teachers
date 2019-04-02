@@ -7,7 +7,7 @@ import {
   parseScrollableCollectionsListResponse,
 } from './collectionParser';
 
-export const fetchUserCollections = (
+export const fetchMyCollections = (
   links: Links,
 ): Promise<VideoCollection[]> => {
   if (!links.myCollections) {

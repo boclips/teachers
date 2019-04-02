@@ -1,3 +1,4 @@
+import Mock = jest.Mock;
 import configureStore from 'redux-mock-store';
 import ApiStub from '../../../../../test-support/ApiStub';
 import eventually from '../../../../../test-support/eventually';
@@ -8,12 +9,12 @@ import {
 } from '../../../../../test-support/video-service-responses';
 import activateUser from '../../../../services/users/activateUser';
 import { Link, RawLink } from '../../../../types/Link';
+import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
 import onRegisterAnalyticsMiddleware from './onRegisterAnalyticsMiddleware';
-import Mock = jest.Mock;
 
 jest.mock('../../../searchBar/redux/dispatchSearchVideoAction');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
@@ -29,9 +30,9 @@ const store = mockStore({});
 
 describe('on store login', () => {
   beforeEach(() => {
-    new ApiStub({ ...links, activate: { href: '/v1/activate' } }).fetchUser(
-      userResponse(),
-    );
+    new ApiStub({ ...links, activate: { href: '/v1/activate' } })
+      .fetchUser(userResponse())
+      .fetchCollections();
 
     store.dispatch(
       userLoggedIn(
@@ -40,6 +41,14 @@ describe('on store login', () => {
         }),
       ),
     );
+  });
+
+  it('fetches fetches my collections', async () => {
+    await eventually(() => {
+      expect(store.getActions().map(action => action.type)).toContain(
+        storeCollectionsAction([]).type,
+      );
+    });
   });
 
   it('sets up web analytics', async () => {

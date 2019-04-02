@@ -31,7 +31,7 @@ describe('adding video to collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      userCollections: [otherCollection, targetCollection],
+      myCollections: [otherCollection, targetCollection],
       publicCollections: PublicCollectionsFactory.sample(),
     };
 
@@ -44,12 +44,12 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.updating).toEqual(true);
-    expect(stateAfter.userCollections[0]).toEqual(otherCollection);
-    expect(stateAfter.userCollections[1]).not.toEqual(targetCollection);
-    expect(Object.keys(stateAfter.userCollections[1].videos)).toHaveLength(2);
-    expect(stateAfter.userCollections[1].videos['124']).toEqual(newVideo);
-    expect(stateAfter.userCollections[1].videoIds).toHaveLength(2);
-    expect(stateAfter.userCollections[1].videoIds.map(id => id.id)).toContain(
+    expect(stateAfter.myCollections[0]).toEqual(otherCollection);
+    expect(stateAfter.myCollections[1]).not.toEqual(targetCollection);
+    expect(Object.keys(stateAfter.myCollections[1].videos)).toHaveLength(2);
+    expect(stateAfter.myCollections[1].videos['124']).toEqual(newVideo);
+    expect(stateAfter.myCollections[1].videoIds).toHaveLength(2);
+    expect(stateAfter.myCollections[1].videoIds.map(id => id.id)).toContain(
       '124',
     );
   });
@@ -63,7 +63,7 @@ describe('adding video to collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      userCollections: [collection],
+      myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
     };
 
@@ -75,8 +75,8 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.updating).toEqual(false);
-    expect(Object.keys(stateAfter.userCollections[0].videos)).toHaveLength(1);
-    expect(stateAfter.userCollections[0].videoIds).toHaveLength(1);
+    expect(Object.keys(stateAfter.myCollections[0].videos)).toHaveLength(1);
+    expect(stateAfter.myCollections[0].videoIds).toHaveLength(1);
   });
 
   test('adding a new video that we already know about in the video ids list only updates the video map', () => {
@@ -94,7 +94,7 @@ describe('adding video to collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      userCollections: [collection],
+      myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
     };
 
@@ -106,8 +106,8 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.updating).toEqual(true);
-    expect(Object.keys(stateAfter.userCollections[0].videos)).toHaveLength(1);
-    expect(stateAfter.userCollections[0].videoIds).toHaveLength(1);
+    expect(Object.keys(stateAfter.myCollections[0].videos)).toHaveLength(1);
+    expect(stateAfter.myCollections[0].videoIds).toHaveLength(1);
   });
 });
 
@@ -124,7 +124,7 @@ describe('removing videos from a colleciton', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      userCollections: [collection],
+      myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
     };
 
@@ -137,10 +137,10 @@ describe('removing videos from a colleciton', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.updating).toEqual(true);
-    expect(Object.keys(stateAfter.userCollections[0].videos)).toHaveLength(1);
-    expect(stateAfter.userCollections[0].videos['124'].id).toEqual('124');
-    expect(stateAfter.userCollections[0].videoIds).toHaveLength(1);
-    expect(stateAfter.userCollections[0].videoIds[0].id).toEqual('124');
+    expect(Object.keys(stateAfter.myCollections[0].videos)).toHaveLength(1);
+    expect(stateAfter.myCollections[0].videos['124'].id).toEqual('124');
+    expect(stateAfter.myCollections[0].videoIds).toHaveLength(1);
+    expect(stateAfter.myCollections[0].videoIds[0].id).toEqual('124');
   });
 });
 
@@ -163,7 +163,7 @@ describe('fetch video for collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      userCollections: [collection],
+      myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
     };
 
@@ -174,12 +174,12 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(Object.keys(stateAfter.userCollections[0].videos)).toHaveLength(1);
-    expect(stateAfter.userCollections[0].videos[video.id].title).toEqual(
+    expect(Object.keys(stateAfter.myCollections[0].videos)).toHaveLength(1);
+    expect(stateAfter.myCollections[0].videos[video.id].title).toEqual(
       video.title,
     );
-    expect(stateAfter.userCollections[0].videos[video.id].id).toEqual(video.id);
-    expect(stateAfter.userCollections[0].videoIds).toHaveLength(1);
+    expect(stateAfter.myCollections[0].videos[video.id].id).toEqual(video.id);
+    expect(stateAfter.myCollections[0].videoIds).toHaveLength(1);
   });
 
   test('sets videos in collection details', () => {
@@ -201,7 +201,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       publicCollectionDetails: collection,
-      userCollections: [],
+      myCollections: [],
       publicCollections: PublicCollectionsFactory.sample(),
     };
 
@@ -245,7 +245,7 @@ describe('fetch video for collection', () => {
       publicCollections: PublicCollectionsFactory.sample({
         items: [collection],
       }),
-      userCollections: [],
+      myCollections: [],
     };
 
     const action = storeVideoForCollectionAction({
@@ -274,7 +274,7 @@ test('remove a collection', () => {
   const stateBefore: CollectionsStateValue = {
     updating: false,
     loading: false,
-    userCollections: [collection],
+    myCollections: [collection],
     publicCollections: PublicCollectionsFactory.sample(),
   };
 
@@ -282,7 +282,7 @@ test('remove a collection', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
-  expect(stateAfter.userCollections).toHaveLength(0);
+  expect(stateAfter.myCollections).toHaveLength(0);
 });
 
 test('editing a collection', () => {
@@ -291,7 +291,7 @@ test('editing a collection', () => {
   const stateBefore: CollectionsStateValue = {
     updating: false,
     loading: false,
-    userCollections: [collection],
+    myCollections: [collection],
     publicCollections: PublicCollectionsFactory.sample(),
   };
 
@@ -301,8 +301,8 @@ test('editing a collection', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
-  expect(stateAfter.userCollections.length).toEqual(1);
-  expect(stateAfter.userCollections[0].title).toEqual('changed');
+  expect(stateAfter.myCollections.length).toEqual(1);
+  expect(stateAfter.myCollections[0].title).toEqual('changed');
 });
 
 test('append public collections action page', () => {
@@ -311,7 +311,7 @@ test('append public collections action page', () => {
   const stateBefore: CollectionsStateValue = {
     updating: false,
     loading: false,
-    userCollections: [collection],
+    myCollections: [collection],
     publicCollections: PublicCollectionsFactory.sample(),
   };
 
@@ -322,7 +322,7 @@ test('append public collections action page', () => {
 
   const action = appendPublicCollectionsAction(
     PublicCollectionsFactory.sample({
-      items: stateBefore.userCollections,
+      items: stateBefore.myCollections,
       links: {
         next: nextCollectionLink,
       },

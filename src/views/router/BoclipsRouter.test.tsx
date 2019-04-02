@@ -288,7 +288,7 @@ function buildStore(
   const collections = {
     loading: true,
     updating: false,
-    userCollections: [],
+    myCollections: [],
     publicCollections: undefined,
   };
 

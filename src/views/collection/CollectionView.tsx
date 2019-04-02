@@ -157,7 +157,7 @@ export class CollectionView extends PureComponent<
 
 function mapStateToProps(state: CollectionState, props: OwnProps): StateProps {
   const indexOfCollection = getIndexOfCollection(
-    state.collections.userCollections,
+    state.collections.myCollections,
     props.collectionId,
   );
   if (state.collections.loading) {
@@ -165,7 +165,7 @@ function mapStateToProps(state: CollectionState, props: OwnProps): StateProps {
   }
   if (indexOfCollection >= 0) {
     return {
-      collection: state.collections.userCollections[indexOfCollection],
+      collection: state.collections.myCollections[indexOfCollection],
       loading: false,
     };
   }

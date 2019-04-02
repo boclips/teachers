@@ -56,16 +56,16 @@ export interface Scrollable<T> {
 export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
-  userCollections: VideoCollection[];
+  myCollections: VideoCollection[];
   publicCollections: Scrollable<VideoCollection>;
   publicCollectionDetails?: VideoCollection;
 }
 
 export function getIndexOfCollection(
-  userCollections: VideoCollection[],
+  myCollections: VideoCollection[],
   collectionId: string,
 ) {
-  const indexOfCollection = userCollections.findIndex(
+  const indexOfCollection = myCollections.findIndex(
     col => col.id === collectionId,
   );
   return indexOfCollection;

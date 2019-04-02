@@ -70,7 +70,7 @@ export class CollectionListView extends PureComponent<
 
 function mapStateToProps(state: CollectionState): StateProps {
   return {
-    collections: state.collections.userCollections,
+    collections: state.collections.myCollections,
     loading: state.collections.loading,
   };
 }

@@ -30,7 +30,7 @@ import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddl
 import { VideoMap } from './../../../../types/VideoCollection';
 
 const initialState: CollectionsStateValue = {
-  userCollections: [],
+  myCollections: [],
   publicCollections: undefined,
   publicCollectionDetails: undefined,
   loading: true,
@@ -39,11 +39,11 @@ const initialState: CollectionsStateValue = {
 
 const onStoreCollectionsAction = (
   state: CollectionsStateValue,
-  userCollections: VideoCollection[],
+  myCollections: VideoCollection[],
 ): CollectionsStateValue => {
   return {
     ...state,
-    userCollections,
+    myCollections,
     loading: false,
     updating: false,
   };
@@ -104,14 +104,14 @@ const onAddVideoAction = (
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(
-    state.userCollections,
+    state.myCollections,
     request.collection.id,
   );
-  const userCollections = [...state.userCollections];
+  const myCollections = [...state.myCollections];
 
   if (indexOfCollection > -1) {
-    const videos = state.userCollections[indexOfCollection].videos;
-    const videoIds = state.userCollections[indexOfCollection].videoIds;
+    const videos = state.myCollections[indexOfCollection].videos;
+    const videoIds = state.myCollections[indexOfCollection].videoIds;
 
     const alreadyHaveVideoId =
       videoIds.find(v => v.id === request.video.id) != null;
@@ -126,8 +126,8 @@ const onAddVideoAction = (
       links: request.video.links,
     };
 
-    userCollections[indexOfCollection] = {
-      ...userCollections[indexOfCollection],
+    myCollections[indexOfCollection] = {
+      ...myCollections[indexOfCollection],
       videos: {
         ...videos,
         [request.video.id]: request.video,
@@ -136,7 +136,7 @@ const onAddVideoAction = (
     };
   }
 
-  return { ...state, userCollections, updating: true };
+  return { ...state, myCollections, updating: true };
 };
 
 const getUpdateVideoIds = (
@@ -151,23 +151,23 @@ const onRemoveVideoAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const userCollections = [...state.userCollections];
+  const myCollections = [...state.myCollections];
   const indexOfCollection = getIndexOfCollection(
-    state.userCollections,
+    state.myCollections,
     request.collection.id,
   );
 
   if (indexOfCollection > -1) {
-    const collection = userCollections[indexOfCollection];
+    const collection = myCollections[indexOfCollection];
 
-    userCollections[indexOfCollection] = {
-      ...userCollections[indexOfCollection],
+    myCollections[indexOfCollection] = {
+      ...myCollections[indexOfCollection],
       videos: removeVideo(request.video.id, collection.videos),
       videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
     };
   }
 
-  return { ...state, userCollections, updating: true };
+  return { ...state, myCollections, updating: true };
 };
 
 const removeVideo = (videoIdToRemove: string, videos: VideoMap): VideoMap => {
@@ -198,7 +198,7 @@ const onStoreVideosForCollectionAction = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
-  state = reduceStoreVideoForUserCollections(state, request);
+  state = reduceStoreVideoForMyCollections(state, request);
   state = reduceStoreVideoForPublicCollections(state, request);
   return reduceStoreVideoForCollectionDetails(state, request);
 };
@@ -220,19 +220,19 @@ function videosAlreadyLoaded(
   return request.videos.map(v => v.id).every(id => videos[id] !== undefined);
 }
 
-const reduceStoreVideoForUserCollections = (
+const reduceStoreVideoForMyCollections = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(
-    state.userCollections,
+    state.myCollections,
     request.collection.id,
   );
   if (indexOfCollection < 0) {
     return state;
   }
-  const userCollections = [...state.userCollections];
-  const videos = state.userCollections[indexOfCollection].videos;
+  const myCollections = [...state.myCollections];
+  const videos = state.myCollections[indexOfCollection].videos;
 
   if (videosAlreadyLoaded(request, videos)) {
     return state;
@@ -240,15 +240,15 @@ const reduceStoreVideoForUserCollections = (
 
   const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
 
-  userCollections[indexOfCollection] = {
-    ...userCollections[indexOfCollection],
+  myCollections[indexOfCollection] = {
+    ...myCollections[indexOfCollection],
     videos: {
       ...videos,
       ...videoMapToUpdate,
     },
   };
 
-  return { ...state, userCollections };
+  return { ...state, myCollections };
 };
 
 const reduceStoreVideoForPublicCollections = (
@@ -330,7 +330,7 @@ const onCollectionRemoved = (
   return {
     ...state,
     updating: false,
-    userCollections: state.userCollections.filter(
+    myCollections: state.myCollections.filter(
       collection => collection.id !== removedCollection.id,
     ),
   };
@@ -341,15 +341,15 @@ const onCollectionEdited = (
   editedCollection: VideoCollection,
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(
-    state.userCollections,
+    state.myCollections,
     editedCollection.id,
   );
 
-  const userCollections = [...state.userCollections];
+  const myCollections = [...state.myCollections];
 
   if (indexOfCollection > -1) {
-    userCollections[indexOfCollection] = {
-      ...userCollections[indexOfCollection],
+    myCollections[indexOfCollection] = {
+      ...myCollections[indexOfCollection],
       ...editedCollection,
     };
   }
@@ -357,7 +357,7 @@ const onCollectionEdited = (
   return {
     ...state,
     updating: false,
-    userCollections,
+    myCollections,
   };
 };
 

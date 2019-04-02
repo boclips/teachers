@@ -39,7 +39,7 @@ test('displays an empty state when no collections', () => {
   const { wrapper } = render({
     loading: false,
     updating: false,
-    userCollections: [],
+    myCollections: [],
   });
 
   expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(

@@ -2,7 +2,7 @@ import { KeycloakInstance } from 'keycloak-js';
 import { Store } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { fetchLinksAction } from '../../../../app/redux/links/actions/fetchLinksAction';
-import { fetchUserCollections } from '../../../../services/collections/fetchCollections';
+import { fetchMyCollections } from '../../../../services/collections/fetchCollections';
 import fetchLinks from '../../../../services/links/fetchLinks';
 import activateUser from '../../../../services/users/activateUser';
 import { fetchUser } from '../../../../services/users/fetchUser';
@@ -22,7 +22,7 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
       return links;
     })
     .then((links: Links) => {
-      fetchUserCollections(links)
+      fetchMyCollections(links)
         .then(collections => {
           store.dispatch(storeCollectionsAction(collections));
         })
