@@ -9,6 +9,7 @@ export interface Links {
   collections?: Link;
   myCollections?: Link;
   publicCollections?: Link;
+  bookmarkedCollections?: Link;
   activate?: Link;
   profile?: Link;
   createAccount?: Link;

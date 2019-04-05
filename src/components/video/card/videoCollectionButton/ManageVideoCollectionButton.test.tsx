@@ -160,6 +160,7 @@ const mountWith = (
     collections: {
       myCollections: collections,
       publicCollections: undefined,
+      bookmarkedCollections: undefined,
       loading,
       updating,
     },

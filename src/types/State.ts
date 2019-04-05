@@ -58,6 +58,7 @@ export interface CollectionsStateValue {
   updating: boolean;
   myCollections: VideoCollection[];
   publicCollections: Scrollable<VideoCollection>;
+  bookmarkedCollections: Scrollable<VideoCollection>;
   publicCollectionDetails?: VideoCollection;
 }
 

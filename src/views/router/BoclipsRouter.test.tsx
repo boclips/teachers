@@ -19,6 +19,7 @@ import {
   VideoStateValue,
 } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
+import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
@@ -137,6 +138,19 @@ describe('when authorised', () => {
     );
 
     const collectionsView = wrapper.find(PublicCollectionListView);
+    expect(collectionsView).toExist();
+  });
+
+  test('shows bookmarked collections view on /bookmarked-collections', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/bookmarked-collections')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(BookmarkedCollectionListView);
     expect(collectionsView).toExist();
   });
 
@@ -290,6 +304,7 @@ function buildStore(
     updating: false,
     myCollections: [],
     publicCollections: undefined,
+    bookmarkedCollections: undefined,
   };
 
   const store = mockStore({

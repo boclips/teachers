@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import collectionsImg from '../../../../resources/images/collections.png';
 import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCardList } from '../card/CollectionCardList';
@@ -15,6 +16,7 @@ interface Props {
 interface StateProps {
   publicCollections: VideoCollection[];
   loading: boolean;
+  canFetchPublicCollections: boolean;
   hasMorePublicCollections: boolean;
 }
 
@@ -29,7 +31,11 @@ class PublicCollectionsGrid extends React.PureComponent<
   public render() {
     return (
       <CollectionCardList
-        title="Video collections"
+        title={
+          <span>
+            <img src={collectionsImg} /> Video collections
+          </span>
+        }
         description={this.props.description}
         tiny={true}
         loading={this.props.loading}
@@ -48,7 +54,15 @@ class PublicCollectionsGrid extends React.PureComponent<
   }
 
   public componentDidMount(): void {
-    if (!this.props.publicCollections) {
+    this.fetchCollectionsIfNeeded();
+  }
+
+  public componentDidUpdate(): void {
+    this.fetchCollectionsIfNeeded();
+  }
+
+  private fetchCollectionsIfNeeded() {
+    if (!this.props.publicCollections && this.props.canFetchPublicCollections) {
       this.props.fetchPublicCollections();
     }
   }
@@ -59,7 +73,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fetchNextPage: () => dispatch(fetchNextPublicCollectionsAction()),
 });
 
-function mapStateToProps({ collections }: State): StateProps {
+function mapStateToProps({ collections, links }: State): StateProps {
   return {
     loading: collections.loading,
     publicCollections:
@@ -69,6 +83,7 @@ function mapStateToProps({ collections }: State): StateProps {
       collections.publicCollections.links &&
       collections.publicCollections.links.next &&
       true,
+    canFetchPublicCollections: links && links.publicCollections && true,
   };
 }
 
