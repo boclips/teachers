@@ -32,6 +32,7 @@ import { VideoMap } from './../../../../types/VideoCollection';
 const initialState: CollectionsStateValue = {
   myCollections: [],
   publicCollections: undefined,
+  bookmarkedCollections: undefined,
   publicCollectionDetails: undefined,
   loading: true,
   updating: false,

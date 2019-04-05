@@ -1,7 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import InfiniteScroll = require('react-infinite-scroll-component');
-import collections from '../../../../resources/images/collections.png';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardContainer from './CollectionCardContainer';
@@ -13,7 +12,7 @@ interface InfiniteScrollProps {
 interface Props {
   collections: VideoCollection[];
   loading: boolean;
-  title: string;
+  title: string | React.ReactFragment;
   description?: string;
   tiny?: boolean;
   maxNumberOfCollections?: number;
@@ -24,10 +23,7 @@ export class CollectionCardList extends React.PureComponent<Props> {
   public render() {
     return (
       <React.Fragment>
-        <h1 className="big-title alt">
-          {' '}
-          <img src={collections} /> {this.props.title}
-        </h1>
+        <h1 className="big-title alt">{this.props.title}</h1>
         {this.props.description && (
           <p className={'collection-list-description'}>
             {this.props.description}

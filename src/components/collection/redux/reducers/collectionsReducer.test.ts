@@ -33,6 +33,7 @@ describe('adding video to collection', () => {
       loading: false,
       myCollections: [otherCollection, targetCollection],
       publicCollections: PublicCollectionsFactory.sample(),
+      bookmarkedCollections: undefined,
     };
 
     const newVideo = VideoFactory.sample({ id: '124' });
@@ -65,6 +66,7 @@ describe('adding video to collection', () => {
       loading: false,
       myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
+      bookmarkedCollections: undefined,
     };
 
     const action = addToCollectionAction({
@@ -96,6 +98,7 @@ describe('adding video to collection', () => {
       loading: false,
       myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
+      bookmarkedCollections: undefined,
     };
 
     const action = addToCollectionAction({
@@ -126,6 +129,7 @@ describe('removing videos from a colleciton', () => {
       loading: false,
       myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
+      bookmarkedCollections: undefined,
     };
 
     const videoToRemove = VideoFactory.sample({ id: '123' });
@@ -165,6 +169,7 @@ describe('fetch video for collection', () => {
       loading: false,
       myCollections: [collection],
       publicCollections: PublicCollectionsFactory.sample(),
+      bookmarkedCollections: undefined,
     };
 
     const action = storeVideoForCollectionAction({
@@ -203,6 +208,7 @@ describe('fetch video for collection', () => {
       publicCollectionDetails: collection,
       myCollections: [],
       publicCollections: PublicCollectionsFactory.sample(),
+      bookmarkedCollections: undefined,
     };
 
     const action = storeVideoForCollectionAction({
@@ -246,6 +252,7 @@ describe('fetch video for collection', () => {
         items: [collection],
       }),
       myCollections: [],
+      bookmarkedCollections: undefined,
     };
 
     const action = storeVideoForCollectionAction({
@@ -276,6 +283,7 @@ test('remove a collection', () => {
     loading: false,
     myCollections: [collection],
     publicCollections: PublicCollectionsFactory.sample(),
+    bookmarkedCollections: undefined,
   };
 
   const action = onCollectionRemovedAction(collection);
@@ -293,6 +301,7 @@ test('editing a collection', () => {
     loading: false,
     myCollections: [collection],
     publicCollections: PublicCollectionsFactory.sample(),
+    bookmarkedCollections: undefined,
   };
 
   const editedCollection = { ...collection, title: 'changed' };
@@ -313,6 +322,7 @@ test('append public collections action page', () => {
     loading: false,
     myCollections: [collection],
     publicCollections: PublicCollectionsFactory.sample(),
+    bookmarkedCollections: undefined,
   };
 
   const nextCollectionLink = new Link({

@@ -9,6 +9,7 @@ import PrivateRoute, {
 } from '../../components/login/PrivateRoute';
 import { RouterState } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
+import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionListView from '../collection/CollectionListView';
 import CollectionView from '../collection/CollectionView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
@@ -59,6 +60,11 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             <PrivateRoute
               path="/public-collections"
               component={PublicCollectionListView}
+              exact={true}
+            />
+            <PrivateRoute
+              path="/bookmarked-collections"
+              component={BookmarkedCollectionListView}
               exact={true}
             />
             <PrivateRoute

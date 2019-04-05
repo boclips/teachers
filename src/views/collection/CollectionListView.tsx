@@ -3,6 +3,7 @@ import Row from 'antd/lib/grid/row';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import collections from '../../../resources/images/collections.png';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { CollectionCardList } from '../../components/collection/card/CollectionCardList';
 import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
@@ -44,7 +45,11 @@ export class CollectionListView extends PureComponent<
     return (
       this.props.collections && (
         <CollectionCardList
-          title="My video collections"
+          title={
+            <span>
+              <img src={collections} /> My video collections
+            </span>
+          }
           collections={this.props.collections}
           loading={this.props.loading}
         />
