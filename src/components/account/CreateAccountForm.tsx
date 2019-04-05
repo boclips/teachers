@@ -14,6 +14,7 @@ import State from '../../types/State';
 import NotificationFactory from '../common/NotificationFactory';
 import './CreateAccountForm.less';
 import { extractReferralCode } from './extractReferralCode';
+import Checkbox from "antd/es/checkbox";
 
 interface StateProps {
   links: Links;
@@ -129,55 +130,72 @@ class RegistrationForm extends React.Component<
   public renderForm() {
     const { getFieldDecorator } = this.props.form;
 
+    // @ts-ignore
     return (
       <section className="create-account-form__container">
         <Row>
           <Col
             xs={{ span: 24 }}
             md={{ span: 14, push: 5 }}
-            xl={{ span: 10, push: 7 }}
+            xl={{ span: 12, push: 12 }}
           >
             <Form onSubmit={this.handleSubmit}>
               <h1 className="alt create-account-form__title">
-                Create an account
+                Create account
               </h1>
 
               <section className="create-account-form__form">
-                <Form.Item>
-                  {getFieldDecorator('firstName', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please enter your first name',
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="first-name"
-                      size="large"
-                      prefix={<Icon type="user" />}
-                      placeholder="First name"
-                    />,
-                  )}
-                </Form.Item>
+                <Row>
+                  <Form.Item className="create-account-form__name-fields">
+                    <Col
+                      xs={{ span: 24 }}
+                      md={{ span: 12 }}
+                      xl={{ span: 12, gutter: 0 }}
+                    >
+                      <Form.Item>
+                        {getFieldDecorator('firstName', {
+                          rules: [
+                            {
+                              required: true,
+                              message: 'Please enter your first name',
+                            },
+                          ],
+                        })(
+                          <Input
+                            data-qa="first-name"
+                            size="large"
+                            placeholder="First name"
+                            className="create-account-form__first-name"
+                          />,
+                        )}
+                      </Form.Item>
+                    </Col>
+                    <Col
+                      xs={{ span: 24 }}
+                      md={{ span: 12 }}
+                      xl={{ span: 12 }}
+                    >
+                      <Form.Item>
+                        {getFieldDecorator('lastName', {
+                          rules: [
+                            {
+                              required: true,
+                              message: 'Please enter your last name',
+                            },
+                          ],
+                        })(
+                          <Input
+                            data-qa="last-name"
+                            size="large"
+                            placeholder="Last name"
+                            className="create-account-form__last-name"
+                          />,
+                        )}
+                      </Form.Item>
+                    </Col>
+                  </Form.Item>
+                </Row>
 
-                <Form.Item>
-                  {getFieldDecorator('lastName', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please enter your last name',
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="last-name"
-                      size="large"
-                      prefix={<Icon type="user" />}
-                      placeholder="Last name"
-                    />,
-                  )}
-                </Form.Item>
 
                 <Form.Item>
                   {getFieldDecorator('subjects', {
@@ -186,33 +204,40 @@ class RegistrationForm extends React.Component<
                     <Input
                       data-qa="subjects"
                       size="large"
-                      prefix={<Icon type="book" />}
                       placeholder="Subject(s) taught"
                     />,
                   )}
                 </Form.Item>
 
-                <Form.Item>
-                  {getFieldDecorator('email', {
-                    rules: [
-                      {
-                        type: 'email',
-                        message: 'The input is not valid email',
-                      },
-                      {
-                        required: true,
-                        message: 'Please enter your email',
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="email"
-                      size="large"
-                      prefix={<Icon type="mail" />}
-                      placeholder="email"
-                    />,
-                  )}
-                </Form.Item>
+                <Row>
+                  <Col
+                    xs={{ span: 24 }}
+                    md={{ span: 16 }}
+                    xl={{ span: 16 }}
+                  >
+                    <Form.Item>
+                      {getFieldDecorator('email', {
+                        rules: [
+                          {
+                            type: 'email',
+                            message: 'The input is not valid email',
+                          },
+                          {
+                            required: true,
+                            message: 'Please enter your email',
+                          },
+                        ],
+                      })(
+                        <Input
+                          data-qa="email"
+                          size="large"
+                          placeholder="Email"
+                        />,
+                      )}
+                    </Form.Item>
+                  </Col>
+                </Row>
+
                 <Form.Item>
                   {getFieldDecorator('password', {
                     rules: [
@@ -229,7 +254,6 @@ class RegistrationForm extends React.Component<
                     <Input
                       data-qa="password"
                       size="large"
-                      prefix={<Icon type="lock" />}
                       type="password"
                       placeholder="Password"
                     />,
@@ -250,11 +274,32 @@ class RegistrationForm extends React.Component<
                     <Input
                       data-qa="password-confirm"
                       size="large"
-                      prefix={<Icon type="lock" />}
                       type="password"
                       onBlur={this.handleConfirmBlur}
                       placeholder="Confirm password"
                     />,
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('privacy_policy', {
+                    rules: [
+                      {
+                        required: true
+                      }
+                    ],
+                  })(
+                    <Checkbox className="create-account-form__checkbox">
+                      I have read and agree with the Boclips <Link className="create-account-form__checkbox-link" to={'#'}>Terms and Conditions</Link>. Boclips will collect and process data as described in the <Link className="create-account-form__checkbox-link" to={'#'}>Privacy Policy</Link>.
+                    </Checkbox>
+                  )}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('marketing-preference', {
+                    rules: [],
+                  })(
+                    <Checkbox className="create-account-form__checkbox">
+                      I want to receive marketing information about Boclips's similar products or services which may be of interest to me in accordance with the <Link className="create-account-form__checkbox-link" to={'#'}>Privacy Policy</Link>.
+                    </Checkbox>
                   )}
                 </Form.Item>
               </section>
