@@ -6,7 +6,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
-import { CopyLinkButton } from './CopyLinkButton';
+import CopyLinkButton from './CopyLinkButton';
 import './VideoCard.less';
 import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
 import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';

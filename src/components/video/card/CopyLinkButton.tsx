@@ -1,8 +1,10 @@
 import { Button } from 'antd';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { connect } from 'react-redux';
 import { Constants } from '../../../app/AppConstants';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { LoginState } from '../../../types/State';
 import { Video } from '../../../types/Video';
 import NotificationFactory from '../../common/NotificationFactory';
 
@@ -10,7 +12,11 @@ interface OwnProps {
   video: Video;
 }
 
-export class CopyLinkButton extends React.PureComponent<OwnProps> {
+interface StateProps {
+  userId: string | null;
+}
+
+class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
   private showCopiedNotification = (video: Video) => (url: string) => {
     AnalyticsFactory.getInstance().trackVideoLinkCopied(video);
     NotificationFactory.success({
@@ -23,7 +29,7 @@ export class CopyLinkButton extends React.PureComponent<OwnProps> {
   public render() {
     return (
       <CopyToClipboard
-        text={`${Constants.HOST}/videos/${this.props.video.id}`}
+        text={this.getLink()}
         onCopy={this.showCopiedNotification(this.props.video)}
         options={{ debug: true }}
       >
@@ -38,4 +44,20 @@ export class CopyLinkButton extends React.PureComponent<OwnProps> {
       </CopyToClipboard>
     );
   }
+
+  private getLink() {
+    const link = `${Constants.HOST}/videos/${this.props.video.id}`;
+    if (this.props.userId) {
+      return `${link}?referer=${this.props.userId}`;
+    }
+    return link;
+  }
 }
+
+function mapStateToProps(state: LoginState): StateProps {
+  return {
+    userId: state.user ? state.user.id : null,
+  };
+}
+
+export default connect(mapStateToProps)(CopyLinkButton);
