@@ -250,7 +250,10 @@ class RegistrationForm extends React.Component<
                   },
                 ],
               })(
-                <Checkbox className="create-account-form__checkbox">
+                <Checkbox
+                  className="create-account-form__checkbox"
+                  data-qa="privacy_policy"
+                >
                   I have read and agree with the Boclips{' '}
                   <a
                     rel="noopener noreferrer"
