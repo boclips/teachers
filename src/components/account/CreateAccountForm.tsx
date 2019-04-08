@@ -252,9 +252,14 @@ class RegistrationForm extends React.Component<
               })(
                 <Checkbox className="create-account-form__checkbox">
                   I have read and agree with the Boclips{' '}
-                  <Link className="create-account-form__checkbox-link" to={'#'}>
+                  <a
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="create-account-form__checkbox-link"
+                    href={'https://www.boclips.com/terms-and-conditions'}
+                  >
                     Terms and Conditions
-                  </Link>
+                  </a>
                   . Boclips will collect and process data as described in the{' '}
                   <Link className="create-account-form__checkbox-link" to={'#'}>
                     Privacy Policy
