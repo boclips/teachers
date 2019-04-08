@@ -1,5 +1,4 @@
-import { Button, Col, Form, Icon, Input, Row } from 'antd';
-import Checkbox from 'antd/es/checkbox';
+import { Button, Col, Form, Input, Row, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -31,7 +30,7 @@ interface InternalState {
 class RegistrationForm extends React.Component<
   StateProps & FormComponentProps,
   InternalState
-> {
+  > {
   public state = {
     showConfirmation: false,
     confirmDirty: false,
