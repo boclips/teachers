@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, Checkbox } from 'antd';
+import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -30,7 +30,7 @@ interface InternalState {
 class RegistrationForm extends React.Component<
   StateProps & FormComponentProps,
   InternalState
-  > {
+> {
   public state = {
     showConfirmation: false,
     confirmDirty: false,
@@ -281,7 +281,7 @@ class RegistrationForm extends React.Component<
                   )}
                 </Form.Item>
                 <Form.Item>
-                  {getFieldDecorator('marketing-preference', {
+                  {getFieldDecorator('hasOptedIntoMarketing', {
                     rules: [],
                   })(
                     <Checkbox className="create-account-form__checkbox">

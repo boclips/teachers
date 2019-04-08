@@ -9,6 +9,7 @@ export interface CreateAccountRequest {
   password: string;
   analyticsId: string;
   referralCode: string;
+  hasOptedIntoMarketing: boolean;
 }
 
 export const createAccount = (
