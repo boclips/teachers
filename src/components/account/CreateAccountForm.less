@@ -1,7 +1,7 @@
-@import '../../../resources/styles/_colours';
-@import '../../../resources/styles/_antd-theme.less';
+@import "../../../resources/styles/_colours";
 
-.create-account-form__ {
+.create-account-form__{
+
   &title {
     margin-bottom: 40px;
     animation: slide-in 0.5s 0s both;
@@ -25,22 +25,11 @@
     border-top: 1px solid @shade-2;
   }
 
-  &inline-item.ant-row.ant-form-item {
+  &name-fields.ant-row.ant-form-item {
     margin-bottom: 0;
   }
 
-  @media (min-width: @screen-md) {
-    &inline-item--right {
-      margin-left: 8px;
-    }
-
-    &inline-item--left {
-      margin-right: 8px;
-    }
-  }
-
-  &checkbox,
-  &checkbox-link {
+  &checkbox, &checkbox-link {
     color: @blue-grey;
     font-size: 14px;
     line-height: 16px;
