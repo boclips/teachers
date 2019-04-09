@@ -1,4 +1,5 @@
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
+import { Button, Col, Form, Icon, Input, Row } from 'antd';
+import Checkbox from 'antd/es/checkbox';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -14,7 +15,6 @@ import State from '../../types/State';
 import NotificationFactory from '../common/NotificationFactory';
 import './CreateAccountForm.less';
 import { extractReferralCode } from './extractReferralCode';
-import { Recaptcha } from './recaptcha/Recaptcha';
 import TwoColumnInlineForm from './TwoColumnInlineFormItem';
 
 interface StateProps {
@@ -299,17 +299,6 @@ class RegistrationForm extends React.Component<
                     </Checkbox>,
                   )}
                 </Form.Item>
-                <p className="recaptcha-notice">
-                  This site is protected by reCAPTCHA and the Google{' '}
-                  <a href="https://policies.google.com/privacy">
-                    Privacy Policy
-                  </a>{' '}
-                  and{' '}
-                  <a href="https://policies.google.com/terms">
-                    Terms of Service
-                  </a>{' '}
-                  apply.
-                </p>
               </section>
 
               <div style={{ display: 'none' }}>
@@ -323,13 +312,6 @@ class RegistrationForm extends React.Component<
                   {getFieldDecorator('analyticsId', {
                     rules: [],
                     initialValue: AnalyticsFactory.getInstance().getId(),
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Recaptcha verifyCallback={this.updateRecaptchaToken} />
-                <Form.Item>
-                  {getFieldDecorator('recaptchaToken', {
-                    rules: [],
-                    initialValue: '',
                   })(<Input type="text" />)}
                 </Form.Item>
               </div>
@@ -357,10 +339,6 @@ class RegistrationForm extends React.Component<
       </section>
     );
   }
-
-  private updateRecaptchaToken = recaptchaToken => {
-    this.props.form.setFieldsValue({ recaptchaToken });
-  };
 }
 
 function mapStateToProps(state: State): StateProps {
