@@ -130,6 +130,7 @@ class RegistrationForm extends React.Component<
 
   public renderForm() {
     const { getFieldDecorator } = this.props.form;
+
     return (
       <section className="create-account-form__container">
         <Row>
@@ -322,10 +323,7 @@ class RegistrationForm extends React.Component<
                 size="large"
                 type="primary"
                 htmlType="submit"
-                disabled={
-                  this.state.creating ||
-                  !this.props.form.getFieldValue('privacy_policy')
-                }
+                disabled={this.state.creating}
                 loading={this.state.creating}
               >
                 Register
