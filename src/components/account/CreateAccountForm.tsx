@@ -11,6 +11,7 @@ import {
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
+import BlankTargetLink from '../common/BlankTargetLink';
 import NotificationFactory from '../common/NotificationFactory';
 import './CreateAccountForm.less';
 import { extractReferralCode } from './extractReferralCode';
@@ -255,19 +256,14 @@ class RegistrationForm extends React.Component<
                   data-qa="privacy_policy"
                 >
                   I have read and agree with the Boclips{' '}
-                  <a
-                    rel="noopener noreferrer"
-                    target="_blank"
+                  <BlankTargetLink
                     className="create-account-form__checkbox-link"
-                    href={'https://www.boclips.com/terms-and-conditions'}
+                    href="https://www.boclips.com/terms-and-conditions"
                   >
                     Terms and Conditions
-                  </a>
+                  </BlankTargetLink>
                   . Boclips will collect and process data as described in the{' '}
-                  <Link className="create-account-form__checkbox-link" to={'#'}>
-                    Privacy Policy
-                  </Link>
-                  .
+                  <PrivacyPolicyLink />.
                 </Checkbox>,
               )}
             </Form.Item>
@@ -278,11 +274,7 @@ class RegistrationForm extends React.Component<
                 <Checkbox className="create-account-form__checkbox">
                   I want to receive marketing information about Boclips's
                   similar products or services which may be of interest to me in
-                  accordance with the{' '}
-                  <Link className="create-account-form__checkbox-link" to={'#'}>
-                    Privacy Policy
-                  </Link>
-                  .
+                  accordance with the <PrivacyPolicyLink />.
                 </Checkbox>,
               )}
             </Form.Item>
@@ -338,3 +330,12 @@ export default connect<StateProps, {}, {}>(
   mapStateToProps,
   null,
 )(Form.create<StateProps>()(RegistrationForm));
+
+const PrivacyPolicyLink = () => (
+  <BlankTargetLink
+    className="create-account-form__checkbox-link"
+    href="https://www.boclips.com/privacy-policy"
+  >
+    Privacy Policy
+  </BlankTargetLink>
+);
