@@ -10,7 +10,7 @@ const getFilters = (mode: string): RequestFilters => {
   let excludeTags = [];
 
   if (mode === Constants.NEWS) {
-    includeTags = [Constants.NEWS];
+    includeTags = [Constants.NEWS, Constants.CLASSROOM];
   } else {
     includeTags = [Constants.CLASSROOM];
     excludeTags = [Constants.NEWS];
