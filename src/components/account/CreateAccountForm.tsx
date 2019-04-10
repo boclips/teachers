@@ -277,6 +277,7 @@ class RegistrationForm extends React.Component<
             <Form.Item>
               {getFieldDecorator('hasOptedIntoMarketing', {
                 rules: [],
+                initialValue: false,
               })(
                 <Checkbox className="create-account-form__checkbox">
                   I want to receive marketing information about Boclips's
