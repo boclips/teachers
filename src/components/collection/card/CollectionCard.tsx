@@ -7,6 +7,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import VideoPlayer from '../../video/player/VideoPlayer';
 import { CollectionSubtitle } from '../CollectionSubtitle';
+import BookmarkingButton from './BookmarkCollectionButton';
 import './CollectionCard.less';
 import RemoveCollectionButton from './RemoveCollectionButton';
 
@@ -34,6 +35,7 @@ export class CollectionCard extends React.PureComponent<Props> {
           {this.props.collection.title}
         </h1>
         <CollectionSubtitle collection={this.props.collection} />
+        <BookmarkingButton collection={this.props.collection} />
         {!this.props.tiny && (
           <RemoveCollectionButton collection={this.props.collection} />
         )}

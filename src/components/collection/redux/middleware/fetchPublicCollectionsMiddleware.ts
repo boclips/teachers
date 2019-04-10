@@ -1,7 +1,7 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import {
-  fetchNextPublicCollections,
+  fetchNextCollectionsPage,
   fetchPublicCollections,
 } from '../../../../services/collections/fetchCollections';
 import { CollectionState, LinksState } from '../../../../types/State';
@@ -23,7 +23,7 @@ export function onFetchNextCollections(
   store: MiddlewareAPI<any, CollectionState>,
 ) {
   const publicCollections = store.getState().collections.publicCollections;
-  fetchNextPublicCollections(publicCollections)
+  fetchNextCollectionsPage(publicCollections)
     .then(collections => {
       store.dispatch(appendPublicCollectionsAction(collections));
     })

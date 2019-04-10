@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
   LinksFactory,
-  PublicCollectionsFactory,
+  PageableCollectionsFactory,
 } from '../../../test-support/factories';
 import {
   collectionsResponse,
@@ -11,7 +11,7 @@ import {
 import { Link } from '../../types/Link';
 import {
   fetchMyCollections,
-  fetchNextPublicCollections,
+  fetchNextCollectionsPage,
   fetchPublicCollections,
 } from './fetchCollections';
 
@@ -68,8 +68,8 @@ describe('public collections', () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?publicpage')
       .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
-    const collections = await fetchNextPublicCollections(
-      PublicCollectionsFactory.sample({
+    const collections = await fetchNextCollectionsPage(
+      PageableCollectionsFactory.sample({
         links: { next: new Link({ href: '/v1/collections?publicpage' }) },
       }),
     );

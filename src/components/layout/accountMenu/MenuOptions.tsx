@@ -5,6 +5,19 @@ interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   logo?: React.ReactNode;
 }
 
+class BookmarkedCollectionsLink extends React.PureComponent<Props> {
+  public render = () => (
+    <Link
+      to={'/bookmarked-collections'}
+      data-qa="bookmarked-collections"
+      onClick={this.props.onClick}
+    >
+      {this.props.logo}
+      My bookmarks
+    </Link>
+  );
+}
+
 class VideoCollectionsLink extends React.PureComponent<Props> {
   public render = () => (
     <Link
@@ -13,7 +26,7 @@ class VideoCollectionsLink extends React.PureComponent<Props> {
       onClick={this.props.onClick}
     >
       {this.props.logo}
-      My video collections
+      My videos
     </Link>
   );
 }
@@ -27,4 +40,4 @@ class LogoutLink extends React.PureComponent<Props> {
   );
 }
 
-export { VideoCollectionsLink, LogoutLink };
+export { VideoCollectionsLink, BookmarkedCollectionsLink, LogoutLink };

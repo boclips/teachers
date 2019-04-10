@@ -46,7 +46,7 @@ export interface CollectionState {
   collections: CollectionsStateValue;
 }
 
-export interface Scrollable<T> {
+export interface Pageable<T> {
   items: T[];
   links: {
     next?: Link;
@@ -57,16 +57,16 @@ export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
   myCollections: VideoCollection[];
-  publicCollections: Scrollable<VideoCollection>;
-  bookmarkedCollections: Scrollable<VideoCollection>;
+  publicCollections: Pageable<VideoCollection>;
+  bookmarkedCollections: Pageable<VideoCollection>;
   publicCollectionDetails?: VideoCollection;
 }
 
 export function getIndexOfCollection(
-  myCollections: VideoCollection[],
+  collections: VideoCollection[],
   collectionId: string,
 ) {
-  const indexOfCollection = myCollections.findIndex(
+  const indexOfCollection = collections.findIndex(
     col => col.id === collectionId,
   );
   return indexOfCollection;

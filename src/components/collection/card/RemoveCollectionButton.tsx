@@ -22,7 +22,7 @@ export class RemoveCollectionButtonInner extends PureComponent<
     return this.props.collection.links.remove ? (
       <Icon
         data-qa="delete-collection"
-        className="delete-collection__icon"
+        className="delete-collection__icon top-right-icon"
         onClick={this.removeCollection}
         type="delete"
         theme="filled"

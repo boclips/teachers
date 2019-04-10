@@ -1,15 +1,18 @@
 import ApiStub from '../../../../../test-support/ApiStub';
 import {
-  PublicCollectionsFactory,
+  PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
 import { Link } from '../../../../types/Link';
 import { CollectionsStateValue } from '../../../../types/State';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
+import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
+import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
+import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { collectionsReducer } from './collectionsReducer';
@@ -32,7 +35,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: [otherCollection, targetCollection],
-      publicCollections: PublicCollectionsFactory.sample(),
+      publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -65,7 +68,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: [collection],
-      publicCollections: PublicCollectionsFactory.sample(),
+      publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -97,7 +100,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: [collection],
-      publicCollections: PublicCollectionsFactory.sample(),
+      publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -128,7 +131,7 @@ describe('removing videos from a colleciton', () => {
       updating: false,
       loading: false,
       myCollections: [collection],
-      publicCollections: PublicCollectionsFactory.sample(),
+      publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -168,7 +171,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       myCollections: [collection],
-      publicCollections: PublicCollectionsFactory.sample(),
+      publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -207,7 +210,7 @@ describe('fetch video for collection', () => {
       loading: false,
       publicCollectionDetails: collection,
       myCollections: [],
-      publicCollections: PublicCollectionsFactory.sample(),
+      publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -248,7 +251,7 @@ describe('fetch video for collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      publicCollections: PublicCollectionsFactory.sample({
+      publicCollections: PageableCollectionsFactory.sample({
         items: [collection],
       }),
       myCollections: [],
@@ -273,6 +276,165 @@ describe('fetch video for collection', () => {
     );
     expect(stateAfter.publicCollections.items[0].videoIds).toHaveLength(1);
   });
+
+  test('sets videos in bookmarked collections', () => {
+    const video = VideoFactory.sample({ id: '123' });
+
+    new ApiStub().fetchVideo({ video });
+
+    const collection = VideoCollectionFactory.sample({
+      id: 'target',
+      videoIds: [
+        {
+          id: video.id,
+          links: video.links,
+        },
+      ],
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      publicCollections: undefined,
+      myCollections: [],
+      bookmarkedCollections: PageableCollectionsFactory.sample({
+        items: [collection],
+      }),
+    };
+
+    const action = storeVideoForCollectionAction({
+      videos: [video],
+      collection,
+    });
+
+    const stateAfter = collectionsReducer(stateBefore, action);
+
+    expect(
+      Object.keys(stateAfter.bookmarkedCollections.items[0].videos),
+    ).toHaveLength(1);
+    expect(
+      stateAfter.bookmarkedCollections.items[0].videos[video.id].title,
+    ).toEqual(video.title);
+    expect(
+      stateAfter.bookmarkedCollections.items[0].videos[video.id].id,
+    ).toEqual(video.id);
+    expect(stateAfter.bookmarkedCollections.items[0].videoIds).toHaveLength(1);
+  });
+});
+
+describe('bookmarking a collection', () => {
+  test('adds collection to bookmarks', () => {
+    const toBeBookmarkedCollection = VideoCollectionFactory.sample();
+    const untouchedCollection = VideoCollectionFactory.sample({
+      id: 'another-collection',
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      myCollections: undefined,
+      publicCollections: undefined,
+      bookmarkedCollections: PageableCollectionsFactory.sample({
+        items: [untouchedCollection],
+      }),
+    };
+
+    const action = onCollectionBookmarkedAction(toBeBookmarkedCollection);
+
+    const updatedBookmarks = collectionsReducer(stateBefore, action)
+      .bookmarkedCollections.items;
+
+    expect(updatedBookmarks).toHaveLength(2);
+    expect(updatedBookmarks).toContain(toBeBookmarkedCollection);
+    expect(updatedBookmarks).toContain(untouchedCollection);
+  });
+
+  test('updates public collection', () => {
+    const toBeUpdatedCollection = VideoCollectionFactory.sample({
+      id: '123',
+      title: 'jose carlos',
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      myCollections: undefined,
+      publicCollections: PageableCollectionsFactory.sample({
+        items: [toBeUpdatedCollection],
+      }),
+      bookmarkedCollections: undefined,
+    };
+
+    const updatedCollection = {
+      ...toBeUpdatedCollection,
+      title: 'la familia es muy importante',
+    };
+
+    const action = onCollectionBookmarkedAction(updatedCollection);
+
+    const publicCollections = collectionsReducer(stateBefore, action)
+      .publicCollections.items;
+
+    expect(publicCollections).toHaveLength(1);
+    expect(publicCollections).toContainEqual(updatedCollection);
+  });
+});
+
+describe('unbookmarking a collection', () => {
+  test('removes collection from bookmarks', () => {
+    const toBeUnbookmarkedCollection = VideoCollectionFactory.sample();
+    const untouchedCollection = VideoCollectionFactory.sample({
+      id: 'another-collection',
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      myCollections: undefined,
+      publicCollections: undefined,
+      bookmarkedCollections: PageableCollectionsFactory.sample({
+        items: [toBeUnbookmarkedCollection, untouchedCollection],
+      }),
+    };
+
+    const action = onCollectionUnbookmarkedAction(toBeUnbookmarkedCollection);
+
+    const updatedBookmarks = collectionsReducer(stateBefore, action)
+      .bookmarkedCollections.items;
+
+    expect(updatedBookmarks).toHaveLength(1);
+    expect(updatedBookmarks).toContain(untouchedCollection);
+  });
+
+  test('updates public collection', () => {
+    const toBeUpdatedCollection = VideoCollectionFactory.sample({
+      id: '123',
+      title: 'jose carlos',
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      myCollections: undefined,
+      publicCollections: PageableCollectionsFactory.sample({
+        items: [toBeUpdatedCollection],
+      }),
+      bookmarkedCollections: undefined,
+    };
+
+    const updatedCollection = {
+      ...toBeUpdatedCollection,
+      title: 'la familia es muy importante',
+    };
+
+    const action = onCollectionUnbookmarkedAction(updatedCollection);
+
+    const publicCollections = collectionsReducer(stateBefore, action)
+      .publicCollections.items;
+
+    expect(publicCollections).toHaveLength(1);
+    expect(publicCollections).toContainEqual(updatedCollection);
+  });
 });
 
 test('remove a collection', () => {
@@ -282,7 +444,7 @@ test('remove a collection', () => {
     updating: false,
     loading: false,
     myCollections: [collection],
-    publicCollections: PublicCollectionsFactory.sample(),
+    publicCollections: PageableCollectionsFactory.sample(),
     bookmarkedCollections: undefined,
   };
 
@@ -300,7 +462,7 @@ test('editing a collection', () => {
     updating: false,
     loading: false,
     myCollections: [collection],
-    publicCollections: PublicCollectionsFactory.sample(),
+    publicCollections: PageableCollectionsFactory.sample(),
     bookmarkedCollections: undefined,
   };
 
@@ -314,14 +476,14 @@ test('editing a collection', () => {
   expect(stateAfter.myCollections[0].title).toEqual('changed');
 });
 
-test('append public collections action page', () => {
+test('appending public collections', () => {
   const collection = VideoCollectionFactory.sample();
 
   const stateBefore: CollectionsStateValue = {
     updating: false,
     loading: false,
     myCollections: [collection],
-    publicCollections: PublicCollectionsFactory.sample(),
+    publicCollections: PageableCollectionsFactory.sample(),
     bookmarkedCollections: undefined,
   };
 
@@ -331,7 +493,7 @@ test('append public collections action page', () => {
   });
 
   const action = appendPublicCollectionsAction(
-    PublicCollectionsFactory.sample({
+    PageableCollectionsFactory.sample({
       items: stateBefore.myCollections,
       links: {
         next: nextCollectionLink,
@@ -342,4 +504,36 @@ test('append public collections action page', () => {
   const stateAfter = collectionsReducer(stateBefore, action);
 
   expect(stateAfter.publicCollections.links.next).toEqual(nextCollectionLink);
+});
+
+test('appending bookmarked collections', () => {
+  const collection = VideoCollectionFactory.sample();
+
+  const stateBefore: CollectionsStateValue = {
+    updating: false,
+    loading: false,
+    myCollections: [collection],
+    publicCollections: undefined,
+    bookmarkedCollections: PageableCollectionsFactory.sample(),
+  };
+
+  const nextCollectionLink = new Link({
+    href: 'next',
+    templated: false,
+  });
+
+  const action = appendBookmarkedCollectionsAction(
+    PageableCollectionsFactory.sample({
+      items: stateBefore.myCollections,
+      links: {
+        next: nextCollectionLink,
+      },
+    }),
+  );
+
+  const stateAfter = collectionsReducer(stateBefore, action);
+
+  expect(stateAfter.bookmarkedCollections.links.next).toEqual(
+    nextCollectionLink,
+  );
 });

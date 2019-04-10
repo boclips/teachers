@@ -7,6 +7,7 @@ import {
 } from '../../../../test-support/factories';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionSubtitle } from '../CollectionSubtitle';
+import BookmarkCollectionButton from './BookmarkCollectionButton';
 import { CollectionCard } from './CollectionCard';
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -47,6 +48,13 @@ describe('CollectionCard', () => {
 
   test('renders video previews', () => {
     expect(wrapper.find(By.dataQa('collection-video-preview'))).toHaveLength(2);
+  });
+
+  test('renders bookmark button', () => {
+    expect(wrapper.find(BookmarkCollectionButton)).toHaveProp(
+      'collection',
+      collection,
+    );
   });
 
   test('does not render a video preview counter', () => {

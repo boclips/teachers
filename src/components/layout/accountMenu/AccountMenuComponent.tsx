@@ -1,7 +1,11 @@
 import { Dropdown, Menu } from 'antd';
 import React, { SyntheticEvent } from 'react';
 import AccountMenuIconComponent from './AccountMenuIconComponent';
-import { LogoutLink, VideoCollectionsLink } from './MenuOptions';
+import {
+  BookmarkedCollectionsLink,
+  LogoutLink,
+  VideoCollectionsLink,
+} from './MenuOptions';
 
 interface Props {
   onLogout: (e: SyntheticEvent) => void;
@@ -13,6 +17,9 @@ const menu = (props: Props) => (
       <VideoCollectionsLink />
     </Menu.Item>
     <Menu.Item key="2">
+      <BookmarkedCollectionsLink />
+    </Menu.Item>
+    <Menu.Item key="3">
       <LogoutLink onClick={props.onLogout} />
     </Menu.Item>
   </Menu>

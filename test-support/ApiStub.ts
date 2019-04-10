@@ -75,6 +75,11 @@ export default class ApiStub {
     return this;
   }
 
+  public fetchBookmarkedCollections(collections = collectionsResponse()) {
+    MockFetchVerify.getOnce('/v1/collections?bookmarked=true', collections);
+    return this;
+  }
+
   public fetchCollection(collection = collectionResponse(), once = false) {
     if (once) {
       MockFetchVerify.getOnce(`/v1/collections/${collection.id}`, collection);

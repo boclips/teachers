@@ -124,6 +124,20 @@ export default class MixpanelAnalytics {
     });
   }
 
+  public trackCollectionBookmarked(collection: VideoCollection): void {
+    this.mixpanelInstance.track(EventTypes.COLLECTION_BOOKMARKED, {
+      collection_title: collection.title,
+      collection_id: collection.id,
+    });
+  }
+
+  public trackCollectionUnbookmarked(collection: VideoCollection): void {
+    this.mixpanelInstance.track(EventTypes.COLLECTION_UNBOOKMARKED, {
+      collection_title: collection.title,
+      collection_id: collection.id,
+    });
+  }
+
   public trackVideoRemovedFromCollection(
     video: Video,
     collection: VideoCollection,

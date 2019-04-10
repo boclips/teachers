@@ -19,6 +19,9 @@ export const links = {
     publicCollections: {
       href: '/v1/collections?public=true',
     },
+    bookmarkedCollections: {
+      href: '/v1/collections?bookmarked=true',
+    },
     myCollections: {
       href: '/v1/collections?projection=list&owner=me',
     },

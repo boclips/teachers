@@ -5,12 +5,13 @@ import createReducer, {
 import {
   CollectionsStateValue,
   getIndexOfCollection,
-  Scrollable,
+  Pageable,
 } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
+import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
@@ -18,10 +19,13 @@ import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
+import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
+import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
+import { storeBookmarkedCollectionsAction } from '../actions/storeBookmarkedCollectionsAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storePublicCollectionsAction } from '../actions/storePublicCollectionsAction';
@@ -52,7 +56,7 @@ const onStoreCollectionsAction = (
 
 const onStorePublicCollectionsAction = (
   state: CollectionsStateValue,
-  publicCollections: Scrollable<VideoCollection>,
+  publicCollections: Pageable<VideoCollection>,
 ): CollectionsStateValue => {
   return {
     ...state,
@@ -64,7 +68,7 @@ const onStorePublicCollectionsAction = (
 
 const onAppendPublicCollectionsAction = (
   state: CollectionsStateValue,
-  publicCollections: Scrollable<VideoCollection>,
+  publicCollections: Pageable<VideoCollection>,
 ): CollectionsStateValue => {
   publicCollections = {
     ...state.publicCollections,
@@ -74,6 +78,38 @@ const onAppendPublicCollectionsAction = (
   return {
     ...state,
     publicCollections,
+    loading: false,
+    updating: false,
+  };
+};
+
+const onStoreBookmarkedCollectionsAction = (
+  state: CollectionsStateValue,
+  bookmarkedCollections: Pageable<VideoCollection>,
+): CollectionsStateValue => {
+  return {
+    ...state,
+    bookmarkedCollections,
+    loading: false,
+    updating: false,
+  };
+};
+
+const onAppendBookmarkedCollectionsAction = (
+  state: CollectionsStateValue,
+  bookmarkedCollections: Pageable<VideoCollection>,
+): CollectionsStateValue => {
+  bookmarkedCollections = {
+    ...state.bookmarkedCollections,
+    items: [
+      ...state.bookmarkedCollections.items,
+      ...bookmarkedCollections.items,
+    ],
+    links: bookmarkedCollections.links,
+  };
+  return {
+    ...state,
+    bookmarkedCollections,
     loading: false,
     updating: false,
   };
@@ -201,6 +237,7 @@ const onStoreVideosForCollectionAction = (
 ): CollectionsStateValue => {
   state = reduceStoreVideoForMyCollections(state, request);
   state = reduceStoreVideoForPublicCollections(state, request);
+  state = reduceStoreVideoForBookmarkedCollections(state, request);
   return reduceStoreVideoForCollectionDetails(state, request);
 };
 
@@ -292,6 +329,48 @@ const reduceStoreVideoForPublicCollections = (
   };
 };
 
+const reduceStoreVideoForBookmarkedCollections = (
+  state: CollectionsStateValue,
+  request: { videos: Video[]; collection: VideoCollection },
+): CollectionsStateValue => {
+  if (!state.bookmarkedCollections || !state.bookmarkedCollections.items) {
+    return state;
+  }
+
+  const indexOfCollection = getIndexOfCollection(
+    state.bookmarkedCollections.items,
+    request.collection.id,
+  );
+
+  if (indexOfCollection < 0) {
+    return state;
+  }
+  const bookmarkedCollectionsItems = [...state.bookmarkedCollections.items];
+  const videos = state.bookmarkedCollections.items[indexOfCollection].videos;
+
+  if (videosAlreadyLoaded(request, videos)) {
+    return state;
+  }
+
+  const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
+
+  bookmarkedCollectionsItems[indexOfCollection] = {
+    ...bookmarkedCollectionsItems[indexOfCollection],
+    videos: {
+      ...videos,
+      ...videoMapToUpdate,
+    },
+  };
+
+  return {
+    ...state,
+    bookmarkedCollections: {
+      ...state.bookmarkedCollections,
+      items: bookmarkedCollectionsItems,
+    },
+  };
+};
+
 const reduceStoreVideoForCollectionDetails = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
@@ -335,6 +414,85 @@ const onCollectionRemoved = (
       collection => collection.id !== removedCollection.id,
     ),
   };
+};
+
+const removeUnbookmarkedCollection = (
+  state: CollectionsStateValue,
+  unbookmarkedCollection: VideoCollection,
+): CollectionsStateValue => {
+  return {
+    ...state,
+    bookmarkedCollections: {
+      ...state.bookmarkedCollections,
+      items:
+        state.bookmarkedCollections &&
+        state.bookmarkedCollections.items.filter(
+          collection => collection.id !== unbookmarkedCollection.id,
+        ),
+    },
+  };
+};
+
+const addBookmarkedCollection = (
+  state: CollectionsStateValue,
+  bookmarkedCollection: VideoCollection,
+): CollectionsStateValue => {
+  return {
+    ...state,
+    bookmarkedCollections: state.bookmarkedCollections && {
+      ...state.bookmarkedCollections,
+      items: [
+        ...(state.bookmarkedCollections.items || []), // TODO: use default?
+        bookmarkedCollection,
+      ],
+    },
+  };
+};
+
+const updatePublicCollection = (
+  state: CollectionsStateValue,
+  updatedCollection: VideoCollection,
+): CollectionsStateValue => {
+  if (!state.publicCollections) {
+    return state;
+  }
+
+  const indexOfCollection = getIndexOfCollection(
+    state.publicCollections && state.publicCollections.items,
+    updatedCollection.id,
+  );
+
+  const publicCollections = [...state.publicCollections.items];
+
+  if (indexOfCollection > -1) {
+    publicCollections[indexOfCollection] = {
+      ...updatedCollection,
+      videos: publicCollections[indexOfCollection].videos,
+    };
+  }
+
+  return {
+    ...state,
+    publicCollections: { ...state.publicCollections, items: publicCollections },
+  };
+};
+
+const onCollectionUnbookmarked = (
+  state: CollectionsStateValue,
+  updatedCollection: VideoCollection,
+): CollectionsStateValue => {
+  state = removeUnbookmarkedCollection(state, updatedCollection);
+  state = updatePublicCollection(state, updatedCollection);
+  return state;
+};
+
+const onCollectionBookmarked = (
+  state: CollectionsStateValue,
+  updatedCollection: VideoCollection,
+): CollectionsStateValue => {
+  state = addBookmarkedCollection(state, updatedCollection);
+  state = updatePublicCollection(state, updatedCollection);
+  return state;
 };
 
 const onCollectionEdited = (
@@ -385,4 +543,14 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
     onStoreVideosForCollectionAction,
   ),
   actionHandler(onCollectionEditedAction, onCollectionEdited),
+  actionHandler(
+    storeBookmarkedCollectionsAction,
+    onStoreBookmarkedCollectionsAction,
+  ),
+  actionHandler(
+    appendBookmarkedCollectionsAction,
+    onAppendBookmarkedCollectionsAction,
+  ),
+  actionHandler(onCollectionUnbookmarkedAction, onCollectionUnbookmarked),
+  actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
 );

@@ -1,5 +1,5 @@
 import ApiStub from '../../../test-support/ApiStub';
-import { CollectionListPage } from '../../../test-support/page-objects/CollectionListPage';
+import { MyCollectionListPage } from '../../../test-support/page-objects/MyCollectionListPage';
 
 test('displays collections list', async () => {
   new ApiStub()
@@ -7,7 +7,7 @@ test('displays collections list', async () => {
     .fetchCollections()
     .fetchVideo();
 
-  const collectionPage = await CollectionListPage.load();
+  const collectionPage = await MyCollectionListPage.load();
 
   expect(collectionPage.getCollections()).toHaveLength(1);
   expect(collectionPage.getCollections()[0]).toMatchObject({
@@ -25,7 +25,7 @@ test('shows notification after deleting collections', async () => {
     .fetchVideo()
     .deleteCollection();
 
-  const collectionsPage = await CollectionListPage.load();
+  const collectionsPage = await MyCollectionListPage.load();
 
   collectionsPage.deleteCollection(0);
   await collectionsPage.assertNotification(

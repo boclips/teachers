@@ -1,5 +1,5 @@
 import { Link } from '../../types/Link';
-import { Scrollable } from '../../types/State';
+import { Pageable } from '../../types/State';
 import { VideoId } from '../../types/Video';
 import { VideoCollection } from './../../types/VideoCollection';
 
@@ -9,7 +9,7 @@ export const parseCollectionResponse = (response: any): VideoCollection => {
 
 export const parseScrollableCollectionsListResponse = (
   response: any,
-): Scrollable<VideoCollection> => ({
+): Pageable<VideoCollection> => ({
   items: parseCollectionsListResponse(response),
   links: {
     next:
@@ -63,6 +63,10 @@ const getLinks = (data: any) => {
       : undefined,
     edit: data._links.edit ? new Link(data._links.edit) : undefined,
     remove: data._links.remove ? new Link(data._links.remove) : undefined,
+    bookmark: data._links.bookmark ? new Link(data._links.bookmark) : undefined,
+    unbookmark: data._links.unbookmark
+      ? new Link(data._links.unbookmark)
+      : undefined,
     self: data._links.self ? new Link(data._links.self) : undefined,
   };
 };

@@ -2,7 +2,7 @@ import moment = require('moment');
 import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
-import { Scrollable } from '../src/types/State';
+import { Pageable } from '../src/types/State';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
@@ -90,14 +90,16 @@ export class VideoCollectionLinksFactory {
       removeVideo: arg.removeVideo || undefined,
       edit: arg.edit || undefined,
       remove: arg.remove || undefined,
+      bookmark: arg.bookmark || undefined,
+      unbookmark: arg.unbookmark || undefined,
     });
   }
 }
 
-export class PublicCollectionsFactory {
+export class PageableCollectionsFactory {
   public static sample(
-    arg: Partial<Scrollable<VideoCollection>> = {},
-  ): Scrollable<VideoCollection> {
+    arg: Partial<Pageable<VideoCollection>> = {},
+  ): Pageable<VideoCollection> {
     return Object.freeze({
       items: arg.items || [],
       links: { next: (arg.links && arg.links.next) || undefined },

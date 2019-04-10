@@ -7,13 +7,16 @@ import NotificationFactory from '../../src/components/common/NotificationFactory
 import { By } from '../By';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
+import { AbstractCollectionListPage } from './AbstractCollectionListPage';
 
-export class CollectionListPage {
-  constructor(public wrapper: ReactWrapper) {}
+export class MyCollectionListPage extends AbstractCollectionListPage {
+  constructor(public wrapper: ReactWrapper) {
+    super(wrapper);
+  }
 
   public static async load() {
     jest.spyOn(NotificationFactory, 'success');
-    const page = new CollectionListPage(
+    const page = new MyCollectionListPage(
       mount(
         <App
           history={createMemoryHistory({
@@ -25,15 +28,6 @@ export class CollectionListPage {
 
     await page.hasLoaded();
     return page;
-  }
-
-  public getCollections(): Collection[] {
-    return this.wrapper.find(By.dataQa('collection-card')).map(el => ({
-      title: findOne(el, 'collection-title').text(),
-      numberOfVideos: Number(findOne(el, 'collection-number-of-videos').text()),
-      updatedAt: findOne(el, 'collection-updated-at').text(),
-      createdBy: findOne(el, 'collection-created-by').text(),
-    }));
   }
 
   public deleteCollection(index: number) {
@@ -62,9 +56,4 @@ export class CollectionListPage {
       findOne(this.wrapper, 'collection-list-page');
     });
   }
-}
-
-interface Collection {
-  title: string;
-  numberOfVideos: number;
 }
