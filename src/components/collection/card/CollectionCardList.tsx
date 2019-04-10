@@ -24,11 +24,13 @@ export class CollectionCardList extends React.PureComponent<Props> {
     return (
       <React.Fragment>
         <h1 className="big-title alt">{this.props.title}</h1>
+
         {this.props.description && (
           <p className={'collection-list-description'}>
             {this.props.description}
           </p>
         )}
+
         <Row gutter={20}>
           {this.props.loading
             ? this.renderLoading()
