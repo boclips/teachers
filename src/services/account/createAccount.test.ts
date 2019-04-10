@@ -24,6 +24,7 @@ test('create account', async () => {
       password: 'Champagn3',
       analyticsId: 'mixpanel-123',
       referralCode: 'SCAM-123',
+      hasOptedIntoMarketing: false,
     },
     201,
   );
@@ -36,6 +37,7 @@ test('create account', async () => {
     password: 'Champagn3',
     analyticsId: 'mixpanel-123',
     referralCode: 'SCAM-123',
+    hasOptedIntoMarketing: false,
   });
 
   expect(success).toEqual(true);
