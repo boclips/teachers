@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const tsImportPluginFactory = require('ts-import-plugin');
 const path = require('path');
 
 const srcPath = path.resolve(__dirname, '../src');
@@ -12,11 +13,11 @@ module.exports = {
   output: {
     path: distPath,
     filename: '[name]-[contenthash:20].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   // Allows ts(x) and js files to be imported without extension
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
   },
   module: {
     rules: [
@@ -26,9 +27,17 @@ module.exports = {
         use: {
           loader: 'ts-loader',
           options: {
-            transpileOnly: true
-          }
-        }
+            transpileOnly: true,
+            getCustomTransformers: () => ({
+              before: [
+                tsImportPluginFactory({
+                  libraryName: 'antd',
+                  libraryDirectory: 'lib',
+                }),
+              ],
+            }),
+          },
+        },
       },
       {
         test: /\.less$/,
@@ -36,28 +45,25 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           {
-            loader: "less-loader",
+            loader: 'less-loader',
             options: {
-              javascriptEnabled: true
-            }
-          }
-        ]
+              javascriptEnabled: true,
+            },
+          },
+        ],
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
-        use: [
-          'file-loader',
-          'image-webpack-loader'
-        ],
-      }
-    ]
+        use: ['file-loader', 'image-webpack-loader'],
+      },
+    ],
   },
   plugins: [
-    new MiniCssExtractPlugin({filename: '[name]-[contenthash:20].css'}),
+    new MiniCssExtractPlugin({ filename: '[name]-[contenthash:20].css' }),
     new HtmlWebpackPlugin({
       template: path.resolve(srcPath, 'index.html'),
-      ga: 'replaced-by-profile'
+      ga: 'replaced-by-profile',
     }),
-    new CopyWebpackPlugin([{from: staticPath, to: distPath}]),
-  ]
+    new CopyWebpackPlugin([{ from: staticPath, to: distPath }]),
+  ],
 };
