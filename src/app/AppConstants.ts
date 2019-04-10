@@ -21,15 +21,23 @@ export class AppConstants {
     const stagingHost = '.staging-boclips.com';
     const productionHost = '.boclips.com';
 
-    if (this.window.location.hostname.indexOf(stagingHost) !== -1) {
+    /**
+     * When running locally, we should return the environment that has been
+     * configured in .env.dev rather than the hostname.
+     */
+    const domain = process.env.ENVIRONMENT_DOMAIN
+      ? '.' + process.env.ENVIRONMENT_DOMAIN
+      : this.window.location.hostname;
+
+    if (domain.indexOf(stagingHost) !== -1) {
       return 'STAGING';
-    } else if (this.window.location.hostname.indexOf(productionHost) !== -1) {
+    } else if (domain.indexOf(productionHost) !== -1) {
       return 'PRODUCTION';
-    } else if (this.window.location.hostname.indexOf(testingHost) !== -1) {
+    } else if (domain.indexOf(testingHost) !== -1) {
       return 'TESTING';
-    } else if (this.window.location.hostname.indexOf(localBoclips) !== -1) {
+    } else if (domain.indexOf(localBoclips) !== -1) {
       return 'TESTING';
-    } else if (this.window.location.hostname.indexOf(localHost) !== -1) {
+    } else if (domain.indexOf(localHost) !== -1) {
       return 'TESTING';
     } else {
       throw Error('Environment could not be detected');
