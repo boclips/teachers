@@ -78,9 +78,9 @@
     font-size: 16px;
   }
 }
-  .ant-input-affix-wrapper .ant-input-lg:not(:first-child) {
-    padding-left: 34px;
-  }
+.ant-input-affix-wrapper .ant-input-lg:not(:first-child) {
+  padding-left: 34px;
+}
 
 .ant-input-prefix {
   .anticon {
@@ -89,7 +89,7 @@
   }
 }
 
-input[type="checkbox"].ant-checkbox-input  {
+input[type='checkbox'].ant-checkbox-input {
   height: 24px;
   width: 24px;
 }
@@ -102,6 +102,12 @@ input[type="checkbox"].ant-checkbox-input  {
   padding-left: 38px;
 }
 
+@media (max-width: @screen-xs) {
+  .ant-input-search.ant-input-search-enter-button > .ant-input {
+    padding-left: 30px;
+    padding-right: 8px;
+  }
+}
 .ant-notification {
   .ant-notification-notice-description {
     font-size: 14px;
