@@ -8,7 +8,7 @@
     "test:watch": "jest --watch",
     "dev": "webpack-dev-server --config webpack-config/webpack.dev.js",
     "build": "webpack --config webpack-config/webpack.prod.js",
-    "analyze": "webpack --config webpack-config/webpack.analyze.js",
+    "analyse": "webpack --config webpack-config/webpack.analyse.js",
     "compile": "tsc -p . --noEmit",
     "watch": "npm run compile -- cd--watch",
     "lint": "tslint -c tslint.json -p .",
