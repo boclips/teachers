@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import InfiniteScroll = require('react-infinite-scroll-component');
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardContainer from './CollectionCardContainer';

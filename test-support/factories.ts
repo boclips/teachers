@@ -1,4 +1,4 @@
-import moment = require('moment');
+import * as moment from 'moment';
 import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';

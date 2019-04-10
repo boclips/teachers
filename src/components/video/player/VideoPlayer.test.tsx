@@ -1,7 +1,7 @@
 import { BoclipsPlayer } from 'boclips-react-player';
 import { PlaybackConfig } from 'boclips-react-player/dist/src/PlaybackConfig';
 import { shallow } from 'enzyme';
-import moment = require('moment');
+import * as moment from 'moment';
 import React from 'react';
 import { VideoFactory } from '../../../../test-support/factories';
 import { VideoPlayer } from './VideoPlayer';

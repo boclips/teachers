@@ -8,6 +8,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "plugins": [{ "name": "tslint-language-service" }],
-    "module": "ESNext"
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   }
 }

@@ -1,6 +1,6 @@
 import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
 import { Mixpanel } from 'mixpanel-browser';
-import moment = require('moment');
+import * as moment from 'moment';
 import {
   VideoCollectionFactory,
   VideoFactory,
