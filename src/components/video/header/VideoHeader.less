@@ -22,9 +22,9 @@
       width: calc(100% - @badge-container-width);
     }
     color: @shade-6;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    line-height: 25px;
+    line-height: 24px;
     margin-bottom: 0px;
 
     &.clamp-2-lines {
@@ -58,6 +58,13 @@
       font-weight: bold;
       line-height: 24px;
       margin-bottom: 0px;
+
+      .anticon:hover {
+        color: inherit;
+      }
+      span {
+        vertical-align: 2px;
+      }
     }
     .video-badge {
       &.adfree {
@@ -78,7 +85,7 @@
     font-size: 14px;
     color: @shade-5;
     font-weight: bold;
-    line-height: 24px;
+    line-height: 18px;
     margin-bottom: 8px;
     margin-top: -2px;
   }

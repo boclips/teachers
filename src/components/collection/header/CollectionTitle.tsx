@@ -6,6 +6,7 @@ import './CollectionTitle.less';
 export interface Props {
   title: string;
   isPublic: boolean;
+  isMine: boolean;
 }
 
 export class CollectionTitle extends React.Component<Props> {
@@ -18,12 +19,14 @@ export class CollectionTitle extends React.Component<Props> {
       <section className="collection-title">
         <h1 data-qa="collection-name" className="text--secondary">
           {this.props.title}
-          <img
-            src={this.getLogo()}
-            className="collection-title__logo"
-            data-qa="collection-visibility"
-            data-state={this.props.isPublic + ''}
-          />
+          {this.props.isMine && (
+            <img
+              src={this.getLogo()}
+              className="collection-title__logo"
+              data-qa="collection-visibility"
+              data-state={this.props.isPublic + ''}
+            />
+          )}
         </h1>
       </section>
     );

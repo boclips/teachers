@@ -45,11 +45,13 @@ export default class VideoCard extends React.PureComponent<Props> {
         </section>
 
         <section className="video-details">
-          <div className="subjects-container">
-            {this.props.video.subjects.map(subject => (
-              <SubjectTag subject={subject} key={subject} />
-            ))}
-          </div>
+          {this.props.video.subjects.length !== 0 && (
+            <div className="subjects-container">
+              {this.props.video.subjects.map(subject => (
+                <SubjectTag subject={subject} key={subject} />
+              ))}
+            </div>
+          )}
 
           <Link
             className="no-underline"

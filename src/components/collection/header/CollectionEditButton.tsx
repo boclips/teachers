@@ -4,7 +4,8 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import Bodal from '../../common/Bodal';
 import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
 import CollectionEditForm, { EditableFields } from './CollectionEditForm';
-import './CollectionEditForm.less';
+
+import './CollectionEditButton.less';
 
 interface Props {
   collection: VideoCollection;
@@ -99,6 +100,7 @@ export default class CollectionEditButton extends React.PureComponent<
           cancelButtonProps={{ size: 'large' }}
           closable={false}
           width={655}
+          wrapClassName="generic-modal edit-collection-modal"
         >
           <CollectionEditForm
             title={this.props.collection.title}

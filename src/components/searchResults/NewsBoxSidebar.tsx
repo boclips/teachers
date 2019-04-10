@@ -28,7 +28,7 @@ export class NewsBoxSidebar extends PureComponent<NewBoxSidePanelProps> {
               </div>
             </Col>
           </Row>
-          <Row type="flex" justify="center">
+          <Row type="flex" className="news-box__cta" justify="center">
             <Button onClick={this.props.onButtonClick} size="large">
               View News
             </Button>

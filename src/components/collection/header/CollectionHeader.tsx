@@ -20,6 +20,7 @@ export default class CollectionHeader extends React.PureComponent<Props> {
             <CollectionTitle
               title={this.props.collection.title}
               isPublic={this.props.collection.isPublic}
+              isMine={this.props.collection.isMine}
             />
           </Col>
           <Col>

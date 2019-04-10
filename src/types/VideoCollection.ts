@@ -19,6 +19,7 @@ export interface VideoCollection {
   videoIds: VideoId[];
   links: VideoCollectionLinks;
   isPublic: boolean;
+  isMine: boolean;
   createdBy: string;
 }
 

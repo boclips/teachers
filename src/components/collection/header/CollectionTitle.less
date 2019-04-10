@@ -1,19 +1,20 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
-.collection-title__ {
+.collection-title {
   display: flex;
   justify-content: flex-start;
   align-items: baseline;
 
   h1 {
     margin-bottom: 0.2em;
+    font-size: 24px;
   }
 
-  &logo {
+  &__logo {
     margin-left: 10px;
   }
 
-  &edit {
+  &__edit {
     color: @shade-4;
     font-size: 24px;
     padding-left: 12px;
@@ -21,7 +22,7 @@
     transition: color 300ms ease-in-out;
   }
 
-  &input-container {
+  &__input-container {
     display: flex;
     justify-content: flex-start;
 
@@ -40,7 +41,7 @@
     }
   }
 
-  &input {
+  &__input {
     font-weight: bold;
   }
 }

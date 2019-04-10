@@ -1,6 +1,7 @@
 import { Checkbox, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
+import './CollectionEditForm.less';
 
 export interface EditableFields {
   title: string;

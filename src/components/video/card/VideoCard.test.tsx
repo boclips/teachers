@@ -17,6 +17,20 @@ describe('when outside video collection', () => {
 
     expect(wrapper.find(ManageVideoCollectionsButton)).toExist();
   });
+
+  test('it does not render subject tags container if there are none on the video', () => {
+    const video = VideoFactory.sample({ subjects: [] });
+    const wrapper = shallow(<VideoCard video={video} />);
+
+    expect(wrapper.find('.subjects-container')).toHaveLength(0);
+  });
+
+  test('renders subject tags container if there are none on the video', () => {
+    const video = VideoFactory.sample();
+    const wrapper = shallow(<VideoCard video={video} />);
+
+    expect(wrapper.find('.subjects-container')).toHaveLength(1);
+  });
 });
 
 describe('when within video collection', () => {

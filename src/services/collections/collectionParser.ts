@@ -51,6 +51,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     videoIds,
     links: getLinks(data),
     isPublic: data.public,
+    isMine: data.mine,
     createdBy: data.createdBy,
   };
 };

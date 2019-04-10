@@ -22,7 +22,7 @@ export const VideoHeader = React.memo((props: Props) => (
         <DurationFormatter duration={props.video.duration} />
       </p>
     </section>
-    <p className={'subtitle'}>
+    <p className="subtitle">
       Released on{' '}
       <span data-qa="video-released-on">
         <DateFormatter date={props.video.releasedOn} />
