@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var webpack = require('webpack');
 
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -52,6 +53,11 @@ module.exports = merge(common, {
       ga: googleAnalyticsId,
     }),
     new CleanWebpackPlugin([distPath], { root: path.resolve(__dirname, '..') }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
   ],
+
   devtool: 'source-map',
 });
