@@ -260,7 +260,7 @@ class RegistrationForm extends React.Component<
               })(
                 <Checkbox
                   className="create-account-form__checkbox"
-                  data-qa="privacy_policy"
+                  data-qa="privacy-policy"
                 >
                   I have read and agree with the Boclips{' '}
                   <BlankTargetLink
