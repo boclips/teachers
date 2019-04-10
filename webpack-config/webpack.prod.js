@@ -4,7 +4,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-var webpack = require('webpack');
+const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -56,6 +57,11 @@ module.exports = merge(common, {
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
+    }),
+    new CompressionPlugin({
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.svg$|\.png$/,
     }),
   ],
 
