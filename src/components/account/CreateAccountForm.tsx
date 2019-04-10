@@ -25,6 +25,7 @@ interface InternalState {
   showConfirmation: boolean;
   confirmDirty: boolean;
   creating: boolean;
+  renderRecaptcha: boolean;
 }
 
 class RegistrationForm extends React.Component<
@@ -35,6 +36,7 @@ class RegistrationForm extends React.Component<
     showConfirmation: false,
     confirmDirty: false,
     creating: false,
+    renderRecaptcha: true,
   };
 
   private handleSubmit = e => {
@@ -60,7 +62,11 @@ class RegistrationForm extends React.Component<
                   description: 'Please try again or contact our support team.',
                 });
               }
-              this.setState({ ...this.state, creating: false });
+              this.setState({
+                ...this.state,
+                creating: false,
+                renderRecaptcha: true,
+              });
             });
         }
       },
@@ -276,13 +282,15 @@ class RegistrationForm extends React.Component<
                     initialValue: AnalyticsFactory.getInstance().getId(),
                   })(<Input type="text" />)}
                 </Form.Item>
-                <Recaptcha verifyCallback={this.updateRecaptchaToken} />
                 <Form.Item>
                   {getFieldDecorator('recaptchaToken', {
                     rules: [],
                     initialValue: '',
                   })(<Input type="text" />)}
                 </Form.Item>
+                {this.state.renderRecaptcha && (
+                  <Recaptcha verifyCallback={this.updateRecaptchaToken} />
+                )}
               </div>
 
               <Button
@@ -308,6 +316,7 @@ class RegistrationForm extends React.Component<
 
   private updateRecaptchaToken = recaptchaToken => {
     this.props.form.setFieldsValue({ recaptchaToken });
+    this.setState({ renderRecaptcha: false });
   };
 }
 
