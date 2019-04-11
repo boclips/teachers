@@ -14,7 +14,8 @@ import {
 import PageLayout from '../../components/layout/PageLayout';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { CollectionVideoCardList } from '../../components/video/list/VideoCardList';
-import { CollectionState, getIndexOfCollection } from '../../types/State';
+import { Links } from '../../types/Links';
+import State, { getIndexOfCollection } from '../../types/State';
 import { VideoId } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import './CollectionView.less';
@@ -26,6 +27,7 @@ interface OwnProps {
 interface StateProps {
   collection?: VideoCollection;
   loading: boolean;
+  links: Links;
 }
 
 interface DispatchProps {
@@ -132,7 +134,14 @@ export class CollectionView extends PureComponent<
         (this.props.collection &&
           this.props.collection.id !== this.props.collectionId))
     ) {
-      this.props.fetchCollection();
+      /* TODO: camouflaging race condition problem:
+        the race condition occurs, when the initial v1 response does
+        not contain the collection link yet. We then try to obtain the collection, but the collection rel is not set.
+        fetchCollection will return a rejected promise.
+      */
+      if (this.props.links.collection) {
+        this.props.fetchCollection();
+      }
     }
   }
 
@@ -155,23 +164,26 @@ export class CollectionView extends PureComponent<
   }
 }
 
-function mapStateToProps(state: CollectionState, props: OwnProps): StateProps {
+function mapStateToProps(state: State, props: OwnProps): StateProps {
   const indexOfCollection = getIndexOfCollection(
     state.collections.myCollections,
     props.collectionId,
   );
   if (state.collections.loading) {
-    return { collection: undefined, loading: true };
+    return { collection: undefined, loading: true, links: undefined };
   }
   if (indexOfCollection >= 0) {
     return {
       collection: state.collections.myCollections[indexOfCollection],
       loading: false,
+      links: state.links,
     };
   }
+
   return {
     collection: state.collections.publicCollectionDetails,
     loading: false,
+    links: state.links,
   };
 }
 

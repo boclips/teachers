@@ -2,6 +2,7 @@ import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import BookmarkCollectionButton from '../card/BookmarkCollectionButton';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 import './CollectionHeader.less';
@@ -25,6 +26,7 @@ export default class CollectionHeader extends React.PureComponent<Props> {
           </Col>
           <Col>
             <CollectionEditButtonContainer collection={this.props.collection} />
+            <BookmarkCollectionButton collection={this.props.collection} />
           </Col>
         </Row>
         <CollectionSubtitle collection={this.props.collection} />
