@@ -7,11 +7,6 @@
 
 .ant-card.video-card {
   position: relative;
-  animation: fade-in 0.4s 0s both;
-  &.skeleton {
-    animation: slide-in 0.5s 0s both;
-    .animation-delay(10);
-  }
 
   &:nth-of-type(1) {
     margin-top: 20px;
@@ -68,15 +63,8 @@
   }
 
   .plyr__video-wrapper {
-    max-height: @video-height;
-
     .plyr__poster {
       background-size: cover;
-      max-height: @video-height;
-    }
-
-    video,
-    iframe {
       max-height: @video-height;
     }
   }
