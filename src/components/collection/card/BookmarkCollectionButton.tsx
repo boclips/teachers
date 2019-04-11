@@ -7,6 +7,7 @@ import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { bookmarkCollectionAction } from '../redux/actions/bookmarkCollectionAction';
 import { unbookmarkCollectionAction } from '../redux/actions/unbookmarkCollectionAction';
+import './BookmarkCollectionButton.less';
 import './RemoveCollectionButton.less';
 
 interface OwnProps {
@@ -23,11 +24,11 @@ export class BookmarkCollectionButtonInner extends PureComponent<
 > {
   public render() {
     return (
-      <section>
+      <section className={'bookmark-button'}>
         {this.props.collection.links.bookmark ? (
           <img
             data-qa="bookmark-collection"
-            className="top-right-icon"
+            className="top-right-icon bookmark-icon"
             onClick={this.bookmarkCollection}
             src={bookmarkFilled}
           />
@@ -36,7 +37,7 @@ export class BookmarkCollectionButtonInner extends PureComponent<
         {this.props.collection.links.unbookmark ? (
           <img
             data-qa="unbookmark-collection"
-            className="top-right-icon"
+            className="top-right-icon bookmark-icon"
             onClick={this.unbookmarkCollection}
             src={bookmarkEmpty}
           />
