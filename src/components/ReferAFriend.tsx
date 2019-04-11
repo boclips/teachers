@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React from 'react';
+import AnalyticsFactory from '../services/analytics/AnalyticsFactory';
 import Bodal from './common/Bodal';
-import AnalyticsFactory from "../services/analytics/AnalyticsFactory";
 
 interface Props {
   text: string;
@@ -53,11 +53,11 @@ export default class ReferAFriend extends React.Component<Props, State> {
 
   private openModal = () => {
     this.setState({ visible: true });
-    AnalyticsFactory.getInstance().trackReferAFriendModalOpened()
+    AnalyticsFactory.getInstance().trackReferAFriendModalOpened();
   };
 
   private closeModal = () => {
     this.setState({ visible: false });
-    AnalyticsFactory.getInstance().trackReferAFriendModalClosed()
+    AnalyticsFactory.getInstance().trackReferAFriendModalClosed();
   };
 }

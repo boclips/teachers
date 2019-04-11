@@ -8,8 +8,8 @@ import PublicCollectionsGrid from '../../components/collection/public/PublicColl
 import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import './HomeView.less';
-import AnalyticsFactory from "../../services/analytics/AnalyticsFactory";
 
 const { Content } = Layout;
 export default class HomeView extends PureComponent {
@@ -71,6 +71,6 @@ export default class HomeView extends PureComponent {
   }
 
   private track(_: SyntheticEvent) {
-    AnalyticsFactory.getInstance().trackHomepageExploreCollections()
+    AnalyticsFactory.getInstance().trackHomepageExploreCollections();
   }
 }

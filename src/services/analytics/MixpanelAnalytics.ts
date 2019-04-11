@@ -188,14 +188,14 @@ export default class MixpanelAnalytics {
   }
 
   public trackReferAFriendModalOpened() {
-    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_OPENED)
+    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_OPENED);
   }
 
   public trackReferAFriendModalClosed() {
-    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_CLOSED)
+    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_CLOSED);
   }
 
   public trackHomepageExploreCollections() {
-    this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS)
+    this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS);
   }
 }
