@@ -177,4 +177,11 @@ export default class MixpanelAnalytics {
       formData,
     );
   }
+
+  public trackAccountAlreadyExists(formData: any) {
+    this.mixpanelInstance.track(
+      EventTypes.REGISTRATION_ACCOUNT_EXISTS,
+      formData,
+    );
+  }
 }

@@ -60,12 +60,18 @@ class RegistrationForm extends React.Component<
                   description:
                     'If you forgot your password, try to reset it instead.',
                 });
+
+                AnalyticsFactory.getInstance().trackAccountAlreadyExists({
+                  ...values,
+                  password: 'redacted',
+                });
               } else {
                 NotificationFactory.error({
                   message: 'Ooops! Something went wrong...',
                   description: 'Please try again or contact our support team.',
                 });
-                AnalyticsFactory.getInstance().trackFailedAccountCreation({
+
+                AnalyticsFactory.getInstance().trackAccountAlreadyExists({
                   ...values,
                   password: 'redacted',
                 });

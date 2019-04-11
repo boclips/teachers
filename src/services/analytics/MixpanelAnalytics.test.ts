@@ -192,4 +192,14 @@ describe('MixpanelAnalytics', () => {
       data,
     );
   });
+
+  it('track when account already exists', () => {
+    const data = { some: 'data' };
+    mixpanelAnalytics.trackAccountAlreadyExists(data);
+
+    expect(mock.track).toHaveBeenCalledWith(
+      'REGISTRATION_ACCOUNT_EXISTS',
+      data,
+    );
+  });
 });
