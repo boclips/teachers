@@ -170,4 +170,11 @@ export default class MixpanelAnalytics {
       ...toMixpanelSegment(watchedSegment),
     });
   }
+
+  public trackFailedAccountCreation(formData: any) {
+    this.mixpanelInstance.track(
+      EventTypes.REGISTRATION_ATTEMPT_FAILED,
+      formData,
+    );
+  }
 }

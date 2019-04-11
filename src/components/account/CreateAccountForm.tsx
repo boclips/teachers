@@ -44,6 +44,7 @@ class RegistrationForm extends React.Component<
 
   private handleSubmit = e => {
     e.preventDefault();
+
     this.props.form.validateFieldsAndScroll(
       (err, values: CreateAccountRequest) => {
         if (!err) {
@@ -63,6 +64,10 @@ class RegistrationForm extends React.Component<
                 NotificationFactory.error({
                   message: 'Ooops! Something went wrong...',
                   description: 'Please try again or contact our support team.',
+                });
+                AnalyticsFactory.getInstance().trackFailedAccountCreation({
+                  ...values,
+                  password: 'redacted',
                 });
               }
               this.setState({

@@ -182,4 +182,14 @@ describe('MixpanelAnalytics', () => {
       video_type: 'news',
     });
   });
+
+  it('track failed account creation', () => {
+    const data = { some: 'data' };
+    mixpanelAnalytics.trackFailedAccountCreation(data);
+
+    expect(mock.track).toHaveBeenCalledWith(
+      'REGISTRATION_ATTEMPT_FAILED',
+      data,
+    );
+  });
 });
