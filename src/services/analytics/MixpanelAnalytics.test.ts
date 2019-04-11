@@ -202,4 +202,16 @@ describe('MixpanelAnalytics', () => {
       data,
     );
   });
+
+  it('track when refer a friend modal opened', () => {
+    mixpanelAnalytics.trackReferAFriendModalOpened();
+
+    expect(mock.track).toHaveBeenCalledWith('REFER_A_FRIEND_MODAL_OPENED');
+  });
+
+  it('track when refer a friend modal closed', () => {
+    mixpanelAnalytics.trackReferAFriendModalClosed();
+
+    expect(mock.track).toHaveBeenCalledWith('REFER_A_FRIEND_MODAL_CLOSED');
+  });
 });

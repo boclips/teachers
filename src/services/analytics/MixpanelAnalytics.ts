@@ -184,4 +184,12 @@ export default class MixpanelAnalytics {
       formData,
     );
   }
+
+  public trackReferAFriendModalOpened() {
+    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_OPENED)
+  }
+
+  public trackReferAFriendModalClosed() {
+    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_CLOSED)
+  }
 }
