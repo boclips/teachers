@@ -1,5 +1,6 @@
 import { Icon } from 'antd';
 import { uuid } from 'boclips-react-player/dist/src/uuid';
+import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { VideoId } from '../../../types/Video';
@@ -23,7 +24,10 @@ export class CollectionCard extends React.PureComponent<Props> {
     return (
       <section
         key={`card-${this.props.collection.id}`}
-        className={'collection-card' + (this.props.tiny ? ' tiny' : '')}
+        className={classnames('collection-card', {
+          tiny: this.props.tiny,
+          clickable: !!this.props.onClick,
+        })}
         data-qa="collection-card"
         data-state={this.props.collection.title}
         onClick={this.props.onClick}
@@ -42,17 +46,6 @@ export class CollectionCard extends React.PureComponent<Props> {
         <section className="collection-video-previews">
           {this.renderVideoPreviews()}
         </section>
-        {!this.props.tiny && (
-          <h3 className="view-collection">
-            <Link
-              data-state={this.props.collection.title}
-              data-qa="view-collection"
-              to={'/collections/' + this.props.collection.id}
-            >
-              View collection
-            </Link>
-          </h3>
-        )}
       </section>
     );
   }
@@ -134,7 +127,7 @@ export class CollectionCard extends React.PureComponent<Props> {
       <section key={uuid()} className="video-container">
         <section className="video-container-inner">
           <section className="video-counter">
-            <span>
+            <span className="count">
               +
               <span data-qa="collection-video-preview-counter">
                 {totalNumberOfVideos - (this.props.numberOfPreviews - 1)}

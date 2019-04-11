@@ -68,7 +68,7 @@ export class SearchPage {
 
   public clickOnFirstTitle() {
     this.wrapper
-      .find(By.dataQa('link-to-details', 'a'))
+      .find(By.dataQa('video-title'))
       .first()
       .simulate('click', { button: 0 });
   }

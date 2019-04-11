@@ -12,7 +12,7 @@ interface Props {
 }
 
 const menu = (props: Props) => (
-  <Menu>
+  <Menu className="account-menu">
     <Menu.Item key="1">
       <VideoCollectionsLink />
     </Menu.Item>

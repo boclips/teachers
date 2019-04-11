@@ -1,9 +1,7 @@
 import { Drawer, Menu } from 'antd';
 import React, { SyntheticEvent } from 'react';
-import collectionsIcon from '../../../../resources/images/collections-grey.svg';
-import logooutIcon from '../../../../resources/images/logout.svg';
 import AccountMenuIconComponent from './AccountMenuIconComponent';
-import './AccountMenuMobile.less';
+import './AccountMenuMobileComponent.less';
 import {
   BookmarkedCollectionsLink,
   LogoutLink,
@@ -45,7 +43,7 @@ export default class AccountMenuMobile extends React.PureComponent<
       <div className="display-mobile">
         <AccountMenuIconComponent onClick={this.showDrawer} />
         <Drawer
-          className="account-menu-mobile__drawer"
+          className="account-menu account-menu-mobile__drawer"
           visible={this.state.visible}
           placement="bottom"
           title="My account"
@@ -54,39 +52,15 @@ export default class AccountMenuMobile extends React.PureComponent<
         >
           <Menu selectable={false}>
             <Menu.Item key="1" className="account-menu-mobile__menu-item">
-              <VideoCollectionsLink
-                logo={
-                  <img
-                    src={collectionsIcon}
-                    className="account-menu-mobile__image"
-                  />
-                }
-                onClick={this.onClose}
-              />
+              <VideoCollectionsLink onClick={this.onClose} />
             </Menu.Item>
             <Menu.Divider key="lovely-divider-1" />
             <Menu.Item key="2" className="account-menu-mobile__menu-item">
-              <BookmarkedCollectionsLink
-                logo={
-                  <img
-                    src={collectionsIcon}
-                    className="account-menu-mobile__image"
-                  />
-                }
-                onClick={this.onClose}
-              />
+              <BookmarkedCollectionsLink onClick={this.onClose} />
             </Menu.Item>
             <Menu.Divider key="lovely-divider-2" />
             <Menu.Item key="3" className="account-menu-mobile__menu-item">
-              <LogoutLink
-                logo={
-                  <img
-                    src={logooutIcon}
-                    className="account-menu-mobile__image"
-                  />
-                }
-                onClick={this.props.onLogout}
-              />
+              <LogoutLink onClick={this.props.onLogout} />
             </Menu.Item>
           </Menu>
         </Drawer>

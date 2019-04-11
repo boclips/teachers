@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BookmarkedIcon from '../../../../resources/images/bookmarked-collections.svg?react';
+import CollectionsIcon from '../../../../resources/images/collections-grey.svg?react';
+import LogoutIcon from '../../../../resources/images/logout.svg?react';
 
-interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  logo?: React.ReactNode;
-}
+type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 class BookmarkedCollectionsLink extends React.PureComponent<Props> {
   public render = () => (
@@ -12,8 +13,8 @@ class BookmarkedCollectionsLink extends React.PureComponent<Props> {
       data-qa="bookmarked-collections"
       onClick={this.props.onClick}
     >
-      {this.props.logo}
-      My bookmarks
+      <BookmarkedIcon />
+      <span>My bookmarks</span>
     </Link>
   );
 }
@@ -25,8 +26,8 @@ class VideoCollectionsLink extends React.PureComponent<Props> {
       data-qa="video-collection"
       onClick={this.props.onClick}
     >
-      {this.props.logo}
-      My videos
+      <CollectionsIcon />
+      <span>My videos</span>
     </Link>
   );
 }
@@ -34,8 +35,8 @@ class VideoCollectionsLink extends React.PureComponent<Props> {
 class LogoutLink extends React.PureComponent<Props> {
   public render = () => (
     <a data-qa="logout-button" href="#" onClick={this.props.onClick}>
-      {this.props.logo}
-      Log out
+      <LogoutIcon />
+      <span>Log out</span>
     </a>
   );
 }

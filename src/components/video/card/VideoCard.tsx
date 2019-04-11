@@ -1,6 +1,6 @@
 import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { VideoHeader } from '../header/VideoHeader';
@@ -11,16 +11,16 @@ import './VideoCard.less';
 import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
 import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
 
-interface Props {
+export interface Props extends RouteComponentProps {
   video: Video | null;
   videoIndex?: number;
   currentCollection?: VideoCollection;
 }
 
-export default class VideoCard extends React.PureComponent<Props> {
+export class VideoCardForRouter extends React.PureComponent<Props> {
   public render() {
     if (!this.props.video) {
-      return <VideoCard.Skeleton />;
+      return <VideoCardForRouter.Skeleton />;
     }
 
     return (
@@ -33,7 +33,7 @@ export default class VideoCard extends React.PureComponent<Props> {
   public renderContent() {
     return (
       <section className="video-content">
-        <VideoHeader video={this.props.video} />
+        <VideoHeader video={this.props.video} onClick={this.navigateToVideo} />
 
         <section className={'video-preview'}>
           <div aria-label={'video player'} tabIndex={0}>
@@ -53,18 +53,13 @@ export default class VideoCard extends React.PureComponent<Props> {
             </div>
           )}
 
-          <Link
-            className="no-underline"
-            to={`/videos/${this.props.video.id}`}
-            data-qa="link-to-details"
+          <p
+            data-qa="video-description"
+            className="description clamp-3-lines"
+            onClick={this.navigateToVideo}
           >
-            <p
-              data-qa="video-description"
-              className="description clamp-3-lines"
-            >
-              {this.props.video.description}
-            </p>
-          </Link>
+            {this.props.video.description}
+          </p>
 
           <Row className="buttons-row">
             <CopyLinkButton video={this.props.video} />
@@ -98,4 +93,12 @@ export default class VideoCard extends React.PureComponent<Props> {
       />
     </Card>
   );
+
+  private navigateToVideo = () => {
+    this.props.history.push(`/videos/${this.props.video.id}`);
+  };
 }
+
+const VideoCard = withRouter(VideoCardForRouter);
+
+export default VideoCard;

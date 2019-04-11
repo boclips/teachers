@@ -57,6 +57,22 @@ describe('CollectionCard', () => {
     );
   });
 
+  test('does not have class clickable without an onClick', () => {
+    expect(wrapper.find('.clickable')).toHaveLength(0);
+  });
+
+  test('has class clickable when an onclick function is provided', () => {
+    const noop = () => {};
+    wrapper = shallow(
+      <CollectionCard
+        collection={collection}
+        numberOfPreviews={NUMBER_OF_PREVIEWS}
+        onClick={noop}
+      />,
+    );
+    expect(wrapper.find('.clickable')).toHaveLength(1);
+  });
+
   test('does not render a video preview counter', () => {
     expect(
       wrapper.find(By.dataQa('collection-video-preview-counter')),

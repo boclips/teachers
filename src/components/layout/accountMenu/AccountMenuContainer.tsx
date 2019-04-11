@@ -5,10 +5,12 @@ import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import AccountMenuComponent from './AccountMenuComponent';
 import AccountMenuMobile from './AccountMenuMobileComponent';
 
+import './AccountMenuContainer.less';
+
 export class AccountMenuContainer extends PureComponent {
   public render() {
     return (
-      <div className={'logout-container'}>
+      <div className="logout-container">
         <AccountMenuComponent onLogout={this.confirmLogout} />
         <AccountMenuMobile onLogout={this.confirmLogout} />
       </div>

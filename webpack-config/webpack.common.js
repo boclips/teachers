@@ -53,7 +53,19 @@ module.exports = {
         ],
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /\.svg$/i,
+        oneOf: [
+          {
+            resourceQuery: /react/,
+            use: ['svg-react-loader']
+          },
+          {
+            use: ['file-loader', 'image-webpack-loader'],
+          }
+        ]
+      },
+      {
+        test: /\.(gif|png|jpe?g)$/i,
         use: ['file-loader', 'image-webpack-loader'],
       },
     ],
