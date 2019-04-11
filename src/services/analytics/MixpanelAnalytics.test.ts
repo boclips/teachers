@@ -214,4 +214,10 @@ describe('MixpanelAnalytics', () => {
 
     expect(mock.track).toHaveBeenCalledWith('REFER_A_FRIEND_MODAL_CLOSED');
   });
+
+  it('track user explores more collections on homepage', () => {
+    mixpanelAnalytics.trackHomepageExploreCollections();
+
+    expect(mock.track).toHaveBeenCalledWith('HOMEPAGE_EXPLORE_COLLECTIONS');
+  });
 });

@@ -192,4 +192,8 @@ export default class MixpanelAnalytics {
   public trackReferAFriendModalClosed() {
     this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_CLOSED)
   }
+
+  public trackHomepageExploreCollections() {
+    this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS)
+  }
 }

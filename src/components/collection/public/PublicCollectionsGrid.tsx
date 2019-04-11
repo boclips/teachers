@@ -73,6 +73,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fetchNextPage: () => dispatch(fetchNextPublicCollectionsAction()),
 });
 
+// TODO: hasMorePublicCollections condition needs work
 function mapStateToProps({ collections, links }: State): StateProps {
   return {
     loading: collections.loading,
