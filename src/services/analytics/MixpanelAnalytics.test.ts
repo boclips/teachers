@@ -39,6 +39,8 @@ describe('MixpanelAnalytics', () => {
     const collection = VideoCollectionFactory.sample({
       title: 'style',
       id: 'doggy',
+      isPublic: true,
+      isMine: true,
     });
 
     mixpanelAnalytics.trackCollectionVisited(collection);
@@ -46,6 +48,8 @@ describe('MixpanelAnalytics', () => {
     expect(mock.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
       video_collection_id: 'doggy',
       video_collection_title: 'style',
+      video_collection_is_owner: true,
+      video_collection_is_public: true,
     });
   });
 

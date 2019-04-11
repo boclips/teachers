@@ -79,6 +79,8 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, {
       video_collection_title: collection.title,
       video_collection_id: collection.id,
+      video_collection_is_owner: collection.isMine,
+      video_collection_is_public: collection.isPublic,
     });
   }
 
