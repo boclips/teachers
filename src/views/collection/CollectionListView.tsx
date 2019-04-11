@@ -62,11 +62,8 @@ export class CollectionListView extends PureComponent<
       <Row className="collections-view-empty" data-qa="collections-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
           <img src={emptyCollection} />
-          <h1 data-qa="no-collections">You have no collections</h1>
-          <p>
-            You can create a collection by clicking the Save button on your
-            favorite videos and choosing the new collection option
-          </p>
+          <h1 data-qa="no-collections">You have no collections, yet.</h1>
+          <p>Use the Save button to create your very own collection.</p>
         </Col>
       </Row>
     );

@@ -43,6 +43,6 @@ test('displays an empty state when no collections', () => {
   });
 
   expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(
-    'You have no collections',
+    'You have no collections, yet.',
   );
 });
