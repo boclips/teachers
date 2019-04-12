@@ -13,7 +13,9 @@ class BookmarkedCollectionsLink extends React.PureComponent<Props> {
       data-qa="bookmarked-collections"
       onClick={this.props.onClick}
     >
-      <img src={bookmarkedIcon} />
+      <span className="icon-container">
+        <img src={bookmarkedIcon} />
+      </span>
       <span>My bookmarks</span>
     </Link>
   );
@@ -26,7 +28,9 @@ class VideoCollectionsLink extends React.PureComponent<Props> {
       data-qa="video-collection"
       onClick={this.props.onClick}
     >
-      <img src={collectionsIcon} />
+      <span className="icon-container">
+        <img src={collectionsIcon} />
+      </span>
       <span>My videos</span>
     </Link>
   );
@@ -35,7 +39,9 @@ class VideoCollectionsLink extends React.PureComponent<Props> {
 class LogoutLink extends React.PureComponent<Props> {
   public render = () => (
     <a data-qa="logout-button" href="#" onClick={this.props.onClick}>
-      <img src={logoutIcon} />
+      <span className="icon-container">
+        <img src={logoutIcon} />
+      </span>
       <span>Log out</span>
     </a>
   );
