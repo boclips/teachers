@@ -2,9 +2,7 @@ import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import registrationLogo from '../../../resources/images/registration-logo.svg';
-import wavingHand from '../../../resources/images/waving-hand.png';
 import {
   createAccount,
   CreateAccountRequest,
@@ -13,9 +11,12 @@ import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
 import BlankTargetLink from '../common/BlankTargetLink';
-import NotificationFactory from '../common/NotificationFactory';
+import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
+import { handleError, handleUserExists } from './createAccountHelpers';
 import { extractReferralCode } from './extractReferralCode';
+import { LoginLink } from './LoginLink';
+import { PrivacyPolicyLink } from './PrivacyPolicyLink';
 import { Recaptcha } from './recaptcha/Recaptcha';
 import TwoColumnInlineForm from './TwoColumnInlineFormItem';
 
@@ -42,113 +43,21 @@ class RegistrationForm extends React.Component<
     renderRecaptcha: true,
   };
 
-  private handleSubmit = e => {
-    e.preventDefault();
-
-    this.props.form.validateFieldsAndScroll(
-      (err, values: CreateAccountRequest) => {
-        if (!err) {
-          this.setState({ ...this.state, creating: true });
-          createAccount(this.props.links, values)
-            .then(() => {
-              this.setState({ ...this.state, showConfirmation: true });
-            })
-            .catch(error => {
-              if (error.response.status === 409) {
-                NotificationFactory.error({
-                  message: 'This email is already registered',
-                  description:
-                    'If you forgot your password, try to reset it instead.',
-                });
-
-                AnalyticsFactory.getInstance().trackAccountAlreadyExists({
-                  ...values,
-                  password: 'redacted',
-                });
-              } else {
-                NotificationFactory.error({
-                  message: 'Ooops! Something went wrong...',
-                  description: 'Please try again or contact our support team.',
-                });
-
-                AnalyticsFactory.getInstance().trackAccountAlreadyExists({
-                  ...values,
-                  password: 'redacted',
-                });
-              }
-              this.setState({
-                ...this.state,
-                creating: false,
-                renderRecaptcha: true,
-              });
-            });
-        }
-      },
-    );
-  };
-
-  private handleConfirmBlur = e => {
-    const value = e.target.value;
-    this.setState({
-      ...this.state,
-      confirmDirty: this.state.confirmDirty || !!value,
-    });
-  };
-
-  private compareToFirstPassword = (_, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('The passwords are not the same');
-    } else {
-      callback();
-    }
-  };
-
-  private validateToNextPassword = (_, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
-    }
-    callback();
-  };
-
   public componentDidMount() {
     AnalyticsFactory.getInstance().trackAccountRegistration();
   }
 
   public render() {
-    return this.state.showConfirmation
-      ? this.renderConfirmation()
-      : this.renderForm();
-  }
-
-  public renderConfirmation() {
-    return (
-      <section className="illustrated-page">
-        <Row>
-          <Col sm={{ span: 24 }} md={{ span: 8 }}>
-            <section className="illustration">
-              <img src={wavingHand} />
-            </section>
-          </Col>
-          <Col sm={{ span: 24 }} md={{ span: 16 }}>
-            <section className="message">
-              <h1 className="big-title">Welcome to Boclips for teachers!</h1>
-              <p>
-                Thanks for registering. Please login to activate your account.
-              </p>
-              <p className="action">
-                <Link to={'/'}>Click here to log in</Link>
-              </p>
-            </section>
-          </Col>
-        </Row>
-      </section>
+    return this.state.showConfirmation ? (
+      <CreateAccountConfirmation />
+    ) : (
+      this.renderForm()
     );
   }
 
   public renderForm() {
     const { getFieldDecorator } = this.props.form;
+
     return (
       <section className="create-account-form__container">
         <Row>
@@ -359,9 +268,7 @@ class RegistrationForm extends React.Component<
                 Register
               </Button>
             </Form>
-            <p className="create-account-form__existing">
-              Already have an account? <Link to={'/'}>Login</Link>
-            </p>
+            <LoginLink />
           </Col>
         </Row>
       </section>
@@ -371,6 +278,65 @@ class RegistrationForm extends React.Component<
   private updateRecaptchaToken = recaptchaToken => {
     this.props.form.setFieldsValue({ recaptchaToken });
     this.setState({ renderRecaptcha: false });
+  };
+
+  private handleSubmit = e => {
+    e.preventDefault();
+
+    this.props.form.validateFieldsAndScroll(
+      (err, values: CreateAccountRequest) => {
+        if (!err) {
+          this.setState({ ...this.state, creating: true });
+          createAccount(this.props.links, values)
+            .then(() => {
+              this.setState({ ...this.state, showConfirmation: true });
+            })
+            .catch(error => {
+              const formDetailsRedacted = {
+                ...values,
+                password: 'redacted',
+              };
+
+              if (error.response.status === 409) {
+                handleUserExists(formDetailsRedacted);
+              } else {
+                handleError(formDetailsRedacted);
+              }
+
+              this.setState({
+                ...this.state,
+                creating: false,
+                renderRecaptcha: true,
+              });
+            });
+        }
+      },
+    );
+  };
+
+  private handleConfirmBlur = e => {
+    const value = e.target.value;
+    this.setState({
+      ...this.state,
+      confirmDirty: this.state.confirmDirty || !!value,
+    });
+  };
+
+  private compareToFirstPassword = (_, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('The passwords are not the same');
+    } else {
+      callback();
+    }
+  };
+
+  private validateToNextPassword = (_, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
   };
 }
 
@@ -386,12 +352,3 @@ export default connect<StateProps, {}, {}>(
   mapStateToProps,
   null,
 )(Form.create<StateProps>()(RegistrationForm));
-
-const PrivacyPolicyLink = () => (
-  <BlankTargetLink
-    className="create-account-form__checkbox-link"
-    href="https://www.boclips.com/privacy-policy"
-  >
-    Privacy Policy
-  </BlankTargetLink>
-);
