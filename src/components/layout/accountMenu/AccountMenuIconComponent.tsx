@@ -9,7 +9,7 @@ interface Props {
 
 const AccountMenuIconComponent = React.memo((props: Props) => (
   <img
-    className="account-menu ant-dropdown-link"
+    className="account-menu-icon ant-dropdown-link"
     data-qa="account-menu-open"
     onClick={props.onClick}
     src={myAccountImg}
