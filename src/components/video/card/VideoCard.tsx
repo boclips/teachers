@@ -3,6 +3,7 @@ import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
+import StopClickPropagation from '../../common/StopClickPropagation';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import SubjectTag from '../tags/SubjectTag';
@@ -24,7 +25,11 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
     }
 
     return (
-      <Card className="video-card" bordered={false}>
+      <Card
+        className="video-card"
+        bordered={false}
+        onClick={this.navigateToVideo}
+      >
         <section data-qa="video-card">{this.renderContent()}</section>
       </Card>
     );
@@ -33,16 +38,18 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
   public renderContent() {
     return (
       <section className="video-content">
-        <VideoHeader video={this.props.video} onClick={this.navigateToVideo} />
+        <VideoHeader video={this.props.video} />
 
-        <section className={'video-preview'}>
-          <div aria-label={'video player'} tabIndex={0}>
-            <VideoPlayer
-              video={this.props.video}
-              videoIndex={this.props.videoIndex}
-            />
-          </div>
-        </section>
+        <StopClickPropagation>
+          <section className={'video-preview'}>
+            <div aria-label={'video player'} tabIndex={0}>
+              <VideoPlayer
+                video={this.props.video}
+                videoIndex={this.props.videoIndex}
+              />
+            </div>
+          </section>
+        </StopClickPropagation>
 
         <section className="video-details">
           {this.props.video.subjects.length !== 0 && (
@@ -53,18 +60,16 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
             </div>
           )}
 
-          <p
-            data-qa="video-description"
-            className="description clamp-3-lines"
-            onClick={this.navigateToVideo}
-          >
+          <p data-qa="video-description" className="description clamp-3-lines">
             {this.props.video.description}
           </p>
 
-          <Row className="buttons-row">
-            <CopyLinkButton video={this.props.video} />
-            {this.renderVideoManagementButton()}
-          </Row>
+          <StopClickPropagation>
+            <Row className="buttons-row">
+              <CopyLinkButton video={this.props.video} />
+              {this.renderVideoManagementButton()}
+            </Row>
+          </StopClickPropagation>
         </section>
       </section>
     );

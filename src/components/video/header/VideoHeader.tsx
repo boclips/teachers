@@ -1,6 +1,5 @@
 import { Icon } from 'antd';
-import classnames from 'classnames';
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -9,14 +8,10 @@ import './VideoHeader.less';
 
 interface Props {
   video: Video;
-  onClick?: MouseEventHandler;
 }
 
 export const VideoHeader = React.memo((props: Props) => (
-  <section
-    className={classnames('video-header', { clickable: !!props.onClick })}
-    onClick={props.onClick}
-  >
+  <section className={'video-header'}>
     <h1 className="title clamp-2-lines" data-qa="video-title">
       {props.video.title}
     </h1>

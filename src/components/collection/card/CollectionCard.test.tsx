@@ -1,10 +1,17 @@
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
+import configureStore from 'redux-mock-store';
 import { By } from '../../../../test-support/By';
 import {
+  LinksFactory,
   VideoCollectionFactory,
+  VideoCollectionLinksFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
+import { Link } from '../../../types/Link';
+import { LinksState } from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import BookmarkCollectionButton from './BookmarkCollectionButton';
@@ -24,6 +31,9 @@ describe('CollectionCard', () => {
         VideoFactory.sample({ id: '1' }),
         VideoFactory.sample({ id: '2' }),
       ]),
+      links: VideoCollectionLinksFactory.sample({
+        remove: new Link({ href: 'it-exists', templated: false }),
+      }),
     });
 
     wrapper = shallow(
@@ -61,16 +71,56 @@ describe('CollectionCard', () => {
     expect(wrapper.find('.clickable')).toHaveLength(0);
   });
 
-  test('has class clickable when an onclick function is provided', () => {
-    const noop = () => {};
-    wrapper = shallow(
-      <CollectionCard
-        collection={collection}
-        numberOfPreviews={NUMBER_OF_PREVIEWS}
-        onClick={noop}
-      />,
-    );
-    expect(wrapper.find('.clickable')).toHaveLength(1);
+  describe('a collection card with an onclick function', () => {
+    const mockStore = configureStore<LinksState>();
+    const store = mockStore({
+      links: LinksFactory.sample(),
+    });
+
+    const getWrapper = (onClick: React.MouseEventHandler) => {
+      return mount(
+        <Provider store={store}>
+          <MemoryRouter>
+            <CollectionCard
+              collection={collection}
+              numberOfPreviews={NUMBER_OF_PREVIEWS}
+              onClick={onClick}
+            />
+          </MemoryRouter>
+        </Provider>,
+      );
+    };
+
+    test('has class clickable when an onclick function is provided', () => {
+      wrapper = getWrapper(() => {});
+      expect(wrapper.find('.clickable')).toHaveLength(1);
+    });
+
+    test('When clicking on a video preview the onClick prop is not called', () => {
+      const spy = jest.fn(() => {});
+
+      wrapper = getWrapper(spy);
+
+      const collectionVideoPreview = wrapper
+        .find('.collection-video-preview')
+        .first();
+
+      collectionVideoPreview.simulate('click');
+
+      expect(spy.mock.calls).toHaveLength(0);
+    });
+
+    test('When clicking the delete button the onClick prop is not called', () => {
+      const spy = jest.fn(() => {});
+
+      wrapper = getWrapper(spy);
+
+      const deleteButton = wrapper.find(By.dataQa('delete-collection')).first();
+
+      deleteButton.simulate('click');
+
+      expect(spy.mock.calls).toHaveLength(0);
+    });
   });
 
   test('does not render a video preview counter', () => {

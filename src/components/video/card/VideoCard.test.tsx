@@ -1,12 +1,23 @@
-import { shallow } from 'enzyme';
+import { Card } from 'antd';
+import { RouterActionType } from 'connected-react-router';
+import { mount, shallow } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
+import configureStore from 'redux-mock-store';
 import {
+  LinksFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
-import { VideoHeader } from '../header/VideoHeader';
+import {
+  CollectionState,
+  LinksState,
+  RouterState,
+  SearchState,
+} from '../../../types/State';
 import { Props, VideoCardForRouter } from './VideoCard';
 import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
 import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
@@ -47,7 +58,7 @@ describe('when outside video collection', () => {
     const video = VideoFactory.sample();
 
     beforeEach(() => {
-      wrapper = getWrapper({ history: fakeHistory as any });
+      wrapper = getMountedWrapper({ history: fakeHistory as any });
     });
 
     afterEach(() => {
@@ -59,16 +70,22 @@ describe('when outside video collection', () => {
       expect(push.mock.calls[0][0]).toEqual(`/videos/${video.id}`);
     };
 
-    it('happens when you click on the header', () => {
-      const title = wrapper.find(VideoHeader);
-      title.simulate('click');
+    it('happens when you click on the card', () => {
+      const videoCard = wrapper.find(Card);
+      videoCard.simulate('click');
       expectNavigationChanged();
     });
 
-    it('happens when you click the description', () => {
-      const title = wrapper.find('.description');
-      title.simulate('click');
-      expectNavigationChanged();
+    it('does not happen when you click on the video controls', () => {
+      const videoPreview = wrapper.find('.video-preview');
+      videoPreview.simulate('click');
+      expect(push.mock.calls).toHaveLength(0);
+    });
+
+    it('does not happen when you click on any button in the buttons row', () => {
+      const buttonsRow = wrapper.find('.buttons-row').first();
+      buttonsRow.simulate('click');
+      expect(push.mock.calls).toHaveLength(0);
     });
   });
 });
@@ -100,3 +117,64 @@ describe('when within video collection', () => {
     expect(wrapper.find(ManageVideoCollectionsButton)).toExist();
   });
 });
+
+const mockStore = configureStore<
+  SearchState & LinksState & RouterState & CollectionState
+>();
+
+function createStore(query: string, isLoading = false) {
+  return {
+    links: LinksFactory.sample(),
+    search: {
+      videos: [],
+      loading: isLoading,
+      query,
+      paging: {
+        totalElements: 1111,
+        totalPages: 0,
+        number: 0,
+        size: 10,
+      },
+    },
+    router: {
+      location: {
+        pathname: '',
+        search: `?q=${query}`,
+        hash: '',
+        state: null,
+      },
+      action: 'PUSH' as RouterActionType,
+    },
+    collections: {
+      loading: false,
+      updating: false,
+      myCollections: [],
+      publicCollections: {
+        items: [],
+        links: {},
+      },
+      bookmarkedCollections: {
+        items: [],
+        links: {},
+      },
+    },
+  };
+}
+
+const getMountedWrapper = (givenProps: Partial<Props> = {}) => {
+  const props: Props = {
+    video: VideoFactory.sample(),
+    history: null,
+    location: null,
+    match: null,
+    ...givenProps,
+  };
+
+  return mount(
+    <Provider store={mockStore(createStore(''))}>
+      <MemoryRouter>
+        <VideoCardForRouter {...props} />
+      </MemoryRouter>
+    </Provider>,
+  );
+};

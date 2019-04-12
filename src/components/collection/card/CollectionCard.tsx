@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { VideoId } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
+import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoPlayer from '../../video/player/VideoPlayer';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import BookmarkingButton from './BookmarkCollectionButton';
@@ -16,7 +17,7 @@ interface Props {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler;
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
@@ -39,10 +40,12 @@ export class CollectionCard extends React.PureComponent<Props> {
           {this.props.collection.title}
         </h1>
         <CollectionSubtitle collection={this.props.collection} />
-        <BookmarkingButton collection={this.props.collection} />
-        {!this.props.tiny && (
-          <RemoveCollectionButton collection={this.props.collection} />
-        )}
+        <StopClickPropagation>
+          <BookmarkingButton collection={this.props.collection} />
+          {!this.props.tiny && (
+            <RemoveCollectionButton collection={this.props.collection} />
+          )}
+        </StopClickPropagation>
         <section className="collection-video-previews">
           {this.renderVideoPreviews()}
         </section>
@@ -79,38 +82,40 @@ export class CollectionCard extends React.PureComponent<Props> {
   private renderVideoPreview(videoId: VideoId) {
     const video = this.props.collection.videos[videoId.id];
     return video ? (
-      <section
-        key={'collection-video-preview' + this.props.collection.id + video.id}
-        className="collection-video-preview"
-        data-qa="collection-video-preview"
-      >
-        {this.props.tiny ? (
-          <section className="video-container">
-            <section className="video-container-inner">
-              <section
-                className="thumbnail-container"
-                style={{ backgroundImage: `url(${video.thumbnailUrl})` }}
-              />
-            </section>
-          </section>
-        ) : (
-          <section className="video-container">
-            <section className="video-container-inner">
-              <VideoPlayer video={video} controls="thumbnail" />
-            </section>
-          </section>
-        )}
-        <Link
-          to={`/videos/${video.id}`}
-          className="title clamp-2-lines link--secondary"
+      <StopClickPropagation>
+        <section
+          key={'collection-video-preview' + this.props.collection.id + video.id}
+          className="collection-video-preview"
+          data-qa="collection-video-preview"
         >
-          {video.title}
-        </Link>
-        <section data-qa="video-duration" className={'subtitle duration'}>
-          <Icon type="clock-circle" />{' '}
-          <DurationFormatter duration={video.duration} />
+          {this.props.tiny ? (
+            <section className="video-container">
+              <section className="video-container-inner">
+                <section
+                  className="thumbnail-container"
+                  style={{ backgroundImage: `url(${video.thumbnailUrl})` }}
+                />
+              </section>
+            </section>
+          ) : (
+            <section className="video-container">
+              <section className="video-container-inner">
+                <VideoPlayer video={video} controls="thumbnail" />
+              </section>
+            </section>
+          )}
+          <Link
+            to={`/videos/${video.id}`}
+            className="title clamp-2-lines link--secondary"
+          >
+            {video.title}
+          </Link>
+          <section data-qa="video-duration" className={'subtitle duration'}>
+            <Icon type="clock-circle" />{' '}
+            <DurationFormatter duration={video.duration} />
+          </section>
         </section>
-      </section>
+      </StopClickPropagation>
     ) : (
       <CollectionCard.VideoPreviewSkeleton
         key={
