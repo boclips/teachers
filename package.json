@@ -51,7 +51,7 @@
     "axios-logger": "^1.0.0",
     "axios-mock-adapter": "^1.15.0",
     "boclips-js-security": "^1.0.52",
-    "boclips-react-player": "^23.0.0",
+    "boclips-react-player": "^24.0.0",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^0.1.19",
     "compression-webpack-plugin": "^2.0.0",
