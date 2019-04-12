@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import collectionsImg from '../../../../resources/images/collections.png';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCardList } from '../card/CollectionCardList';
@@ -69,8 +70,13 @@ class PublicCollectionsGrid extends React.PureComponent<
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  fetchPublicCollections: () => dispatch(fetchPublicCollectionsAction()),
-  fetchNextPage: () => dispatch(fetchNextPublicCollectionsAction()),
+  fetchPublicCollections: () => {
+    return dispatch(fetchPublicCollectionsAction());
+  },
+  fetchNextPage: () => {
+    AnalyticsFactory.getInstance().trackMorePublicCollectionsLoaded();
+    return dispatch(fetchNextPublicCollectionsAction());
+  },
 });
 
 // TODO: hasMorePublicCollections condition needs work

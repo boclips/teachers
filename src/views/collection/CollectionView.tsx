@@ -192,10 +192,12 @@ function mapDispatchToProps(
   ownProps: OwnProps,
 ): DispatchProps {
   return {
-    fetchCollection: () =>
-      dispatch(fetchCollectionAction(ownProps.collectionId)),
-    fetchVideosForCollection: (request: VideosForCollectionRequest) =>
-      dispatch(fetchVideosForCollectionAction(request)),
+    fetchCollection: () => {
+      dispatch(fetchCollectionAction(ownProps.collectionId));
+    },
+    fetchVideosForCollection: (request: VideosForCollectionRequest) => {
+      return dispatch(fetchVideosForCollectionAction(request));
+    },
   };
 }
 

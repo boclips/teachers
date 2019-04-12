@@ -198,4 +198,8 @@ export default class MixpanelAnalytics {
   public trackHomepageExploreCollections() {
     this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS);
   }
+
+  public trackMorePublicCollectionsLoaded() {
+    this.mixpanelInstance.track(EventTypes.MORE_PUBLIC_COLLECTION_LOADED);
+  }
 }
