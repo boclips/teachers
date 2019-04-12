@@ -1,7 +1,11 @@
 import { Button } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
 import AnalyticsFactory from '../services/analytics/AnalyticsFactory';
+import { UserProfile } from '../services/users/UserProfile';
+import { LoginState } from '../types/State';
 import Bodal from './common/Bodal';
+import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 
 interface Props {
   text: string;
@@ -11,17 +15,35 @@ interface State {
   visible: boolean;
 }
 
-export default class ReferAFriend extends React.Component<Props, State> {
-  public iframe = {
-    __html:
-      '<iframe src="https://boclips.referralrock.com/promotion/1/?widget=1" style="background-color: white; height:800px; width:100%;" />',
-  };
+interface StateProps {
+  user: UserProfile;
+}
 
-  constructor(props: Props) {
+class ReferAFriend extends React.Component<Props & StateProps, State> {
+  constructor(props: Props & StateProps) {
     super(props);
 
     this.state = {
       visible: false,
+    };
+  }
+
+  private buildReferralUrl() {
+    const user = this.props.user;
+    return new ReferAFriendUrlBuilder()
+      .setFirstName(user.firstName)
+      .setLastName(user.lastName)
+      .setEmail(user.email)
+      .setUserId(user.id)
+      .setBaseUrl(
+        'https://boclips.referralrock.com/access/?programidentifier=adf9b438-bfa6-4d55-a9d7-418d8d520333',
+      )
+      .build();
+  }
+
+  private getIFrame() {
+    return {
+      __html: `<iframe src="${this.buildReferralUrl()}" style="background-color: white; height:800px; width:100%;" />`,
     };
   }
 
@@ -45,7 +67,10 @@ export default class ReferAFriend extends React.Component<Props, State> {
             </Button>,
           ]}
         >
-          <div dangerouslySetInnerHTML={this.iframe} />
+          <div
+            className="iframeWrapper"
+            dangerouslySetInnerHTML={this.getIFrame()}
+          />
         </Bodal>
       </React.Fragment>
     );
@@ -61,3 +86,11 @@ export default class ReferAFriend extends React.Component<Props, State> {
     AnalyticsFactory.getInstance().trackReferAFriendModalClosed();
   };
 }
+
+function mapStateToProps(state: LoginState): StateProps {
+  return {
+    user: state.user,
+  };
+}
+
+export default connect(mapStateToProps)(ReferAFriend);
