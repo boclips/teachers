@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Form, Input, Row } from 'antd';
+import { Button, Col, Form, Input, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -10,15 +10,19 @@ import {
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
-import BlankTargetLink from '../common/BlankTargetLink';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
-import { extractReferralCode } from './extractReferralCode';
-import { LoginLink } from './LoginLink';
-import { PrivacyPolicyLink } from './PrivacyPolicyLink';
+import { CaptchaNotice } from './form/CaptchaNotice';
+import { EmailForm } from './form/EmailForm';
+import { LoginLink } from './form/LoginLink';
+import { MarketingAgreementForm } from './form/MarketingAgreementForm';
+import { NameForm } from './form/NameForm';
+import { PrivacyPolicyAgreementForm } from './form/PrivacyPolicyAgreementForm';
+import { SubjectsForm } from './form/SubjectsForm';
+import TwoColumnInlineForm from './form/TwoColumnInlineFormItem';
 import { Recaptcha } from './recaptcha/Recaptcha';
-import TwoColumnInlineForm from './TwoColumnInlineFormItem';
+import { extractReferralCode } from './referral/extractReferralCode';
 
 interface StateProps {
   links: Links;
@@ -69,75 +73,9 @@ class RegistrationForm extends React.Component<
               <h1 className="alt create-account-form__title">Create account</h1>
 
               <section className="create-account-form__form">
-                <TwoColumnInlineForm
-                  leftColumn={getFieldDecorator('firstName', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please enter your first name',
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="first-name"
-                      size="large"
-                      placeholder="First name"
-                      className="create-account-form__first-name"
-                    />,
-                  )}
-                  rightColumn={getFieldDecorator('lastName', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please enter your last name',
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="last-name"
-                      size="large"
-                      placeholder="Last name"
-                      className="create-account-form__last-name"
-                    />,
-                  )}
-                />
-
-                <Form.Item>
-                  {getFieldDecorator('subjects', {
-                    rules: [],
-                  })(
-                    <Input
-                      data-qa="subjects"
-                      size="large"
-                      placeholder="Subject(s) taught"
-                    />,
-                  )}
-                </Form.Item>
-
-                <Row>
-                  <Col xs={{ span: 24 }} md={{ span: 16 }} xl={{ span: 16 }}>
-                    <Form.Item>
-                      {getFieldDecorator('email', {
-                        rules: [
-                          {
-                            type: 'email',
-                            message: 'The input is not valid email',
-                          },
-                          {
-                            required: true,
-                            message: 'Please enter your email',
-                          },
-                        ],
-                      })(
-                        <Input
-                          data-qa="email"
-                          size="large"
-                          placeholder="Email"
-                        />,
-                      )}
-                    </Form.Item>
-                  </Col>
-                </Row>
+                <NameForm form={this.props.form} />
+                <SubjectsForm form={this.props.form} />
+                <EmailForm form={this.props.form} />
 
                 <TwoColumnInlineForm
                   leftColumn={getFieldDecorator('password', {
@@ -180,53 +118,9 @@ class RegistrationForm extends React.Component<
                   )}
                 />
 
-                <Form.Item>
-                  {getFieldDecorator('privacy_policy', {
-                    rules: [
-                      {
-                        required: true,
-                      },
-                    ],
-                  })(
-                    <Checkbox
-                      className="create-account-form__checkbox"
-                      data-qa="privacy-policy"
-                    >
-                      I have read and agree with the Boclips{' '}
-                      <BlankTargetLink
-                        className="create-account-form__checkbox-link"
-                        href="https://www.boclips.com/terms-and-conditions"
-                      >
-                        Terms and Conditions
-                      </BlankTargetLink>
-                      . Boclips will collect and process data as described in
-                      the <PrivacyPolicyLink />.
-                    </Checkbox>,
-                  )}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('hasOptedIntoMarketing', {
-                    rules: [],
-                    initialValue: false,
-                  })(
-                    <Checkbox className="create-account-form__checkbox">
-                      I want to receive marketing information about Boclips's
-                      similar products or services which may be of interest to
-                      me in accordance with the <PrivacyPolicyLink />.
-                    </Checkbox>,
-                  )}
-                </Form.Item>
-                <p className="recaptcha-notice">
-                  This site is protected by reCAPTCHA and the Google{' '}
-                  <a href="https://policies.google.com/privacy">
-                    Privacy Policy
-                  </a>{' '}
-                  and{' '}
-                  <a href="https://policies.google.com/terms">
-                    Terms of Service
-                  </a>{' '}
-                  apply.
-                </p>
+                <PrivacyPolicyAgreementForm form={this.props.form} />
+                <MarketingAgreementForm form={this.props.form} />
+                <CaptchaNotice />
               </section>
 
               <div style={{ display: 'none' }}>
@@ -282,6 +176,7 @@ class RegistrationForm extends React.Component<
 
   private handleSubmit = e => {
     e.preventDefault();
+    e.stopPropagation();
 
     this.props.form.validateFieldsAndScroll(
       (err, values: CreateAccountRequest) => {

@@ -1,6 +1,6 @@
 import { Col, Form } from 'antd';
 import React from 'react';
-import './CreateAccountForm.less';
+import '../CreateAccountForm.less';
 
 interface Props {
   leftColumn: React.ReactNode;

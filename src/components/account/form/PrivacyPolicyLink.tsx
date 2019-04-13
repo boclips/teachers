@@ -1,5 +1,5 @@
 import React from 'react';
-import BlankTargetLink from '../common/BlankTargetLink';
+import BlankTargetLink from '../../common/BlankTargetLink';
 
 export class PrivacyPolicyLink extends React.Component {
   public render() {
