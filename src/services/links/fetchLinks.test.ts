@@ -15,6 +15,7 @@ test('parses all links', async () => {
       myCollections: { href: '/collections?owner=123' },
       publicCollections: { href: '/collections?list=yes&public=true' },
       bookmarkedCollections: { href: '/collections?bookmarked=true' },
+      subjects: { href: '/subjects' },
     },
   });
 
@@ -35,6 +36,9 @@ test('parses all links', async () => {
     }),
     bookmarkedCollections: new Link({
       href: '/collections?bookmarked=true',
+    }),
+    subjects: new Link({
+      href: '/subjects',
     }),
   };
 

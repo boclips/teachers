@@ -15,6 +15,7 @@ import {
   RouterState,
   SearchState,
   SearchStateValue,
+  SubjectState,
   VideoDetailsState,
   VideoStateValue,
 } from '../../types/State';
@@ -30,7 +31,12 @@ import VideoDetailsView from '../videoDetails/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
 
 const mockStore = configureStore<
-  RouterState & VideoDetailsState & SearchState & LoginState & CollectionState
+  RouterState &
+    VideoDetailsState &
+    SearchState &
+    LoginState &
+    CollectionState &
+    SubjectState
 >();
 
 test('shows video details view on /videos/{id}', () => {
@@ -307,12 +313,18 @@ function buildStore(
     bookmarkedCollections: undefined,
   };
 
+  const subjectsState: SubjectState = {
+    subjects: [],
+  };
+
   const store = mockStore({
     router,
     video,
     search,
     user,
     collections,
+    ...subjectsState,
   });
+
   return store;
 }

@@ -17,6 +17,8 @@ import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/
 import { userDetailsFetchedReducer } from '../components/login/redux/reducers/userDetailsFetchedReducer';
 import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchVideosMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
+import fetchSubjectsMiddleware from '../components/subject/redux/middleware/fetchSubjectsMiddleware';
+import { subjectsReducer } from '../components/subject/redux/reducers/subjectsReducer';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
@@ -35,6 +37,7 @@ const rootReducer: Reducer<any> = combineReducers({
   video: videoReducer,
   user: userDetailsFetchedReducer,
   collections: collectionsReducer,
+  subjects: subjectsReducer,
 });
 
 interface Props {
@@ -58,6 +61,7 @@ export default class App extends PureComponent<Props> {
         onStoreLoginMiddleware,
         onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,
+        fetchSubjectsMiddleware,
       ),
     ),
   );

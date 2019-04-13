@@ -2,6 +2,7 @@ import { Button, Col, Form, Input, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import registrationLogo from '../../../resources/images/registration-logo.svg';
 import {
   createAccount,
@@ -10,6 +11,8 @@ import {
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
+import { Subject } from '../../types/Subject';
+import { fetchSubjectsAction } from '../subject/redux/actions/fetchSubjectsAction';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
@@ -24,9 +27,10 @@ import TwoColumnInlineForm from './form/TwoColumnInlineFormItem';
 import { Recaptcha } from './recaptcha/Recaptcha';
 import { extractReferralCode } from './referral/extractReferralCode';
 
-interface StateProps {
+interface CreateAccountProps {
   links: Links;
   referralCode: string;
+  subjects: Subject[];
 }
 
 interface InternalState {
@@ -36,8 +40,12 @@ interface InternalState {
   renderRecaptcha: boolean;
 }
 
+interface DispatchProps {
+  fetchSubjects: () => void;
+}
+
 class RegistrationForm extends React.Component<
-  StateProps & FormComponentProps,
+  CreateAccountProps & FormComponentProps & DispatchProps,
   InternalState
 > {
   public state = {
@@ -49,6 +57,8 @@ class RegistrationForm extends React.Component<
 
   public componentDidMount() {
     AnalyticsFactory.getInstance().trackAccountRegistration();
+
+    this.props.fetchSubjects();
   }
 
   public render() {
@@ -74,7 +84,10 @@ class RegistrationForm extends React.Component<
 
               <section className="create-account-form__form">
                 <NameForm form={this.props.form} />
-                <SubjectsForm form={this.props.form} />
+                <SubjectsForm
+                  form={this.props.form}
+                  subjects={this.props.subjects}
+                />
                 <EmailForm form={this.props.form} />
 
                 <TwoColumnInlineForm
@@ -235,15 +248,22 @@ class RegistrationForm extends React.Component<
   };
 }
 
-function mapStateToProps(state: State): StateProps {
+function mapStateToProps(state: State): CreateAccountProps {
   const queryParam = state.router.location.search;
   return {
     links: state.links,
     referralCode: extractReferralCode(queryParam),
+    subjects: state.subjects,
   };
 }
 
-export default connect<StateProps, {}, {}>(
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    fetchSubjects: () => dispatch(fetchSubjectsAction()),
+  };
+}
+
+export default connect<CreateAccountProps, DispatchProps, {}>(
   mapStateToProps,
-  null,
-)(Form.create<StateProps>()(RegistrationForm));
+  mapDispatchToProps,
+)(Form.create<CreateAccountProps>()(RegistrationForm));

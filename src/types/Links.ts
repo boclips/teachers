@@ -13,4 +13,5 @@ export interface Links {
   activate?: Link;
   profile?: Link;
   createAccount?: Link;
+  subjects?: Link;
 }

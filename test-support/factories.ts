@@ -142,6 +142,7 @@ export class LinksFactory {
         arg.publicCollections || new Link({ href: '/collections?bookmarked' }),
       collection: arg.collection || new Link({ href: '/collections/xxx' }),
       createAccount: arg.createAccount || new Link({ href: '/users' }),
+      subjects: arg.subjects || new Link({ href: '/subjects' }),
     });
   }
 }

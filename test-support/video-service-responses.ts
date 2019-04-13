@@ -208,6 +208,27 @@ export function collectionsResponse(videosWithin: any[] = [video177]) {
   };
 }
 
+export function subjectsResponse() {
+  return {
+    _embedded: {
+      subjects: [
+        {
+          id: '1',
+          name: 'Maths',
+        },
+        {
+          id: '2',
+          name: 'French',
+        },
+        {
+          id: '3',
+          name: 'German',
+        },
+      ],
+    },
+  };
+}
+
 export function userResponse(id: string = 'user-id') {
   return {
     id,

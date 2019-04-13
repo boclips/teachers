@@ -15,8 +15,4 @@ export class CreateAccountView extends PureComponent {
       </PageLayout>
     );
   }
-
-  public renderForm() {
-    return <CreateAccountForm />;
-  }
 }

@@ -58,6 +58,10 @@ export default function fetchLinks() {
           links.createAccount = new Link(body._links.createAccount);
         }
 
+        if (body._links.subjects) {
+          links.subjects = new Link(body._links.subjects);
+        }
+
         return links;
       },
     )
