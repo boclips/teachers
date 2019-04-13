@@ -4,8 +4,6 @@ import { Subject } from '../../../types/Subject';
 import { FormComponentProps } from './FormComponentProps';
 import './SubjectsForm.less';
 
-const Option = Select.Option;
-
 interface SubjectsFormProps {
   subjects: Subject[];
 }
@@ -18,8 +16,10 @@ export class SubjectsForm extends React.Component<
       <Form.Item>
         {this.props.form.getFieldDecorator('subjects', {
           rules: [{ type: 'array' }],
+          initialValue: [],
         })(
           <Select
+            filterOption={this.filter}
             className={'subjects-selection'}
             mode="multiple"
             placeholder="Subject(s)"
@@ -34,15 +34,18 @@ export class SubjectsForm extends React.Component<
   }
 
   private generateOptions() {
-    const options = [];
-    this.props.subjects.forEach(subject => {
-      options.push(
-        <Option key={subject.id} value={subject.id}>
+    const Option = Select.Option;
+
+    return this.props.subjects.map(subject => {
+      return (
+        <Option key={subject.name} value={subject.id} title={subject.name}>
           {subject.name}
-        </Option>,
+        </Option>
       );
     });
+  }
 
-    return options;
+  private filter(inputValue, option) {
+    return option.key.indexOf(inputValue) !== -1;
   }
 }
