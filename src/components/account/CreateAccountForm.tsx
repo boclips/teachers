@@ -12,10 +12,11 @@ import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
 import { Subject } from '../../types/Subject';
-import { fetchSubjectsAction } from '../subject/redux/actions/fetchSubjectsAction';
+import { fetchSubjectsAction } from '../multipleSelect/redux/actions/fetchSubjectsAction';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
+import { AgeRangeForm } from './form/AgeRangeForm';
 import { CaptchaNotice } from './form/CaptchaNotice';
 import { EmailForm } from './form/EmailForm';
 import { LoginLink } from './form/LoginLink';
@@ -31,6 +32,7 @@ interface CreateAccountProps {
   links: Links;
   referralCode: string;
   subjects: Subject[];
+  ageRanges: AgeRange[];
 }
 
 interface InternalState {
@@ -87,6 +89,10 @@ class RegistrationForm extends React.Component<
                 <SubjectsForm
                   form={this.props.form}
                   subjects={this.props.subjects}
+                />
+                <AgeRangeForm
+                  form={this.props.form}
+                  ageRanges={this.props.ageRanges}
                 />
                 <EmailForm form={this.props.form} />
 
@@ -254,6 +260,7 @@ function mapStateToProps(state: State): CreateAccountProps {
     links: state.links,
     referralCode: extractReferralCode(queryParam),
     subjects: state.subjects,
+    ageRanges: state.ageRanges,
   };
 }
 

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import {
+  AgeRangeState,
   CollectionState,
   LoginState,
   RouterState,
@@ -317,6 +318,15 @@ function buildStore(
     subjects: [],
   };
 
+  const ageRangeState: AgeRangeState = {
+    ageRanges: [
+      {
+        label: '4-5',
+        value: [4, 5],
+      },
+    ],
+  };
+
   const store = mockStore({
     router,
     video,
@@ -324,6 +334,7 @@ function buildStore(
     user,
     collections,
     ...subjectsState,
+    ...ageRangeState,
   });
 
   return store;

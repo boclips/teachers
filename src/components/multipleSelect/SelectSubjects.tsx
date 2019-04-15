@@ -1,7 +1,7 @@
-import { Select } from 'antd';
 import { SelectValue } from 'antd/lib/select';
 import React from 'react';
 import { Subject } from '../../types/Subject';
+import MultiSelect from '../common/MultiSelect';
 
 interface Props {
   subjects: Subject[];
@@ -11,22 +11,20 @@ interface Props {
 export class SelectSubjects extends React.PureComponent<Props> {
   public render() {
     return (
-      <Select
+      <MultiSelect
         filterOption={this.filter}
-        className={'subjects-selection'}
         mode="multiple"
         placeholder="Subject(s)"
         data-qa="subjects"
-        size={'large'}
         onChange={this.props.onUpdateSubjects}
       >
         {this.generateOptions()}
-      </Select>
+      </MultiSelect>
     );
   }
 
   private generateOptions() {
-    const Option = Select.Option;
+    const Option = MultiSelect.Option;
 
     this.sortSubjectsByName();
 

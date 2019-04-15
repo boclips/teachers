@@ -5,6 +5,7 @@ export interface CreateAccountRequest {
   firstName: string;
   lastName: string;
   subjects: string;
+  ageRange: number[];
   email: string;
   password: string;
   analyticsId: string;

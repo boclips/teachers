@@ -2,9 +2,8 @@ import { Form } from 'antd';
 import { SelectValue } from 'antd/lib/select';
 import React from 'react';
 import { Subject } from '../../../types/Subject';
-import { SelectSubjects } from '../../subject/SelectSubjects';
+import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { FormComponentProps } from './FormComponentProps';
-import './SubjectsForm.less';
 
 interface SubjectsFormProps {
   subjects: Subject[];

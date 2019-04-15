@@ -51,6 +51,10 @@ export interface SubjectState {
   subjects: Subject[];
 }
 
+export interface AgeRangeState {
+  ageRanges: AgeRange[];
+}
+
 export interface Pageable<T> {
   items: T[];
   links: {
@@ -84,4 +88,5 @@ export default interface State
     VideoDetailsState,
     RouterState,
     CollectionState,
-    SubjectState {}
+    SubjectState,
+    AgeRangeState {}
