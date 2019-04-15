@@ -36,6 +36,8 @@ export class SubjectsForm extends React.Component<
   private generateOptions() {
     const Option = Select.Option;
 
+    this.sortSubjectsByName();
+
     return this.props.subjects.map(subject => {
       return (
         <Option key={subject.name} value={subject.id} title={subject.name}>
@@ -45,7 +47,19 @@ export class SubjectsForm extends React.Component<
     });
   }
 
+  private sortSubjectsByName() {
+    this.props.subjects.sort((a: Subject, b: Subject) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+
   private filter(inputValue, option) {
-    return option.key.indexOf(inputValue) !== -1;
+    return option.key.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
   }
 }
