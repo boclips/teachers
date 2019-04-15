@@ -1,6 +1,5 @@
 import { Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import { SelectValue } from 'antd/lib/select';
 import React from 'react';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 
@@ -9,7 +8,7 @@ interface Props {
 }
 
 export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
-  public onUpdateAgeRange = (value: SelectValue) => {
+  public onUpdateAgeRange = (value: number[]) => {
     this.props.form.setFieldsValue({ ageRanges: value });
   };
 

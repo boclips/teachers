@@ -4,7 +4,7 @@ import MultiSelect from '../common/MultiSelect';
 
 interface Props {
   ageRanges: AgeRange[];
-  onUpdateAgeRange: (value: SelectValue) => void;
+  onUpdateAgeRange: (value: number[]) => void;
 }
 
 export class SelectAgeRange extends React.PureComponent<Props> {

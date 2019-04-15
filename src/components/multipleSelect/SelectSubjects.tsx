@@ -1,11 +1,10 @@
-import { SelectValue } from 'antd/lib/select';
 import React from 'react';
 import { Subject } from '../../types/Subject';
 import MultiSelect from '../common/MultiSelect';
 
 interface Props {
   subjects: Subject[];
-  onUpdateSubjects: (value: SelectValue) => void;
+  onUpdateSubjects: (value: string[]) => void;
 }
 
 export class SelectSubjects extends React.PureComponent<Props> {
@@ -14,14 +13,18 @@ export class SelectSubjects extends React.PureComponent<Props> {
       <MultiSelect
         filterOption={this.filter}
         mode="multiple"
-        placeholder="Subject(s)"
+        placeholder="Subject(s) I teach"
         data-qa="subjects"
-        onChange={this.props.onUpdateSubjects}
+        onChange={this.onChange}
       >
         {this.generateOptions()}
       </MultiSelect>
     );
   }
+
+  private onChange = (value: string[]) => {
+    this.props.onUpdateSubjects(value);
+  };
 
   private generateOptions() {
     const Option = MultiSelect.Option;

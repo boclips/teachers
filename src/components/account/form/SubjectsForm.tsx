@@ -1,5 +1,4 @@
 import { Form } from 'antd';
-import { SelectValue } from 'antd/lib/select';
 import React from 'react';
 import { Subject } from '../../../types/Subject';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
@@ -12,7 +11,7 @@ interface SubjectsFormProps {
 export class SubjectsForm extends React.Component<
   FormComponentProps & SubjectsFormProps
 > {
-  public onUpdateSubjects = (value: SelectValue) => {
+  public onUpdateSubjects = (value: string[]) => {
     this.props.form.setFieldsValue({ subjects: value });
   };
 
