@@ -8,6 +8,10 @@
 .ant-card.video-card {
   position: relative;
   cursor: pointer;
+  &.skeleton {
+    animation: slide-in 0.5s 0s both;
+    .animation-delay(10);
+  }
 
   &:nth-of-type(1) {
     margin-top: 20px;
