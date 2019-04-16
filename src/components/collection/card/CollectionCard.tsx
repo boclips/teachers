@@ -82,7 +82,7 @@ export class CollectionCard extends React.PureComponent<Props> {
   private renderVideoPreview(videoId: VideoId) {
     const video = this.props.collection.videos[videoId.id];
     return video ? (
-      <StopClickPropagation>
+      <StopClickPropagation key={`video-${videoId.id}`}>
         <section
           key={'collection-video-preview' + this.props.collection.id + video.id}
           className="collection-video-preview"
