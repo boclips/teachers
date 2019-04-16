@@ -22,22 +22,20 @@ export default class HomeView extends PureComponent {
             showSearchBar={false}
             hideFooter={true}
           >
-            <Content>
-              <Row>
-                <Col
-                  xs={{ span: 22, offset: 1 }}
-                  md={{ span: 18, offset: 3 }}
-                  xl={{ span: 14, offset: 5 }}
-                >
-                  <section className="home-search">
-                    <section className="home-searchbar">
-                      <label>I'm looking for:</label>
-                      <SearchBar />
-                    </section>
+            <Row>
+              <Col
+                xs={{ span: 22, offset: 1 }}
+                md={{ span: 18, offset: 3 }}
+                xl={{ span: 14, offset: 5 }}
+              >
+                <section className="home-search">
+                  <section className="home-searchbar">
+                    <label>I'm looking for:</label>
+                    <SearchBar />
                   </section>
-                </Col>
-              </Row>
-            </Content>
+                </section>
+              </Col>
+            </Row>
           </PageLayout>
         </section>
         <section className="discovery-section">
