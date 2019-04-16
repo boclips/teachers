@@ -28,6 +28,7 @@ test('Clears videos and sets loading flag and query on the loading action', () =
         includeTags: [],
         excludeTags: [],
       },
+      sortBy: null,
     }),
   );
 

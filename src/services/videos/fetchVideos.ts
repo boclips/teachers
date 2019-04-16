@@ -17,6 +17,7 @@ export default function fetchVideos(
     page: searchRequest.page - 1,
     include_tag: searchRequest.filters.includeTags,
     exclude_tag: searchRequest.filters.excludeTags,
+    sort_by: searchRequest.sortBy,
   });
   return axios
     .get(url)

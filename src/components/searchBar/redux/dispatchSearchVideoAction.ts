@@ -1,8 +1,8 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
 import { Constants } from '../../../app/AppConstants';
-import { RequestFilters } from '../../../types/SearchRequest';
-import State from '../../../types/State';
+import { RequestFilters, SortBy } from '../../../types/SearchRequest';
+import { RouterState } from '../../../types/State';
 import { searchVideosAction } from './actions/searchVideosActions';
 
 const getFilters = (mode: string): RequestFilters => {
@@ -16,26 +16,33 @@ const getFilters = (mode: string): RequestFilters => {
     excludeTags = [Constants.NEWS];
   }
 
-  const filters = {
+  return {
     includeTags,
     excludeTags,
   };
-
-  return filters;
 };
 
-export const dispatchSearchVideoAction = (store: Store<State>) => {
+const getSortBy = (mode: string): SortBy => {
+  if (mode === Constants.NEWS) {
+    return 'RELEASE_DATE';
+  }
+
+  return null;
+};
+
+export const dispatchSearchVideoAction = (store: Store<RouterState>) => {
   const { router } = store.getState();
   const location = router.location;
 
   if (location.pathname === '/videos' && location.search.indexOf('q')) {
     const queryParams = queryString.parse(location.search);
     const query = queryParams.q as string;
-    const page = +queryParams.page;
+    const page = parseInt(queryParams.page as string, 10);
     const mode = queryParams.mode as string;
 
     const filters = getFilters(mode);
+    const sortBy = getSortBy(mode);
 
-    store.dispatch(searchVideosAction({ query, page, filters }));
+    store.dispatch(searchVideosAction({ query, page, filters, sortBy }));
   }
 };

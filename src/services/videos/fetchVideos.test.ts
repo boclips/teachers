@@ -16,7 +16,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&include_tag,exclude_tag}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag}',
       templated: true,
     }),
   });
@@ -29,6 +29,7 @@ beforeEach(async () => {
         includeTags: [Constants.CLASSROOM],
         excludeTags: [Constants.NEWS],
       },
+      sortBy: 'RELEASE_DATE',
     },
     links,
   );
@@ -52,4 +53,8 @@ test('only requests content for the classroom', () => {
 
 test('excludes news by default', () => {
   expect(queryParams.exclude_tag).toEqual(Constants.NEWS);
+});
+
+test('includes sort_by when provided', () => {
+  expect(queryParams.sort_by).toEqual('RELEASE_DATE');
 });
