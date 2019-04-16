@@ -11,6 +11,7 @@ import CollectionEditButton from './CollectionEditButton';
 
 interface Props {
   collection: VideoCollection;
+  className?: string;
 }
 
 interface StateProps {
@@ -26,11 +27,13 @@ class CollectionEditButtonContainer extends React.PureComponent<
 > {
   public render() {
     return this.props.collection.links.edit ? (
-      <CollectionEditButton
-        onUpdate={this.props.patchCollection}
-        collection={this.props.collection}
-        canSave={this.props.canSave}
-      />
+      <section className={this.props.className}>
+        <CollectionEditButton
+          onUpdate={this.props.patchCollection}
+          collection={this.props.collection}
+          canSave={this.props.canSave}
+        />
+      </section>
     ) : null;
   }
 }

@@ -16,18 +16,23 @@ export default class CollectionHeader extends React.PureComponent<Props> {
     return (
       <React.Fragment>
         <Row type="flex" justify="space-between">
-          <Col>
+          <Col xs={{ span: 24, order: 1 }} md={{ span: 19, order: 1 }}>
             <CollectionTitle
               title={this.props.collection.title}
               isPublic={this.props.collection.isPublic}
               isMine={this.props.collection.isMine}
             />
           </Col>
-          <Col>
-            <CollectionEditButtonContainer collection={this.props.collection} />
+          <Col xs={{ span: 24, order: 3 }} md={{ span: 5, order: 2 }}>
+            <CollectionEditButtonContainer
+              className="collection-header__edit-button"
+              collection={this.props.collection}
+            />
+          </Col>
+          <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
+            <CollectionSubtitle collection={this.props.collection} />
           </Col>
         </Row>
-        <CollectionSubtitle collection={this.props.collection} />
       </React.Fragment>
     );
   }
