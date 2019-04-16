@@ -9,7 +9,7 @@ interface Props {
 
 export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
   public onUpdateAgeRange = (value: number[]) => {
-    this.props.form.setFieldsValue({ ageRanges: value });
+    this.props.form.setFieldsValue({ ageRange: value });
   };
 
   public render() {
