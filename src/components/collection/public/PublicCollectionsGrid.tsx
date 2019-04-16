@@ -38,7 +38,7 @@ class PublicCollectionsGrid extends React.PureComponent<
           </span>
         }
         description={this.props.description}
-        tiny={true}
+        grid={true}
         loading={this.props.loading}
         collections={this.props.publicCollections}
         maxNumberOfCollections={this.props.maxNumberOfCollections}

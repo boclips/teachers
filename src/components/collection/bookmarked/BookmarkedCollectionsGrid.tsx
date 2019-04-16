@@ -52,7 +52,7 @@ class BookmarkedCollectionsGrid extends React.PureComponent<
           </span>
         }
         description={this.props.description}
-        tiny={true}
+        grid={true}
         loading={this.props.loading}
         collections={this.props.bookmarkedCollections}
         maxNumberOfCollections={this.props.maxNumberOfCollections}
