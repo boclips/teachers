@@ -95,7 +95,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   private saveButton(onClick?: () => void) {
     return (
       <SavingButton
-        saving={this.props.updating && this.state.isSaving}
+        saving={this.state.isSaving}
         className="toggle-collection-button"
         data-qa={'video-collection-menu'}
         size={'large'}
@@ -245,11 +245,11 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   };
 
   private createCollection = () => {
+    this.onClose({ isSaving: true })();
     this.props.onCreateCollection({
       title: this.state.newCollectionTitle,
       videos: [this.props.video],
     });
-    this.onClose({ isSaving: true })();
   };
 
   private showCreateCollection = e => {
