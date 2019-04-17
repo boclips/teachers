@@ -21,8 +21,9 @@ export default class SavingButton extends React.PureComponent<Props, State> {
   }
 
   public UNSAFE_componentWillReceiveProps(nextProps: Readonly<Props>): void {
-    const isJustSaved = this.state.saving && !nextProps.saving;
+    const isJustSaved = this.props.saving && !nextProps.saving;
     let timeoutId;
+
     if (isJustSaved && !this.state.timeoutId) {
       timeoutId = setTimeout(
         function() {
@@ -34,13 +35,14 @@ export default class SavingButton extends React.PureComponent<Props, State> {
         }.bind(this),
         3000,
       );
+
+      this.setState({
+        ...this.state,
+        timeoutId,
+        justSaved: isJustSaved,
+        saving: nextProps.saving,
+      });
     }
-    this.setState({
-      ...this.state,
-      timeoutId,
-      justSaved: isJustSaved,
-      saving: nextProps.saving,
-    });
   }
 
   public componentWillUnmount() {
