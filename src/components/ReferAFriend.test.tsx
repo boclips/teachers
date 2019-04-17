@@ -24,23 +24,25 @@ beforeEach(() => {
   wrapper = mount(
     <Provider store={mockStore({ user })}>
       <MemoryRouter>
-        <ReferAFriend text={'Refer a friend'} />
+        <ReferAFriend>
+          <p>Hello</p>
+        </ReferAFriend>
       </MemoryRouter>
     </Provider>,
   );
 });
 
-test('initializes input with value prop', () => {
-  expect(wrapper.find('a').text()).toBe('Refer a friend');
+test('it renders a child component', () => {
+  expect(wrapper.find(ReferAFriend).prop('children')).toEqual(<p>Hello</p>);
 });
 
 test('on click a modal pops up', () => {
-  wrapper.find('a').simulate('click');
+  wrapper.find(ReferAFriend).simulate('click');
   expect(wrapper.debug()).toContain('visible={true}');
 });
 
 test('on click a modal opens with correct source', () => {
-  wrapper.find('a').simulate('click');
+  wrapper.find(ReferAFriend).simulate('click');
 
   const {
     dangerouslySetInnerHTML: { __html },

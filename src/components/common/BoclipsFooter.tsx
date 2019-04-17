@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import State from '../../types/State';
-import ReferAFriend from '../ReferAFriend';
 import './BoclipsFooter.less';
 
 interface StateProps {
@@ -21,9 +20,6 @@ class BoclipsFooter extends PureComponent<StateProps> {
           All trademarks, service marks, trade names, product names and logos
           appearing on the site are the property of their respective owners. Any
           rights not expressly granted herein are reserved.
-        </p>
-        <p>
-          {this.props.isAuthenticated && <ReferAFriend text="Refer a friend" />}
         </p>
       </section>
     );

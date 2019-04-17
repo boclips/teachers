@@ -4,11 +4,15 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
+import ReferAFriendBannerMobile from '../../../resources/images/refer-a-friend-banner-mobile.svg';
+import ReferAFriendBanner from '../../../resources/images/refer-a-friend-banner.svg';
 import PublicCollectionsGrid from '../../components/collection/public/PublicCollectionsGrid';
 import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
+import ReferAFriend from '../../components/ReferAFriend';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+
 import './HomeView.less';
 
 const { Content } = Layout;
@@ -37,6 +41,24 @@ export default class HomeView extends PureComponent {
               </Col>
             </Row>
           </PageLayout>
+        </section>
+        <section className="refer-a-friend-banner">
+          <Content>
+            <Row>
+              <Col>
+                <ReferAFriend>
+                  <img
+                    className="refer-a-friend-banner__img display-tablet-and-desktop"
+                    src={ReferAFriendBanner}
+                  />
+                  <img
+                    className="refer-a-friend-banner__img display-mobile"
+                    src={ReferAFriendBannerMobile}
+                  />
+                </ReferAFriend>
+              </Col>
+            </Row>
+          </Content>
         </section>
         <section className="discovery-section">
           <Content>

@@ -5,6 +5,7 @@ import './AccountMenuMobileComponent.less';
 import {
   BookmarkedCollectionsLink,
   LogoutLink,
+  ReferAFriendLink,
   VideoCollectionsLink,
 } from './MenuOptions';
 
@@ -48,7 +49,7 @@ export default class AccountMenuMobile extends React.PureComponent<
           placement="bottom"
           title="My account"
           onClose={this.onClose}
-          height="185"
+          height="225"
         >
           <Menu selectable={false}>
             <Menu.Item key="1" className="account-menu-mobile__menu-item">
@@ -60,6 +61,10 @@ export default class AccountMenuMobile extends React.PureComponent<
             </Menu.Item>
             <Menu.Divider key="lovely-divider-2" />
             <Menu.Item key="3" className="account-menu-mobile__menu-item">
+              <ReferAFriendLink />
+            </Menu.Item>
+            <Menu.Divider key="lovely-divider-3" />
+            <Menu.Item key="4" className="account-menu-mobile__menu-item">
               <LogoutLink onClick={this.props.onLogout} />
             </Menu.Item>
           </Menu>

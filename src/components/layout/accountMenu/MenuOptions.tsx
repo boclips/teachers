@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import collectionsIcon from '../../../../resources/images/collections-grey.svg';
 import logoutIcon from '../../../../resources/images/logout.svg';
 import bookmarkedIcon from '../../../../resources/images/my-bookmarks.svg';
+import ReferAFriendIcon from '../../../../resources/images/refer-a-friend-icon.svg';
+import ReferAFriend from '../../ReferAFriend';
 
 type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
@@ -47,4 +49,24 @@ class LogoutLink extends React.PureComponent<Props> {
   );
 }
 
-export { VideoCollectionsLink, BookmarkedCollectionsLink, LogoutLink };
+class ReferAFriendLink extends React.PureComponent<{}> {
+  public render() {
+    return (
+      <ReferAFriend>
+        <a data-qa="refer-a-friend-button" href="#">
+          <span className="icon-container">
+            <img src={ReferAFriendIcon} />
+          </span>
+          <span>Refer a friend</span>
+        </a>
+      </ReferAFriend>
+    );
+  }
+}
+
+export {
+  VideoCollectionsLink,
+  BookmarkedCollectionsLink,
+  LogoutLink,
+  ReferAFriendLink,
+};

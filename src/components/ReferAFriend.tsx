@@ -8,7 +8,7 @@ import Bodal from './common/Bodal';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 
 interface Props {
-  text: string;
+  children: React.ReactNode;
 }
 
 interface State {
@@ -50,9 +50,7 @@ class ReferAFriend extends React.Component<Props & StateProps, State> {
   public render() {
     return (
       <React.Fragment>
-        <a href="#" onClick={this.openModal}>
-          {this.props.text}
-        </a>
+        <div onClick={this.openModal}>{this.props.children}</div>
 
         <Bodal
           title="Refer a friend"
