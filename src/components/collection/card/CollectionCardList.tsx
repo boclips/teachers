@@ -1,11 +1,10 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardContainer from './CollectionCardContainer';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { uuid } from 'boclips-react-player/dist/src/uuid';
 
 interface InfiniteScrollProps {
   next: () => void;

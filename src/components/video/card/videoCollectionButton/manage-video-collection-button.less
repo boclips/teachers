@@ -54,7 +54,7 @@
   }
 
   &__menu-item {
-    min-width: 400px;
+    max-width: 380px;
     display: inline-block;
   }
 
@@ -63,8 +63,12 @@
   }
 
   &__collection-entry {
+    width: 340px;
     display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
+    vertical-align: bottom;
   }
 
   &__title-input {
