@@ -15,7 +15,7 @@ export class NewsBoxSidebar extends PureComponent<NewBoxSidePanelProps> {
         >
           <Row type="flex" justify="center">
             <Col>
-              <img className="news-box__logo" src={newsLogo} alt="News icon" />
+              <img className="news-box__logo" src={newsLogo} alt="" />
             </Col>
             <Col>
               <div className="news-box__title-container">

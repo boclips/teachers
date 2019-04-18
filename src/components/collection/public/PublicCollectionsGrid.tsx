@@ -34,8 +34,7 @@ class PublicCollectionsGrid extends React.PureComponent<
       <CollectionCardList
         title={
           <span>
-            <img src={collectionsImg} alt="Collections icon" /> Most recent
-            video collections
+            <img src={collectionsImg} alt="" /> Most recent video collections
           </span>
         }
         description={this.props.description}

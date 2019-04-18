@@ -47,8 +47,7 @@ export class CollectionListView extends PureComponent<
         <CollectionCardList
           title={
             <span>
-              <img src={collections} alt="Collections icon" /> My video
-              collections
+              <img src={collections} alt="" /> My video collections
             </span>
           }
           collections={this.props.collections}

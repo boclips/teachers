@@ -105,7 +105,7 @@ export class CollectionView extends PureComponent<
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 8 }}>
             <section className="illustration">
-              <img src={sadTeacher} />
+              <img src={sadTeacher} alt="Illustration of a sad woman" />
             </section>
           </Col>
           <Col sm={{ span: 24 }} md={{ span: 16 }}>

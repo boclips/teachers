@@ -48,11 +48,8 @@ class BookmarkedCollectionsGrid extends React.PureComponent<
       <CollectionCardList
         title={
           <span>
-            <img
-              src={bookmarkedCollectionsImg}
-              alt="Bookmarked collections icon"
-            />{' '}
-            My bookmarked collections
+            <img src={bookmarkedCollectionsImg} alt="" /> My bookmarked
+            collections
           </span>
         }
         description={this.props.description}
@@ -88,8 +85,8 @@ class BookmarkedCollectionsGrid extends React.PureComponent<
           <h1 data-qa="no-collections">You have no bookmarks, yet.</h1>
           <p>
             You can add bookmarks by clicking the{' '}
-            <img src={bookmarkFilled} alt="Bookmark collection icon" /> icon
-            next to collection titles.
+            <img src={bookmarkFilled} alt="Bookmark collection" /> icon next to
+            collection titles.
           </p>
         </Col>
       </Row>
