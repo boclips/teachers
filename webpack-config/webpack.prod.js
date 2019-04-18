@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
+const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -53,7 +54,7 @@ module.exports = merge(common, {
       template: path.resolve(srcPath, 'index.html'),
       ga: googleAnalyticsId,
     }),
-    new CleanWebpackPlugin([distPath], { root: path.resolve(__dirname, '..') }),
+    new CleanWebpackPlugin([distPath], {root: path.resolve(__dirname, '..')}),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
@@ -63,6 +64,7 @@ module.exports = merge(common, {
       algorithm: 'gzip',
       test: /\.js$|\.css$|\.svg$|\.png$/,
     }),
+    new DynamicCdnWebpackPlugin(),
   ],
 
   devtool: 'source-map',
