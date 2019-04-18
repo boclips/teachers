@@ -1,15 +1,12 @@
 import { RouterActionType } from 'connected-react-router';
-import configureStore from 'redux-mock-store';
 import { Constants } from '../../../app/AppConstants';
 import { Action } from '../../../app/redux/actions';
 import { SearchRequest } from '../../../types/SearchRequest';
-import { RouterState } from '../../../types/State';
+import { MockStoreFactory } from './../../../../test-support/factories';
 import { dispatchSearchVideoAction } from './dispatchSearchVideoAction';
 
-const mockStore = configureStore<RouterState>();
-
 function getStore(mode: string = '') {
-  return mockStore({
+  return MockStoreFactory.sample({
     router: {
       location: {
         pathname: '/videos',
@@ -23,7 +20,7 @@ function getStore(mode: string = '') {
 }
 
 it('does not dispatch a SearchRequest when not on a videos page', () => {
-  const store = mockStore({
+  const store = MockStoreFactory.sample({
     router: {
       location: {
         pathname: '',

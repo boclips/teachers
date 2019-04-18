@@ -2,18 +2,15 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import {
+  MockStoreFactory,
   UserProfileFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import { LoginState } from '../../../types/State';
 import CopyLinkButton from './CopyLinkButton';
 
-const mockStore = configureStore<LoginState>();
-
 it('adds id of logged in user as a query param', () => {
-  const store = mockStore({
+  const store = MockStoreFactory.sample({
     user: UserProfileFactory.sample({
       id: 'userId',
     }),
@@ -30,7 +27,7 @@ it('adds id of logged in user as a query param', () => {
 });
 
 test('does not add referer query param if no user', () => {
-  const store = mockStore({
+  const store = MockStoreFactory.sample({
     user: null,
   });
 

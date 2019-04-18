@@ -1,10 +1,10 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import {
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
 } from '../../../../test-support/factories';
@@ -13,8 +13,6 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import { editCollectionAction } from '../redux/actions/editCollectionAction';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 
-const mockStore = configureStore<{}>();
-
 describe('when can edit collection', () => {
   it('changing the title fires a patch action', () => {
     const collection = VideoCollectionFactory.sample({
@@ -22,7 +20,7 @@ describe('when can edit collection', () => {
         edit: new Link({ href: 'something', templated: false }),
       }),
     });
-    const store = mockStore({ collections: {} });
+    const store = MockStoreFactory.sample();
     const wrapper = mountComponent(collection, store);
 
     CollectionEditModalHelper.openModal(wrapper);
@@ -46,7 +44,7 @@ describe('when can edit collection', () => {
         edit: new Link({ href: 'something', templated: false }),
       }),
     });
-    const store = mockStore({ collections: {} });
+    const store = MockStoreFactory.sample();
 
     const wrapper = mountComponent(collection, store);
 
@@ -71,7 +69,7 @@ describe('when can edit collection', () => {
         edit: new Link({ href: 'something', templated: false }),
       }),
     });
-    const store = mockStore({ collections: {} });
+    const store = MockStoreFactory.sample();
 
     const wrapper = mountComponent(collection, store);
 
@@ -88,7 +86,7 @@ describe('When cannot edit collection', () => {
       isPublic: false,
       links: VideoCollectionLinksFactory.sample({ edit: null }),
     });
-    const store = mockStore({ collections: {} });
+    const store = MockStoreFactory.sample();
 
     const wrapper = mountComponent(collection, store);
 

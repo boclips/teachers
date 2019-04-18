@@ -1,12 +1,10 @@
 import { mount } from 'enzyme';
 import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { LoginState } from '../../types/State';
+import { MockStoreFactory } from '../../../test-support/factories';
 import LoginProvider from './LoginProvider';
 
-const mockStore = configureStore<LoginState>();
 jest.mock('boclips-js-security');
 
 class TestComponent extends PureComponent {
@@ -17,7 +15,7 @@ class TestComponent extends PureComponent {
 
 test('Renders children', () => {
   const wrapper = mount(
-    <Provider store={mockStore({ user: undefined })}>
+    <Provider store={MockStoreFactory.sample({ user: undefined })}>
       <LoginProvider>
         <TestComponent />
       </LoginProvider>

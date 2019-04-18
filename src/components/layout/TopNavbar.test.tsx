@@ -1,15 +1,15 @@
-import { shallow } from 'enzyme';
-import React, { ReactElement } from 'react';
-import { Link } from 'react-router-dom';
-import { Store } from 'redux';
-import configureStore from 'redux-mock-store';
+import { mount } from 'enzyme';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Link, MemoryRouter } from 'react-router-dom';
 import { By } from '../../../test-support/By';
-import { UserProfileFactory } from '../../../test-support/factories';
-import { LoginState } from '../../types/State';
+import {
+  MockStoreFactory,
+  UserProfileFactory,
+} from '../../../test-support/factories';
 import { AccountMenuContainer } from './accountMenu/AccountMenuContainer';
 import TopNavbarContainer from './TopNavbarContainer';
 
-const mockStore = configureStore<LoginState>();
 const user = UserProfileFactory.sample({ authenticated: true });
 
 describe('when authenticated', () => {
@@ -50,27 +50,33 @@ describe('when authenticated', () => {
   });
 
   function mountAuthenticatedLayout() {
-    return shallowWithStore(<TopNavbarContainer />, mockStore({ user }))
-      .dive()
-      .dive();
+    return mount(
+      <Provider store={MockStoreFactory.sample({ user })}>
+        <MemoryRouter>
+          <TopNavbarContainer />
+        </MemoryRouter>
+      </Provider>,
+    );
   }
 
   function mountAuthenticatedLayoutWithoutSearch() {
-    return shallowWithStore(
-      <TopNavbarContainer showSearchBar={false} />,
-      mockStore({ user }),
-    )
-      .dive()
-      .dive();
+    return mount(
+      <Provider store={MockStoreFactory.sample({ user })}>
+        <MemoryRouter>
+          <TopNavbarContainer showSearchBar={false} />
+        </MemoryRouter>
+      </Provider>,
+    );
   }
 
   function mountAuthenticatedLayoutWithTabs() {
-    return shallowWithStore(
-      <TopNavbarContainer showTabs={true} />,
-      mockStore({ user }),
-    )
-      .dive()
-      .dive();
+    return mount(
+      <Provider store={MockStoreFactory.sample({ user })}>
+        <MemoryRouter>
+          <TopNavbarContainer showTabs={true} />
+        </MemoryRouter>
+      </Provider>,
+    );
   }
 });
 
@@ -88,18 +94,12 @@ describe('when not authenticated', () => {
   });
 
   function mountAnonymousLayout() {
-    return shallowWithStore(
-      <TopNavbarContainer />,
-      mockStore({ user: undefined }),
-    )
-      .dive()
-      .dive();
+    return mount(
+      <Provider store={MockStoreFactory.sample({ user: undefined })}>
+        <MemoryRouter>
+          <TopNavbarContainer />
+        </MemoryRouter>
+      </Provider>,
+    );
   }
 });
-
-const shallowWithStore = (component: ReactElement<any>, store: Store) => {
-  const context = {
-    store,
-  };
-  return shallow(component, { context });
-};

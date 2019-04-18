@@ -1,23 +1,15 @@
 import { Card } from 'antd';
-import { RouterActionType } from 'connected-react-router';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import configureStore from 'redux-mock-store';
 import {
-  LinksFactory,
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
-import {
-  CollectionState,
-  LinksState,
-  RouterState,
-  SearchState,
-} from '../../../types/State';
 import { Props, VideoCardForRouter } from './VideoCard';
 import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
 import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
@@ -118,49 +110,6 @@ describe('when within video collection', () => {
   });
 });
 
-const mockStore = configureStore<
-  SearchState & LinksState & RouterState & CollectionState
->();
-
-function createStore(query: string, isLoading = false) {
-  return {
-    links: LinksFactory.sample(),
-    search: {
-      videos: [],
-      loading: isLoading,
-      query,
-      paging: {
-        totalElements: 1111,
-        totalPages: 0,
-        number: 0,
-        size: 10,
-      },
-    },
-    router: {
-      location: {
-        pathname: '',
-        search: `?q=${query}`,
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
-    collections: {
-      loading: false,
-      updating: false,
-      myCollections: [],
-      publicCollections: {
-        items: [],
-        links: {},
-      },
-      bookmarkedCollections: {
-        items: [],
-        links: {},
-      },
-    },
-  };
-}
-
 const getMountedWrapper = (givenProps: Partial<Props> = {}) => {
   const props: Props = {
     video: VideoFactory.sample(),
@@ -171,7 +120,7 @@ const getMountedWrapper = (givenProps: Partial<Props> = {}) => {
   };
 
   return mount(
-    <Provider store={mockStore(createStore(''))}>
+    <Provider store={MockStoreFactory.sample()}>
       <MemoryRouter>
         <VideoCardForRouter {...props} />
       </MemoryRouter>

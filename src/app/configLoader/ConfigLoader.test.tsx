@@ -4,17 +4,17 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import configureStore from 'redux-mock-store';
 import eventually from '../../../test-support/eventually';
-import { LinksFactory } from '../../../test-support/factories';
+import {
+  LinksFactory,
+  MockStoreFactory,
+} from '../../../test-support/factories';
 import fetchLinks from '../../services/links/fetchLinks';
-import { LinksState } from '../../types/State';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
 import ConfigLoader from './ConfigLoader';
 jest.mock('../../services/links/fetchLinks');
 
 const loading = () => <span id="loading" />;
-const mockStore = configureStore<LinksState>();
 const mountConfigLoader = (store: Store) =>
   mount(
     <Provider store={store}>
@@ -29,7 +29,7 @@ describe('when component mounts', () => {
   describe('when links fetched', () => {
     test('dispatches FETCH_LINKS action', async () => {
       fetchLinksMock.mockReturnValue(Promise.resolve(LinksFactory.sample()));
-      const store = mockStore({ links: null });
+      const store = MockStoreFactory.sample({ links: null });
 
       mountConfigLoader(store);
 
@@ -43,7 +43,7 @@ describe('when component mounts', () => {
 describe('when links are present', () => {
   test('renders child component', () => {
     const wrapper = mountConfigLoader(
-      mockStore({ links: LinksFactory.sample() }),
+      MockStoreFactory.sample({ links: LinksFactory.sample() }),
     );
 
     expect(wrapper.find('#child')).toExist();
@@ -53,7 +53,7 @@ describe('when links are present', () => {
 
 describe('when links are not present', () => {
   test('renders loading component', () => {
-    const wrapper = mountConfigLoader(mockStore({ links: null }));
+    const wrapper = mountConfigLoader(MockStoreFactory.sample({ links: null }));
     expect(wrapper.find('#loading')).toExist();
     expect(wrapper.find('#child')).not.toExist();
   });

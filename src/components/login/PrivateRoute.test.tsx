@@ -3,13 +3,13 @@ import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { UserProfileFactory } from '../../../test-support/factories';
-import { LoginState } from '../../types/State';
+import {
+  MockStoreFactory,
+  UserProfileFactory,
+} from '../../../test-support/factories';
 import PrivateRoute from './PrivateRoute';
 
-const mockStore = configureStore<LoginState>();
 jest.mock('boclips-js-security');
 
 class TestComponent extends PureComponent {
@@ -31,7 +31,7 @@ function render(store: Store<any>) {
 describe('when not logged in', () => {
   test('does not render component', () => {
     const wrapper = render(
-      mockStore({
+      MockStoreFactory.sample({
         user: null,
       }),
     );
@@ -45,7 +45,7 @@ describe('when logged in', () => {
   test('Renders component', () => {
     const user = UserProfileFactory.sample({ authenticated: true });
 
-    const wrapper = render(mockStore({ user }));
+    const wrapper = render(MockStoreFactory.sample({ user }));
 
     const content = wrapper.find(By.dataQa('restricted-content'));
     expect(content).toExist();
@@ -55,7 +55,7 @@ describe('when logged in', () => {
     const user = UserProfileFactory.sample({ authenticated: true });
 
     const wrapper = mount(
-      <Provider store={mockStore({ user })}>
+      <Provider store={MockStoreFactory.sample({ user })}>
         <MemoryRouter initialEntries={['/']}>
           <PrivateRoute path="/">
             <TestComponent />

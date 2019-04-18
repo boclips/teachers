@@ -7,7 +7,11 @@ import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
-import State, { Pageable, SearchStateValue } from '../src/types/State';
+import State, {
+  CollectionsStateValue,
+  Pageable,
+  SearchStateValue,
+} from '../src/types/State';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
@@ -210,8 +214,30 @@ export class RouterFactory {
   }
 }
 
+export class CollectionsFactory {
+  public static sample(
+    arg: Partial<CollectionsStateValue> = {},
+  ): CollectionsStateValue {
+    return Object.freeze({
+      loading: false,
+      updating: false,
+      myCollections: [VideoCollectionFactory.sample()],
+      publicCollections: {
+        items: [],
+        links: {},
+      },
+      bookmarkedCollections: {
+        items: [],
+        links: {},
+      },
+      publicCollectionDetails: VideoCollectionFactory.sample(),
+      ...arg,
+    });
+  }
+}
+
 export class MockStoreFactory {
-  public static sample(store: Partial<State>): MockStoreEnhanced<State> {
+  public static sample(store: Partial<State> = {}): MockStoreEnhanced<State> {
     const mockStore = configureStore<State>();
 
     return mockStore({
@@ -222,20 +248,7 @@ export class MockStoreFactory {
         loading: false,
         item: VideoFactory.sample(),
       },
-      collections: {
-        loading: false,
-        updating: false,
-        myCollections: [VideoCollectionFactory.sample()],
-        publicCollections: {
-          items: [],
-          links: {},
-        },
-        bookmarkedCollections: {
-          items: [],
-          links: {},
-        },
-        publicCollectionDetails: VideoCollectionFactory.sample(),
-      },
+      collections: CollectionsFactory.sample(),
       router: RouterFactory.sample(),
       subjects: [],
       ageRanges: [],

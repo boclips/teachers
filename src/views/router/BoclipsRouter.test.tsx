@@ -7,19 +7,8 @@ import createMemoryHistory from 'history/createMemoryHistory';
 import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import { MockStoreFactory } from '../../../test-support/factories';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
-import {
-  AgeRangeState,
-  CollectionState,
-  LoginState,
-  RouterState,
-  SearchState,
-  SearchStateValue,
-  SubjectState,
-  VideoDetailsState,
-  VideoStateValue,
-} from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionListView from '../collection/CollectionListView';
@@ -30,15 +19,6 @@ import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
 import VideoDetailsView from '../videoDetails/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
-
-const mockStore = configureStore<
-  RouterState &
-    VideoDetailsState &
-    SearchState &
-    LoginState &
-    CollectionState &
-    SubjectState
->();
 
 test('shows video details view on /videos/{id}', () => {
   const history = createMemoryHistory();
@@ -283,58 +263,15 @@ function buildStore(
     action: 'PUSH' as RouterActionType,
   };
 
-  const video: VideoStateValue = {
-    loading: false,
-    item: null,
-  };
-
-  const search: SearchStateValue = {
-    loading: false,
-    query: '',
-    videos: [],
-    paging: {
-      totalElements: 0,
-      totalPages: 0,
-      number: 0,
-      size: 10,
-    },
-  };
-
   let user = null;
   if (authorised) {
     user = Keycloak();
     user.authenticated = true;
   }
 
-  const collections = {
-    loading: true,
-    updating: false,
-    myCollections: [],
-    publicCollections: undefined,
-    bookmarkedCollections: undefined,
-  };
-
-  const subjectsState: SubjectState = {
-    subjects: [],
-  };
-
-  const ageRangeState: AgeRangeState = {
-    ageRanges: [
-      {
-        label: '4-5',
-        value: [4, 5],
-      },
-    ],
-  };
-
-  const store = mockStore({
+  const store = MockStoreFactory.sample({
     router,
-    video,
-    search,
     user,
-    collections,
-    ...subjectsState,
-    ...ageRangeState,
   });
 
   return store;

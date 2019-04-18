@@ -2,24 +2,13 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import configureStore from 'redux-mock-store';
-import {
-  LinksFactory,
-  VideoCollectionFactory,
-} from '../../../../test-support/factories';
-import { CollectionState, LinksState, RouterState } from '../../../types/State';
+import { MockStoreFactory } from '../../../../test-support/factories';
 import { fetchPublicCollectionsAction } from '../redux/actions/fetchPublicCollectionsAction';
 import PublicCollectionsGrid from './PublicCollectionsGrid';
 
-const mockStore = configureStore<CollectionState & RouterState & LinksState>();
-
 test('dispatches fetch public collection if none when mounted', () => {
-  const store = mockStore({
-    links: LinksFactory.sample(),
-    // @ts-ignore
-    collections: {},
-    // @ts-ignore
-    router: { location: { search: '' } },
+  const store = MockStoreFactory.sample({
+    collections: {} as any,
   });
 
   mount(
@@ -32,18 +21,7 @@ test('dispatches fetch public collection if none when mounted', () => {
 });
 
 test('dispatches does not fetch public collection if some when mounted', () => {
-  const store = mockStore({
-    links: LinksFactory.sample(),
-    // @ts-ignore
-    collections: {
-      publicCollections: {
-        items: [VideoCollectionFactory.sample()],
-        links: {},
-      },
-    },
-    // @ts-ignore
-    router: { location: { search: '' } },
-  });
+  const store = MockStoreFactory.sample();
 
   mount(
     <Provider store={store}>

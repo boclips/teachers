@@ -1,20 +1,19 @@
 import { mount } from 'enzyme';
-import React, { ReactElement } from 'react';
-import { Store } from 'redux';
-import configureStore, { MockStore } from 'redux-mock-store';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { MockStore } from 'redux-mock-store';
 import { By } from '../../../../../test-support/By';
 import {
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
-import { CollectionState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
 import SavingButton from '../../../common/savingButton/SavingButton';
 import ManageVideoCollectionsButton from './ManageVideoCollectionButton';
 
-const mockStore = configureStore<CollectionState>();
 let store: MockStore;
 
 describe('when loading collections', () => {
@@ -156,7 +155,7 @@ const mountWith = (
   loading: boolean = false,
   updating: boolean = false,
 ) => {
-  store = mockStore({
+  store = MockStoreFactory.sample({
     collections: {
       myCollections: collections,
       publicCollections: undefined,
@@ -165,12 +164,9 @@ const mountWith = (
       updating,
     },
   });
-  return mountWithStore(<ManageVideoCollectionsButton video={video} />, store);
-};
-
-const mountWithStore = (component: ReactElement<any>, st: Store) => {
-  const context = {
-    store: st,
-  };
-  return mount(component, { context });
+  return mount(
+    <Provider store={store}>
+      <ManageVideoCollectionsButton video={video} />
+    </Provider>,
+  );
 };

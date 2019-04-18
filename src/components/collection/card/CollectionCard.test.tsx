@@ -2,16 +2,14 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import configureStore from 'redux-mock-store';
 import { By } from '../../../../test-support/By';
 import {
-  LinksFactory,
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
-import { LinksState } from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import BookmarkCollectionButton from './BookmarkCollectionButton';
@@ -72,14 +70,9 @@ describe('CollectionCard', () => {
   });
 
   describe('a collection card with an onclick function', () => {
-    const mockStore = configureStore<LinksState>();
-    const store = mockStore({
-      links: LinksFactory.sample(),
-    });
-
     const getWrapper = (onClick: React.MouseEventHandler) => {
       return mount(
-        <Provider store={store}>
+        <Provider store={MockStoreFactory.sample()}>
           <MemoryRouter>
             <CollectionCard
               collection={collection}

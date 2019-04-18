@@ -3,15 +3,15 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import configureStore from 'redux-mock-store';
-import { UserProfileFactory } from '../../test-support/factories';
-import { LoginState } from '../types/State';
+import {
+  MockStoreFactory,
+  UserProfileFactory,
+} from '../../test-support/factories';
 import ReferAFriend from './ReferAFriend';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 
 let wrapper: ReactWrapper;
 
-const mockStore = configureStore<LoginState>();
 const user = UserProfileFactory.sample({
   firstName: 'Matt',
   lastName: 'Jones',
@@ -22,7 +22,7 @@ const user = UserProfileFactory.sample({
 
 beforeEach(() => {
   wrapper = mount(
-    <Provider store={mockStore({ user })}>
+    <Provider store={MockStoreFactory.sample({ user })}>
       <MemoryRouter>
         <ReferAFriend>
           <p>Hello</p>

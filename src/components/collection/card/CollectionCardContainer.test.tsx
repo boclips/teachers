@@ -2,14 +2,12 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from 'redux-mock-store';
 import ApiStub from '../../../../test-support/ApiStub';
 import {
-  LinksFactory,
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import { CollectionState, LinksState } from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { fetchVideosForCollectionAction } from '../redux/actions/fetchVideosForCollectionAction';
 import CollectionCardContainer from './CollectionCardContainer';
@@ -143,8 +141,7 @@ describe('does not fetch videos scenarios', () => {
 });
 
 const createMockStore = (collection: VideoCollection) => {
-  const mockStore = configureStore<CollectionState & LinksState>();
-  return mockStore({
+  return MockStoreFactory.sample({
     collections: {
       myCollections: [collection],
       publicCollections: undefined,
@@ -152,6 +149,5 @@ const createMockStore = (collection: VideoCollection) => {
       loading: false,
       updating: false,
     },
-    links: LinksFactory.sample(),
   });
 };

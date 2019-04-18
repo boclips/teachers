@@ -1,27 +1,25 @@
-import { RouterActionType } from 'connected-react-router';
 import { shallow } from 'enzyme';
 import React from 'react';
-import configureStore from 'redux-mock-store';
-import { RouterState, SearchState } from '../../../types/State';
+import {
+  MockStoreFactory,
+  RouterFactory,
+  SearchFactory,
+} from '../../../../test-support/factories';
 import withNewsNavigation, { NewsNavigationProps } from './withNewsNavigation';
 
-const mockStore = configureStore<RouterState & SearchState>();
-
-const store = mockStore({
+const store = MockStoreFactory.sample({
   router: {
+    ...RouterFactory.sample(),
     location: {
       pathname: '',
       search: '?q=eggs',
       hash: '',
       state: null,
     },
-    action: 'PUSH' as RouterActionType,
   },
   search: {
-    loading: false,
+    ...SearchFactory.sample(),
     query: 'string',
-    videos: null,
-    paging: null,
   },
 });
 

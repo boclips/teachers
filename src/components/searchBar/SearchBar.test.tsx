@@ -1,28 +1,29 @@
-import { push, RouterActionType } from 'connected-react-router';
+import { push } from 'connected-react-router';
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore, { MockStore } from 'redux-mock-store';
-import { RouterState } from '../../types/State';
+import { MockStore } from 'redux-mock-store';
+import {
+  MockStoreFactory,
+  RouterFactory,
+} from '../../../test-support/factories';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
-
-const mockStore = configureStore<RouterState>();
 
 let store: MockStore;
 
 let statefulSearchBar: ReactWrapper<any>;
 
 beforeEach(() => {
-  store = mockStore({
+  store = MockStoreFactory.sample({
     router: {
+      ...RouterFactory.sample(),
       location: {
         pathname: '',
         search: '?q=eggs',
         hash: '',
         state: null,
       },
-      action: 'PUSH' as RouterActionType,
     },
   });
 

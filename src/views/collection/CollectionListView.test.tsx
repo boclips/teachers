@@ -1,27 +1,15 @@
-import { ConnectedRouter, RouterActionType } from 'connected-react-router';
+import { ConnectedRouter } from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { CollectionState, RouterState } from '../../types/State';
+import { MockStoreFactory } from '../../../test-support/factories';
 import CollectionListView from './CollectionListView';
 
-const mockStore = configureStore<CollectionState & RouterState>();
-
 function render(collection) {
-  const store = mockStore({
+  const store = MockStoreFactory.sample({
     collections: collection,
-    router: {
-      location: {
-        pathname: '',
-        search: `?q=${''}`,
-        hash: '',
-        state: null,
-      },
-      action: 'PUSH' as RouterActionType,
-    },
   });
 
   const wrapper = mount(
