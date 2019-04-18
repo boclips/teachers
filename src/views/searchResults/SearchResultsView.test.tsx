@@ -1,17 +1,18 @@
-import { RouterActionType } from 'connected-react-router';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import configureStore from 'redux-mock-store';
 import { By } from '../../../test-support/By';
-import { LinksFactory } from '../../../test-support/factories';
-import { LinksState, RouterState, SearchState } from '../../types/State';
+import {
+  MockStoreFactory,
+  RouterFactory,
+  SearchFactory,
+} from '../../../test-support/factories';
 import SearchResultsView from './SearchResultsView';
 
 test('shows placeholders when results are loading', () => {
-  const store = mockStore(createStore('donuts', true));
+  const store = createStore('donuts', true);
   const wrapper = mountWith(store);
 
   const placeholders = wrapper.find(By.dataQa('search-results-placeholders'));
@@ -20,7 +21,7 @@ test('shows placeholders when results are loading', () => {
 });
 
 test('shows a no results message when there are zero search results', () => {
-  const store = mockStore(createStore('donuts'));
+  const store = createStore('donuts');
   const wrapper = mountWith(store);
 
   const message = wrapper.find(By.dataQa('search-zero-results'));
@@ -31,15 +32,13 @@ test('shows a no results message when there are zero search results', () => {
 });
 
 test('does not show a no results message when search query is empty', () => {
-  const store = mockStore(createStore(''));
+  const store = createStore('');
   const wrapper = mountWith(store);
 
   const message = wrapper.find(By.dataQa('search-zero-results'));
 
   expect(message).not.toExist();
 });
-
-const mockStore = configureStore<SearchState & LinksState & RouterState>();
 
 function mountWith(store: Store) {
   return mount(
@@ -52,27 +51,20 @@ function mountWith(store: Store) {
 }
 
 function createStore(query: string, isLoading = false) {
-  return {
-    links: LinksFactory.sample(),
+  return MockStoreFactory.sample({
     search: {
-      videos: [],
+      ...SearchFactory.sample(),
       loading: isLoading,
       query,
-      paging: {
-        totalElements: 1111,
-        totalPages: 0,
-        number: 0,
-        size: 10,
-      },
     },
     router: {
+      ...RouterFactory.sample(),
       location: {
         pathname: '',
         search: `?q=${query}`,
         hash: '',
         state: null,
       },
-      action: 'PUSH' as RouterActionType,
     },
-  };
+  });
 }

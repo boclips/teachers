@@ -1,8 +1,13 @@
+import {
+  RouterActionType,
+  RouterState as ReactRouterState,
+} from 'connected-react-router';
 import * as moment from 'moment';
+import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
-import { Pageable } from '../src/types/State';
+import State, { Pageable, SearchStateValue } from '../src/types/State';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
@@ -157,6 +162,84 @@ export class UserProfileFactory {
       analyticsId: arg.analyticsId || 'mixpanel-123',
       id: arg.id || '1',
       links: arg.links || UserProfileLinksFactory.sample(),
+    });
+  }
+}
+export class LoginFactory {
+  public static sample(arg: Partial<UserProfile> = {}): UserProfile {
+    return Object.freeze({
+      authenticated: arg.authenticated || true,
+      email: arg.email || 'joe@boclips.com',
+      firstName: arg.firstName || 'joe',
+      lastName: arg.lastName || 'boclips',
+      analyticsId: arg.analyticsId || 'mixpanel-123',
+      id: arg.id || '1',
+      links: arg.links || UserProfileLinksFactory.sample(),
+    });
+  }
+}
+
+export class SearchFactory {
+  public static sample(arg: Partial<SearchStateValue> = {}): SearchStateValue {
+    return Object.freeze({
+      query: 'hello',
+      videos: [],
+      paging: {
+        number: 1,
+        size: 10,
+        totalElements: 10,
+        totalPages: 10,
+      },
+      loading: false,
+      ...arg,
+    });
+  }
+}
+export class RouterFactory {
+  public static sample(arg: Partial<ReactRouterState> = {}): ReactRouterState {
+    return Object.freeze({
+      location: {
+        pathname: '',
+        search: `?q=hi`,
+        hash: '',
+        state: null,
+      },
+      action: 'PUSH' as RouterActionType,
+      ...arg,
+    });
+  }
+}
+
+export class MockStoreFactory {
+  public static sample(store: Partial<State>): MockStoreEnhanced<State> {
+    const mockStore = configureStore<State>();
+
+    return mockStore({
+      links: LinksFactory.sample(),
+      search: SearchFactory.sample(),
+      user: UserProfileFactory.sample(),
+      video: {
+        loading: false,
+        item: VideoFactory.sample(),
+      },
+      collections: {
+        loading: false,
+        updating: false,
+        myCollections: [VideoCollectionFactory.sample()],
+        publicCollections: {
+          items: [],
+          links: {},
+        },
+        bookmarkedCollections: {
+          items: [],
+          links: {},
+        },
+        publicCollectionDetails: VideoCollectionFactory.sample(),
+      },
+      router: RouterFactory.sample(),
+      subjects: [],
+      ageRanges: [],
+      ...store,
     });
   }
 }
