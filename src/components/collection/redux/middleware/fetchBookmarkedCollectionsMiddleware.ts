@@ -8,7 +8,7 @@ import { CollectionState, LinksState } from '../../../../types/State';
 import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { fetchBookmarkedCollectionsAction } from '../actions/fetchBookmarkedCollectionsAction';
 import { fetchNextBookmarkedCollectionsAction } from '../actions/fetchNextBookmarkedCollectionsAction';
-import { storeBookmarkedCollectionsAction } from '../actions/storeBookmarkedCollectionsAction';
+import { storePageableCollectionsAction } from '../actions/storePageableCollectionsAction';
 
 export function onFetchBookmarkedCollections(
   store: MiddlewareAPI<any, LinksState>,
@@ -16,7 +16,12 @@ export function onFetchBookmarkedCollections(
   const links = store.getState().links;
   fetchBookmarkedCollections(links)
     .then(collections => {
-      store.dispatch(storeBookmarkedCollectionsAction(collections));
+      store.dispatch(
+        storePageableCollectionsAction({
+          key: 'bookmarkedCollections',
+          collections,
+        }),
+      );
     })
     .catch(console.error);
 }
