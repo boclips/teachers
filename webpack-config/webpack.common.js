@@ -18,6 +18,12 @@ module.exports = {
   // Allows ts(x) and js files to be imported without extension
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      '@ant-design/icons/lib/dist$': path.resolve(
+        __dirname,
+        '../resources/icons.ts',
+      ),
+    },
   },
   module: {
     rules: [
