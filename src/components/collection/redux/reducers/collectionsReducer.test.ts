@@ -1,5 +1,6 @@
 import ApiStub from '../../../../../test-support/ApiStub';
 import {
+  CollectionsFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
@@ -14,6 +15,7 @@ import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
+import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { collectionsReducer } from './collectionsReducer';
 
@@ -536,4 +538,21 @@ test('appending bookmarked collections', () => {
   expect(stateAfter.bookmarkedCollections.links.next).toEqual(
     nextCollectionLink,
   );
+});
+
+test('can fetch my collections', () => {
+  const collectionToFetch = VideoCollectionFactory.sample();
+
+  const stateBefore: CollectionsStateValue = {
+    ...CollectionsFactory.sample(),
+  };
+
+  const action = storeCollectionsAction({
+    collections: [collectionToFetch],
+    key: 'myCollections',
+  });
+
+  const stateAfter = collectionsReducer(stateBefore, action);
+
+  expect(stateAfter.myCollections).toEqual([collectionToFetch]);
 });

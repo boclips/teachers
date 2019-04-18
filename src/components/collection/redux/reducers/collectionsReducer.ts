@@ -26,11 +26,10 @@ import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmar
 import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
-import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import {
-  StorePageableCollectionRequest,
-  storePageableCollectionsAction,
-} from '../actions/storePageableCollectionsAction';
+  storeCollectionsAction,
+  StoreCollectionsRequest,
+} from '../actions/storeCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import { VideoMap } from './../../../../types/VideoCollection';
@@ -304,19 +303,7 @@ const onCollectionEdited = (
 
 const onStoreCollectionsAction = (
   state: CollectionsStateValue,
-  myCollections: VideoCollection[],
-): CollectionsStateValue => {
-  return {
-    ...state,
-    myCollections,
-    loading: false,
-    updating: false,
-  };
-};
-
-const onStorePagableCollectionsAction = (
-  state: CollectionsStateValue,
-  request: StorePageableCollectionRequest,
+  request: StoreCollectionsRequest,
 ): CollectionsStateValue => {
   return {
     ...state,
@@ -360,29 +347,10 @@ const reduceStoreVideoForMyCollections = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(
+  const myCollections = updateMatchingCollectionWithVideos(
+    request,
     state.myCollections,
-    request.collection.id,
   );
-  if (indexOfCollection < 0) {
-    return state;
-  }
-  const myCollections = [...state.myCollections];
-  const videos = state.myCollections[indexOfCollection].videos;
-
-  if (videosAlreadyLoaded(request, videos)) {
-    return state;
-  }
-
-  const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
-
-  myCollections[indexOfCollection] = {
-    ...myCollections[indexOfCollection],
-    videos: {
-      ...videos,
-      ...videoMapToUpdate,
-    },
-  };
 
   return { ...state, myCollections };
 };
@@ -399,36 +367,81 @@ const reduceStoreVideoForPageableCollections = (
     return state;
   }
 
-  const indexOfCollection = getIndexOfCollection(
+  const collectionItems = updateMatchingCollectionWithVideos(
+    request,
     state[key].items,
-    request.collection.id,
   );
-
-  if (indexOfCollection < 0) {
-    return state;
-  }
-  const collectionItems = [...state[key].items];
-  const videos = state[key].items[indexOfCollection].videos;
-
-  if (videosAlreadyLoaded(request, videos)) {
-    return state;
-  }
-
-  const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
-
-  collectionItems[indexOfCollection] = {
-    ...collectionItems[indexOfCollection],
-    videos: {
-      ...videos,
-      ...videoMapToUpdate,
-    },
-  };
 
   return {
     ...state,
     [key]: {
       ...state[key],
       items: collectionItems,
+    },
+  };
+};
+
+const reduceStoreVideoForCollectionDetails = (
+  state: CollectionsStateValue,
+  request: { videos: Video[]; collection: VideoCollection },
+): CollectionsStateValue => {
+  if (
+    !state.publicCollectionDetails ||
+    state.publicCollectionDetails.id !== request.collection.id
+  ) {
+    return state;
+  }
+
+  const collectionDetails = addVideosToCollection(request);
+
+  return {
+    ...state,
+    publicCollectionDetails: collectionDetails,
+  };
+};
+
+const updateMatchingCollectionWithVideos = (
+  request: {
+    videos: Video[];
+    collection: VideoCollection;
+  },
+  collections: Readonly<VideoCollection[]>,
+): VideoCollection[] => {
+  const collectionItems = [...collections];
+
+  const indexOfCollectionToUpdate = getIndexOfCollection(
+    collectionItems,
+    request.collection.id,
+  );
+
+  if (indexOfCollectionToUpdate < 0) {
+    return collectionItems;
+  }
+
+  const updatedCollection = addVideosToCollection(request);
+
+  collectionItems[indexOfCollectionToUpdate] = updatedCollection;
+
+  return collectionItems;
+};
+
+const addVideosToCollection = (request: {
+  videos: Video[];
+  collection: VideoCollection;
+}): VideoCollection => {
+  const videos = request.collection.videos;
+
+  if (videosAlreadyLoaded(request, videos)) {
+    return request.collection;
+  }
+
+  const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
+
+  return {
+    ...request.collection,
+    videos: {
+      ...videos,
+      ...videoMapToUpdate,
     },
   };
 };
@@ -449,38 +462,6 @@ function videosAlreadyLoaded(
 ) {
   return request.videos.map(v => v.id).every(id => videos[id] !== undefined);
 }
-
-const reduceStoreVideoForCollectionDetails = (
-  state: CollectionsStateValue,
-  request: { videos: Video[]; collection: VideoCollection },
-): CollectionsStateValue => {
-  if (
-    !state.publicCollectionDetails ||
-    state.publicCollectionDetails.id !== request.collection.id
-  ) {
-    return state;
-  }
-  const videos = state.publicCollectionDetails.videos;
-
-  if (videosAlreadyLoaded(request, videos)) {
-    return state;
-  }
-
-  const videoMapToUpdate: VideoMap = getVideoMapToUpdate(request);
-
-  const collectionDetails = {
-    ...state.publicCollectionDetails,
-    videos: {
-      ...videos,
-      ...videoMapToUpdate,
-    },
-  };
-
-  return {
-    ...state,
-    publicCollectionDetails: collectionDetails,
-  };
-};
 
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
@@ -509,9 +490,5 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(
     storeVideoForCollectionAction,
     onStoreVideosForCollectionAction,
-  ),
-  actionHandler(
-    storePageableCollectionsAction,
-    onStorePagableCollectionsAction,
   ),
 );

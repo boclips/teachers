@@ -43,10 +43,10 @@ describe('on store login', () => {
     );
   });
 
-  it('fetches fetches my collections', async () => {
+  it('fetches my collections', async () => {
     await eventually(() => {
       expect(store.getActions().map(action => action.type)).toContain(
-        storeCollectionsAction([]).type,
+        storeCollectionsAction({ collections: [], key: 'myCollections' }).type,
       );
     });
   });

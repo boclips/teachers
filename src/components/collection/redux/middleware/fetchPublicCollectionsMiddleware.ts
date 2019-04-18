@@ -8,14 +8,14 @@ import { CollectionState, LinksState } from '../../../../types/State';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { fetchNextPublicCollectionsAction } from '../actions/fetchNextPublicCollectionsAction';
 import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
-import { storePageableCollectionsAction } from '../actions/storePageableCollectionsAction';
+import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 
 export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
   const links = store.getState().links;
   fetchPublicCollections(links)
     .then(collections => {
       store.dispatch(
-        storePageableCollectionsAction({
+        storeCollectionsAction({
           key: 'publicCollections',
           collections,
         }),

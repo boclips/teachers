@@ -24,7 +24,9 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
     .then((links: Links) => {
       fetchMyCollections(links)
         .then(collections => {
-          store.dispatch(storeCollectionsAction(collections));
+          store.dispatch(
+            storeCollectionsAction({ collections, key: 'myCollections' }),
+          );
         })
         .catch(e => console.error('Cannot fetch collections', e));
       return links;

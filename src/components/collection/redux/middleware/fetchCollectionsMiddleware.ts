@@ -10,7 +10,9 @@ export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
   const links = store.getState().links;
   fetchMyCollections(links)
     .then(collections => {
-      store.dispatch(storeCollectionsAction(collections));
+      store.dispatch(
+        storeCollectionsAction({ collections, key: 'myCollections' }),
+      );
       AnalyticsFactory.getInstance().trackMyCollectionsVisited();
     })
     .catch(console.error);
