@@ -17,7 +17,7 @@ export default class NotificationFactory {
         </div>
       ),
       placement: 'bottomRight',
-      icon: <img src={tickIcon} />,
+      icon: <img src={tickIcon} alt="Tick icon" />,
       style: {
         background: '#008F52',
         color: '#FFFFFF',

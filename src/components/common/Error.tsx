@@ -6,7 +6,11 @@ export default class Error extends React.Component {
     return (
       <section className="ant-layout-content error">
         <div className="ant-col-12">
-          <img className="ant-col-20" src={noResultsIllustration} />
+          <img
+            className="ant-col-20"
+            src={noResultsIllustration}
+            alt="No results illustration"
+          />
         </div>
         <div className="ant-col-12 error-message">
           <div>

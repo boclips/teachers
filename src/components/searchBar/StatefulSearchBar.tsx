@@ -69,7 +69,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           style={{ width: '100%' }}
         >
           <Search
-            prefix={<img src={logo} />}
+            prefix={<img src={logo} alt="Search icon" />}
             placeholder="Enter your search term"
             type="search"
             data-qa="search-input"

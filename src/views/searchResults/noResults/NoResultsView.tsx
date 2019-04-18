@@ -42,7 +42,11 @@ export default class NoResultsView extends React.Component<Props, State> {
       <section className="ant-layout-content zero-results">
         <Row>
           <Col xs={{ span: 16, push: 4 }} md={{ span: 12, push: 0 }}>
-            <img className="ant-col-20" src={noResultsIllustration} />
+            <img
+              className="ant-col-20"
+              src={noResultsIllustration}
+              alt="No results illustration"
+            />
           </Col>
           <Col xs={24} md={12}>
             {!this.state.isFormSubmitted && (

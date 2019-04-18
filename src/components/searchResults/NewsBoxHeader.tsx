@@ -10,7 +10,7 @@ export const NewsBoxHeader = React.memo((props: NewsBoxHeaderProps) => (
       <Col>
         <p className="news-box__title text--secondary">
           <span>
-            <img className="news-box__logo" src={newsLogo} />
+            <img className="news-box__logo" src={newsLogo} alt="News icon" />
             {props.resultsQuery}{' '}
           </span>
           <span className="news-box__title--bold">On the news</span>

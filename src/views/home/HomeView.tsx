@@ -50,10 +50,12 @@ export default class HomeView extends PureComponent {
                   <img
                     className="refer-a-friend-banner__img display-tablet-and-desktop"
                     src={ReferAFriendBanner}
+                    alt="Refer a friend banner"
                   />
                   <img
                     className="refer-a-friend-banner__img display-mobile"
                     src={ReferAFriendBannerMobile}
+                    alt="Refer a friend banner"
                   />
                 </ReferAFriend>
               </Col>

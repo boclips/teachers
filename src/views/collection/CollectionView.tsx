@@ -86,7 +86,7 @@ export class CollectionView extends PureComponent<
     return (
       <Row data-qa="collection-view-empty" className="collection-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
-          <img src={emptyCollection} />
+          <img src={emptyCollection} alt="Empty collection illustration" />
           <h1 data-qa="collection-empty-title">
             This video collection is empty
           </h1>
