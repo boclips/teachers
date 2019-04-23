@@ -4,7 +4,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import removeFromCollection from '../../../../services/collections/removeFromCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
+import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 
 export function onRemoveFromCollection(
@@ -14,7 +14,7 @@ export function onRemoveFromCollection(
   removeFromCollection(request.video, request.collection)
     .then(success => {
       store.dispatch(
-        removeFromCollectionResultAction({
+        onRemoveFromCollectionAction({
           collection: request.collection,
           video: request.video,
           success,

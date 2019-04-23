@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 
-export const removeFromCollectionResultAction = actionCreatorFactory<
+export const onRemoveFromCollectionAction = actionCreatorFactory<
   UpdateCollectionResult
->('REMOVE_FROM_COLLECTION_RESULT');
+>('ON_REMOVE_FROM_COLLECTION');

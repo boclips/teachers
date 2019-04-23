@@ -4,8 +4,8 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import addToCollection from '../../../../services/collections/addToCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
+import { onAddToCollectionAction } from '../actions/onAddToCollectionAction';
 
 export function onAddToCollection(
   store: MiddlewareAPI,
@@ -14,7 +14,7 @@ export function onAddToCollection(
   addToCollection(request.video, request.collection)
     .then(success => {
       store.dispatch(
-        addToCollectionResultAction({
+        onAddToCollectionAction({
           collection: request.collection,
           video: request.video,
           success,

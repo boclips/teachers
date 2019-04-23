@@ -1,7 +1,7 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import NotificationFactory from '../../../common/NotificationFactory';
-import { removeFromCollectionResultAction } from './../actions/removeFromCollectionResultAction';
+import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
 import { UpdateCollectionResult } from './addToCollectionResultMiddleware';
 
 export const onRemoveFromCollectionResult = (
@@ -17,6 +17,6 @@ export const onRemoveFromCollectionResult = (
 };
 
 export default sideEffect(
-  removeFromCollectionResultAction,
+  onRemoveFromCollectionAction,
   onRemoveFromCollectionResult,
 );

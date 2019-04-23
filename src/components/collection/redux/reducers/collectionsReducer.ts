@@ -7,21 +7,21 @@ import {
   getIndexOfCollection,
 } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
-import { createCollectionResultAction } from '../actions/createCollectionResultAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
 import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
+import { onAddToCollectionAction } from '../actions/onAddToCollectionAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
+import { onCreateCollectionAction } from '../actions/onCreateCollectionAction';
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
-import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
+import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
@@ -184,9 +184,9 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(fetchCollectionAction, loadingCollections),
   actionHandler(fetchMyCollectionsAction, loadingCollections),
   actionHandler(fetchPublicCollectionsAction, loadingCollections),
-  actionHandler(removeFromCollectionResultAction, collectionUpdated),
-  actionHandler(addToCollectionResultAction, collectionUpdated),
-  actionHandler(createCollectionResultAction, collectionUpdated),
+  actionHandler(onRemoveFromCollectionAction, collectionUpdated),
+  actionHandler(onAddToCollectionAction, collectionUpdated),
+  actionHandler(onCreateCollectionAction, collectionUpdated),
   actionHandler(
     appendPublicCollectionsAction,
     onAppendPageableCollectionsAction,

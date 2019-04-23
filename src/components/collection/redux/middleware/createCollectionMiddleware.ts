@@ -7,8 +7,8 @@ import {
 } from '../../../../services/collections/createCollection';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
-import { createCollectionResultAction } from '../actions/createCollectionResultAction';
 import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
+import { onCreateCollectionAction } from '../actions/onCreateCollectionAction';
 
 export function onCreateCollection(
   store: MiddlewareAPI,
@@ -17,7 +17,7 @@ export function onCreateCollection(
   const links = store.getState().links;
   createCollection(links, request)
     .then(() => {
-      store.dispatch(createCollectionResultAction());
+      store.dispatch(onCreateCollectionAction());
       store.dispatch(fetchMyCollectionsAction());
     })
     .catch(() => {
