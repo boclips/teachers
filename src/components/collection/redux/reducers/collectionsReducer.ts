@@ -174,7 +174,7 @@ const collectionUpdated = (
   return { ...state, updating: false };
 };
 
-const onUpdatingCollection = (
+const collectionUpdating = (
   state: CollectionsStateValue,
 ): CollectionsStateValue => {
   return { ...state, updating: true };
@@ -302,8 +302,8 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(appendPublicCollectionsAction, onAppendPublicCollectionsAction),
   actionHandler(addToCollectionAction, onAddVideoAction),
   actionHandler(removeFromCollectionAction, onRemoveVideoAction),
-  actionHandler(createCollectionAction, onUpdatingCollection),
-  actionHandler(editCollectionAction, onUpdatingCollection),
+  actionHandler(createCollectionAction, collectionUpdating),
+  actionHandler(editCollectionAction, collectionUpdating),
   actionHandler(fetchCollectionAction, loadingCollections),
   actionHandler(fetchCollectionsAction, loadingCollections),
   actionHandler(fetchPublicCollectionsAction, loadingCollections),
