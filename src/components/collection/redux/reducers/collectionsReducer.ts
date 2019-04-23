@@ -300,6 +300,10 @@ const onCollectionEdited = (
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(appendPublicCollectionsAction, onAppendPublicCollectionsAction),
+  actionHandler(
+    appendBookmarkedCollectionsAction,
+    onAppendBookmarkedCollectionsAction,
+  ),
   actionHandler(addVideoToCollectionAction, onAddVideoAction),
   actionHandler(removeVideoFromCollectionAction, onRemoveVideoAction),
   actionHandler(createCollectionAction, collectionUpdating),
@@ -313,10 +317,6 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(createCollectionResultAction, collectionUpdated),
   actionHandler(onCollectionRemovedAction, onCollectionRemoved),
   actionHandler(onCollectionEditedAction, onCollectionEdited),
-  actionHandler(
-    appendBookmarkedCollectionsAction,
-    onAppendBookmarkedCollectionsAction,
-  ),
   actionHandler(onCollectionUnbookmarkedAction, onCollectionUnbookmarked),
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
