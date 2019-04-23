@@ -19,7 +19,14 @@ export class EmailForm extends React.Component<FormComponentProps> {
                   message: 'Please enter your email',
                 },
               ],
-            })(<Input data-qa="email" size="large" placeholder="Email" />)}
+            })(
+              <Input
+                data-qa="email"
+                size="large"
+                placeholder="Email"
+                aria-required={true}
+              />,
+            )}
           </Form.Item>
         </Col>
       </Row>

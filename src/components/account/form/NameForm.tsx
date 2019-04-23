@@ -20,6 +20,7 @@ export class NameForm extends React.Component<FormComponentProps> {
             size="large"
             placeholder="First name"
             className="create-account-form__first-name"
+            aria-required={true}
           />,
         )}
         rightColumn={this.props.form.getFieldDecorator('lastName', {
@@ -35,6 +36,7 @@ export class NameForm extends React.Component<FormComponentProps> {
             size="large"
             placeholder="Last name"
             className="create-account-form__last-name"
+            aria-required={true}
           />,
         )}
       />

@@ -16,6 +16,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
         placeholder="Age(s) I teach"
         data-qa="ageRange"
         onChange={this.onChange}
+        aria-label="Ages I teach"
       >
         {this.generateOptions()}
       </MultiSelect>

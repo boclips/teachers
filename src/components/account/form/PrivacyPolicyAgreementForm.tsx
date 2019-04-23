@@ -20,6 +20,7 @@ export class PrivacyPolicyAgreementForm extends React.Component<
           <Checkbox
             className="create-account-form__checkbox"
             data-qa="privacy-policy"
+            aria-required={true}
           >
             I have read and agree with the Boclips{' '}
             <BlankTargetLink

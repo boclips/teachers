@@ -16,6 +16,7 @@ export class SelectSubjects extends React.PureComponent<Props> {
         placeholder="Subject(s) I teach"
         data-qa="subjects"
         onChange={this.onChange}
+        aria-label="Subjects I teach"
       >
         {this.generateOptions()}
       </MultiSelect>
