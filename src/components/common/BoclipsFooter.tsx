@@ -14,14 +14,14 @@ class BoclipsFooter extends PureComponent<StateProps> {
 
   public render() {
     return (
-      <section className="boclips-footer ant-layout-content">
+      <footer className="boclips-footer ant-layout-content">
         <p>Copyright © {this.getCurrentYear()} Boclips. All rights reserved.</p>
         <p>
           All trademarks, service marks, trade names, product names and logos
           appearing on the site are the property of their respective owners. Any
           rights not expressly granted herein are reserved.
         </p>
-      </section>
+      </footer>
     );
   }
 }
