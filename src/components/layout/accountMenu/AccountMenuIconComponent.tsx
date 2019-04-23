@@ -13,7 +13,10 @@ const AccountMenuIconComponent = React.memo((props: Props) => (
     data-qa="account-menu-open"
     onClick={props.onClick}
     src={myAccountImg}
-    alt="My account icon"
+    alt="My account menu"
+    tabIndex={0}
+    role="button"
+    aria-label="My account menu"
   />
 ));
 
