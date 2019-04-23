@@ -1,5 +1,5 @@
-export type CollectionKey = PageableCollectionKey | 'myCollections';
+export type CollectionKey = ReadOnlyCollectionKey | 'myCollections';
 
-export type PageableCollectionKey =
+export type ReadOnlyCollectionKey =
   | 'publicCollections'
   | 'bookmarkedCollections';

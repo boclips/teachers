@@ -19,7 +19,7 @@ export const fetchMyCollections = (
     .then(response => parseCollectionsListResponse(response));
 };
 
-export const fetchPageableCollections = (
+export const fetchReadOnlyCollections = (
   links: Links,
   key: CollectionKey,
 ): Promise<Pageable<VideoCollection>> => {

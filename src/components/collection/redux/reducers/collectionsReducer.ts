@@ -2,17 +2,12 @@ import { Reducer } from 'redux';
 import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
-import {
-  CollectionsStateValue,
-  getIndexOfCollection,
-} from '../../../../types/State';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import { CollectionsStateValue } from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
-  AppendCollectionRequest,
   appendPublicCollectionsAction,
-} from '../actions/appendPageableCollectionsAction';
+} from '../actions/appendReadOnlyCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
@@ -37,6 +32,11 @@ import {
   onRemoveVideoFromMyCollectionAction,
 } from './myCollectionsReducer';
 import {
+  onAppendReadOnlyCollectionsAction,
+  onCollectionBookmarked,
+  onCollectionUnbookmarked,
+} from './readOnlyCollectionsReducer';
+import {
   onStoreCollectionAction,
   onStoreCollectionsAction,
   onStoreVideosForCollectionAction,
@@ -49,26 +49,6 @@ const initialState: CollectionsStateValue = {
   publicCollectionDetails: undefined,
   loading: true,
   updating: false,
-};
-
-const onAppendPageableCollectionsAction = (
-  state: CollectionsStateValue,
-  request: AppendCollectionRequest,
-): CollectionsStateValue => {
-  const collectionKey = request.key;
-
-  const collection = {
-    ...state[collectionKey],
-    items: [...state[collectionKey].items, ...request.collections.items],
-    links: request.collections.links,
-  };
-
-  return {
-    ...state,
-    [collectionKey]: collection,
-    loading: false,
-    updating: false,
-  };
 };
 
 const loadingCollections = (
@@ -93,85 +73,6 @@ const collectionUpdating = (
   return { ...state, updating: true };
 };
 
-const removeUnbookmarkedCollection = (
-  state: CollectionsStateValue,
-  unbookmarkedCollection: VideoCollection,
-): CollectionsStateValue => {
-  return {
-    ...state,
-    bookmarkedCollections: {
-      ...state.bookmarkedCollections,
-      items:
-        state.bookmarkedCollections &&
-        state.bookmarkedCollections.items.filter(
-          collection => collection.id !== unbookmarkedCollection.id,
-        ),
-    },
-  };
-};
-
-const addBookmarkedCollection = (
-  state: CollectionsStateValue,
-  bookmarkedCollection: VideoCollection,
-): CollectionsStateValue => {
-  return {
-    ...state,
-    bookmarkedCollections: state.bookmarkedCollections && {
-      ...state.bookmarkedCollections,
-      items: [
-        ...(state.bookmarkedCollections.items || []), // TODO: use default?
-        bookmarkedCollection,
-      ],
-    },
-  };
-};
-
-const updatePublicCollection = (
-  state: CollectionsStateValue,
-  updatedCollection: VideoCollection,
-): CollectionsStateValue => {
-  if (!state.publicCollections) {
-    return state;
-  }
-
-  const indexOfCollection = getIndexOfCollection(
-    state.publicCollections && state.publicCollections.items,
-    updatedCollection.id,
-  );
-
-  const publicCollections = [...state.publicCollections.items];
-
-  if (indexOfCollection > -1) {
-    publicCollections[indexOfCollection] = {
-      ...updatedCollection,
-      videos: publicCollections[indexOfCollection].videos,
-    };
-  }
-
-  return {
-    ...state,
-    publicCollections: { ...state.publicCollections, items: publicCollections },
-  };
-};
-
-const onCollectionUnbookmarked = (
-  state: CollectionsStateValue,
-  updatedCollection: VideoCollection,
-): CollectionsStateValue => {
-  state = removeUnbookmarkedCollection(state, updatedCollection);
-  state = updatePublicCollection(state, updatedCollection);
-  return state;
-};
-
-const onCollectionBookmarked = (
-  state: CollectionsStateValue,
-  updatedCollection: VideoCollection,
-): CollectionsStateValue => {
-  state = addBookmarkedCollection(state, updatedCollection);
-  state = updatePublicCollection(state, updatedCollection);
-  return state;
-};
-
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(addVideoToMyCollectionAction, onAddVideoToMyCollectionAction),
@@ -191,11 +92,11 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(onCreateCollectionAction, collectionUpdated),
   actionHandler(
     appendPublicCollectionsAction,
-    onAppendPageableCollectionsAction,
+    onAppendReadOnlyCollectionsAction,
   ),
   actionHandler(
     appendBookmarkedCollectionsAction,
-    onAppendPageableCollectionsAction,
+    onAppendReadOnlyCollectionsAction,
   ),
   actionHandler(onCollectionUnbookmarkedAction, onCollectionUnbookmarked),
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),

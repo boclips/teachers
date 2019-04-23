@@ -1,11 +1,11 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { PageableCollectionKey } from '../../../../types/CollectionKey';
+import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
 import { Pageable } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
 
 export interface AppendCollectionRequest {
   collections: Pageable<VideoCollection>;
-  key: PageableCollectionKey;
+  key: ReadOnlyCollectionKey;
 }
 
 export const appendPublicCollectionsAction = actionCreatorFactory<
@@ -16,13 +16,13 @@ export const appendBookmarkedCollectionsAction = actionCreatorFactory<
   AppendCollectionRequest
 >('APPEND_BOOKMARKED_COLLECTIONS');
 
-export const appendPageableCollectionsAction = (
+export const appendReadOnlyCollectionsAction = (
   request: AppendCollectionRequest,
 ) => {
   switch (request.key) {
     case 'bookmarkedCollections':
       return appendBookmarkedCollectionsAction(request);
     case 'publicCollections':
-      return appendPageableCollectionsAction(request);
+      return appendReadOnlyCollectionsAction(request);
   }
 };

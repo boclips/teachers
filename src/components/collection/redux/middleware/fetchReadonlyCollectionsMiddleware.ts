@@ -2,16 +2,16 @@ import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import {
   fetchNextCollectionsPage,
-  fetchPageableCollections,
+  fetchReadOnlyCollections,
 } from '../../../../services/collections/fetchCollections';
+import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
 import { CollectionState, LinksState } from '../../../../types/State';
-import { appendPageableCollectionsAction } from '../actions/appendPageableCollectionsAction';
+import { appendReadOnlyCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
 import { fetchBookmarkedCollectionsAction } from '../actions/fetchBookmarkedCollectionsAction';
 import { fetchNextBookmarkedCollectionsAction } from '../actions/fetchNextBookmarkedCollectionsAction';
 import { fetchNextPublicCollectionsAction } from '../actions/fetchNextPublicCollectionsAction';
 import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-import { PageableCollectionKey } from './../../../../types/CollectionKey';
 
 const onFetchPublicCollections = (store: MiddlewareAPI<any, LinksState>) =>
   onFetchCollections(store, 'publicCollections');
@@ -21,10 +21,10 @@ const onFetchBookmarkCollections = (store: MiddlewareAPI<any, LinksState>) =>
 
 export function onFetchCollections(
   store: MiddlewareAPI<any, LinksState>,
-  request: PageableCollectionKey,
+  request: ReadOnlyCollectionKey,
 ) {
   const links = store.getState().links;
-  fetchPageableCollections(links, request)
+  fetchReadOnlyCollections(links, request)
     .then(collections => {
       store.dispatch(
         storeCollectionsAction({
@@ -46,13 +46,13 @@ const onFetchNextBookmarkedCollection = (
 
 export function onFetchNextCollections(
   store: MiddlewareAPI<any, CollectionState>,
-  request: PageableCollectionKey,
+  request: ReadOnlyCollectionKey,
 ) {
   const publicCollections = store.getState().collections[request];
   fetchNextCollectionsPage(publicCollections)
     .then(collections => {
       store.dispatch(
-        appendPageableCollectionsAction({
+        appendReadOnlyCollectionsAction({
           collections,
           key: request,
         }),

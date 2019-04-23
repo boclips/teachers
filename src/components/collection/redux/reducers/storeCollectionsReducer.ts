@@ -5,7 +5,7 @@ import {
 import { Video } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
-import { PageableCollectionKey } from './../../../../types/CollectionKey';
+import { ReadOnlyCollectionKey } from './../../../../types/CollectionKey';
 
 export const onStoreCollectionsAction = (
   state: CollectionsStateValue,
@@ -63,7 +63,7 @@ const reduceStoreVideoForMyCollections = (
 
 const reduceStoreVideoForPageableCollections = (
   state: CollectionsStateValue,
-  key: PageableCollectionKey,
+  key: ReadOnlyCollectionKey,
   request: {
     videos: Video[];
     collection: VideoCollection;

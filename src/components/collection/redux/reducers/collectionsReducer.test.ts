@@ -11,7 +11,7 @@ import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction
 import {
   appendBookmarkedCollectionsAction,
   appendPublicCollectionsAction,
-} from '../actions/appendPageableCollectionsAction';
+} from '../actions/appendReadOnlyCollectionsAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';

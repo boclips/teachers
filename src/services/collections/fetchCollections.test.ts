@@ -12,7 +12,7 @@ import { Link } from '../../types/Link';
 import {
   fetchMyCollections,
   fetchNextCollectionsPage,
-  fetchPageableCollections,
+  fetchReadOnlyCollections,
 } from './fetchCollections';
 
 const links = LinksFactory.sample({
@@ -48,7 +48,7 @@ describe('public collections', () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?public')
       .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
-    const collections = await fetchPageableCollections(
+    const collections = await fetchReadOnlyCollections(
       links,
       'publicCollections',
     );
