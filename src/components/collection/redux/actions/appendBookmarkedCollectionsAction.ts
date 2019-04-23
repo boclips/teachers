@@ -1,7 +1,6 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { Pageable } from '../../../../types/State';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import { AppendCollectionRequest } from './appendPublicCollectionsAction';
 
 export const appendBookmarkedCollectionsAction = actionCreatorFactory<
-  Pageable<VideoCollection>
+  AppendCollectionRequest
 >('APPEND_BOOKMARKED_COLLECTIONS');

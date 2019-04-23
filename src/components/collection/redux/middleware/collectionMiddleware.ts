@@ -3,10 +3,9 @@ import addToCollectionResultMiddleware from './addToCollectionResultMiddleware';
 import bookmarkCollectionMiddleware from './bookmarkCollectionMiddleware';
 import createCollectionMiddleware from './createCollectionMiddleware';
 import editCollectionMiddleware from './editCollectionMiddleware';
-import fetchBookmarkedCollectionsMiddleware from './fetchBookmarkedCollectionsMiddleware';
 import fetchCollectionMiddleware from './fetchCollectionMiddleware';
 import fetchCollectionsMiddleware from './fetchCollectionsMiddleware';
-import fetchPublicCollectionsMiddleware from './fetchPublicCollectionsMiddleware';
+import fetchPublicCollectionsMiddleware from './fetchPageableCollectionsMiddleware';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
 import removeCollectionMiddleware from './removeCollectionMiddleware';
 import removeFromCollectionMiddleware from './removeFromCollectionMiddleware';
@@ -17,7 +16,6 @@ export default [
   fetchCollectionMiddleware,
   fetchCollectionsMiddleware,
   ...fetchPublicCollectionsMiddleware,
-  ...fetchBookmarkedCollectionsMiddleware,
   addToCollectionMiddleware,
   addToCollectionResultMiddleware,
   removeFromCollectionMiddleware,

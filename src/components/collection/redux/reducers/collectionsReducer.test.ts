@@ -494,14 +494,15 @@ test('appending public collections', () => {
     templated: false,
   });
 
-  const action = appendPublicCollectionsAction(
-    PageableCollectionsFactory.sample({
+  const action = appendPublicCollectionsAction({
+    collections: PageableCollectionsFactory.sample({
       items: stateBefore.myCollections,
       links: {
         next: nextCollectionLink,
       },
     }),
-  );
+    key: 'publicCollections',
+  });
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
@@ -524,14 +525,15 @@ test('appending bookmarked collections', () => {
     templated: false,
   });
 
-  const action = appendBookmarkedCollectionsAction(
-    PageableCollectionsFactory.sample({
+  const action = appendBookmarkedCollectionsAction({
+    collections: PageableCollectionsFactory.sample({
       items: stateBefore.myCollections,
       links: {
         next: nextCollectionLink,
       },
     }),
-  );
+    key: 'bookmarkedCollections',
+  });
 
   const stateAfter = collectionsReducer(stateBefore, action);
 

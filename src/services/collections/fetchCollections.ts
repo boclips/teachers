@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Links } from '../../types/Links';
 import { Pageable } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
+import { CollectionKey } from './../../types/CollectionKey';
 import {
   parseCollectionsListResponse,
   parseScrollableCollectionsListResponse,
@@ -18,25 +19,15 @@ export const fetchMyCollections = (
     .then(response => parseCollectionsListResponse(response));
 };
 
-export const fetchPublicCollections = (
+export const fetchPageableCollections = (
   links: Links,
+  key: CollectionKey,
 ): Promise<Pageable<VideoCollection>> => {
-  if (!links.publicCollections) {
+  if (!links[key]) {
     return Promise.reject();
   }
   return axios
-    .get(links.publicCollections.getOriginalLink())
-    .then(response => parseScrollableCollectionsListResponse(response));
-};
-
-export const fetchBookmarkedCollections = (
-  links: Links,
-): Promise<Pageable<VideoCollection>> => {
-  if (!links.bookmarkedCollections) {
-    return Promise.reject();
-  }
-  return axios
-    .get(links.bookmarkedCollections.getOriginalLink())
+    .get(links[key].getOriginalLink())
     .then(response => parseScrollableCollectionsListResponse(response));
 };
 

@@ -12,7 +12,7 @@ import { Link } from '../../types/Link';
 import {
   fetchMyCollections,
   fetchNextCollectionsPage,
-  fetchPublicCollections,
+  fetchPageableCollections,
 } from './fetchCollections';
 
 const links = LinksFactory.sample({
@@ -48,7 +48,10 @@ describe('public collections', () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?public')
       .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
-    const collections = await fetchPublicCollections(links);
+    const collections = await fetchPageableCollections(
+      links,
+      'publicCollections',
+    );
 
     expect(collections.items[0].id).toEqual('id');
     expect(collections.items[0].title).toEqual('funky collection');

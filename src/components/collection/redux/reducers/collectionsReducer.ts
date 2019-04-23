@@ -5,7 +5,6 @@ import createReducer, {
 import {
   CollectionsStateValue,
   getIndexOfCollection,
-  Pageable,
 } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
@@ -30,6 +29,7 @@ import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import { VideoMap } from './../../../../types/VideoCollection';
+import { AppendCollectionRequest } from './../actions/appendPublicCollectionsAction';
 import {
   onStoreCollectionAction,
   onStoreCollectionsAction,
@@ -45,38 +45,21 @@ const initialState: CollectionsStateValue = {
   updating: false,
 };
 
-const onAppendPublicCollectionsAction = (
+const onAppendPageableCollectionsAction = (
   state: CollectionsStateValue,
-  publicCollections: Pageable<VideoCollection>,
+  request: AppendCollectionRequest,
 ): CollectionsStateValue => {
-  publicCollections = {
-    ...state.publicCollections,
-    items: [...state.publicCollections.items, ...publicCollections.items],
-    links: publicCollections.links,
-  };
-  return {
-    ...state,
-    publicCollections,
-    loading: false,
-    updating: false,
-  };
-};
+  const collectionKey = request.key;
 
-const onAppendBookmarkedCollectionsAction = (
-  state: CollectionsStateValue,
-  bookmarkedCollections: Pageable<VideoCollection>,
-): CollectionsStateValue => {
-  bookmarkedCollections = {
-    ...state.bookmarkedCollections,
-    items: [
-      ...state.bookmarkedCollections.items,
-      ...bookmarkedCollections.items,
-    ],
-    links: bookmarkedCollections.links,
+  const collection = {
+    ...state[collectionKey],
+    items: [...state[collectionKey].items, ...request.collections.items],
+    links: request.collections.links,
   };
+
   return {
     ...state,
-    bookmarkedCollections,
+    [collectionKey]: collection,
     loading: false,
     updating: false,
   };
@@ -299,10 +282,13 @@ const onCollectionEdited = (
 
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
-  actionHandler(appendPublicCollectionsAction, onAppendPublicCollectionsAction),
+  actionHandler(
+    appendPublicCollectionsAction,
+    onAppendPageableCollectionsAction,
+  ),
   actionHandler(
     appendBookmarkedCollectionsAction,
-    onAppendBookmarkedCollectionsAction,
+    onAppendPageableCollectionsAction,
   ),
   actionHandler(addVideoToCollectionAction, onAddVideoAction),
   actionHandler(removeVideoFromCollectionAction, onRemoveVideoAction),
