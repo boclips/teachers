@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { removeVideoFromCollectionAction } from '../../../collection/redux/actions/removeFromCollectionAction';
+import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
 
 interface Props {
   video: Video;
@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch: Dispatch, props: Props): DispatchProps {
   return {
     onRemoveFromCollection: () =>
       dispatch(
-        removeVideoFromCollectionAction({
+        removeVideoFromMyCollectionAction({
           video: props.video,
           collection: props.collection,
         }),

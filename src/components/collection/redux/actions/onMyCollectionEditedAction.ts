@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 import { VideoCollection } from '../../../../types/VideoCollection';
 
-export const onCollectionEditedAction = actionCreatorFactory<VideoCollection>(
-  'ON_COLLECTION_EDITED_ACTION',
+export const onMyCollectionEditedAction = actionCreatorFactory<VideoCollection>(
+  'ON_MY_COLLECTION_EDITED_ACTION',
 );

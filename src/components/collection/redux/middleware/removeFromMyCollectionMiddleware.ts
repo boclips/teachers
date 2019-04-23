@@ -4,8 +4,8 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import removeFromCollection from '../../../../services/collections/removeFromCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { removeVideoFromCollectionAction } from '../actions/removeFromCollectionAction';
-import { removeFromCollectionResultAction } from './../actions/removeFromCollectionResultAction';
+import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
+import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 
 export function onRemoveFromCollection(
   store: MiddlewareAPI,
@@ -29,6 +29,6 @@ export function onRemoveFromCollection(
 }
 
 export default sideEffect(
-  removeVideoFromCollectionAction,
+  removeVideoFromMyCollectionAction,
   onRemoveFromCollection,
 );

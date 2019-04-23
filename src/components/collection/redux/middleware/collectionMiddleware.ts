@@ -1,15 +1,15 @@
-import addToCollectionMiddleware from './addToCollectionMiddleware';
 import addToCollectionResultMiddleware from './addToCollectionResultMiddleware';
+import addToCollectionMiddleware from './addToMyCollectionMiddleware';
 import bookmarkCollectionMiddleware from './bookmarkCollectionMiddleware';
 import createCollectionMiddleware from './createCollectionMiddleware';
-import editCollectionMiddleware from './editCollectionMiddleware';
+import editCollectionMiddleware from './editMyCollectionMiddleware';
 import fetchCollectionMiddleware from './fetchCollectionMiddleware';
 import fetchCollectionsMiddleware from './fetchCollectionsMiddleware';
 import fetchPublicCollectionsMiddleware from './fetchPageableCollectionsMiddleware';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
-import removeCollectionMiddleware from './removeCollectionMiddleware';
-import removeFromCollectionMiddleware from './removeFromCollectionMiddleware';
 import removeFromCollectionResultMiddleware from './removeFromCollectionResultMiddleware';
+import removeFromCollectionMiddleware from './removeFromMyCollectionMiddleware';
+import removeCollectionMiddleware from './removeMyCollectionMiddleware';
 import unbookmarkCollectionMiddleware from './unbookmarkCollectionMiddleware';
 
 export default [

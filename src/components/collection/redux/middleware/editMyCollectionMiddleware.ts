@@ -7,7 +7,7 @@ import {
   editCollectionAction,
   EditCollectionRequest,
 } from '../actions/editCollectionAction';
-import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
+import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
 
 export function onEditCollection(
   store: MiddlewareAPI,
@@ -17,7 +17,7 @@ export function onEditCollection(
     .then(() => {
       const updatedCollection = createUpdatedCollection(request);
 
-      store.dispatch(onCollectionEditedAction(updatedCollection));
+      store.dispatch(onMyCollectionEditedAction(updatedCollection));
     })
     .catch(() => {
       NotificationFactory.error({ description: 'Error renaming collection.' });

@@ -5,7 +5,7 @@ import { deleteCollection } from '../../../../services/collections/deleteCollect
 import { VideoCollection } from '../../../../types/VideoCollection';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { deleteCollectionAction } from '../actions/deleteCollectionAction';
-import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
+import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 
 export function onDeleteCollection(
   store: MiddlewareAPI,
@@ -16,7 +16,7 @@ export function onDeleteCollection(
       NotificationFactory.success({
         description: `Your collection "${request.title}" has been deleted`,
       });
-      store.dispatch(onCollectionRemovedAction(request));
+      store.dispatch(onMyCollectionRemovedAction(request));
     })
     .catch(() => {
       NotificationFactory.error({ description: 'Error deleting collection.' });

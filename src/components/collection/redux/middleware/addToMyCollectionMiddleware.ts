@@ -4,8 +4,8 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import addToCollection from '../../../../services/collections/addToCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addVideoToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
+import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 
 export function onAddToCollection(
   store: MiddlewareAPI,
@@ -28,4 +28,4 @@ export function onAddToCollection(
   );
 }
 
-export default sideEffect(addVideoToCollectionAction, onAddToCollection);
+export default sideEffect(addVideoToMyCollectionAction, onAddToCollection);

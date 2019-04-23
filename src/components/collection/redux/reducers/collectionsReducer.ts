@@ -8,8 +8,8 @@ import {
 } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addVideoToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
+import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
@@ -19,11 +19,11 @@ import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
-import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
-import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
-import { removeVideoFromCollectionAction } from '../actions/removeFromCollectionAction';
+import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
+import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
+import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
@@ -74,7 +74,7 @@ const loadingCollections = (
   };
 };
 
-const onAddVideoAction = (
+const onAddVideoToMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
@@ -122,7 +122,7 @@ const getUpdateVideoIds = (
   return alreadyHaveVideoId ? [...videoIds] : [...videoIds, videoId];
 };
 
-const onRemoveVideoAction = (
+const onRemoveVideoFromMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
@@ -163,7 +163,7 @@ const collectionUpdating = (
   return { ...state, updating: true };
 };
 
-const onCollectionRemoved = (
+const onMyCollectionRemoved = (
   state: CollectionsStateValue,
   removedCollection: VideoCollection,
 ): CollectionsStateValue => {
@@ -255,7 +255,7 @@ const onCollectionBookmarked = (
   return state;
 };
 
-const onCollectionEdited = (
+const onMyCollectionEdited = (
   state: CollectionsStateValue,
   editedCollection: VideoCollection,
 ): CollectionsStateValue => {
@@ -290,8 +290,11 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
     appendBookmarkedCollectionsAction,
     onAppendPageableCollectionsAction,
   ),
-  actionHandler(addVideoToCollectionAction, onAddVideoAction),
-  actionHandler(removeVideoFromCollectionAction, onRemoveVideoAction),
+  actionHandler(addVideoToMyCollectionAction, onAddVideoToMyCollectionAction),
+  actionHandler(
+    removeVideoFromMyCollectionAction,
+    onRemoveVideoFromMyCollectionAction,
+  ),
   actionHandler(createCollectionAction, collectionUpdating),
   actionHandler(editCollectionAction, collectionUpdating),
   actionHandler(fetchCollectionAction, loadingCollections),
@@ -301,8 +304,8 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(removeFromCollectionResultAction, collectionUpdated),
   actionHandler(addToCollectionResultAction, collectionUpdated),
   actionHandler(createCollectionResultAction, collectionUpdated),
-  actionHandler(onCollectionRemovedAction, onCollectionRemoved),
-  actionHandler(onCollectionEditedAction, onCollectionEdited),
+  actionHandler(onMyCollectionRemovedAction, onMyCollectionRemoved),
+  actionHandler(onMyCollectionEditedAction, onMyCollectionEdited),
   actionHandler(onCollectionUnbookmarkedAction, onCollectionUnbookmarked),
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),

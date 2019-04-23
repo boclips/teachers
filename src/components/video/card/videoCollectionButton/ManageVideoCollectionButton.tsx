@@ -6,9 +6,9 @@ import { CreateCollectionRequest } from '../../../../services/collections/create
 import State from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addVideoToCollectionAction } from '../../../collection/redux/actions/addToCollectionAction';
+import { addVideoToMyCollectionAction } from '../../../collection/redux/actions/addToMyCollectionAction';
 import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
-import { removeVideoFromCollectionAction } from '../../../collection/redux/actions/removeFromCollectionAction';
+import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
 import SavingButton from '../../../common/savingButton/SavingButton';
 import './manage-video-collection-button.less';
 
@@ -278,10 +278,12 @@ function mapDispatchToProps(
 ): DispatchProps {
   return {
     onAddToCollection: (collection: VideoCollection) =>
-      dispatch(addVideoToCollectionAction({ video: props.video, collection })),
+      dispatch(
+        addVideoToMyCollectionAction({ video: props.video, collection }),
+      ),
     onRemoveFromCollection: (collection: VideoCollection) =>
       dispatch(
-        removeVideoFromCollectionAction({ video: props.video, collection }),
+        removeVideoFromMyCollectionAction({ video: props.video, collection }),
       ),
     onCreateCollection: (request: CreateCollectionRequest) =>
       dispatch(createCollectionAction(request)),
