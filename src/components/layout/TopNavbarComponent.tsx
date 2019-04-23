@@ -17,7 +17,7 @@ const TopNavbarComponent = React.memo((props: Props) => (
       <Col sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }}>
         <section>
           <Link to="/" data-qa="boclips-logo">
-            <img className="logo" src={boclipsLogo} alt="Boclips logo" />
+            <img className="logo" src={boclipsLogo} alt="Boclips" />
           </Link>
         </section>
       </Col>

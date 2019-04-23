@@ -31,7 +31,10 @@ export class BookmarkCollectionButtonInner extends PureComponent<
             className="top-right-icon bookmark-icon"
             onClick={this.bookmarkCollection}
             src={bookmarkFilled}
-            alt="Bookmark collection icon"
+            alt=""
+            tabIndex={0}
+            role="button"
+            aria-label="Bookmark a collection"
           />
         ) : null}
 
@@ -41,7 +44,10 @@ export class BookmarkCollectionButtonInner extends PureComponent<
             className="top-right-icon bookmark-icon"
             onClick={this.unbookmarkCollection}
             src={bookmarkEmpty}
-            alt="Unbookmark collection icon"
+            alt=""
+            tabIndex={0}
+            role="button"
+            aria-label="Unbookmark a collection"
           />
         ) : null}
       </section>

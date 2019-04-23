@@ -26,6 +26,8 @@ export class RemoveCollectionButtonInner extends PureComponent<
         onClick={this.removeCollection}
         type="delete"
         theme="filled"
+        role="button"
+        aria-label="Delete collection"
       />
     ) : null;
   }
