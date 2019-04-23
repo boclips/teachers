@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import collections from '../../../resources/images/collections.png';
 import emptyCollection from '../../../resources/images/empty-collection.svg';
 import { CollectionCardList } from '../../components/collection/card/CollectionCardList';
-import { fetchCollectionsAction } from '../../components/collection/redux/actions/fetchCollectionsAction';
+import { fetchMyCollectionsAction } from '../../components/collection/redux/actions/fetchMyCollectionsAction';
 import PageLayout from '../../components/layout/PageLayout';
 import { CollectionState } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
@@ -82,7 +82,7 @@ function mapStateToProps(state: CollectionState): StateProps {
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    fetchCollection: () => dispatch(fetchCollectionsAction()),
+    fetchCollection: () => dispatch(fetchMyCollectionsAction()),
   };
 }
 

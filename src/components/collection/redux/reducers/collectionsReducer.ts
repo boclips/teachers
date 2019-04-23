@@ -15,7 +15,7 @@ import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
-import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
+import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
 import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
@@ -182,7 +182,7 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(createCollectionAction, collectionUpdating),
   actionHandler(editCollectionAction, collectionUpdating),
   actionHandler(fetchCollectionAction, loadingCollections),
-  actionHandler(fetchCollectionsAction, loadingCollections),
+  actionHandler(fetchMyCollectionsAction, loadingCollections),
   actionHandler(fetchPublicCollectionsAction, loadingCollections),
   actionHandler(removeFromCollectionResultAction, collectionUpdated),
   actionHandler(addToCollectionResultAction, collectionUpdated),

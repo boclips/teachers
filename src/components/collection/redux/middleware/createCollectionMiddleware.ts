@@ -8,7 +8,7 @@ import {
 import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { createCollectionResultAction } from '../actions/createCollectionResultAction';
-import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
+import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
 
 export function onCreateCollection(
   store: MiddlewareAPI,
@@ -18,7 +18,7 @@ export function onCreateCollection(
   createCollection(links, request)
     .then(() => {
       store.dispatch(createCollectionResultAction());
-      store.dispatch(fetchCollectionsAction());
+      store.dispatch(fetchMyCollectionsAction());
     })
     .catch(() => {
       NotificationFactory.error({ description: 'Error creating collection.' });
