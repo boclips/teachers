@@ -9,7 +9,7 @@ import {
 } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { addToCollectionAction } from '../actions/addToCollectionAction';
+import { addVideoToCollectionAction } from '../actions/addToCollectionAction';
 import { addToCollectionResultAction } from '../actions/addToCollectionResultAction';
 import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
@@ -23,7 +23,7 @@ import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedA
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
-import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
+import { removeVideoFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from '../actions/removeFromCollectionResultAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
@@ -300,8 +300,8 @@ const onCollectionEdited = (
 export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   initialState,
   actionHandler(appendPublicCollectionsAction, onAppendPublicCollectionsAction),
-  actionHandler(addToCollectionAction, onAddVideoAction),
-  actionHandler(removeFromCollectionAction, onRemoveVideoAction),
+  actionHandler(addVideoToCollectionAction, onAddVideoAction),
+  actionHandler(removeVideoFromCollectionAction, onRemoveVideoAction),
   actionHandler(createCollectionAction, collectionUpdating),
   actionHandler(editCollectionAction, collectionUpdating),
   actionHandler(fetchCollectionAction, loadingCollections),

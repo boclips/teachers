@@ -7,14 +7,14 @@ import {
 } from '../../../../../test-support/factories';
 import { Link } from '../../../../types/Link';
 import { CollectionsStateValue } from '../../../../types/State';
-import { addToCollectionAction } from '../actions/addToCollectionAction';
+import { addVideoToCollectionAction } from '../actions/addToCollectionAction';
 import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
 import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onCollectionRemovedAction } from '../actions/onCollectionRemovedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
-import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
+import { removeVideoFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { collectionsReducer } from './collectionsReducer';
@@ -42,7 +42,7 @@ describe('adding video to collection', () => {
     };
 
     const newVideo = VideoFactory.sample({ id: '124' });
-    const action = addToCollectionAction({
+    const action = addVideoToCollectionAction({
       video: newVideo,
       collection: targetCollection,
     });
@@ -74,7 +74,7 @@ describe('adding video to collection', () => {
       bookmarkedCollections: undefined,
     };
 
-    const action = addToCollectionAction({
+    const action = addVideoToCollectionAction({
       video,
       collection,
     });
@@ -106,7 +106,7 @@ describe('adding video to collection', () => {
       bookmarkedCollections: undefined,
     };
 
-    const action = addToCollectionAction({
+    const action = addVideoToCollectionAction({
       video,
       collection,
     });
@@ -138,7 +138,7 @@ describe('removing videos from a colleciton', () => {
     };
 
     const videoToRemove = VideoFactory.sample({ id: '123' });
-    const action = removeFromCollectionAction({
+    const action = removeVideoFromCollectionAction({
       video: videoToRemove,
       collection,
     });

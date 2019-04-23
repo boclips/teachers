@@ -4,7 +4,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import removeFromCollection from '../../../../services/collections/removeFromCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { removeFromCollectionAction } from '../actions/removeFromCollectionAction';
+import { removeVideoFromCollectionAction } from '../actions/removeFromCollectionAction';
 import { removeFromCollectionResultAction } from './../actions/removeFromCollectionResultAction';
 
 export function onRemoveFromCollection(
@@ -28,4 +28,7 @@ export function onRemoveFromCollection(
   );
 }
 
-export default sideEffect(removeFromCollectionAction, onRemoveFromCollection);
+export default sideEffect(
+  removeVideoFromCollectionAction,
+  onRemoveFromCollection,
+);
