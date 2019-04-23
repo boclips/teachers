@@ -8,8 +8,10 @@ import {
 import { Link } from '../../../../types/Link';
 import { CollectionsStateValue } from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
-import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
-import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
+import {
+  appendBookmarkedCollectionsAction,
+  appendPublicCollectionsAction,
+} from '../actions/appendPageableCollectionsAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';

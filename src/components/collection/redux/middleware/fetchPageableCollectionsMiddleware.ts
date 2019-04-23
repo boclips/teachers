@@ -5,7 +5,7 @@ import {
   fetchPageableCollections,
 } from '../../../../services/collections/fetchCollections';
 import { CollectionState, LinksState } from '../../../../types/State';
-import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
+import { appendPageableCollectionsAction } from '../actions/appendPageableCollectionsAction';
 import { fetchBookmarkedCollectionsAction } from '../actions/fetchBookmarkedCollectionsAction';
 import { fetchNextBookmarkedCollectionsAction } from '../actions/fetchNextBookmarkedCollectionsAction';
 import { fetchNextPublicCollectionsAction } from '../actions/fetchNextPublicCollectionsAction';
@@ -48,11 +48,11 @@ export function onFetchNextCollections(
   store: MiddlewareAPI<any, CollectionState>,
   request: PageableCollectionKey,
 ) {
-  const publicCollections = store.getState().collections.publicCollections;
+  const publicCollections = store.getState().collections[request];
   fetchNextCollectionsPage(publicCollections)
     .then(collections => {
       store.dispatch(
-        appendPublicCollectionsAction({
+        appendPageableCollectionsAction({
           collections,
           key: request,
         }),

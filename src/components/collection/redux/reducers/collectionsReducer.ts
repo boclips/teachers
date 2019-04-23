@@ -8,8 +8,11 @@ import {
 } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
-import { appendBookmarkedCollectionsAction } from '../actions/appendBookmarkedCollectionsAction';
-import { appendPublicCollectionsAction } from '../actions/appendPublicCollectionsAction';
+import {
+  appendBookmarkedCollectionsAction,
+  AppendCollectionRequest,
+  appendPublicCollectionsAction,
+} from '../actions/appendPageableCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
@@ -27,7 +30,6 @@ import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
-import { AppendCollectionRequest } from './../actions/appendPublicCollectionsAction';
 import {
   onAddVideoToMyCollectionAction,
   onMyCollectionEdited,
