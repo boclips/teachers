@@ -59,7 +59,16 @@ module.exports = {
         ],
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /.react.svg$/i,
+        loader: 'svg-react-loader',
+        options: {
+          props: {
+            role: 'img'
+          }
+        }
+      },
+      {
+        test: /\.(gif|png|jpe?g|(?<!react.)svg)/i,
         use: ['file-loader', 'image-webpack-loader'],
       },
     ],

@@ -3,6 +3,12 @@ declare module '*.png' {
   export default '' as string;
 }
 
+declare module '*.react.svg' {
+  import { HTMLAttributes } from 'react';
+  const value: React.ComponentType<HTMLAttributes<SVGElement>>;
+  export default value;
+}
+
 declare module '*.svg' {
   // @ts-ignore
   export default '' as string;

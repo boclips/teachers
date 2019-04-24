@@ -1,5 +1,5 @@
 import React from 'react';
-import myAccountImg from '../../../../resources/images/my-account.svg';
+import MyAccountImg from '../../../../resources/images/my-account.react.svg';
 
 import './AccountMenuIconComponent.less';
 
@@ -8,12 +8,10 @@ interface Props {
 }
 
 const AccountMenuIconComponent = React.memo((props: Props) => (
-  <img
+  <MyAccountImg
     className="account-menu-icon ant-dropdown-link"
     data-qa="account-menu-open"
     onClick={props.onClick}
-    src={myAccountImg}
-    alt="My account menu"
     tabIndex={0}
     role="button"
     aria-label="My account menu"
