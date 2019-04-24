@@ -25,7 +25,7 @@ export const onStoreCollectionAction = (
 ): CollectionsStateValue => {
   return {
     ...state,
-    publicCollectionDetails: collectionDetails,
+    collectionBeingViewed: collectionDetails,
     loading: false,
     updating: false,
   };
@@ -92,8 +92,8 @@ const reduceStoreVideoForCollectionDetails = (
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
   if (
-    !state.publicCollectionDetails ||
-    state.publicCollectionDetails.id !== request.collection.id
+    !state.collectionBeingViewed ||
+    state.collectionBeingViewed.id !== request.collection.id
   ) {
     return state;
   }
@@ -102,7 +102,7 @@ const reduceStoreVideoForCollectionDetails = (
 
   return {
     ...state,
-    publicCollectionDetails: collectionDetails,
+    collectionBeingViewed: collectionDetails,
   };
 };
 

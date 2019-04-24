@@ -67,7 +67,7 @@ export interface CollectionsStateValue {
   myCollections: VideoCollection[];
   publicCollections: Pageable<VideoCollection>;
   bookmarkedCollections: Pageable<VideoCollection>;
-  publicCollectionDetails?: VideoCollection;
+  collectionBeingViewed?: VideoCollection;
 }
 
 export function getIndexOfCollection(

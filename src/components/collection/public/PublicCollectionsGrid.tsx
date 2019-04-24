@@ -17,7 +17,6 @@ interface Props {
 interface StateProps {
   publicCollections: VideoCollection[];
   loading: boolean;
-  canFetchPublicCollections: boolean;
   hasMorePublicCollections: boolean;
 }
 
@@ -63,7 +62,7 @@ class PublicCollectionsGrid extends React.PureComponent<
   }
 
   private fetchCollectionsIfNeeded() {
-    if (!this.props.publicCollections && this.props.canFetchPublicCollections) {
+    if (!this.props.publicCollections) {
       this.props.fetchPublicCollections();
     }
   }
@@ -79,18 +78,15 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   },
 });
 
-// TODO: hasMorePublicCollections condition needs work
-function mapStateToProps({ collections, links }: State): StateProps {
+function mapStateToProps({ collections }: State): StateProps {
   return {
     loading: collections.loading,
     publicCollections:
       collections.publicCollections && collections.publicCollections.items,
     hasMorePublicCollections:
       collections.publicCollections &&
-      collections.publicCollections.links &&
       collections.publicCollections.links.next &&
       true,
-    canFetchPublicCollections: links && links.publicCollections && true,
   };
 }
 

@@ -84,7 +84,7 @@ describe('fetch video for collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      publicCollectionDetails: collection,
+      collectionBeingViewed: collection,
       myCollections: [],
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
@@ -97,16 +97,16 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(Object.keys(stateAfter.publicCollectionDetails.videos)).toHaveLength(
+    expect(Object.keys(stateAfter.collectionBeingViewed.videos)).toHaveLength(
       1,
     );
-    expect(stateAfter.publicCollectionDetails.videos[video.id].title).toEqual(
+    expect(stateAfter.collectionBeingViewed.videos[video.id].title).toEqual(
       video.title,
     );
-    expect(stateAfter.publicCollectionDetails.videos[video.id].id).toEqual(
+    expect(stateAfter.collectionBeingViewed.videos[video.id].id).toEqual(
       video.id,
     );
-    expect(stateAfter.publicCollectionDetails.videoIds).toHaveLength(1);
+    expect(stateAfter.collectionBeingViewed.videoIds).toHaveLength(1);
   });
 
   test('sets videos in public collections', () => {

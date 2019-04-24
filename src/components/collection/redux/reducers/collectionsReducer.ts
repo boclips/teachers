@@ -46,7 +46,7 @@ const initialState: CollectionsStateValue = {
   myCollections: [],
   publicCollections: undefined,
   bookmarkedCollections: undefined,
-  publicCollectionDetails: undefined,
+  collectionBeingViewed: undefined,
   loading: true,
   updating: false,
 };

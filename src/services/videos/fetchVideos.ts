@@ -8,9 +8,6 @@ export default function fetchVideos(
   searchRequest: SearchRequest,
   links: Links,
 ): Promise<SearchResults> {
-  if (!links.videos) {
-    return Promise.reject();
-  }
   const url = links.videos.getTemplatedLink({
     query: searchRequest.query,
     size: 10,

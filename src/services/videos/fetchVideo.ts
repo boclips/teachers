@@ -5,9 +5,6 @@ import { Video } from '../../types/Video';
 import convertVideoResource from './convertVideoResource';
 
 export default function fetchVideo(id: string, links: Links): Promise<Video> {
-  if (!links.video) {
-    return Promise.reject();
-  }
   return axios
     .get(links.video.getTemplatedLink({ id }))
     .then(response => response.data)

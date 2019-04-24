@@ -11,9 +11,6 @@ import {
 export const fetchMyCollections = (
   links: Links,
 ): Promise<VideoCollection[]> => {
-  if (!links.myCollections) {
-    return Promise.reject();
-  }
   return axios
     .get(links.myCollections.getOriginalLink())
     .then(response => parseCollectionsListResponse(response));
@@ -23,9 +20,6 @@ export const fetchReadOnlyCollections = (
   links: Links,
   key: CollectionKey,
 ): Promise<Pageable<VideoCollection>> => {
-  if (!links[key]) {
-    return Promise.reject();
-  }
   return axios
     .get(links[key].getOriginalLink())
     .then(response => parseScrollableCollectionsListResponse(response));
@@ -34,7 +28,7 @@ export const fetchReadOnlyCollections = (
 export const fetchNextCollectionsPage = (
   collections: Pageable<VideoCollection>,
 ): Promise<Pageable<VideoCollection>> => {
-  if (!collections.links || !collections.links.next) {
+  if (!collections.links.next) {
     return Promise.reject();
   }
   return axios

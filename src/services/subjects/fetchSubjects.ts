@@ -3,10 +3,6 @@ import { Links } from '../../types/Links';
 import { Subject } from '../../types/Subject';
 
 export function fetchSubjects(links: Links): Promise<Subject[]> {
-  if (!links.subjects) {
-    return Promise.reject();
-  }
-
   return axios
     .get(links.subjects.getOriginalLink())
     .then(response => response.data)

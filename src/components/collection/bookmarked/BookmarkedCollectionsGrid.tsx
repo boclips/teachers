@@ -20,7 +20,6 @@ interface Props {
 interface StateProps {
   bookmarkedCollections: VideoCollection[];
   loading: boolean;
-  canFetchBookmarkedCollections: boolean;
   hasMoreBookmarkedCollections: boolean;
 }
 
@@ -94,10 +93,7 @@ class BookmarkedCollectionsGrid extends React.PureComponent<
   }
 
   private fetchCollectionsIfNeeded() {
-    if (
-      !this.props.bookmarkedCollections &&
-      this.props.canFetchBookmarkedCollections
-    ) {
+    if (!this.props.bookmarkedCollections) {
       this.props.fetchBookmarkedCollections();
     }
   }
@@ -109,7 +105,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fetchNextPage: () => dispatch(fetchNextBookmarkedCollectionsAction()),
 });
 
-function mapStateToProps({ collections, links }: State): StateProps {
+function mapStateToProps({ collections }: State): StateProps {
   return {
     loading: collections.loading,
     bookmarkedCollections:
@@ -117,10 +113,8 @@ function mapStateToProps({ collections, links }: State): StateProps {
       collections.bookmarkedCollections.items,
     hasMoreBookmarkedCollections:
       collections.bookmarkedCollections &&
-      collections.bookmarkedCollections.links &&
       collections.bookmarkedCollections.links.next &&
       true,
-    canFetchBookmarkedCollections: links && links.bookmarkedCollections && true,
   };
 }
 

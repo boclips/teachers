@@ -230,7 +230,7 @@ export class CollectionsFactory {
         items: [],
         links: {},
       },
-      publicCollectionDetails: VideoCollectionFactory.sample(),
+      collectionBeingViewed: VideoCollectionFactory.sample(),
       ...arg,
     });
   }

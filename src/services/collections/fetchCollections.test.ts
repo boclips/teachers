@@ -71,6 +71,7 @@ describe('public collections', () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?publicpage')
       .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
+
     const collections = await fetchNextCollectionsPage(
       PageableCollectionsFactory.sample({
         links: { next: new Link({ href: '/v1/collections?publicpage' }) },

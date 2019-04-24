@@ -134,14 +134,7 @@ export class CollectionView extends PureComponent<
         (this.props.collection &&
           this.props.collection.id !== this.props.collectionId))
     ) {
-      /* TODO: camouflaging race condition problem:
-        the race condition occurs, when the initial v1 response does
-        not contain the collection link yet. We then try to obtain the collection, but the collection rel is not set.
-        fetchCollection will return a rejected promise.
-      */
-      if (this.props.links.collection) {
-        this.props.fetchCollection();
-      }
+      this.props.fetchCollection();
     }
   }
 
@@ -165,13 +158,14 @@ export class CollectionView extends PureComponent<
 }
 
 function mapStateToProps(state: State, props: OwnProps): StateProps {
+  if (state.collections.loading) {
+    return { collection: undefined, loading: true, links: undefined };
+  }
   const indexOfCollection = getIndexOfCollection(
     state.collections.myCollections,
     props.collectionId,
   );
-  if (state.collections.loading) {
-    return { collection: undefined, loading: true, links: undefined };
-  }
+
   if (indexOfCollection >= 0) {
     return {
       collection: state.collections.myCollections[indexOfCollection],
@@ -181,7 +175,7 @@ function mapStateToProps(state: State, props: OwnProps): StateProps {
   }
 
   return {
-    collection: state.collections.publicCollectionDetails,
+    collection: state.collections.collectionBeingViewed,
     loading: false,
     links: state.links,
   };
