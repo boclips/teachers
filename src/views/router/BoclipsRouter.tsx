@@ -10,8 +10,8 @@ import PrivateRoute, {
 import { RouterState } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
-import CollectionListView from '../collection/CollectionListView';
 import CollectionDetailsView from '../collection/CollectionDetailsView';
+import CollectionListView from '../collection/CollectionListView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
