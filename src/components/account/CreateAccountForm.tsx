@@ -3,7 +3,7 @@ import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import registrationLogo from '../../../resources/images/registration-logo.svg';
+import RegistrationLogo from '../../../resources/images/registration-logo.react.svg';
 import {
   createAccount,
   CreateAccountRequest,
@@ -78,11 +78,7 @@ class RegistrationForm extends React.Component<
       <section className="create-account-form__container">
         <Row>
           <Col xs={{ span: 0 }} lg={{ span: 12 }}>
-            <img
-              className="create-account__logo"
-              src={registrationLogo}
-              alt="Create account logo"
-            />
+            <RegistrationLogo className="create-account__logo" />
           </Col>
           <Col xs={{ span: 24 }} lg={{ span: 12 }}>
             <Form onSubmit={this.handleSubmit}>
