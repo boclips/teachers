@@ -6,13 +6,13 @@ import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import ReferAFriendBannerMobile from '../../../resources/images/refer-a-friend-banner-mobile.svg';
 import ReferAFriendBanner from '../../../resources/images/refer-a-friend-banner.svg';
-import PublicCollectionsGrid from '../../components/collection/public/PublicCollectionsGrid';
 import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import ReferAFriend from '../../components/ReferAFriend';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
+import GenericGridList from '../../components/collection/gridList/GenericGridList';
 import './HomeView.less';
 
 const { Content } = Layout;
@@ -73,7 +73,8 @@ export default class HomeView extends PureComponent {
             <Row>
               <Col>
                 <section className="home-collections">
-                  <PublicCollectionsGrid
+                  <GenericGridList
+                    collectionKey="publicCollections"
                     maxNumberOfCollections={6}
                     description="Spark your students' curiosity with teacher-made collections"
                   />

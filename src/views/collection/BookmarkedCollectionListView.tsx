@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import BookmarkedCollectionsGrid from '../../components/collection/bookmarked/BookmarkedCollectionsGrid';
+import GenericGridList from '../../components/collection/gridList/GenericGridList';
 import PageLayout from '../../components/layout/PageLayout';
 
 export class BookmarkedCollectionListView extends PureComponent {
@@ -17,6 +17,6 @@ export class BookmarkedCollectionListView extends PureComponent {
   }
 
   public renderContent() {
-    return <BookmarkedCollectionsGrid />;
+    return <GenericGridList collectionKey="bookmarkedCollections" />;
   }
 }

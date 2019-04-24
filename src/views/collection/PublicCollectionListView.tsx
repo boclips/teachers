@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import PublicCollectionsGrid from '../../components/collection/public/PublicCollectionsGrid';
+import GenericGridList from '../../components/collection/gridList/GenericGridList';
 import PageLayout from '../../components/layout/PageLayout';
 
 export class PublicCollectionListView extends PureComponent {
@@ -18,7 +18,10 @@ export class PublicCollectionListView extends PureComponent {
 
   public renderContent() {
     return (
-      <PublicCollectionsGrid description="Explore the collections other teachers have created and discover new videos to help engage your students." />
+      <GenericGridList
+        collectionKey="publicCollections"
+        description="Explore the collections other teachers have created and discover new videos to help engage your students."
+      />
     );
   }
 }
