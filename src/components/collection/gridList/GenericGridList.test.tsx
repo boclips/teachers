@@ -3,8 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { MockStoreFactory } from '../../../../test-support/factories';
-import { fetchBookmarkedCollectionsAction } from '../redux/actions/fetchBookmarkedCollectionsAction';
-import { fetchPublicCollectionsAction } from '../redux/actions/fetchPublicCollectionsAction';
+import { fetchReadOnlyCollectionsAction } from '../redux/actions/fetchReadOnlyCollectionsAction';
 import GenericGridList from './GenericGridList';
 
 describe('public collections', () => {
@@ -24,7 +23,9 @@ describe('public collections', () => {
     );
 
     expect(store.getActions()).toHaveLength(1);
-    expect(store.getActions()).toContainEqual(fetchPublicCollectionsAction());
+    expect(store.getActions()).toContainEqual(
+      fetchReadOnlyCollectionsAction('publicCollections'),
+    );
   });
 
   test('does not fetch public collection if some when mounted', () => {
@@ -64,7 +65,7 @@ describe('bookmarked collections', () => {
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      fetchBookmarkedCollectionsAction(),
+      fetchReadOnlyCollectionsAction('bookmarkedCollections'),
     );
   });
 

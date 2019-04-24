@@ -12,7 +12,7 @@ import { createCollectionAction } from '../actions/createCollectionAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
-import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
+import { fetchReadOnlyCollectionsAction } from '../actions/fetchReadOnlyCollectionsAction';
 import { onAddToCollectionAction } from '../actions/onAddToCollectionAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
@@ -86,7 +86,7 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(editCollectionAction, collectionUpdating),
   actionHandler(fetchCollectionAction, loadingCollections),
   actionHandler(fetchMyCollectionsAction, loadingCollections),
-  actionHandler(fetchPublicCollectionsAction, loadingCollections),
+  actionHandler(fetchReadOnlyCollectionsAction, loadingCollections),
   actionHandler(onRemoveFromCollectionAction, collectionUpdated),
   actionHandler(onAddToCollectionAction, collectionUpdated),
   actionHandler(onCreateCollectionAction, collectionUpdated),

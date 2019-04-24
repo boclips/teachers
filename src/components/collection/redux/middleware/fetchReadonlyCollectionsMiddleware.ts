@@ -7,17 +7,10 @@ import {
 import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
 import { CollectionState, LinksState } from '../../../../types/State';
 import { appendReadOnlyCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
-import { fetchBookmarkedCollectionsAction } from '../actions/fetchBookmarkedCollectionsAction';
 import { fetchNextBookmarkedCollectionsAction } from '../actions/fetchNextBookmarkedCollectionsAction';
 import { fetchNextPublicCollectionsAction } from '../actions/fetchNextPublicCollectionsAction';
-import { fetchPublicCollectionsAction } from '../actions/fetchPublicCollectionsAction';
+import { fetchReadOnlyCollectionsAction } from '../actions/fetchReadOnlyCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-
-const onFetchPublicCollections = (store: MiddlewareAPI<any, LinksState>) =>
-  onFetchCollections(store, 'publicCollections');
-
-const onFetchBookmarkCollections = (store: MiddlewareAPI<any, LinksState>) =>
-  onFetchCollections(store, 'bookmarkedCollections');
 
 export function onFetchCollections(
   store: MiddlewareAPI<any, LinksState>,
@@ -62,8 +55,7 @@ export function onFetchNextCollections(
 }
 
 export default [
-  sideEffect(fetchPublicCollectionsAction, onFetchPublicCollections),
-  sideEffect(fetchBookmarkedCollectionsAction, onFetchBookmarkCollections),
+  sideEffect(fetchReadOnlyCollectionsAction, onFetchCollections),
   sideEffect(fetchNextPublicCollectionsAction, onFetchNextPublicCollection),
   sideEffect(
     fetchNextBookmarkedCollectionsAction,

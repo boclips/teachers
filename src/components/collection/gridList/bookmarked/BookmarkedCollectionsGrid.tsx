@@ -1,9 +1,9 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React from 'react';
-import bookmarkedCollectionsImg from '../../../../resources/images/bookmarked-collections.png';
-import emptyCollection from '../../../../resources/images/empty-collection.svg';
-import bookmarkFilled from '../../../../resources/images/unbookmarked.svg';
+import emptyCollection from '../../../../..//resources/images/empty-collection.svg';
+import bookmarkFilled from '../../../../..//resources/images/unbookmarked.svg';
+import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { CollectionCardList } from '../../card/CollectionCardList';
 
