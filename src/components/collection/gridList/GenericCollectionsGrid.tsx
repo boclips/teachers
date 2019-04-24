@@ -25,7 +25,7 @@ interface DispatchProps {
   fetchNextPage: () => void;
 }
 
-class GenericGridList extends React.PureComponent<
+class GenericCollectionsGrid extends React.PureComponent<
   StateProps & DispatchProps & Props
 > {
   public render() {
@@ -38,10 +38,6 @@ class GenericGridList extends React.PureComponent<
   }
 
   public componentDidMount() {
-    this.fetchCollectionsIfNeeded();
-  }
-
-  private fetchCollectionsIfNeeded() {
     if (!this.props.collections) {
       this.props.fetchCollections();
     }
@@ -73,4 +69,4 @@ function mapStateToProps({ collections }: State, props: Props): StateProps {
 export default connect<StateProps, DispatchProps, Props>(
   mapStateToProps,
   mapDispatchToProps,
-)(GenericGridList);
+)(GenericCollectionsGrid);

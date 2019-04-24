@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { MockStoreFactory } from '../../../../test-support/factories';
 import { fetchReadOnlyCollectionsAction } from '../redux/actions/fetchReadOnlyCollectionsAction';
-import GenericGridList from './GenericGridList';
+import GenericCollectionsGrid from './GenericCollectionsGrid';
 
 describe('public collections', () => {
   test('dispatches fetch public collection if none when mounted', () => {
@@ -14,7 +14,7 @@ describe('public collections', () => {
 
     mount(
       <Provider store={store}>
-        <GenericGridList
+        <GenericCollectionsGrid
           maxNumberOfCollections={1}
           description=""
           collectionKey="publicCollections"
@@ -34,7 +34,7 @@ describe('public collections', () => {
     mount(
       <Provider store={store}>
         <MemoryRouter>
-          <GenericGridList
+          <GenericCollectionsGrid
             maxNumberOfCollections={1}
             description=""
             collectionKey="publicCollections"
@@ -55,7 +55,7 @@ describe('bookmarked collections', () => {
 
     mount(
       <Provider store={store}>
-        <GenericGridList
+        <GenericCollectionsGrid
           maxNumberOfCollections={1}
           description=""
           collectionKey="bookmarkedCollections"
@@ -75,7 +75,7 @@ describe('bookmarked collections', () => {
     mount(
       <Provider store={store}>
         <MemoryRouter>
-          <GenericGridList
+          <GenericCollectionsGrid
             maxNumberOfCollections={1}
             description=""
             collectionKey="bookmarkedCollections"

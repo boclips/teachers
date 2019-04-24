@@ -12,7 +12,7 @@ import ReferAFriend from '../../components/ReferAFriend';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
-import GenericGridList from '../../components/collection/gridList/GenericGridList';
+import GenericCollectionsGrid from '../../components/collection/gridList/GenericCollectionsGrid';
 import './HomeView.less';
 
 const { Content } = Layout;
@@ -73,7 +73,7 @@ export default class HomeView extends PureComponent {
             <Row>
               <Col>
                 <section className="home-collections">
-                  <GenericGridList
+                  <GenericCollectionsGrid
                     collectionKey="publicCollections"
                     maxNumberOfCollections={6}
                     description="Spark your students' curiosity with teacher-made collections"
