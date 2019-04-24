@@ -23,6 +23,6 @@ export const appendReadOnlyCollectionsAction = (
     case 'bookmarkedCollections':
       return appendBookmarkedCollectionsAction(request);
     case 'publicCollections':
-      return appendReadOnlyCollectionsAction(request);
+      return appendPublicCollectionsAction(request);
   }
 };
