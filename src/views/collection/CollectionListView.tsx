@@ -38,6 +38,7 @@ export class CollectionListView extends PureComponent<
     if (!this.props.collections) {
       return null;
     }
+
     if (!this.props.loading && this.props.collections.length === 0) {
       return this.renderEmptyCollection();
     }
@@ -51,7 +52,6 @@ export class CollectionListView extends PureComponent<
             </span>
           }
           collections={this.props.collections}
-          loading={this.props.loading}
         />
       )
     );

@@ -16,7 +16,6 @@ interface Props {
 
 interface StateProps {
   publicCollections: VideoCollection[];
-  loading: boolean;
   hasMorePublicCollections: boolean;
 }
 
@@ -38,7 +37,6 @@ class PublicCollectionsGrid extends React.PureComponent<
         }
         description={this.props.description}
         grid={true}
-        loading={this.props.loading}
         collections={this.props.publicCollections}
         maxNumberOfCollections={this.props.maxNumberOfCollections}
         infiniteScroll={
@@ -54,10 +52,6 @@ class PublicCollectionsGrid extends React.PureComponent<
   }
 
   public componentDidMount(): void {
-    this.fetchCollectionsIfNeeded();
-  }
-
-  public componentDidUpdate(): void {
     this.fetchCollectionsIfNeeded();
   }
 
@@ -80,7 +74,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
 function mapStateToProps({ collections }: State): StateProps {
   return {
-    loading: collections.loading,
     publicCollections:
       collections.publicCollections && collections.publicCollections.items,
     hasMorePublicCollections:

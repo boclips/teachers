@@ -13,7 +13,6 @@ describe('CollectionCardList', () => {
           VideoCollectionFactory.sample(),
           VideoCollectionFactory.sample(),
         ]}
-        loading={false}
         title=""
       />,
     );
@@ -29,7 +28,6 @@ describe('CollectionCardList', () => {
           VideoCollectionFactory.sample(),
           VideoCollectionFactory.sample(),
         ]}
-        loading={false}
         title=""
         maxNumberOfCollections={2}
       />,

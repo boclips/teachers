@@ -15,7 +15,7 @@ class CollectionsLoaded extends PureComponent<Props & StateProps> {
   public render() {
     return this.props.loading
       ? this.props.showWhenLoading
-      : this.props.children;
+      : this.props.children || null;
   }
 }
 

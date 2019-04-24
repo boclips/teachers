@@ -19,7 +19,6 @@ interface Props {
 
 interface StateProps {
   bookmarkedCollections: VideoCollection[];
-  loading: boolean;
   hasMoreBookmarkedCollections: boolean;
 }
 
@@ -53,7 +52,6 @@ class BookmarkedCollectionsGrid extends React.PureComponent<
         }
         description={this.props.description}
         grid={true}
-        loading={this.props.loading}
         collections={this.props.bookmarkedCollections}
         maxNumberOfCollections={this.props.maxNumberOfCollections}
         infiniteScroll={
@@ -69,10 +67,6 @@ class BookmarkedCollectionsGrid extends React.PureComponent<
   }
 
   public componentDidMount(): void {
-    this.fetchCollectionsIfNeeded();
-  }
-
-  public componentDidUpdate(): void {
     this.fetchCollectionsIfNeeded();
   }
 
@@ -107,7 +101,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 
 function mapStateToProps({ collections }: State): StateProps {
   return {
-    loading: collections.loading,
     bookmarkedCollections:
       collections.bookmarkedCollections &&
       collections.bookmarkedCollections.items,

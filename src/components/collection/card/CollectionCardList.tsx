@@ -3,6 +3,7 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { VideoCollection } from '../../../types/VideoCollection';
+import CollectionsLoaded from '../CollectionsLoaded';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardContainer from './CollectionCardContainer';
 
@@ -12,7 +13,6 @@ interface InfiniteScrollProps {
 }
 interface Props {
   collections: VideoCollection[];
-  loading: boolean;
   title: string | React.ReactFragment;
   description?: string;
   grid?: boolean;
@@ -33,9 +33,8 @@ export class CollectionCardList extends React.PureComponent<Props> {
         )}
 
         <Row gutter={20}>
-          {this.props.loading
-            ? this.renderLoading()
-            : this.props.collections &&
+          <CollectionsLoaded showWhenLoading={this.renderLoading()}>
+            {this.props.collections &&
               (this.props.infiniteScroll ? (
                 <InfiniteScroll
                   style={{ overflow: 'hidden' }}
@@ -49,6 +48,7 @@ export class CollectionCardList extends React.PureComponent<Props> {
               ) : (
                 this.renderCollections()
               ))}
+          </CollectionsLoaded>
         </Row>
       </React.Fragment>
     );
