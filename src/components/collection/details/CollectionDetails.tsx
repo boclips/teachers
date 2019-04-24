@@ -4,7 +4,7 @@ import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import EmptyCollection from '../../../../resources/images/empty-collection.react.svg';
-import sadTeacher from '../../../../resources/images/sad-teacher.svg';
+import SadTeacher from '../../../../resources/images/sad-teacher.react.svg';
 import { Links } from '../../../types/Links';
 import State, { getIndexOfCollection } from '../../../types/State';
 import { VideoId } from '../../../types/Video';
@@ -81,7 +81,7 @@ class CollectionDetails extends PureComponent<
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 8 }}>
             <section className="illustration">
-              <img src={sadTeacher} alt="Illustration of a sad woman" />
+              <SadTeacher />
             </section>
           </Col>
           <Col sm={{ span: 24 }} md={{ span: 16 }}>
