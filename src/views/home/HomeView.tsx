@@ -53,7 +53,7 @@ export default class HomeView extends PureComponent {
                     alt="Refer a friend banner"
                     tabIndex={0}
                     role="button"
-                    aria-label="Refer a friend button"
+                    aria-label="Refer a friend"
                   />
                   <img
                     className="refer-a-friend-banner__img display-mobile"
@@ -61,7 +61,7 @@ export default class HomeView extends PureComponent {
                     alt="Refer a friend banner"
                     tabIndex={0}
                     role="button"
-                    aria-label="Refer a friend button"
+                    aria-label="Refer a friend"
                   />
                 </ReferAFriend>
               </Col>
