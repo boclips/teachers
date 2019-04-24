@@ -12,7 +12,7 @@ import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionListView from '../collection/CollectionListView';
-import CollectionView from '../collection/CollectionView';
+import CollectionDetailsView from '../collection/CollectionDetailsView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
@@ -163,7 +163,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(CollectionView);
+    const videoDetailsView = wrapper.find(CollectionDetailsView);
     expect(videoDetailsView).toExist();
   });
 
@@ -230,7 +230,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(CollectionView);
+    const videoDetailsView = wrapper.find(CollectionDetailsView);
     expect(videoDetailsView).not.toExist();
   });
 

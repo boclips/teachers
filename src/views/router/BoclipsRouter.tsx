@@ -11,7 +11,7 @@ import { RouterState } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionListView from '../collection/CollectionListView';
-import CollectionView from '../collection/CollectionView';
+import CollectionDetailsView from '../collection/CollectionDetailsView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
@@ -29,7 +29,9 @@ function collectionView(
   props: PrivateRouteComponentProps<{ collectionId: string }>,
 ) {
   return (
-    <CollectionView collectionId={props.computedMatch.params.collectionId} />
+    <CollectionDetailsView
+      collectionId={props.computedMatch.params.collectionId}
+    />
   );
 }
 

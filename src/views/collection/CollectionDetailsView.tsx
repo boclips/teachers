@@ -35,7 +35,7 @@ interface DispatchProps {
   fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
 }
 
-export class CollectionView extends PureComponent<
+export class CollectionDetailsView extends PureComponent<
   OwnProps & StateProps & DispatchProps
 > {
   public render() {
@@ -207,4 +207,4 @@ function mapDispatchToProps(
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
-)(CollectionView);
+)(CollectionDetailsView);
