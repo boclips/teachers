@@ -10,4 +10,4 @@ export interface StoreCollectionsRequest {
 
 export const storeCollectionsAction = actionCreatorFactory<
   StoreCollectionsRequest
->('STORE_PAGEABLE_COLLECTIONS');
+>('STORE_COLLECTIONS');

@@ -119,31 +119,40 @@ export class CollectionView extends PureComponent<
     );
   }
 
+  private fetchVideosIfNeeded() {
+    const videoIdsToFetch = this.videoIdsToFetch();
+
+    if (videoIdsToFetch == null || videoIdsToFetch.length === 0) {
+      return;
+    }
+
+    this.props.fetchVideosForCollection({
+      videos: videoIdsToFetch,
+      collection: this.props.collection,
+    });
+  }
+
   private fetchCollectionIfNeeded() {
-    if (
+    const noCollectionLoaded =
+      !this.props.loading && this.props.collection === undefined;
+
+    const differentCollection =
       this.props.collection &&
-      this.props.collection.id === this.props.collectionId
-    ) {
-      this.props.fetchVideosForCollection({
-        videos: this.videoIdsToFetch(),
-        collection: this.props.collection,
-      });
-    } else if (
-      !this.props.loading &&
-      (this.props.collection === undefined ||
-        (this.props.collection &&
-          this.props.collection.id !== this.props.collectionId))
-    ) {
+      this.props.collection.id !== this.props.collectionId;
+
+    if (differentCollection || noCollectionLoaded) {
       this.props.fetchCollection();
     }
   }
 
   public componentDidMount() {
     this.fetchCollectionIfNeeded();
+    this.fetchVideosIfNeeded();
   }
 
   public componentDidUpdate() {
     this.fetchCollectionIfNeeded();
+    this.fetchVideosIfNeeded();
   }
 
   private videoIdsToFetch(): VideoId[] {
