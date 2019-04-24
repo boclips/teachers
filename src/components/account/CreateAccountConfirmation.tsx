@@ -10,7 +10,10 @@ export class CreateAccountConfirmation extends React.Component {
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 8 }}>
             <section className="illustration">
-              <img src={wavingHand} alt="Illustration of a waving hand" />
+              <img
+                src={wavingHand}
+                alt="A hand waving with colourful dots flying around"
+              />
             </section>
           </Col>
           <Col sm={{ span: 24 }} md={{ span: 16 }}>

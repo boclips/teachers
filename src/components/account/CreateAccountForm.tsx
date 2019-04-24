@@ -19,6 +19,7 @@ import { handleError, handleUserExists } from './createAccountHelpers';
 import { AgeRangeForm } from './form/AgeRangeForm';
 import { CaptchaNotice } from './form/CaptchaNotice';
 import { EmailForm } from './form/EmailForm';
+import { ErrorAnnouncement } from './form/ErrorAnnouncement';
 import { LoginLink } from './form/LoginLink';
 import { MarketingAgreementForm } from './form/MarketingAgreementForm';
 import { NameForm } from './form/NameForm';
@@ -40,6 +41,7 @@ interface InternalState {
   confirmDirty: boolean;
   creating: boolean;
   renderRecaptcha: boolean;
+  formErrors: object;
 }
 
 interface DispatchProps {
@@ -55,6 +57,7 @@ class RegistrationForm extends React.Component<
     confirmDirty: false,
     creating: false,
     renderRecaptcha: true,
+    formErrors: null,
   };
 
   public componentDidMount() {
@@ -81,6 +84,14 @@ class RegistrationForm extends React.Component<
             <RegistrationLogo className="create-account__logo" />
           </Col>
           <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+            <section
+              className="visually-hidden error-announcements"
+              role="alert"
+              aria-live="assertive"
+            >
+              <ErrorAnnouncement error={this.state.formErrors} />
+            </section>
+
             <Form onSubmit={this.handleSubmit}>
               <h1 className="alt create-account-form__title">Create account</h1>
 
@@ -223,6 +234,11 @@ class RegistrationForm extends React.Component<
                 renderRecaptcha: true,
               });
             });
+        } else {
+          this.setState({
+            ...this.state,
+            formErrors: err,
+          });
         }
       },
     );
