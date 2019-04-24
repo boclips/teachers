@@ -1,7 +1,15 @@
 import React from 'react';
 
 interface ErrorAnnouncementProps {
-  error: object;
+  error: {
+    [key: string]: {
+      errors: [
+        {
+          message: string;
+        }
+      ];
+    };
+  };
 }
 
 export class ErrorAnnouncement extends React.Component<ErrorAnnouncementProps> {
@@ -22,9 +30,7 @@ export class ErrorAnnouncement extends React.Component<ErrorAnnouncementProps> {
     return (
       <ul className="errors-list">
         {Object.keys(this.props.error).map(field => (
-          <li key={field}>
-            {field}: {this.props.error[field].errors[0].message}
-          </li>
+          <li key={field}>{this.props.error[field].errors[0].message}</li>
         ))}
       </ul>
     );

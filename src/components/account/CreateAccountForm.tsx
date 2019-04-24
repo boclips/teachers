@@ -109,7 +109,8 @@ class RegistrationForm extends React.Component<
                       {
                         required: true,
                         min: 8,
-                        message: 'Please enter at least 8 characters',
+                        message:
+                          'Please enter at least 8 characters for your password',
                       },
                       {
                         validator: this.validateToNextPassword,
@@ -123,7 +124,7 @@ class RegistrationForm extends React.Component<
                       placeholder="Password"
                     />,
                   )}
-                  rightColumn={getFieldDecorator('confirm', {
+                  rightColumn={getFieldDecorator('confirmPassword', {
                     rules: [
                       {
                         required: true,
@@ -260,7 +261,7 @@ class RegistrationForm extends React.Component<
   private validateToNextPassword = (_, value, callback) => {
     const form = this.props.form;
     if (value && this.state.confirmDirty) {
-      form.validateFields(['confirm'], { force: true });
+      form.validateFields(['confirmPassword'], { force: true });
     }
     callback();
   };
