@@ -84,11 +84,7 @@ class RegistrationForm extends React.Component<
             <RegistrationLogo className="create-account__logo" />
           </Col>
           <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-            <section
-              className="visually-hidden error-announcements"
-              role="alert"
-              aria-live="assertive"
-            >
+            <section className="visually-hidden">
               <ErrorAnnouncement error={this.state.formErrors} />
             </section>
 

@@ -5,28 +5,28 @@ interface ErrorAnnouncementProps {
 }
 
 export class ErrorAnnouncement extends React.Component<ErrorAnnouncementProps> {
-  private errorMessage;
-
-  public componentDidMount() {
-    this.errorMessage.focus();
-  }
-
   public render() {
     return (
-      <section ref={c => (this.errorMessage = c)}>
-        {this.props.error ? (
-          <p>There are {Object.keys(this.props.error).length} errors.</p>
-        ) : (
-          <p />
+      <section role="alert" aria-live="assertive">
+        {this.props.error && (
+          <p>
+            There are {Object.keys(this.props.error).length} errors in the form.
+          </p>
         )}
+        {this.props.error && this.renderErrors()}
       </section>
     );
   }
 
-  // private renderErrors() {
-  //   return
-  //       {Object.keys(this.props.error).forEach(field => {
-  //         <li>{field}: {this.props.error[field]}</li>
-  //       });}
-  // }
+  private renderErrors() {
+    return (
+      <ul className="errors-list">
+        {Object.keys(this.props.error).map(field => (
+          <li key={field}>
+            {field}: {this.props.error[field].errors[0].message}
+          </li>
+        ))}
+      </ul>
+    );
+  }
 }
