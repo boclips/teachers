@@ -1,8 +1,8 @@
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import bookmarkEmpty from '../../../../resources/images/bookmarked.svg';
-import bookmarkFilled from '../../../../resources/images/unbookmarked.svg';
+import BookmarkEmpty from '../../../../resources/images/bookmarked.react.svg';
+import BookmarkFilled from '../../../../resources/images/unbookmarked.react.svg';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { bookmarkCollectionAction } from '../redux/actions/bookmarkCollectionAction';
@@ -26,12 +26,10 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     return (
       <section className={'bookmark-button'}>
         {this.props.collection.links.bookmark ? (
-          <img
+          <BookmarkFilled
             data-qa="bookmark-collection"
             className="top-right-icon bookmark-icon"
             onClick={this.bookmarkCollection}
-            src={bookmarkFilled}
-            alt=""
             tabIndex={0}
             role="button"
             aria-label="Bookmark a collection"
@@ -39,12 +37,10 @@ export class BookmarkCollectionButtonInner extends PureComponent<
         ) : null}
 
         {this.props.collection.links.unbookmark ? (
-          <img
+          <BookmarkEmpty
             data-qa="unbookmark-collection"
             className="top-right-icon bookmark-icon"
             onClick={this.unbookmarkCollection}
-            src={bookmarkEmpty}
-            alt=""
             tabIndex={0}
             role="button"
             aria-label="Unbookmark a collection"

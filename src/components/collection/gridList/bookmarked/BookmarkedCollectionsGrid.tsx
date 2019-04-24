@@ -2,7 +2,7 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React from 'react';
 import emptyCollection from '../../../../..//resources/images/empty-collection.svg';
-import bookmarkFilled from '../../../../..//resources/images/unbookmarked.svg';
+import BookmarkFilled from '../../../../..//resources/images/unbookmarked.react.svg';
 import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { CollectionCardList } from '../../card/CollectionCardList';
@@ -57,8 +57,8 @@ class BookmarkedCollectionsGrid extends React.PureComponent<Props> {
           <h1 data-qa="no-collections">You have no bookmarks, yet.</h1>
           <p>
             You can add bookmarks by clicking the{' '}
-            <img src={bookmarkFilled} alt="Bookmark a collection" /> icon next
-            to collection titles.
+            <BookmarkFilled aria-label="Bookmark a collection" /> icon next to
+            collection titles.
           </p>
         </Col>
       </Row>
