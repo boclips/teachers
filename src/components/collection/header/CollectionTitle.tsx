@@ -1,6 +1,6 @@
 import React from 'react';
-import publicLogo from '../../../../resources/images/global.svg';
-import privateLogo from '../../../../resources/images/private.svg';
+import PublicLogo from '../../../../resources/images/global.react.svg';
+import PrivateLogo from '../../../../resources/images/private.react.svg';
 import './CollectionTitle.less';
 
 export interface Props {
@@ -10,22 +10,17 @@ export interface Props {
 }
 
 export class CollectionTitle extends React.Component<Props> {
-  private getLogo() {
-    return this.props.isPublic ? publicLogo : privateLogo;
-  }
-
   public render() {
+    const Logo = this.props.isPublic ? PublicLogo : PrivateLogo;
     return (
       <section className="collection-title">
         <h1 data-qa="collection-name" className="text--secondary">
           {this.props.title}
           {this.props.isMine && (
-            <img
-              src={this.getLogo()}
+            <Logo
               className="collection-title__logo"
               data-qa="collection-visibility"
               data-state={this.props.isPublic + ''}
-              alt="Collection logo"
             />
           )}
         </h1>
