@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import collections from '../../../resources/images/collections.png';
-import emptyCollection from '../../../resources/images/empty-collection.svg';
+import EmptyCollection from '../../../resources/images/empty-collection.react.svg';
 import { CollectionCardList } from '../../components/collection/card/CollectionCardList';
 import { fetchMyCollectionsAction } from '../../components/collection/redux/actions/fetchMyCollectionsAction';
 import PageLayout from '../../components/layout/PageLayout';
@@ -61,7 +61,7 @@ export class CollectionListView extends PureComponent<
     return (
       <Row className="collections-view-empty" data-qa="collections-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
-          <img src={emptyCollection} alt="No collections illustration" />
+          <EmptyCollection />
           <h1 data-qa="no-collections">You have no collections, yet.</h1>
           <p>
             Use the Save button on your favourite videos to create your very own

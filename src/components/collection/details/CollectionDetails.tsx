@@ -3,7 +3,7 @@ import React from 'react';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import emptyCollection from '../../../../resources/images/empty-collection.svg';
+import EmptyCollection from '../../../../resources/images/empty-collection.react.svg';
 import sadTeacher from '../../../../resources/images/sad-teacher.svg';
 import { Links } from '../../../types/Links';
 import State, { getIndexOfCollection } from '../../../types/State';
@@ -62,7 +62,7 @@ class CollectionDetails extends PureComponent<
     return (
       <Row data-qa="collection-view-empty" className="collection-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
-          <img src={emptyCollection} alt="Empty collection illustration" />
+          <EmptyCollection />
           <h1 data-qa="collection-empty-title">
             This video collection is empty
           </h1>
