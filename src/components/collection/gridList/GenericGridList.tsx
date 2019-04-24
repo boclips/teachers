@@ -4,8 +4,7 @@ import { Dispatch } from 'redux';
 import { ReadOnlyCollectionKey } from '../../../types/CollectionKey';
 import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { fetchNextBookmarkedCollectionsAction } from '../redux/actions/fetchNextBookmarkedCollectionsAction';
-import { fetchNextPublicCollectionsAction } from '../redux/actions/fetchNextPublicCollectionsAction';
+import { fetchNextPageableCollectionsAction } from '../redux/actions/fetchNextPageableCollectionsAction';
 import { fetchReadOnlyCollectionsAction } from '../redux/actions/fetchReadOnlyCollectionsAction';
 import BookmarkedCollectionsGrid from './bookmarked/BookmarkedCollectionsGrid';
 import PublicCollectionsGrid from './public/PublicCollectionsGrid';
@@ -55,16 +54,8 @@ const mapDispatchToProps = (
 ): DispatchProps => ({
   fetchCollections: () =>
     dispatch(fetchReadOnlyCollectionsAction(props.collectionKey)),
-  fetchNextPage: () => {
-    switch (props.collectionKey) {
-      case 'bookmarkedCollections':
-        dispatch(fetchNextBookmarkedCollectionsAction());
-        break;
-      case 'publicCollections':
-        dispatch(fetchNextPublicCollectionsAction());
-        break;
-    }
-  },
+  fetchNextPage: () =>
+    dispatch(fetchNextPageableCollectionsAction(props.collectionKey)),
 });
 
 function mapStateToProps({ collections }: State, props: Props): StateProps {
