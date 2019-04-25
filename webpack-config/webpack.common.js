@@ -65,7 +65,8 @@ module.exports = {
         options: {
           props: {
             role: 'img'
-          }
+          },
+          classIdPrefix: '[name]-[hash:8]__'
         }
       },
       {
