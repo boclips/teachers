@@ -1,13 +1,23 @@
+[![concourse](https://concourse.devboclips.net/api/v1/pipelines/boclips/jobs/build-teachers/badge)]()
+
 # Teachers
 
-The chosen teacher video platform aka B2T.
+This is the user-facing teacher application running on [teachers.boclips.com](teachers.boclips.com).
+
+The application allows teacher to use videos in the classroom in a safe way.
+Our videos do not contain adverts and are appropriate for children.
 
 ## Development
 
+It is written in TypeScript, based on react/redux and has way too any npm dependencies (like any other web app these days).
+
+### Running locally
+
 To run a local instance of B2T against `staging`, run `npm run dev`.
+
 The environment can be changed in `.env.dev`. Using the `ENVIRONMENT_DOMAIN` environment variable.
 
-Other handy commands:
+### Developing locally
 
 ```
 npm run test
@@ -24,6 +34,10 @@ npm run compile
 ```
 npm run lint:fix
 ```
+
+### Dependency analysis
+
+To analyse the depencencies that end up in the bundle, run:
 
 ```
 npm run lint:analyse
