@@ -1,7 +1,7 @@
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionSubtitle } from '../CollectionSubtitle';
-import './CollectionCardHeader.less';
+import './CollectionCardTitle.less';
 
 interface Props {
   collection: VideoCollection;

@@ -8,10 +8,8 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoPlayer from '../../video/player/VideoPlayer';
-import BookmarkingButton from './BookmarkCollectionButton';
 import './CollectionCard.less';
-import CollectionCardTitle from './CollectionCardTitle';
-import RemoveCollectionButton from './RemoveCollectionButton';
+import CollectionCardHeader from './CollectionCardHeader';
 
 interface Props {
   collection: VideoCollection;
@@ -33,13 +31,10 @@ export class CollectionCard extends React.PureComponent<Props> {
         data-state={this.props.collection.title}
         onClick={this.props.onClick}
       >
-        <CollectionCardTitle collection={this.props.collection} />
-        <StopClickPropagation>
-          <BookmarkingButton collection={this.props.collection} />
-          {!this.props.tiny && (
-            <RemoveCollectionButton collection={this.props.collection} />
-          )}
-        </StopClickPropagation>
+        <CollectionCardHeader
+          collection={this.props.collection}
+          showRemoveButton={!this.props.tiny}
+        />
         <section className="collection-video-previews">
           {this.renderVideoPreviews()}
         </section>

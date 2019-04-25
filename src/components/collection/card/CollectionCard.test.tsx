@@ -11,9 +11,8 @@ import {
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
-import BookmarkCollectionButton from './BookmarkCollectionButton';
 import { CollectionCard } from './CollectionCard';
-import CollectionCardTitle from './CollectionCardTitle';
+import CollectionCardHeader from './CollectionCardHeader';
 
 const NUMBER_OF_PREVIEWS = 4;
 
@@ -42,21 +41,14 @@ describe('CollectionCard', () => {
     );
   });
 
-  test('renders collection title', () => {
-    expect(wrapper.find(CollectionCardTitle).prop('collection')).toEqual(
+  test('renders collection header', () => {
+    expect(wrapper.find(CollectionCardHeader).props().collection).toEqual(
       collection,
     );
   });
 
   test('renders video previews', () => {
     expect(wrapper.find(By.dataQa('collection-video-preview'))).toHaveLength(2);
-  });
-
-  test('renders bookmark button', () => {
-    expect(wrapper.find(BookmarkCollectionButton)).toHaveProp(
-      'collection',
-      collection,
-    );
   });
 
   test('does not have class clickable without an onClick', () => {
