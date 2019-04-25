@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import AnalyticsFactory from '../services/analytics/AnalyticsFactory';
 import { UserProfile } from '../services/users/UserProfile';
 import { LoginState } from '../types/State';
+import { A11yButton } from './common/A11yButton';
 import Bodal from './common/Bodal';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 
@@ -50,7 +51,9 @@ class ReferAFriend extends React.Component<Props & StateProps, State> {
   public render() {
     return (
       <React.Fragment>
-        <div onClick={this.openModal}>{this.props.children}</div>
+        <A11yButton callback={this.openModal}>
+          <div>{this.props.children}</div>
+        </A11yButton>
 
         <Bodal
           title="Refer a friend"
