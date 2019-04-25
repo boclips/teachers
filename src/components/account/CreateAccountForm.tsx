@@ -3,7 +3,7 @@ import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import RegistrationLogo from '../../../resources/images/registration-logo.react.svg';
+import RegistrationLogo from '../../../resources/images/registration-logo.svg';
 import {
   createAccount,
   CreateAccountRequest,

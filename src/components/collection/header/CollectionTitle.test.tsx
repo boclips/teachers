@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import PublicLogo from '../../../../resources/images/global.react.svg';
-import PrivateLogo from '../../../../resources/images/private.react.svg';
+import PublicLogo from '../../../../resources/images/global.svg';
+import PrivateLogo from '../../../../resources/images/private.svg';
 import { By } from '../../../../test-support/By';
 import { CollectionTitle } from './CollectionTitle';
 

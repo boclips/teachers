@@ -1,8 +1,8 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React from 'react';
-import EmptyCollection from '../../../../..//resources/images/empty-collection.react.svg';
-import BookmarkFilled from '../../../../..//resources/images/unbookmarked.react.svg';
+import EmptyCollection from '../../../../..//resources/images/empty-collection.svg';
+import BookmarkFilled from '../../../../..//resources/images/unbookmarked.svg';
 import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { CollectionCardList } from '../../card/CollectionCardList';

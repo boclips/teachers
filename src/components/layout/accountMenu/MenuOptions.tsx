@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CollectionsIcon from '../../../../resources/images/collections-grey.react.svg';
-import LogoutIcon from '../../../../resources/images/logout.react.svg';
-import BookmarkedIcon from '../../../../resources/images/my-bookmarks.react.svg';
-import ReferAFriendIcon from '../../../../resources/images/refer-a-friend-icon.react.svg';
+import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
+import LogoutIcon from '../../../../resources/images/logout.svg';
+import BookmarkedIcon from '../../../../resources/images/my-bookmarks.svg';
+import ReferAFriendIcon from '../../../../resources/images/refer-a-friend-icon.svg';
 import ReferAFriend from '../../ReferAFriend';
 
 type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;

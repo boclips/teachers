@@ -1,5 +1,5 @@
 import React from 'react';
-import MyAccountImg from '../../../../resources/images/my-account.react.svg';
+import MyAccountImg from '../../../../resources/images/my-account.svg';
 
 import './AccountMenuIconComponent.less';
 
