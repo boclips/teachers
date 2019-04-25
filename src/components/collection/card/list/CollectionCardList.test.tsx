@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoCollectionFactory } from '../../../../test-support/factories';
-import CollectionCardContainer from './CollectionCardContainer';
+import { VideoCollectionFactory } from '../../../../../test-support/factories';
+import CollectionCardContainer from '../CollectionCardContainer';
 import { CollectionCardList } from './CollectionCardList';
 
 describe('CollectionCardList', () => {

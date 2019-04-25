@@ -1,7 +1,7 @@
 import React from 'react';
 import collectionsImg from '../../../../../resources/images/collections.png';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { CollectionCardList } from '../../card/CollectionCardList';
+import { CollectionCardList } from '../../card/list/CollectionCardList';
 
 interface Props {
   maxNumberOfCollections?: number;

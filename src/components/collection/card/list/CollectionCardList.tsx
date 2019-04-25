@@ -2,10 +2,10 @@ import { Col, Row } from 'antd';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { VideoCollection } from '../../../types/VideoCollection';
-import CollectionsLoaded from '../CollectionsLoaded';
-import { CollectionCard } from './CollectionCard';
-import CollectionCardContainer from './CollectionCardContainer';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import CollectionsLoaded from '../../CollectionsLoaded';
+import { CollectionCard } from '../CollectionCard';
+import CollectionCardContainer from '../CollectionCardContainer';
 
 interface InfiniteScrollProps {
   next: () => void;

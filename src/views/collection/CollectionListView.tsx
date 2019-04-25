@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import collections from '../../../resources/images/collections.png';
 import EmptyCollection from '../../../resources/images/empty-collection.svg';
-import { CollectionCardList } from '../../components/collection/card/CollectionCardList';
+import { CollectionCardList } from '../../components/collection/card/list/CollectionCardList';
 import { fetchMyCollectionsAction } from '../../components/collection/redux/actions/fetchMyCollectionsAction';
 import PageLayout from '../../components/layout/PageLayout';
 import { CollectionState } from '../../types/State';

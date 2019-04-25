@@ -5,7 +5,7 @@ import EmptyCollection from '../../../../..//resources/images/empty-collection.s
 import BookmarkFilled from '../../../../..//resources/images/unbookmarked.svg';
 import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { CollectionCardList } from '../../card/CollectionCardList';
+import { CollectionCardList } from '../../card/list/CollectionCardList';
 
 interface Props {
   maxNumberOfCollections?: number;
