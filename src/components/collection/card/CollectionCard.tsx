@@ -40,4 +40,34 @@ export class CollectionCard extends React.PureComponent<Props> {
       </section>
     );
   }
+
+  public static Skeleton = (props: { tiny: boolean }) => (
+    <section
+      className={
+        'collection-card skeleton ant-skeleton ant-skeleton-active' +
+        (props.tiny ? ' tiny' : '')
+      }
+    >
+      <section className="ant-skeleton-content">
+        <h3 className="collection-title ant-skeleton-title" />
+        <span className="highlight">
+          <span />
+        </span>
+        <section className="collection-video-previews">
+          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
+            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+          </section>
+          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
+            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+          </section>
+          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
+            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+          </section>
+          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
+            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+          </section>
+        </section>
+      </section>
+    </section>
+  );
 }

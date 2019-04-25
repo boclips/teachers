@@ -12,6 +12,7 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
+import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 import CollectionCardHeader from './header/CollectionCardHeader';
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -49,6 +50,10 @@ describe('CollectionCard', () => {
 
   test('does not have class clickable without an onClick', () => {
     expect(wrapper.find('.clickable')).toHaveLength(0);
+  });
+
+  test('renders collection video previews', () => {
+    expect(wrapper.find(CollectionCardVideoPreviews)).toExist();
   });
 
   describe('a collection card with an onclick function', () => {

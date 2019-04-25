@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { By } from '../../../../test-support/By';
 import { VideoFactory } from '../../../../test-support/factories';
+import CollectionCardVideoPreview from './CollectionCardVideoPreview';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 describe('when number of videos is less than the number of previews', () => {
   const wrapper = shallow(
@@ -12,6 +13,7 @@ describe('when number of videos is less than the number of previews', () => {
       videos={[VideoFactory.sample({ id: '1' })]}
     />,
   );
+
   test('does not render a video preview counter with less vidoes than number of previews', () => {
     expect(
       wrapper.find(By.dataQa('collection-video-preview-counter')),
@@ -19,7 +21,7 @@ describe('when number of videos is less than the number of previews', () => {
   });
 
   test('renders video previews', () => {
-    expect(wrapper.find(By.dataQa('collection-video-preview'))).toHaveLength(1);
+    expect(wrapper.find(CollectionCardVideoPreview)).toHaveLength(1);
   });
 });
 
@@ -38,7 +40,7 @@ describe('when more videos than number of previews', () => {
   );
 
   test('renders 1 video previews', () => {
-    expect(wrapper.find(By.dataQa('collection-video-preview'))).toHaveLength(1);
+    expect(wrapper.find(CollectionCardVideoPreview)).toHaveLength(1);
   });
 
   test('renders video preview counter', () => {
@@ -62,7 +64,7 @@ describe('when exactly same number of videos as number of previews', () => {
   );
 
   test('renders 2 video previews', () => {
-    expect(wrapper.find(By.dataQa('collection-video-preview'))).toHaveLength(2);
+    expect(wrapper.find(CollectionCardVideoPreview)).toHaveLength(2);
   });
 
   test('does not render a video preview counter', () => {
