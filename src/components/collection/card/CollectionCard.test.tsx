@@ -1,10 +1,6 @@
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
-import { By } from '../../../../test-support/By';
 import {
-  MockStoreFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
@@ -54,52 +50,5 @@ describe('CollectionCard', () => {
 
   test('renders collection video previews', () => {
     expect(wrapper.find(CollectionCardVideoPreviews)).toExist();
-  });
-
-  describe('a collection card with an onclick function', () => {
-    const getWrapper = (onClick: React.MouseEventHandler) => {
-      return mount(
-        <Provider store={MockStoreFactory.sample()}>
-          <MemoryRouter>
-            <CollectionCard
-              collection={collection}
-              numberOfPreviews={NUMBER_OF_PREVIEWS}
-              onClick={onClick}
-            />
-          </MemoryRouter>
-        </Provider>,
-      );
-    };
-
-    test('has class clickable when an onclick function is provided', () => {
-      wrapper = getWrapper(() => {});
-      expect(wrapper.find('.clickable')).toHaveLength(1);
-    });
-
-    test('When clicking on a video preview the onClick prop is not called', () => {
-      const spy = jest.fn(() => {});
-
-      wrapper = getWrapper(spy);
-
-      const collectionVideoPreview = wrapper
-        .find('.collection-video-preview')
-        .first();
-
-      collectionVideoPreview.simulate('click');
-
-      expect(spy.mock.calls).toHaveLength(0);
-    });
-
-    test('When clicking the delete button the onClick prop is not called', () => {
-      const spy = jest.fn(() => {});
-
-      wrapper = getWrapper(spy);
-
-      const deleteButton = wrapper.find(By.dataQa('delete-collection')).first();
-
-      deleteButton.simulate('click');
-
-      expect(spy.mock.calls).toHaveLength(0);
-    });
   });
 });
