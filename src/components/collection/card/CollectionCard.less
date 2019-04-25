@@ -29,21 +29,6 @@
     cursor: pointer;
   }
 
-  .collection-title {
-    margin-bottom: 0px;
-    font-size: 18px;
-
-    &.clamp-2-lines {
-      max-height: 24px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      display: -webkit-box;
-      width: 90%;
-    }
-  }
-
   .collection-video-previews {
     display: grid;
     grid-column-gap: @preview-gutter;
@@ -186,7 +171,7 @@
       }
     }
 
-    .video-container-padding .video-container-inner{
+    .video-container-padding .video-container-inner {
       background-color: @shade-3;
     }
   }
@@ -254,7 +239,8 @@
         text-align: center;
         height: 100%;
 
-        .count, .label {
+        .count,
+        .label {
           line-height: 0.8;
         }
 

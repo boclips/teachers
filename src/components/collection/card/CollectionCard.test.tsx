@@ -11,9 +11,9 @@ import {
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { CollectionSubtitle } from '../CollectionSubtitle';
 import BookmarkCollectionButton from './BookmarkCollectionButton';
 import { CollectionCard } from './CollectionCard';
+import CollectionCardTitle from './CollectionCardTitle';
 
 const NUMBER_OF_PREVIEWS = 4;
 
@@ -43,13 +43,7 @@ describe('CollectionCard', () => {
   });
 
   test('renders collection title', () => {
-    expect(wrapper.find(By.dataQa('collection-title')).text()).toEqual(
-      'a collection',
-    );
-  });
-
-  test('renders collection subtitle', () => {
-    expect(wrapper.find(CollectionSubtitle).prop('collection')).toEqual(
+    expect(wrapper.find(CollectionCardTitle).prop('collection')).toEqual(
       collection,
     );
   });
