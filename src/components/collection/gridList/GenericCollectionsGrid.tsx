@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { ReadOnlyCollectionKey } from '../../../types/CollectionKey';
-import State from '../../../types/State';
+import Page from '../../../types/Page';
+import State, { Pageable } from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { fetchNextPageableCollectionsAction } from '../redux/actions/fetchNextPageableCollectionsAction';
 import { fetchReadOnlyCollectionsAction } from '../redux/actions/fetchReadOnlyCollectionsAction';
@@ -55,14 +56,12 @@ const mapDispatchToProps = (
 });
 
 function mapStateToProps({ collections }: State, props: Props): StateProps {
+  const collectionsOfType: Pageable<VideoCollection> =
+    collections[props.collectionKey];
+
   return {
-    collections:
-      collections[props.collectionKey] &&
-      collections[props.collectionKey].items,
-    hasMoreCollections:
-      collections[props.collectionKey] &&
-      collections[props.collectionKey].links.next &&
-      true,
+    collections: new Page(collectionsOfType).items(),
+    hasMoreCollections: new Page(collectionsOfType).hasNextPage(),
   };
 }
 
