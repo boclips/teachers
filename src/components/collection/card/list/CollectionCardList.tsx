@@ -4,8 +4,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import CollectionsLoaded from '../../CollectionsLoaded';
-import { CollectionCard } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
+import CollectionCardVideoPreviews from '../CollectionCardVideoPreviews';
 
 interface InfiniteScrollProps {
   next: () => void;
@@ -91,7 +91,7 @@ export class CollectionCardList extends React.PureComponent<Props> {
         md={{ span: this.props.grid ? 12 : 24 }}
         lg={{ span: this.props.grid ? 8 : 24 }}
       >
-        <CollectionCard.Skeleton tiny={this.props.grid} />
+        <CollectionCardVideoPreviews.Skeleton tiny={this.props.grid} />
       </Col>
     ));
   }
