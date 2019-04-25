@@ -12,7 +12,7 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionCard } from './CollectionCard';
-import CollectionCardHeader from './CollectionCardHeader';
+import CollectionCardHeader from './header/CollectionCardHeader';
 
 const NUMBER_OF_PREVIEWS = 4;
 

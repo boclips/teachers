@@ -3,8 +3,8 @@ import React from 'react';
 import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from '../../../../test-support/factories';
-import { Link } from '../../../types/Link';
+} from '../../../../../test-support/factories';
+import { Link } from '../../../../types/Link';
 import { RemoveCollectionButtonInner } from './RemoveCollectionButton';
 
 const noOp = () => {};

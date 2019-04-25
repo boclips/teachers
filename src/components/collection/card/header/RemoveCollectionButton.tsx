@@ -2,9 +2,9 @@ import { Icon, Modal } from 'antd';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { VideoCollection } from '../../../types/VideoCollection';
-import { deleteCollectionAction } from '../redux/actions/deleteCollectionAction';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import { deleteCollectionAction } from '../../redux/actions/deleteCollectionAction';
 import './RemoveCollectionButton.less';
 
 interface OwnProps {

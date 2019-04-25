@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from '../../../../test-support/By';
-import { VideoCollectionFactory } from '../../../../test-support/factories';
-import { CollectionSubtitle } from '../CollectionSubtitle';
+import { By } from '../../../../../test-support/By';
+import { VideoCollectionFactory } from '../../../../../test-support/factories';
+import { CollectionSubtitle } from '../../CollectionSubtitle';
 import CollectionCardTitle from './CollectionCardTitle';
 
 test('renders title', () => {

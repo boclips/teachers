@@ -1,12 +1,12 @@
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import BookmarkEmpty from '../../../../resources/images/bookmarked.svg';
-import BookmarkFilled from '../../../../resources/images/unbookmarked.svg';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { VideoCollection } from '../../../types/VideoCollection';
-import { bookmarkCollectionAction } from '../redux/actions/bookmarkCollectionAction';
-import { unbookmarkCollectionAction } from '../redux/actions/unbookmarkCollectionAction';
+import BookmarkEmpty from '../../../../../resources/images/bookmarked.svg';
+import BookmarkFilled from '../../../../../resources/images/unbookmarked.svg';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import { bookmarkCollectionAction } from '../../redux/actions/bookmarkCollectionAction';
+import { unbookmarkCollectionAction } from '../../redux/actions/unbookmarkCollectionAction';
 import './BookmarkCollectionButton.less';
 import './RemoveCollectionButton.less';
 

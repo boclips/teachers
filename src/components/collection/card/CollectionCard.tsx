@@ -9,7 +9,7 @@ import DurationFormatter from '../../common/formatters/DurationFormatter';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoPlayer from '../../video/player/VideoPlayer';
 import './CollectionCard.less';
-import CollectionCardHeader from './CollectionCardHeader';
+import CollectionCardHeader from './header/CollectionCardHeader';
 
 interface Props {
   collection: VideoCollection;

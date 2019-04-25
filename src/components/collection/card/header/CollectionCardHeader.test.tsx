@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoCollectionFactory } from '../../../../test-support/factories';
+import { VideoCollectionFactory } from '../../../../../test-support/factories';
 import BookmarkingButton from './BookmarkCollectionButton';
 import CollectionCardHeader from './CollectionCardHeader';
 import CollectionCardTitle from './CollectionCardTitle';

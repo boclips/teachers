@@ -1,6 +1,6 @@
 import React from 'react';
-import { VideoCollection } from '../../../types/VideoCollection';
-import StopClickPropagation from '../../common/StopClickPropagation';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import StopClickPropagation from '../../../common/StopClickPropagation';
 import BookmarkingButton from './BookmarkCollectionButton';
 import CollectionCardTitle from './CollectionCardTitle';
 import RemoveCollectionButton from './RemoveCollectionButton';
