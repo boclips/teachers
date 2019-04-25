@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import GenericCollectionsGrid from '../../components/collection/gridList/GenericCollectionsGrid';
+import GenericCollectionsGrid from '../../components/collection/grid/GenericCollectionsGrid';
 import PageLayout from '../../components/layout/PageLayout';
 
 export class BookmarkedCollectionListView extends PureComponent {

@@ -12,7 +12,7 @@ import ReferAFriend from '../../components/ReferAFriend';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
-import GenericCollectionsGrid from '../../components/collection/gridList/GenericCollectionsGrid';
+import GenericCollectionsGrid from '../../components/collection/grid/GenericCollectionsGrid';
 import './HomeView.less';
 
 const { Content } = Layout;
