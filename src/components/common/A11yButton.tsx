@@ -43,5 +43,5 @@ export const A11yButton = ({ callback, children }: Props) => {
       children.props.onClick(event);
     }
   };
-  return React.cloneElement(children, { onClick, onKeyDown });
+  return React.cloneElement(children, { onClick, onKeyDown, role: 'button' });
 };
