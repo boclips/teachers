@@ -2,6 +2,7 @@ import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
 import { Video } from '../../../types/Video';
 import CollectionCardVideoPreview from './CollectionCardVideoPreview';
+import './CollectionCardVideoPreviews.less';
 
 interface Props {
   videos: Video[];
