@@ -1,8 +1,9 @@
-import { uuid } from 'boclips-react-player/dist/src/uuid';
 import React from 'react';
 import { Video } from '../../../types/Video';
+import CollectionCardPreviewCount from './CollectionCardPreviewCount';
 import CollectionCardVideoPreview from './CollectionCardVideoPreview';
 import './CollectionCardVideoPreviews.less';
+import EmptyCollectionCardPreview from './EmptyCollectionCardPreview';
 
 interface Props {
   videos: Video[];
@@ -12,57 +13,35 @@ interface Props {
 }
 
 class CollectionCardVideoPreviews extends React.PureComponent<Props> {
-  private renderVideoPreviewCount(totalNumberOfVideos: number) {
-    return (
-      <section key={uuid()} className="video-container">
-        <section className="video-container-inner">
-          <section className="video-counter">
-            <span className="count">
-              +
-              <span data-qa="collection-video-preview-counter">
-                {totalNumberOfVideos - (this.props.numberOfPreviews - 1)}
-              </span>
-            </span>
-            <section className="label">videos</section>
-          </section>
-        </section>
-      </section>
-    );
-  }
-
-  private renderVideoPreviewPadding() {
-    return (
-      <section key={uuid()} className="video-container video-container-padding">
-        <section className="video-container-inner" />
-      </section>
-    );
-  }
-
   public render() {
     const previews = [];
     if (this.props.videos.length === this.props.numberOfPreviews) {
       previews.push(
         ...this.props.videos
           .slice(0, this.props.numberOfPreviews)
-          .map((video, index) =>
-            this.renderVideoPreview(video, video ? video.id : index),
-          ),
+          .map((video, index) => this.renderVideoPreview(video, index)),
       );
     } else {
       previews.push(
         ...this.props.videos
           .slice(0, this.props.numberOfPreviews - 1)
-          .map((video, index) =>
-            this.renderVideoPreview(video, video ? video.id : index),
-          ),
+          .map((video, index) => this.renderVideoPreview(video, index)),
       );
     }
     if (this.props.videos.length > this.props.numberOfPreviews) {
-      previews.push(this.renderVideoPreviewCount(this.props.videos.length));
+      previews.push(
+        <CollectionCardPreviewCount
+          key={this.props.id + previews.length}
+          totalNumberOfVideos={this.props.videos.length}
+          numberOfPreviews={this.props.numberOfPreviews}
+        />,
+      );
     }
 
     while (previews.length < this.props.numberOfPreviews) {
-      previews.push(this.renderVideoPreviewPadding());
+      previews.push(
+        <EmptyCollectionCardPreview key={this.props.id + previews.length} />,
+      );
     }
 
     return (

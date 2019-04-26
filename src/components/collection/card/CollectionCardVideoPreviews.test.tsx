@@ -2,6 +2,7 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import { By } from '../../../../test-support/By';
 import { VideoFactory } from '../../../../test-support/factories';
+import CollectionCardPreviewCount from './CollectionCardPreviewCount';
 import CollectionCardVideoPreview from './CollectionCardVideoPreview';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 describe('when number of videos is less than the number of previews', () => {
@@ -45,7 +46,11 @@ describe('when more videos than number of previews', () => {
 
   test('renders video preview counter', () => {
     expect(
-      wrapper.find(By.dataQa('collection-video-preview-counter')).text(),
+      wrapper
+        .find(CollectionCardPreviewCount)
+        .dive()
+        .find(By.dataQa('collection-video-preview-counter'))
+        .text(),
     ).toEqual('2');
   });
 });
