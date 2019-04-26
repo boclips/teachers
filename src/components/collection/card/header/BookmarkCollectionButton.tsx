@@ -25,35 +25,39 @@ export class BookmarkCollectionButtonInner extends PureComponent<
 > {
   public render() {
     return (
-      <section className={'bookmark-button'}>
-        {this.props.collection.links.bookmark ? (
-          <A11yButton callback={this.bookmarkCollection}>
+      <A11yButton callback={this.onClick}>
+        <section
+          tabIndex={0}
+          role="button"
+          className="top-right-icon bookmark-icon bookmark-button"
+        >
+          {this.props.collection.links.bookmark && (
             <BookmarkFilled
               data-qa="bookmark-collection"
-              className="top-right-icon bookmark-icon"
-              tabIndex={0}
-              role="button"
               aria-label="Bookmark a collection"
             />
-          </A11yButton>
-        ) : null}
+          )}
 
-        {this.props.collection.links.unbookmark ? (
-          <A11yButton callback={this.unbookmarkCollection}>
+          {this.props.collection.links.unbookmark && (
             <BookmarkEmpty
               data-qa="unbookmark-collection"
-              className="top-right-icon bookmark-icon"
-              tabIndex={0}
-              role="button"
               aria-label="Unbookmark a collection"
             />
-          </A11yButton>
-        ) : null}
-      </section>
+          )}
+        </section>
+      </A11yButton>
     );
   }
 
-  public bookmarkCollection = (e: SyntheticEvent) => {
+  private onClick = (e: SyntheticEvent) => {
+    if (this.props.collection.links.bookmark) {
+      this.bookmarkCollection(e);
+    } else {
+      this.unbookmarkCollection(e);
+    }
+  };
+
+  private bookmarkCollection = (e: SyntheticEvent) => {
     if (e && e.stopPropagation) {
       e.stopPropagation();
     }
@@ -63,7 +67,7 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     this.props.onBookmarkCollectionAction(this.props.collection);
   };
 
-  public unbookmarkCollection = (e: SyntheticEvent) => {
+  private unbookmarkCollection = (e: SyntheticEvent) => {
     if (e && e.stopPropagation) {
       e.stopPropagation();
     }
