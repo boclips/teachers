@@ -1,10 +1,10 @@
 import { Icon } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Video } from '../../../types/Video';
-import DurationFormatter from '../../common/formatters/DurationFormatter';
-import StopClickPropagation from '../../common/StopClickPropagation';
-import VideoPlayer from '../../video/player/VideoPlayer';
+import { Video } from '../../../../types/Video';
+import DurationFormatter from '../../../common/formatters/DurationFormatter';
+import StopClickPropagation from '../../../common/StopClickPropagation';
+import VideoPlayer from '../../../video/player/VideoPlayer';
 import './CollectionCardVideoPreview.less';
 
 interface Props {

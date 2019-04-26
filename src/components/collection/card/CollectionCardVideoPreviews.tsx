@@ -1,9 +1,9 @@
 import React from 'react';
 import { Video } from '../../../types/Video';
-import CollectionCardPreviewCount from './CollectionCardPreviewCount';
-import CollectionCardVideoPreview from './CollectionCardVideoPreview';
 import './CollectionCardVideoPreviews.less';
-import EmptyCollectionCardPreview from './EmptyCollectionCardPreview';
+import CollectionCardVideoPreview from './preview/CollectionCardVideoPreview';
+import CollectionCardVideoPreviewCount from './preview/CollectionCardVideoPreviewCount';
+import EmptyCollectionCardVideoPreview from './preview/EmptyCollectionVideoCardPreview';
 
 interface Props {
   videos: Video[];
@@ -30,7 +30,7 @@ class CollectionCardVideoPreviews extends React.PureComponent<Props> {
     }
     if (this.props.videos.length > this.props.numberOfPreviews) {
       previews.push(
-        <CollectionCardPreviewCount
+        <CollectionCardVideoPreviewCount
           key={this.props.id + previews.length}
           totalNumberOfVideos={this.props.videos.length}
           numberOfPreviews={this.props.numberOfPreviews}
@@ -40,7 +40,9 @@ class CollectionCardVideoPreviews extends React.PureComponent<Props> {
 
     while (previews.length < this.props.numberOfPreviews) {
       previews.push(
-        <EmptyCollectionCardPreview key={this.props.id + previews.length} />,
+        <EmptyCollectionCardVideoPreview
+          key={this.props.id + previews.length}
+        />,
       );
     }
 

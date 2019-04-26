@@ -5,7 +5,7 @@ export interface Props {
   totalNumberOfVideos: number;
 }
 
-const CollectionCardPreviewCount = React.memo((props: Props) => (
+const CollectionCardVideoPreviewCount = React.memo((props: Props) => (
   <section className="video-container">
     <section className="video-container-inner">
       <section className="video-counter">
@@ -21,4 +21,4 @@ const CollectionCardPreviewCount = React.memo((props: Props) => (
   </section>
 ));
 
-export default CollectionCardPreviewCount;
+export default CollectionCardVideoPreviewCount;
