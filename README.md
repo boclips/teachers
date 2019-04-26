@@ -1,6 +1,6 @@
-[![concourse](https://concourse.devboclips.net/api/v1/pipelines/boclips/jobs/build-teachers/badge)]()
-
 # Teachers
+
+[![concourse](https://concourse.devboclips.net/api/v1/pipelines/boclips/jobs/build-teachers/badge)]()
 
 This is the user-facing teacher application running on [teachers.boclips.com](teachers.boclips.com).
 
