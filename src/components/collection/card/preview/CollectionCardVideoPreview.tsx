@@ -16,10 +16,10 @@ interface Props {
 class CollectionCardVideoPreview extends React.PureComponent<Props> {
   private renderThumbnailContainer() {
     return (
-      <section className="video-container">
-        <section className="video-container-inner">
+      <section className="colleciton-card-video-container">
+        <section className="colleciton-card-video-container__inner">
           <section
-            className="thumbnail-container"
+            className="collection-card-thumbnail-container"
             style={{ backgroundImage: `url(${this.props.video.thumbnailUrl})` }}
           />
         </section>
@@ -29,8 +29,8 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
 
   private renderVideoContainer() {
     return (
-      <section className="video-container">
-        <section className="video-container-inner">
+      <section className="colleciton-card-video-container">
+        <section className="colleciton-card-video-container__inner">
           <VideoPlayer video={this.props.video} controls="thumbnail" />
         </section>
       </section>
@@ -39,7 +39,7 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
 
   public static VideoPreviewSkeleton = () => (
     <section className="collection-video-preview skeleton">
-      <section className="video-container" />
+      <section className="colleciton-card-video-container" />
       <section className={'title'} />
       <section className={'subtitle'} />
     </section>

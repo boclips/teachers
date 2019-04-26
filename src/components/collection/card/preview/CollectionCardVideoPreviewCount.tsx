@@ -6,8 +6,8 @@ export interface Props {
 }
 
 const CollectionCardVideoPreviewCount = React.memo((props: Props) => (
-  <section className="video-container">
-    <section className="video-container-inner">
+  <section className="colleciton-card-video-container">
+    <section className="colleciton-card-video-container__inner">
       <section className="video-counter">
         <span className="count">
           +
