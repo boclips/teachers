@@ -50,5 +50,5 @@ test('initial state for subjects is set by initial value', () => {
     />,
   );
 
-  expect(wrapper.state().subjects).toEqual(['1', '2']);
+  expect(wrapper.state().value).toEqual(['1', '2']);
 });

@@ -11,7 +11,8 @@ export interface Props {
 }
 
 export interface State {
-  subjects: string[];
+  value: string[];
+  sortedSubjects: Subject[];
 }
 
 export class SelectSubjects extends React.PureComponent<Props, State> {
@@ -20,19 +21,20 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
   };
 
   public state = {
-    subjects: this.props.initialValue,
+    value: this.props.initialValue,
+    sortedSubjects: SelectSubjects.sortSubjectsByName(this.props.subjects),
   };
 
   public render() {
     return (
       <MultiSelect
-        filterOption={this.filter}
+        filterOption={SelectSubjects.filter}
         mode="multiple"
         placeholder={this.props.placeholder}
         data-qa="subjects"
         onChange={this.onChange}
         aria-label={this.props.placeholder}
-        value={this.state.subjects}
+        value={this.state.value}
       >
         {this.generateOptions()}
       </MultiSelect>
@@ -40,17 +42,15 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
   }
 
   private onChange = (newValue: string[]) => {
-    this.setState({ subjects: newValue }, () => {
-      this.props.onUpdateSubjects(this.state.subjects);
+    this.setState({ value: newValue }, () => {
+      this.props.onUpdateSubjects(this.state.value);
     });
   };
 
   private generateOptions() {
     const Option = MultiSelect.Option;
 
-    this.sortSubjectsByName();
-
-    return this.props.subjects.map(subject => {
+    return this.state.sortedSubjects.map(subject => {
       return (
         <Option key={subject.name} value={subject.id} title={subject.name}>
           {subject.name}
@@ -59,8 +59,8 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
     });
   }
 
-  private sortSubjectsByName() {
-    this.props.subjects.sort((a: Subject, b: Subject) => {
+  private static sortSubjectsByName(subjects: Readonly<Subject[]>): Subject[] {
+    return [...subjects].sort((a: Subject, b: Subject) => {
       if (a.name > b.name) {
         return 1;
       }
@@ -71,7 +71,7 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
     });
   }
 
-  private filter(inputValue, option) {
+  private static filter(inputValue, option) {
     return option.key.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
   }
 }
