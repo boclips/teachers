@@ -18,6 +18,30 @@ test('renders a list of subjects alphabetically ordered', () => {
   expect(options.at(1).prop('children')).toBe('Maths');
 });
 
+test('renders a list of subjects alphabetically ordered, after receiving an update', () => {
+  const subjects = [{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }];
+
+  const wrapper = shallow(
+    <SelectSubjects
+      subjects={[]}
+      onUpdateSubjects={jest.fn()}
+      placeholder="Select a subject"
+      initialValue={[]}
+    />,
+  );
+
+  const options = wrapper.find(Select.Option);
+  expect(options.length).toEqual(0);
+
+  wrapper.setProps({ subjects });
+
+  const optionsAfterUpdate = wrapper.find(Select.Option);
+  expect(optionsAfterUpdate.length).toEqual(2);
+
+  expect(optionsAfterUpdate.at(0).prop('children')).toBe('Art');
+  expect(optionsAfterUpdate.at(1).prop('children')).toBe('Maths');
+});
+
 test('onSelection returns a list of selected ids', () => {
   const callback = jest.fn();
   const wrapper = mount(

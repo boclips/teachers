@@ -25,6 +25,14 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
     sortedSubjects: SelectSubjects.sortSubjectsByName(this.props.subjects),
   };
 
+  public componentDidUpdate(prevProps: Readonly<Props>): void {
+    if (prevProps.subjects !== this.props.subjects) {
+      this.setState({
+        sortedSubjects: SelectSubjects.sortSubjectsByName(this.props.subjects),
+      });
+    }
+  }
+
   public render() {
     return (
       <MultiSelect
