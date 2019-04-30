@@ -13,7 +13,7 @@ export default class SubjectTag extends React.Component<Props> {
     return (
       <div className="subject-tag">
         <span className="tag-type">Subject:</span>
-        <span data-qa="video-subject">{this.props.subject}</span>
+        <span data-qa="subject">{this.props.subject}</span>
       </div>
     );
   }

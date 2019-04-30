@@ -19,11 +19,11 @@ const CollectionCardHeader = React.memo(
         <BookmarkingButton collection={collection} />
         {showRemoveButton && <RemoveCollectionButton collection={collection} />}
       </StopClickPropagation>
-      {collection.subjects.length !== 0 && (
-        <div className="subjects-container">
+      <div className="tags-container">
+        {collection.subjects.length !== 0 && (
           <ConnectedSubjectTag id={collection.subjects[0]} />
-        </div>
-      )}
+        )}
+      </div>
     </>
   ),
 );

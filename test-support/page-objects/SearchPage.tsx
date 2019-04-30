@@ -54,7 +54,7 @@ export class SearchPage {
       isSaved: el
         .find('ManageVideoCollectionsButton')
         .prop('isInDefaultCollection'),
-      subjects: el.find(By.dataQa('video-subject')).map(tag => tag.text()),
+      subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
     }));
   }
 

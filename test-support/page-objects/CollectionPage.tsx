@@ -35,7 +35,7 @@ export class CollectionPage {
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
-      subjects: el.find(By.dataQa('video-subject')).map(tag => tag.text()),
+      subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
     }));
   }
 

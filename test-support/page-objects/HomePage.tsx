@@ -28,7 +28,7 @@ export class HomePage {
     return this.wrapper
       .find(By.dataQa('collection-card'))
       .map(collectionCard => {
-        const subjectWrapper = collectionCard.find(By.dataQa('video-subject'));
+        const subjectWrapper = collectionCard.find(By.dataQa('subject'));
 
         return {
           title: findOne(collectionCard, 'collection-title').text(),

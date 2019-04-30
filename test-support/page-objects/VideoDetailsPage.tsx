@@ -36,7 +36,7 @@ export class VideoDetailsPage {
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       thumbnailUrl: el.find(BoclipsPlayer).prop('thumbnail'),
-      subjects: findAll(el, 'video-subject').map(tag => tag.text()),
+      subjects: findAll(el, 'subject').map(tag => tag.text()),
     }))[0];
   }
 }
