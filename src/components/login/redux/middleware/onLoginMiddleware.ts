@@ -9,6 +9,7 @@ import { fetchUser } from '../../../../services/users/fetchUser';
 import { UserProfile } from '../../../../services/users/UserProfile';
 import { Links } from '../../../../types/Links';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
+import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
@@ -41,6 +42,9 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
     .then((user: UserProfile) => {
       store.dispatch(userDetailsFetched(user));
       store.dispatch(registerAnalytics(user.analyticsId));
+    })
+    .then(() => {
+      store.dispatch(fetchSubjectsAction());
     })
     .catch(error => {
       console.warn(error);

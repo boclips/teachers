@@ -51,7 +51,8 @@
                     </g>
                 </g>
                 <g id="messaging" transform="translate(99.000000, 8.000000)">
-                    <text id="Refer-3-teachers-and" font-family="Heebo-Regular, Heebo" font-size="16" font-weight="normal" line-spacing="20" fill="#3D4564">
+                    <text id="Refer-3-teachers-and" font-family="Heebo-Regular, Heebo" font-size="16" font-weight="normal"
+                          fill="#3D4564">
                         <tspan x="0" y="52">Refer 3 teachers</tspan>
                         <tspan x="0" y="72">and get rewarded</tspan>
                     </text>

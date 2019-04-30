@@ -23,3 +23,23 @@ test('edit collection', async () => {
 
   expect(success).toEqual(true);
 });
+
+test('change subjects on collection', async () => {
+  MockFetchVerify.patch(
+    '/v1/collections/the-id',
+    { title: 'avideo', subjects: ['id-one', 'id-two'] },
+    204,
+  );
+
+  const success = await editCollection({
+    originalCollection: VideoCollectionFactory.sample({
+      links: VideoCollectionLinksFactory.sample({
+        edit: new Link({ href: '/v1/collections/the-id' }),
+      }),
+    }),
+    title: 'avideo',
+    subjects: ['id-one', 'id-two'],
+  });
+
+  expect(success).toEqual(true);
+});

@@ -25,14 +25,24 @@ export class HomePage {
   }
 
   public getPublicCollections(): Collection[] {
-    return this.wrapper.find(By.dataQa('collection-card')).map(el => ({
-      title: findOne(el, 'collection-title').text(),
-      numberOfVideos: Number(findOne(el, 'collection-number-of-videos').text()),
-    }));
+    return this.wrapper
+      .find(By.dataQa('collection-card'))
+      .map(collectionCard => {
+        const subjectWrapper = collectionCard.find(By.dataQa('video-subject'));
+
+        return {
+          title: findOne(collectionCard, 'collection-title').text(),
+          numberOfVideos: Number(
+            findOne(collectionCard, 'collection-number-of-videos').text(),
+          ),
+          subject: subjectWrapper.length ? subjectWrapper.text() : null,
+        };
+      });
   }
 }
 
 interface Collection {
   title: string;
   numberOfVideos: number;
+  subject: string | null;
 }

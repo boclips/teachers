@@ -39,6 +39,10 @@ const createUpdatedCollection = (request: EditCollectionRequest) => ({
     request.isPublic != null
       ? request.isPublic
       : request.originalCollection.isPublic,
+  subjects:
+    request.subjects != null
+      ? request.subjects
+      : request.originalCollection.subjects,
 });
 
 export default sideEffect(editCollectionAction, onEditCollection);

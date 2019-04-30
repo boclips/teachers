@@ -32,6 +32,9 @@ export const links = {
       href: '/v1/users/{id}',
       templated: true,
     },
+    subjects: {
+      href: '/v1/subjects',
+    },
   },
 };
 
@@ -130,6 +133,7 @@ export function collectionResponse(
     videos: videosWithin,
     updatedAt: '2019-01-16T12:00:00.870Z',
     public: true,
+    subjects: [],
     createdBy: 'AI',
     _links: {
       self: {
@@ -164,7 +168,21 @@ export function collectionResponse(
   };
 }
 
-export function collectionsResponse(videosWithin: any[] = [video177]) {
+export function collectionResponseWithSubject(
+  videosWithin: any[] = [video177Slim],
+  id: string = 'id',
+  editble: boolean = true,
+) {
+  return {
+    ...collectionResponse(videosWithin, id, editble),
+    subjects: [{ id: '1', name: null }, { id: '2', name: null }],
+  };
+}
+
+export function collectionsResponse(
+  videosWithin: any[] = [video177],
+  subjects: Array<{ id: string; name: null }> = [],
+) {
   return {
     _embedded: {
       collections: [
@@ -176,6 +194,7 @@ export function collectionsResponse(videosWithin: any[] = [video177]) {
           updatedAt: '2019-01-16T12:00:00.870Z',
           public: true,
           createdBy: 'AI',
+          subjects,
           _links: {
             edit: {
               href: '/v1/collections/id',

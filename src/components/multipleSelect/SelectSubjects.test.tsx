@@ -1,13 +1,15 @@
 import { Select } from 'antd';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { SelectSubjects } from './SelectSubjects';
+import { Props, SelectSubjects, State } from './SelectSubjects';
 
 test('renders a list of subjects alphabetically ordered', () => {
   const wrapper = shallow(
     <SelectSubjects
       subjects={[{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }]}
       onUpdateSubjects={jest.fn()}
+      placeholder="Select a subject"
+      initialValue={[]}
     />,
   );
 
@@ -22,6 +24,8 @@ test('onSelection returns a list of selected ids', () => {
     <SelectSubjects
       subjects={[{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }]}
       onUpdateSubjects={callback}
+      placeholder="Select a subject"
+      initialValue={[]}
     />,
   );
 
@@ -33,4 +37,18 @@ test('onSelection returns a list of selected ids', () => {
 
   expect(callback).toHaveBeenCalledTimes(2);
   expect(callback).toHaveBeenCalledWith(['3', '1']);
+});
+
+test('initial state for subjects is set by initial value', () => {
+  const callback = jest.fn();
+  const wrapper = mount<Props, State>(
+    <SelectSubjects
+      subjects={[{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }]}
+      onUpdateSubjects={callback}
+      placeholder="Select a subject"
+      initialValue={['1', '2']}
+    />,
+  );
+
+  expect(wrapper.state().subjects).toEqual(['1', '2']);
 });

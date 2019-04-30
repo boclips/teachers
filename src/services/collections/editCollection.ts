@@ -11,6 +11,7 @@ export const editCollection = (
     .patch(request.originalCollection.links.edit.getOriginalLink(), {
       title: request.title,
       isPublic: request.isPublic,
+      subjects: request.subjects,
     })
     .then(() => true);
 };

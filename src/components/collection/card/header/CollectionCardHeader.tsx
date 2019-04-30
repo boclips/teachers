@@ -1,6 +1,7 @@
 import React from 'react';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import StopClickPropagation from '../../../common/StopClickPropagation';
+import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from './BookmarkCollectionButton';
 import CollectionCardTitle from './CollectionCardTitle';
 import RemoveCollectionButton from './RemoveCollectionButton';
@@ -10,16 +11,21 @@ interface Props {
   showRemoveButton: boolean;
 }
 
-const CollectionCardHeader = React.memo((props: Props) => (
-  <>
-    <CollectionCardTitle collection={props.collection} />
-    <StopClickPropagation>
-      <BookmarkingButton collection={props.collection} />
-      {props.showRemoveButton && (
-        <RemoveCollectionButton collection={props.collection} />
+const CollectionCardHeader = React.memo(
+  ({ collection, showRemoveButton }: Props) => (
+    <>
+      <CollectionCardTitle collection={collection} />
+      <StopClickPropagation>
+        <BookmarkingButton collection={collection} />
+        {showRemoveButton && <RemoveCollectionButton collection={collection} />}
+      </StopClickPropagation>
+      {collection.subjects.length !== 0 && (
+        <div className="subjects-container">
+          <ConnectedSubjectTag id={collection.subjects[0]} />
+        </div>
       )}
-    </StopClickPropagation>
-  </>
-));
+    </>
+  ),
+);
 
 export default CollectionCardHeader;

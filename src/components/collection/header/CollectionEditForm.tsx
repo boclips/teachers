@@ -1,11 +1,15 @@
 import { Checkbox, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
+import { connect } from 'react-redux';
+import State from '../../../types/State';
+import { SubjectsForm } from '../../account/form/SubjectsForm';
 import './CollectionEditForm.less';
 
 export interface EditableFields {
   title: string;
   isPublic: boolean;
+  subjects: string[];
 }
 
 export interface OwnProps extends EditableFields {
@@ -13,7 +17,7 @@ export interface OwnProps extends EditableFields {
 }
 
 class CollectionEditForm extends React.PureComponent<
-  OwnProps & FormComponentProps
+  OwnProps & ReturnType<typeof mapStateToProps> & FormComponentProps
 > {
   public render() {
     const { getFieldDecorator } = this.props.form;
@@ -35,9 +39,21 @@ class CollectionEditForm extends React.PureComponent<
             </Checkbox>,
           )}
         </Form.Item>
+        <SubjectsForm
+          form={this.props.form}
+          subjects={this.props.subjectsInStore}
+          placeholder="Subjects"
+          initialValue={this.props.subjects}
+        />
       </Form>
     );
   }
 }
 
-export default Form.create<EditableFields>()(CollectionEditForm);
+const mapStateToProps = (state: State) => ({
+  subjectsInStore: state.subjects,
+});
+
+export default connect(mapStateToProps)(
+  Form.create<EditableFields>()(CollectionEditForm),
+);

@@ -96,6 +96,8 @@ class RegistrationForm extends React.Component<
                 <SubjectsForm
                   form={this.props.form}
                   subjects={this.props.subjects}
+                  placeholder="Subjects I teach.."
+                  initialValue={[]}
                 />
                 <AgeRangeForm
                   form={this.props.form}

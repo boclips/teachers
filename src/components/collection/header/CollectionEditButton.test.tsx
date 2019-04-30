@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../../test-support/By';
@@ -10,6 +10,7 @@ import {
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { editCollectionAction } from '../redux/actions/editCollectionAction';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 
@@ -33,11 +34,12 @@ describe('when can edit collection', () => {
         originalCollection: collection,
         title: 'test',
         isPublic: null,
+        subjects: null,
       }),
     );
   });
 
-  it('changing the visibility of collection fires a patch action', () => {
+  it('changing the visibility of a collection fires a patch action', () => {
     const collection = VideoCollectionFactory.sample({
       isPublic: false,
       links: VideoCollectionLinksFactory.sample({
@@ -58,6 +60,35 @@ describe('when can edit collection', () => {
         originalCollection: collection,
         isPublic: true,
         title: null,
+        subjects: null,
+      }),
+    );
+  });
+
+  it('changing the subjects of a collection fires a patch action', () => {
+    const collection = VideoCollectionFactory.sample({
+      links: VideoCollectionLinksFactory.sample({
+        edit: new Link({ href: 'something', templated: false }),
+      }),
+    });
+    const store = MockStoreFactory.sample();
+
+    const wrapper = mountComponent(collection, store);
+
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionFormHelper.editSubjects(wrapper, [
+      'subject-one-id',
+      'subject-two-id',
+    ]);
+    CollectionEditModalHelper.confirmModal(wrapper);
+
+    expect(store.getActions()).toHaveLength(1);
+    expect(store.getActions()).toContainEqual(
+      editCollectionAction({
+        originalCollection: collection,
+        isPublic: null,
+        title: null,
+        subjects: ['subject-one-id', 'subject-two-id'],
       }),
     );
   });
@@ -116,6 +147,16 @@ export class CollectionFormHelper {
       .first()
       .simulate('change', { target: { checked: visiblity } });
   }
+
+  public static editSubjects(wrapper: ReactWrapper, subjectIds: string[]) {
+    wrapper.find(SelectSubjects).simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
+
+    subjectIds.forEach(subjectId => {
+      menuItems.find(`[value="${subjectId}"]`).simulate('click');
+    });
+  }
 }
 export class CollectionEditModalHelper {
   public static openModal(wrapper) {
@@ -128,7 +169,9 @@ export class CollectionEditModalHelper {
 
   public static confirmModal(wrapper) {
     const events = new EventSimulator(wrapper);
-    events.click(wrapper.findWhere(n => n.text() === 'Save').find('Button'));
+    events.click(
+      wrapper.findWhere(n => n.length && n.text() === 'Save').find('Button'),
+    );
     return wrapper;
   }
 }

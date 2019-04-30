@@ -6,6 +6,9 @@ import { FormComponentProps } from './FormComponentProps';
 
 interface SubjectsFormProps {
   subjects: Subject[];
+  placeholder: string;
+  label?: string;
+  initialValue: string[];
 }
 
 export class SubjectsForm extends React.Component<
@@ -20,11 +23,14 @@ export class SubjectsForm extends React.Component<
       <Form.Item>
         {this.props.form.getFieldDecorator('subjects', {
           rules: [{ type: 'array' }],
-          initialValue: [],
+          initialValue: this.props.initialValue,
         })(
           <SelectSubjects
             subjects={this.props.subjects}
+            placeholder={this.props.placeholder}
+            label={this.props.label}
             onUpdateSubjects={this.onUpdateSubjects}
+            initialValue={this.props.initialValue}
           />,
         )}
       </Form.Item>

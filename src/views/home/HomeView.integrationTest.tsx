@@ -1,10 +1,14 @@
 import ApiStub from '../../../test-support/ApiStub';
 import { HomePage } from '../../../test-support/page-objects/HomePage';
+import {
+  collectionsResponse,
+  video177,
+} from '../../../test-support/video-service-responses';
 
 describe('Home page', () => {
-  let homePage: HomePage;
+  test('loads public collections', async () => {
+    let homePage: HomePage;
 
-  beforeEach(async () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
@@ -12,12 +16,34 @@ describe('Home page', () => {
       .fetchCollections();
 
     homePage = await HomePage.load();
-  });
 
-  test('loads public collections', () => {
     expect(homePage.getPublicCollections()).toContainEqual({
       title: 'funky collection',
       numberOfVideos: 1,
+      subject: null,
+    });
+  });
+
+  test('loads public collection and renders a single subject', async () => {
+    let homePage: HomePage;
+
+    new ApiStub()
+      .defaultUser()
+      .fetchVideo()
+      .fetchPublicCollections(
+        collectionsResponse(
+          [video177],
+          [{ id: '1', name: null }, { id: '2', name: null }],
+        ),
+      )
+      .fetchCollections();
+
+    homePage = await HomePage.load();
+
+    expect(homePage.getPublicCollections()).toContainEqual({
+      title: 'funky collection',
+      numberOfVideos: 1,
+      subject: 'Maths',
     });
   });
 });

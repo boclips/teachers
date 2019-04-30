@@ -3,6 +3,7 @@ import {
   collectionResponse,
   collectionsResponse,
   links,
+  subjectsResponse,
   userResponse,
   video177,
   video177Slim,
@@ -25,6 +26,7 @@ interface SingleVideoOptions {
 export default class ApiStub {
   constructor(linksDefault: any = links) {
     MockFetchVerify.get('/v1/', JSON.stringify(linksDefault));
+    this.fetchSubjects();
   }
 
   public queryVideos(options: VideoQueryOptions) {
@@ -42,6 +44,11 @@ export default class ApiStub {
       `/v1/videos/${options.video.id}`,
       JSON.stringify(options.video),
     );
+    return this;
+  }
+
+  public fetchSubjects() {
+    MockFetchVerify.get(`/v1/subjects`, JSON.stringify(subjectsResponse()));
     return this;
   }
 

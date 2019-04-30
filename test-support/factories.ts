@@ -12,6 +12,7 @@ import State, {
   Pageable,
   SearchStateValue,
 } from '../src/types/State';
+import { Subject } from '../src/types/Subject';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
@@ -74,6 +75,7 @@ export class VideoCollectionFactory {
       isPublic: arg.isPublic || false,
       isMine: arg.isMine || true,
       createdBy: 'Le Factory',
+      subjects: [],
     });
   }
 
@@ -236,6 +238,22 @@ export class CollectionsFactory {
   }
 }
 
+export class SubjectFactory {
+  public static sample(arg: Subject[] = []): Subject[] {
+    return Object.freeze([
+      {
+        id: 'subject-one-id',
+        name: 'subject one',
+      },
+      {
+        id: 'subject-two-id',
+        name: 'subject two',
+      },
+      ...arg,
+    ]) as Subject[];
+  }
+}
+
 export class MockStoreFactory {
   public static sample(store: Partial<State> = {}): MockStoreEnhanced<State> {
     const mockStore = configureStore<State>();
@@ -250,7 +268,7 @@ export class MockStoreFactory {
       },
       collections: CollectionsFactory.sample(),
       router: RouterFactory.sample(),
-      subjects: [],
+      subjects: SubjectFactory.sample(),
       ageRanges: [],
       ...store,
     });

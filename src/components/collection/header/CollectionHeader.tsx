@@ -2,6 +2,7 @@ import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 import './CollectionHeader.less';
@@ -30,6 +31,9 @@ export default class CollectionHeader extends React.PureComponent<Props> {
             />
           </Col>
           <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
+            {this.props.collection.subjects.map(subjectId => (
+              <ConnectedSubjectTag key={subjectId} id={subjectId} />
+            ))}
             <CollectionSubtitle collection={this.props.collection} />
           </Col>
         </Row>

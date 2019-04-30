@@ -53,6 +53,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     isPublic: data.public,
     isMine: data.mine,
     createdBy: data.createdBy,
+    subjects: data.subjects.map(subject => subject.id),
   };
 };
 

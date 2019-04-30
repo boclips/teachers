@@ -92,7 +92,8 @@
                         <text id="Refer-a-friend" font-family="Heebo-Bold, Heebo" font-size="28" font-weight="bold" fill="#0051BC">
                             <tspan x="0" y="29">Refer a friend</tspan>
                         </text>
-                        <text id="Refer-3-teachers-and" font-family="Heebo-Regular, Heebo" font-size="18" font-weight="normal" line-spacing="23" fill="#3D4564">
+                        <text id="Refer-3-teachers-and" font-family="Heebo-Regular, Heebo" font-size="18" font-weight="normal"
+                              fill="#3D4564">
                             <tspan x="0" y="57">Refer 3 teachers and get rewarded</tspan>
                         </text>
                         <g id="Buttons-/-secondary-/-default" transform="translate(0.000000, 67.000000)">

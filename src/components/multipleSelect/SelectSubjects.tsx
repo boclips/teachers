@@ -2,29 +2,47 @@ import React from 'react';
 import { Subject } from '../../types/Subject';
 import MultiSelect from '../common/MultiSelect';
 
-interface Props {
+export interface Props {
+  label?: string;
+  placeholder: string;
   subjects: Subject[];
   onUpdateSubjects: (value: string[]) => void;
+  initialValue: string[];
 }
 
-export class SelectSubjects extends React.PureComponent<Props> {
+export interface State {
+  subjects: string[];
+}
+
+export class SelectSubjects extends React.PureComponent<Props, State> {
+  public static defaultProps = {
+    label: '',
+  };
+
+  public state = {
+    subjects: this.props.initialValue,
+  };
+
   public render() {
     return (
       <MultiSelect
         filterOption={this.filter}
         mode="multiple"
-        placeholder="Subject(s) I teach"
+        placeholder={this.props.placeholder}
         data-qa="subjects"
         onChange={this.onChange}
-        aria-label="Subjects I teach"
+        aria-label={this.props.placeholder}
+        value={this.state.subjects}
       >
         {this.generateOptions()}
       </MultiSelect>
     );
   }
 
-  private onChange = (value: string[]) => {
-    this.props.onUpdateSubjects(value);
+  private onChange = (newValue: string[]) => {
+    this.setState({ subjects: newValue }, () => {
+      this.props.onUpdateSubjects(this.state.subjects);
+    });
   };
 
   private generateOptions() {

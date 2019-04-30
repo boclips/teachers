@@ -77,7 +77,7 @@ describe('when editable collection', () => {
     const newTitle = 'this is a shiny new title';
     MockFetchVerify.patch(
       '/v1/collections/id',
-      { title: newTitle, isPublic: null },
+      { title: newTitle, isPublic: null, subjects: null },
       204,
     );
 
@@ -86,10 +86,7 @@ describe('when editable collection', () => {
 
     expect(collectionPage.isEditable()).toBeTruthy();
     CollectionEditModalHelper.openModal(wrapper);
-    CollectionFormHelper.editCollectionText(
-      wrapper,
-      'this is a shiny new title',
-    );
+    CollectionFormHelper.editCollectionText(wrapper, newTitle);
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
 
     await eventually(() => {
