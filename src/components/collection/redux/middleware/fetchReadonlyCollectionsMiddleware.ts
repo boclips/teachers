@@ -1,5 +1,6 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import {
   fetchNextCollectionsPage,
   fetchReadOnlyCollections,
@@ -35,6 +36,7 @@ export function onFetchNextCollections(
   const publicCollections = store.getState().collections[request];
   fetchNextCollectionsPage(publicCollections)
     .then(collections => {
+      AnalyticsFactory.getInstance().trackMoreCollectionsLoaded(request);
       store.dispatch(
         appendReadOnlyCollectionsAction({
           collections,

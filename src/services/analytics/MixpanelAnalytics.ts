@@ -199,7 +199,9 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS);
   }
 
-  public trackMorePublicCollectionsLoaded() {
-    this.mixpanelInstance.track(EventTypes.MORE_PUBLIC_COLLECTION_LOADED);
+  public trackMoreCollectionsLoaded(typeOfCollections: any) {
+    this.mixpanelInstance.track(EventTypes.MORE_COLLECTIONS_LOADED, {
+      type: typeOfCollections,
+    });
   }
 }
