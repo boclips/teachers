@@ -3,6 +3,8 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
+import CollectionHeader from '../../src/components/collection/header/CollectionHeader';
+import { CollectionTitle } from '../../src/components/collection/header/CollectionTitle';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
@@ -37,6 +39,16 @@ export class CollectionPage {
       isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
       subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
     }));
+  }
+
+  public getCollectionDetails() {
+    return this.wrapper.find(CollectionHeader).map(el => ({
+      title: findOne(el, 'collection-name').text(),
+      isPublic: el.find(CollectionTitle).props().isPublic,
+      subjects: el.find(By.dataQa('subject')).map(s => s.text()),
+      lastUpdated: findOne(el, 'collection-updated-at').text(),
+      ageRange: el.find(By.dataQa('age-range')).text(),
+    }))[0];
   }
 
   public isEmptyCollection() {

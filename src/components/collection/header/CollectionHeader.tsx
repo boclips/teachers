@@ -2,6 +2,7 @@ import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
@@ -34,6 +35,9 @@ export default class CollectionHeader extends React.PureComponent<Props> {
             {this.props.collection.subjects.map(subjectId => (
               <ConnectedSubjectTag key={subjectId} id={subjectId} />
             ))}
+            {this.props.collection.ageRange && (
+              <AgeRangeTag ageRange={this.props.collection.ageRange} />
+            )}
             <CollectionSubtitle collection={this.props.collection} />
           </Col>
         </Row>

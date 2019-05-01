@@ -26,9 +26,14 @@ const links = LinksFactory.sample({
 
 describe('user collections', () => {
   test('returns available collections in skinny format for user collections list', async () => {
+    const subject = { id: 'a', name: null };
     new MockAdapter(axios)
       .onGet('/v1/collections?projection=list')
-      .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
+      .replyOnce(
+        200,
+        JSON.stringify(collectionsResponse([video177Slim], [subject])),
+        {},
+      );
 
     const collections = await fetchMyCollections(links);
 
@@ -40,6 +45,8 @@ describe('user collections', () => {
     expect(collections[0].videos).toEqual({});
     expect(collections[0].isPublic).toEqual(true);
     expect(collections[0].createdBy).toEqual('AI');
+    expect(collections[0].ageRange).toEqual('3-9');
+    expect(collections[0].subjects).toContain(subject.id);
   });
 });
 
@@ -61,6 +68,7 @@ describe('public collections', () => {
     expect(collections.items[0].videos).toEqual({});
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
+    expect(collections.items[0].ageRange).toEqual('3-9');
 
     expect(collections.links.next.getOriginalLink()).toEqual(
       'http://localhost/v1/collections/next',
@@ -85,5 +93,6 @@ describe('public collections', () => {
     expect(collections.items[0].videoIds[0].id).toEqual('177');
     expect(collections.items[0].videos).toEqual({});
     expect(collections.items[0].isPublic).toEqual(true);
+    expect(collections.items[0].ageRange).toEqual('3-9');
   });
 });

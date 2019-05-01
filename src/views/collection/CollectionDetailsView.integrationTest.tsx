@@ -14,6 +14,23 @@ import {
 } from '../../components/collection/header/CollectionEditButton.test';
 
 describe('when video collection', () => {
+  test('displays collection basic details', async () => {
+    new ApiStub()
+      .defaultUser()
+      .fetchCollections()
+      .fetchVideo();
+
+    const collectionPage = await CollectionPage.load();
+
+    expect(collectionPage.getCollectionDetails()).toMatchObject({
+      title: 'funky collection',
+      isPublic: true,
+      subjects: [],
+      lastUpdated: 'Jan 16, 2019',
+      ageRange: '3-9',
+    });
+  });
+
   test('displays video collection with videos', async () => {
     new ApiStub()
       .defaultUser()

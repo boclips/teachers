@@ -194,6 +194,11 @@ export function collectionsResponse(
           updatedAt: '2019-01-16T12:00:00.870Z',
           public: true,
           createdBy: 'AI',
+          ageRange: {
+            min: 3,
+            max: 9,
+            label: '3-9',
+          },
           subjects,
           _links: {
             edit: {
