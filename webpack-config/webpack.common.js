@@ -64,9 +64,9 @@ module.exports = {
         loader: 'svg-react-loader',
         options: {
           props: {
-            role: 'img'
-          }
-        }
+            role: 'img',
+          },
+        },
       },
       {
         test: /\.(gif|png|jpe?g)$/i,
