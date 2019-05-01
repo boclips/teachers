@@ -75,7 +75,8 @@ export class VideoCollectionFactory {
       isPublic: arg.isPublic || false,
       isMine: arg.isMine || true,
       createdBy: 'Le Factory',
-      subjects: [],
+      subjects: arg.subjects || [],
+      ageRange: arg.ageRange || null,
     });
   }
 

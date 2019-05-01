@@ -1,6 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { VideoCollectionFactory } from '../../../../../test-support/factories';
+import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
+import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from './BookmarkCollectionButton';
 import CollectionCardHeader from './CollectionCardHeader';
 import CollectionCardTitle from './CollectionCardTitle';
@@ -46,4 +48,25 @@ test('does not render remove collection button', () => {
   );
 
   expect(wrapper.find(RemoveCollectionButton)).not.toExist();
+});
+
+test('renders first subject when present', () => {
+  const collection = VideoCollectionFactory.sample({
+    subjects: ['hello', 'world'],
+  });
+  const wrapper = shallow(
+    <CollectionCardHeader collection={collection} showRemoveButton={false} />,
+  );
+
+  expect(wrapper.find(ConnectedSubjectTag).length).toEqual(1);
+  expect(wrapper.find(ConnectedSubjectTag).props().id).toEqual('hello');
+});
+
+test('renders age range when present', () => {
+  const collection = VideoCollectionFactory.sample({ ageRange: 'hello' });
+  const wrapper = shallow(
+    <CollectionCardHeader collection={collection} showRemoveButton={false} />,
+  );
+
+  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('hello');
 });

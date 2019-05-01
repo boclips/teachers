@@ -1,6 +1,7 @@
 import React from 'react';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import StopClickPropagation from '../../../common/StopClickPropagation';
+import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from './BookmarkCollectionButton';
 import CollectionCardTitle from './CollectionCardTitle';
@@ -23,6 +24,7 @@ const CollectionCardHeader = React.memo(
         {collection.subjects.length !== 0 && (
           <ConnectedSubjectTag id={collection.subjects[0]} />
         )}
+        {collection.ageRange && <AgeRangeTag ageRange={collection.ageRange} />}
       </div>
     </>
   ),
