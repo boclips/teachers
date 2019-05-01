@@ -2,20 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
-import './SubjectTag.less';
+import { Tag } from './Tag';
 
-interface Props {
+interface SubjectTagProps {
   subject: string;
 }
 
-export default class SubjectTag extends React.Component<Props> {
-  public render() {
-    return (
-      <div className="subject-tag">
-        <span className="tag-type">Subject:</span>
-        <span data-qa="subject">{this.props.subject}</span>
-      </div>
-    );
+export class SubjectTag extends React.Component<SubjectTagProps> {
+  public render(): React.ReactNode {
+    return <Tag value={this.props.subject} dataQa="subject" label="Subject" />;
   }
 }
 

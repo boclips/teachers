@@ -3,7 +3,7 @@ import React from 'react';
 import { Video } from '../../../types/Video';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
-import SubjectTag from '../tags/SubjectTag';
+import { SubjectTag } from '../tags/SubjectTag';
 
 interface Props {
   video: Video | null;

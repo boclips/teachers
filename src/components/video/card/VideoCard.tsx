@@ -6,7 +6,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
-import SubjectTag from '../tags/SubjectTag';
+import { SubjectTag } from '../tags/SubjectTag';
 import CopyLinkButton from './CopyLinkButton';
 import './VideoCard.less';
 import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
