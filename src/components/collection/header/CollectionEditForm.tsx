@@ -1,4 +1,4 @@
-import { Checkbox, Form, Input } from 'antd';
+import { Checkbox, Form, Input, Slider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -10,15 +10,29 @@ export interface EditableFields {
   title: string;
   isPublic: boolean;
   subjects: string[];
+  ageRange?: number[];
 }
 
-export interface OwnProps extends EditableFields {
-  canSave: boolean;
+export interface Props extends EditableFields {
+  onAgeRangeChange: (e) => void;
+  sliderRange: { min: number; max: number };
 }
 
 class CollectionEditForm extends React.PureComponent<
-  OwnProps & ReturnType<typeof mapStateToProps> & FormComponentProps
+  Props & ReturnType<typeof mapStateToProps> & FormComponentProps
 > {
+  private marks = {
+    3: '3',
+    5: '5',
+    7: '7',
+    9: '9',
+    11: '11',
+    14: '14',
+    16: '16',
+    18: '18',
+    19: '19+',
+  };
+
   public render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -37,6 +51,20 @@ class CollectionEditForm extends React.PureComponent<
             <Checkbox data-qa="visibility-edit">
               Public (anyone can see it)
             </Checkbox>,
+          )}
+        </Form.Item>
+        <Form.Item className="form__item">
+          {getFieldDecorator('ageRange', {
+            initialValue: this.props.ageRange,
+          })(
+            <Slider
+              min={this.props.sliderRange.min}
+              max={this.props.sliderRange.max}
+              range={true}
+              marks={this.marks}
+              onChange={this.props.onAgeRangeChange}
+              step={null}
+            />,
           )}
         </Form.Item>
         <SubjectsForm

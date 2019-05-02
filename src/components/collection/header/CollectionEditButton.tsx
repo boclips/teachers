@@ -15,6 +15,7 @@ interface Props {
 
 interface State {
   visible: boolean;
+  hasAgeRangeBeenTouched: boolean;
 }
 
 export default class CollectionEditButton extends React.PureComponent<
@@ -23,13 +24,23 @@ export default class CollectionEditButton extends React.PureComponent<
 > {
   private formRef: any;
 
+  private sliderRange = {
+    min: 3,
+    max: 19,
+  };
+
   constructor(props: Props) {
     super(props);
 
     this.state = {
       visible: false,
+      hasAgeRangeBeenTouched: false,
     };
   }
+
+  private onAgeRangeChange = () => {
+    this.setState({ hasAgeRangeBeenTouched: true });
+  };
 
   public handleOk = () => {
     const form = this.formRef.props.form;
@@ -53,6 +64,9 @@ export default class CollectionEditButton extends React.PureComponent<
             values.subjects !== this.props.collection.subjects
               ? values.subjects
               : null,
+          ageRange: this.hasAgeRangeChanged(values.ageRange)
+            ? this.convertAgeRangeToString(values.ageRange)
+            : null,
         });
       }
 
@@ -96,8 +110,12 @@ export default class CollectionEditButton extends React.PureComponent<
             title={this.props.collection.title}
             isPublic={this.props.collection.isPublic}
             subjects={this.props.collection.subjects}
-            canSave={this.props.canSave}
             wrappedComponentRef={this.saveFormRef}
+            ageRange={this.convertAgeRangeToArray(
+              this.props.collection.ageRange,
+            )}
+            onAgeRangeChange={this.onAgeRangeChange}
+            sliderRange={this.sliderRange}
           />
         </Bodal>
       </React.Fragment>
@@ -113,9 +131,41 @@ export default class CollectionEditButton extends React.PureComponent<
   private hasFieldsChanged = (values: EditableFields) =>
     values.title !== this.props.collection.title ||
     values.isPublic !== this.props.collection.isPublic ||
-    values.subjects !== this.props.collection.subjects;
+    values.subjects !== this.props.collection.subjects ||
+    this.hasAgeRangeChanged(values.ageRange);
 
   private saveFormRef = formRef => {
     this.formRef = formRef;
   };
+
+  private convertAgeRangeToArray(ageRange?: string): number[] {
+    if (ageRange == null) {
+      return [this.sliderRange.min, this.sliderRange.max];
+    }
+
+    if (ageRange.includes('+')) {
+      const min = Number(ageRange.split('+')[0]);
+      return [min, this.sliderRange.max];
+    } else {
+      return ageRange.split('-').map(el => Number(el));
+    }
+  }
+
+  private convertAgeRangeToString(ageRangeFromForm?: number[]): string {
+    if (ageRangeFromForm == null) {
+      return null;
+    }
+
+    if (ageRangeFromForm[1] === this.sliderRange.max) {
+      return `${ageRangeFromForm[0]}+`;
+    } else {
+      return `${ageRangeFromForm[0]}-${ageRangeFromForm[1]}`;
+    }
+  }
+  private hasAgeRangeChanged(ageRange: number[]) {
+    return (
+      this.convertAgeRangeToString(ageRange) !==
+        this.props.collection.ageRange && this.state.hasAgeRangeBeenTouched
+    );
+  }
 }

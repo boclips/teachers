@@ -1,3 +1,4 @@
+import { Slider } from 'antd';
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -35,6 +36,7 @@ describe('when can edit collection', () => {
         title: 'test',
         isPublic: null,
         subjects: null,
+        ageRange: null,
       }),
     );
   });
@@ -61,6 +63,7 @@ describe('when can edit collection', () => {
         isPublic: true,
         title: null,
         subjects: null,
+        ageRange: null,
       }),
     );
   });
@@ -89,8 +92,62 @@ describe('when can edit collection', () => {
         isPublic: null,
         title: null,
         subjects: ['subject-one-id', 'subject-two-id'],
+        ageRange: null,
       }),
     );
+  });
+
+  describe('changing age range of a collection fires a patch', () => {
+    it('when age range is an interval', () => {
+      const collection = VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: 'something', templated: false }),
+        }),
+        ageRange: '3-9',
+      });
+      const store = MockStoreFactory.sample();
+      const wrapper = mountComponent(collection, store);
+      CollectionEditModalHelper.openModal(wrapper);
+      const slider = wrapper.find(Slider);
+      slider.props().onChange([5, 9]);
+
+      CollectionEditModalHelper.confirmModal(wrapper);
+      expect(store.getActions()).toHaveLength(1);
+      expect(store.getActions()[0]).toEqual(
+        editCollectionAction({
+          originalCollection: collection,
+          title: null,
+          ageRange: '5-9',
+          subjects: null,
+          isPublic: null,
+        }),
+      );
+    });
+    it('when age range is increased to max', () => {
+      const collection = VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: 'something', templated: false }),
+        }),
+        ageRange: '11-16',
+      });
+      const store = MockStoreFactory.sample();
+      const wrapper = mountComponent(collection, store);
+      CollectionEditModalHelper.openModal(wrapper);
+      const slider = wrapper.find(Slider);
+      slider.props().onChange([11, 19]);
+
+      CollectionEditModalHelper.confirmModal(wrapper);
+      expect(store.getActions()).toHaveLength(1);
+      expect(store.getActions()[0]).toEqual(
+        editCollectionAction({
+          originalCollection: collection,
+          title: null,
+          ageRange: '11+',
+          subjects: null,
+          isPublic: null,
+        }),
+      );
+    });
   });
 
   it('not editing anything does not lead to a patch action', () => {
@@ -103,6 +160,9 @@ describe('when can edit collection', () => {
     const store = MockStoreFactory.sample();
 
     const wrapper = mountComponent(collection, store);
+
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionEditModalHelper.confirmModal(wrapper);
 
     CollectionEditModalHelper.openModal(wrapper);
     CollectionEditModalHelper.confirmModal(wrapper);

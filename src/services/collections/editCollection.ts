@@ -12,6 +12,7 @@ export const editCollection = (
       title: request.title,
       isPublic: request.isPublic,
       subjects: request.subjects,
+      ageRange: request.ageRange,
     })
     .then(() => true);
 };

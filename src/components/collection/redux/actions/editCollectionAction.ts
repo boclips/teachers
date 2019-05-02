@@ -5,6 +5,7 @@ export interface EditCollectionRequest {
   title?: string;
   isPublic?: boolean;
   subjects?: string[];
+  ageRange?: string;
   originalCollection: VideoCollection;
 }
 

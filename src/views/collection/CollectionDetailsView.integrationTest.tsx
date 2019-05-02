@@ -1,3 +1,4 @@
+import { Slider } from 'antd';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import eventually from '../../../test-support/eventually';
@@ -85,7 +86,7 @@ describe('when collection not found', () => {
 });
 
 describe('when editable collection', () => {
-  test('can edit collection', async () => {
+  test('can edit title of collection', async () => {
     new ApiStub()
       .defaultUser()
       .fetchCollections()
@@ -94,7 +95,7 @@ describe('when editable collection', () => {
     const newTitle = 'this is a shiny new title';
     MockFetchVerify.patch(
       '/v1/collections/id',
-      { title: newTitle, isPublic: null, subjects: null },
+      { title: newTitle, isPublic: null, subjects: null, ageRange: null },
       204,
     );
 
@@ -110,6 +111,35 @@ describe('when editable collection', () => {
       expect(wrapper.find(By.dataQa('collection-name')).text()).toEqual(
         newTitle,
       );
+    });
+  });
+
+  test('can edit age range of collection', async () => {
+    new ApiStub()
+      .defaultUser()
+      .fetchCollections()
+      .fetchVideo();
+
+    MockFetchVerify.patch(
+      '/v1/collections/id',
+      { title: null, isPublic: null, subjects: null, ageRange: '5-11' },
+      204,
+    );
+
+    const collectionPage = await CollectionPage.load();
+    const wrapper = collectionPage.wrapper;
+
+    expect(collectionPage.isEditable()).toBeTruthy();
+    CollectionEditModalHelper.openModal(wrapper);
+
+    const slider = wrapper.find(Slider);
+
+    slider.props().onChange([5, 11]);
+
+    CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
+
+    await eventually(() => {
+      expect(wrapper.find(By.dataQa('age-range')).text()).toEqual('5-11');
     });
   });
 
