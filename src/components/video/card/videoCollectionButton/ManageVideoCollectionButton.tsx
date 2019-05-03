@@ -148,51 +148,49 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         {this.collectionItem(collection, this.props.video)}
       </Menu.Item>
     ));
-    if (menuEntries.length) {
-      menuEntries.push(<Menu.Divider key="lovely-divider" />);
-    }
-    menuEntries.push(
-      <Menu.Item
-        key="option-create-collection"
-        onClick={this.preventDefault}
-        disabled={this.state.createCollectionVisible}
-      >
-        {this.state.createCollectionVisible ? (
-          <section>
-            <Input
-              className="manage-video-collection-button__title-input"
-              type="text"
-              placeholder="Enter collection name"
-              onChange={this.setTitle}
-              data-qa="new-collection-title"
-              onPressEnter={this.createCollection}
-            />
-            <Button
-              htmlType="button"
-              className="manage-video-collection-button__create-collection-button"
-              type="primary"
-              data-qa="create-collection-button"
-              onClick={this.createCollection}
-            >
-              Create
-            </Button>
-          </section>
-        ) : (
-          <section
-            data-qa="create-collection"
-            className="manage-video-collection-button__create-collection"
-            onClick={this.showCreateCollection}
-          >
-            <Icon type="plus" />
-            New video collection
-          </section>
-        )}
-      </Menu.Item>,
-    );
+
     return (
-      <Menu className="manage-video-collection-button__menu-container">
-        {menuEntries}
-      </Menu>
+      <>
+        <Menu className="manage-video-collection-button__menu-container">
+          {menuEntries}
+        </Menu>
+        <div
+          className="manage-video-collection-button__create-collection-container"
+          key="option-create-collection"
+          onClick={this.preventDefault}
+        >
+          {this.state.createCollectionVisible ? (
+            <section>
+              <Input
+                className="manage-video-collection-button__title-input"
+                type="text"
+                placeholder="Enter collection name"
+                onChange={this.setTitle}
+                data-qa="new-collection-title"
+                onPressEnter={this.createCollection}
+              />
+              <Button
+                htmlType="button"
+                className="manage-video-collection-button__create-collection-button"
+                type="primary"
+                data-qa="create-collection-button"
+                onClick={this.createCollection}
+              >
+                Create
+              </Button>
+            </section>
+          ) : (
+            <section
+              data-qa="create-collection"
+              className="manage-video-collection-button__create-collection"
+              onClick={this.showCreateCollection}
+            >
+              <Icon type="plus" />
+              New video collection
+            </section>
+          )}
+        </div>
+      </>
     );
   }
 
