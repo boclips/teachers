@@ -11,7 +11,7 @@ interface InfiniteScrollProps {
   next: () => void;
   hasMore: boolean;
 }
-interface Props {
+export interface CollectionCardListProps {
   collections: VideoCollection[];
   title: string | React.ReactFragment;
   description?: string;
@@ -20,8 +20,9 @@ interface Props {
   infiniteScroll?: InfiniteScrollProps;
 }
 
-// TODO now all collection lists are pageable, this should just take a Pageable<VideoCollection> as props
-export class CollectionCardList extends React.PureComponent<Props> {
+export class CollectionCardList extends React.PureComponent<
+  CollectionCardListProps
+> {
   public render() {
     return (
       <React.Fragment>

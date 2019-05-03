@@ -18,13 +18,15 @@ test('can fetch my collections', () => {
   };
 
   const action = storeCollectionsAction({
-    collections: [collectionToFetch],
+    collections: PageableCollectionsFactory.sample({
+      items: [collectionToFetch],
+    }),
     key: 'myCollections',
   });
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
-  expect(stateAfter.myCollections).toEqual([collectionToFetch]);
+  expect(stateAfter.myCollections.items).toEqual([collectionToFetch]);
 });
 
 describe('fetch video for collection', () => {

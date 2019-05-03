@@ -3,27 +3,6 @@ import {
   getIndexOfCollection,
 } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { AppendCollectionRequest } from '../actions/appendReadOnlyCollectionsAction';
-
-export const onAppendReadOnlyCollectionsAction = (
-  state: CollectionsStateValue,
-  request: AppendCollectionRequest,
-): CollectionsStateValue => {
-  const collectionKey = request.key;
-
-  const collection = {
-    ...state[collectionKey],
-    items: [...state[collectionKey].items, ...request.collections.items],
-    links: request.collections.links,
-  };
-
-  return {
-    ...state,
-    [collectionKey]: collection,
-    loading: false,
-    updating: false,
-  };
-};
 
 export const onCollectionUnbookmarked = (
   state: CollectionsStateValue,

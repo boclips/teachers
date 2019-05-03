@@ -6,13 +6,14 @@ import { CollectionsStateValue } from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
+  appendMyCollectionsAction,
   appendPublicCollectionsAction,
 } from '../actions/appendReadOnlyCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
-import { fetchReadOnlyCollectionsAction } from '../actions/fetchReadOnlyCollectionsAction';
+import { fetchPageableCollectionsAction } from '../actions/fetchPageableCollectionsAction';
 import { onAddToCollectionAction } from '../actions/onAddToCollectionAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
@@ -31,8 +32,8 @@ import {
   onMyCollectionRemoved,
   onRemoveVideoFromMyCollectionAction,
 } from './myCollectionsReducer';
+import { onAppendPageableCollectionsAction } from './pageableCollectionsReducer';
 import {
-  onAppendReadOnlyCollectionsAction,
   onCollectionBookmarked,
   onCollectionUnbookmarked,
 } from './readOnlyCollectionsReducer';
@@ -86,18 +87,19 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(editCollectionAction, collectionUpdating),
   actionHandler(fetchCollectionAction, loadingCollections),
   actionHandler(fetchMyCollectionsAction, loadingCollections),
-  actionHandler(fetchReadOnlyCollectionsAction, loadingCollections),
+  actionHandler(fetchPageableCollectionsAction, loadingCollections),
   actionHandler(onRemoveFromCollectionAction, collectionUpdated),
   actionHandler(onAddToCollectionAction, collectionUpdated),
   actionHandler(onCreateCollectionAction, collectionUpdated),
   actionHandler(
     appendPublicCollectionsAction,
-    onAppendReadOnlyCollectionsAction,
+    onAppendPageableCollectionsAction,
   ),
   actionHandler(
     appendBookmarkedCollectionsAction,
-    onAppendReadOnlyCollectionsAction,
+    onAppendPageableCollectionsAction,
   ),
+  actionHandler(appendMyCollectionsAction, onAppendPageableCollectionsAction),
   actionHandler(onCollectionUnbookmarkedAction, onCollectionUnbookmarked),
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),

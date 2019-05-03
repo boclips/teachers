@@ -4,47 +4,27 @@ import React from 'react';
 import EmptyCollection from '../../../../..//resources/images/empty-collection.svg';
 import BookmarkFilled from '../../../../..//resources/images/unbookmarked.svg';
 import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import { CollectionCardList } from '../../card/list/CollectionCardList';
+import PageableCollectionCardList from '../../card/list/PageableCollectionCardList';
 
 interface Props {
   maxNumberOfCollections?: number;
   description?: string;
-  fetchNextPage: () => void;
-  collections: VideoCollection[];
-  hasMoreCollections: boolean;
 }
 
 class BookmarkedCollectionsGrid extends React.PureComponent<Props> {
   public render() {
-    if (!this.props.collections) {
-      return null;
-    }
-
-    if (this.props.collections && this.props.collections.length === 0) {
-      return this.renderEmptyCollection();
-    }
-
     return (
-      <CollectionCardList
+      <PageableCollectionCardList
         title={
           <span>
             <img src={bookmarkedCollectionsImg} alt="" /> My bookmarked
             collections
           </span>
         }
-        description={this.props.description}
         grid={true}
-        collections={this.props.collections}
-        maxNumberOfCollections={this.props.maxNumberOfCollections}
-        infiniteScroll={
-          this.props.maxNumberOfCollections
-            ? undefined
-            : {
-                next: this.props.fetchNextPage,
-                hasMore: this.props.hasMoreCollections,
-              }
-        }
+        description={this.props.description}
+        collectionKey="bookmarkedCollections"
+        renderIfEmptyCollection={this.renderEmptyCollection()}
       />
     );
   }

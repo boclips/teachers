@@ -6,15 +6,16 @@ import {
   fetchPageableCollections,
 } from '../../../../services/collections/fetchCollections';
 import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
+import { CollectionKey } from '../../../../types/CollectionKey';
 import { CollectionState, LinksState } from '../../../../types/State';
-import { appendReadOnlyCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
+import { appedPageableCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
 import { fetchNextPageableCollectionsAction } from '../actions/fetchNextPageableCollectionsAction';
-import { fetchReadOnlyCollectionsAction } from '../actions/fetchReadOnlyCollectionsAction';
+import { fetchPageableCollectionsAction } from '../actions/fetchPageableCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 
 export function onFetchCollections(
   store: MiddlewareAPI<any, LinksState>,
-  request: ReadOnlyCollectionKey,
+  request: CollectionKey,
 ) {
   const links = store.getState().links;
   fetchPageableCollections(links, request)
@@ -33,12 +34,12 @@ export function onFetchNextCollections(
   store: MiddlewareAPI<any, CollectionState>,
   request: ReadOnlyCollectionKey,
 ) {
-  const publicCollections = store.getState().collections[request];
-  fetchNextCollectionsPage(publicCollections)
+  const collectionsToFetch = store.getState().collections[request];
+  fetchNextCollectionsPage(collectionsToFetch)
     .then(collections => {
       AnalyticsFactory.getInstance().trackMoreCollectionsLoaded(request);
       store.dispatch(
-        appendReadOnlyCollectionsAction({
+        appedPageableCollectionsAction({
           collections,
           key: request,
         }),
@@ -48,6 +49,6 @@ export function onFetchNextCollections(
 }
 
 export default [
-  sideEffect(fetchReadOnlyCollectionsAction, onFetchCollections),
+  sideEffect(fetchPageableCollectionsAction, onFetchCollections),
   sideEffect(fetchNextPageableCollectionsAction, onFetchNextCollections),
 ];

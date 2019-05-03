@@ -5,7 +5,7 @@ import createCollectionMiddleware from './createCollectionMiddleware';
 import editCollectionMiddleware from './editMyCollectionMiddleware';
 import fetchCollectionMiddleware from './fetchCollectionMiddleware';
 import fetchCollectionsMiddleware from './fetchCollectionsMiddleware';
-import fetchPublicCollectionsMiddleware from './fetchReadonlyCollectionsMiddleware';
+import fetchPublicCollectionsMiddleware from './fetchPageableCollectionsMiddleware';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
 import removeFromCollectionResultMiddleware from './removeFromCollectionResultMiddleware';
 import removeFromCollectionMiddleware from './removeFromMyCollectionMiddleware';

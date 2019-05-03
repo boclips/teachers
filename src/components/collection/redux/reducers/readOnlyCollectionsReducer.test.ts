@@ -2,83 +2,10 @@ import {
   PageableCollectionsFactory,
   VideoCollectionFactory,
 } from '../../../../../test-support/factories';
-import { Link } from '../../../../types/Link';
 import { CollectionsStateValue } from '../../../../types/State';
-import {
-  appendBookmarkedCollectionsAction,
-  appendPublicCollectionsAction,
-} from '../actions/appendReadOnlyCollectionsAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { collectionsReducer } from './collectionsReducer';
-
-test('appending bookmarked collections', () => {
-  const collection = VideoCollectionFactory.sample();
-
-  const stateBefore: CollectionsStateValue = {
-    updating: false,
-    loading: false,
-    myCollections: PageableCollectionsFactory.sample({
-      items: [collection],
-    }),
-    publicCollections: undefined,
-    bookmarkedCollections: PageableCollectionsFactory.sample(),
-  };
-
-  const nextCollectionLink = new Link({
-    href: 'next',
-    templated: false,
-  });
-
-  const action = appendBookmarkedCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
-      items: stateBefore.myCollections.items,
-      links: {
-        next: nextCollectionLink,
-      },
-    }),
-    key: 'bookmarkedCollections',
-  });
-
-  const stateAfter = collectionsReducer(stateBefore, action);
-
-  expect(stateAfter.bookmarkedCollections.links.next).toEqual(
-    nextCollectionLink,
-  );
-});
-
-test('appending public collections', () => {
-  const collection = VideoCollectionFactory.sample();
-
-  const stateBefore: CollectionsStateValue = {
-    updating: false,
-    loading: false,
-    myCollections: PageableCollectionsFactory.sample({
-      items: [collection],
-    }),
-    publicCollections: PageableCollectionsFactory.sample(),
-    bookmarkedCollections: undefined,
-  };
-
-  const nextCollectionLink = new Link({
-    href: 'next',
-    templated: false,
-  });
-
-  const action = appendPublicCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
-      items: stateBefore.myCollections.items,
-      links: {
-        next: nextCollectionLink,
-      },
-    }),
-    key: 'publicCollections',
-  });
-
-  const stateAfter = collectionsReducer(stateBefore, action);
-
-  expect(stateAfter.publicCollections.links.next).toEqual(nextCollectionLink);
-});
 
 test('updates public collection', () => {
   const toBeUpdatedCollection = VideoCollectionFactory.sample({

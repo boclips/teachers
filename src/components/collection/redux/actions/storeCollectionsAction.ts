@@ -4,7 +4,7 @@ import { Pageable } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
 
 export interface StoreCollectionsRequest {
-  collections: Pageable<VideoCollection> | VideoCollection[];
+  collections: Pageable<VideoCollection>;
   key: CollectionKey;
 }
 
