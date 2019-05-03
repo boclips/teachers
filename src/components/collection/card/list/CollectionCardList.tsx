@@ -20,6 +20,7 @@ interface Props {
   infiniteScroll?: InfiniteScrollProps;
 }
 
+// TODO now all collection lists are pageable, this should just take a Pageable<VideoCollection> as props
 export class CollectionCardList extends React.PureComponent<Props> {
   public render() {
     return (

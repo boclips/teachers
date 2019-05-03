@@ -3,20 +3,9 @@ import { Links } from '../../types/Links';
 import { Pageable } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
 import { CollectionKey } from './../../types/CollectionKey';
-import {
-  parseCollectionsListResponse,
-  parseScrollableCollectionsListResponse,
-} from './collectionParser';
+import { parseScrollableCollectionsListResponse } from './collectionParser';
 
-export const fetchMyCollections = (
-  links: Links,
-): Promise<VideoCollection[]> => {
-  return axios
-    .get(links.myCollections.getOriginalLink())
-    .then(response => parseCollectionsListResponse(response));
-};
-
-export const fetchReadOnlyCollections = (
+export const fetchPageableCollections = (
   links: Links,
   key: CollectionKey,
 ): Promise<Pageable<VideoCollection>> => {

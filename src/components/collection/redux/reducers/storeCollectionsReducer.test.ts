@@ -46,7 +46,9 @@ describe('fetch video for collection', () => {
     const stateBefore: CollectionsStateValue = {
       updating: false,
       loading: false,
-      myCollections: [collection],
+      myCollections: PageableCollectionsFactory.sample({
+        items: [collection],
+      }),
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
@@ -58,12 +60,16 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(Object.keys(stateAfter.myCollections[0].videos)).toHaveLength(1);
-    expect(stateAfter.myCollections[0].videos[video.id].title).toEqual(
+    expect(Object.keys(stateAfter.myCollections.items[0].videos)).toHaveLength(
+      1,
+    );
+    expect(stateAfter.myCollections.items[0].videos[video.id].title).toEqual(
       video.title,
     );
-    expect(stateAfter.myCollections[0].videos[video.id].id).toEqual(video.id);
-    expect(stateAfter.myCollections[0].videoIds).toHaveLength(1);
+    expect(stateAfter.myCollections.items[0].videos[video.id].id).toEqual(
+      video.id,
+    );
+    expect(stateAfter.myCollections.items[0].videoIds).toHaveLength(1);
   });
 
   test('sets videos in collection details', () => {
@@ -85,7 +91,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       collectionBeingViewed: collection,
-      myCollections: [],
+      myCollections: undefined,
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
@@ -130,7 +136,7 @@ describe('fetch video for collection', () => {
       publicCollections: PageableCollectionsFactory.sample({
         items: [collection],
       }),
-      myCollections: [],
+      myCollections: undefined,
       bookmarkedCollections: undefined,
     };
 
@@ -172,7 +178,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       publicCollections: undefined,
-      myCollections: [],
+      myCollections: undefined,
       bookmarkedCollections: PageableCollectionsFactory.sample({
         items: [collection],
       }),

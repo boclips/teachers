@@ -5,7 +5,7 @@ import {
 import { Video } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
-import { ReadOnlyCollectionKey } from './../../../../types/CollectionKey';
+import { CollectionKey } from './../../../../types/CollectionKey';
 
 export const onStoreCollectionsAction = (
   state: CollectionsStateValue,
@@ -35,7 +35,11 @@ export const onStoreVideosForCollectionAction = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
-  state = reduceStoreVideoForMyCollections(state, request);
+  state = reduceStoreVideoForPageableCollections(
+    state,
+    'myCollections',
+    request,
+  );
   state = reduceStoreVideoForPageableCollections(
     state,
     'bookmarkedCollections',
@@ -49,21 +53,9 @@ export const onStoreVideosForCollectionAction = (
   return reduceStoreVideoForCollectionDetails(state, request);
 };
 
-const reduceStoreVideoForMyCollections = (
-  state: CollectionsStateValue,
-  request: { videos: Video[]; collection: VideoCollection },
-): CollectionsStateValue => {
-  const myCollections = updateMatchingCollectionWithVideos(
-    request,
-    state.myCollections,
-  );
-
-  return { ...state, myCollections };
-};
-
 const reduceStoreVideoForPageableCollections = (
   state: CollectionsStateValue,
-  key: ReadOnlyCollectionKey,
+  key: CollectionKey,
   request: {
     videos: Video[];
     collection: VideoCollection;

@@ -5,6 +5,7 @@ import { MockStore } from 'redux-mock-store';
 import { By } from '../../../../../test-support/By';
 import {
   MockStoreFactory,
+  PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
@@ -157,7 +158,9 @@ const mountWith = (
 ) => {
   store = MockStoreFactory.sample({
     collections: {
-      myCollections: collections,
+      myCollections: PageableCollectionsFactory.sample({
+        items: collections,
+      }),
       publicCollections: undefined,
       bookmarkedCollections: undefined,
       loading,

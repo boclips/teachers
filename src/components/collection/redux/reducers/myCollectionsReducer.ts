@@ -10,14 +10,14 @@ export const onAddVideoToMyCollectionAction = (
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(
-    state.myCollections,
+    state.myCollections.items,
     request.collection.id,
   );
-  const myCollections = [...state.myCollections];
+  const myCollections = { ...state.myCollections };
 
   if (indexOfCollection > -1) {
-    const videos = state.myCollections[indexOfCollection].videos;
-    const videoIds = state.myCollections[indexOfCollection].videoIds;
+    const videos = state.myCollections.items[indexOfCollection].videos;
+    const videoIds = state.myCollections.items[indexOfCollection].videoIds;
 
     const alreadyHaveVideoId =
       videoIds.find(v => v.id === request.video.id) != null;
@@ -32,8 +32,8 @@ export const onAddVideoToMyCollectionAction = (
       links: request.video.links,
     };
 
-    myCollections[indexOfCollection] = {
-      ...myCollections[indexOfCollection],
+    myCollections.items[indexOfCollection] = {
+      ...myCollections.items[indexOfCollection],
       videos: {
         ...videos,
         [request.video.id]: request.video,
@@ -57,17 +57,17 @@ export const onRemoveVideoFromMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const myCollections = [...state.myCollections];
+  const myCollections = { ...state.myCollections };
   const indexOfCollection = getIndexOfCollection(
-    state.myCollections,
+    state.myCollections.items,
     request.collection.id,
   );
 
   if (indexOfCollection > -1) {
-    const collection = myCollections[indexOfCollection];
+    const collection = myCollections.items[indexOfCollection];
 
-    myCollections[indexOfCollection] = {
-      ...myCollections[indexOfCollection],
+    myCollections.items[indexOfCollection] = {
+      ...myCollections.items[indexOfCollection],
       videos: removeVideo(request.video.id, collection.videos),
       videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
     };
@@ -83,9 +83,12 @@ export const onMyCollectionRemoved = (
   return {
     ...state,
     updating: false,
-    myCollections: state.myCollections.filter(
-      collection => collection.id !== removedCollection.id,
-    ),
+    myCollections: {
+      ...state.myCollections,
+      items: state.myCollections.items.filter(
+        collection => collection.id !== removedCollection.id,
+      ),
+    },
   };
 };
 
@@ -94,15 +97,15 @@ export const onMyCollectionEdited = (
   editedCollection: VideoCollection,
 ): CollectionsStateValue => {
   const indexOfCollection = getIndexOfCollection(
-    state.myCollections,
+    state.myCollections.items,
     editedCollection.id,
   );
 
-  const myCollections = [...state.myCollections];
+  const myCollections = { ...state.myCollections };
 
   if (indexOfCollection > -1) {
-    myCollections[indexOfCollection] = {
-      ...myCollections[indexOfCollection],
+    myCollections.items[indexOfCollection] = {
+      ...myCollections.items[indexOfCollection],
       ...editedCollection,
     };
   }

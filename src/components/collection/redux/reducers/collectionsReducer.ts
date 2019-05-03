@@ -43,7 +43,7 @@ import {
 } from './storeCollectionsReducer';
 
 const initialState: CollectionsStateValue = {
-  myCollections: [],
+  myCollections: undefined,
   publicCollections: undefined,
   bookmarkedCollections: undefined,
   collectionBeingViewed: undefined,

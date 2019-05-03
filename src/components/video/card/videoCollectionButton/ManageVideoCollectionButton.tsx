@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { CreateCollectionRequest } from '../../../../services/collections/createCollection';
-import State from '../../../../types/State';
+import State, { Pageable } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addVideoToMyCollectionAction } from '../../../collection/redux/actions/addToMyCollectionAction';
@@ -13,7 +13,7 @@ import SavingButton from '../../../common/savingButton/SavingButton';
 import './manage-video-collection-button.less';
 
 interface StateProps {
-  collections: VideoCollection[];
+  collections: Pageable<VideoCollection>;
   loading: boolean;
   updating: boolean;
 }
@@ -140,7 +140,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         </section>
       );
     }
-    const menuEntries = this.props.collections.map(collection => (
+    const menuEntries = this.props.collections.items.map(collection => (
       <Menu.Item
         key={collection.id}
         className="manage-video-collection-button__menu-item"

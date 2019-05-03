@@ -2,7 +2,7 @@ import { KeycloakInstance } from 'keycloak-js';
 import { Store } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
-import { fetchMyCollections } from '../../../../services/collections/fetchCollections';
+import { fetchPageableCollections } from '../../../../services/collections/fetchCollections';
 import fetchLinks from '../../../../services/links/fetchLinks';
 import activateUser from '../../../../services/users/activateUser';
 import { fetchUser } from '../../../../services/users/fetchUser';
@@ -23,7 +23,7 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
       return links;
     })
     .then((links: Links) => {
-      fetchMyCollections(links)
+      fetchPageableCollections(links, 'myCollections')
         .then(collections => {
           store.dispatch(
             storeCollectionsAction({ collections, key: 'myCollections' }),

@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ApiStub from '../../../../test-support/ApiStub';
 import {
   MockStoreFactory,
+  PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
@@ -143,7 +144,9 @@ describe('does not fetch videos scenarios', () => {
 const createMockStore = (collection: VideoCollection) => {
   return MockStoreFactory.sample({
     collections: {
-      myCollections: [collection],
+      myCollections: PageableCollectionsFactory.sample({
+        items: [collection],
+      }),
       publicCollections: undefined,
       bookmarkedCollections: undefined,
       loading: false,

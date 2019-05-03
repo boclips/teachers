@@ -3,7 +3,7 @@ import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import {
   fetchNextCollectionsPage,
-  fetchReadOnlyCollections,
+  fetchPageableCollections,
 } from '../../../../services/collections/fetchCollections';
 import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
 import { CollectionState, LinksState } from '../../../../types/State';
@@ -17,7 +17,7 @@ export function onFetchCollections(
   request: ReadOnlyCollectionKey,
 ) {
   const links = store.getState().links;
-  fetchReadOnlyCollections(links, request)
+  fetchPageableCollections(links, request)
     .then(collections => {
       store.dispatch(
         storeCollectionsAction({

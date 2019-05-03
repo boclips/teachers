@@ -64,7 +64,7 @@ export interface Pageable<T> {
 export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
-  myCollections: VideoCollection[];
+  myCollections: Pageable<VideoCollection>;
   publicCollections: Pageable<VideoCollection>;
   bookmarkedCollections: Pageable<VideoCollection>;
   collectionBeingViewed?: VideoCollection;

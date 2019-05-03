@@ -18,7 +18,9 @@ test('appending bookmarked collections', () => {
   const stateBefore: CollectionsStateValue = {
     updating: false,
     loading: false,
-    myCollections: [collection],
+    myCollections: PageableCollectionsFactory.sample({
+      items: [collection],
+    }),
     publicCollections: undefined,
     bookmarkedCollections: PageableCollectionsFactory.sample(),
   };
@@ -30,7 +32,7 @@ test('appending bookmarked collections', () => {
 
   const action = appendBookmarkedCollectionsAction({
     collections: PageableCollectionsFactory.sample({
-      items: stateBefore.myCollections,
+      items: stateBefore.myCollections.items,
       links: {
         next: nextCollectionLink,
       },
@@ -51,7 +53,9 @@ test('appending public collections', () => {
   const stateBefore: CollectionsStateValue = {
     updating: false,
     loading: false,
-    myCollections: [collection],
+    myCollections: PageableCollectionsFactory.sample({
+      items: [collection],
+    }),
     publicCollections: PageableCollectionsFactory.sample(),
     bookmarkedCollections: undefined,
   };
@@ -63,7 +67,7 @@ test('appending public collections', () => {
 
   const action = appendPublicCollectionsAction({
     collections: PageableCollectionsFactory.sample({
-      items: stateBefore.myCollections,
+      items: stateBefore.myCollections.items,
       links: {
         next: nextCollectionLink,
       },

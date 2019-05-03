@@ -142,13 +142,13 @@ class CollectionDetails extends PureComponent<
 
 function mapStateToProps(state: State, props: OwnProps): StateProps {
   const indexOfCollection = getIndexOfCollection(
-    state.collections.myCollections,
+    state.collections.myCollections.items,
     props.collectionId,
   );
 
   if (indexOfCollection >= 0) {
     return {
-      collection: state.collections.myCollections[indexOfCollection],
+      collection: state.collections.myCollections.items[indexOfCollection],
       links: state.links,
     };
   }

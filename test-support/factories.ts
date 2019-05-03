@@ -224,7 +224,7 @@ export class CollectionsFactory {
     return Object.freeze({
       loading: false,
       updating: false,
-      myCollections: [VideoCollectionFactory.sample()],
+      myCollections: { items: [VideoCollectionFactory.sample()], links: {} },
       publicCollections: {
         items: [],
         links: {},

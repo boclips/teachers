@@ -8,12 +8,12 @@ import EmptyCollection from '../../../resources/images/empty-collection.svg';
 import { CollectionCardList } from '../../components/collection/card/list/CollectionCardList';
 import { fetchMyCollectionsAction } from '../../components/collection/redux/actions/fetchMyCollectionsAction';
 import PageLayout from '../../components/layout/PageLayout';
-import { CollectionState } from '../../types/State';
+import { CollectionState, Pageable } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
 import './CollectionListView.less';
 
 interface StateProps {
-  collections: VideoCollection[];
+  collections: Pageable<VideoCollection>;
   loading: boolean;
 }
 
@@ -39,7 +39,11 @@ export class CollectionListView extends PureComponent<
       return null;
     }
 
-    if (!this.props.loading && this.props.collections.length === 0) {
+    const collectionIsEmpty =
+      !this.props.collections.items ||
+      this.props.collections.items.length === 0;
+
+    if (!this.props.loading && collectionIsEmpty) {
       return this.renderEmptyCollection();
     }
 
@@ -51,7 +55,7 @@ export class CollectionListView extends PureComponent<
               <img src={collections} alt="" /> My video collections
             </span>
           }
-          collections={this.props.collections}
+          collections={this.props.collections.items}
         />
       )
     );
