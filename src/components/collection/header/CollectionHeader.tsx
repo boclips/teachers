@@ -32,13 +32,17 @@ export default class CollectionHeader extends React.PureComponent<Props> {
             />
           </Col>
           <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
-            {this.props.collection.subjects.map(subjectId => (
-              <ConnectedSubjectTag key={subjectId} id={subjectId} />
-            ))}
-            {this.props.collection.ageRange && (
-              <AgeRangeTag ageRange={this.props.collection.ageRange} />
-            )}
-            <CollectionSubtitle collection={this.props.collection} />
+            <Row>
+              {this.props.collection.subjects.map(subjectId => (
+                <ConnectedSubjectTag key={subjectId} id={subjectId} />
+              ))}
+              {this.props.collection.ageRange && (
+                <AgeRangeTag ageRange={this.props.collection.ageRange} />
+              )}
+            </Row>
+            <Row>
+              <CollectionSubtitle collection={this.props.collection} />
+            </Row>
           </Col>
         </Row>
       </React.Fragment>
