@@ -8,6 +8,7 @@
 .ant-card.video-card {
   position: relative;
   cursor: pointer;
+
   &.skeleton {
     animation: slide-in 0.5s 0s both;
     .animation-delay(10);
@@ -123,9 +124,16 @@
   @media (max-width: @screen-md) {
     flex-direction: column;
   }
+
   .video-header {
     @media (max-width: @screen-md) {
       order: 2;
+    }
+  }
+
+  .buttons-row {
+    @media (max-width: @screen-md) {
+      order: 3;
     }
   }
 

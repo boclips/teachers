@@ -3,6 +3,7 @@ import { Link } from './Link';
 
 export interface VideoLinks {
   self: Link;
+  transcript?: Link;
 }
 
 export interface VideoId {

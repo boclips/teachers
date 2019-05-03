@@ -15,7 +15,7 @@ function getPlaybackProperties(
 }
 
 export default function convertVideoResource(resource: any): Video {
-  return {
+  const video: Video = {
     id: resource.id,
     title: resource.title,
     description: resource.description,
@@ -27,6 +27,14 @@ export default function convertVideoResource(resource: any): Video {
     subjects: resource.subjects,
     badges: resource.badges,
     type: { name: resource.type.name },
-    links: { self: new Link(resource._links.self) },
+    links: {
+      self: new Link(resource._links.self),
+    },
   };
+
+  if (resource._links.transcript) {
+    video.links.transcript = new Link(resource._links.transcript);
+  }
+
+  return video;
 }
