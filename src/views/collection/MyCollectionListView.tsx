@@ -10,7 +10,7 @@ import { fetchMyCollectionsAction } from '../../components/collection/redux/acti
 import PageLayout from '../../components/layout/PageLayout';
 import { CollectionState, Pageable } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
-import './CollectionListView.less';
+import './MyCollectionListView.less';
 
 interface StateProps {
   collections: Pageable<VideoCollection>;
@@ -21,7 +21,7 @@ interface DispatchProps {
   fetchCollection: () => void;
 }
 
-export class CollectionListView extends PureComponent<
+export class MyCollectionListView extends PureComponent<
   StateProps & DispatchProps
 > {
   public render() {
@@ -93,4 +93,4 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CollectionListView);
+)(MyCollectionListView);

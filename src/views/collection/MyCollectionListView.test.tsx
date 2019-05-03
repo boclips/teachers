@@ -5,7 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../test-support/By';
 import { MockStoreFactory } from '../../../test-support/factories';
-import CollectionListView from './CollectionListView';
+import MyCollectionListView from './MyCollectionListView';
 
 function render(collection) {
   const store = MockStoreFactory.sample({
@@ -15,7 +15,7 @@ function render(collection) {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedRouter history={createMemoryHistory()}>
-        <CollectionListView />
+        <MyCollectionListView />
       </ConnectedRouter>
     </Provider>,
   );
