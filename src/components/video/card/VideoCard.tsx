@@ -4,13 +4,12 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
+import CopyLinkButton from '../buttons/copyLink/CopyLinkButton';
+import VideoCollectionButton from '../buttons/videoCollection/VideoCollectionButton';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';
-import CopyLinkButton from './CopyLinkButton';
 import './VideoCard.less';
-import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
-import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
 
 export interface Props extends RouteComponentProps {
   video: Video | null;
@@ -67,23 +66,14 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
           <StopClickPropagation>
             <Row className="buttons-row">
               <CopyLinkButton video={this.props.video} />
-              {this.renderVideoManagementButton()}
+              <VideoCollectionButton
+                video={this.props.video}
+                collection={this.props.currentCollection}
+              />
             </Row>
           </StopClickPropagation>
         </section>
       </section>
-    );
-  }
-
-  private renderVideoManagementButton() {
-    return this.props.currentCollection &&
-      this.props.currentCollection.links.removeVideo ? (
-      <RemoveFromVideoCollectionButton
-        video={this.props.video}
-        collection={this.props.currentCollection}
-      />
-    ) : (
-      <ManageVideoCollectionsButton video={this.props.video} />
     );
   }
 

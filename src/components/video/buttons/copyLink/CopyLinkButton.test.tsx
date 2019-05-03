@@ -6,7 +6,7 @@ import {
   MockStoreFactory,
   UserProfileFactory,
   VideoFactory,
-} from '../../../../test-support/factories';
+} from '../../../../../test-support/factories';
 import CopyLinkButton from './CopyLinkButton';
 
 it('adds id of logged in user as a query param', () => {

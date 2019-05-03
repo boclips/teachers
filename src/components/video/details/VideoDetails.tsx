@@ -1,7 +1,7 @@
-import { Button, Skeleton } from 'antd';
-import axios from 'axios';
+import { Skeleton } from 'antd';
 import React from 'react';
 import { Video } from '../../../types/Video';
+import DownloadTranscriptButton from '../buttons/DownloadTranscriptButton';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';
@@ -32,39 +32,12 @@ class VideoDetailsContent extends React.PureComponent<Props> {
             {this.props.video.description}
           </p>
           <section className="buttons-row">
-            {this.props.video.links.transcript && (
-              <Button
-                size={'large'}
-                onClick={this.handleTranscriptClick}
-                data-qa="download-transcript"
-              >
-                Download transcript
-              </Button>
-            )}
+            <DownloadTranscriptButton video={this.props.video} />
           </section>
         </section>
       </section>
     );
   }
-
-  private handleTranscriptClick = () => {
-    const uri = this.props.video.links.transcript;
-    axios.get(uri.getOriginalLink()).then(response => {
-      const disposition: string = response.headers['Content-Disposition'];
-      const regex = /filename="(.*?)"/;
-      const matches = regex.exec(disposition);
-      const filename =
-        (matches && matches.length > 1 && matches[1]) || this.props.video.title;
-
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  };
 }
 
 class VideoDetailsSkeleton extends React.PureComponent<Props> {

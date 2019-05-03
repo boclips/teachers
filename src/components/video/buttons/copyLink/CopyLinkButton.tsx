@@ -2,11 +2,11 @@ import { Button } from 'antd';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
-import { Constants } from '../../../app/AppConstants';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { LoginState } from '../../../types/State';
-import { Video } from '../../../types/Video';
-import NotificationFactory from '../../common/NotificationFactory';
+import { Constants } from '../../../../app/AppConstants';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { LoginState } from '../../../../types/State';
+import { Video } from '../../../../types/Video';
+import NotificationFactory from '../../../common/NotificationFactory';
 
 interface OwnProps {
   video: Video;

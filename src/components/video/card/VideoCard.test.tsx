@@ -5,14 +5,10 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import {
   MockStoreFactory,
-  VideoCollectionFactory,
-  VideoCollectionLinksFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import { Link } from '../../../types/Link';
+import VideoCollectionButton from '../buttons/videoCollection/VideoCollectionButton';
 import { Props, VideoCardForRouter } from './VideoCard';
-import ManageVideoCollectionsButton from './videoCollectionButton/ManageVideoCollectionButton';
-import RemoveFromVideoCollectionButton from './videoCollectionButton/RemoveFromVideoCollectionButton';
 
 const getWrapper = (givenProps: Partial<Props> = {}) => {
   const props: Props = {
@@ -28,7 +24,7 @@ const getWrapper = (givenProps: Partial<Props> = {}) => {
 describe('when outside video collection', () => {
   test('renders save button when card has no collection', () => {
     const wrapper = getWrapper();
-    expect(wrapper.find(ManageVideoCollectionsButton)).toExist();
+    expect(wrapper.find(VideoCollectionButton)).toExist();
   });
 
   test('it does not render subject tags container if there are none on the video', () => {
@@ -79,34 +75,6 @@ describe('when outside video collection', () => {
       buttonsRow.simulate('click');
       expect(push.mock.calls).toHaveLength(0);
     });
-  });
-});
-
-describe('when within video collection', () => {
-  test('renders remove button when videos can be removed', () => {
-    const video = VideoFactory.sample();
-    const collection = VideoCollectionFactory.sample({
-      links: VideoCollectionLinksFactory.sample({
-        removeVideo: new Link({ href: '' }),
-      }),
-    });
-
-    const wrapper = getWrapper({ video, currentCollection: collection });
-
-    expect(wrapper.find(RemoveFromVideoCollectionButton)).toExist();
-  });
-
-  test('renders save button when videos cannot be removed', () => {
-    const video = VideoFactory.sample();
-    const collection = VideoCollectionFactory.sample({
-      links: VideoCollectionLinksFactory.sample({
-        removeVideo: undefined,
-      }),
-    });
-
-    const wrapper = getWrapper({ video, currentCollection: collection });
-
-    expect(wrapper.find(ManageVideoCollectionsButton)).toExist();
   });
 });
 
