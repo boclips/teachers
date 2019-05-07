@@ -4,10 +4,15 @@ import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../test-support/By';
-import { MockStoreFactory } from '../../../test-support/factories';
+import {
+  CollectionsFactory,
+  MockStoreFactory,
+  PageableCollectionsFactory,
+} from '../../../test-support/factories';
+import { CollectionsStateValue } from '../../types/State';
 import MyCollectionListView from './MyCollectionListView';
 
-function render(collection) {
+function render(collection: CollectionsStateValue) {
   const store = MockStoreFactory.sample({
     collections: collection,
   });
@@ -24,11 +29,15 @@ function render(collection) {
 }
 
 test('displays an empty state when no collections', () => {
-  const { wrapper } = render({
-    loading: false,
-    updating: false,
-    myCollections: [],
-  });
+  const { wrapper } = render(
+    CollectionsFactory.sample({
+      loading: false,
+      updating: false,
+      myCollections: PageableCollectionsFactory.sample({
+        items: [],
+      }),
+    }),
+  );
 
   expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(
     'You have no collections, yet.',

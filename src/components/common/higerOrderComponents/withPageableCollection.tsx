@@ -54,11 +54,12 @@ function mapStateToProps(state: State, props: Props): StateProps {
   };
 }
 
-// TODO figure out how to type the HOC properly
-export default compose<any>(
-  connect<StateProps, DispatchProps, Props>(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-  withPageableCollection,
-);
+export default function<T>(args: any) {
+  return compose<React.ComponentType<T & Props>>(
+    connect<StateProps, DispatchProps, Props>(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
+    withPageableCollection,
+  )(args);
+}

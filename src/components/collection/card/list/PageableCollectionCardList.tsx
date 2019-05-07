@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { CollectionKey } from '../../../../types/CollectionKey';
 import withPageableCollection, {
   WithPageableCollectionProps,
 } from '../../../common/higerOrderComponents/withPageableCollection';
@@ -8,17 +7,25 @@ import {
   CollectionCardListProps,
 } from './CollectionCardList';
 
-interface Props {
-  collectionKey: CollectionKey;
+export interface PageableCollectionCardListProps {
   renderIfEmptyCollection?: ReactNode;
+  title: string | React.ReactFragment;
+  description?: string;
+  grid?: boolean;
+  maxNumberOfCollections?: number;
 }
 
 class PageableCollectionCardList extends React.PureComponent<
-  Props & CollectionCardListProps & WithPageableCollectionProps
+  PageableCollectionCardListProps &
+    CollectionCardListProps &
+    WithPageableCollectionProps
 > {
   public render() {
-    const emptyCollection =
-      !this.props.collections || this.props.collections.length === 0;
+    if (!this.props.collections) {
+      return null;
+    }
+
+    const emptyCollection = this.props.collections.length === 0;
 
     if (!this.props.loading && emptyCollection) {
       return this.props.renderIfEmptyCollection || null;
@@ -47,4 +54,6 @@ class PageableCollectionCardList extends React.PureComponent<
   }
 }
 
-export default withPageableCollection(PageableCollectionCardList);
+export default withPageableCollection<PageableCollectionCardListProps>(
+  PageableCollectionCardList,
+);

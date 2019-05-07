@@ -6,17 +6,15 @@ import { VideoCollection } from '../../../../types/VideoCollection';
 import CollectionsLoaded from '../../CollectionsLoaded';
 import { CollectionCard } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
+import { PageableCollectionCardListProps } from './PageableCollectionCardList';
 
 interface InfiniteScrollProps {
   next: () => void;
   hasMore: boolean;
 }
-export interface CollectionCardListProps {
+export interface CollectionCardListProps
+  extends PageableCollectionCardListProps {
   collections: VideoCollection[];
-  title: string | React.ReactFragment;
-  description?: string;
-  grid?: boolean;
-  maxNumberOfCollections?: number;
   infiniteScroll?: InfiniteScrollProps;
 }
 

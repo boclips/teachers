@@ -2,7 +2,10 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../../../test-support/By';
-import { MockStoreFactory } from '../../../../../test-support/factories';
+import {
+  MockStoreFactory,
+  PageableCollectionsFactory,
+} from '../../../../../test-support/factories';
 import { fetchPageableCollectionsAction } from '../../redux/actions/fetchPageableCollectionsAction';
 import BookmarkedCollectionsGrid from './BookmarkedCollectionsGrid';
 
@@ -31,7 +34,9 @@ describe('bookmarked collections', () => {
         updating: false,
         myCollections: undefined,
         publicCollections: undefined,
-        bookmarkedCollections: undefined,
+        bookmarkedCollections: PageableCollectionsFactory.sample({
+          items: [],
+        }),
       },
     });
 

@@ -60,9 +60,13 @@ describe('some collection', () => {
     expect(store.getActions()).toHaveLength(0);
   });
 
-  test('renders empty component if no collections', () => {
+  test('renders empty component if no collections in pageable resource', () => {
     const store = MockStoreFactory.sample({
-      collections: {} as any,
+      collections: CollectionsFactory.sample({
+        bookmarkedCollections: PageableCollectionsFactory.sample({
+          items: [],
+        }),
+      }),
     });
 
     const wrapper = mount(
