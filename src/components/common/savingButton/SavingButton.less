@@ -15,12 +15,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .anticon {
+      transition: opacity 300ms ease-in-out;;
+    }
+
+    &.saving .anticon,&.saved .anticon {
+      opacity: 0;
+    }
   }
 
   &tick-container {
     position: absolute;
     position: absolute;
-    right: -11px;
+    left: -4px;
     top: -2px;
 
     .circle-loader {

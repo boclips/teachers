@@ -4,8 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import CopyLinkButton from '../buttons/copyLink/CopyLinkButton';
-import VideoCollectionButton from '../buttons/videoCollection/VideoCollectionButton';
+import VideoButtons from '../buttons/VideoButtons';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';
@@ -65,8 +64,7 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
 
           <StopClickPropagation>
             <Row className="buttons-row">
-              <CopyLinkButton video={this.props.video} />
-              <VideoCollectionButton
+              <VideoButtons
                 video={this.props.video}
                 collection={this.props.currentCollection}
               />

@@ -145,7 +145,7 @@ test('adding a video to a collection', async () => {
     .find(By.dataQa('video-collection-menu'))
     .first();
 
-  expect(collectionMenuButton).toHaveText('Save');
+  expect(collectionMenuButton.text()).toContain('Save');
 
   collectionMenuButton.simulate('click');
 

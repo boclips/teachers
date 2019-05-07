@@ -1,7 +1,9 @@
 import { Button, Checkbox, Drawer, Icon, Input, Menu, Popover } from 'antd';
+import { CustomIconComponentProps } from 'antd/es/icon';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import saveSvg from '../../../../../resources/images/save.svg';
 import { CreateCollectionRequest } from '../../../../services/collections/createCollection';
 import State, { Pageable } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
@@ -93,6 +95,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   }
 
   private saveButton(onClick?: () => void) {
+    const svg = saveSvg as React.ComponentType<CustomIconComponentProps>;
     return (
       <SavingButton
         saving={this.state.isSaving}
@@ -101,7 +104,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         size={'large'}
         onClick={onClick}
       >
-        Save
+        <Icon component={svg} /> <span>Save</span>
       </SavingButton>
     );
   }

@@ -1,0 +1,38 @@
+@import '../../../../resources/styles/_colours.less';
+
+.video-buttons__container {
+  border-top: 2px solid @shade-2;
+  margin-bottom: -8px;
+
+  .ant-btn {
+    display: inline-flex;
+    border: none;
+    border-right: 2px solid @shade-2;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    min-width: 0px;
+    padding: 0px 24px;
+
+    &:active {
+      box-shadow: none !important;
+    }
+
+    & .anticon + span {
+      margin-left: 8px;
+    }
+
+    .anticon {
+      font-size: 24px;
+    }
+
+    height: 24px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+
+    &:last-child:not(:first-child) {
+      border-right: 0px;
+    }
+  }
+
+
+}

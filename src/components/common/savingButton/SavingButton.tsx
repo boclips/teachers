@@ -56,7 +56,11 @@ export default class SavingButton extends React.PureComponent<Props, State> {
     delete btnProps.saving;
     return (
       <Button {...btnProps}>
-        <section className="saving-button__container">
+        <section
+          className={`saving-button__container ${
+            this.props.saving ? 'saving' : ' '
+          } ${this.state.justSaved ? 'saved' : ' '}`}
+        >
           {this.props.children}
           {this.props.saving || this.state.justSaved ? (
             <section

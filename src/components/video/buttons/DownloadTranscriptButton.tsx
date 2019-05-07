@@ -1,6 +1,8 @@
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
+import { CustomIconComponentProps } from 'antd/lib/icon';
 import axios from 'axios';
 import React from 'react';
+import downloadTranscriptSvg from '../../../../resources/images/download-transcript.svg';
 import { Video } from '../../../types/Video';
 
 interface OwnProps {
@@ -11,6 +13,9 @@ export default class DownloadTranscriptButton extends React.PureComponent<
   OwnProps
 > {
   public render() {
+    const svg = downloadTranscriptSvg as React.ComponentType<
+      CustomIconComponentProps
+    >;
     return (
       (this.props.video.links.transcript && (
         <Button
@@ -18,7 +23,7 @@ export default class DownloadTranscriptButton extends React.PureComponent<
           onClick={this.handleTranscriptClick}
           data-qa="download-transcript"
         >
-          Download transcript
+          <Icon component={svg} /> Transcript
         </Button>
       )) ||
       null

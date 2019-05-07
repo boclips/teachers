@@ -7,7 +7,7 @@ import {
   MockStoreFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import VideoCollectionButton from '../buttons/videoCollection/VideoCollectionButton';
+import VideoButtons from '../buttons/VideoButtons';
 import { Props, VideoCardForRouter } from './VideoCard';
 
 const getWrapper = (givenProps: Partial<Props> = {}) => {
@@ -22,9 +22,9 @@ const getWrapper = (givenProps: Partial<Props> = {}) => {
 };
 
 describe('when outside video collection', () => {
-  test('renders save button when card has no collection', () => {
+  test('renders video buttons', () => {
     const wrapper = getWrapper();
-    expect(wrapper.find(VideoCollectionButton)).toExist();
+    expect(wrapper.find(VideoButtons)).toExist();
   });
 
   test('it does not render subject tags container if there are none on the video', () => {
