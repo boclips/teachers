@@ -1,6 +1,7 @@
 import { Button, Checkbox, Drawer, Icon, Input, Menu, Popover } from 'antd';
 import { CustomIconComponentProps } from 'antd/es/icon';
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import saveSvg from '../../../../../resources/images/save.svg';
@@ -157,9 +158,22 @@ class ManageVideoCollectionsButton extends React.PureComponent<
 
     return (
       <>
-        <Menu className="manage-video-collection-button__menu-container">
-          {menuEntries}
-        </Menu>
+        <InfiniteScroll
+          dataLength={this.props.collections.length}
+          next={this.props.fetchNextPage}
+          hasMore={this.props.hasMoreCollections}
+          scrollThreshold={0.3}
+          hasChildren={this.props.collections.length > 0}
+          loader=""
+          scrollableTarget="videoCollectionButtonScroll"
+        >
+          <Menu
+            id="videoCollectionButtonScroll"
+            className="manage-video-collection-button__menu-container"
+          >
+            {menuEntries}
+          </Menu>
+        </InfiniteScroll>
         <div
           className="manage-video-collection-button__create-collection-container"
           key="option-create-collection"
