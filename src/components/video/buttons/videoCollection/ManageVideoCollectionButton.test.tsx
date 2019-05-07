@@ -169,7 +169,10 @@ const mountWith = (
   });
   return mount(
     <Provider store={store}>
-      <ManageVideoCollectionsButton video={video} />
+      <ManageVideoCollectionsButton
+        video={video}
+        collectionKey="myCollections"
+      />
     </Provider>,
   );
 };

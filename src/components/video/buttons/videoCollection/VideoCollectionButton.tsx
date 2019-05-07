@@ -19,7 +19,10 @@ export default class VideoCollectionButton extends React.PureComponent<
         collection={this.props.collection}
       />
     ) : (
-      <ManageVideoCollectionsButton video={this.props.video} />
+      <ManageVideoCollectionsButton
+        video={this.props.video}
+        collectionKey="myCollections"
+      />
     );
   }
 }

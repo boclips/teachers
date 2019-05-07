@@ -5,18 +5,19 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import saveSvg from '../../../../../resources/images/save.svg';
 import { CreateCollectionRequest } from '../../../../services/collections/createCollection';
-import State, { Pageable } from '../../../../types/State';
+import State from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addVideoToMyCollectionAction } from '../../../collection/redux/actions/addToMyCollectionAction';
 import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
 import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
+import withPageableCollection, {
+  WithPageableCollectionProps,
+} from '../../../common/higerOrderComponents/withPageableCollection';
 import SavingButton from '../../../common/savingButton/SavingButton';
 import './manage-video-collection-button.less';
 
 interface StateProps {
-  collections: Pageable<VideoCollection>;
-  loading: boolean;
   updating: boolean;
 }
 
@@ -39,10 +40,12 @@ interface InternalState {
 }
 
 class ManageVideoCollectionsButton extends React.PureComponent<
-  StateProps & OwnProps & DispatchProps,
+  StateProps & OwnProps & DispatchProps & WithPageableCollectionProps,
   InternalState
 > {
-  constructor(props: StateProps & OwnProps & DispatchProps) {
+  constructor(
+    props: StateProps & OwnProps & DispatchProps & WithPageableCollectionProps,
+  ) {
     super(props);
 
     this.state = {
@@ -143,7 +146,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         </section>
       );
     }
-    const menuEntries = this.props.collections.items.map(collection => (
+    const menuEntries = (this.props.collections || []).map(collection => (
       <Menu.Item
         key={collection.id}
         className="manage-video-collection-button__menu-item"
@@ -293,8 +296,6 @@ function mapDispatchToProps(
 
 function mapStateToProps({ collections }: State): StateProps {
   return {
-    collections: collections.myCollections,
-    loading: collections.loading,
     updating: collections.updating,
   };
 }
@@ -302,4 +303,4 @@ function mapStateToProps({ collections }: State): StateProps {
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
-)(ManageVideoCollectionsButton);
+)(withPageableCollection<OwnProps>(ManageVideoCollectionsButton));
