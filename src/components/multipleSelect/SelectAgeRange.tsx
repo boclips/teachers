@@ -46,12 +46,22 @@ export class SelectAgeRange extends React.PureComponent<Props> {
         <Option
           key={ageRange.label}
           title={ageRange.label}
-          value={JSON.stringify(ageRange.value)}
+          value={JSON.stringify(this.generateRange(ageRange))}
         >
           {ageRange.label}
         </Option>
       );
     });
+  }
+
+  private generateRange(ageRange) {
+    const arr = [];
+
+    for (let i = ageRange.min; i <= ageRange.max; i++) {
+      arr.push(i);
+    }
+
+    return arr;
   }
 
   private filter(inputValue, option) {

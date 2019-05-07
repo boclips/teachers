@@ -7,12 +7,17 @@ export const editCollection = (
   if (!request.originalCollection.links.edit) {
     return Promise.reject();
   }
+
+  const endpoint = request.originalCollection.links.edit.getOriginalLink();
+
   return axios
-    .patch(request.originalCollection.links.edit.getOriginalLink(), {
+    .patch(endpoint, {
       title: request.title,
       isPublic: request.isPublic,
       subjects: request.subjects,
-      ageRange: request.ageRange,
+      ageRange: request.ageRange != null ? request.ageRange.label : undefined,
     })
-    .then(() => true);
+    .then(() => {
+      return true;
+    });
 };

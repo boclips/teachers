@@ -103,7 +103,7 @@ describe('when can edit collection', () => {
         links: VideoCollectionLinksFactory.sample({
           edit: new Link({ href: 'something', templated: false }),
         }),
-        ageRange: '3-9',
+        ageRange: { label: '3-9', min: 3, max: 9 },
       });
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
@@ -117,7 +117,11 @@ describe('when can edit collection', () => {
         editCollectionAction({
           originalCollection: collection,
           title: null,
-          ageRange: '5-9',
+          ageRange: {
+            label: '5-9',
+            min: 5,
+            max: 9,
+          },
           subjects: null,
           isPublic: null,
         }),
@@ -128,7 +132,7 @@ describe('when can edit collection', () => {
         links: VideoCollectionLinksFactory.sample({
           edit: new Link({ href: 'something', templated: false }),
         }),
-        ageRange: '11-16',
+        ageRange: { label: '11-16', min: 11, max: 16 },
       });
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
@@ -142,7 +146,10 @@ describe('when can edit collection', () => {
         editCollectionAction({
           originalCollection: collection,
           title: null,
-          ageRange: '11+',
+          ageRange: {
+            label: '11+',
+            min: 11,
+          },
           subjects: null,
           isPublic: null,
         }),

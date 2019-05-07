@@ -44,30 +44,32 @@ export default class CollectionEditButton extends React.PureComponent<
 
   public handleOk = () => {
     const form = this.formRef.props.form;
-    form.validateFields((err, values: EditableFields) => {
-      if (err) {
+    form.validateFields((formErrors, values: EditableFields) => {
+      if (formErrors) {
         return;
       }
+
+      const collectionChanges = {
+        originalCollection: this.props.collection,
+        title:
+          values.title !== this.props.collection.title ? values.title : null,
+        isPublic:
+          values.isPublic !== this.props.collection.isPublic
+            ? values.isPublic
+            : null,
+        subjects:
+          values.subjects !== this.props.collection.subjects
+            ? values.subjects
+            : null,
+        ageRange: this.hasAgeRangeChanged(values.ageRange)
+          ? this.convertArrayToAgeRange(values.ageRange)
+          : null,
+      };
 
       form.resetFields();
 
       if (this.hasFieldsChanged(values)) {
-        this.props.onUpdate({
-          originalCollection: this.props.collection,
-          title:
-            values.title !== this.props.collection.title ? values.title : null,
-          isPublic:
-            values.isPublic !== this.props.collection.isPublic
-              ? values.isPublic
-              : null,
-          subjects:
-            values.subjects !== this.props.collection.subjects
-              ? values.subjects
-              : null,
-          ageRange: this.hasAgeRangeChanged(values.ageRange)
-            ? this.convertAgeRangeToString(values.ageRange)
-            : null,
-        });
+        this.props.onUpdate(collectionChanges);
       }
 
       this.setState({ visible: false });
@@ -111,9 +113,7 @@ export default class CollectionEditButton extends React.PureComponent<
             isPublic={this.props.collection.isPublic}
             subjects={this.props.collection.subjects}
             wrappedComponentRef={this.saveFormRef}
-            ageRange={this.convertAgeRangeToArray(
-              this.props.collection.ageRange,
-            )}
+            ageRange={this.getAgeRangeValue(this.props.collection.ageRange)}
             onAgeRangeChange={this.onAgeRangeChange}
             sliderRange={this.sliderRange}
           />
@@ -138,34 +138,38 @@ export default class CollectionEditButton extends React.PureComponent<
     this.formRef = formRef;
   };
 
-  private convertAgeRangeToArray(ageRange?: string): number[] {
+  private getAgeRangeValue(ageRange?: AgeRange): number[] {
     if (ageRange == null) {
       return [this.sliderRange.min, this.sliderRange.max];
-    }
-
-    if (ageRange.includes('+')) {
-      const min = Number(ageRange.split('+')[0]);
-      return [min, this.sliderRange.max];
     } else {
-      return ageRange.split('-').map(el => Number(el));
+      return [ageRange.min, ageRange.max || this.sliderRange.max];
     }
   }
 
-  private convertAgeRangeToString(ageRangeFromForm?: number[]): string {
+  private convertArrayToAgeRange(ageRangeFromForm?: number[]): AgeRange {
     if (ageRangeFromForm == null) {
       return null;
     }
 
     if (ageRangeFromForm[1] === this.sliderRange.max) {
-      return `${ageRangeFromForm[0]}+`;
+      return {
+        label: `${ageRangeFromForm[0]}+`,
+        min: ageRangeFromForm[0],
+      };
     } else {
-      return `${ageRangeFromForm[0]}-${ageRangeFromForm[1]}`;
+      return {
+        label: `${ageRangeFromForm[0]}-${ageRangeFromForm[1]}`,
+        min: ageRangeFromForm[0],
+        max: ageRangeFromForm[1],
+      };
     }
   }
+
   private hasAgeRangeChanged(ageRange: number[]) {
     return (
-      this.convertAgeRangeToString(ageRange) !==
-        this.props.collection.ageRange && this.state.hasAgeRangeBeenTouched
+      this.state.hasAgeRangeBeenTouched &&
+      this.convertArrayToAgeRange(ageRange).label !==
+        this.props.collection.ageRange.label
     );
   }
 }

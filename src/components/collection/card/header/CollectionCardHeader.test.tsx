@@ -63,7 +63,9 @@ test('renders first subject when present', () => {
 });
 
 test('renders age range when present', () => {
-  const collection = VideoCollectionFactory.sample({ ageRange: 'hello' });
+  const collection = VideoCollectionFactory.sample({
+    ageRange: { label: 'hello', min: 3, max: 9 },
+  });
   const wrapper = shallow(
     <CollectionCardHeader collection={collection} showRemoveButton={false} />,
   );

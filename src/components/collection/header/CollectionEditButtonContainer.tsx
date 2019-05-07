@@ -38,10 +38,13 @@ class CollectionEditButtonContainer extends React.PureComponent<
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  patchCollection: (request: EditCollectionRequest) =>
-    dispatch(editCollectionAction(request)),
-});
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
+  return {
+    patchCollection: (request: EditCollectionRequest) => {
+      dispatch(editCollectionAction(request));
+    },
+  };
+};
 
 function mapStateToProps({ collections }: State): StateProps {
   return {

@@ -54,7 +54,13 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     isMine: data.mine,
     createdBy: data.createdBy,
     subjects: data.subjects.map(subject => subject.id),
-    ageRange: data.ageRange && data.ageRange.label,
+    ageRange: data.ageRange
+      ? {
+          label: data.ageRange.label,
+          min: data.ageRange.min,
+          max: data.ageRange.max,
+        }
+      : null,
   };
 };
 

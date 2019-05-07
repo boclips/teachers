@@ -95,7 +95,7 @@ describe('when editable collection', () => {
     const newTitle = 'this is a shiny new title';
     MockFetchVerify.patch(
       '/v1/collections/id',
-      { title: newTitle, isPublic: null, subjects: null, ageRange: null },
+      { title: newTitle, isPublic: null, subjects: null },
       204,
     );
 
