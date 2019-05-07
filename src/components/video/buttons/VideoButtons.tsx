@@ -19,11 +19,11 @@ export default class VideoButtons extends React.PureComponent<OwnProps> {
   public render() {
     return (
       <section className="video-buttons__container">
-        <section className="display-tablet-and-desktop">
+        <section className="display-desktop">
           <DesktopButtons {...this.props} />
         </section>
 
-        <section className="display-mobile">
+        <section className="display-mobile-and-tablet">
           <MobileButtons {...this.props} />
         </section>
       </section>

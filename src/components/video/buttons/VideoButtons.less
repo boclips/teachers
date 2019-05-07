@@ -8,11 +8,15 @@
       border-top: 2px solid @shade-2;
     }
     margin-bottom: -8px;
+    display: flex;
+    align-items: baseline;
 
-    @media (max-width: @screen-md) {
-      .ant-btn-group {
-        float: right;
-      }
+    @media (max-width: @screen-lg) {
+      justify-content: flex-start;
+    }
+
+    @media (max-width: @screen-lg) {
+      justify-content: flex-end;
     }
 
     .ant-btn {
@@ -22,12 +26,12 @@
       box-shadow: none !important;
       min-width: 0px;
 
-      @media (min-width: @screen-md) {
+      @media (min-width: @screen-lg) {
         border-right: 2px solid @shade-2;
         padding: 0px 24px;
       }
 
-      @media (max-width: @screen-md) {
+      @media (max-width: @screen-lg) {
         padding: 0px 12px;
       }
 

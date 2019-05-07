@@ -19,3 +19,19 @@ button.display-tablet-and-desktop {
     display: inline-block;
   }
 }
+
+.display-mobile-and-tablet {
+  display: inherit;
+
+  @media (min-width: @screen-lg) {
+    display: none;
+  }
+}
+
+.display-desktop {
+  display: none;
+
+  @media (min-width: @screen-lg) {
+    display: inherit;
+  }
+}
