@@ -10,7 +10,7 @@ export class BookmarkedCollectionListView extends PureComponent {
           className="bookmarked-collection-list collection-list"
           data-qa="bookmarked-collection-list-page"
         >
-          <BookmarkedCollectionsGrid />;
+          <BookmarkedCollectionsGrid />
         </section>
       </PageLayout>
     );
