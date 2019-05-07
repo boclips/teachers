@@ -8,17 +8,26 @@
     margin: 0;
     font-weight: bold;
     border-bottom: 0px;
-    color: @inactive-tab-color;
+    @media (max-width: @screen-md) {
+      color: @inactive-tab-color;
+    }
+    @media (min-width: @screen-md) {
+      margin-top: 8px
+    }
   }
 
   & .ant-tabs-ink-bar {
-    background-color: @active-tab-color;
+    @media (max-width: @screen-md) {
+      background-color: @active-tab-color;
+    }
     height: 4px;
   }
 
   & .ant-tabs-nav .ant-tabs-tab-active,
   & .ant-tabs-nav .ant-tabs-tab:hover {
-    color: @active-tab-color;
+    @media (max-width: @screen-md) {
+      color: @active-tab-color;
+    }
     font-weight: bold;
   }
 

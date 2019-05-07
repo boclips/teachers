@@ -12,13 +12,13 @@ export default class SearchResultsWithSidebar extends React.PureComponent<
     const { videos, paging, query } = this.props.results;
     return (
       <Row>
-        <Col xs={{ span: 24 }} md={{ span: 18 }}>
+        <Col xs={{ span: 24 }} xl={{ span: 18 }}>
           <SearchVideoCardList
             totalElements={paging && paging.totalElements}
             videos={videos}
           />
         </Col>
-        <Col xs={{ span: 0 }} md={{ span: 6 }}>
+        <Col xs={{ span: 0 }} xl={{ span: 6 }}>
           <NewsBoxSidebar
             onButtonClick={this.props.onNavigate}
             resultsQuery={query}

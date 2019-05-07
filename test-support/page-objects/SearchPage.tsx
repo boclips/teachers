@@ -53,6 +53,7 @@ export class SearchPage {
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved: el
         .find('ManageVideoCollectionsButton')
+        .first()
         .prop('isInDefaultCollection'),
       subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
     }));

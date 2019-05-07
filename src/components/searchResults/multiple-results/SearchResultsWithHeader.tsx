@@ -12,7 +12,7 @@ export default class SearchResultsWithHeader extends React.PureComponent<
     return (
       <React.Fragment>
         <Row>
-          <Col md={24} span={0}>
+          <Col xl={24} span={0}>
             <NewsBoxHeader
               onButtonClick={this.props.onNavigate}
               resultsQuery={query}

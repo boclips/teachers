@@ -25,7 +25,7 @@ const TabElement = React.memo((props: TabElementProps) => (
 
 export const TabsComponent = React.memo((props: Props) => (
   <Row>
-    <Col span={24} md={0}>
+    <Col span={24} xl={0}>
       <Tabs
         className="tabs"
         size="large"

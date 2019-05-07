@@ -71,6 +71,7 @@ export class CollectionPage {
     return findAll(this.wrapper, 'video-card')
       .at(index)
       .find(By.dataQa('remove-from-collection', 'button'))
+      .first()
       .simulate('click');
   }
 

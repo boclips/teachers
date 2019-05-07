@@ -39,7 +39,11 @@ export class NewsBoxSidebar extends PureComponent<NewBoxSidePanelProps> {
   }
 
   public static Skeleton = () => (
-    <Card className="video-card" bordered={false}>
+    <Card
+      className="video-card"
+      bordered={false}
+      style={{ marginLeft: '32px' }}
+    >
       <Skeleton
         loading={true}
         active={true}
