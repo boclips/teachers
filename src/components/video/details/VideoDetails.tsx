@@ -1,10 +1,13 @@
-import { Skeleton } from 'antd';
+import { Icon, Skeleton } from 'antd';
 import React from 'react';
 import { Video } from '../../../types/Video';
-import DownloadTranscriptButton from '../buttons/DownloadTranscriptButton';
-import { VideoHeader } from '../header/VideoHeader';
+import DateFormatter from '../../common/formatters/DateFormatter';
+import DurationFormatter from '../../common/formatters/DurationFormatter';
+import VideoButtons from '../buttons/VideoButtons';
+import VideoPreviewBadge from '../card/VideoBadge';
 import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';
+import './VideoDetails.less';
 
 interface Props {
   video: Video | null;
@@ -19,21 +22,44 @@ class VideoDetailsContent extends React.PureComponent<Props> {
     }
 
     return (
-      <section className="video-content">
+      <section className="video-details-container video-content">
+        <section className={'video-header'}>
+          <h1 className="title clamp-2-lines big-title" data-qa="video-title">
+            {this.props.video.title}
+          </h1>
+          <p className="subtitle">
+            Released on{' '}
+            <span data-qa="video-released-on">
+              <DateFormatter date={this.props.video.releasedOn} />
+            </span>{' '}
+            by{' '}
+            <span data-qa="video-content-partner">
+              {this.props.video.contentPartner}
+            </span>
+          </p>
+        </section>
+        <section className="buttons-row">
+          <VideoButtons video={this.props.video} />
+        </section>
         <VideoPlayer video={this.props.video} />
         <section className="video-details">
-          <VideoHeader video={this.props.video} />
-          <div className="subjects-container">
-            {this.props.video.subjects.map(subject => (
-              <SubjectTag subject={subject} key={subject} />
-            ))}
-          </div>
+          <section className="badges-row">
+            <div className="subjects-container">
+              {this.props.video.subjects.map(subject => (
+                <SubjectTag subject={subject} key={subject} />
+              ))}
+            </div>
+            <section className="badge-container">
+              <p data-qa="video-duration" className={'subtitle duration'}>
+                <Icon type="clock-circle" />{' '}
+                <DurationFormatter duration={this.props.video.duration} />
+              </p>
+              <VideoPreviewBadge video={this.props.video} />
+            </section>
+          </section>
           <p data-qa="video-description" className="description">
             {this.props.video.description}
           </p>
-          <section className="buttons-row">
-            <DownloadTranscriptButton video={this.props.video} />
-          </section>
         </section>
       </section>
     );

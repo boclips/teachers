@@ -20,6 +20,7 @@ import './manage-video-collection-button.less';
 
 interface StateProps {
   updating: boolean;
+  canFetchMyCollections: boolean;
 }
 
 export interface OwnProps {
@@ -65,6 +66,10 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   }
 
   public render() {
+    if (!this.props.canFetchMyCollections) {
+      return null;
+    }
+
     return (
       <span>
         <span className="display-tablet-and-desktop">
@@ -73,7 +78,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             overlayClassName="manage-video-collection-button__popover"
             autoAdjustOverflow={false}
             content={this.menu()}
-            placement="bottom"
+            placement="bottomLeft"
             trigger="click"
             onVisibleChange={this.onPopoverToggle}
             visible={this.state.collectionPopoverVisible}
@@ -308,9 +313,10 @@ function mapDispatchToProps(
   };
 }
 
-function mapStateToProps({ collections }: State): StateProps {
+function mapStateToProps({ collections, links }: State): StateProps {
   return {
     updating: collections.updating,
+    canFetchMyCollections: links.myCollections && true,
   };
 }
 

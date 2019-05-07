@@ -17,6 +17,19 @@ import ManageVideoCollectionsButton from './ManageVideoCollectionButton';
 
 let store: MockStore;
 
+describe('when no public collection link', () => {
+  test('renders nothing', () => {
+    const wrapper = mountWith(null, null, true);
+
+    wrapper
+      .find(By.dataQa('video-collection-menu', 'button'))
+      .first()
+      .simulate('click');
+
+    expect(wrapper.find(By.dataQa('loading-collections'))).toExist();
+  });
+});
+
 describe('when loading collections', () => {
   test('renders loading thingy', () => {
     const wrapper = mountWith(null, null, true);

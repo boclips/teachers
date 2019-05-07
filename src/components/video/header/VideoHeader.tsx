@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const VideoHeader = React.memo((props: Props) => (
-  <section className={'video-header'}>
+  <section className={'card-video-header'}>
     <h1 className="title clamp-2-lines" data-qa="video-title">
       {props.video.title}
     </h1>

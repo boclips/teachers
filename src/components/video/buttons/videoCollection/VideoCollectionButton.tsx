@@ -13,12 +13,15 @@ export default class VideoCollectionButton extends React.PureComponent<
   OwnProps
 > {
   public render() {
-    return this.props.collection && this.props.collection.links.removeVideo ? (
-      <RemoveFromVideoCollectionButton
-        video={this.props.video}
-        collection={this.props.collection}
-      />
-    ) : (
+    if (this.props.collection && this.props.collection.links.removeVideo) {
+      return (
+        <RemoveFromVideoCollectionButton
+          video={this.props.video}
+          collection={this.props.collection}
+        />
+      );
+    }
+    return (
       <ManageVideoCollectionsButton
         video={this.props.video}
         collectionKey="myCollections"
