@@ -54,7 +54,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
     });
   }
 
-  private generateRange(ageRange) {
+  private generateRange(ageRange): number[] {
     const arr = [];
 
     for (let i = ageRange.min; i <= ageRange.max; i++) {
