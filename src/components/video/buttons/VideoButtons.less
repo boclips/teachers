@@ -1,38 +1,86 @@
 @import '../../../../resources/styles/_colours.less';
+@import '../../../../resources/styles/_antd-theme';
 
-.video-buttons__container {
-  border-top: 2px solid @shade-2;
-  margin-bottom: -8px;
+.video-buttons__ {
 
-  .ant-btn {
-    display: inline-flex;
-    border: none;
-    border-right: 2px solid @shade-2;
-    border-radius: 0px !important;
-    box-shadow: none !important;
-    min-width: 0px;
-    padding: 0px 24px;
+  &container {
+    @media (min-width: @screen-md) {
+      border-top: 2px solid @shade-2;
+    }
+    margin-bottom: -8px;
 
-    &:active {
+    @media (max-width: @screen-md) {
+      .ant-btn-group {
+        float: right;
+      }
+    }
+
+    .ant-btn {
+      display: inline-flex;
+      border: none;
+      border-radius: 0px !important;
       box-shadow: none !important;
-    }
+      min-width: 0px;
 
-    & .anticon + span {
-      margin-left: 8px;
-    }
+      @media (min-width: @screen-md) {
+        border-right: 2px solid @shade-2;
+        padding: 0px 24px;
+      }
 
-    .anticon {
-      font-size: 24px;
-    }
+      @media (max-width: @screen-md) {
+        padding: 0px 12px;
+      }
 
-    height: 24px;
-    margin-top: 8px;
-    margin-bottom: 0px;
+      &:active {
+        box-shadow: none !important;
+      }
 
-    &:last-child:not(:first-child) {
-      border-right: 0px;
+      & .anticon + span {
+        margin-left: 8px;
+      }
+
+      .anticon {
+        font-size: 24px;
+      }
+
+      height: 24px;
+      margin-top: 8px;
+      margin-bottom: 0px;
+
+      &:last-child:not(:first-child) {
+        border-right: 0px;
+      }
     }
   }
 
+  &dropdown {
+    .ant-btn {
+      display: inline-flex;
+      border: none;
+      border-radius: 0px !important;
+      box-shadow: none !important;
+      min-width: 0px;
 
+
+      &:active {
+        box-shadow: none !important;
+      }
+
+      & .anticon + span {
+        margin-left: 8px;
+      }
+
+      .anticon {
+        font-size: 24px;
+      }
+
+      height: 24px;
+      margin-top: 8px;
+      margin-bottom: 0px;
+
+      &:last-child:not(:first-child) {
+        border-right: 0px;
+      }
+    }
+  }
 }
