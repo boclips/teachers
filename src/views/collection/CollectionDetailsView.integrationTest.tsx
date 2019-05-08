@@ -122,7 +122,12 @@ describe('when editable collection', () => {
 
     MockFetchVerify.patch(
       '/v1/collections/id',
-      { title: null, isPublic: null, subjects: null, ageRange: '5-11' },
+      {
+        title: null,
+        isPublic: null,
+        subjects: null,
+        ageRange: { min: 5, max: 11 },
+      },
       204,
     );
 
@@ -135,7 +140,6 @@ describe('when editable collection', () => {
     const slider = wrapper.find(Slider);
 
     slider.props().onChange([5, 11]);
-
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
 
     await eventually(() => {

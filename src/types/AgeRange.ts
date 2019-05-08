@@ -1,5 +1,5 @@
 interface AgeRange {
-  label: string;
+  label?: string;
   min: number;
   max?: number;
 }

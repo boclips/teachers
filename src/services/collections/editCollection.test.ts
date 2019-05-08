@@ -47,7 +47,7 @@ test('change subjects on collection', async () => {
 test('change age range on collection', async () => {
   MockFetchVerify.patch(
     '/v1/collections/the-id',
-    { title: 'avideo', ageRange: '7-11' },
+    { title: 'avideo', ageRange: { min: 7, max: 11 } },
     204,
   );
 

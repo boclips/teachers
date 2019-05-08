@@ -15,7 +15,9 @@ export const editCollection = (
       title: request.title,
       isPublic: request.isPublic,
       subjects: request.subjects,
-      ageRange: request.ageRange != null ? request.ageRange.label : undefined,
+      ageRange: request.ageRange
+        ? { min: request.ageRange.min, max: request.ageRange.max }
+        : undefined,
     })
     .then(() => {
       return true;
