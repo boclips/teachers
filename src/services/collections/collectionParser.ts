@@ -1,6 +1,7 @@
 import { Link } from '../../types/Link';
 import { Pageable } from '../../types/State';
 import { VideoId } from '../../types/Video';
+import { AgeRange } from './../../types/AgeRange';
 import { VideoCollection } from './../../types/VideoCollection';
 
 export const parseCollectionResponse = (response: any): VideoCollection => {
@@ -55,11 +56,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     createdBy: data.createdBy,
     subjects: data.subjects.map(subject => subject.id),
     ageRange: data.ageRange
-      ? {
-          label: data.ageRange.label,
-          min: data.ageRange.min,
-          max: data.ageRange.max,
-        }
+      ? new AgeRange({ min: data.ageRange.min, max: data.ageRange.max })
       : null,
   };
 };

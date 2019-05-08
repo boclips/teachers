@@ -58,7 +58,7 @@ test('change age range on collection', async () => {
       }),
     }),
     title: 'avideo',
-    ageRange: { label: '7-11', min: 7, max: 11 },
+    ageRange: { min: 7, max: 11 },
   });
 
   expect(success).toEqual(true);

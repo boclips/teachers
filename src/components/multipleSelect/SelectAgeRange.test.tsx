@@ -1,12 +1,13 @@
 import { Select } from 'antd';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
+import { AgeRange } from '../../types/AgeRange';
 import { SelectAgeRange } from './SelectAgeRange';
 
 it('renders a list of age ranges', () => {
   const wrapper = shallow(
     <SelectAgeRange
-      ageRanges={[{ label: '3-5', min: 3, max: 5 }]}
+      ageRanges={[new AgeRange({ min: 3, max: 5 })]}
       onUpdateAgeRange={jest.fn()}
     />,
   );
@@ -18,7 +19,7 @@ it('renders a list of age ranges', () => {
 it('serialises value prop to a json array', () => {
   const wrapper = shallow(
     <SelectAgeRange
-      ageRanges={[{ label: '3-5', min: 3, max: 5 }]}
+      ageRanges={[new AgeRange({ min: 3, max: 5 })]}
       onUpdateAgeRange={jest.fn()}
     />,
   );
@@ -32,8 +33,8 @@ it('callback gets called with unique ages', () => {
   const wrapper = mount(
     <SelectAgeRange
       ageRanges={[
-        { label: '3-5', min: 3, max: 5 },
-        { label: '5-7', min: 5, max: 7 },
+        new AgeRange({ min: 3, max: 5 }),
+        new AgeRange({ min: 5, max: 7 }),
       ]}
       onUpdateAgeRange={callback}
     />,

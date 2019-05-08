@@ -4,6 +4,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import Bodal from '../../common/Bodal';
 import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
 
+import { AgeRange } from '../../../types/AgeRange';
 import './CollectionEditButton.less';
 import CollectionEditForm, { EditableFields } from './CollectionEditForm';
 
@@ -62,7 +63,7 @@ export default class CollectionEditButton extends React.PureComponent<
             ? values.subjects
             : null,
         ageRange: this.hasAgeRangeChanged(values.ageRange)
-          ? this.convertArrayToAgeRange(values.ageRange)
+          ? this.convertArrayToAgeRange(values.ageRange).getData()
           : null,
       };
 
@@ -142,7 +143,10 @@ export default class CollectionEditButton extends React.PureComponent<
     if (ageRange == null) {
       return [this.sliderRange.min, this.sliderRange.max];
     } else {
-      return [ageRange.min, ageRange.max || this.sliderRange.max];
+      return [
+        ageRange.getData().min,
+        ageRange.getData().max || this.sliderRange.max,
+      ];
     }
   }
 
@@ -152,24 +156,24 @@ export default class CollectionEditButton extends React.PureComponent<
     }
 
     if (ageRangeFromForm[1] === this.sliderRange.max) {
-      return {
-        label: `${ageRangeFromForm[0]}+`,
-        min: ageRangeFromForm[0],
-      };
+      return new AgeRange({ min: ageRangeFromForm[0] });
     } else {
-      return {
-        label: `${ageRangeFromForm[0]}-${ageRangeFromForm[1]}`,
+      return new AgeRange({
         min: ageRangeFromForm[0],
         max: ageRangeFromForm[1],
-      };
+      });
     }
   }
 
   private hasAgeRangeChanged(ageRange: number[]) {
-    return (
-      this.state.hasAgeRangeBeenTouched &&
-      this.convertArrayToAgeRange(ageRange).label !==
-        this.props.collection.ageRange.label
-    );
+    if (this.props.collection.ageRange == null) {
+      return this.state.hasAgeRangeBeenTouched;
+    } else {
+      return (
+        this.state.hasAgeRangeBeenTouched &&
+        this.convertArrayToAgeRange(ageRange).getLabel() !==
+          this.props.collection.ageRange.getLabel()
+      );
+    }
   }
 }

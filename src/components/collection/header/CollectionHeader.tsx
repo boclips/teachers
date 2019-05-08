@@ -37,7 +37,12 @@ export default class CollectionHeader extends React.PureComponent<Props> {
                 <ConnectedSubjectTag key={subjectId} id={subjectId} />
               ))}
               {this.props.collection.ageRange && (
-                <AgeRangeTag ageRange={this.props.collection.ageRange.label} />
+                <AgeRangeTag
+                  ageRange={
+                    this.props.collection.ageRange &&
+                    this.props.collection.ageRange.getLabel()
+                  }
+                />
               )}
             </Row>
             <Row>

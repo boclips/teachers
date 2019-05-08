@@ -25,7 +25,7 @@ const CollectionCardHeader = React.memo(
           <ConnectedSubjectTag id={collection.subjects[0]} />
         )}
         {collection.ageRange && (
-          <AgeRangeTag ageRange={collection.ageRange.label} />
+          <AgeRangeTag ageRange={collection.ageRange.getLabel()} />
         )}
       </div>
     </>

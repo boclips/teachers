@@ -9,6 +9,7 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
 } from '../../../../test-support/factories';
+import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
@@ -103,7 +104,7 @@ describe('when can edit collection', () => {
         links: VideoCollectionLinksFactory.sample({
           edit: new Link({ href: 'something', templated: false }),
         }),
-        ageRange: { label: '3-9', min: 3, max: 9 },
+        ageRange: new AgeRange({ min: 3, max: 9 }),
       });
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
@@ -118,7 +119,6 @@ describe('when can edit collection', () => {
           originalCollection: collection,
           title: null,
           ageRange: {
-            label: '5-9',
             min: 5,
             max: 9,
           },
@@ -132,7 +132,7 @@ describe('when can edit collection', () => {
         links: VideoCollectionLinksFactory.sample({
           edit: new Link({ href: 'something', templated: false }),
         }),
-        ageRange: { label: '11-16', min: 11, max: 16 },
+        ageRange: new AgeRange({ min: 11, max: 16 }),
       });
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
@@ -147,8 +147,35 @@ describe('when can edit collection', () => {
           originalCollection: collection,
           title: null,
           ageRange: {
-            label: '11+',
             min: 11,
+          },
+          subjects: null,
+          isPublic: null,
+        }),
+      );
+    });
+
+    it('when original collection has no age range', () => {
+      const collection = VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: 'something', templated: false }),
+        }),
+      });
+      const store = MockStoreFactory.sample();
+      const wrapper = mountComponent(collection, store);
+      CollectionEditModalHelper.openModal(wrapper);
+      const slider = wrapper.find(Slider);
+      slider.props().onChange([11, 16]);
+
+      CollectionEditModalHelper.confirmModal(wrapper);
+      expect(store.getActions()).toHaveLength(1);
+      expect(store.getActions()[0]).toEqual(
+        editCollectionAction({
+          originalCollection: collection,
+          title: null,
+          ageRange: {
+            min: 11,
+            max: 16,
           },
           subjects: null,
           isPublic: null,

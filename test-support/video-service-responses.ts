@@ -197,7 +197,6 @@ export function collectionsResponse(
           ageRange: {
             min: 3,
             max: 9,
-            label: '3-9',
           },
           subjects,
           _links: {

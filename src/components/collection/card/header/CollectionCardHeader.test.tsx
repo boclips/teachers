@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { VideoCollectionFactory } from '../../../../../test-support/factories';
+import { AgeRange } from '../../../../types/AgeRange';
 import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from './BookmarkCollectionButton';
@@ -64,11 +65,11 @@ test('renders first subject when present', () => {
 
 test('renders age range when present', () => {
   const collection = VideoCollectionFactory.sample({
-    ageRange: { label: 'hello', min: 3, max: 9 },
+    ageRange: new AgeRange({ min: 3, max: 9 }),
   });
   const wrapper = shallow(
     <CollectionCardHeader collection={collection} showRemoveButton={false} />,
   );
 
-  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('hello');
+  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3-9');
 });

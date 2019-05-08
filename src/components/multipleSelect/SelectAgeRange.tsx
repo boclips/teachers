@@ -1,5 +1,6 @@
 import { SelectValue } from 'antd/lib/select';
 import React from 'react';
+import { AgeRange } from '../../types/AgeRange';
 import MultiSelect from '../common/MultiSelect';
 
 interface Props {
@@ -44,24 +45,14 @@ export class SelectAgeRange extends React.PureComponent<Props> {
     return this.props.ageRanges.map(ageRange => {
       return (
         <Option
-          key={ageRange.label}
-          title={ageRange.label}
-          value={JSON.stringify(this.generateRange(ageRange))}
+          key={ageRange.getLabel()}
+          title={ageRange.getLabel()}
+          value={JSON.stringify(ageRange.generateRangeArray())}
         >
-          {ageRange.label}
+          {ageRange.getLabel()}
         </Option>
       );
     });
-  }
-
-  private generateRange(ageRange): number[] {
-    const arr = [];
-
-    for (let i = ageRange.min; i <= ageRange.max; i++) {
-      arr.push(i);
-    }
-
-    return arr;
   }
 
   private filter(inputValue, option) {

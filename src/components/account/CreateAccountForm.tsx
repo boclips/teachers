@@ -9,6 +9,7 @@ import {
   CreateAccountRequest,
 } from '../../services/account/createAccount';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+import { AgeRange } from '../../types/AgeRange';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
 import { Subject } from '../../types/Subject';

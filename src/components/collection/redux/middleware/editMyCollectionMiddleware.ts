@@ -2,6 +2,7 @@ import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { editCollection } from '../../../../services/collections/editCollection';
+import { AgeRange } from '../../../../types/AgeRange';
 import NotificationFactory from '../../../common/NotificationFactory';
 import {
   editCollectionAction,
@@ -51,7 +52,7 @@ const createUpdatedCollection = (request: EditCollectionRequest) => {
         : request.originalCollection.subjects,
     ageRange:
       request.ageRange != null
-        ? request.ageRange
+        ? new AgeRange(request.ageRange)
         : request.originalCollection.ageRange,
   };
 };
