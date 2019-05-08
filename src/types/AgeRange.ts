@@ -13,9 +13,9 @@ export class AgeRange {
 
   public getLabel() {
     if (this.ageRange.max) {
-      return `${this.ageRange.min}-${this.ageRange.max}`;
+      return `${this.ageRange.min} - ${this.ageRange.max}`;
     } else {
-      return `${this.ageRange.min}+`;
+      return `${this.ageRange.min} +`;
     }
   }
 

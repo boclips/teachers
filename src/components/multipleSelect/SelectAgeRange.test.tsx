@@ -13,7 +13,7 @@ it('renders a list of age ranges', () => {
   );
 
   const options = wrapper.find(Select.Option);
-  expect(options.first().prop('children')).toEqual('3-5');
+  expect(options.first().prop('children')).toEqual('3 - 5');
 });
 
 it('serialises value prop to a json array', () => {

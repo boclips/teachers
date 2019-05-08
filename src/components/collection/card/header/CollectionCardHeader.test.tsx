@@ -71,5 +71,5 @@ test('renders age range when present', () => {
     <CollectionCardHeader collection={collection} showRemoveButton={false} />,
   );
 
-  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3-9');
+  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3 - 9');
 });

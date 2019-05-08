@@ -3,13 +3,13 @@ describe('generating a label', () => {
   test('returns a hyphenated label when ageRange has min and max', () => {
     const ageRange = new AgeRange({ min: 5, max: 11 });
 
-    expect(ageRange.getLabel()).toEqual('5-11');
+    expect(ageRange.getLabel()).toEqual('5 - 11');
   });
 
   test('returns an n+ label when ageRange has min only', () => {
     const ageRange = new AgeRange({ min: 7 });
 
-    expect(ageRange.getLabel()).toEqual('7+');
+    expect(ageRange.getLabel()).toEqual('7 +');
   });
 });
 
