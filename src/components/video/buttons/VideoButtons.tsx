@@ -45,15 +45,21 @@ const DesktopButtons = (props: OwnProps) => {
 };
 
 const MobileButtons = (props: OwnProps) => {
-  const menu = () => (
-    <Menu className="video-buttons__dropdown">
-      <Menu.Item key="1">
-        <CopyLinkButton video={props.video} />
-      </Menu.Item>
+  const items = [];
+  items.push(
+    <Menu.Item key="1">
+      <CopyLinkButton video={props.video} />
+    </Menu.Item>,
+  );
+  if (props.video.links.transcript) {
+    items.push(
       <Menu.Item key="2">
         <DownloadTranscriptButton video={props.video} />
-      </Menu.Item>
-    </Menu>
+      </Menu.Item>,
+    );
+  }
+  const menu = () => (
+    <Menu className="video-buttons__dropdown">{...items}</Menu>
   );
 
   return (
