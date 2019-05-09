@@ -1,6 +1,6 @@
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
-@import "~antd/lib/style/color/colors";
-@import "_colours";
+@import '~antd/lib/style/color/colors';
+@import '_colours';
 
 // The prefix to use on all css classes from ant.
 @ant-prefix: ant;
@@ -10,21 +10,40 @@
   font-family: 'Heebo';
   font-style: normal;
   font-weight: 400;
-  src: local('Heebo'), local('Heebo-Regular'), url(https://fonts.gstatic.com/s/heebo/v3/NGS6v5_NC0k9P9H2TbFhsqMA.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: local('Heebo'), local('Heebo-Regular'),
+    url(https://fonts.gstatic.com/s/heebo/v3/NGS6v5_NC0k9P9H2TbFhsqMA.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Heebo';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Heebo Medium'), local('Heebo-Medium'),
+    url(https://fonts.gstatic.com/s/heebo/v4/NGS3v5_NC0k9P9kFbqRMkK4q06VE.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 @font-face {
   font-family: 'Heebo';
   font-style: normal;
   font-weight: 700;
-  src: local('Heebo Bold'), local('Heebo-Bold'), url(https://fonts.gstatic.com/s/heebo/v3/NGS3v5_NC0k9P9lNaKRMkK4q06VE.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  src: local('Heebo Bold'), local('Heebo-Bold'),
+    url(https://fonts.gstatic.com/s/heebo/v3/NGS3v5_NC0k9P9lNaKRMkK4q06VE.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 
 // -------- Colors -----------
 @primary-color: @blue-6;
 @info-color: @blue-6;
-@success-color: #008F52;
+@success-color: #008f52;
 @processing-color: @blue-6;
 @error-color: @dark-red;
 @highlight-color: @red-6;
@@ -33,16 +52,24 @@
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
-@primary-1: color(~`colorPalette("@{primary-color}", 1)`); // replace tint(@primary-color, 90%)
-@primary-2: color(~`colorPalette("@{primary-color}", 2)`); // replace tint(@primary-color, 80%)
-@primary-3: color(~`colorPalette("@{primary-color}", 3)`); // unused
-@primary-4: color(~`colorPalette("@{primary-color}", 4)`); // unused
-@primary-5: color(~`colorPalette("@{primary-color}", 5)`); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-1: color(
+  ~`colorPalette('@{primary-color}', 1) `
+); // replace tint(@primary-color, 90%)
+@primary-2: color(
+  ~`colorPalette('@{primary-color}', 2) `
+); // replace tint(@primary-color, 80%)
+@primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
+@primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
+@primary-5: color(
+  ~`colorPalette('@{primary-color}', 5) `
+); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
 @primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
-@primary-7: color(~`colorPalette("@{primary-color}", 7)`); // replace shade(@primary-color, 5%)
-@primary-8: color(~`colorPalette("@{primary-color}", 8)`); // unused
-@primary-9: color(~`colorPalette("@{primary-color}", 9)`); // unused
-@primary-10: color(~`colorPalette("@{primary-color}", 10)`); // unused
+@primary-7: color(
+  ~`colorPalette('@{primary-color}', 7) `
+); // replace shade(@primary-color, 5%)
+@primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
+@primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
+@primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
 
 // Base Scaffolding Variables
 // ---
@@ -51,8 +78,9 @@
 @body-background: @shade-1;
 // Base background color for most components
 @component-background: #fff;
-@font-family: "Heebo", "Helvetica Neue", Helvetica, Arial, sans-serif;
-@code-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+@font-family: 'Heebo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@code-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
+  monospace;
 @heading-color: fade(#000, 85%);
 @text-color: fade(#000, 65%);
 @text-color-secondary: fade(#000, 45%);
@@ -118,7 +146,11 @@
 @outline-width: 2px;
 @outline-color: @primary-color;
 
-@background-color-light: hsv(0, 0, 98%); // background of header and selected item
+@background-color-light: hsv(
+  0,
+  0,
+  98%
+); // background of header and selected item
 @background-color-base: hsv(0, 0, 96%); // Default grey background color
 
 // Disabled states
@@ -127,7 +159,7 @@
 @disabled-color-dark: fade(#fff, 35%);
 
 // Shadow
-@shadow-color: rgba(0, 0, 0, .15);
+@shadow-color: rgba(0, 0, 0, 0.15);
 @box-shadow-base: @shadow-1-down;
 @shadow-1-up: 0 -2px 8px @shadow-color;
 @shadow-1-down: 0 2px 8px @shadow-color;
@@ -256,9 +288,9 @@
 @zindex-tooltip: 1060;
 
 // Animation
-@animation-duration-slow: .3s; // Modal
-@animation-duration-base: .2s;
-@animation-duration-fast: .1s; // Tooltip
+@animation-duration-slow: 0.3s; // Modal
+@animation-duration-base: 0.2s;
+@animation-duration-fast: 0.1s; // Tooltip
 
 // Form
 // ---
@@ -283,7 +315,6 @@
 @input-padding-vertical-lg: 6px;
 @input-placeholder-color: @shade-5;
 @input-color: @shade-6;
-;
 @input-border-color: @shade-2;
 @input-bg: #fff;
 @input-addon-bg: @background-color-light;
@@ -298,7 +329,7 @@
 //** Tooltip text color
 @tooltip-color: #fff;
 //** Tooltip background color
-@tooltip-bg: rgba(0, 0, 0, .75);
+@tooltip-bg: rgba(0, 0, 0, 0.75);
 //** Tooltip arrow width
 @tooltip-arrow-width: 5px;
 //** Tooltip distance with trigger
@@ -410,7 +441,7 @@
 @card-padding-base: 16px;
 @card-padding-wider: 16px;
 @card-actions-background: @background-color-light;
-@card-shadow: 0 2px 8px rgba(0, 0, 0, .09);
+@card-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
 
 // Tabs
 // ---
@@ -461,7 +492,7 @@
 // ---
 @pagination-item-size: 32px;
 @pagination-item-size-sm: 24px;
-@pagination-font-family: "Heebo";
+@pagination-font-family: 'Heebo';
 @pagination-font-weight-active: 500;
 
 // Breadcrumb
@@ -520,17 +551,17 @@
 
 // Alert
 // ---
-@alert-success-border-color: ~`colorPalette("@{success-color}", 3)`;
-@alert-success-bg-color: ~`colorPalette("@{success-color}", 1)`;
+@alert-success-border-color: ~`colorPalette('@{success-color}', 3) `;
+@alert-success-bg-color: ~`colorPalette('@{success-color}', 1) `;
 @alert-success-icon-color: @success-color;
-@alert-info-border-color: ~`colorPalette("@{info-color}", 3)`;
-@alert-info-bg-color: ~`colorPalette("@{info-color}", 1)`;
+@alert-info-border-color: ~`colorPalette('@{info-color}', 3) `;
+@alert-info-bg-color: ~`colorPalette('@{info-color}', 1) `;
 @alert-info-icon-color: @info-color;
-@alert-warning-border-color: ~`colorPalette("@{warning-color}", 3)`;
-@alert-warning-bg-color: ~`colorPalette("@{warning-color}", 1)`;
+@alert-warning-border-color: ~`colorPalette('@{warning-color}', 3) `;
+@alert-warning-bg-color: ~`colorPalette('@{warning-color}', 1) `;
 @alert-warning-icon-color: @warning-color;
-@alert-error-border-color: ~`colorPalette("@{error-color}", 3)`;
-@alert-error-bg-color: ~`colorPalette("@{error-color}", 1)`;
+@alert-error-border-color: ~`colorPalette('@{error-color}', 3) `;
+@alert-error-bg-color: ~`colorPalette('@{error-color}', 1) `;
 @alert-error-icon-color: @error-color;
 
 @media screen and (min-width: 1200px) {

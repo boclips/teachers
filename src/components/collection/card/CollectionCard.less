@@ -28,12 +28,11 @@
 
   .tags-container {
     margin: 5px 0 10px;
-    min-height: 38px;
   }
 
   .tag {
     background-color: @shade-1;
-    max-width: 200px;
+    max-width: 198px;
   }
 
   &.tiny {
@@ -47,6 +46,10 @@
       .last-updated {
         display: none;
       }
+    }
+
+    @media (min-width: @screen-md) {
+      min-height: 321px;
     }
   }
 
