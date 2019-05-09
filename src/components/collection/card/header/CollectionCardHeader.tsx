@@ -10,24 +10,35 @@ import RemoveCollectionButton from './RemoveCollectionButton';
 interface Props {
   collection: VideoCollection;
   showRemoveButton: boolean;
+  showTagsIfEmpty: boolean;
 }
 
+const hasAgeRange = (collection: VideoCollection) =>
+  collection.ageRange && true;
+const hasSubjects = (collection: VideoCollection) =>
+  collection.subjects.length > 0;
+
+const hasValidTags = (collection: VideoCollection) =>
+  hasAgeRange(collection) || hasSubjects(collection);
+
 const CollectionCardHeader = React.memo(
-  ({ collection, showRemoveButton }: Props) => (
+  ({ collection, showRemoveButton, showTagsIfEmpty }: Props) => (
     <>
       <CollectionCardTitle collection={collection} />
       <StopClickPropagation>
         <BookmarkingButton collection={collection} />
         {showRemoveButton && <RemoveCollectionButton collection={collection} />}
       </StopClickPropagation>
-      <div className="tags-container">
-        {collection.subjects.length !== 0 && (
-          <ConnectedSubjectTag id={collection.subjects[0]} />
-        )}
-        {collection.ageRange && (
-          <AgeRangeTag ageRange={collection.ageRange.getLabel()} />
-        )}
-      </div>
+      {hasValidTags(collection) || showTagsIfEmpty ? (
+        <div className="tags-container">
+          {hasSubjects(collection) && (
+            <ConnectedSubjectTag id={collection.subjects[0]} />
+          )}
+          {hasAgeRange(collection) && (
+            <AgeRangeTag ageRange={collection.ageRange.getLabel()} />
+          )}
+        </div>
+      ) : null}
     </>
   ),
 );

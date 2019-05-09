@@ -5,7 +5,6 @@
   animation: slide-in 0.5s 0s both;
   .animation-delay(10);
 
-  min-height: 326px;
   margin-top: 20px;
   padding: 20px;
   border-radius: 8px;
@@ -28,6 +27,7 @@
 
   .tags-container {
     margin: 5px 0 10px;
+    display: flex;
   }
 
   .tag {
@@ -36,7 +36,7 @@
   }
 
   &.tiny {
-    min-height: 270px;
+    min-height: 325px;
     padding: 20px 20px 20px;
     display: flex;
     flex-direction: column;
@@ -46,10 +46,6 @@
       .last-updated {
         display: none;
       }
-    }
-
-    @media (min-width: @screen-md) {
-      min-height: 321px;
     }
   }
 

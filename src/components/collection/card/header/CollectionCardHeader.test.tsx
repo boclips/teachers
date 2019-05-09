@@ -12,7 +12,11 @@ import RemoveCollectionButton from './RemoveCollectionButton';
 test('renders title', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader collection={collection} showRemoveButton={true} />,
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={true}
+      showTagsIfEmpty={false}
+    />,
   );
 
   expect(wrapper.find(CollectionCardTitle).props().collection).toEqual(
@@ -23,7 +27,11 @@ test('renders title', () => {
 test('renders bookmarking button', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader collection={collection} showRemoveButton={true} />,
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={true}
+      showTagsIfEmpty={false}
+    />,
   );
 
   expect(wrapper.find(BookmarkingButton).props().collection).toEqual(
@@ -34,7 +42,11 @@ test('renders bookmarking button', () => {
 test('renders remove collection button', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader collection={collection} showRemoveButton={true} />,
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={true}
+      showTagsIfEmpty={true}
+    />,
   );
 
   expect(wrapper.find(RemoveCollectionButton).props().collection).toEqual(
@@ -45,7 +57,11 @@ test('renders remove collection button', () => {
 test('does not render remove collection button', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader collection={collection} showRemoveButton={false} />,
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={false}
+      showTagsIfEmpty={false}
+    />,
   );
 
   expect(wrapper.find(RemoveCollectionButton)).not.toExist();
@@ -56,7 +72,11 @@ test('renders first subject when present', () => {
     subjects: ['hello', 'world'],
   });
   const wrapper = shallow(
-    <CollectionCardHeader collection={collection} showRemoveButton={false} />,
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={false}
+      showTagsIfEmpty={false}
+    />,
   );
 
   expect(wrapper.find(ConnectedSubjectTag).length).toEqual(1);
@@ -68,8 +88,44 @@ test('renders age range when present', () => {
     ageRange: new AgeRange({ min: 3, max: 9 }),
   });
   const wrapper = shallow(
-    <CollectionCardHeader collection={collection} showRemoveButton={false} />,
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={false}
+      showTagsIfEmpty={false}
+    />,
   );
 
   expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3 - 9');
+});
+
+test('does not render tags container when no tags are present', () => {
+  const collection = VideoCollectionFactory.sample({
+    ageRange: null,
+    subjects: [],
+  });
+  const wrapper = shallow(
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={false}
+      showTagsIfEmpty={false}
+    />,
+  );
+
+  expect(wrapper.find('.tags-container')).not.toExist();
+});
+
+test('does render tags container when no tags are present but show tags is true', () => {
+  const collection = VideoCollectionFactory.sample({
+    ageRange: null,
+    subjects: [],
+  });
+  const wrapper = shallow(
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={false}
+      showTagsIfEmpty={true}
+    />,
+  );
+
+  expect(wrapper.find('.tags-container')).toExist();
 });

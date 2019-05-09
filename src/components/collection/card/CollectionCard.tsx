@@ -28,6 +28,7 @@ export class CollectionCard extends React.PureComponent<Props> {
         <CollectionCardHeader
           collection={this.props.collection}
           showRemoveButton={!this.props.tiny}
+          showTagsIfEmpty={this.props.tiny}
         />
         <CollectionCardVideoPreviews
           numberOfPreviews={this.props.numberOfPreviews}
