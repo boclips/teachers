@@ -11,6 +11,7 @@ class MultiSelect extends React.PureComponent<SelectProps> {
         className={'boclips-multi-select-selection'}
         mode="multiple"
         size={'large'}
+        dropdownClassName={'dropdown'}
         {...this.props}
       >
         {this.props.children}
