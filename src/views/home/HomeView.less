@@ -5,10 +5,14 @@
     background-color: @shade-2;
   }
   .home-search {
-    margin: 150px 0;
+    margin: 54px 0;
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    @media (min-width: @screen-md) {
+      margin: 74px 0;
+    }
 
     .home-logo {
       animation: slide-in 0.5s 0s both;
@@ -55,6 +59,14 @@
       animation: slide-in 0.5s 2s both;
       float: right;
       margin-top: 20px;
+
+      @media (max-width: @screen-md) {
+        width: 100%;
+
+        button {
+          width: 100%;
+        }
+      }
     }
   }
 
