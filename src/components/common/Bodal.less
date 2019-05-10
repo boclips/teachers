@@ -1,4 +1,5 @@
 @import '../../../resources/styles/_colours';
+@import '../../../resources/styles/_antd-theme.less';
 
 @border-radius: 8px;
 
@@ -28,5 +29,12 @@
       border-top: none;
       padding: 40px 36px 36px 0px;
     }
+
+    @media (max-width: @screen-sm) {
+      .ant-modal-body, .ant-modal-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }  
   }
 }
