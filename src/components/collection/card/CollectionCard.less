@@ -35,12 +35,28 @@
     max-width: 198px;
   }
 
+  .tag:last-child {
+    margin-right: 0;
+  }
+
   &.tiny {
-    min-height: 325px;
+    min-height: 320px;
     padding: 20px 20px 20px;
     display: flex;
     flex-direction: column;
     align-content: space-between;
+
+    @media (max-width: @screen-lg) {
+      min-height: 356px;
+    }
+
+    @media (max-width: @screen-md) {
+      min-height: 330px;
+    }
+
+    @media (max-width: @screen-sm) {
+      min-height: 260px;
+    }
 
     .highlight {
       .last-updated {

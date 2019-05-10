@@ -1,5 +1,9 @@
 import React from 'react';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { Video } from '../../../types/Video';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../common/higerOrderComponents/withMediaBreakPoint';
 import './CollectionCardVideoPreviews.less';
 import CollectionCardVideoPreview from './preview/CollectionCardVideoPreview';
 import CollectionCardVideoPreviewCount from './preview/CollectionCardVideoPreviewCount';
@@ -12,7 +16,9 @@ interface Props {
   isGrid: boolean;
 }
 
-class CollectionCardVideoPreviews extends React.PureComponent<Props> {
+class CollectionCardVideoPreviews extends React.PureComponent<
+  Props & WithMediaBreakPointProps
+> {
   public render() {
     const previews = [];
     if (this.props.videos.length === this.props.numberOfPreviews) {
@@ -38,8 +44,9 @@ class CollectionCardVideoPreviews extends React.PureComponent<Props> {
       );
     }
     let emptyPreviewsLimit = this.props.numberOfPreviews;
+
     if (
-      this.props.isGrid &&
+      this.props.mediaBreakpoint.width <= MediaBreakpoints.md.width &&
       previews.length <= this.props.numberOfPreviews / 2
     ) {
       emptyPreviewsLimit /= 2;
@@ -74,4 +81,4 @@ class CollectionCardVideoPreviews extends React.PureComponent<Props> {
   }
 }
 
-export default CollectionCardVideoPreviews;
+export default withMediaBreakPoint(CollectionCardVideoPreviews);

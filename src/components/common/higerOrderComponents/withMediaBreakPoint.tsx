@@ -55,7 +55,7 @@ const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
     }
 
     public componentWillUnmount() {
-      window.addEventListener('resize', this.updateMediaBreakpoint);
+      window.removeEventListener('resize', this.updateMediaBreakpoint);
     }
 
     public render() {
