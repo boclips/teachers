@@ -7,7 +7,7 @@ import { createCollection } from './createCollection';
 let links: Links;
 beforeEach(async () => {
   links = LinksFactory.sample({
-    collections: new Link({
+    createCollection: new Link({
       href: '/v1/collections',
     }),
   });

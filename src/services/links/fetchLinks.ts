@@ -24,8 +24,8 @@ export default function fetchLinks() {
           links.videos = new Link(body._links.search);
         }
 
-        if (body._links.collections) {
-          links.collections = new Link(body._links.collections);
+        if (body._links.createCollection) {
+          links.createCollection = new Link(body._links.createCollection);
         }
 
         if (body._links.collection) {

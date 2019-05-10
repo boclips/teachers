@@ -6,7 +6,7 @@ export interface Links {
   createPlaybackEvent: Link;
   createNoSearchResultsEvent: Link;
   collection?: Link;
-  collections?: Link;
+  createCollection?: Link;
   myCollections?: Link;
   publicCollections?: Link;
   bookmarkedCollections?: Link;

@@ -11,7 +11,7 @@ test('parses all links', async () => {
       createPlaybackEvent: { href: '/events' },
       createNoSearchResultsEvent: { href: '/events/no-search-results' },
       collection: { href: '/collection/{id}', templated: true },
-      collections: { href: '/collections' },
+      createCollection: { href: '/collections' },
       myCollections: { href: '/collections?owner=123' },
       publicCollections: { href: '/collections?list=yes&public=true' },
       bookmarkedCollections: { href: '/collections?bookmarked=true' },
@@ -30,7 +30,7 @@ test('parses all links', async () => {
     }),
     collection: new Link({ href: '/collection/{id}', templated: true }),
     myCollections: new Link({ href: '/collections?owner=123' }),
-    collections: new Link({ href: '/collections' }),
+    createCollection: new Link({ href: '/collections' }),
     publicCollections: new Link({
       href: '/collections?list=yes&public=true',
     }),

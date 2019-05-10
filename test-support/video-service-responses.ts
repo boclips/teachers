@@ -25,7 +25,7 @@ export const links = {
     myCollections: {
       href: '/v1/collections?projection=list&owner=me',
     },
-    collections: {
+    createCollection: {
       href: '/v1/collections',
     },
     profile: {

@@ -145,7 +145,8 @@ export class LinksFactory {
       activate: arg.activate,
       profile:
         arg.profile || new Link({ href: '/v1/users/{id}', templated: true }),
-      collections: arg.collections || new Link({ href: '/collections' }),
+      createCollection:
+        arg.createCollection || new Link({ href: '/collections' }),
       myCollections:
         arg.myCollections || new Link({ href: '/collections?owner=abc' }),
       publicCollections:

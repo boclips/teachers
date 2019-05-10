@@ -11,11 +11,11 @@ export const createCollection = (
   links: Links,
   request: CreateCollectionRequest,
 ): Promise<boolean> => {
-  if (!links.collections) {
+  if (!links.createCollection) {
     return Promise.reject();
   }
   return axios
-    .post(links.collections.getOriginalLink(), toResource(request))
+    .post(links.createCollection.getOriginalLink(), toResource(request))
     .then(() => true);
 };
 
