@@ -2,8 +2,12 @@ import { Checkbox, Form, Input, Slider } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../common/higerOrderComponents/withMediaBreakPoint';
 import './CollectionEditForm.less';
 
 export interface EditableFields {
@@ -19,9 +23,12 @@ export interface Props extends EditableFields {
 }
 
 class CollectionEditForm extends React.PureComponent<
-  Props & ReturnType<typeof mapStateToProps> & FormComponentProps
+  Props &
+    ReturnType<typeof mapStateToProps> &
+    FormComponentProps &
+    WithMediaBreakPointProps
 > {
-  private marks = {
+  private getMarks = () => ({
     3: '3',
     5: '5',
     7: '7',
@@ -30,8 +37,11 @@ class CollectionEditForm extends React.PureComponent<
     14: '14',
     16: '16',
     18: '18',
-    19: '19+',
-  };
+    19:
+      this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width
+        ? '+'
+        : '19+',
+  });
 
   public render() {
     const { getFieldDecorator } = this.props.form;
@@ -61,7 +71,7 @@ class CollectionEditForm extends React.PureComponent<
               min={this.props.sliderRange.min}
               max={this.props.sliderRange.max}
               range={true}
-              marks={this.marks}
+              marks={this.getMarks()}
               onChange={this.props.onAgeRangeChange}
               step={null}
             />,
@@ -82,6 +92,6 @@ const mapStateToProps = (state: State) => ({
   subjectsInStore: state.subjects,
 });
 
-export default connect(mapStateToProps)(
-  Form.create<EditableFields>()(CollectionEditForm),
+export default withMediaBreakPoint(
+  connect(mapStateToProps)(Form.create<EditableFields>()(CollectionEditForm)),
 );
