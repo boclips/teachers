@@ -37,8 +37,14 @@ class CollectionCardVideoPreviews extends React.PureComponent<Props> {
         />,
       );
     }
-
-    while (previews.length < this.props.numberOfPreviews) {
+    let emptyPreviewsLimit = this.props.numberOfPreviews;
+    if (
+      this.props.isGrid &&
+      previews.length <= this.props.numberOfPreviews / 2
+    ) {
+      emptyPreviewsLimit /= 2;
+    }
+    while (previews.length < emptyPreviewsLimit) {
       previews.push(
         <EmptyCollectionCardVideoPreview
           key={this.props.id + previews.length}
