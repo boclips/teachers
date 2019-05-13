@@ -3,7 +3,7 @@ import { VideoCollection } from '../../../../types/VideoCollection';
 import StopClickPropagation from '../../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
-import BookmarkingButton from './BookmarkCollectionButton';
+import BookmarkingButton from '../../buttons/bookmark/BookmarkCollectionButton';
 import CollectionCardTitle from './CollectionCardTitle';
 import RemoveCollectionButton from './RemoveCollectionButton';
 

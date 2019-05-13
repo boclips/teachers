@@ -4,6 +4,7 @@ import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
+import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 import './CollectionHeader.less';
@@ -24,12 +25,18 @@ export default class CollectionHeader extends React.PureComponent<Props> {
               isPublic={this.props.collection.isPublic}
               isMine={this.props.collection.isMine}
             />
+            <span className="collection-header__bookmark-button display-mobile">
+              <BookmarkCollectionButton collection={this.props.collection} />
+            </span>
           </Col>
           <Col xs={{ span: 24, order: 3 }} md={{ span: 5, order: 2 }}>
             <CollectionEditButtonContainer
               className="collection-header__edit-button"
               collection={this.props.collection}
             />
+            <span className="collection-header__bookmark-button display-tablet-and-desktop">
+              <BookmarkCollectionButton collection={this.props.collection} />
+            </span>
           </Col>
           <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
             <Row>

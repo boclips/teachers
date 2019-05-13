@@ -11,6 +11,26 @@ import { BookmarkCollectionButtonInner } from './BookmarkCollectionButton';
 const noOp = () => {};
 
 describe('BookmarkCollectionButton', () => {
+  describe('when neither bookmark nor unbookmark link', () => {
+    test('renders nothing', () => {
+      const button = shallow(
+        <BookmarkCollectionButtonInner
+          collection={VideoCollectionFactory.sample({
+            links: VideoCollectionLinksFactory.sample({
+              bookmark: undefined,
+              unbookmark: undefined,
+            }),
+          })}
+          onBookmarkCollectionAction={noOp}
+          onUnbookmarkCollectionAction={noOp}
+        />,
+      );
+
+      expect(button.find(By.dataQa('bookmark-collection'))).not.toExist();
+      expect(button.find(By.dataQa('unbookmark-collection'))).not.toExist();
+    });
+  });
+
   describe('when bookmark link', () => {
     test('renders bookmark button', () => {
       const button = shallow(

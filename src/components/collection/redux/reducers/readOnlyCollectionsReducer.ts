@@ -59,26 +59,49 @@ const updatePublicCollection = (
   state: CollectionsStateValue,
   updatedCollection: VideoCollection,
 ): CollectionsStateValue => {
-  if (!state.publicCollections) {
-    return state;
+  let collectionBeingViewed = state.collectionBeingViewed;
+  if (
+    collectionBeingViewed &&
+    collectionBeingViewed.id === updatedCollection.id
+  ) {
+    collectionBeingViewed = buildUpdatedCollection(
+      updatedCollection,
+      collectionBeingViewed,
+    );
   }
 
-  const indexOfCollection = getIndexOfCollection(
-    state.publicCollections && state.publicCollections.items,
-    updatedCollection.id,
-  );
+  let publicCollections = state.publicCollections;
+  if (state.publicCollections) {
+    const indexOfCollection = getIndexOfCollection(
+      state.publicCollections && state.publicCollections.items,
+      updatedCollection.id,
+    );
 
-  const publicCollections = [...state.publicCollections.items];
+    const publicCollectionsItems = [...state.publicCollections.items];
 
-  if (indexOfCollection > -1) {
-    publicCollections[indexOfCollection] = {
-      ...updatedCollection,
-      videos: publicCollections[indexOfCollection].videos,
+    if (indexOfCollection > -1) {
+      publicCollectionsItems[indexOfCollection] = buildUpdatedCollection(
+        updatedCollection,
+        publicCollectionsItems[indexOfCollection],
+      );
+    }
+
+    publicCollections = {
+      ...state.publicCollections,
+      items: publicCollectionsItems,
     };
   }
 
   return {
     ...state,
-    publicCollections: { ...state.publicCollections, items: publicCollections },
+    publicCollections,
+    collectionBeingViewed,
   };
+
+  function buildUpdatedCollection(newCollection, originalCollection) {
+    return {
+      ...newCollection,
+      videos: originalCollection.videos,
+    };
+  }
 };

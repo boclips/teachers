@@ -9,7 +9,6 @@ import { A11yButton } from '../../../common/A11yButton';
 import { bookmarkCollectionAction } from '../../redux/actions/bookmarkCollectionAction';
 import { unbookmarkCollectionAction } from '../../redux/actions/unbookmarkCollectionAction';
 import './BookmarkCollectionButton.less';
-import './RemoveCollectionButton.less';
 
 interface OwnProps {
   collection: VideoCollection;
@@ -24,6 +23,12 @@ export class BookmarkCollectionButtonInner extends PureComponent<
   OwnProps & DispatchProps
 > {
   public render() {
+    if (
+      !this.props.collection.links.bookmark &&
+      !this.props.collection.links.unbookmark
+    ) {
+      return null;
+    }
     return (
       <A11yButton callback={this.onClick}>
         <section
