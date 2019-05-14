@@ -3,8 +3,8 @@
 set -x -e
 
 npm -v
-npm audit --audit-level moderate
 npm ci
+npm run audit
 npm run lint
 npm run compile
 npm run test
