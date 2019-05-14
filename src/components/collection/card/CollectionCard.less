@@ -40,7 +40,7 @@
   }
 
   &.tiny {
-    min-height: 320px;
+    min-height: 316px;
     padding: 20px 20px 20px;
     display: flex;
     flex-direction: column;
@@ -51,11 +51,15 @@
     }
 
     @media (max-width: @screen-md) {
-      min-height: 330px;
+      min-height: 248px;
     }
 
     @media (max-width: @screen-sm) {
-      min-height: 260px;
+      min-height: 229px;
+    }
+
+    @media (max-width: @screen-xs) {
+      min-height: 200px;
     }
 
     .highlight {

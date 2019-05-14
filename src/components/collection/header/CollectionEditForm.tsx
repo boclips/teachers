@@ -47,7 +47,7 @@ class CollectionEditForm extends React.PureComponent<
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <Form className="form">
+      <Form className="form-edit-collection">
         <Form.Item className="form__item">
           {getFieldDecorator('title', { initialValue: this.props.title })(
             <Input data-qa="title-edit" />,
@@ -63,11 +63,12 @@ class CollectionEditForm extends React.PureComponent<
             </Checkbox>,
           )}
         </Form.Item>
-        <Form.Item className="form__item">
+        <Form.Item className="form__item" label="Age">
           {getFieldDecorator('ageRange', {
             initialValue: this.props.ageRange,
           })(
             <Slider
+              className="slider"
               min={this.props.sliderRange.min}
               max={this.props.sliderRange.max}
               range={true}
@@ -82,6 +83,7 @@ class CollectionEditForm extends React.PureComponent<
           subjects={this.props.subjectsInStore}
           placeholder="Subjects"
           initialValue={this.props.subjects}
+          label="Subjects"
         />
       </Form>
     );

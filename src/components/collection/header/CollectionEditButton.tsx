@@ -94,7 +94,7 @@ export default class CollectionEditButton extends React.PureComponent<
           Edit Collection
         </Button>
         <Bodal
-          title="Edit Collection"
+          title="Edit collection"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}

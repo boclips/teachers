@@ -20,7 +20,7 @@ export class SubjectsForm extends React.Component<
 
   public render() {
     return (
-      <Form.Item>
+      <Form.Item className="form__item" label={this.props.label}>
         {this.props.form.getFieldDecorator('subjects', {
           rules: [{ type: 'array' }],
           initialValue: this.props.initialValue,
