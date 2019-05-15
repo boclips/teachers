@@ -49,7 +49,6 @@ export default class AccountMenuMobile extends React.PureComponent<
           placement="bottom"
           title="My account"
           onClose={this.onClose}
-          height="225"
         >
           <Menu selectable={false}>
             <Menu.Item key="1" className="account-menu-mobile__menu-item">
