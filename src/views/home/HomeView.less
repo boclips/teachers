@@ -4,8 +4,12 @@
   .search-section .ant-layout {
     background-color: @shade-2;
   }
+
   .home-search {
     margin: 54px 0;
+    @media (max-width: @screen-md) {
+      margin: 8px 0 54px;
+    }
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -16,6 +20,7 @@
 
     .home-logo {
       animation: slide-in 0.5s 0s both;
+
       .logo {
         width: 145px;
         margin-bottom: 24px;
@@ -38,6 +43,7 @@
     .ant-select-selection {
       background-color: @shade-2;
     }
+
     .ant-input {
       background-color: #ffffff;
       border-color: #d3dcf3;
@@ -46,8 +52,12 @@
 
   .discovery-section {
     margin-top: 66px;
+    @media (max-width: @screen-md) {
+      margin-top: 40px;
+    }
+
     .collection-list-description {
-      font-size: 22px;
+      font-size: 20px;
       margin-bottom: 0.5em;
     }
 
