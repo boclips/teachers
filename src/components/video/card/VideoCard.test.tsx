@@ -71,7 +71,13 @@ describe('when outside video collection', () => {
     });
 
     it('does not happen when you click on any button in the buttons row', () => {
-      const buttonsRow = wrapper.find('.buttons-row').first();
+      const buttonsRow = wrapper
+        .find('.buttons-row')
+        .first()
+        .childAt(0)
+        .first()
+        .childAt(0)
+        .first();
       buttonsRow.simulate('click');
       expect(push.mock.calls).toHaveLength(0);
     });

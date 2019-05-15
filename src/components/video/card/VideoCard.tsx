@@ -62,14 +62,14 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
             {this.props.video.description}
           </p>
 
-          <StopClickPropagation>
-            <Row className="buttons-row">
+          <Row className="buttons-row">
+            <StopClickPropagation>
               <VideoButtons
                 video={this.props.video}
                 collection={this.props.currentCollection}
               />
-            </Row>
-          </StopClickPropagation>
+            </StopClickPropagation>
+          </Row>
         </section>
       </section>
     );
