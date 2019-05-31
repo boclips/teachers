@@ -31,7 +31,7 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
     return (
       <section className="colleciton-card-video-container">
         <section className="colleciton-card-video-container__inner">
-          <VideoPlayer video={this.props.video} controls="thumbnail" />
+          <VideoPlayer video={this.props.video} mode="thumbnail" />
         </section>
       </section>
     );
