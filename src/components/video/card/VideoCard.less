@@ -68,46 +68,9 @@
     }
   }
 
-  .plyr__video-wrapper {
-    .plyr__poster {
-      background-size: cover;
-      max-height: @video-height;
-    }
+  .boclips-player {
+    max-height: @video-height;
 
-    .boclips-player--playback {
-      max-height: @video-height;
-    }
-  }
-
-  .boclips-player-container--fullscreen {
-    &,
-    video,
-    iframe,
-    .plyr__video-wrapper,
-    .plyr__poster {
-      max-height: none !important;
-    }
-  }
-
-  .plyr__video-embed {
-    height: auto;
-    padding-bottom: 0px !important;
-    position: relative;
-
-    iframe {
-      border: 0;
-      left: 0;
-      position: relative;
-      top: 0;
-    }
-  }
-
-  // Don't restrict height to video-card container when fullscreen
-  .plyr--fullscreen-enabled .plyr__video-embed {
-    height: inherit;
-  }
-
-  .plyr--video {
     @media (max-width: @screen-md) {
       border-radius: @video-border-radius @video-border-radius 0px 0px;
     }
