@@ -1,4 +1,4 @@
-require('dotenv').config({path: '.env.dev'});
+require('dotenv').config({ path: '.env.dev' });
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -20,23 +20,28 @@ module.exports = merge(common, {
   devServer: {
     historyApiFallback: true,
     port: localPort,
+    host: '0.0.0.0',
+    disableHostCheck: true,
     proxy: {
       '/v1/**': {
         target: teachersApi,
         changeOrigin: true,
-        onProxyRes: function (proxyRes, req, res) {
+        onProxyRes: function(proxyRes, req, res) {
+          /** @var {http.IncomingMessage} req */
+
           var originalBody = Buffer.from([]);
 
-          proxyRes.on('data', function (data) {
+          proxyRes.on('data', function(data) {
             originalBody = Buffer.concat([originalBody, data]);
           });
 
-          proxyRes.on('end', function () {
+          proxyRes.on('end', function() {
             var apiUrlPattern = `https:\\/\\/api\\.${process.env.ENVIRONMENT_DOMAIN.replace(
               '.',
               '\\.',
             )}\\/v1\\/`;
-            var proxiedApiUrl = `http://localhost:${localPort}/v1/`;
+
+            var proxiedApiUrl = `http://${req.headers.host}/v1/`;
             const bodyWithRewrittenLinks = originalBody
               .toString('UTF-8')
               .replace(new RegExp(apiUrlPattern, 'gm'), proxiedApiUrl);
