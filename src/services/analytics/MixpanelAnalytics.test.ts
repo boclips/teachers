@@ -1,4 +1,4 @@
-import SegmentWatchedEvent from 'boclips-react-player/dist/src/SegmentWatchedEvent';
+import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import { Mixpanel } from 'mixpanel-browser';
 import * as moment from 'moment';
 import {
@@ -168,7 +168,7 @@ describe('MixpanelAnalytics', () => {
       type: { name: 'news' },
     });
 
-    mixpanelAnalytics.trackVideoPlayback(video, {} as SegmentWatchedEvent);
+    mixpanelAnalytics.trackVideoPlayback(video, {} as PlaybackEvent);
 
     expect(mock.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
       playback_segment_end_seconds: undefined,

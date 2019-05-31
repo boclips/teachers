@@ -23,7 +23,7 @@ module.exports = {
   // The glob patterns Jest uses to detect test files
   testMatch: ['**/*.(integrationTest|test).(ts|tsx|js)'],
 
-  testPathIgnorePatterns: ['node_modules', 'boclips-react-player'],
+  testPathIgnorePatterns: ['node_modules'],
 
   // A map from regular expressions to paths to transformers
   transform: {
