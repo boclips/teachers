@@ -1,4 +1,4 @@
-export interface SearchRequest {
+export interface VideoSearchRequest {
   query: string;
   page: number;
   filters: RequestFilters;

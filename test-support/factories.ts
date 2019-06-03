@@ -137,6 +137,9 @@ export class LinksFactory {
   public static sample(arg: Partial<Links> = {}): Links {
     return Object.freeze({
       videos: arg.videos || new Link({ href: '/videos' }),
+      searchCollections:
+        arg.searchCollections ||
+        new Link({ href: '/collections?query={query}', templated: true }),
       video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
       createPlaybackEvent:
         arg.createPlaybackEvent || new Link({ href: '/events' }),

@@ -1,9 +1,9 @@
 import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
-import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
+import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { CreateCollectionRequest } from '../collections/createCollection';
 import { UserProfile } from '../users/UserProfile';
 import EventTypes from './EventTypes';
@@ -52,7 +52,7 @@ export default class MixpanelAnalytics {
   }
 
   public trackSearch(
-    searchRequest: SearchRequest,
+    searchRequest: VideoSearchRequest,
     searchResults: SearchResults,
   ) {
     let type;

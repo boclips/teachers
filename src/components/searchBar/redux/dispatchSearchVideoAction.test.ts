@@ -1,7 +1,7 @@
 import { RouterActionType } from 'connected-react-router';
 import { Constants } from '../../../app/AppConstants';
 import { Action } from '../../../app/redux/actions';
-import { SearchRequest } from '../../../types/SearchRequest';
+import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
 import { MockStoreFactory } from './../../../../test-support/factories';
 import { dispatchSearchVideoAction } from './dispatchSearchVideoAction';
 
@@ -43,7 +43,7 @@ describe('when on the videos page', () => {
 
     dispatchSearchVideoAction(store);
 
-    const action: Action<SearchRequest> = store.getActions()[0];
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
 
     expect(action).toBeTruthy();
     expect(action.payload.query).toEqual('Testing123');
@@ -54,7 +54,7 @@ describe('when on the videos page', () => {
 
     dispatchSearchVideoAction(store);
 
-    const action: Action<SearchRequest> = store.getActions()[0];
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
 
     expect(action).toBeTruthy();
     expect(action.payload.page).toEqual(3);
@@ -65,7 +65,7 @@ describe('when on the videos page', () => {
 
     dispatchSearchVideoAction(store);
 
-    const action: Action<SearchRequest> = store.getActions()[0];
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
 
     expect(action).toBeTruthy();
     expect(action.payload.sortBy).toEqual('RELEASE_DATE');
@@ -76,7 +76,7 @@ describe('when on the videos page', () => {
 
     dispatchSearchVideoAction(store);
 
-    const action: Action<SearchRequest> = store.getActions()[0];
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
 
     expect(action).toBeTruthy();
     expect(action.payload.filters.includeTags).toEqual([
@@ -90,7 +90,7 @@ describe('when on the videos page', () => {
 
     dispatchSearchVideoAction(store);
 
-    const action: Action<SearchRequest> = store.getActions()[0];
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
 
     expect(action).toBeTruthy();
     expect(action.payload.filters.includeTags).toEqual([Constants.CLASSROOM]);

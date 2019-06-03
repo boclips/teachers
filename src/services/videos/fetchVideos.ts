@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { Links } from '../../types/Links';
-import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
+import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { parseVideosResponse } from './parseVideosResponse';
 
 export default function fetchVideos(
-  searchRequest: SearchRequest,
+  searchRequest: VideoSearchRequest,
   links: Links,
 ): Promise<SearchResults> {
   const url = links.videos.getTemplatedLink({

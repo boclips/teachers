@@ -5,9 +5,9 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../test-support/factories';
-import { SearchRequest } from '../../types/SearchRequest';
 import { SearchResults } from '../../types/State';
 import { StreamPlayback } from '../../types/Video';
+import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { UserProfile } from '../users/UserProfile';
 import MixpanelAnalytics from './MixpanelAnalytics';
 
@@ -59,7 +59,7 @@ describe('MixpanelAnalytics', () => {
         query: 'test',
         page: 1,
         filters: { excludeTags: ['news'] },
-      } as SearchRequest,
+      } as VideoSearchRequest,
       {
         videos: [VideoFactory.sample()],
         paging: {

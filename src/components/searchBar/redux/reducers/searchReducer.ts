@@ -3,8 +3,8 @@ import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import PageSpec from '../../../../types/PageSpec';
-import { SearchRequest } from '../../../../types/SearchRequest';
 import { SearchResults, SearchStateValue } from '../../../../types/State';
+import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
 
@@ -24,7 +24,7 @@ const initialState: SearchStateValue = {
 
 function onSearchVideosAction(
   _,
-  searchRequest: SearchRequest,
+  searchRequest: VideoSearchRequest,
 ): SearchStateValue {
   return {
     videos: [],

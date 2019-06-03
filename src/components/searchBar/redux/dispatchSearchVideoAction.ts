@@ -1,8 +1,8 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
 import { Constants } from '../../../app/AppConstants';
-import { RequestFilters, SortBy } from '../../../types/SearchRequest';
 import { RouterState } from '../../../types/State';
+import { RequestFilters, SortBy } from '../../../types/VideoSearchRequest';
 import { searchVideosAction } from './actions/searchVideosActions';
 
 const getFilters = (mode: string): RequestFilters => {

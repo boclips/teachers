@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { SearchRequest } from '../../../../types/SearchRequest';
+import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 
-export const searchVideosAction = actionCreatorFactory<SearchRequest>(
+export const searchVideosAction = actionCreatorFactory<VideoSearchRequest>(
   'SEARCH_VIDEOS',
 );
