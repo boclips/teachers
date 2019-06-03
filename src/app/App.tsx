@@ -28,6 +28,7 @@ import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import ConfigLoader from './configLoader/ConfigLoader';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
 import { linksReducer } from './redux/links/reducers/linksReducer';
+import { sentryBreadcrumbMiddleware } from './redux/sentryBreadcrumbMiddleware';
 
 const composeEnhancers =
   window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
@@ -56,6 +57,7 @@ export default class App extends PureComponent<Props> {
     composeEnhancers(
       applyMiddleware(
         routerMiddleware(this.props.history || defaultHistory),
+        sentryBreadcrumbMiddleware,
         searchVideosMiddleware,
         videoDetailsMiddleware,
         ...fetchVideosMiddleware,
