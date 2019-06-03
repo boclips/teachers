@@ -20,8 +20,8 @@ export default function fetchLinks() {
           links.collection = new Link(body._links.userCollection);
         }
 
-        if (body._links.search) {
-          links.videos = new Link(body._links.search);
+        if (body._links.searchVideos) {
+          links.videos = new Link(body._links.searchVideos);
         }
 
         if (body._links.createCollection) {

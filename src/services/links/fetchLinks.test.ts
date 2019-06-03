@@ -6,7 +6,7 @@ import fetchLinks from './fetchLinks';
 test('parses all links', async () => {
   MockFetchVerify.get('/v1/', {
     _links: {
-      search: { href: '/videos', templated: false },
+      searchVideos: { href: '/videos', templated: false },
       video: { href: '/videos/{id}', templated: true },
       createPlaybackEvent: { href: '/events' },
       createNoSearchResultsEvent: { href: '/events/no-search-results' },
