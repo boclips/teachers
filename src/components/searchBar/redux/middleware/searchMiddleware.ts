@@ -5,7 +5,7 @@ import fetchVideos from '../../../../services/videos/fetchVideos';
 import { CollectionState, LinksState } from '../../../../types/State';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { searchVideosAction } from '../actions/searchVideosActions';
-import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
+import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
 
 export function onSearchVideos(
   store: MiddlewareAPI<any, LinksState & CollectionState>,
@@ -13,7 +13,7 @@ export function onSearchVideos(
 ) {
   const links = store.getState().links;
   fetchVideos(searchRequest, links).then(results => {
-    store.dispatch(storeSearchResultsAction(results));
+    store.dispatch(storeVideoSearchResultsAction(results));
 
     AnalyticsFactory.getInstance().trackSearch(searchRequest, results);
   });

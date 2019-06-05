@@ -1,7 +1,7 @@
 import { VideoFactory } from '../../../../../test-support/factories';
-import { SearchResults, SearchStateValue } from '../../../../types/State';
+import { SearchStateValue, VideoSearchResults } from '../../../../types/State';
 import { searchVideosAction } from '../actions/searchVideosActions';
-import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
+import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
 import { searchReducer } from './searchReducer';
 
 const defaultPaging = {
@@ -50,7 +50,7 @@ test('Sets videos and clears loading flag on the store action', () => {
     paging: defaultPaging,
   };
 
-  const searchResults: SearchResults = {
+  const searchResults: VideoSearchResults = {
     videos: [VideoFactory.sample({ title: 'dog video' })],
     query: 'dogs',
     paging: defaultPaging,
@@ -58,7 +58,7 @@ test('Sets videos and clears loading flag on the store action', () => {
 
   const newState = searchReducer(
     state,
-    storeSearchResultsAction(searchResults),
+    storeVideoSearchResultsAction(searchResults),
   );
 
   const expectedState: SearchStateValue = {

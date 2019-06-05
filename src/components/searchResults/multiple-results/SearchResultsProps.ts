@@ -1,6 +1,6 @@
-import { SearchResults } from '../../../types/State';
+import { VideoSearchResults } from '../../../types/State';
 
 export default interface SearchResultsProps {
-  results: SearchResults;
+  results: VideoSearchResults;
   onNavigate: () => void;
 }

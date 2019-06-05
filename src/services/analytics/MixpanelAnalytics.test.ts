@@ -5,7 +5,7 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../test-support/factories';
-import { SearchResults } from '../../types/State';
+import { VideoSearchResults } from '../../types/State';
 import { StreamPlayback } from '../../types/Video';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { UserProfile } from '../users/UserProfile';
@@ -65,7 +65,7 @@ describe('MixpanelAnalytics', () => {
         paging: {
           number: 1,
         },
-      } as SearchResults,
+      } as VideoSearchResults,
     );
 
     expect(mock.track).toHaveBeenCalledWith('VIDEO_SEARCH', {

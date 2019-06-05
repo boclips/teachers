@@ -14,13 +14,13 @@ import SearchResultsWithSidebar from '../../components/searchResults/multiple-re
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { NewsBoxSidebar } from '../../components/searchResults/NewsBoxSidebar';
 import { Links } from '../../types/Links';
-import State, { SearchResults } from '../../types/State';
+import State, { VideoSearchResults } from '../../types/State';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';
 
 interface StateProps {
   loading: boolean;
-  results: SearchResults;
+  results: VideoSearchResults;
   links: Links;
   currentPage: number;
 }

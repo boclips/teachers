@@ -12,13 +12,13 @@ export interface LinksState {
   links: Links;
 }
 
-export interface SearchResults {
+export interface VideoSearchResults {
   query: string;
   videos: Video[];
   paging: PageSpec;
 }
 
-export interface SearchStateValue extends SearchResults {
+export interface SearchStateValue extends VideoSearchResults {
   loading: boolean;
 }
 

@@ -3,10 +3,10 @@ import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import PageSpec from '../../../../types/PageSpec';
-import { SearchResults, SearchStateValue } from '../../../../types/State';
+import { SearchStateValue, VideoSearchResults } from '../../../../types/State';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { searchVideosAction } from '../actions/searchVideosActions';
-import { storeSearchResultsAction } from '../actions/storeSearchResultsAction';
+import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
 
 const defaultPaging: PageSpec = {
   totalElements: 0,
@@ -36,7 +36,7 @@ function onSearchVideosAction(
 
 function onStoreSearchResultsAction(
   _: SearchStateValue,
-  results: SearchResults,
+  results: VideoSearchResults,
 ): SearchStateValue {
   return { ...results, loading: false };
 }
@@ -44,5 +44,5 @@ function onStoreSearchResultsAction(
 export const searchReducer: Reducer<SearchStateValue> = createReducer(
   initialState,
   actionHandler(searchVideosAction, onSearchVideosAction),
-  actionHandler(storeSearchResultsAction, onStoreSearchResultsAction),
+  actionHandler(storeVideoSearchResultsAction, onStoreSearchResultsAction),
 );

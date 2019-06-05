@@ -3,11 +3,11 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { SearchResults } from '../../../types/State';
+import { VideoSearchResults } from '../../../types/State';
 
 interface StateProps {
   isNewsMode: boolean;
-  results: SearchResults;
+  results: VideoSearchResults;
 }
 
 interface DispatchProps {
