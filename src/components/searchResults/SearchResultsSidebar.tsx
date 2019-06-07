@@ -51,6 +51,7 @@ export class SearchResultsSidebar extends PureComponent<
                   <img src={collectionsImg} alt="" /> Collections
                 </span>
               }
+              emptyPlaceholder="No collections found for this search"
               sidebar={true}
             />
           </section>

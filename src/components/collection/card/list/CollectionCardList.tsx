@@ -57,6 +57,21 @@ export class CollectionCardList extends React.PureComponent<
   private renderCollections() {
     return [
       <TransitionGroup exit={true} key={'collections-container'}>
+        {this.props.emptyPlaceholder &&
+          (!this.props.collections || !this.props.collections.length) && (
+            <CSSTransition
+              classNames="card-list"
+              timeout={500}
+              key="empty-placeholder"
+            >
+              <section
+                className="collection-empty-placeholder"
+                data-qa="empty-placeholder"
+              >
+                <Col xs={{ span: 24 }}>{this.props.emptyPlaceholder}</Col>
+              </section>
+            </CSSTransition>
+          )}
         {this.props.collections &&
           this.props.collections
             .slice(0, this.props.maxNumberOfCollections)

@@ -10,6 +10,7 @@ import {
 export interface PageableCollectionCardListProps {
   renderIfEmptyCollection?: ReactNode;
   title: string | React.ReactFragment;
+  emptyPlaceholder?: string | React.ReactFragment;
   description?: string;
   grid?: boolean;
   sidebar?: boolean;
