@@ -12,15 +12,19 @@ import PageLayout from '../../components/layout/PageLayout';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
-import { NewsBoxSidebar } from '../../components/searchResults/NewsBoxSidebar';
+import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
 import { Links } from '../../types/Links';
-import State, { VideoSearchResults } from '../../types/State';
+import State, {
+  CollectionSearchResults,
+  VideoSearchResults,
+} from '../../types/State';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';
 
 interface StateProps {
   loading: boolean;
-  results: VideoSearchResults;
+  videoResults: VideoSearchResults;
+  collectionResults: CollectionSearchResults;
   links: Links;
   currentPage: number;
 }
@@ -40,10 +44,10 @@ class SearchResultsView extends React.PureComponent<
     if (this.props.loading) {
       return this.renderResultPlaceholders();
     }
-    if (this.props.results.videos.length > 0) {
+    if (this.props.videoResults.videos.length > 0) {
       return this.renderResults();
     }
-    if (this.props.results.query.length > 0) {
+    if (this.props.videoResults.query.length > 0) {
       return this.renderZeroResultsMessage();
     }
     return null;
@@ -56,12 +60,14 @@ class SearchResultsView extends React.PureComponent<
       <section className={'search-results-container'} data-qa="search-page">
         {isNewsMode ? (
           <SearchResultsWithHeader
-            results={this.props.results}
+            videoResults={this.props.videoResults}
+            collectionResults={this.props.collectionResults}
             onNavigate={this.props.goToSearchResults}
           />
         ) : (
           <SearchResultsWithSidebar
-            results={this.props.results}
+            videoResults={this.props.videoResults}
+            collectionResults={this.props.collectionResults}
             onNavigate={this.props.goToNewsResults}
           />
         )}
@@ -73,13 +79,13 @@ class SearchResultsView extends React.PureComponent<
 
   public renderPagination() {
     return (
-      this.props.results.paging && (
+      this.props.videoResults.paging && (
         <section className={'results-pagination'} data-qa="pagination">
           <Pagination
             current={this.props.currentPage}
             defaultCurrent={this.props.currentPage}
-            defaultPageSize={this.props.results.paging.size}
-            total={this.props.results.paging.totalElements}
+            defaultPageSize={this.props.videoResults.paging.size}
+            total={this.props.videoResults.paging.totalElements}
             onChange={this.changePage}
           />
         </section>
@@ -100,7 +106,7 @@ class SearchResultsView extends React.PureComponent<
         </Col>
         {!isNewsMode && (
           <Col xs={{ span: 0 }} xl={{ span: 5 }}>
-            <NewsBoxSidebar.Skeleton />
+            <SearchResultsSidebar.Skeleton />
           </Col>
         )}
       </section>
@@ -111,7 +117,7 @@ class SearchResultsView extends React.PureComponent<
     return (
       <NoResultsView
         links={this.props.links}
-        query={this.props.results.query}
+        query={this.props.videoResults.query}
       />
     );
   }
@@ -119,7 +125,7 @@ class SearchResultsView extends React.PureComponent<
   private changePage = (currentPage: number) => {
     this.props.onPageChange(
       currentPage,
-      this.props.results.query,
+      this.props.videoResults.query,
       this.props.isNewsMode,
     );
   };
@@ -127,8 +133,9 @@ class SearchResultsView extends React.PureComponent<
 
 function mapStateToProps({ search, links, router }: State): StateProps {
   return {
-    loading: search.loading,
-    results: search,
+    loading: search.videoSearch.loading,
+    videoResults: search.videoSearch,
+    collectionResults: search.collectionSearch,
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
   };

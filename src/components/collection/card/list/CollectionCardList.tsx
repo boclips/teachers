@@ -57,30 +57,37 @@ export class CollectionCardList extends React.PureComponent<
   private renderCollections() {
     return [
       <TransitionGroup exit={true} key={'collections-container'}>
-        {this.props.collections
-          .slice(0, this.props.maxNumberOfCollections)
-          .map(collection => {
-            return (
-              <CSSTransition
-                classNames="card-list"
-                timeout={500}
-                key={collection.id}
-              >
-                <Col
-                  xs={{ span: 24 }}
-                  md={{ span: this.props.grid ? 12 : 24 }}
-                  lg={{ span: this.props.grid ? 8 : 24 }}
+        {this.props.collections &&
+          this.props.collections
+            .slice(0, this.props.maxNumberOfCollections)
+            .map(collection => {
+              return (
+                <CSSTransition
+                  classNames="card-list"
+                  timeout={500}
+                  key={collection.id}
                 >
-                  <CollectionCardContainer
-                    tiny={this.props.grid}
-                    collection={collection}
-                  />
-                </Col>
-              </CSSTransition>
-            );
-          })}
+                  <Col
+                    xs={{ span: 24 }}
+                    md={{
+                      span: this.singleColumn() ? 24 : 12,
+                    }}
+                    lg={{ span: this.singleColumn() ? 24 : 8 }}
+                  >
+                    <CollectionCardContainer
+                      tiny={this.props.grid || this.props.sidebar}
+                      collection={collection}
+                    />
+                  </Col>
+                </CSSTransition>
+              );
+            })}
       </TransitionGroup>,
     ];
+  }
+
+  private singleColumn() {
+    return this.props.sidebar || !this.props.grid;
   }
 
   public renderLoading() {
@@ -88,8 +95,8 @@ export class CollectionCardList extends React.PureComponent<
       <Col
         key={`sk-${count}`}
         xs={{ span: 24 }}
-        md={{ span: this.props.grid ? 12 : 24 }}
-        lg={{ span: this.props.grid ? 8 : 24 }}
+        md={{ span: this.singleColumn() ? 24 : 12 }}
+        lg={{ span: this.singleColumn() ? 24 : 8 }}
       >
         <CollectionCard.Skeleton tiny={this.props.grid} />
       </Col>

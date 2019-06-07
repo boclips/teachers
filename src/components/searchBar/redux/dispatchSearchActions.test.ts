@@ -1,9 +1,10 @@
 import { RouterActionType } from 'connected-react-router';
 import { Constants } from '../../../app/AppConstants';
 import { Action } from '../../../app/redux/actions';
+import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
 import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
 import { MockStoreFactory } from './../../../../test-support/factories';
-import { dispatchSearchVideoAction } from './dispatchSearchVideoAction';
+import { dispatchSearchActions } from './dispatchSearchActions';
 
 function getStore(mode: string = '') {
   return MockStoreFactory.sample({
@@ -32,7 +33,7 @@ it('does not dispatch a SearchRequest when not on a videos page', () => {
     },
   });
 
-  dispatchSearchVideoAction(store);
+  dispatchSearchActions(store);
 
   expect(store.getActions()).toHaveLength(0);
 });
@@ -41,7 +42,7 @@ describe('when on the videos page', () => {
   it('passes the query into the action', () => {
     const store = getStore();
 
-    dispatchSearchVideoAction(store);
+    dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
 
@@ -52,7 +53,7 @@ describe('when on the videos page', () => {
   it('passes the expected page number into the action', () => {
     const store = getStore();
 
-    dispatchSearchVideoAction(store);
+    dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
 
@@ -63,7 +64,7 @@ describe('when on the videos page', () => {
   it('sorts the results by release date when mode is news', () => {
     const store = getStore(Constants.NEWS);
 
-    dispatchSearchVideoAction(store);
+    dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
 
@@ -74,7 +75,7 @@ describe('when on the videos page', () => {
   it('filters the results by NEWS and CLASSROOM tags if mode is news', () => {
     const store = getStore(Constants.NEWS);
 
-    dispatchSearchVideoAction(store);
+    dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
 
@@ -88,12 +89,23 @@ describe('when on the videos page', () => {
   it('filters the results by CLASSROOM, and excludes NEWS if mode is not news', () => {
     const store = getStore();
 
-    dispatchSearchVideoAction(store);
+    dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
 
     expect(action).toBeTruthy();
     expect(action.payload.filters.includeTags).toEqual([Constants.CLASSROOM]);
     expect(action.payload.filters.excludeTags).toEqual([Constants.NEWS]);
+  });
+
+  it('searches collections', () => {
+    const store = getStore();
+
+    dispatchSearchActions(store);
+
+    const action: Action<CollectionSearchRequest> = store.getActions()[1];
+
+    expect(action).toBeTruthy();
+    expect(action.payload.query).toEqual('Testing123');
   });
 });

@@ -6,13 +6,13 @@ import {
 } from '../../../../app/redux/actions';
 import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
 import State from '../../../../types/State';
-import { dispatchSearchVideoAction } from '../../../searchBar/redux/dispatchSearchVideoAction';
+import { dispatchSearchActions } from '../../../searchBar/redux/dispatchSearchActions';
 
 export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 
 const fetchVideos = (store: Store<State>) => {
   if (store.getState().links && store.getState().links.videos) {
-    dispatchSearchVideoAction(store);
+    dispatchSearchActions(store);
   }
 };
 

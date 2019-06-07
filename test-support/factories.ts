@@ -8,9 +8,11 @@ import { UserProfile } from '../src/services/users/UserProfile';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import State, {
+  CollectionSearchStateValue,
   CollectionsStateValue,
   Pageable,
   SearchStateValue,
+  VideoSearchStateValue,
 } from '../src/types/State';
 import { Subject } from '../src/types/Subject';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
@@ -193,6 +195,18 @@ export class LoginFactory {
 export class SearchFactory {
   public static sample(arg: Partial<SearchStateValue> = {}): SearchStateValue {
     return Object.freeze({
+      videoSearch: VideoSearchFactory.sample(),
+      collectionSearch: CollectionSearchFactory.sample(),
+      ...arg,
+    });
+  }
+}
+
+export class VideoSearchFactory {
+  public static sample(
+    arg: Partial<VideoSearchStateValue> = {},
+  ): VideoSearchStateValue {
+    return Object.freeze({
       query: 'hello',
       videos: [],
       paging: {
@@ -206,6 +220,20 @@ export class SearchFactory {
     });
   }
 }
+
+export class CollectionSearchFactory {
+  public static sample(
+    arg: Partial<CollectionSearchStateValue> = {},
+  ): CollectionSearchStateValue {
+    return Object.freeze({
+      query: 'hello',
+      collections: [],
+      loading: false,
+      ...arg,
+    });
+  }
+}
+
 export class RouterFactory {
   public static sample(arg: Partial<ReactRouterState> = {}): ReactRouterState {
     return Object.freeze({

@@ -8,7 +8,7 @@ export default class SearchResultsWithHeader extends React.PureComponent<
   SearchResultsProps
 > {
   public render() {
-    const { videos, paging, query } = this.props.results;
+    const { videos, paging, query } = this.props.videoResults;
     return (
       <React.Fragment>
         <Row>

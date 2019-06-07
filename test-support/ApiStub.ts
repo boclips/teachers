@@ -15,6 +15,11 @@ interface VideoQueryOptions {
   results: any;
 }
 
+interface CollectionQueryOptions {
+  query: string;
+  results: any;
+}
+
 interface CollectionOptions {
   collectionId: string;
 }
@@ -34,6 +39,14 @@ export default class ApiStub {
     const url = options.tag
       ? `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${options.tag}`
       : `/v1/videos?.*query=${escapedQuery}`;
+
+    MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
+    return this;
+  }
+
+  public queryCollections(options: CollectionQueryOptions) {
+    const escapedQuery = encodeURIComponent(options.query);
+    const url = `/v1/collections?.*query=${escapedQuery}`;
 
     MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
     return this;

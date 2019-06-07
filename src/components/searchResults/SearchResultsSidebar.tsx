@@ -1,10 +1,14 @@
 import { Button, Card, Col, Row, Skeleton } from 'antd';
 import React, { PureComponent } from 'react';
 import newsLogo from '../../../resources/images/news-logo.png';
+import { VideoCollection } from '../../types/VideoCollection';
+import { CollectionCardList } from '../collection/card/list/CollectionCardList';
 import './NewsBox.less';
 import { NewsBoxProps } from './NewsBoxProps';
 
-export class NewsBoxSidebar extends PureComponent<NewBoxSidePanelProps> {
+export class SearchResultsSidebar extends PureComponent<
+  SearchResultsSidebarProps
+> {
   public render(): React.ReactNode {
     return (
       <Row type="flex" justify="center">
@@ -34,6 +38,13 @@ export class NewsBoxSidebar extends PureComponent<NewBoxSidePanelProps> {
             </Button>
           </Row>
         </section>
+        <section data-qa="collections-side-panel">
+          <CollectionCardList
+            collections={this.props.collections}
+            title="Collections"
+            sidebar={true}
+          />
+        </section>
       </Row>
     );
   }
@@ -54,4 +65,6 @@ export class NewsBoxSidebar extends PureComponent<NewBoxSidePanelProps> {
   );
 }
 
-interface NewBoxSidePanelProps extends NewsBoxProps {}
+interface SearchResultsSidebarProps extends NewsBoxProps {
+  collections: VideoCollection[];
+}

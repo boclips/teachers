@@ -59,6 +59,13 @@ export class SearchPage {
     }));
   }
 
+  public getCollectionResults() {
+    return findAll(this.wrapper, 'collection-card').map(el => ({
+      title: findOne(el, 'collection-title').text(),
+      numberOfVideos: +findOne(el, 'collection-number-of-videos').text(),
+    }));
+  }
+
   public getVideoCard(index: number) {
     return findAll(this.wrapper, 'video-card').at(index);
   }
@@ -85,6 +92,13 @@ export class SearchPage {
     await eventually(() => {
       this.wrapper = this.wrapper.update();
       findOne(this.wrapper, 'search-page');
+    });
+  }
+
+  public async hasCollections() {
+    await eventually(() => {
+      this.wrapper = this.wrapper.update();
+      findOne(this.wrapper, 'collection-card');
     });
   }
 }

@@ -5,6 +5,10 @@ export const links = {
         '/v1/videos?query={query}&page={page}&size={size}{&include_tag,exclude_tag}',
       templated: true,
     },
+    searchCollections: {
+      href: '/v1/collections?query={query}',
+      templated: true,
+    },
     video: {
       href: '/v1/videos/{id}',
       templated: true,

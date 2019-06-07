@@ -3,6 +3,7 @@ import { Store } from 'redux';
 import { Constants } from '../../../app/AppConstants';
 import { RouterState } from '../../../types/State';
 import { RequestFilters, SortBy } from '../../../types/VideoSearchRequest';
+import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
 
 const getFilters = (mode: string): RequestFilters => {
@@ -30,7 +31,7 @@ const getSortBy = (mode: string): SortBy => {
   return null;
 };
 
-export const dispatchSearchVideoAction = (store: Store<RouterState>) => {
+export const dispatchSearchActions = (store: Store<RouterState>) => {
   const { router } = store.getState();
   const location = router.location;
 
@@ -44,5 +45,6 @@ export const dispatchSearchVideoAction = (store: Store<RouterState>) => {
     const sortBy = getSortBy(mode);
 
     store.dispatch(searchVideosAction({ query, page, filters, sortBy }));
+    store.dispatch(searchCollectionsAction({ query }));
   }
 };

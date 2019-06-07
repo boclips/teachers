@@ -3,7 +3,7 @@ import * as queryString from 'querystring';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { VideoSearchResults } from '../../../types/State';
+import State, { VideoSearchResults } from '../../../types/State';
 
 interface StateProps {
   isNewsMode: boolean;
@@ -38,10 +38,11 @@ const withNewsNavigation = Component => (props: StateProps & DispatchProps) => {
   return <Component {...componentProps} />;
 };
 
-const mapStateToProps = ({ router, search }): StateProps => ({
+const mapStateToProps = ({ router, search }: State): StateProps => ({
   isNewsMode:
-    queryString.parse(router.location.search).mode === 'news' || false,
-  results: search,
+    // tslint:disable-next-line:no-string-literal
+    queryString.parse(router.location['search']).mode === 'news' || false,
+  results: search.videoSearch,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({

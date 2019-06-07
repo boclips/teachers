@@ -16,7 +16,7 @@ import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
 import onRegisterAnalyticsMiddleware from './onRegisterAnalyticsMiddleware';
 
-jest.mock('../../../searchBar/redux/dispatchSearchVideoAction');
+jest.mock('../../../searchBar/redux/dispatchSearchActions');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
 jest.mock('../../../../services/users/activateUser');
 

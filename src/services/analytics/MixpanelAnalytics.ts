@@ -1,6 +1,6 @@
 import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
-import { VideoSearchResults } from '../../types/State';
+import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
 import { Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
@@ -51,7 +51,7 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
   }
 
-  public trackSearch(
+  public trackVideoSearch(
     searchRequest: VideoSearchRequest,
     searchResults: VideoSearchResults,
   ) {
@@ -72,6 +72,16 @@ export default class MixpanelAnalytics {
       [`${EventTypes.VIDEO_SEARCH}_page_number`.toLowerCase()]: searchResults
         .paging.number,
       [`${EventTypes.VIDEO_SEARCH}_type`.toLowerCase()]: type,
+    });
+  }
+
+  public trackCollectionSearch(searchResults: CollectionSearchResults) {
+    this.mixpanelInstance.track(EventTypes.COLLECTION_SEARCH, {
+      [`${
+        EventTypes.COLLECTION_SEARCH
+      }_query`.toLowerCase()]: searchResults.query,
+      [`${EventTypes.COLLECTION_SEARCH}_number_of_results`.toLowerCase()]:
+        searchResults.collections && searchResults.collections.length,
     });
   }
 

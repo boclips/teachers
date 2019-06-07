@@ -8,6 +8,7 @@ import {
   MockStoreFactory,
   RouterFactory,
   SearchFactory,
+  VideoSearchFactory,
 } from '../../../test-support/factories';
 import SearchResultsView from './SearchResultsView';
 
@@ -52,11 +53,13 @@ function mountWith(store: Store) {
 
 function createStore(query: string, isLoading = false) {
   return MockStoreFactory.sample({
-    search: {
-      ...SearchFactory.sample(),
-      loading: isLoading,
-      query,
-    },
+    search: SearchFactory.sample({
+      videoSearch: {
+        ...VideoSearchFactory.sample(),
+        loading: isLoading,
+        query,
+      },
+    }),
     router: {
       ...RouterFactory.sample(),
       location: {

@@ -1,11 +1,24 @@
-import { Reducer } from 'redux';
+import { combineReducers, Reducer } from 'redux';
 import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
+import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
 import PageSpec from '../../../../types/PageSpec';
-import { SearchStateValue, VideoSearchResults } from '../../../../types/State';
+import {
+  CollectionSearchResults,
+  CollectionSearchStateValue,
+  SearchStateValue,
+  VideoSearchResults,
+  VideoSearchStateValue,
+} from '../../../../types/State';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
+import { storeVideoForCollectionAction } from '../../../collection/redux/actions/storeVideoForCollectionAction';
+import { updateMatchingCollectionWithVideos } from '../../../collection/redux/reducers/storeCollectionsReducer';
+import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
+import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
 
 const defaultPaging: PageSpec = {
@@ -15,7 +28,7 @@ const defaultPaging: PageSpec = {
   size: 10,
 };
 
-const initialState: SearchStateValue = {
+const initialState: VideoSearchStateValue = {
   videos: [],
   loading: false,
   query: '',
@@ -25,7 +38,7 @@ const initialState: SearchStateValue = {
 function onSearchVideosAction(
   _,
   searchRequest: VideoSearchRequest,
-): SearchStateValue {
+): VideoSearchStateValue {
   return {
     videos: [],
     query: searchRequest.query,
@@ -34,15 +47,75 @@ function onSearchVideosAction(
   };
 }
 
-function onStoreSearchResultsAction(
-  _: SearchStateValue,
+function onStoreVideoSearchResultsAction(
+  _: VideoSearchStateValue,
   results: VideoSearchResults,
-): SearchStateValue {
+): VideoSearchStateValue {
   return { ...results, loading: false };
 }
 
-export const searchReducer: Reducer<SearchStateValue> = createReducer(
+function onSearchCollectionsAction(
+  _,
+  searchRequest: CollectionSearchRequest,
+): CollectionSearchStateValue {
+  return {
+    collections: [],
+    query: searchRequest.query,
+    loading: true,
+  };
+}
+
+function onStoreCollectionSearchResultsAction(
+  _: CollectionSearchStateValue,
+  results: CollectionSearchResults,
+): CollectionSearchStateValue {
+  return { ...results, loading: false };
+}
+
+function onStoreVideosForSearchCollection(
+  state: CollectionSearchStateValue,
+  request: {
+    videos: Video[];
+    collection: VideoCollection;
+  },
+): CollectionSearchStateValue {
+  if (!state || !state.collections) {
+    return state;
+  }
+
+  const collectionItems = updateMatchingCollectionWithVideos(
+    request,
+    state.collections,
+  );
+
+  return {
+    ...state,
+    collections: collectionItems,
+  };
+}
+
+export const videoSearchReducer: Reducer<VideoSearchStateValue> = createReducer(
   initialState,
   actionHandler(searchVideosAction, onSearchVideosAction),
-  actionHandler(storeVideoSearchResultsAction, onStoreSearchResultsAction),
+  actionHandler(storeVideoSearchResultsAction, onStoreVideoSearchResultsAction),
 );
+
+export const collectionSearchReducer: Reducer<
+  CollectionSearchStateValue
+> = createReducer(
+  initialState,
+  actionHandler(searchCollectionsAction, onSearchCollectionsAction),
+  actionHandler(
+    storeCollectionSearchResultsAction,
+    onStoreCollectionSearchResultsAction,
+  ),
+  actionHandler(
+    storeVideoForCollectionAction,
+    onStoreVideosForSearchCollection,
+  ),
+);
+
+export const searchReducer: Reducer<SearchStateValue> = combineReducers({
+  videoSearch: videoSearchReducer,
+  collectionSearch: collectionSearchReducer,
+});

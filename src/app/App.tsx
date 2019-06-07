@@ -18,7 +18,7 @@ import { userDetailsFetchedReducer } from '../components/login/redux/reducers/us
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
 import { ageRangeReducer } from '../components/multipleSelect/redux/reducers/ageReducer';
 import { subjectsReducer } from '../components/multipleSelect/redux/reducers/subjectsReducer';
-import searchVideosMiddleware from '../components/searchBar/redux/middleware/searchMiddleware';
+import searchMiddleware from '../components/searchBar/redux/middleware/searchMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
@@ -58,7 +58,7 @@ export default class App extends PureComponent<Props> {
       applyMiddleware(
         routerMiddleware(this.props.history || defaultHistory),
         sentryBreadcrumbMiddleware,
-        searchVideosMiddleware,
+        ...searchMiddleware,
         videoDetailsMiddleware,
         ...fetchVideosMiddleware,
         fetchLinksMiddleware,

@@ -98,7 +98,7 @@ const reduceStoreVideoForCollectionDetails = (
   };
 };
 
-const updateMatchingCollectionWithVideos = (
+export const updateMatchingCollectionWithVideos = (
   request: {
     videos: Video[];
     collection: VideoCollection;

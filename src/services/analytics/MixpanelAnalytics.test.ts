@@ -54,7 +54,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks search', () => {
-    mixpanelAnalytics.trackSearch(
+    mixpanelAnalytics.trackVideoSearch(
       {
         query: 'test',
         page: 1,

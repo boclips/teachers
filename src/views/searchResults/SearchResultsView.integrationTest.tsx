@@ -5,7 +5,7 @@ import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import {
   collectionsResponse,
   video177,
-  videos as results,
+  videos as videoResults,
   videosResponse,
 } from '../../../test-support/video-service-responses';
 import { findElement, waitForElement } from '../../../testSetup';
@@ -23,11 +23,13 @@ beforeEach(() => {
   }
 });
 
-test('search for a video shows results', async () => {
+test('search shows video results', async () => {
   const query = 'some video';
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query, results })
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections();
 
   const searchPage = await SearchPage.load(query);
@@ -45,11 +47,32 @@ test('search for a video shows results', async () => {
   });
 });
 
+test('search shows collection results', async () => {
+  const query = 'some video';
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
+    .fetchCollections();
+
+  const searchPage = await SearchPage.load(query);
+  await searchPage.hasCollections();
+
+  expect(searchPage.getCollectionResults()).toHaveLength(1);
+  expect(searchPage.getCollectionResults()[0]).toMatchObject({
+    title: 'funky collection',
+    numberOfVideos: 1,
+  });
+});
+
 test('shows news-only view with news header', async () => {
   const query = 'some news';
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query, results, tag: Constants.NEWS })
+    .queryVideos({ query, results: videoResults, tag: Constants.NEWS })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections();
 
   const searchPage = await SearchPage.loadNews(query);
@@ -69,7 +92,9 @@ test('should render news box', async () => {
   const query = 'some video';
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query, results })
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections();
 
   const searchPage = await SearchPage.load(query);
@@ -86,7 +111,9 @@ test('shows total count of videos', async () => {
   const query = 'some video';
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query, results })
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections();
 
   const searchPage = await SearchPage.load(query);
@@ -98,7 +125,9 @@ test('redirects when clicking on first title', async () => {
   const query = 'some video';
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query, results })
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections()
     .fetchVideo({ video: video177 });
 
@@ -112,6 +141,8 @@ test('removing a video from a collection', async () => {
   new ApiStub()
     .defaultUser()
     .queryVideos({ query, results: videosResponse([video177]) })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections()
     .removeFromCollection();
 
@@ -136,6 +167,8 @@ test('adding a video to a collection', async () => {
   new ApiStub()
     .defaultUser()
     .queryVideos({ query, results: videosResponse([video177]) })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
     .fetchCollections(collectionsResponse([]))
     .addToCollection();
 

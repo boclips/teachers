@@ -18,7 +18,16 @@ export interface VideoSearchResults {
   paging: PageSpec;
 }
 
-export interface SearchStateValue extends VideoSearchResults {
+export interface CollectionSearchResults {
+  query: string;
+  collections: VideoCollection[];
+}
+
+export interface VideoSearchStateValue extends VideoSearchResults {
+  loading: boolean;
+}
+
+export interface CollectionSearchStateValue extends CollectionSearchResults {
   loading: boolean;
 }
 
@@ -29,6 +38,11 @@ export interface VideoStateValue {
 
 export interface SearchState {
   search: SearchStateValue;
+}
+
+export interface SearchStateValue {
+  videoSearch: VideoSearchStateValue;
+  collectionSearch: CollectionSearchStateValue;
 }
 
 export interface VideoDetailsState {

@@ -4,6 +4,7 @@ import {
   MockStoreFactory,
   RouterFactory,
   SearchFactory,
+  VideoSearchFactory,
 } from '../../../../test-support/factories';
 import withNewsNavigation, { NewsNavigationProps } from './withNewsNavigation';
 
@@ -19,7 +20,10 @@ const store = MockStoreFactory.sample({
   },
   search: {
     ...SearchFactory.sample(),
-    query: 'string',
+    videoSearch: {
+      ...VideoSearchFactory.sample(),
+      query: 'string',
+    },
   },
 });
 
