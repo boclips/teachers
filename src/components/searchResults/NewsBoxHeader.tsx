@@ -1,8 +1,8 @@
 import { Button, Col, Row } from 'antd';
 import React from 'react';
 import newsLogo from '../../../resources/images/news-logo.png';
-import './NewsBox.less';
 import { NewsBoxProps } from './NewsBoxProps';
+import './SearchResultsSidebar.less';
 
 export const NewsBoxHeader = React.memo((props: NewsBoxHeaderProps) => (
   <section data-qa="news-header" key={'news-box'} className="news-box">
