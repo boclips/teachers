@@ -53,6 +53,7 @@ export class SearchResultsSidebar extends PureComponent<
               }
               emptyPlaceholder="No collections found for this search"
               sidebar={true}
+              maxNumberOfCollections={5}
             />
           </section>
         </Row>
