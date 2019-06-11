@@ -95,6 +95,18 @@ export default class ApiStub {
     return this;
   }
 
+  public fetchDiscoverMathsCollections(
+    collections = collectionsResponse(),
+    once = false,
+  ) {
+    if (once) {
+      MockFetchVerify.getOnce('/v1/collections?subjects=maths', collections);
+    } else {
+      MockFetchVerify.get('/v1/collections?subjects=maths', collections);
+    }
+    return this;
+  }
+
   public fetchBookmarkedCollections(collections = collectionsResponse()) {
     MockFetchVerify.getOnce('/v1/collections?bookmarked=true', collections);
     return this;

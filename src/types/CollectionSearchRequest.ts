@@ -1,3 +1,4 @@
 export interface CollectionSearchRequest {
-  query: string;
+  query?: string;
+  subjects?: string;
 }

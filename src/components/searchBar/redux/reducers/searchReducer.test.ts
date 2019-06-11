@@ -6,15 +6,21 @@ import {
 import {
   CollectionSearchResults,
   CollectionSearchStateValue,
+  SearchStateValue,
   VideoSearchResults,
   VideoSearchStateValue,
 } from '../../../../types/State';
+import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/onCollectionBookmarkedAction';
 import { storeVideoForCollectionAction } from '../../../collection/redux/actions/storeVideoForCollectionAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-import { collectionSearchReducer, videoSearchReducer } from './searchReducer';
+import {
+  collectionSearchReducer,
+  searchReducer,
+  videoSearchReducer,
+} from './searchReducer';
 
 describe('searching videos', () => {
   const defaultPaging = {
@@ -169,5 +175,37 @@ describe('searching collections', () => {
     );
     expect(stateAfter.collections[0].videos[video.id].id).toEqual(video.id);
     expect(stateAfter.collections[0].videoIds).toHaveLength(1);
+  });
+
+  // TODO: fix this bug
+  describe.skip('interacting with results', () => {
+    test('bookmaring results updates collection search results', () => {
+      const toBeUpdatedCollection = VideoCollectionFactory.sample({
+        id: '123',
+        title: 'jose carlos',
+      });
+
+      const stateBefore: SearchStateValue = {
+        videoSearch: undefined,
+        collectionSearch: {
+          collections: [toBeUpdatedCollection],
+          loading: false,
+          query: '',
+        },
+      };
+
+      const updatedCollection = {
+        ...toBeUpdatedCollection,
+        title: 'la familia es muy importante',
+      };
+
+      const action = onCollectionBookmarkedAction(updatedCollection);
+
+      const publicCollections = searchReducer(stateBefore, action)
+        .collectionSearch.collections;
+
+      expect(publicCollections).toHaveLength(1);
+      expect(publicCollections).toContainEqual(updatedCollection);
+    });
   });
 });

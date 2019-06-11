@@ -31,7 +31,7 @@ describe('some collection', () => {
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      fetchPageableCollectionsAction('bookmarkedCollections'),
+      fetchPageableCollectionsAction({ key: 'bookmarkedCollections' }),
     );
   });
 

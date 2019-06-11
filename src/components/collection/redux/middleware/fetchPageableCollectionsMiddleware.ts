@@ -6,23 +6,26 @@ import {
   fetchPageableCollections,
 } from '../../../../services/collections/fetchCollections';
 import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
-import { CollectionKey } from '../../../../types/CollectionKey';
 import { CollectionState, LinksState } from '../../../../types/State';
-import { appedPageableCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
+import { appendPageableCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
 import { fetchNextPageableCollectionsAction } from '../actions/fetchNextPageableCollectionsAction';
-import { fetchPageableCollectionsAction } from '../actions/fetchPageableCollectionsAction';
+import {
+  FetchPageableCollectionRequest,
+  fetchPageableCollectionsAction,
+} from '../actions/fetchPageableCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 
 export function onFetchCollections(
   store: MiddlewareAPI<any, LinksState>,
-  request: CollectionKey,
+  request: FetchPageableCollectionRequest,
 ) {
   const links = store.getState().links;
   fetchPageableCollections(links, request)
     .then(collections => {
       store.dispatch(
         storeCollectionsAction({
-          key: request,
+          key: request.key,
+          request: request.request,
           collections,
         }),
       );
@@ -39,7 +42,7 @@ export function onFetchNextCollections(
     .then(collections => {
       AnalyticsFactory.getInstance().trackMoreCollectionsLoaded(request);
       store.dispatch(
-        appedPageableCollectionsAction({
+        appendPageableCollectionsAction({
           collections,
           key: request,
         }),

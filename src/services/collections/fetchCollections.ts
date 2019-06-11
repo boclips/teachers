@@ -1,16 +1,20 @@
 import axios from 'axios';
+import { FetchPageableCollectionRequest } from '../../components/collection/redux/actions/fetchPageableCollectionsAction';
 import { Links } from '../../types/Links';
 import { Pageable } from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
-import { CollectionKey } from './../../types/CollectionKey';
 import { parseScrollableCollectionsListResponse } from './collectionParser';
 
 export const fetchPageableCollections = (
   links: Links,
-  key: CollectionKey,
+  request: FetchPageableCollectionRequest,
 ): Promise<Pageable<VideoCollection>> => {
   return axios
-    .get(links[key].getOriginalLink())
+    .get(
+      request.request
+        ? links[request.key].getTemplatedLink(request.request)
+        : links[request.key].getOriginalLink(),
+    )
     .then(response => parseScrollableCollectionsListResponse(response));
 };
 

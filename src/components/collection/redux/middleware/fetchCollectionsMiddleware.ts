@@ -8,7 +8,7 @@ import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 
 export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
   const links = store.getState().links;
-  fetchPageableCollections(links, 'myCollections')
+  fetchPageableCollections(links, { key: 'myCollections' })
     .then(collections => {
       store.dispatch(
         storeCollectionsAction({ collections, key: 'myCollections' }),

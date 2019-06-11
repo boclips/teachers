@@ -142,6 +142,9 @@ export class LinksFactory {
       searchCollections:
         arg.searchCollections ||
         new Link({ href: '/collections?query={query}', templated: true }),
+      discoverCollections:
+        arg.discoverCollections ||
+        new Link({ href: '/collections?query={query}', templated: true }),
       video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
       createPlaybackEvent:
         arg.createPlaybackEvent || new Link({ href: '/events' }),
@@ -258,6 +261,10 @@ export class CollectionsFactory {
       updating: false,
       myCollections: { items: [VideoCollectionFactory.sample()], links: {} },
       publicCollections: {
+        items: [],
+        links: {},
+      },
+      discoverCollections: {
         items: [],
         links: {},
       },

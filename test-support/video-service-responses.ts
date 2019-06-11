@@ -6,7 +6,7 @@ export const links = {
       templated: true,
     },
     searchCollections: {
-      href: '/v1/collections?query={query}',
+      href: '/v1/collections{&query,subjects}',
       templated: true,
     },
     video: {
