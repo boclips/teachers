@@ -53,6 +53,7 @@ describe('fetch video for collection', () => {
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
+      discoverCollections: undefined,
     };
 
     const action = storeVideoForCollectionAction({
@@ -93,6 +94,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       collectionBeingViewed: collection,
+      discoverCollections: undefined,
       myCollections: undefined,
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
@@ -138,6 +140,7 @@ describe('fetch video for collection', () => {
       publicCollections: PageableCollectionsFactory.sample({
         items: [collection],
       }),
+      discoverCollections: undefined,
       myCollections: undefined,
       bookmarkedCollections: undefined,
     };
@@ -180,6 +183,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       publicCollections: undefined,
+      discoverCollections: undefined,
       myCollections: undefined,
       bookmarkedCollections: PageableCollectionsFactory.sample({
         items: [collection],
@@ -203,5 +207,50 @@ describe('fetch video for collection', () => {
       stateAfter.bookmarkedCollections.items[0].videos[video.id].id,
     ).toEqual(video.id);
     expect(stateAfter.bookmarkedCollections.items[0].videoIds).toHaveLength(1);
+  });
+
+  test('sets videos in discover collections', () => {
+    const video = VideoFactory.sample({ id: '123' });
+
+    new ApiStub().fetchVideo({ video });
+
+    const collection = VideoCollectionFactory.sample({
+      id: 'target',
+      videoIds: [
+        {
+          id: video.id,
+          links: video.links,
+        },
+      ],
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      publicCollections: undefined,
+      discoverCollections: PageableCollectionsFactory.sample({
+        items: [collection],
+      }),
+      myCollections: undefined,
+      bookmarkedCollections: undefined,
+    };
+
+    const action = storeVideoForCollectionAction({
+      videos: [video],
+      collection,
+    });
+
+    const stateAfter = collectionsReducer(stateBefore, action);
+
+    expect(
+      Object.keys(stateAfter.discoverCollections.items[0].videos),
+    ).toHaveLength(1);
+    expect(
+      stateAfter.discoverCollections.items[0].videos[video.id].title,
+    ).toEqual(video.title);
+    expect(stateAfter.discoverCollections.items[0].videos[video.id].id).toEqual(
+      video.id,
+    );
+    expect(stateAfter.discoverCollections.items[0].videoIds).toHaveLength(1);
   });
 });

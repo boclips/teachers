@@ -12,6 +12,7 @@ import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionDetailsView from '../collection/CollectionDetailsView';
+import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
 import MyCollectionListView from '../collection/MyCollectionListView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
@@ -126,6 +127,22 @@ describe('when authorised', () => {
 
     const collectionsView = wrapper.find(PublicCollectionListView);
     expect(collectionsView).toExist();
+  });
+
+  test('shows discover collections view on /discover-collections', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider
+        store={buildStore('/discover-collections', 'subject=maths', true)}
+      >
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(DiscoverCollectionsView);
+    expect(collectionsView).toExist();
+    expect(collectionsView).toHaveProp('subject', 'maths');
   });
 
   test('shows bookmarked collections view on /bookmarked-collections', () => {

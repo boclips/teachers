@@ -6,6 +6,7 @@ import { CollectionsStateValue } from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
+  appendDiscoverCollectionsAction,
   appendMyCollectionsAction,
   appendPublicCollectionsAction,
 } from '../actions/appendReadOnlyCollectionsAction';
@@ -46,6 +47,7 @@ import {
 const initialState: CollectionsStateValue = {
   myCollections: undefined,
   publicCollections: undefined,
+  discoverCollections: undefined,
   bookmarkedCollections: undefined,
   collectionBeingViewed: undefined,
   loading: true,
@@ -91,6 +93,10 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(onRemoveFromCollectionAction, collectionUpdated),
   actionHandler(onAddToCollectionAction, collectionUpdated),
   actionHandler(onCreateCollectionAction, collectionUpdated),
+  actionHandler(
+    appendDiscoverCollectionsAction,
+    onAppendPageableCollectionsAction,
+  ),
   actionHandler(
     appendPublicCollectionsAction,
     onAppendPageableCollectionsAction,

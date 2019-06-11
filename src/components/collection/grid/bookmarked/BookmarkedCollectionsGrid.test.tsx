@@ -23,7 +23,7 @@ describe('bookmarked collections', () => {
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      fetchPageableCollectionsAction('bookmarkedCollections'),
+      fetchPageableCollectionsAction({ key: 'bookmarkedCollections' }),
     );
   });
 
@@ -33,6 +33,7 @@ describe('bookmarked collections', () => {
         loading: false,
         updating: false,
         myCollections: undefined,
+        discoverCollections: undefined,
         publicCollections: undefined,
         bookmarkedCollections: PageableCollectionsFactory.sample({
           items: [],

@@ -50,6 +50,11 @@ export const onStoreVideosForCollectionAction = (
     'publicCollections',
     request,
   );
+  state = reduceStoreVideoForPageableCollections(
+    state,
+    'discoverCollections',
+    request,
+  );
   return reduceStoreVideoForCollectionDetails(state, request);
 };
 

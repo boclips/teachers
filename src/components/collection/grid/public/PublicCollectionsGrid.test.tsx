@@ -19,7 +19,7 @@ describe('public collections', () => {
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      fetchPageableCollectionsAction('publicCollections'),
+      fetchPageableCollectionsAction({ key: 'publicCollections' }),
     );
   });
 });

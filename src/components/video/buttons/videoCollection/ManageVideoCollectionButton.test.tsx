@@ -174,6 +174,7 @@ const mountWith = (
       myCollections: PageableCollectionsFactory.sample({
         items: collections,
       }),
+      discoverCollections: undefined,
       publicCollections: undefined,
       bookmarkedCollections: undefined,
       loading,

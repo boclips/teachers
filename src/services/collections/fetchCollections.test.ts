@@ -35,7 +35,9 @@ describe('user collections', () => {
         {},
       );
 
-    const collections = await fetchPageableCollections(links, 'myCollections');
+    const collections = await fetchPageableCollections(links, {
+      key: 'myCollections',
+    });
 
     expect(collections.items[0].id).toEqual('id');
     expect(collections.items[0].title).toEqual('funky collection');
@@ -60,10 +62,9 @@ describe('public collections', () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?public')
       .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
-    const collections = await fetchPageableCollections(
-      links,
-      'publicCollections',
-    );
+    const collections = await fetchPageableCollections(links, {
+      key: 'publicCollections',
+    });
 
     expect(collections.items[0].id).toEqual('id');
     expect(collections.items[0].title).toEqual('funky collection');

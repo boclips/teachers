@@ -23,7 +23,7 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
       return links;
     })
     .then((links: Links) => {
-      fetchPageableCollections(links, 'myCollections')
+      fetchPageableCollections(links, { key: 'myCollections' })
         .then(collections => {
           store.dispatch(
             storeCollectionsAction({ collections, key: 'myCollections' }),

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import { CollectionKey } from '../../../types/CollectionKey';
+import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
 import Page from '../../../types/Page';
 import State, { Pageable } from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -10,6 +11,7 @@ import { fetchPageableCollectionsAction } from '../../collection/redux/actions/f
 
 interface Props {
   collectionKey: CollectionKey;
+  collectionFiler?: CollectionSearchRequest;
 }
 
 interface StateProps {
@@ -38,7 +40,12 @@ const mapDispatchToProps = (
   props: Props,
 ): DispatchProps => ({
   fetchCollections: () =>
-    dispatch(fetchPageableCollectionsAction(props.collectionKey)),
+    dispatch(
+      fetchPageableCollectionsAction({
+        key: props.collectionKey,
+        request: props.collectionFiler,
+      }),
+    ),
   fetchNextPage: () =>
     dispatch(fetchNextPageableCollectionsAction(props.collectionKey)),
 });

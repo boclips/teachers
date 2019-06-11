@@ -26,6 +26,7 @@ export default function fetchLinks() {
 
         if (body._links.searchCollections) {
           links.searchCollections = new Link(body._links.searchCollections);
+          links.discoverCollections = new Link(body._links.searchCollections);
         }
 
         if (body._links.createCollection) {

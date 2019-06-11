@@ -21,6 +21,7 @@ test('updates public collection', () => {
       items: [toBeUpdatedCollection],
     }),
     bookmarkedCollections: undefined,
+    discoverCollections: undefined,
   };
 
   const updatedCollection = {
@@ -49,6 +50,7 @@ describe('bookmarking a collection', () => {
       loading: false,
       myCollections: undefined,
       publicCollections: undefined,
+      discoverCollections: undefined,
       bookmarkedCollections: PageableCollectionsFactory.sample({
         items: [untouchedCollection],
       }),
@@ -74,6 +76,7 @@ describe('bookmarking a collection', () => {
       updating: false,
       loading: false,
       myCollections: undefined,
+      discoverCollections: undefined,
       publicCollections: PageableCollectionsFactory.sample({
         items: [toBeUpdatedCollection],
       }),
@@ -93,6 +96,37 @@ describe('bookmarking a collection', () => {
     expect(publicCollections).toHaveLength(1);
     expect(publicCollections).toContainEqual(updatedCollection);
   });
+
+  test('updates discover collection', () => {
+    const toBeUpdatedCollection = VideoCollectionFactory.sample({
+      id: '123',
+      title: 'jose carlos',
+    });
+
+    const stateBefore: CollectionsStateValue = {
+      updating: false,
+      loading: false,
+      myCollections: undefined,
+      discoverCollections: PageableCollectionsFactory.sample({
+        items: [toBeUpdatedCollection],
+      }),
+      publicCollections: undefined,
+      bookmarkedCollections: undefined,
+    };
+
+    const updatedCollection = {
+      ...toBeUpdatedCollection,
+      title: 'la familia es muy importante',
+    };
+
+    const action = onCollectionBookmarkedAction(updatedCollection);
+
+    const discoverCollections = collectionsReducer(stateBefore, action)
+      .discoverCollections.items;
+
+    expect(discoverCollections).toHaveLength(1);
+    expect(discoverCollections).toContainEqual(updatedCollection);
+  });
 });
 
 describe('unbookmarking a collection', () => {
@@ -107,6 +141,7 @@ describe('unbookmarking a collection', () => {
       loading: false,
       myCollections: undefined,
       publicCollections: undefined,
+      discoverCollections: undefined,
       bookmarkedCollections: PageableCollectionsFactory.sample({
         items: [toBeUnbookmarkedCollection, untouchedCollection],
       }),

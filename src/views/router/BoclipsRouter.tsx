@@ -1,6 +1,7 @@
 import { ConnectedRouter } from 'connected-react-router';
 import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
+import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
@@ -11,6 +12,7 @@ import { RouterState } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionDetailsView from '../collection/CollectionDetailsView';
+import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import MyCollectionListView from '../collection/MyCollectionListView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
@@ -33,6 +35,13 @@ function collectionView(
       collectionId={props.computedMatch.params.collectionId}
     />
   );
+}
+
+function discoverCollectionsView(props: RouteComponentProps) {
+  const queryParams = queryString.parse(props.location.search);
+  const subject = queryParams.subject as string;
+
+  return <DiscoverCollectionsView subject={subject} />;
 }
 
 interface StateProps {
@@ -62,6 +71,11 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             <PrivateRoute
               path="/public-collections"
               component={PublicCollectionListView}
+              exact={true}
+            />
+            <PrivateRoute
+              path="/discover-collections"
+              component={discoverCollectionsView}
               exact={true}
             />
             <PrivateRoute

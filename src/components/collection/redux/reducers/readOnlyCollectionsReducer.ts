@@ -9,7 +9,7 @@ export const onCollectionUnbookmarked = (
   updatedCollection: VideoCollection,
 ): CollectionsStateValue => {
   state = removeUnbookmarkedCollection(state, updatedCollection);
-  state = updatePublicCollection(state, updatedCollection);
+  state = updateCachedCollections(state, updatedCollection);
   return state;
 };
 
@@ -18,7 +18,7 @@ export const onCollectionBookmarked = (
   updatedCollection: VideoCollection,
 ): CollectionsStateValue => {
   state = addBookmarkedCollection(state, updatedCollection);
-  state = updatePublicCollection(state, updatedCollection);
+  state = updateCachedCollections(state, updatedCollection);
   return state;
 };
 
@@ -55,7 +55,7 @@ const addBookmarkedCollection = (
   };
 };
 
-const updatePublicCollection = (
+const updateCachedCollections = (
   state: CollectionsStateValue,
   updatedCollection: VideoCollection,
 ): CollectionsStateValue => {
@@ -70,33 +70,38 @@ const updatePublicCollection = (
     );
   }
 
-  let publicCollections = state.publicCollections;
-  if (state.publicCollections) {
-    const indexOfCollection = getIndexOfCollection(
-      state.publicCollections && state.publicCollections.items,
-      updatedCollection.id,
-    );
-
-    const publicCollectionsItems = [...state.publicCollections.items];
-
-    if (indexOfCollection > -1) {
-      publicCollectionsItems[indexOfCollection] = buildUpdatedCollection(
-        updatedCollection,
-        publicCollectionsItems[indexOfCollection],
-      );
-    }
-
-    publicCollections = {
-      ...state.publicCollections,
-      items: publicCollectionsItems,
-    };
-  }
+  const publicCollections = updateCache(state.publicCollections);
+  const discoverCollections = updateCache(state.discoverCollections);
 
   return {
     ...state,
     publicCollections,
+    discoverCollections,
     collectionBeingViewed,
   };
+
+  function updateCache(collections) {
+    if (collections) {
+      const indexOfCollection = getIndexOfCollection(
+        collections && collections.items,
+        updatedCollection.id,
+      );
+
+      const collectionsItems = [...collections.items];
+
+      if (indexOfCollection > -1) {
+        collectionsItems[indexOfCollection] = buildUpdatedCollection(
+          updatedCollection,
+          collectionsItems[indexOfCollection],
+        );
+      }
+
+      return {
+        ...collections,
+        items: collectionsItems,
+      };
+    }
+  }
 
   function buildUpdatedCollection(newCollection, originalCollection) {
     return {

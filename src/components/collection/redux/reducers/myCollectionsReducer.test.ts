@@ -31,6 +31,7 @@ describe('adding video to collection', () => {
         items: [otherCollection, targetCollection],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
+      discoverCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -65,6 +66,7 @@ describe('adding video to collection', () => {
         items: [collection],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
+      discoverCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -85,6 +87,7 @@ describe('adding video to collection', () => {
         items: [collection],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
+      discoverCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -110,6 +113,7 @@ describe('adding video to collection', () => {
         items: [collection],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
+      discoverCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -146,6 +150,7 @@ describe('adding video to collection', () => {
         items: [collection],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
+      discoverCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
@@ -181,6 +186,7 @@ describe('removing videos from a colleciton', () => {
         items: [collection],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
+      discoverCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
