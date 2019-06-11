@@ -1,33 +1,49 @@
+import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import collectionsImg from '../../../resources/images/collections.png';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import PageLayout from '../../components/layout/PageLayout';
-import './CollectionDetailsView.less';
+import SubjectLabel from '../../components/SubjectLabel';
+import './DiscoverCollectionsView.less';
 
 interface Props {
   subject: string;
 }
 
+const { Content } = Layout;
+
 export class DiscoverCollectionsView extends PureComponent<Props> {
   public render() {
     return (
-      <PageLayout>
-        <section
-          className="discover-collections-list collection-list"
-          data-qa="discover-collections-list-page"
+      <section>
+        <PageLayout
+          subheader={
+            <section className="discover-collections__header">
+              <Content>
+                <h1>
+                  <SubjectLabel subjectId={this.props.subject} />
+                </h1>
+              </Content>
+            </section>
+          }
         >
-          <PageableCollectionCardList
-            title={
-              <span>
-                <img src={collectionsImg} alt="" /> Video collections
-              </span>
-            }
-            grid={true}
-            collectionKey="discoverCollections"
-            collectionFiler={{ subjects: this.props.subject }}
-          />
-        </section>
-      </PageLayout>
+          <section
+            className="discover-collections__container collection-list"
+            data-qa="discover-collections-list-page"
+          >
+            <PageableCollectionCardList
+              title={
+                <span>
+                  <img src={collectionsImg} alt="" /> Video collections
+                </span>
+              }
+              grid={true}
+              collectionKey="discoverCollections"
+              collectionFiler={{ subjects: this.props.subject }}
+            />
+          </section>
+        </PageLayout>
+      </section>
     );
   }
 }

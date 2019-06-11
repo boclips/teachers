@@ -3,55 +3,61 @@
 @header-height: 64px;
 @mobile-header-height: 92px;
 
-.top-search-bar {
-  background-color: white;
-  @media (max-width: @screen-md) {
-    background-color: @cta-blue;
-    .ant-select-selection {
-      background-color: transparent;
+.page-layout {
+  .top-search-bar {
+    background-color: white;
+    @media (max-width: @screen-md) {
+      background-color: @cta-blue;
+      .ant-select-selection {
+        background-color: transparent;
 
-      .ant-input {
-        background-color: @shade-2;
+        .ant-input {
+          background-color: @shade-2;
+        }
       }
     }
-  }
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 
-  &.fixed {
-    position: fixed;
-    z-index: 1000;
-    width: 100%;
-    min-height: 40px;
-
-    .logo {
-      width: 110px;
-      position: relative;
-      @media (max-width: @screen-md) {
-        display: none;
-      }
-    }
-
-    .logout-container {
+    &.fixed {
+      position: fixed;
+      z-index: 1000;
       width: 100%;
-      height: @header-height;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
+      min-height: 40px;
 
-      button {
-        min-width: 84px;
+      .logo {
+        width: 110px;
+        position: relative;
+        @media (max-width: @screen-md) {
+          display: none;
+        }
+      }
+
+      .logout-container {
+        width: 100%;
+        height: @header-height;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        button {
+          min-width: 84px;
+        }
+      }
+
+      & + .ant-layout-content {
+        padding-top: @header-height;
+        @media (max-width: @screen-xl) {
+          padding-top: @mobile-header-height;
+        }
       }
     }
 
-    & + .ant-layout-content {
-      padding-top: @header-height;
-      @media (max-width: @screen-xl) {
-        padding-top: @mobile-header-height;
-      }
+    .ant-input {
+      background-color: @shade-1;
     }
   }
 
-  .ant-input {
-    background-color: @shade-1;
+  .subheader {
+    margin-top: @header-height;
   }
 }
