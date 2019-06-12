@@ -9,7 +9,6 @@ const common = require('./webpack.common.js');
 const webpack = require('webpack');
 
 const googleAnalyticsId = 'does-not-matter';
-const teachersApi = `https://api.${process.env.ENVIRONMENT_DOMAIN}`;
 
 const srcPath = path.resolve(__dirname, '../src');
 const localPort = 8081;
@@ -22,40 +21,6 @@ module.exports = merge(common, {
     port: localPort,
     host: '0.0.0.0',
     disableHostCheck: true,
-    proxy: {
-      '/v1/**': {
-        target: teachersApi,
-        changeOrigin: true,
-        onProxyRes: function(proxyRes, req, res) {
-          /** @var {http.IncomingMessage} req */
-
-          var originalBody = Buffer.from([]);
-
-          proxyRes.on('data', function(data) {
-            originalBody = Buffer.concat([originalBody, data]);
-          });
-
-          proxyRes.on('end', function() {
-            var apiUrlPattern = `https:\\/\\/api\\.${process.env.ENVIRONMENT_DOMAIN.replace(
-              '.',
-              '\\.',
-            )}\\/v1\\/`;
-
-            var proxiedApiUrl = `http://${req.headers.host}/v1/`;
-            const bodyWithRewrittenLinks = originalBody
-              .toString('UTF-8')
-              .replace(new RegExp(apiUrlPattern, 'gm'), proxiedApiUrl);
-            console.log(
-              `Proxied request... replacing ${apiUrlPattern} with ${proxiedApiUrl}`,
-            );
-            res.status(proxyRes.statusCode);
-            res.write(bodyWithRewrittenLinks);
-            res.end();
-          });
-        },
-        selfHandleResponse: true,
-      },
-    },
   },
   plugins: [
     new HtmlWebpackPlugin({
