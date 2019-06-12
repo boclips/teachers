@@ -22,9 +22,17 @@ class VideoDetailsContent extends React.PureComponent<Props> {
     }
 
     return (
-      <section className="video-details-container video-content">
+      <section
+        className="video-details-container video-content"
+        itemScope={true}
+        itemType="http://schema.org/Article"
+      >
         <section className={'video-header'}>
-          <h1 className="title clamp-2-lines big-title" data-qa="video-title">
+          <h1
+            className="title clamp-2-lines big-title"
+            data-qa="video-title"
+            itemProp="name"
+          >
             {this.props.video.title}
           </h1>
           <p className="subtitle">
@@ -42,6 +50,11 @@ class VideoDetailsContent extends React.PureComponent<Props> {
           <VideoButtons video={this.props.video} />
         </section>
         <VideoPlayer video={this.props.video} />
+        <img
+          src={this.props.video.thumbnailUrl}
+          style={{ display: 'none' }}
+          itemProp="image"
+        />
         <section className="video-details">
           <section className="badges-row">
             <div className="subjects-container">
@@ -57,7 +70,11 @@ class VideoDetailsContent extends React.PureComponent<Props> {
               <VideoPreviewBadge video={this.props.video} />
             </section>
           </section>
-          <p data-qa="video-description" className="description">
+          <p
+            data-qa="video-description"
+            className="description"
+            itemProp="description"
+          >
             {this.props.video.description}
           </p>
         </section>
