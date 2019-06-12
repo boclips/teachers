@@ -17,7 +17,7 @@ import { userLoggedIn } from '../actions/userLoggedIn';
 const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
   const userId = keycloak.subject;
 
-  fetchLinks()
+  fetchLinks(store.getState().apiPrefix)
     .then((links: Links) => {
       store.dispatch(storeLinksAction(links));
       return links;

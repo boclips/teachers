@@ -22,6 +22,7 @@ export class MyCollectionListPage extends AbstractCollectionListPage {
           history={createMemoryHistory({
             initialEntries: [`/collections`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

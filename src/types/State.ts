@@ -69,6 +69,10 @@ export interface AgeRangeState {
   ageRanges: AgeRange[];
 }
 
+export interface Environment {
+  apiPrefix: string;
+}
+
 export interface Pageable<T> {
   items: T[];
   links: {
@@ -104,4 +108,5 @@ export default interface State
     RouterState,
     CollectionState,
     SubjectState,
-    AgeRangeState {}
+    AgeRangeState,
+    Environment {}

@@ -1,50 +1,51 @@
+const prefix = 'https://api.example.com';
+
 export const links = {
   _links: {
     searchVideos: {
-      href:
-        '/v1/videos?query={query}&page={page}&size={size}{&include_tag,exclude_tag}',
+      href: `${prefix}/v1/videos?query={query}&page={page}&size={size}{&include_tag,exclude_tag}`,
       templated: true,
     },
     searchCollections: {
-      href: '/v1/collections{?query,subjects}',
+      href: `${prefix}/v1/collections{?query,subjects}`,
       templated: true,
     },
     video: {
-      href: '/v1/videos/{id}',
+      href: `${prefix}/v1/videos/{id}`,
       templated: true,
     },
     createPlaybackEvent: {
-      href: '/v1/events',
+      href: `${prefix}/v1/events`,
     },
     collection: {
-      href: '/v1/collections/{id}',
+      href: `${prefix}/v1/collections/{id}`,
       templated: true,
     },
     publicCollections: {
-      href: '/v1/collections?public=true',
+      href: `${prefix}/v1/collections?public=true`,
     },
     bookmarkedCollections: {
-      href: '/v1/collections?bookmarked=true',
+      href: `${prefix}/v1/collections?bookmarked=true`,
     },
     myCollections: {
-      href: '/v1/collections?projection=list&owner=me',
+      href: `${prefix}/v1/collections?projection=list&owner=me`,
     },
     createCollection: {
-      href: '/v1/collections',
+      href: `${prefix}/v1/collections`,
     },
     profile: {
-      href: '/v1/users/{id}',
+      href: `${prefix}/v1/users/{id}`,
       templated: true,
     },
     subjects: {
-      href: '/v1/subjects',
+      href: `${prefix}/v1/subjects`,
     },
   },
 };
 
 export const video177Slim = Object.freeze({
   id: '177',
-  _links: { self: { href: '/v1/videos/177' } },
+  _links: { self: { href: `${prefix}/v1/videos/177` } },
 });
 
 export const video177 = Object.freeze({
@@ -141,30 +142,30 @@ export function collectionResponse(
     createdBy: 'AI',
     _links: {
       self: {
-        href: `/v1/collections/${id}`,
+        href: `${prefix}/v1/collections/${id}`,
         templated: false,
       },
       edit: editable
         ? {
-            href: `/v1/collections/${id}`,
+            href: `${prefix}/v1/collections/${id}`,
             templated: false,
           }
         : undefined,
       remove: editable
         ? {
-            href: `/v1/collections/${id}`,
+            href: `${prefix}/v1/collections/${id}`,
             templated: false,
           }
         : undefined,
       addVideo: editable
         ? {
-            href: `/v1/collections/${id}/videos/{video_id}`,
+            href: `${prefix}/v1/collections/${id}/videos/{video_id}`,
             templated: true,
           }
         : undefined,
       removeVideo: editable
         ? {
-            href: `/v1/collections/${id}/videos/{video_id}`,
+            href: `${prefix}/v1/collections/${id}/videos/{video_id}`,
             templated: true,
           }
         : undefined,
@@ -205,23 +206,23 @@ export function collectionsResponse(
           subjects,
           _links: {
             edit: {
-              href: '/v1/collections/id',
+              href: `${prefix}/v1/collections/id`,
               templated: false,
             },
             remove: {
-              href: '/v1/collections/id',
+              href: `${prefix}/v1/collections/id`,
               templated: false,
             },
             addVideo: {
-              href: '/v1/collections/id/videos/{video_id}',
+              href: `${prefix}/v1/collections/id/videos/{video_id}`,
               templated: true,
             },
             removeVideo: {
-              href: '/v1/collections/id/videos/{video_id}',
+              href: `${prefix}/v1/collections/id/videos/{video_id}`,
               templated: true,
             },
             self: {
-              href: '/v1/collections/id',
+              href: `${prefix}/v1/collections/id`,
               templated: false,
             },
           },

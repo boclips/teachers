@@ -43,7 +43,7 @@ test('search shows video results', async () => {
     releasedOn: 'Feb 11, 2018',
     badgeAlt: 'Ad free',
     subjects: ['Maths', 'Physics'],
-    playerVideoUri: '/v1/videos/177',
+    playerVideoUri: 'https://api.example.com/v1/videos/177',
   });
 });
 

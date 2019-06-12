@@ -26,11 +26,16 @@ const mockStore = configureStore<{}>([
   onStoreLoginMiddleware,
   onRegisterAnalyticsMiddleware,
 ]);
-const store = mockStore({});
+const store = mockStore({
+  apiPrefix: 'https://api.example.com',
+});
 
 describe('on store login', () => {
   beforeEach(() => {
-    new ApiStub({ ...links, activate: { href: '/v1/activate' } })
+    new ApiStub({
+      ...links,
+      activate: { href: 'https://api.example.com/v1/activate' },
+    })
       .fetchUser(userResponse())
       .fetchCollections();
 

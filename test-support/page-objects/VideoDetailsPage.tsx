@@ -14,6 +14,7 @@ export class VideoDetailsPage {
       mount(
         <App
           history={createMemoryHistory({ initialEntries: ['/videos/177'] })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

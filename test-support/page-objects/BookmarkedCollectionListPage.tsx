@@ -18,6 +18,7 @@ export class BookmarkedCollectionListPage extends AbstractCollectionListPage {
           history={createMemoryHistory({
             initialEntries: [`/bookmarked-collections`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

@@ -299,6 +299,7 @@ export class MockStoreFactory {
     const mockStore = configureStore<State>();
 
     return mockStore({
+      apiPrefix: 'https://api.example.com',
       links: LinksFactory.sample(),
       search: SearchFactory.sample(),
       user: UserProfileFactory.sample(),

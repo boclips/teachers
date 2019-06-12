@@ -5,7 +5,7 @@ import { fetchLinksAction } from '../actions/fetchLinksAction';
 import { storeLinksAction } from '../actions/storeLinksAction';
 
 export default sideEffect(fetchLinksAction, (store: Store) => {
-  fetchLinks()
+  fetchLinks(store.getState().apiPrefix)
     .then(storeLinksAction)
     .then(store.dispatch);
 });

@@ -29,8 +29,10 @@ interface SingleVideoOptions {
 }
 
 export default class ApiStub {
+  private readonly prefix: string = 'https://api.example.com';
+
   constructor(linksDefault: any = links) {
-    MockFetchVerify.get('/v1/', JSON.stringify(linksDefault));
+    MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
     this.fetchSubjects();
   }
 
@@ -54,14 +56,17 @@ export default class ApiStub {
 
   public fetchVideo(options: SingleVideoOptions = { video: video177 }) {
     MockFetchVerify.get(
-      `/v1/videos/${options.video.id}`,
+      `${this.prefix}/v1/videos/${options.video.id}`,
       JSON.stringify(options.video),
     );
     return this;
   }
 
   public fetchSubjects() {
-    MockFetchVerify.get(`/v1/subjects`, JSON.stringify(subjectsResponse()));
+    MockFetchVerify.get(
+      `${this.prefix}/v1/subjects`,
+      JSON.stringify(subjectsResponse()),
+    );
     return this;
   }
 
@@ -71,12 +76,12 @@ export default class ApiStub {
   ) {
     if (once) {
       MockFetchVerify.getOnce(
-        '/v1/collections?projection=list&owner=me',
+        `${this.prefix}/v1/collections?projection=list&owner=me`,
         collectionsList,
       );
     } else {
       MockFetchVerify.get(
-        '/v1/collections?projection=list&owner=me',
+        `${this.prefix}/v1/collections?projection=list&owner=me`,
         collectionsList,
       );
     }
@@ -88,28 +93,46 @@ export default class ApiStub {
     once = false,
   ) {
     if (once) {
-      MockFetchVerify.getOnce('/v1/collections?public=true', collections);
+      MockFetchVerify.getOnce(
+        `${this.prefix}/v1/collections?public=true`,
+        collections,
+      );
     } else {
-      MockFetchVerify.get('/v1/collections?public=true', collections);
+      MockFetchVerify.get(
+        `${this.prefix}/v1/collections?public=true`,
+        collections,
+      );
     }
     return this;
   }
 
   public fetchDiscoverMathsCollections(collections = collectionsResponse()) {
-    MockFetchVerify.get('/v1/collections?subjects=maths', collections);
+    MockFetchVerify.get(
+      `${this.prefix}/v1/collections?subjects=maths`,
+      collections,
+    );
     return this;
   }
 
   public fetchBookmarkedCollections(collections = collectionsResponse()) {
-    MockFetchVerify.getOnce('/v1/collections?bookmarked=true', collections);
+    MockFetchVerify.getOnce(
+      `${this.prefix}/v1/collections?bookmarked=true`,
+      collections,
+    );
     return this;
   }
 
   public fetchCollection(collection = collectionResponse(), once = false) {
     if (once) {
-      MockFetchVerify.getOnce(`/v1/collections/${collection.id}`, collection);
+      MockFetchVerify.getOnce(
+        `${this.prefix}/v1/collections/${collection.id}`,
+        collection,
+      );
     } else {
-      MockFetchVerify.get(`/v1/collections/${collection.id}`, collection);
+      MockFetchVerify.get(
+        `${this.prefix}/v1/collections/${collection.id}`,
+        collection,
+      );
     }
     return this;
   }
@@ -138,7 +161,7 @@ export default class ApiStub {
     collectionOptions: CollectionOptions = { collectionId: 'id' },
   ) {
     MockFetchVerify.delete(
-      `/v1/collections/${collectionOptions.collectionId}`,
+      `${this.prefix}/v1/collections/${collectionOptions.collectionId}`,
       JSON.stringify({}),
       204,
     );
@@ -146,7 +169,7 @@ export default class ApiStub {
   }
 
   public fetchUser(user: any) {
-    MockFetchVerify.get(`/v1/users/${user.id}`, user);
+    MockFetchVerify.get(`${this.prefix}/v1/users/${user.id}`, user);
     return this;
   }
 

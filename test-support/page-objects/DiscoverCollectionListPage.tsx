@@ -18,6 +18,7 @@ export class DiscoverCollectionListPage extends AbstractCollectionListPage {
           history={createMemoryHistory({
             initialEntries: [`/discover-collections?subject=maths`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

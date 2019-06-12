@@ -3,8 +3,10 @@ import { Link } from '../../types/Link';
 import { Links } from '../../types/Links';
 import fetchLinks from './fetchLinks';
 
+const prefix = 'https://api.example.com';
+
 test('parses all links', async () => {
-  MockFetchVerify.get('/v1/', {
+  MockFetchVerify.get(`${prefix}/v1/`, {
     _links: {
       searchVideos: { href: '/videos', templated: false },
       video: { href: '/videos/{id}', templated: true },
@@ -19,7 +21,7 @@ test('parses all links', async () => {
     },
   });
 
-  const links = await fetchLinks();
+  const links = await fetchLinks(prefix);
 
   const expectedLinks: Links = {
     videos: new Link({ href: '/videos', templated: false }),
@@ -47,7 +49,7 @@ test('parses all links', async () => {
 
 describe('when anonymous user', () => {
   test('creates mandatory links', async () => {
-    MockFetchVerify.get('/v1/', {
+    MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
         createPlaybackEvent: { href: '/events' },
@@ -55,7 +57,7 @@ describe('when anonymous user', () => {
       },
     });
 
-    const links = await fetchLinks();
+    const links = await fetchLinks(prefix);
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),
@@ -71,7 +73,7 @@ describe('when anonymous user', () => {
 
 describe('when activate link available', () => {
   test('creates mandatory links plus activate link ', async () => {
-    MockFetchVerify.get('/v1/', {
+    MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
         createPlaybackEvent: { href: '/events' },
@@ -80,7 +82,7 @@ describe('when activate link available', () => {
       },
     });
 
-    const links = await fetchLinks();
+    const links = await fetchLinks(prefix);
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),
@@ -97,7 +99,7 @@ describe('when activate link available', () => {
 
 describe('when profile link available', () => {
   test('creates mandatory links plus profile link ', async () => {
-    MockFetchVerify.get('/v1/', {
+    MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
         createPlaybackEvent: { href: '/events' },
@@ -106,7 +108,7 @@ describe('when profile link available', () => {
       },
     });
 
-    const links = await fetchLinks();
+    const links = await fetchLinks(prefix);
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),

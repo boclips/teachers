@@ -18,6 +18,7 @@ export class SearchPage {
           history={createMemoryHistory({
             initialEntries: [`/videos?page=1&q=${escapedQuery}`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );
@@ -34,6 +35,7 @@ export class SearchPage {
           history={createMemoryHistory({
             initialEntries: [`/videos?page=1&q=${escapedQuery}&mode=news`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

@@ -50,7 +50,7 @@ describe('when video collection', () => {
       releasedOn: 'Feb 11, 2018',
       badgeAlt: 'Ad free',
       subjects: ['Maths', 'Physics'],
-      playerVideoUri: '/v1/videos/177',
+      playerVideoUri: 'https://api.example.com/v1/videos/177',
     });
   });
 });
@@ -94,7 +94,7 @@ describe('when editable collection', () => {
 
     const newTitle = 'this is a shiny new title';
     MockFetchVerify.patch(
-      '/v1/collections/id',
+      'https://api.example.com/v1/collections/id',
       { title: newTitle, isPublic: null, subjects: null, ageRange: null },
       204,
     );
@@ -121,7 +121,7 @@ describe('when editable collection', () => {
       .fetchVideo();
 
     MockFetchVerify.patch(
-      '/v1/collections/id',
+      'https://api.example.com/v1/collections/id',
       {
         title: null,
         isPublic: null,

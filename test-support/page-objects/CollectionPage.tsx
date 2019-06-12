@@ -19,6 +19,7 @@ export class CollectionPage {
           history={createMemoryHistory({
             initialEntries: [`/collections/${collectionId}`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

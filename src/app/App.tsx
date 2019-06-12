@@ -41,9 +41,11 @@ const rootReducer: Reducer<any> = combineReducers({
   collections: collectionsReducer,
   subjects: subjectsReducer,
   ageRanges: ageRangeReducer,
+  apiPrefix: (state = {}) => state,
 });
 
 interface Props {
+  apiPrefix: string;
   history?: History;
 }
 
@@ -54,6 +56,7 @@ export default class App extends PureComponent<Props> {
 
   private store = createStore<State, any, any, any>(
     connectRouter(defaultHistory)(rootReducer),
+    { apiPrefix: this.props.apiPrefix },
     composeEnhancers(
       applyMiddleware(
         routerMiddleware(this.props.history || defaultHistory),

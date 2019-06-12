@@ -11,7 +11,12 @@ export class HomePage {
 
   public static async load() {
     const page = new HomePage(
-      mount(<App history={createMemoryHistory({ initialEntries: ['/'] })} />),
+      mount(
+        <App
+          history={createMemoryHistory({ initialEntries: ['/'] })}
+          apiPrefix="https://api.example.com"
+        />,
+      ),
     );
     await page.hasLoaded();
     return page;

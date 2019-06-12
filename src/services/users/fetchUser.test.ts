@@ -10,7 +10,10 @@ describe('fetch user ', async () => {
 
     const userProfile = await fetchUser(
       LinksFactory.sample({
-        profile: new Link({ href: '/v1/users/{id}', templated: true }),
+        profile: new Link({
+          href: 'https://api.example.com/v1/users/{id}',
+          templated: true,
+        }),
       }),
       '123',
     );

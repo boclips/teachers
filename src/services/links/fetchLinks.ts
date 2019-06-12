@@ -2,9 +2,9 @@ import axios from 'axios';
 import { Link } from '../../types/Link';
 import { Links } from '../../types/Links';
 
-export default function fetchLinks() {
+export default function fetchLinks(prefix: string) {
   return axios
-    .get('/v1/')
+    .get(`${prefix}/v1/`)
     .then(response => response.data)
     .then(
       (body): Links => {

@@ -18,6 +18,7 @@ export class PublicCollectionListPage extends AbstractCollectionListPage {
           history={createMemoryHistory({
             initialEntries: [`/public-collections`],
           })}
+          apiPrefix="https://api.example.com"
         />,
       ),
     );

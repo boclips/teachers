@@ -2,6 +2,7 @@ import './index.less';
 // CSS breaks when index.less joins the rest of the imports
 
 import * as Sentry from '@sentry/browser';
+import { extractEndpoint } from 'boclips-js-security';
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './app/App';
@@ -27,4 +28,7 @@ if (environment === 'production') {
   addHubspotScript();
 }
 
-ReactDom.render(<App />, document.getElementById('root'));
+ReactDom.render(
+  <App apiPrefix={extractEndpoint(window.location.hostname, 'api')} />,
+  document.getElementById('root'),
+);
