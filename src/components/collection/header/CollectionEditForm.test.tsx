@@ -27,26 +27,3 @@ test('can set correct initial age range for slider when age range is an interval
 
   expect(wrapper.find(Slider).props().value).toEqual([3, 9]);
 });
-
-test('can set correct initial age range for slider when age range is n+', () => {
-  const ageRangeChange = () => {
-    return false;
-  };
-  const store = MockStoreFactory.sample();
-  const wrapper = mount(
-    <Provider store={store}>
-      <>
-        <CollectionEditForm
-          title="irrelevant"
-          isPublic={true}
-          subjects={[]}
-          ageRange={[5, 19]}
-          onAgeRangeChange={ageRangeChange}
-          sliderRange={{ min: 3, max: 19 }}
-        />
-      </>
-    </Provider>,
-  );
-
-  expect(wrapper.find(Slider).props().value).toEqual([5, 19]);
-});
