@@ -2,14 +2,26 @@ import React from 'react';
 
 interface Props {
   children: React.ReactNode;
+  wrapper?: 'div' | 'section';
+  wrapperProps?: { [key: string]: any };
 }
 
-const onClick = (event: React.MouseEvent) => {
-  event.stopPropagation();
-};
+class StopClickPropagation extends React.PureComponent<Props> {
+  public static defaultProps: Partial<Props> = {
+    wrapper: 'div',
+    wrapperProps: {},
+  };
 
-const StopClickPropagation = (props: Props) => {
-  return <div onClick={onClick}>{props.children}</div>;
-};
+  private handleOnClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
 
+  public render() {
+    return React.createElement(this.props.wrapper, {
+      ...this.props.wrapperProps,
+      children: this.props.children,
+      onClick: this.handleOnClick,
+    });
+  }
+}
 export default StopClickPropagation;

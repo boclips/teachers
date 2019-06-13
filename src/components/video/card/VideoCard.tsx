@@ -38,15 +38,16 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
       <section className="video-content">
         <VideoHeader video={this.props.video} />
 
-        <StopClickPropagation>
-          <section className={'video-preview'}>
-            <div aria-label={'video player'} tabIndex={0}>
-              <VideoPlayer
-                video={this.props.video}
-                videoIndex={this.props.videoIndex}
-              />
-            </div>
-          </section>
+        <StopClickPropagation
+          wrapper="section"
+          wrapperProps={{ className: 'video-preview' }}
+        >
+          <div aria-label={'video player'} tabIndex={0}>
+            <VideoPlayer
+              video={this.props.video}
+              videoIndex={this.props.videoIndex}
+            />
+          </div>
         </StopClickPropagation>
 
         <section className="video-details">

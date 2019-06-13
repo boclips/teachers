@@ -69,8 +69,6 @@
   }
 
   .boclips-player {
-    max-height: @video-height;
-
     @media (max-width: @screen-md) {
       border-radius: @video-border-radius @video-border-radius 0px 0px;
     }
@@ -85,17 +83,19 @@
 
     @media (max-width: @screen-md) {
       flex-direction: column;
-    }
 
-    .card-video-header {
-      @media (max-width: @screen-md) {
+      .card-video-header {
         order: 2;
       }
-    }
 
-    .buttons-row {
-      @media (max-width: @screen-md) {
+      .buttons-row {
         order: 3;
+      }
+
+      .video-preview {
+        height: 0;
+        // the aspect should be 16:9
+        padding-bottom: 100% / 16 * 9;
       }
     }
 
@@ -176,5 +176,3 @@
     }
   }
 }
-
-
