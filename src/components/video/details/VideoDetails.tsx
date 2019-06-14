@@ -3,7 +3,7 @@ import React from 'react';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
-import VideoButtons from '../buttons/VideoButtons';
+import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import VideoPreviewBadge from '../card/VideoBadge';
 import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';

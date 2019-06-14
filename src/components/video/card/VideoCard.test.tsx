@@ -7,7 +7,7 @@ import {
   MockStoreFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import VideoButtons from '../buttons/VideoButtons';
+import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { Props, VideoCardForRouter } from './VideoCard';
 
 const getWrapper = (givenProps: Partial<Props> = {}) => {

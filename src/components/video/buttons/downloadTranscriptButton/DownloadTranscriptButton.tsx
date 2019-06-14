@@ -2,8 +2,8 @@ import { Button, Icon } from 'antd';
 import { CustomIconComponentProps } from 'antd/lib/icon';
 import axios from 'axios';
 import React from 'react';
-import downloadTranscriptSvg from '../../../../resources/images/download-transcript.svg';
-import { Video } from '../../../types/Video';
+import downloadTranscriptSvg from '../../../../../resources/images/download-transcript.svg';
+import { Video } from '../../../../types/Video';
 
 interface OwnProps {
   video: Video;

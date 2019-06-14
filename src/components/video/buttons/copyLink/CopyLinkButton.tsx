@@ -38,7 +38,7 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
       >
         <Button
           data-qa="copy-link"
-          className={'secondary copy-link-button'}
+          className={'secondary copy-link-button share-menu'}
           tabIndex={0}
         >
           <Icon component={svg} /> Copy link

@@ -1,13 +1,15 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
 import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
-import moreSvg from '../../../../resources/images/more.svg';
-import { Video } from '../../../types/Video';
-import { VideoCollection } from '../../../types/VideoCollection';
-import CopyLinkButton from './copyLink/CopyLinkButton';
-import DownloadTranscriptButton from './DownloadTranscriptButton';
+import moreSvg from '../../../../../resources/images/more.svg';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import CopyLinkButton from '../copyLink/CopyLinkButton';
+import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
+import { GoogleClassroomShareButton } from '../gclassroom/GoogleClassroomShareButton';
+import ShareButton from '../shareButton/ShareButton';
+import VideoCollectionButton from '../videoCollection/VideoCollectionButton';
 import './VideoButtons.less';
-import VideoCollectionButton from './videoCollection/VideoCollectionButton';
 
 interface OwnProps {
   video: Video;
@@ -22,7 +24,6 @@ export default class VideoButtons extends React.PureComponent<OwnProps> {
         <section className="display-desktop">
           <DesktopButtons {...this.props} />
         </section>
-
         <section className="display-mobile-and-tablet">
           <MobileButtons {...this.props} />
         </section>
@@ -38,7 +39,7 @@ const DesktopButtons = (props: OwnProps) => {
         video={props.video}
         collection={props.collection}
       />
-      <CopyLinkButton video={props.video} />
+      <ShareButton video={props.video} />
       <DownloadTranscriptButton video={props.video} />
     </Button.Group>
   );
@@ -51,9 +52,14 @@ const MobileButtons = (props: OwnProps) => {
       <CopyLinkButton video={props.video} />
     </Menu.Item>,
   );
+  items.push(
+    <Menu.Item key="2">
+      <GoogleClassroomShareButton video={props.video} />
+    </Menu.Item>,
+  );
   if (props.video.links.transcript) {
     items.push(
-      <Menu.Item key="2">
+      <Menu.Item key="3">
         <DownloadTranscriptButton video={props.video} />
       </Menu.Item>,
     );

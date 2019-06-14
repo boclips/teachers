@@ -1,0 +1,51 @@
+@import '../../../../../resources/styles/_antd-theme.less';
+.share-button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 2px;
+
+  &__icon {
+    height: 20px;
+    width: 18px;
+    line-height: 20px !important;
+  }
+}
+
+.share-button-dropdown {
+  width: 243px;
+}
+
+.share-menu {
+  border-right: 0px !important;
+  padding-left: 0px !important;
+}
+
+.share-option {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 0px 20px;
+
+  &__label {
+    height: 24px;
+    width: 45px;
+    color: #434656;
+    font-family: Heebo;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  &__close-button {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+.share-option:hover {
+  cursor: default;
+  background-color: white;
+}
+
+.share-option__close-button:hover {
+  cursor: pointer;
+}
