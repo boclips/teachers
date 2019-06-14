@@ -71,7 +71,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     }
 
     return (
-      <span>
+      <>
         <span className="display-tablet-and-desktop">
           <Popover
             title={this.props.loading ? 'Loading collections...' : 'Save to:'}
@@ -99,7 +99,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             {this.menu()}
           </Drawer>
         </span>
-      </span>
+      </>
     );
   }
 

@@ -75,7 +75,7 @@ const MobileButtons = (props: OwnProps) => {
         collection={props.collection}
       />
       <Dropdown overlay={menu()} trigger={['click']}>
-        <Button htmlType="button">
+        <Button className={'video-menu-button video-menu-button--bordered'}>
           <Icon component={svg} />
         </Button>
       </Dropdown>

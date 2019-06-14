@@ -20,11 +20,11 @@ const share = shareSvg as React.ComponentType<CustomIconComponentProps>;
 const close = closeSvg as React.ComponentType<CustomIconComponentProps>;
 
 const menu = (props: MenuProps) => (
-  <Menu className="video-buttons__container share-button-dropdown">
-    <Menu.Item key="1" className={'share-option'}>
-      <span className={'share-option__label'}>Share: </span>
+  <Menu className="share-menu">
+    <Menu.Item key="1" className={'share-menu__header'}>
+      <span className={'share-menu__header-label'}>Share: </span>
       <Icon
-        className="share-option__close-button"
+        className="share-menu__header-close-button"
         data-qa="close-button"
         component={close}
       />
@@ -39,16 +39,14 @@ const menu = (props: MenuProps) => (
 );
 
 const ShareButton = React.memo((props: Props) => (
-  <div className="display-tablet-and-desktop">
-    <Dropdown overlay={menu(props)} trigger={['click']}>
-      <Button>
-        <section className="share-button">
-          <Icon component={share} className="share-button__icon" />
-          <span>Share</span>
-        </section>
-      </Button>
-    </Dropdown>
-  </div>
+  <Dropdown overlay={menu(props)} trigger={['click']}>
+    <Button className="video-menu-button video-menu-button--bordered">
+      <section className="share-button">
+        <Icon component={share} className="share-button__icon" />
+        <span>Share</span>
+      </section>
+    </Button>
+  </Dropdown>
 ));
 
 export default ShareButton;
