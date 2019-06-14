@@ -29,10 +29,10 @@ const menu = (props: MenuProps) => (
         component={close}
       />
     </Menu.Item>
-    <Menu.Item key="2" className="share-button-dropdown__item">
+    <Menu.Item key="2" className="share-menu__item">
       <CopyLinkButton video={props.video} />
     </Menu.Item>
-    <Menu.Item key="3" className="share-button-dropdown__item">
+    <Menu.Item key="3" className="share-menu__item">
       <GoogleClassroomShareButton video={props.video} />
     </Menu.Item>
   </Menu>

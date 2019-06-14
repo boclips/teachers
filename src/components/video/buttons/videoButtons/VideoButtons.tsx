@@ -40,7 +40,10 @@ const DesktopButtons = (props: OwnProps) => {
         collection={props.collection}
       />
       <ShareButton video={props.video} />
-      <DownloadTranscriptButton video={props.video} />
+      <DownloadTranscriptButton
+        className="video-menu-button video-menu-button--bordered"
+        video={props.video}
+      />
     </Button.Group>
   );
 };
@@ -60,7 +63,10 @@ const MobileButtons = (props: OwnProps) => {
   if (props.video.links.transcript) {
     items.push(
       <Menu.Item key="3">
-        <DownloadTranscriptButton video={props.video} />
+        <DownloadTranscriptButton
+          className="video-menu-button video-menu-button--un-padded"
+          video={props.video}
+        />
       </Menu.Item>,
     );
   }
