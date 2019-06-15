@@ -5,7 +5,7 @@ import { VideoFactory } from '../../../../../test-support/factories';
 import { GoogleClassroomShareButton } from './GoogleClassroomShareButton';
 
 it('opens a new window with the correct url', () => {
-  (global as any).open = jest.fn();
+  (window as any).open = jest.fn();
 
   const wrapper = shallow(
     <GoogleClassroomShareButton
@@ -15,7 +15,7 @@ it('opens a new window with the correct url', () => {
 
   wrapper.find(Button).simulate('click');
 
-  expect(global.open).toHaveBeenCalledWith(
+  expect(window.open).toHaveBeenCalledWith(
     'https://classroom.google.com/u/0/share?url=http%3A%2F%2Flocalhost%2Fvideos%2F123&title=a%20video%20title',
     '_blank',
     'height=570,width=520',
