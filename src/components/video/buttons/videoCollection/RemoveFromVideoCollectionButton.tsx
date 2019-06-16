@@ -24,7 +24,7 @@ class RemoveFromVideoCollectionButton extends React.PureComponent<
     const svg = removeSvg as React.ComponentType<CustomIconComponentProps>;
     return (
       <Button
-        className="toggle-collection-button"
+        className="toggle-collection-button video-menu-button video-menu-button--bordered"
         data-qa="remove-from-collection"
         onClick={this.props.onRemoveFromCollection}
       >
