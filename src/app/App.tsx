@@ -12,6 +12,8 @@ import {
 } from 'redux';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
+import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
+import { disciplinesReducer } from '../components/disciplines/redux/reducers/disciplinesReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onLoginMiddleware';
 import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/onRegisterAnalyticsMiddleware';
 import { userDetailsFetchedReducer } from '../components/login/redux/reducers/userDetailsFetchedReducer';
@@ -41,6 +43,7 @@ const rootReducer: Reducer<any> = combineReducers({
   user: userDetailsFetchedReducer,
   collections: collectionsReducer,
   subjects: subjectsReducer,
+  disciplines: disciplinesReducer,
   ageRanges: ageRangeReducer,
   apiPrefix: (state = {}) => state,
 });
@@ -71,6 +74,7 @@ export default class App extends PureComponent<Props> {
         ...collectionMiddleware,
         fetchSubjectsMiddleware,
         ...updateSearchParametersMiddleware,
+        fetchDisciplinesMiddleware,
       ),
     ),
   );

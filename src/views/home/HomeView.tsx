@@ -13,6 +13,7 @@ import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
 import PublicCollectionsGrid from '../../components/collection/grid/public/PublicCollectionsGrid';
+import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import './HomeView.less';
 
 const { Content } = Layout;
@@ -42,28 +43,17 @@ export default class HomeView extends PureComponent {
             </Row>
           </PageLayout>
         </section>
-        <section className="refer-a-friend-banner">
+
+        <section className="disciplines-section">
           <Content>
             <Row>
               <Col>
-                <ReferAFriend>
-                  <ReferAFriendBanner
-                    className="refer-a-friend-banner__img display-tablet-and-desktop"
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Refer a friend"
-                  />
-                  <ReferAFriendBannerMobile
-                    className="refer-a-friend-banner__img display-mobile"
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Refer a friend"
-                  />
-                </ReferAFriend>
+                <DisciplineCardList />
               </Col>
             </Row>
           </Content>
         </section>
+
         <section className="discovery-section">
           <Content>
             <Row>
@@ -89,6 +79,30 @@ export default class HomeView extends PureComponent {
             </Row>
           </Content>
         </section>
+
+        <section className="refer-a-friend-banner">
+          <Content>
+            <Row>
+              <Col>
+                <ReferAFriend>
+                  <ReferAFriendBanner
+                    className="refer-a-friend-banner__img display-tablet-and-desktop"
+                    tabIndex={0}
+                    role="button"
+                    aria-label="Refer a friend"
+                  />
+                  <ReferAFriendBannerMobile
+                    className="refer-a-friend-banner__img display-mobile"
+                    tabIndex={0}
+                    role="button"
+                    aria-label="Refer a friend"
+                  />
+                </ReferAFriend>
+              </Col>
+            </Row>
+          </Content>
+        </section>
+
         <BoclipsFooter />
       </section>
     );

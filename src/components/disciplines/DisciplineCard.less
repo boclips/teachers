@@ -1,0 +1,51 @@
+@import '../../../resources/styles/_antd-theme.less';
+@import '../../../resources/styles/_colours.less';
+
+.discipline-card__ {
+
+  &title {
+    font-size: 28px;
+    font-weight: normal;
+    color: @dark-blue;
+    margin: 4px;
+  }
+
+  &icon {
+    font-size: 100px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+  }
+
+  &container {
+    margin-top: 24px;
+    border-radius: 8px;
+    box-shadow: @card-shadow;
+    min-height: 290px;
+
+    .ant-card-head {
+      position: relative;
+      border-bottom: 0px;
+      border-radius: 8px 8px 0px 0px;
+      background-color: @shade-4;
+    }
+  }
+
+  &subjects {
+    padding-top: 16px;
+  }
+
+  &subject-item {
+    // forgive me father for I have sinned list-style-image: url("../../../resources/images/bullet.svg");
+    color: @shade-4;
+    margin-bottom: 16px;
+  }
+
+  &subject-link {
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 22px;
+  }
+}

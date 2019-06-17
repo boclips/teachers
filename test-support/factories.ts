@@ -5,6 +5,7 @@ import {
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfile } from '../src/services/users/UserProfile';
+import { Discipline } from '../src/types/Discipline';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
 import State, {
@@ -280,6 +281,15 @@ export class CollectionsFactory {
 }
 
 export class SubjectFactory {
+  public static sample(arg: Partial<Subject> = {}): Subject {
+    return Object.freeze({
+      id: arg.id || 'id',
+      name: arg.name || 'name',
+    });
+  }
+}
+
+export class SubjectsFactory {
   public static sample(arg: Subject[] = []): Subject[] {
     return Object.freeze([
       {
@@ -292,6 +302,33 @@ export class SubjectFactory {
       },
       ...arg,
     ]) as Subject[];
+  }
+}
+
+export class DisciplineFactory {
+  public static sample(arg: Partial<Discipline> = {}): Discipline {
+    return Object.freeze({
+      id: arg.id || 'id',
+      code: arg.code || 'code',
+      name: arg.name || 'name',
+      subjects: arg.subjects || [],
+    });
+  }
+}
+
+export class DisciplinesFactory {
+  public static sample(arg: Discipline[] = []): Discipline[] {
+    return Object.freeze([
+      {
+        id: 'discipline-one-id',
+        name: 'discipline one',
+      },
+      {
+        id: 'discipline-two-id',
+        name: 'discipline two',
+      },
+      ...arg,
+    ]) as Discipline[];
   }
 }
 
@@ -310,7 +347,8 @@ export class MockStoreFactory {
       },
       collections: CollectionsFactory.sample(),
       router: RouterFactory.sample(),
-      subjects: SubjectFactory.sample(),
+      subjects: SubjectsFactory.sample(),
+      disciplines: DisciplinesFactory.sample(),
       ageRanges: [],
       ...store,
     });

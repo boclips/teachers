@@ -10,6 +10,7 @@ import {
 import activateUser from '../../../../services/users/activateUser';
 import { Link, RawLink } from '../../../../types/Link';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
+import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
@@ -53,6 +54,14 @@ describe('on store login', () => {
       expect(store.getActions().map(action => action.type)).toContain(
         storeCollectionsAction({ collections: undefined, key: 'myCollections' })
           .type,
+      );
+    });
+  });
+
+  it('fetches disciplines', async () => {
+    await eventually(() => {
+      expect(store.getActions().map(action => action.type)).toContain(
+        fetchDisciplinesAction().type,
       );
     });
   });

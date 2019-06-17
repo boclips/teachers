@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="8px" viewBox="0 0 6 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>bullet</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="subjects-/-subject-selector" transform="translate(-1.000000, -16.000000)" fill="#C3D3F5" fill-rule="nonzero">
+            <g id="bullet" transform="translate(0.000000, 16.000000)">
+                <path d="M2.5043878,7.83978841 L6.49603009,5.06057225 C7.16798997,4.59736955 7.16798997,3.41498373 6.49603009,2.93959149 L2.5043878,0.160375329 C1.83242791,-0.302827365 1,0.294460319 1,1.22086571 L1,6.76710849 C1,7.70570342 1.83242791,8.3029911 2.5043878,7.83978841 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

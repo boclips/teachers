@@ -9,6 +9,7 @@ import { fetchUser } from '../../../../services/users/fetchUser';
 import { UserProfile } from '../../../../services/users/UserProfile';
 import { Links } from '../../../../types/Links';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
+import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
@@ -20,9 +21,8 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
   fetchLinks(store.getState().apiPrefix)
     .then((links: Links) => {
       store.dispatch(storeLinksAction(links));
-      return links;
-    })
-    .then((links: Links) => {
+      store.dispatch(fetchSubjectsAction());
+      store.dispatch(fetchDisciplinesAction());
       fetchPageableCollections(links, { key: 'myCollections' })
         .then(collections => {
           store.dispatch(
@@ -30,9 +30,6 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
           );
         })
         .catch(e => console.error('Cannot fetch collections', e));
-      return links;
-    })
-    .then((links: Links) => {
       const userProfilePromise = fetchUser(links, userId);
       userProfilePromise.then((userProfile: UserProfile) => {
         return activateUser(links, userProfile);
@@ -42,9 +39,6 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
     .then((user: UserProfile) => {
       store.dispatch(userDetailsFetched(user));
       store.dispatch(registerAnalytics(user.analyticsId));
-    })
-    .then(() => {
-      store.dispatch(fetchSubjectsAction());
     })
     .catch(error => {
       console.warn(error);
