@@ -1,3 +1,4 @@
+import React from 'react';
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
@@ -14,12 +15,16 @@ export function onDeleteCollection(
   deleteCollection(request)
     .then(() => {
       NotificationFactory.success({
-        description: `Your collection "${request.title}" has been deleted`,
+        message: (
+          <span>
+            Your collection <i>{request.title}</i> has been deleted
+          </span>
+        ),
       });
       store.dispatch(onMyCollectionRemovedAction(request));
     })
     .catch(() => {
-      NotificationFactory.error({ description: 'Error deleting collection.' });
+      NotificationFactory.error({ message: 'Error deleting collection.' });
     });
   AnalyticsFactory.getInstance().trackCollectionRemoved(request);
 }

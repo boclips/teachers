@@ -21,7 +21,7 @@ export function onCreateCollection(
       store.dispatch(fetchMyCollectionsAction());
     })
     .catch(() => {
-      NotificationFactory.error({ description: 'Error creating collection.' });
+      NotificationFactory.error({ message: 'Error creating collection.' });
     });
   AnalyticsFactory.getInstance().trackCollectionCreated(request);
 }

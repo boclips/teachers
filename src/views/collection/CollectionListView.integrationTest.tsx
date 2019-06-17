@@ -1,3 +1,4 @@
+import React from 'react';
 import ApiStub from '../../../test-support/ApiStub';
 import { MyCollectionListPage } from '../../../test-support/page-objects/MyCollectionListPage';
 
@@ -29,6 +30,8 @@ test('shows notification after deleting collections', async () => {
 
   collectionsPage.deleteCollection(0);
   await collectionsPage.assertNotification(
-    'Your collection "funky collection" has been deleted',
+    <span>
+      Your collection <i>funky collection</i> has been deleted
+    </span>,
   );
 });

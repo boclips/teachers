@@ -25,7 +25,7 @@ export function onEditCollection(
     })
     .catch(error => {
       console.error(error);
-      NotificationFactory.error({ description: 'Error renaming collection.' });
+      NotificationFactory.error({ message: 'Error renaming collection.' });
     });
 
   if (request.title != null) {

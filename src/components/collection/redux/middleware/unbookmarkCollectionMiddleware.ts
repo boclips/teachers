@@ -16,7 +16,7 @@ export function onUnbookmarkCollection(
     })
     .catch(() => {
       NotificationFactory.error({
-        description: 'Error unbookmarking collection.',
+        message: 'Error unbookmarking collection.',
       });
     });
 }

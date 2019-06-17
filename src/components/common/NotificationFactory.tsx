@@ -3,8 +3,8 @@ import React from 'react';
 import tickIcon from '../../../resources/images/green-check.png';
 
 export interface NotificationOptions {
-  message?: string;
-  description?: string;
+  message: React.ReactNode;
+  description?: React.ReactNode;
 }
 
 export default class NotificationFactory {

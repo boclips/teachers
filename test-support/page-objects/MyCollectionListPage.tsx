@@ -46,7 +46,7 @@ export class MyCollectionListPage extends AbstractCollectionListPage {
     await eventually(() => {
       this.wrapper = this.wrapper.update();
       expect(NotificationFactory.success).toHaveBeenCalledWith({
-        description: message,
+        message,
       });
     });
   }

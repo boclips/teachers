@@ -17,7 +17,7 @@ export function onBookmarkCollection(
     .catch(ex => {
       console.log('error:', ex);
       NotificationFactory.error({
-        description: 'Error bookmarking collection.',
+        message: 'Error bookmarking collection.',
       });
     });
 }

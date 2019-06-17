@@ -42,7 +42,7 @@ export class RemoveCollectionButtonInner extends PureComponent<
     confirm({
       title: (
         <span>
-          Are you sure you want to delete the collection
+          Are you sure you want to delete the collection{' '}
           <i>{this.props.collection.title}</i>?
         </span>
       ),
@@ -64,7 +64,6 @@ export class RemoveCollectionButtonInner extends PureComponent<
       },
     });
   };
-  public doggy() {}
   public confirmRemoveCollection = () => {
     AnalyticsFactory.getInstance().trackCollectionRemoved(
       this.props.collection,
