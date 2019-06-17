@@ -40,9 +40,12 @@ export class RemoveCollectionButtonInner extends PureComponent<
     const confirm = Modal.confirm;
 
     confirm({
-      title: `Are you sure you want to delete the collection "${
-        this.props.collection.title
-      }"?`,
+      title: (
+        <span>
+          Are you sure you want to delete the collection
+          <i>{this.props.collection.title}</i>?
+        </span>
+      ),
       onOk: this.confirmRemoveCollection,
       okText: 'Delete',
       okButtonProps: {
