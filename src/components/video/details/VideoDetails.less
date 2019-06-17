@@ -1,13 +1,13 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
 .video-details-container {
-
   .video-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
+    padding: 0;
 
     &.clickable {
       cursor: pointer;
@@ -17,12 +17,11 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
-      padding: 12px;
-      padding-bottom: 0px;
+      padding: 12px 12px 0;
     }
 
     @media (min-width: @screen-xl) {
-      margin-top: 32px;
+      margin-top: 50px;
     }
 
     .title {
@@ -52,16 +51,9 @@
     }
   }
 
-    .boclips-player {
-      width: 100% !important;
-    }
-
-    .video-details {
-
-      .video-header {
-        padding: 0px;
-      }
-    }
+  .boclips-player {
+    width: 100% !important;
+  }
 
   .video-details {
     width: 100% !important;
@@ -82,7 +74,7 @@
     }
 
     .badge-container {
-      width: 200px;;
+      width: 200px;
       display: flex;
       justify-content: flex-end;
       align-items: baseline;
