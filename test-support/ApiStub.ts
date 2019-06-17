@@ -2,6 +2,7 @@ import MockFetchVerify from './MockFetchVerify';
 import {
   collectionResponse,
   collectionsResponse,
+  disciplinesResponse,
   links,
   subjectsResponse,
   userResponse,
@@ -33,7 +34,7 @@ export default class ApiStub {
 
   constructor(linksDefault: any = links) {
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
-    this.fetchSubjects();
+    this.fetchSubjects().fetchDisciplines();
   }
 
   public queryVideos(options: VideoQueryOptions) {
@@ -66,6 +67,14 @@ export default class ApiStub {
     MockFetchVerify.get(
       `${this.prefix}/v1/subjects`,
       JSON.stringify(subjectsResponse()),
+    );
+    return this;
+  }
+
+  public fetchDisciplines() {
+    MockFetchVerify.get(
+      `${this.prefix}/v1/disciplines`,
+      JSON.stringify(disciplinesResponse()),
     );
     return this;
   }

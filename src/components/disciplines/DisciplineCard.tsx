@@ -31,33 +31,37 @@ const ImagesMap = {
 export class DisciplineCard extends React.PureComponent<Props> {
   public render() {
     return (
-      <Card
-        className="discipline-card__container"
-        bordered={false}
-        title={
-          <h1 data-qa="discipline-title" className="discipline-card__title">
-            {this.props.discipline.name}
-            <DisciplineLogo code={this.props.discipline.code} />
-          </h1>
-        }
-      >
-        <ul className="discipline-card__subjects">
-          {this.props.discipline.subjects.slice(0, 4).map(subject => (
-            <li
-              className="discipline-card__subject-item"
-              data-qa="discipline-subject"
-              key={`subject-${subject.id}`}
-            >
-              <Link
-                to={`/discover-collections?subject=${subject.id}`}
-                className="discipline-card__subject-link"
-              >
-                {subject.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </Card>
+      this.props.discipline && (
+        <Card
+          data-qa="discipline-card"
+          className="discipline-card__container"
+          bordered={false}
+          title={
+            <h1 data-qa="discipline-title" className="discipline-card__title">
+              {this.props.discipline.name}
+              <DisciplineLogo code={this.props.discipline.code} />
+            </h1>
+          }
+        >
+          <ul className="discipline-card__subjects">
+            {this.props.discipline.subjects &&
+              this.props.discipline.subjects.slice(0, 4).map(subject => (
+                <li
+                  className="discipline-card__subject-item"
+                  data-qa="discipline-subject"
+                  key={`subject-${subject.id}`}
+                >
+                  <Link
+                    to={`/discover-collections?subject=${subject.id}`}
+                    className="discipline-card__subject-link"
+                  >
+                    {subject.name}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        </Card>
+      )
     );
   }
 

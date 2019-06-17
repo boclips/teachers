@@ -44,10 +44,26 @@ export class HomePage {
         };
       });
   }
+
+  public getDisciplines(): Discipline[] {
+    return this.wrapper.find(By.dataQa('discipline-card')).map(card => {
+      const subjectWrapper = card.find(By.dataQa('discipline-subject'));
+
+      return {
+        name: findOne(card, 'discipline-title').text(),
+        subjects: subjectWrapper.map(el => el.text()),
+      };
+    });
+  }
 }
 
 interface Collection {
   title: string;
   numberOfVideos: number;
   subject: string | null;
+}
+
+interface Discipline {
+  name: string;
+  subjects: string[];
 }

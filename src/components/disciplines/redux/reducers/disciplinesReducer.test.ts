@@ -12,5 +12,5 @@ test('reduces disciplines', () => {
   expect(stateAfter[0].id).toBe('1');
   expect(stateAfter[0].name).toBe('French');
   expect(stateAfter[0].code).toBe('french');
-  expect(stateAfter[0].subjects).toBe([]);
+  expect(stateAfter[0].subjects).toEqual([]);
 });

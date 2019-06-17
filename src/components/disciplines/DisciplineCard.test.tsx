@@ -1,5 +1,6 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { By } from '../../../test-support/By';
 import {
   DisciplineFactory,
@@ -8,27 +9,31 @@ import {
 import { DisciplineCard } from './DisciplineCard';
 
 test('renders a card with title', () => {
-  const wrapper = shallow(
-    <DisciplineCard discipline={DisciplineFactory.sample({ name: 'Arts' })} />,
+  const wrapper = mount(
+    <MemoryRouter>
+      <DisciplineCard discipline={DisciplineFactory.sample({ name: 'Arts' })} />
+    </MemoryRouter>,
   );
 
   expect(wrapper.find(By.dataQa('discipline-title')).text()).toBe('Arts');
 });
 
 test('renders at most 4 first subjects', () => {
-  const wrapper = shallow(
-    <DisciplineCard
-      discipline={DisciplineFactory.sample({
-        subjects: [
-          SubjectFactory.sample({ name: 'subject 1' }),
-          SubjectFactory.sample({ name: 'subject 2' }),
-          SubjectFactory.sample({ name: 'subject 3' }),
-          SubjectFactory.sample({ name: 'subject 4' }),
-          SubjectFactory.sample({ name: 'subject 5' }),
-          SubjectFactory.sample({ name: 'subject 6' }),
-        ],
-      })}
-    />,
+  const wrapper = mount(
+    <MemoryRouter>
+      <DisciplineCard
+        discipline={DisciplineFactory.sample({
+          subjects: [
+            SubjectFactory.sample({ name: 'subject 1' }),
+            SubjectFactory.sample({ name: 'subject 2' }),
+            SubjectFactory.sample({ name: 'subject 3' }),
+            SubjectFactory.sample({ name: 'subject 4' }),
+            SubjectFactory.sample({ name: 'subject 5' }),
+            SubjectFactory.sample({ name: 'subject 6' }),
+          ],
+        })}
+      />
+    </MemoryRouter>,
   );
 
   expect(wrapper.find(By.dataQa('discipline-subject')).length).toBe(4);
@@ -47,12 +52,14 @@ test('renders at most 4 first subjects', () => {
 });
 
 test('renders at subjects when less than 4', () => {
-  const wrapper = shallow(
-    <DisciplineCard
-      discipline={DisciplineFactory.sample({
-        subjects: [SubjectFactory.sample({ name: 'subject 1' })],
-      })}
-    />,
+  const wrapper = mount(
+    <MemoryRouter>
+      <DisciplineCard
+        discipline={DisciplineFactory.sample({
+          subjects: [SubjectFactory.sample({ name: 'subject 1' })],
+        })}
+      />
+    </MemoryRouter>,
   );
 
   expect(wrapper.find(By.dataQa('discipline-subject')).length).toBe(1);

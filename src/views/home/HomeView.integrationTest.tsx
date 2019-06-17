@@ -24,6 +24,24 @@ describe('Home page', () => {
     });
   });
 
+  test('loads disciplines', async () => {
+    let homePage: HomePage;
+
+    new ApiStub()
+      .defaultUser()
+      .fetchVideo()
+      .fetchPublicCollections()
+      .fetchDisciplines()
+      .fetchCollections();
+
+    homePage = await HomePage.load();
+
+    expect(homePage.getDisciplines()).toContainEqual({
+      name: 'Arts',
+      subjects: ['Performing Arts', 'Art History'],
+    });
+  });
+
   test('loads public collection and renders a single subject', async () => {
     let homePage: HomePage;
 
