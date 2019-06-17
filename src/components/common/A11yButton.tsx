@@ -1,7 +1,9 @@
 import React from 'react';
 
 export interface Props {
-  callback: (event: React.MouseEvent | React.KeyboardEvent) => void;
+  callback: (
+    event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+  ) => void;
   children: React.ReactElement;
 }
 
@@ -19,7 +21,7 @@ export interface Props {
  * @constructor
  */
 export const A11yButton = ({ callback, children }: Props) => {
-  const onKeyDown = (event: React.KeyboardEvent) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (
       event.key === ' ' ||
       event.key === 'Enter' ||
@@ -37,7 +39,7 @@ export const A11yButton = ({ callback, children }: Props) => {
     return true;
   };
 
-  const onClick = (event: React.MouseEvent) => {
+  const onClick = (event: React.MouseEvent<HTMLElement>) => {
     callback(event);
     if (children.props.onClick) {
       children.props.onClick(event);

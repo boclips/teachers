@@ -54,17 +54,21 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     );
   }
 
-  private onClick = (e: SyntheticEvent) => {
+  private onClick = (event: React.SyntheticEvent<HTMLElement>) => {
     if (this.props.collection.links.bookmark) {
-      this.bookmarkCollection(e);
+      this.bookmarkCollection(event);
     } else {
-      this.unbookmarkCollection(e);
+      this.unbookmarkCollection(event);
+    }
+
+    if (event.type === 'click') {
+      event.currentTarget.blur();
     }
   };
 
-  private bookmarkCollection = (e: SyntheticEvent) => {
-    if (e && e.stopPropagation) {
-      e.stopPropagation();
+  private bookmarkCollection = (event: SyntheticEvent) => {
+    if (event && event.stopPropagation) {
+      event.stopPropagation();
     }
     AnalyticsFactory.getInstance().trackCollectionBookmarked(
       this.props.collection,
@@ -72,9 +76,9 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     this.props.onBookmarkCollectionAction(this.props.collection);
   };
 
-  private unbookmarkCollection = (e: SyntheticEvent) => {
-    if (e && e.stopPropagation) {
-      e.stopPropagation();
+  private unbookmarkCollection = (event: SyntheticEvent) => {
+    if (event && event.stopPropagation) {
+      event.stopPropagation();
     }
     AnalyticsFactory.getInstance().trackCollectionUnbookmarked(
       this.props.collection,
