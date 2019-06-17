@@ -40,6 +40,9 @@ export const links = {
     subjects: {
       href: `${prefix}/v1/subjects`,
     },
+    disciplines: {
+      href: `${prefix}/v1/disciplines`,
+    },
   },
 };
 

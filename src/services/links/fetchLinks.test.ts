@@ -18,6 +18,7 @@ test('parses all links', async () => {
       publicCollections: { href: '/collections?list=yes&public=true' },
       bookmarkedCollections: { href: '/collections?bookmarked=true' },
       subjects: { href: '/subjects' },
+      disciplines: { href: '/disciplines' },
     },
   });
 
@@ -41,6 +42,9 @@ test('parses all links', async () => {
     }),
     subjects: new Link({
       href: '/subjects',
+    }),
+    disciplines: new Link({
+      href: '/disciplines',
     }),
   };
 
