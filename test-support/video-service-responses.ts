@@ -260,6 +260,41 @@ export function subjectsResponse() {
   };
 }
 
+export function disciplinesResponse() {
+  return {
+    _embedded: {
+      disciplines: [
+        {
+          id: '1',
+          name: 'Arts',
+          code: 'arts',
+          subjects: [
+            {
+              id: '2',
+              name: 'Performing Arts',
+            },
+            {
+              id: '3',
+              name: 'Art History',
+            },
+          ],
+        },
+        {
+          id: '2',
+          name: 'Barts',
+          code: 'barts',
+          subjects: [],
+        },
+      ],
+    },
+    _links: {
+      self: {
+        href: 'https://api.boclips.com/v1/disciplines',
+      },
+    },
+  };
+}
+
 export function userResponse(id: string = 'user-id') {
   return {
     id,

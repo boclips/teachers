@@ -164,6 +164,7 @@ export class LinksFactory {
       collection: arg.collection || new Link({ href: '/collections/xxx' }),
       createAccount: arg.createAccount || new Link({ href: '/users' }),
       subjects: arg.subjects || new Link({ href: '/subjects' }),
+      disciplines: arg.disciplines || new Link({ href: '/disciplines' }),
     });
   }
 }
