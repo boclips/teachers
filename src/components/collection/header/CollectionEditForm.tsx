@@ -81,7 +81,7 @@ class CollectionEditForm extends React.PureComponent<
         <SubjectsForm
           form={this.props.form}
           subjects={this.props.subjectsInStore}
-          placeholder="Subjects"
+          placeholder="Choose from our list.."
           initialValue={this.props.subjects}
           label="Subjects"
         />
