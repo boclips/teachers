@@ -44,7 +44,7 @@ test('goToNews() dispatches search with search mode set to news', () => {
 
   const actions = store.getActions();
   expect(actions.length).toEqual(1);
-  expect(actions[0].payload.args[0]).toContain('news');
+  expect(actions[0].payload).toContainEqual({ mode: 'news' });
 });
 
 test('goToSearch() dispatches search with search mode set to blank', () => {
@@ -52,5 +52,5 @@ test('goToSearch() dispatches search with search mode set to blank', () => {
 
   const actions = store.getActions();
   expect(actions.length).toEqual(1);
-  expect(actions[0].payload.args[0]).not.toContain('news');
+  expect(actions[0].payload).toContainEqual({ mode: undefined });
 });

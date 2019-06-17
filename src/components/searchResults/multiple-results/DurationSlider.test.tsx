@@ -18,6 +18,21 @@ it('resolves slider values from minutes to seconds', () => {
   });
 });
 
+it('resolves slider with 10+ as unbounded', () => {
+  const spy = jest.fn();
+  const wrapper = shallow(<DurationSlider onChange={spy} />);
+
+  wrapper
+    .find(Slider)
+    .props()
+    .onChange([2, 10]);
+
+  expect(spy).toHaveBeenCalledWith({
+    min: 120,
+    max: null,
+  });
+});
+
 it('does not call callback when types are incorrect', () => {
   const spy = jest.fn();
   const wrapper = shallow(<DurationSlider onChange={spy} />);

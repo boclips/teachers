@@ -1,5 +1,9 @@
 import { Button, Modal } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { bulkUpdateSearchParamsAction } from '../redux/actions/UpdateSearchParametersActions';
+import DurationConverter from './DurationConverter';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 
 interface FilterRequest {
@@ -17,10 +21,7 @@ interface State {
   visible: boolean;
 }
 
-export default class FilterButton extends React.Component<
-  DispatchProps,
-  State
-> {
+export class FilterButton extends React.Component<DispatchProps, State> {
   private formRef: any;
   constructor(props: DispatchProps) {
     super(props);
@@ -76,3 +77,27 @@ export default class FilterButton extends React.Component<
     );
   }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    onSubmit: (fields: FilterFormEditableFields) => {
+      const durationConverter = new DurationConverter();
+      const minIso = durationConverter.secondsToIso(fields.duration.min);
+      const maxIso = durationConverter.secondsToIso(fields.duration.max);
+
+      dispatch(
+        bulkUpdateSearchParamsAction([
+          {
+            min_duration: minIso,
+            max_duration: maxIso,
+          },
+        ]),
+      );
+    },
+  };
+};
+
+export default connect<null, DispatchProps>(
+  null,
+  mapDispatchToProps,
+)(FilterButton);

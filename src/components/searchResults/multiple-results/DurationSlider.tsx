@@ -54,7 +54,7 @@ class DurationSlider extends React.Component<Props> {
 
     this.props.onChange({
       min: min * 60,
-      max: max * 60,
+      max: max === 10 ? null : max * 60,
     });
   };
 }

@@ -1,10 +1,16 @@
 import { Button, Modal, Slider } from 'antd';
 import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
+import {
+  MockStoreFactory,
+  RouterFactory,
+} from '../../../../test-support/factories';
+import { bulkUpdateSearchParamsAction } from '../redux/actions/UpdateSearchParametersActions';
 import DurationSlider from './DurationSlider';
-import FilterButton from './FilterButton';
+import FilterButtonConnected, { FilterButton } from './FilterButton';
 
 test('modal opens', () => {
   const wrapper = mount(<FilterButton onSubmit={jest.fn()} />);
@@ -83,5 +89,46 @@ describe('when a filter is submitted', () => {
     );
 
     expect(spy).not.toHaveBeenCalled();
+  });
+});
+
+describe('url changes', () => {
+  it('updates with the correct duration', () => {
+    const store = MockStoreFactory.sample({
+      router: RouterFactory.sample({
+        location: {
+          pathname: '',
+          search: `?q=hi`,
+          hash: '',
+          state: null,
+        },
+      }),
+    });
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <FilterButtonConnected />
+      </Provider>,
+    );
+
+    wrapper
+      .find(FilterButton)
+      .props()
+      .onSubmit({
+        duration: {
+          min: 70,
+          max: 130,
+        },
+      });
+
+    expect(store.getActions().length).toEqual(1);
+    expect(store.getActions()[0]).toEqual(
+      bulkUpdateSearchParamsAction([
+        {
+          min_duration: 'PT1M10S',
+          max_duration: 'PT2M10S',
+        },
+      ]),
+    );
   });
 });

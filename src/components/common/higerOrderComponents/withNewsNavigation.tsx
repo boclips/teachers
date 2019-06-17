@@ -1,9 +1,9 @@
-import { push } from 'connected-react-router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import State, { VideoSearchResults } from '../../../types/State';
+import { bulkUpdateSearchParamsAction } from '../../searchResults/redux/actions/UpdateSearchParametersActions';
 
 interface StateProps {
   isNewsMode: boolean;
@@ -11,7 +11,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onPageChange: (page: number, query: string, isNewsMode: boolean) => void;
+  onPageChange: (isNews: boolean) => void;
 }
 
 export interface NewsNavigationProps {
@@ -22,11 +22,11 @@ export interface NewsNavigationProps {
 
 const withNewsNavigation = Component => (props: StateProps & DispatchProps) => {
   const goToSearchResults = () => {
-    props.onPageChange(1, props.results.query, false);
+    props.onPageChange(false);
   };
 
   const goToNewsResults = () => {
-    props.onPageChange(1, props.results.query, true);
+    props.onPageChange(true);
   };
 
   const componentProps: NewsNavigationProps = {
@@ -38,22 +38,19 @@ const withNewsNavigation = Component => (props: StateProps & DispatchProps) => {
   return <Component {...componentProps} />;
 };
 
-const mapStateToProps = ({ router, search }: State): StateProps => ({
-  isNewsMode:
-    // tslint:disable-next-line:no-string-literal
-    queryString.parse(router.location['search']).mode === 'news' || false,
-  results: search.videoSearch,
-});
+const mapStateToProps = ({ router, search }: State): StateProps => {
+  return {
+    isNewsMode:
+      // tslint:disable-next-line:no-string-literal
+      queryString.parse(router.location.search).mode === 'news' || false,
+    results: search.videoSearch,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  onPageChange: (page: number, query: string, isNewsMode: boolean) => {
-    const queryParams = queryString.stringify({
-      q: query,
-      page,
-      mode: isNewsMode ? 'news' : undefined,
-    });
-
-    dispatch(push(`/videos?${queryParams}`));
+  onPageChange: (isNews: boolean) => {
+    const mode = isNews ? 'news' : undefined;
+    dispatch(bulkUpdateSearchParamsAction([{ page: 1 }, { mode }]));
   },
 });
 
