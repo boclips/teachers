@@ -1,6 +1,16 @@
+@import '../../../../../resources/styles/_antd-theme.less';
+
 .bookmark-button {
   cursor: pointer;
   .bookmark-icon {
     margin: 3px;
+  }
+}
+
+.collection-card .top-right-icon.bookmark-button {
+  @media (max-width: @screen-md) {
+    padding: 10px;
+    top: 10px;
+    right: 10px;
   }
 }
