@@ -41,7 +41,7 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
       store.dispatch(registerAnalytics(user.analyticsId));
     })
     .catch(error => {
-      console.warn(error);
+      console.error(error);
     });
 };
 

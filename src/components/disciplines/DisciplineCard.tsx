@@ -50,7 +50,9 @@ export class DisciplineCard extends React.PureComponent<Props> {
 
   public static Skeleton = () => (
     <section
-      className={'discipline-card skeleton ant-skeleton ant-skeleton-active'}
+      className={
+        'discipline-card__container skeleton ant-skeleton ant-skeleton-active'
+      }
     >
       <section className="ant-skeleton-content">
         <h3 className="discipline-title ant-skeleton-title" />
@@ -58,6 +60,10 @@ export class DisciplineCard extends React.PureComponent<Props> {
           <span />
         </span>
         <section className="discipline-subjects">
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
           <section className="ant-skeleton-title" />
         </section>
       </section>
