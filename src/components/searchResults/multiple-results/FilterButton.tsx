@@ -2,7 +2,7 @@ import { Button, Modal } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { bulkUpdateSearchParamsAction } from '../redux/actions/UpdateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationConverter from './DurationConverter';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 

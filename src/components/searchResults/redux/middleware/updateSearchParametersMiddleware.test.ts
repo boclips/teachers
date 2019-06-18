@@ -5,8 +5,8 @@ import { RouterFactory } from '../../../../../test-support/factories';
 import {
   bulkUpdateSearchParamsAction,
   updateSearchParamsAction,
-} from '../actions/UpdateSearchParametersActions';
-import UpdateSearchParametersMiddleware from './UpdateSearchParametersMiddleware';
+} from '../actions/updateSearchParametersActions';
+import UpdateSearchParametersMiddleware from './updateSearchParametersMiddleware';
 
 const setupStore = (query: string) => {
   const mockStore = configureStore<{ router: RouterState }>([

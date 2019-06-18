@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import State, { VideoSearchResults } from '../../../types/State';
-import { bulkUpdateSearchParamsAction } from '../../searchResults/redux/actions/UpdateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../../searchResults/redux/actions/updateSearchParametersActions';
 
 interface StateProps {
   isNewsMode: boolean;

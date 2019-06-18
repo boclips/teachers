@@ -8,7 +8,7 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../../test-support/factories';
-import { bulkUpdateSearchParamsAction } from '../redux/actions/UpdateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationSlider from './DurationSlider';
 import FilterButtonConnected, { FilterButton } from './FilterButton';
 

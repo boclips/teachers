@@ -6,8 +6,8 @@ import State from '../../../../types/State';
 import {
   updateSearchParamsAction,
   UpdateSearchParamsRequest,
-} from './../actions/UpdateSearchParametersActions';
-import { bulkUpdateSearchParamsAction } from './../actions/updateSearchParametersActions';
+} from '../actions/updateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../actions/updateSearchParametersActions';
 
 export function onUpdateSearchParameter(
   store: MiddlewareAPI<any, State>,

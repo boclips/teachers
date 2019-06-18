@@ -11,7 +11,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
-import { updateSearchParamsAction } from '../../components/searchResults/redux/actions/UpdateSearchParametersActions';
+import { updateSearchParamsAction } from '../../components/searchResults/redux/actions/updateSearchParametersActions';
 import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
 import { Links } from '../../types/Links';
 import State, {

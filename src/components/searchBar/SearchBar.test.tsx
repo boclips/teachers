@@ -6,7 +6,7 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../test-support/factories';
-import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/UpdateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
 

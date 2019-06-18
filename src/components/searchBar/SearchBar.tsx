@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../types/State';
-import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/UpdateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {
