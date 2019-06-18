@@ -1,9 +1,9 @@
-import { push } from 'connected-react-router';
 import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../types/State';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/UpdateSearchParametersActions';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {
@@ -34,11 +34,13 @@ function mapStateToProps(state: RouterState): StateProps {
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onQuerySubmitted: (query: string) => {
-      const queryParams = queryString.stringify({
-        q: query,
-        page: 1,
-      });
-      dispatch(push(`/videos?${queryParams}`));
+      dispatch(
+        bulkUpdateSearchParamsAction([
+          { page: 1 },
+          { q: query },
+          { mode: undefined },
+        ]),
+      );
     },
   };
 }

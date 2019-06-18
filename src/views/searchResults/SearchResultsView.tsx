@@ -1,7 +1,6 @@
 import { Col } from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
-import { push } from 'connected-react-router';
-import * as queryString from 'querystring';
+import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -12,6 +11,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
+import { updateSearchParamsAction } from '../../components/searchResults/redux/actions/UpdateSearchParametersActions';
 import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
 import { Links } from '../../types/Links';
 import State, {
@@ -30,7 +30,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onPageChange: (page: number, query: string, isNewsMode: boolean) => void;
+  onPageChange: (page: number) => void;
 }
 
 class SearchResultsView extends React.PureComponent<
@@ -123,11 +123,7 @@ class SearchResultsView extends React.PureComponent<
   }
 
   private changePage = (currentPage: number) => {
-    this.props.onPageChange(
-      currentPage,
-      this.props.videoResults.query,
-      this.props.isNewsMode,
-    );
+    this.props.onPageChange(currentPage);
   };
 }
 
@@ -143,13 +139,8 @@ function mapStateToProps({ search, links, router }: State): StateProps {
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onPageChange: (page: number, query: string, isNewsMode: boolean) => {
-      const queryParams = queryString.stringify({
-        q: query,
-        page,
-        mode: isNewsMode ? 'news' : undefined,
-      });
-      dispatch(push(`/videos?${queryParams}`));
+    onPageChange: (page: number) => {
+      dispatch(updateSearchParamsAction({ page }));
     },
   };
 }

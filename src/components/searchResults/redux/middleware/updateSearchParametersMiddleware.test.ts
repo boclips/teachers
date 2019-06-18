@@ -105,7 +105,19 @@ it('updates mutliple url parameters in one dispatch', async () => {
 
   store.dispatch(bulkUpdateSearchParamsAction([durationUpdate, modeUpdate]));
 
-  expect(store.getActions()).toContainEqual(
-    push('/videos?max_duration=1&min_duration=2&mode=test&q=hi'),
-  );
+  await eventually(() => {
+    expect(store.getActions()).toContainEqual(
+      push('/videos?max_duration=1&min_duration=2&mode=test&q=hi'),
+    );
+  });
+});
+
+it('removes parameters if they are undefined', async () => {
+  const store = setupStore('mode=hello&q=hi');
+
+  store.dispatch(updateSearchParamsAction({ mode: undefined }));
+
+  await eventually(() => {
+    expect(store.getActions()).toContainEqual(push('/videos?q=hi'));
+  });
 });

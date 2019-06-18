@@ -1,4 +1,3 @@
-import { push } from 'connected-react-router';
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -7,6 +6,7 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../test-support/factories';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/UpdateSearchParametersActions';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
 
@@ -45,6 +45,10 @@ test('dispatches a navigation action when query submitted callback invoked', () 
   statefulSearchBar.prop('onSubmit')(query);
 
   expect(store.getActions()).toContainEqual(
-    push(`/videos?page=1&q=${encodeURIComponent(query)}`),
+    bulkUpdateSearchParamsAction([
+      { page: 1 },
+      { q: 'the meaning of life' },
+      { mode: undefined },
+    ]),
   );
 });
