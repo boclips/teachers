@@ -7,12 +7,24 @@
     margin-top: 0px !important;
   }
 
-  &header {
+  &header-container {
     margin-bottom: 42px;
     background-color: @shade-4;
-    padding: 50px 0px;
+    padding: 4px 0px;
+  }
+
+  &header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     h1 {
+
+      strong {
+        color: @dark-blue;
+        font-weight: normal;
+      }
+
       color: @mid-blue;
       font-weight: normal;
       font-size: 32px;
@@ -20,5 +32,10 @@
       margin: 0px;
       padding: 0px;
     }
+
+    &-logo {
+
+    }
   }
+
 }

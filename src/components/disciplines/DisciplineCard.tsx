@@ -1,32 +1,13 @@
-import { Card, Icon } from 'antd';
+import { Card } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ArtsIcon from '../../../resources/images/disciplines/discipline-arts.svg';
-import HumanitiesIcon from '../../../resources/images/disciplines/discipline-humanities.svg';
-import LanguagesIcon from '../../../resources/images/disciplines/discipline-languages.svg';
-import LifeSkillsIcon from '../../../resources/images/disciplines/discipline-life-skills.svg';
-import PedagogyIcon from '../../../resources/images/disciplines/discipline-pedagogy.svg';
-import StemIcon from '../../../resources/images/disciplines/discipline-stem.svg';
 import { Discipline } from '../../types/Discipline';
 import './DisciplineCard.less';
+import DisciplineLogo from './DisciplineLogo';
 
 interface Props {
   discipline: Discipline;
 }
-
-const DisciplineLogo = (props: { code: string }) => (
-  <section className="discipline-card__icon">
-    <Icon component={ImagesMap[props.code]} />
-  </section>
-);
-const ImagesMap = {
-  arts: ArtsIcon,
-  humanities: HumanitiesIcon,
-  stem: StemIcon,
-  'life-skills': LifeSkillsIcon,
-  pedagogy: PedagogyIcon,
-  languages: LanguagesIcon,
-};
 
 export class DisciplineCard extends React.PureComponent<Props> {
   public render() {
@@ -39,7 +20,9 @@ export class DisciplineCard extends React.PureComponent<Props> {
           title={
             <h1 data-qa="discipline-title" className="discipline-card__title">
               {this.props.discipline.name}
-              <DisciplineLogo code={this.props.discipline.code} />
+              <section className="discipline-card__icon">
+                <DisciplineLogo discipline={this.props.discipline} />
+              </section>
             </h1>
           }
         >

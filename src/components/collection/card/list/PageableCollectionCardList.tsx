@@ -15,6 +15,7 @@ export interface PageableCollectionCardListProps {
   grid?: boolean;
   sidebar?: boolean;
   maxNumberOfCollections?: number;
+  shouldRefresh?: () => boolean;
 }
 
 class PageableCollectionCardList extends React.PureComponent<
@@ -50,7 +51,10 @@ class PageableCollectionCardList extends React.PureComponent<
   }
 
   public componentDidMount() {
-    if (!this.props.collections) {
+    if (
+      !this.props.collections ||
+      (this.props.shouldRefresh && this.props.shouldRefresh())
+    ) {
       this.props.fetchCollections();
     }
   }

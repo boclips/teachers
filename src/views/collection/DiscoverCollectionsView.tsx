@@ -2,6 +2,8 @@ import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import collectionsImg from '../../../resources/images/collections.png';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
+import DisciplineName from '../../components/disciplines/DisciplineName';
+import SubjectLogo from '../../components/disciplines/SubjectLogo';
 import PageLayout from '../../components/layout/PageLayout';
 import SubjectLabel from '../../components/SubjectLabel';
 import './DiscoverCollectionsView.less';
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const { Content } = Layout;
+const refresh = () => true;
 
 export class DiscoverCollectionsView extends PureComponent<Props> {
   public render() {
@@ -18,11 +21,17 @@ export class DiscoverCollectionsView extends PureComponent<Props> {
       <section>
         <PageLayout
           subheader={
-            <section className="discover-collections__header">
+            <section className="discover-collections__header-container">
               <Content>
-                <h1>
-                  <SubjectLabel subjectId={this.props.subject} />
-                </h1>
+                <section className="discover-collections__header">
+                  <h1>
+                    <DisciplineName subjectId={this.props.subject} />
+                    <SubjectLabel subjectId={this.props.subject} />
+                  </h1>
+                  <section className="discover-collections__header-logo">
+                    <SubjectLogo subjectId={this.props.subject} large={true} />
+                  </section>
+                </section>
               </Content>
             </section>
           }
@@ -40,6 +49,7 @@ export class DiscoverCollectionsView extends PureComponent<Props> {
               grid={true}
               collectionKey="discoverCollections"
               collectionFiler={{ subjects: this.props.subject }}
+              shouldRefresh={refresh}
             />
           </section>
         </PageLayout>
