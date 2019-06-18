@@ -23,9 +23,13 @@ class DisciplineName extends React.Component<Props & StateProps> {
 
 function mapStateToProps(state: DisciplineState, ownProps: Props): StateProps {
   return {
-    currentDiscipline: state.disciplines.find(
-      d => d.subjects.find(s => s.id === ownProps.subjectId) !== undefined,
-    ),
+    currentDiscipline:
+      state.disciplines &&
+      state.disciplines.find(
+        d =>
+          d.subjects &&
+          d.subjects.find(s => s.id === ownProps.subjectId) !== undefined,
+      ),
   };
 }
 
