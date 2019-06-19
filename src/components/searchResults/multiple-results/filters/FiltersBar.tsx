@@ -7,6 +7,7 @@ import withMediaBreakPoint, {
 import AppliedFiltersProvider, {
   AppliedFiltersInjectedProps,
 } from './AppliedFiltersProvider';
+import ClearAllButton from './ClearAllButton';
 import DurationFilterTag from './DurationFilterTag';
 import './FiltersBar.less';
 
@@ -23,13 +24,12 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
             Filters applied:
           </span>
         </Row>
-        <Row>
-          <span className="filters-bar__tags">
-            <DurationFilterTag
-              durationMin={this.props.durationMin}
-              durationMax={this.props.durationMax}
-            />
-          </span>
+        <Row className="filters-bar__tags" align="middle" type="flex">
+          <DurationFilterTag
+            durationMin={this.props.durationMin}
+            durationMax={this.props.durationMax}
+          />
+          <ClearAllButton />
         </Row>
       </div>
     );
