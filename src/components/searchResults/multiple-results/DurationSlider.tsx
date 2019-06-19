@@ -1,12 +1,8 @@
 import { SliderValue } from 'antd/lib/slider';
 import React from 'react';
+import { Range } from '../../../types/Range';
 import { BoclipsSlider } from '../../common/BoclipsSlider';
 import DurationBounds from './DurationBounds';
-
-export interface Range {
-  min: number;
-  max: number;
-}
 
 interface Props {
   onChange: (duration: Range) => void;
