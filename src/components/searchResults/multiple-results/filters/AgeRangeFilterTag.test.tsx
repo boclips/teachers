@@ -26,11 +26,10 @@ it('renders age range with no max', () => {
 });
 
 // Not sure what to do about this?
-
-// it('renders age range with no min', () => {
-//     const wrapper = getWrapper(new AgeRange({ min: null, max: 7 }));
-//     expect(wrapper.find(ClosableTag).props().value).toEqual('3 - 7');
-// });
+it('renders age range with no min', () => {
+    const wrapper = getWrapper(new AgeRange({ min: null, max: 7 }));
+    expect(wrapper.find(ClosableTag).props().value).toEqual('3 - 7');
+});
 
 it('does not render anything if no age range', () => {
     const wrapper = getWrapper();

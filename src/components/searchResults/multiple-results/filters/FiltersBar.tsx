@@ -5,6 +5,7 @@ import AppliedFiltersProvider, {
 } from './AppliedFiltersProvider';
 import DurationFilterTag from './DurationFilterTag';
 import './FiltersBar.less';
+import AgeRangeFilterTag from './AgeRangeFilterTag';
 
 export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
   public render() {
@@ -25,6 +26,7 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
               minDuration={this.props.minDuration}
               maxDuration={this.props.maxDuration}
             />
+            <AgeRangeFilterTag ageRange={this.props.ageRange} />
           </span>
         </Row>
       </div>
