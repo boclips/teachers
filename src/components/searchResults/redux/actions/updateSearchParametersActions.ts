@@ -5,6 +5,11 @@ interface UpdateDurationFilter {
   duration_max?: number;
 }
 
+interface UpdateAgeRangeFilter {
+  age_range_min: number;
+  age_range_max?: number;
+}
+
 interface UpdateSearchQuery {
   q: string;
 }
@@ -19,6 +24,7 @@ interface UpdateSearchMode {
 
 export type UpdateSearchParamsRequest =
   | UpdateDurationFilter
+  | UpdateAgeRangeFilter
   | UpdateSearchQuery
   | UpdateSearchPage
   | UpdateSearchMode;

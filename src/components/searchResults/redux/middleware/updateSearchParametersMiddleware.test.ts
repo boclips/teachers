@@ -54,6 +54,23 @@ it('updates duration filter in url parameters', async () => {
   });
 });
 
+it('updates age range filter in url parameters', async () => {
+  const store = setupStore('q=hi');
+
+  store.dispatch(
+    updateSearchParamsAction({
+      age_range_min: 5,
+      age_range_max: 11,
+    }),
+  );
+
+  await eventually(() => {
+    expect(store.getActions()).toContainEqual(
+      push('/videos?age_range_min=5&age_range_max=11&q=hi'),
+    );
+  });
+});
+
 it('does not include null values in url parameters', async () => {
   const store = setupStore('');
 
