@@ -2,6 +2,7 @@ import { push, RouterState } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
 import eventually from '../../../../../test-support/eventually';
 import { RouterFactory } from '../../../../../test-support/factories';
+import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
   bulkOverrideSearchParamsAction,
   bulkUpdateSearchParamsAction,
@@ -60,6 +61,7 @@ it('does not include null values in url parameters', async () => {
   store.dispatch(
     updateSearchParamsAction({
       duration_min: 123,
+      duration_max: undefined,
     }),
   );
 
@@ -132,5 +134,17 @@ it('ignores all previous values on override aciton', async () => {
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(push('/videos?q=123'));
+  });
+});
+
+it('clears filter on clear search filters action', async () => {
+  const store = setupStore(
+    'mode=hello&q=hi&duration_max=hello&duration_min=123',
+  );
+
+  store.dispatch(clearSearchFilterParametersAction());
+
+  await eventually(() => {
+    expect(store.getActions()).toContainEqual(push('/videos?mode=hello&q=hi'));
   });
 });

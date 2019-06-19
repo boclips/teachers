@@ -3,7 +3,9 @@ import queryString from 'query-string';
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import State from '../../../../types/State';
+import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
+  UpdateAllFilters,
   updateSearchParamsAction,
   UpdateSearchParamsRequest,
 } from '../actions/updateSearchParametersActions';
@@ -49,8 +51,28 @@ export function onBulkUpdateOverrideParams(
   store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
 }
 
+export function onClearSearchFilterParameters(
+  store: MiddlewareAPI<any, State>,
+) {
+  const query = store.getState().router.location.search;
+  const parsedQuery = queryString.parse(query);
+
+  const clearAllFiltersQuery: UpdateAllFilters = {
+    duration_min: undefined,
+    duration_max: undefined,
+  };
+
+  const newQuery = {
+    ...parsedQuery,
+    ...clearAllFiltersQuery,
+  };
+
+  store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
+}
+
 export default [
   sideEffect(updateSearchParamsAction, onUpdateSearchParameter),
   sideEffect(bulkUpdateSearchParamsAction, onBulkUpdateSearchParameter),
   sideEffect(bulkOverrideSearchParamsAction, onBulkUpdateOverrideParams),
+  sideEffect(clearSearchFilterParametersAction, onClearSearchFilterParameters),
 ];
