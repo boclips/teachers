@@ -79,6 +79,31 @@ describe('when a filter is submitted', () => {
     });
   });
 
+  it('calls back with an updated age range', () => {
+    const spy = jest.fn();
+    const wrapper = mount(<FilterButton onSubmit={spy} />);
+    const simulator = new EventSimulator(wrapper);
+
+    simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
+
+    wrapper
+      .find(AgeRangeSlider)
+      .find(Slider)
+      .props()
+      .onChange([5, 11]);
+
+    simulator.click(
+      wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),
+    );
+
+    expect(spy).toHaveBeenCalledWith({
+      ageRange: {
+        min: 5,
+        max: 11,
+      },
+    });
+  });
+
   it("doesn't call back at all if there's no change to filters", () => {
     const spy = jest.fn();
     const wrapper = mount(<FilterButton onSubmit={spy} />);
