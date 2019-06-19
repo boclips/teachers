@@ -5,7 +5,7 @@ import {
   RouterFactory,
 } from '../../../../../test-support/factories';
 import { ClosableTag } from '../../../video/tags/Tag';
-import { updateSearchParamsAction } from '../../redux/actions/UpdateSearchParametersActions';
+import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 
 const getWrapper = (minDuration?: number, maxDuration?: number) => {
