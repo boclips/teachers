@@ -110,12 +110,12 @@ describe('when on the videos page', () => {
   });
 
   it('filters by duration', () => {
-    const store = getStore(`min_duration=60&max_duration=190`);
+    const store = getStore(`duration_min=60&duration_max=190`);
     dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
-    expect(action.payload.filters.min_duration).toEqual(60);
-    expect(action.payload.filters.max_duration).toEqual(190);
+    expect(action.payload.filters.duration_min).toEqual(60);
+    expect(action.payload.filters.duration_max).toEqual(190);
   });
 
   it('defaults durations to undefined if non-existant', () => {
@@ -123,7 +123,7 @@ describe('when on the videos page', () => {
     dispatchSearchActions(store);
 
     const action: Action<VideoSearchRequest> = store.getActions()[0];
-    expect(action.payload.filters.min_duration).toBeUndefined();
-    expect(action.payload.filters.max_duration).toBeUndefined();
+    expect(action.payload.filters.duration_min).toBeUndefined();
+    expect(action.payload.filters.duration_max).toBeUndefined();
   });
 });

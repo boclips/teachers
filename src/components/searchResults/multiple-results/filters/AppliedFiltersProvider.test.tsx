@@ -27,7 +27,7 @@ describe('duration filters', () => {
   it('provides duration with normal range', () => {
     const nested = <div />;
     const wrapper = getWrapper(
-      `?q=hi&min_duration=60&max_duration=180`,
+      `?q=hi&duration_min=60&duration_max=180`,
       nested,
     );
 
@@ -39,7 +39,7 @@ describe('duration filters', () => {
   });
 
   it('provides valid duration with no max', () => {
-    const wrapper = getWrapper(`?q=hi&min_duration=180`, <div />);
+    const wrapper = getWrapper(`?q=hi&duration_min=180`, <div />);
     expect(wrapper.props()).toEqual({
       minDuration: 180,
       maxDuration: null,
@@ -48,7 +48,7 @@ describe('duration filters', () => {
   });
 
   it('provides valid duration with no min', () => {
-    const wrapper = getWrapper(`?q=hi&max_duration=180`, <div />);
+    const wrapper = getWrapper(`?q=hi&duration_max=180`, <div />);
     expect(wrapper.props()).toEqual({
       minDuration: null,
       maxDuration: 180,

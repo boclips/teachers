@@ -106,9 +106,9 @@ export class FilterButton extends React.Component<
 
 const mapStateToProps = ({ router }: AppSate): StateProps => ({
   minDuration:
-    +queryString.parse(router.location.search).min_duration / 60 || null,
+    +queryString.parse(router.location.search).duration_min / 60 || null,
   maxDuration:
-    +queryString.parse(router.location.search).max_duration / 60 || null,
+    +queryString.parse(router.location.search).duration_max / 60 || null,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
@@ -117,8 +117,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(
         bulkUpdateSearchParamsAction([
           {
-            min_duration: fields.duration.min || undefined,
-            max_duration: fields.duration.max || undefined,
+            duration_min: fields.duration.min || undefined,
+            duration_max: fields.duration.max || undefined,
           },
         ]),
       );

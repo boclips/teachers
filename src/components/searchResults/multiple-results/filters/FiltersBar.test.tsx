@@ -29,7 +29,7 @@ it('renders text when there are valid filters', () => {
     router: RouterFactory.sample({
       location: {
         pathname: '',
-        search: '?q=nofilters&min_duration=1',
+        search: '?q=nofilters&duration_min=1',
         hash: '',
         state: null,
       },

@@ -42,7 +42,7 @@ it('removes duration from url on close', () => {
     router: RouterFactory.sample({
       location: {
         pathname: '',
-        search: '?hi&min_duration=123',
+        search: '?hi&duration_min=123',
         hash: '',
         state: null,
       },
@@ -61,8 +61,8 @@ it('removes duration from url on close', () => {
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
-      min_duration: undefined,
-      max_duration: undefined,
+      duration_min: undefined,
+      duration_max: undefined,
     }),
   );
 });

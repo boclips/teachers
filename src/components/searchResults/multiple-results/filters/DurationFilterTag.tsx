@@ -42,8 +42,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClose: () => {
     dispatch(
       updateSearchParamsAction({
-        min_duration: undefined,
-        max_duration: undefined,
+        duration_min: undefined,
+        duration_max: undefined,
       }),
     );
   },

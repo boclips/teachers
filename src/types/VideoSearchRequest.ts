@@ -8,8 +8,8 @@ export interface VideoSearchRequest {
 export interface RequestFilters {
   includeTags: string[];
   excludeTags: string[];
-  min_duration?: number;
-  max_duration?: number;
+  duration_min?: number;
+  duration_max?: number;
 }
 
 export type SortBy = null | 'RELEASE_DATE';

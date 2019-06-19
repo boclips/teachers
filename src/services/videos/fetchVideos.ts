@@ -18,11 +18,11 @@ export default function fetchVideos(
     include_tag: searchRequest.filters.includeTags,
     exclude_tag: searchRequest.filters.excludeTags,
     sort_by: searchRequest.sortBy,
-    min_duration: durationConverter.secondsToIso(
-      searchRequest.filters.min_duration,
+    duration_min: durationConverter.secondsToIso(
+      searchRequest.filters.duration_min,
     ),
-    max_duration: durationConverter.secondsToIso(
-      searchRequest.filters.max_duration,
+    duration_max: durationConverter.secondsToIso(
+      searchRequest.filters.duration_max,
     ),
   });
   return axios

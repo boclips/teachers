@@ -35,9 +35,9 @@ class AppliedFiltersProvider extends React.Component<StateProps & Props> {
 }
 
 const mapStateToProps = ({ router }: State): StateProps => ({
-  minDuration: +queryString.parse(router.location.search).min_duration || null,
+  minDuration: +queryString.parse(router.location.search).duration_min || null,
 
-  maxDuration: +queryString.parse(router.location.search).max_duration || null,
+  maxDuration: +queryString.parse(router.location.search).duration_max || null,
 });
 
 export default connect(

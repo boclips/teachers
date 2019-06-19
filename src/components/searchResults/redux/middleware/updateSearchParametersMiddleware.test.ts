@@ -27,12 +27,12 @@ const setupStore = (query: string) => {
 };
 
 it('updates query in url parameters', async () => {
-  const store = setupStore('q=test&page=1&max_duration=1');
+  const store = setupStore('q=test&page=1&duration_max=1');
   store.dispatch(updateSearchParamsAction({ q: '123' }));
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      push('/videos?max_duration=1&page=1&q=123'),
+      push('/videos?duration_max=1&page=1&q=123'),
     );
   });
 });
@@ -42,14 +42,14 @@ it('updates duration filter in url parameters', async () => {
 
   store.dispatch(
     updateSearchParamsAction({
-      min_duration: 123,
-      max_duration: 4321,
+      duration_min: 123,
+      duration_max: 4321,
     }),
   );
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      push('/videos?max_duration=4321&min_duration=123&q=hi'),
+      push('/videos?duration_max=4321&duration_min=123&q=hi'),
     );
   });
 });
@@ -59,12 +59,12 @@ it('does not include null values in url parameters', async () => {
 
   store.dispatch(
     updateSearchParamsAction({
-      min_duration: 123,
+      duration_min: 123,
     }),
   );
 
   await eventually(() => {
-    expect(store.getActions()).toContainEqual(push('/videos?min_duration=123'));
+    expect(store.getActions()).toContainEqual(push('/videos?duration_min=123'));
   });
 });
 
@@ -98,8 +98,8 @@ it('updates mutliple url parameters in one dispatch', async () => {
   const store = setupStore('mode=hello&q=hi');
 
   const durationUpdate = {
-    max_duration: 1,
-    min_duration: 2,
+    duration_max: 1,
+    duration_min: 2,
   };
 
   const modeUpdate = { mode: 'test' };
@@ -108,7 +108,7 @@ it('updates mutliple url parameters in one dispatch', async () => {
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      push('/videos?max_duration=1&min_duration=2&mode=test&q=hi'),
+      push('/videos?duration_max=1&duration_min=2&mode=test&q=hi'),
     );
   });
 });
@@ -125,7 +125,7 @@ it('removes parameters if they are undefined', async () => {
 
 it('ignores all previous values on override aciton', async () => {
   const store = setupStore(
-    'mode=hello&q=hi&test=1&blah=123&max_duration=hello',
+    'mode=hello&q=hi&test=1&blah=123&duration_max=hello',
   );
 
   store.dispatch(bulkOverrideSearchParamsAction([{ q: '123' }]));

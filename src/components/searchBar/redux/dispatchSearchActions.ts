@@ -20,8 +20,8 @@ const getFilters = (queryParams: any): RequestFilters => {
   return {
     includeTags,
     excludeTags,
-    min_duration: +queryParams.min_duration || undefined,
-    max_duration: +queryParams.max_duration || undefined,
+    duration_min: +queryParams.duration_min || undefined,
+    duration_max: +queryParams.duration_max || undefined,
   };
 };
 

@@ -146,8 +146,8 @@ describe('url changes', () => {
     expect(store.getActions()[0]).toEqual(
       bulkUpdateSearchParamsAction([
         {
-          min_duration: 70,
-          max_duration: 130,
+          duration_min: 70,
+          duration_max: 130,
         },
       ]),
     );

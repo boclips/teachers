@@ -1,8 +1,8 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 interface UpdateDurationFilter {
-  min_duration: number;
-  max_duration?: number;
+  duration_min: number;
+  duration_max?: number;
 }
 
 interface UpdateSearchQuery {
