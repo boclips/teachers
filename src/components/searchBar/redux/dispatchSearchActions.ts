@@ -6,11 +6,11 @@ import { RequestFilters, SortBy } from '../../../types/VideoSearchRequest';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
 
-const getFilters = (mode: string): RequestFilters => {
+const getFilters = (queryParams: any): RequestFilters => {
   let includeTags = [];
   let excludeTags = [];
 
-  if (mode === Constants.NEWS) {
+  if (queryParams.mode === Constants.NEWS) {
     includeTags = [Constants.NEWS, Constants.CLASSROOM];
   } else {
     includeTags = [Constants.CLASSROOM];
@@ -20,6 +20,8 @@ const getFilters = (mode: string): RequestFilters => {
   return {
     includeTags,
     excludeTags,
+    min_duration: +queryParams.min_duration || undefined,
+    max_duration: +queryParams.max_duration || undefined,
   };
 };
 
@@ -41,7 +43,7 @@ export const dispatchSearchActions = (store: Store<RouterState>) => {
     const page = parseInt(queryParams.page as string, 10);
     const mode = queryParams.mode as string;
 
-    const filters = getFilters(mode);
+    const filters = getFilters(queryParams);
     const sortBy = getSortBy(mode);
 
     store.dispatch(searchVideosAction({ query, page, filters, sortBy }));

@@ -8,6 +8,7 @@ import {
   UpdateSearchParamsRequest,
 } from '../actions/updateSearchParametersActions';
 import { bulkUpdateSearchParamsAction } from '../actions/updateSearchParametersActions';
+import { bulkOverrideSearchParamsAction } from './../actions/updateSearchParametersActions';
 
 export function onUpdateSearchParameter(
   store: MiddlewareAPI<any, State>,
@@ -37,7 +38,19 @@ export function onBulkUpdateSearchParameter(
   store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
 }
 
+export function onBulkUpdateOverrideParams(
+  store: MiddlewareAPI<any, State>,
+  request: UpdateSearchParamsRequest[],
+) {
+  const newQuery = request.reduce((acc, value: any) => {
+    return { ...acc, ...value };
+  }, {});
+
+  store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
+}
+
 export default [
   sideEffect(updateSearchParamsAction, onUpdateSearchParameter),
   sideEffect(bulkUpdateSearchParamsAction, onBulkUpdateSearchParameter),
+  sideEffect(bulkOverrideSearchParamsAction, onBulkUpdateOverrideParams),
 ];

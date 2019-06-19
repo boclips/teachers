@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
 import State, { VideoSearchResults } from '../../../types/State';
-import { bulkUpdateSearchParamsAction } from '../../searchResults/redux/actions/updateSearchParametersActions';
+import { bulkOverrideSearchParamsAction } from '../../searchResults/redux/actions/updateSearchParametersActions';
 
 interface StateProps {
   isNewsMode: boolean;
@@ -11,7 +11,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onPageChange: (isNews: boolean) => void;
+  onPageChange: (isNews: boolean, query: string) => void;
 }
 
 export interface NewsNavigationProps {
@@ -22,11 +22,11 @@ export interface NewsNavigationProps {
 
 const withNewsNavigation = Component => (props: StateProps & DispatchProps) => {
   const goToSearchResults = () => {
-    props.onPageChange(false);
+    props.onPageChange(false, props.results.query);
   };
 
   const goToNewsResults = () => {
-    props.onPageChange(true);
+    props.onPageChange(true, props.results.query);
   };
 
   const componentProps: NewsNavigationProps = {
@@ -48,9 +48,11 @@ const mapStateToProps = ({ router, search }: State): StateProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  onPageChange: (isNews: boolean) => {
+  onPageChange: (isNews: boolean, query: string) => {
     const mode = isNews ? 'news' : undefined;
-    dispatch(bulkUpdateSearchParamsAction([{ page: 1 }, { mode }]));
+    dispatch(
+      bulkOverrideSearchParamsAction([{ page: 1 }, { mode }, { q: query }]),
+    );
   },
 });
 

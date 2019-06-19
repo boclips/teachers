@@ -1,6 +1,7 @@
 import Button from 'antd/lib/button/button';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
+import eventually from '../../../test-support/eventually';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import {
   collectionsResponse,
@@ -10,6 +11,10 @@ import {
 } from '../../../test-support/video-service-responses';
 import { findElement, waitForElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
+import DurationFilterTag from '../../components/searchResults/multiple-results/DurationFilterTag';
+import DurationSlider from '../../components/searchResults/multiple-results/DurationSlider';
+import { FilterButton } from '../../components/searchResults/multiple-results/FilterButton';
+import { ClosableTag } from '../../components/video/tags/Tag';
 
 beforeEach(() => {
   try {
@@ -105,6 +110,49 @@ test('should render news box', async () => {
   const button = newsBox.find(Button);
   expect(button).toExist();
   expect(button.text()).toContain('View News');
+});
+
+test('duraiton filter labels are updated when applying filters', async () => {
+  const query = 'some video';
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
+    .fetchCollections();
+
+  const searchPage = await SearchPage.load(query);
+
+  searchPage.wrapper
+    .find(FilterButton)
+    .find(By.dataQa('open-filter-modal'))
+    .first()
+    .simulate('click');
+
+  searchPage.wrapper.find(FilterButton).update();
+
+  searchPage.wrapper
+    .find(FilterButton)
+    .find(DurationSlider)
+    .props()
+    .onChange({ min: 60, max: 240 });
+
+  searchPage.wrapper
+    .find(FilterButton)
+    .findWhere(n => n.length && n.text() === 'OK')
+    .find(Button)
+    .simulate('click');
+
+  await eventually(() => {
+    searchPage.wrapper.update();
+
+    expect(
+      searchPage.wrapper
+        .find(DurationFilterTag)
+        .find(ClosableTag)
+        .props().value,
+    ).toEqual('1m-4m');
+  });
 });
 
 test('shows total count of videos', async () => {

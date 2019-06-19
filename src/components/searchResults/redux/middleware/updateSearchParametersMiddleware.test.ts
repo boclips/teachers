@@ -3,6 +3,7 @@ import configureStore from 'redux-mock-store';
 import eventually from '../../../../../test-support/eventually';
 import { RouterFactory } from '../../../../../test-support/factories';
 import {
+  bulkOverrideSearchParamsAction,
   bulkUpdateSearchParamsAction,
   updateSearchParamsAction,
 } from '../actions/updateSearchParametersActions';
@@ -41,14 +42,14 @@ it('updates duration filter in url parameters', async () => {
 
   store.dispatch(
     updateSearchParamsAction({
-      min_duration: '123',
-      max_duration: '1234',
+      min_duration: 123,
+      max_duration: 4321,
     }),
   );
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      push('/videos?max_duration=1234&min_duration=123&q=hi'),
+      push('/videos?max_duration=4321&min_duration=123&q=hi'),
     );
   });
 });
@@ -58,7 +59,7 @@ it('does not include null values in url parameters', async () => {
 
   store.dispatch(
     updateSearchParamsAction({
-      min_duration: '123',
+      min_duration: 123,
     }),
   );
 
@@ -97,8 +98,8 @@ it('updates mutliple url parameters in one dispatch', async () => {
   const store = setupStore('mode=hello&q=hi');
 
   const durationUpdate = {
-    max_duration: '1',
-    min_duration: '2',
+    max_duration: 1,
+    min_duration: 2,
   };
 
   const modeUpdate = { mode: 'test' };
@@ -119,5 +120,17 @@ it('removes parameters if they are undefined', async () => {
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(push('/videos?q=hi'));
+  });
+});
+
+it('ignores all previous values on override aciton', async () => {
+  const store = setupStore(
+    'mode=hello&q=hi&test=1&blah=123&max_duration=hello',
+  );
+
+  store.dispatch(bulkOverrideSearchParamsAction([{ q: '123' }]));
+
+  await eventually(() => {
+    expect(store.getActions()).toContainEqual(push('/videos?q=123'));
   });
 });

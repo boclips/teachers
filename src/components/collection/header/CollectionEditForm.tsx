@@ -1,10 +1,11 @@
-import { Checkbox, Form, Input, Slider } from 'antd';
+import { Checkbox, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
+import { BoclipsSlider } from '../../common/BoclipsSlider';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
@@ -67,8 +68,7 @@ class CollectionEditForm extends React.PureComponent<
           {getFieldDecorator('ageRange', {
             initialValue: this.props.ageRange,
           })(
-            <Slider
-              className="slider"
+            <BoclipsSlider
               min={this.props.sliderRange.min}
               max={this.props.sliderRange.max}
               range={true}

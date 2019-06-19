@@ -1,8 +1,8 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 interface UpdateDurationFilter {
-  min_duration: string;
-  max_duration?: string;
+  min_duration: number;
+  max_duration?: number;
 }
 
 interface UpdateSearchQuery {
@@ -30,3 +30,7 @@ export const updateSearchParamsAction = actionCreatorFactory<
 export const bulkUpdateSearchParamsAction = actionCreatorFactory<
   UpdateSearchParamsRequest[]
 >('BULK_UPDATE_SEARCH_PARAMS');
+
+export const bulkOverrideSearchParamsAction = actionCreatorFactory<
+  UpdateSearchParamsRequest[]
+>('BULK_OVERRIDE_SEARCH_PARAMS');

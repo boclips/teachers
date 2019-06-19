@@ -6,12 +6,12 @@ import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
 import { MockStoreFactory } from './../../../../test-support/factories';
 import { dispatchSearchActions } from './dispatchSearchActions';
 
-function getStore(mode: string = '') {
+function getStore(params: string = '') {
   return MockStoreFactory.sample({
     router: {
       location: {
         pathname: '/videos',
-        search: '?q=Testing123&page=3&mode=' + mode,
+        search: '?q=Testing123&page=3&' + params,
         state: {},
         hash: '',
       },
@@ -62,7 +62,7 @@ describe('when on the videos page', () => {
   });
 
   it('sorts the results by release date when mode is news', () => {
-    const store = getStore(Constants.NEWS);
+    const store = getStore(`mode=${Constants.NEWS}`);
 
     dispatchSearchActions(store);
 
@@ -73,7 +73,7 @@ describe('when on the videos page', () => {
   });
 
   it('filters the results by NEWS and CLASSROOM tags if mode is news', () => {
-    const store = getStore(Constants.NEWS);
+    const store = getStore(`mode=${Constants.NEWS}`);
 
     dispatchSearchActions(store);
 
@@ -107,5 +107,23 @@ describe('when on the videos page', () => {
 
     expect(action).toBeTruthy();
     expect(action.payload.query).toEqual('Testing123');
+  });
+
+  it('filters by duration', () => {
+    const store = getStore(`min_duration=60&max_duration=190`);
+    dispatchSearchActions(store);
+
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    expect(action.payload.filters.min_duration).toEqual(60);
+    expect(action.payload.filters.max_duration).toEqual(190);
+  });
+
+  it('defaults durations to undefined if non-existant', () => {
+    const store = getStore();
+    dispatchSearchActions(store);
+
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    expect(action.payload.filters.min_duration).toBeUndefined();
+    expect(action.payload.filters.max_duration).toBeUndefined();
   });
 });

@@ -12,28 +12,30 @@ import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParam
 import DurationSlider from './DurationSlider';
 import FilterButtonConnected, { FilterButton } from './FilterButton';
 
-test('modal opens', () => {
-  const wrapper = mount(<FilterButton onSubmit={jest.fn()} />);
-  const simulator = new EventSimulator(wrapper);
+describe('basic modal interaction', () => {
+  test('modal opens', () => {
+    const wrapper = mount(<FilterButton onSubmit={jest.fn()} />);
+    const simulator = new EventSimulator(wrapper);
 
-  simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
+    simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
 
-  expect(wrapper.find(Modal).props().visible).toBe(true);
-});
+    expect(wrapper.find(Modal).props().visible).toBe(true);
+  });
 
-test('modal closes when user cancels', () => {
-  const wrapper = mount(<FilterButton onSubmit={jest.fn()} />);
-  const simulator = new EventSimulator(wrapper);
+  test('modal closes when user cancels', () => {
+    const wrapper = mount(<FilterButton onSubmit={jest.fn()} />);
+    const simulator = new EventSimulator(wrapper);
 
-  simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
+    simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
 
-  wrapper
-    .find(Modal)
-    .props()
-    .onCancel(null);
-  wrapper.update();
+    wrapper
+      .find(Modal)
+      .props()
+      .onCancel(null);
+    wrapper.update();
 
-  expect(wrapper.find(Modal).props().visible).toBe(false);
+    expect(wrapper.find(Modal).props().visible).toBe(false);
+  });
 });
 
 describe('when a filter is submitted', () => {
@@ -92,6 +94,25 @@ describe('when a filter is submitted', () => {
   });
 });
 
+describe('default values', () => {
+  it('can set default duration values', () => {
+    const wrapper = mount(
+      <FilterButton onSubmit={jest.fn} minDuration={4} maxDuration={10} />,
+    );
+
+    const simulator = new EventSimulator(wrapper);
+
+    simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
+
+    expect(
+      wrapper
+        .find(DurationSlider)
+        .find(Slider)
+        .props().defaultValue,
+    ).toEqual([4, 10]);
+  });
+});
+
 describe('url changes', () => {
   it('updates with the correct duration', () => {
     const store = MockStoreFactory.sample({
@@ -125,8 +146,8 @@ describe('url changes', () => {
     expect(store.getActions()[0]).toEqual(
       bulkUpdateSearchParamsAction([
         {
-          min_duration: 'PT1M10S',
-          max_duration: 'PT2M10S',
+          min_duration: 70,
+          max_duration: 130,
         },
       ]),
     );

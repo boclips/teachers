@@ -1,10 +1,18 @@
-import { Button, Modal } from 'antd';
+import { Button, Icon } from 'antd';
+import { CustomIconComponentProps } from 'antd/lib/icon';
+import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import filterIconSvg from '../../../../resources/images/filter-icon.svg';
+import { default as AppSate } from '../../../types/State';
+import Bodal from '../../common/Bodal';
 import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
-import DurationConverter from './DurationConverter';
-import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
+import './FilterButton.less';
+import FilterButtonForm, {
+  FilterFormEditableFields,
+  FilterProps,
+} from './FilterButtonForm';
 
 interface FilterRequest {
   duration: {
@@ -17,11 +25,17 @@ interface DispatchProps {
   onSubmit: (FilterRequest) => void;
 }
 
+interface StateProps extends FilterProps {}
+
 interface State {
   visible: boolean;
 }
 
-export class FilterButton extends React.Component<DispatchProps, State> {
+export class FilterButton extends React.Component<
+  DispatchProps & StateProps,
+  State
+> {
+  private svg = filterIconSvg as React.ComponentType<CustomIconComponentProps>;
   private formRef: any;
   constructor(props: DispatchProps) {
     super(props);
@@ -64,32 +78,47 @@ export class FilterButton extends React.Component<DispatchProps, State> {
   public render() {
     return (
       <React.Fragment>
-        <Button onClick={this.handleOpen} data-qa="open-filter-modal" />
-        <Modal
+        <Button
+          onClick={this.handleOpen}
+          data-qa="open-filter-modal"
+          className="filter-button"
+        >
+          <Icon component={this.svg} />
+          Filter
+        </Button>
+        <Bodal
+          title="Filter results by"
           cancelText="Cancel"
           onCancel={this.handleCancel}
           onOk={this.handleOk}
           visible={this.state.visible}
         >
-          <FilterButtonForm wrappedComponentRef={this.saveFormRef} />
-        </Modal>
+          <FilterButtonForm
+            minDuration={this.props.minDuration}
+            maxDuration={this.props.maxDuration}
+            wrappedComponentRef={this.saveFormRef}
+          />
+        </Bodal>
       </React.Fragment>
     );
   }
 }
 
+const mapStateToProps = ({ router }: AppSate): StateProps => ({
+  minDuration:
+    +queryString.parse(router.location.search).min_duration / 60 || null,
+  maxDuration:
+    +queryString.parse(router.location.search).max_duration / 60 || null,
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onSubmit: (fields: FilterFormEditableFields) => {
-      const durationConverter = new DurationConverter();
-      const minIso = durationConverter.secondsToIso(fields.duration.min);
-      const maxIso = durationConverter.secondsToIso(fields.duration.max);
-
       dispatch(
         bulkUpdateSearchParamsAction([
           {
-            min_duration: minIso,
-            max_duration: maxIso,
+            min_duration: fields.duration.min || undefined,
+            max_duration: fields.duration.max || undefined,
           },
         ]),
       );
@@ -97,7 +126,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 };
 
-export default connect<null, DispatchProps>(
-  null,
+export default connect(
+  mapStateToProps,
   mapDispatchToProps,
 )(FilterButton);

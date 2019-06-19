@@ -7,7 +7,14 @@ export interface FilterFormEditableFields {
   duration?: Range;
 }
 
-class FilterButtonForm extends React.Component<FormComponentProps> {
+export interface FilterProps {
+  minDuration?: number;
+  maxDuration?: number;
+}
+
+class FilterButtonForm extends React.Component<
+  FormComponentProps & FilterProps
+> {
   private onDurationChange = (duration: Range) => {
     this.props.form.setFieldsValue({ duration });
   };
@@ -19,7 +26,11 @@ class FilterButtonForm extends React.Component<FormComponentProps> {
       <Form className="filter-form">
         <Form.Item className="filter-form__item" label="Duration">
           {getFieldDecorator('duration')(
-            <DurationSlider onChange={this.onDurationChange} />,
+            <DurationSlider
+              min={this.props.minDuration}
+              max={this.props.maxDuration}
+              onChange={this.onDurationChange}
+            />,
           )}
         </Form.Item>
       </Form>

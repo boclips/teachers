@@ -2,7 +2,6 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
-import SearchResultsCount from '../../searchResults/multiple-results/SearchResultsCount';
 import VideoCard from '../card/VideoCard';
 import './VideoCardList.less';
 
@@ -22,7 +21,6 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
       <React.Fragment>
-        <SearchResultsCount count={this.props.totalElements} />
         <TransitionGroup exit={true}>
           {this.props.videos.map((video, index) => {
             return (

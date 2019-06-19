@@ -1,6 +1,7 @@
-import { Slider } from 'antd';
 import { SliderValue } from 'antd/lib/slider';
 import React from 'react';
+import { BoclipsSlider } from '../../common/BoclipsSlider';
+import DurationBounds from './DurationBounds';
 
 export interface Range {
   min: number;
@@ -9,9 +10,13 @@ export interface Range {
 
 interface Props {
   onChange: (duration: Range) => void;
+  min?: number;
+  max?: number;
 }
 
 class DurationSlider extends React.Component<Props> {
+  private readonly durationBounds = new DurationBounds();
+
   private getMarks = () => ({
     0: '0m',
     2: '2m',
@@ -27,9 +32,12 @@ class DurationSlider extends React.Component<Props> {
 
   public render() {
     return (
-      <Slider
+      <BoclipsSlider
         step={1}
-        defaultValue={[0, 10]}
+        defaultValue={[
+          this.durationBounds.resolveMin(this.props.min),
+          this.durationBounds.resolveMax(this.props.max),
+        ]}
         tipFormatter={this.formatToolTip}
         min={0}
         max={10}
