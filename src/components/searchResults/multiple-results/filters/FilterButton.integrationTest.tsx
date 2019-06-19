@@ -97,7 +97,7 @@ describe('when a filter is submitted', () => {
 describe('default values', () => {
   it('can set default duration values', () => {
     const wrapper = mount(
-      <FilterButton onSubmit={jest.fn} minDuration={4} maxDuration={10} />,
+      <FilterButton onSubmit={jest.fn} durationMin={4} durationMax={10} />,
     );
 
     const simulator = new EventSimulator(wrapper);

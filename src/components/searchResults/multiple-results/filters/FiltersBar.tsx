@@ -22,8 +22,8 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
         <Row>
           <span className="filters-bar__tags">
             <DurationFilterTag
-              minDuration={this.props.minDuration}
-              maxDuration={this.props.maxDuration}
+              durationMin={this.props.durationMin}
+              durationMax={this.props.durationMax}
             />
           </span>
         </Row>

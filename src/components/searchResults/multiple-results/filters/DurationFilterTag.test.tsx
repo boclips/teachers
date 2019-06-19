@@ -8,11 +8,11 @@ import { ClosableTag } from '../../../video/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 
-const getWrapper = (minDuration?: number, maxDuration?: number) => {
+const getWrapper = (durationMin?: number, durationMax?: number) => {
   const store = MockStoreFactory.sample();
 
   return shallow(
-    <DurationFilterTag minDuration={minDuration} maxDuration={maxDuration} />,
+    <DurationFilterTag durationMin={durationMin} durationMax={durationMax} />,
     { context: { store } },
   ).dive();
 };
@@ -49,7 +49,7 @@ it('removes duration from url on close', () => {
     }),
   });
 
-  const wrapper = shallow(<DurationFilterTag minDuration={123} />, {
+  const wrapper = shallow(<DurationFilterTag durationMin={123} />, {
     context: { store },
   }).dive();
 

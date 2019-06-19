@@ -32,8 +32,8 @@ describe('duration filters', () => {
     );
 
     expect(wrapper.props()).toEqual({
-      minDuration: 60,
-      maxDuration: 180,
+      durationMin: 60,
+      durationMax: 180,
       numberOfFiltersApplied: 1,
     });
   });
@@ -41,8 +41,8 @@ describe('duration filters', () => {
   it('provides valid duration with no max', () => {
     const wrapper = getWrapper(`?q=hi&duration_min=180`, <div />);
     expect(wrapper.props()).toEqual({
-      minDuration: 180,
-      maxDuration: null,
+      durationMin: 180,
+      durationMax: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -50,8 +50,8 @@ describe('duration filters', () => {
   it('provides valid duration with no min', () => {
     const wrapper = getWrapper(`?q=hi&duration_max=180`, <div />);
     expect(wrapper.props()).toEqual({
-      minDuration: null,
-      maxDuration: 180,
+      durationMin: null,
+      durationMax: 180,
       numberOfFiltersApplied: 1,
     });
   });

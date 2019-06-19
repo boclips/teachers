@@ -1,10 +1,10 @@
 import { Button, Icon } from 'antd';
 import { CustomIconComponentProps } from 'antd/lib/icon';
-import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import filterIconSvg from '../../../../../resources/images/filter-icon.svg';
+import SearchFiltersConverter from '../../../../services/searchFilters/searchFiltersConverter';
 import { default as AppSate } from '../../../../types/State';
 import Bodal from '../../../common/Bodal';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
@@ -94,8 +94,8 @@ export class FilterButton extends React.Component<
           visible={this.state.visible}
         >
           <FilterButtonForm
-            minDuration={this.props.minDuration}
-            maxDuration={this.props.maxDuration}
+            durationMin={this.props.durationMin}
+            durationMax={this.props.durationMax}
             wrappedComponentRef={this.saveFormRef}
           />
         </Bodal>
@@ -104,12 +104,16 @@ export class FilterButton extends React.Component<
   }
 }
 
-const mapStateToProps = ({ router }: AppSate): StateProps => ({
-  minDuration:
-    +queryString.parse(router.location.search).duration_min / 60 || null,
-  maxDuration:
-    +queryString.parse(router.location.search).duration_max / 60 || null,
-});
+const searchFiltersConverter = new SearchFiltersConverter();
+
+const mapStateToProps = ({ router }: AppSate): StateProps => {
+  const filters = searchFiltersConverter.fromSearchUrl(router.location.search);
+
+  return {
+    durationMin: filters.durationMin / 60 || null,
+    durationMax: filters.durationMax / 60 || null,
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {

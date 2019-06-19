@@ -1,11 +1,11 @@
-import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
+import SearchFiltersConverter from '../../../../services/searchFilters/searchFiltersConverter';
 import State from '../../../../types/State';
 
 export interface StateProps {
-  minDuration?: number;
-  maxDuration?: number;
+  durationMin?: number;
+  durationMax?: number;
 }
 
 export interface AppliedFiltersInjectedProps extends StateProps {
@@ -18,27 +18,34 @@ interface Props {
 
 class AppliedFiltersProvider extends React.Component<StateProps & Props> {
   public render() {
-    const { children, minDuration, maxDuration } = this.props;
+    const { children, durationMin, durationMax } = this.props;
 
     let numberOfFiltersApplied = 0;
 
-    if (minDuration !== null || maxDuration !== null) {
+    if (durationMin !== null || durationMax !== null) {
       numberOfFiltersApplied += 1;
     }
 
     return React.cloneElement(children, {
-      minDuration,
-      maxDuration,
+      durationMin,
+      durationMax,
       numberOfFiltersApplied,
     });
   }
 }
 
-const mapStateToProps = ({ router }: State): StateProps => ({
-  minDuration: +queryString.parse(router.location.search).duration_min || null,
+const searchFiltersConverter = new SearchFiltersConverter();
 
-  maxDuration: +queryString.parse(router.location.search).duration_max || null,
-});
+const mapStateToProps = ({ router }: State): StateProps => {
+  const searchFilters = searchFiltersConverter.fromSearchUrl(
+    router.location.search,
+  );
+
+  return {
+    durationMin: searchFilters.durationMin,
+    durationMax: searchFilters.durationMax,
+  };
+};
 
 export default connect(
   mapStateToProps,
