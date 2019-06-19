@@ -31,8 +31,8 @@ class DurationSlider extends React.Component<Props> {
       <BoclipsSlider
         step={1}
         defaultValue={[
-          this.durationBounds.resolveMin(this.props.min),
-          this.durationBounds.resolveMax(this.props.max),
+          this.durationBounds.resolveMin(this.props.min / 60),
+          this.durationBounds.resolveMax(this.props.max / 60),
         ]}
         tipFormatter={this.formatToolTip}
         min={0}

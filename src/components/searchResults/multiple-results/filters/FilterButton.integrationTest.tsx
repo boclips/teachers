@@ -8,9 +8,12 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../../../test-support/factories';
+import { setWidth } from '../../../../../test-support/setWidth';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationSlider from './DurationSlider';
-import FilterButtonConnected, { FilterButton } from './FilterButton';
+import FilterButtonConnected, {
+  FilterButtonWithMediaBreakPoint as FilterButton,
+} from './FilterButton';
 
 describe('basic modal interaction', () => {
   test('modal opens', () => {
@@ -97,7 +100,11 @@ describe('when a filter is submitted', () => {
 describe('default values', () => {
   it('can set default duration values', () => {
     const wrapper = mount(
-      <FilterButton onSubmit={jest.fn} durationMin={4} durationMax={10} />,
+      <FilterButton
+        onSubmit={jest.fn}
+        durationMin={4 * 60}
+        durationMax={10 * 60}
+      />,
     );
 
     const simulator = new EventSimulator(wrapper);
@@ -151,5 +158,42 @@ describe('url changes', () => {
         },
       ]),
     );
+  });
+});
+
+describe('number of filters text', () => {
+  it('shows number of filters applied when width is less than md', () => {
+    setWidth(500);
+    const wrapper = mount(
+      <FilterButton onSubmit={jest.fn()} numberOfFiltersApplied={1} />,
+    );
+
+    expect(
+      wrapper.find(FilterButton).find(By.dataQa('filter-button-text')),
+    ).toHaveText('Filter (1)');
+  });
+
+  it('does not show any number next to filters text when no filters', () => {
+    setWidth(500);
+
+    const wrapper = mount(
+      <FilterButton onSubmit={jest.fn()} numberOfFiltersApplied={0} />,
+    );
+
+    expect(
+      wrapper.find(FilterButton).find(By.dataQa('filter-button-text')),
+    ).toHaveText('Filter ');
+  });
+
+  it('does not show number of filters applied when width is greater than md', () => {
+    setWidth(1000);
+
+    const wrapper = mount(
+      <FilterButton onSubmit={jest.fn()} numberOfFiltersApplied={0} />,
+    );
+
+    expect(
+      wrapper.find(FilterButton).find(By.dataQa('filter-button-text')),
+    ).toHaveText('Filter ');
   });
 });

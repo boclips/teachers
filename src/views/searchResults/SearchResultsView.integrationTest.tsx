@@ -13,7 +13,7 @@ import { findElement, waitForElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
 import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
 import DurationSlider from '../../components/searchResults/multiple-results/filters/DurationSlider';
-import { FilterButton } from '../../components/searchResults/multiple-results/filters/FilterButton';
+import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/multiple-results/filters/FilterButton';
 import { ClosableTag } from '../../components/video/tags/Tag';
 
 beforeEach(() => {

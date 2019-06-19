@@ -4,15 +4,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import filterIconSvg from '../../../../../resources/images/filter-icon.svg';
-import SearchFiltersConverter from '../../../../services/searchFilters/searchFiltersConverter';
-import { default as AppSate } from '../../../../types/State';
+import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 import Bodal from '../../../common/Bodal';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../../common/higerOrderComponents/withMediaBreakPoint';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+import AppliedFiltersProvider, {
+  AppliedFiltersInjectedProps,
+} from './AppliedFiltersProvider';
 import './FilterButton.less';
-import FilterButtonForm, {
-  FilterFormEditableFields,
-  FilterProps,
-} from './FilterButtonForm';
+import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 
 interface FilterRequest {
   duration: {
@@ -25,19 +27,18 @@ interface DispatchProps {
   onSubmit: (FilterRequest) => void;
 }
 
-interface StateProps extends FilterProps {}
-
 interface State {
   visible: boolean;
 }
 
-export class FilterButton extends React.Component<
-  DispatchProps & StateProps,
-  State
-> {
+type Props = AppliedFiltersInjectedProps &
+  DispatchProps &
+  WithMediaBreakPointProps;
+
+class FilterButton extends React.Component<Props, State> {
   private svg = filterIconSvg as React.ComponentType<CustomIconComponentProps>;
   private formRef: any;
-  constructor(props: DispatchProps) {
+  constructor(props: DispatchProps & WithMediaBreakPointProps) {
     super(props);
 
     this.state = {
@@ -75,6 +76,12 @@ export class FilterButton extends React.Component<
     this.formRef = formRef;
   };
 
+  private getFiltersAppliedText = () =>
+    this.props.mediaBreakpoint.width <= MediaBreakpoints.md.width &&
+    this.props.numberOfFiltersApplied > 0
+      ? `(${this.props.numberOfFiltersApplied})`
+      : ``;
+
   public render() {
     return (
       <React.Fragment>
@@ -84,7 +91,9 @@ export class FilterButton extends React.Component<
           className="filter-button"
         >
           <Icon component={this.svg} />
-          Filter
+          <span data-qa="filter-button-text">
+            Filter {this.getFiltersAppliedText()}
+          </span>
         </Button>
         <Bodal
           title="Filter results by"
@@ -104,17 +113,6 @@ export class FilterButton extends React.Component<
   }
 }
 
-const searchFiltersConverter = new SearchFiltersConverter();
-
-const mapStateToProps = ({ router }: AppSate): StateProps => {
-  const filters = searchFiltersConverter.fromSearchUrl(router.location.search);
-
-  return {
-    durationMin: filters.durationMin / 60 || null,
-    durationMax: filters.durationMax / 60 || null,
-  };
-};
-
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onSubmit: (fields: FilterFormEditableFields) => {
@@ -130,7 +128,25 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
+const FilterButtonWithMediaBreakPoint = withMediaBreakPoint<Props>(
+  FilterButton,
+);
+
+const ConnectedFilterButton = connect(
+  null,
   mapDispatchToProps,
-)(FilterButton);
+)(FilterButtonWithMediaBreakPoint);
+
+class FilterButtonWrapper extends React.Component<AppliedFiltersInjectedProps> {
+  public render() {
+    return (
+      <AppliedFiltersProvider>
+        <ConnectedFilterButton />
+      </AppliedFiltersProvider>
+    );
+  }
+}
+
+export { FilterButtonWithMediaBreakPoint };
+
+export default FilterButtonWrapper;

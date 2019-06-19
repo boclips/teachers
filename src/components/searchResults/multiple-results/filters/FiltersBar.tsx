@@ -1,5 +1,9 @@
 import { Row } from 'antd';
 import React from 'react';
+import MediaBreakpoints from '../../../../types/MediaBreakpoints';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../../common/higerOrderComponents/withMediaBreakPoint';
 import AppliedFiltersProvider, {
   AppliedFiltersInjectedProps,
 } from './AppliedFiltersProvider';
@@ -32,8 +36,15 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
   }
 }
 
-export default class FilterBarWrapper extends React.Component {
+class FilterBarWrapper extends React.Component<WithMediaBreakPointProps> {
   public render() {
-    return <AppliedFiltersProvider children={<FiltersBar />} />;
+    return this.props.mediaBreakpoint.width <=
+      MediaBreakpoints.md.width ? null : (
+      <AppliedFiltersProvider>
+        <FiltersBar />
+      </AppliedFiltersProvider>
+    );
   }
 }
+
+export default withMediaBreakPoint(FilterBarWrapper);

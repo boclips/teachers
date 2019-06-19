@@ -65,21 +65,21 @@ it('defaults to 0 - 10 if no default values are given', () => {
 
 it('sets default to min and max values passed in', () => {
   const wrapper = shallow(
-    <DurationSlider onChange={jest.fn()} min={2} max={5} />,
+    <DurationSlider onChange={jest.fn()} min={120} max={300} />,
   );
 
   expect(wrapper.find(BoclipsSlider).props().defaultValue).toEqual([2, 5]);
 });
 
 it('sets default to min value passed in and defaults max to 10', () => {
-  const wrapper = shallow(<DurationSlider onChange={jest.fn()} min={2} />);
+  const wrapper = shallow(<DurationSlider onChange={jest.fn()} min={120} />);
 
   expect(wrapper.find(BoclipsSlider).props().defaultValue).toEqual([2, 10]);
 });
 
 it('defaults to 0-10 if min and max are out of range', () => {
   const wrapper = shallow(
-    <DurationSlider onChange={jest.fn()} min={-1} max={11} />,
+    <DurationSlider onChange={jest.fn()} min={-1} max={600000} />,
   );
 
   expect(wrapper.find(BoclipsSlider).props().defaultValue).toEqual([0, 10]);
