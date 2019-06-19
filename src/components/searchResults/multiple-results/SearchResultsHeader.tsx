@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import FilterButton from './FilterButton';
+import FilterButton from './filters/FilterButton';
 import SearchResultsCount from './SearchResultsCount';
 import './SearchResultsHeader.less';
 

@@ -4,10 +4,10 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import filterIconSvg from '../../../../resources/images/filter-icon.svg';
-import { default as AppSate } from '../../../types/State';
-import Bodal from '../../common/Bodal';
-import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
+import filterIconSvg from '../../../../../resources/images/filter-icon.svg';
+import { default as AppSate } from '../../../../types/State';
+import Bodal from '../../../common/Bodal';
+import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import './FilterButton.less';
 import FilterButtonForm, {
   FilterFormEditableFields,

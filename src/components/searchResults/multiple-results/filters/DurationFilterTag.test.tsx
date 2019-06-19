@@ -3,9 +3,9 @@ import React from 'react';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
-import { ClosableTag } from '../../video/tags/Tag';
-import { updateSearchParamsAction } from '../redux/actions/UpdateSearchParametersActions';
+} from '../../../../../test-support/factories';
+import { ClosableTag } from '../../../video/tags/Tag';
+import { updateSearchParamsAction } from '../../redux/actions/UpdateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 
 const getWrapper = (minDuration?: number, maxDuration?: number) => {

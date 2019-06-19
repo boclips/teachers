@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { BoclipsSlider } from '../../common/BoclipsSlider';
+import { BoclipsSlider } from '../../../common/BoclipsSlider';
 import DurationSlider from './DurationSlider';
 
 it('resolves slider values from minutes to seconds', () => {

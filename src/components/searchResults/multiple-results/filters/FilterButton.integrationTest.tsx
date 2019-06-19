@@ -2,13 +2,13 @@ import { Button, Modal, Slider } from 'antd';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from '../../../../test-support/By';
-import EventSimulator from '../../../../test-support/EventSimulator';
+import { By } from '../../../../../test-support/By';
+import EventSimulator from '../../../../../test-support/EventSimulator';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
-import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
+} from '../../../../../test-support/factories';
+import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationSlider from './DurationSlider';
 import FilterButtonConnected, { FilterButton } from './FilterButton';
 

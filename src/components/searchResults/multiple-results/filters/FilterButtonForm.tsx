@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import React from 'react';
-import { Range } from '../../../types/Range';
-import { FormComponentProps } from '../../account/form/FormComponentProps';
+import { Range } from '../../../../types/Range';
+import { FormComponentProps } from '../../../account/form/FormComponentProps';
 import DurationSlider from './DurationSlider';
 
 export interface FilterFormEditableFields {

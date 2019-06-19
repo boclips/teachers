@@ -3,7 +3,7 @@ import React from 'react';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
+} from '../../../../../test-support/factories';
 import AppliedFiltersProvider from './AppliedFiltersProvider';
 
 const getWrapper = (query: string, component: React.ReactElement) => {

@@ -3,7 +3,7 @@ import Row from 'antd/lib/grid/row';
 import React from 'react';
 import { SearchVideoCardList } from '../../video/list/VideoCardList';
 import { SearchResultsSidebar } from '../SearchResultsSidebar';
-import FiltersBar from './FiltersBar';
+import FiltersBar from './filters/FiltersBar';
 import SearchResultsHeader from './SearchResultsHeader';
 import SearchResultsProps from './SearchResultsProps';
 

@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
-import State from '../../../types/State';
+import State from '../../../../types/State';
 
 export interface StateProps {
   minDuration?: number;

@@ -1,11 +1,11 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from '../../../../test-support/By';
+import { By } from '../../../../../test-support/By';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
+} from '../../../../../test-support/factories';
 import FiltersBarWrapper, { FiltersBar } from './FiltersBar';
 
 it('does not render anything if there are no filters', () => {

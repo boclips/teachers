@@ -11,9 +11,9 @@ import {
 } from '../../../test-support/video-service-responses';
 import { findElement, waitForElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
-import DurationFilterTag from '../../components/searchResults/multiple-results/DurationFilterTag';
-import DurationSlider from '../../components/searchResults/multiple-results/DurationSlider';
-import { FilterButton } from '../../components/searchResults/multiple-results/FilterButton';
+import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
+import DurationSlider from '../../components/searchResults/multiple-results/filters/DurationSlider';
+import { FilterButton } from '../../components/searchResults/multiple-results/filters/FilterButton';
 import { ClosableTag } from '../../components/video/tags/Tag';
 
 beforeEach(() => {
