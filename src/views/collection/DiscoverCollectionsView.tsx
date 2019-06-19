@@ -6,6 +6,7 @@ import DisciplineName from '../../components/disciplines/DisciplineName';
 import SubjectLogo from '../../components/disciplines/SubjectLogo';
 import PageLayout from '../../components/layout/PageLayout';
 import SubjectLabel from '../../components/SubjectLabel';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import './DiscoverCollectionsView.less';
 
 interface Props {
@@ -55,6 +56,10 @@ export class DiscoverCollectionsView extends PureComponent<Props> {
         </PageLayout>
       </section>
     );
+  }
+
+  public componentDidMount(): void {
+    AnalyticsFactory.getInstance().trackDiscoveryPage(this.props.subject);
   }
 }
 
