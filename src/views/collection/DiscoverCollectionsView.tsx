@@ -48,7 +48,7 @@ export class DiscoverCollectionsView extends PureComponent<Props> {
               }
               grid={true}
               collectionKey="discoverCollections"
-              collectionFiler={{ subjects: this.props.subject }}
+              collectionFiler={{ subject: this.props.subject }}
               shouldRefresh={refresh}
             />
           </section>

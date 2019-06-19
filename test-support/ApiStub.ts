@@ -117,7 +117,7 @@ export default class ApiStub {
 
   public fetchDiscoverMathsCollections(collections = collectionsResponse()) {
     MockFetchVerify.get(
-      `${this.prefix}/v1/collections?subjects=maths`,
+      `${this.prefix}/v1/collections?subject=maths`,
       collections,
     );
     return this;
