@@ -9,6 +9,11 @@ export interface CreateAccountRequest {
   email: string;
   password: string;
   analyticsId: string;
+  utmSource: string;
+  utmContent: string;
+  utmTerm: string;
+  utmCampaign: string;
+  utmMedium: string;
   referralCode: string;
   hasOptedIntoMarketing: boolean;
 }

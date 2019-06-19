@@ -26,6 +26,10 @@ test('create account', async () => {
       analyticsId: 'mixpanel-123',
       referralCode: 'SCAM-123',
       hasOptedIntoMarketing: false,
+      utmSource: 'some-source',
+      utmContent: 'some-content',
+      utmTerm: 'some-term',
+      utmCampaign: 'some-campaign',
     },
     201,
   );
@@ -40,6 +44,11 @@ test('create account', async () => {
     analyticsId: 'mixpanel-123',
     referralCode: 'SCAM-123',
     hasOptedIntoMarketing: false,
+    utmSource: 'some-source',
+    utmContent: 'some-content',
+    utmTerm: 'some-term',
+    utmCampaign: 'some-campaign',
+    utmMedium: undefined,
   });
 
   expect(success).toEqual(true);

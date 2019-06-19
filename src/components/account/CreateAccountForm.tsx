@@ -8,6 +8,7 @@ import {
   createAccount,
   CreateAccountRequest,
 } from '../../services/account/createAccount';
+import Utm from '../../services/account/Utm';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { AgeRange } from '../../types/AgeRange';
 import { Links } from '../../types/Links';
@@ -28,13 +29,14 @@ import { PrivacyPolicyAgreementForm } from './form/PrivacyPolicyAgreementForm';
 import { SubjectsForm } from './form/SubjectsForm';
 import TwoColumnInlineForm from './form/TwoColumnInlineFormItem';
 import { Recaptcha } from './recaptcha/Recaptcha';
-import { extractReferralCode } from './referral/extractReferralCode';
+import { extractQueryParam } from './referral/extractQueryParam';
 
 interface CreateAccountProps {
   links: Links;
   referralCode: string;
   subjects: Subject[];
   ageRanges: AgeRange[];
+  utm: Utm;
 }
 
 interface InternalState {
@@ -167,6 +169,36 @@ class RegistrationForm extends React.Component<
                   })(<Input type="text" />)}
                 </Form.Item>
                 <Form.Item>
+                  {getFieldDecorator('utmSource', {
+                    rules: [],
+                    initialValue: this.props.utm.source,
+                  })(<Input type="text" />)}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('utmTerm', {
+                    rules: [],
+                    initialValue: this.props.utm.term,
+                  })(<Input type="text" />)}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('utmContent', {
+                    rules: [],
+                    initialValue: this.props.utm.content,
+                  })(<Input type="text" />)}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('utmMedium', {
+                    rules: [],
+                    initialValue: this.props.utm.medium,
+                  })(<Input type="text" />)}
+                </Form.Item>
+                <Form.Item>
+                  {getFieldDecorator('utmCampaign', {
+                    rules: [],
+                    initialValue: this.props.utm.campaign,
+                  })(<Input type="text" />)}
+                </Form.Item>
+                <Form.Item>
                   {getFieldDecorator('recaptchaToken', {
                     rules: [],
                     initialValue: '',
@@ -272,11 +304,19 @@ class RegistrationForm extends React.Component<
 
 function mapStateToProps(state: State): CreateAccountProps {
   const queryParam = state.router.location.search;
+
   return {
     links: state.links,
-    referralCode: extractReferralCode(queryParam),
+    referralCode: extractQueryParam(queryParam, 'REFERRALCODE'),
     subjects: state.subjects,
     ageRanges: state.ageRanges,
+    utm: {
+      source: extractQueryParam(queryParam, 'utm_source'),
+      term: extractQueryParam(queryParam, 'utm_term'),
+      medium: extractQueryParam(queryParam, 'utm_medium'),
+      campaign: extractQueryParam(queryParam, 'utm_campaign'),
+      content: extractQueryParam(queryParam, 'utm_content'),
+    },
   };
 }
 
