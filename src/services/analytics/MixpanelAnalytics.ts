@@ -217,4 +217,8 @@ export default class MixpanelAnalytics {
       type: typeOfCollections,
     });
   }
+
+  public trackSearchFiltersApplied(formData: any) {
+    this.mixpanelInstance.track(EventTypes.SEARCH_FILTERS_APPLIED, formData);
+  }
 }

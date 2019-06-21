@@ -224,4 +224,11 @@ describe('MixpanelAnalytics', () => {
 
     expect(mock.track).toHaveBeenCalledWith('HOMEPAGE_EXPLORE_COLLECTIONS');
   });
+
+  it('track when user applies search filters', () => {
+    const data = { some: 'data' };
+    mixpanelAnalytics.trackSearchFiltersApplied(data);
+
+    expect(mock.track).toHaveBeenCalledWith('SEARCH_FILTERS_APPLIED', data);
+  });
 });

@@ -2,6 +2,7 @@ import { push } from 'connected-react-router';
 import queryString from 'query-string';
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import State from '../../../../types/State';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
@@ -36,6 +37,8 @@ export function onBulkUpdateSearchParameter(
   const newQuery = request.reduce((acc, value: any) => {
     return { ...acc, ...value };
   }, parsedQuery);
+
+  AnalyticsFactory.getInstance().trackSearchFiltersApplied(request);
 
   store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
 }
