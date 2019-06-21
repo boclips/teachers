@@ -41,11 +41,14 @@ export class DiscoverCollectionsView extends PureComponent<
                 <section className="discover-collections__header">
                   <h1>
                     <strong className="discipline-name">
-                      {`${this.props.discipline.name} > `}
+                      {`${this.props.discipline.name}`}
                     </strong>
-                    {this.props.subjects &&
-                      this.props.subjects.length === 1 &&
-                      this.props.subjects[0].name}
+                    {this.props.subjects && this.props.subjects.length === 1 && (
+                      <span>
+                        <strong> > </strong>
+                        {this.props.subjects[0].name}
+                      </span>
+                    )}
                   </h1>
                   <section className="discover-collections__header-logo">
                     <DisciplineLogo
