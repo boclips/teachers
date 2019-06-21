@@ -31,10 +31,23 @@
     }
 
     @media (max-width: @screen-sm) {
-      .ant-modal-body, .ant-modal-footer {
+      .ant-modal-body, .ant-modal-footer, .ant-modal-header {
         padding-left: 16px;
         padding-right: 16px;
       }
-    }  
+
+      .ant-modal-footer {
+
+        padding-top: 8px;
+        padding-bottom: 24px;
+        > div {
+          display: flex;
+
+          > button {
+            flex-grow: 1;
+          }
+        }
+      }
+    }
   }
 }

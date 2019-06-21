@@ -19,12 +19,11 @@ interface StateProps {
 }
 
 class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
-  private showCopiedNotification = (video: Video) => (url: string) => {
+  private showCopiedNotification = (video: Video) => () => {
     AnalyticsFactory.getInstance().trackVideoLinkCopied(video);
     NotificationFactory.success({
-      message: url,
-      description:
-        'has been copied to your clipboard. Paste link to your tool of choice.',
+      message: 'Copied!',
+      description: 'The video link has been copied to your clipboard.',
     });
   };
 
