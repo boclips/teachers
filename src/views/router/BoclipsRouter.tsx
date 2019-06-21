@@ -39,9 +39,24 @@ function collectionView(
 
 function discoverCollectionsView(props: RouteComponentProps) {
   const queryParams = queryString.parse(props.location.search);
-  const subject = queryParams.subject as string;
+  const subjectIdQuery = queryParams.subject as string[] | string;
+  const disciplineId = queryParams.discipline as string;
 
-  return <DiscoverCollectionsView subject={subject} />;
+  let subjectIds;
+  if (!subjectIdQuery) {
+    subjectIds = [];
+  } else if (subjectIdQuery instanceof Array) {
+    subjectIds = subjectIdQuery;
+  } else {
+    subjectIds = [subjectIdQuery];
+  }
+
+  return (
+    <DiscoverCollectionsView
+      subjectIds={subjectIds}
+      disciplineId={disciplineId}
+    />
+  );
 }
 
 interface StateProps {

@@ -11,12 +11,22 @@ export class DiscoverCollectionListPage extends AbstractCollectionListPage {
     super(wrapper);
   }
 
-  public static async loadMaths() {
+  public static async loadBySubject(subjectId: string) {
+    return await this.loadByUrl(`/discover-collections?subject=${subjectId}`);
+  }
+
+  public static async loadByDiscipline(disciplineId: string) {
+    return await this.loadByUrl(
+      `/discover-collections?discipline=${disciplineId}`,
+    );
+  }
+
+  private static async loadByUrl(url: string) {
     const page = new DiscoverCollectionListPage(
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: [`/discover-collections?subject=maths`],
+            initialEntries: [url],
           })}
           apiPrefix="https://api.example.com"
         />,

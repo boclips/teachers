@@ -115,10 +115,12 @@ export default class ApiStub {
     return this;
   }
 
-  public fetchDiscoverMathsCollections(collections = collectionsResponse()) {
+  public fetchCollectionsBySubjects(...subjectIds: string[]) {
     MockFetchVerify.get(
-      `${this.prefix}/v1/collections?subject=maths`,
-      collections,
+      `${this.prefix}/v1/collections?${subjectIds
+        .map(subjectId => `subject=${subjectId}`)
+        .join('&')}`,
+      collectionsResponse(),
     );
     return this;
   }

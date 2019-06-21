@@ -85,9 +85,10 @@ export default class MixpanelAnalytics {
     });
   }
 
-  public trackDiscoveryPage(subjectId: string) {
+  public trackDiscoveryPage(subjectId?: string[], disciplineId?: string) {
     this.mixpanelInstance.track(EventTypes.DISCOVER_COLLECTIONS, {
-      subject_id: subjectId,
+      subject_id: subjectId ? subjectId : null,
+      discipline_id: disciplineId ? disciplineId : null,
     });
   }
 

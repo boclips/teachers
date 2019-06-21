@@ -142,7 +142,29 @@ describe('when authorised', () => {
 
     const collectionsView = wrapper.find(DiscoverCollectionsView);
     expect(collectionsView).toExist();
-    expect(collectionsView).toHaveProp('subject', 'maths');
+    expect(collectionsView).toHaveProp('subjectIds', ['maths']);
+    expect(collectionsView).toHaveProp('disciplineId', undefined);
+  });
+
+  test('shows discover collections by subject view on /discover-collections', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider
+        store={buildStore(
+          '/discover-collections',
+          'discipline=stuff&subject=maths&subject=myths',
+          true,
+        )}
+      >
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const collectionsView = wrapper.find(DiscoverCollectionsView);
+    expect(collectionsView).toExist();
+    expect(collectionsView).toHaveProp('subjectIds', ['maths', 'myths']);
+    expect(collectionsView).toHaveProp('disciplineId', 'stuff');
   });
 
   test('shows bookmarked collections view on /bookmarked-collections', () => {

@@ -265,16 +265,16 @@ export function disciplinesResponse() {
     _embedded: {
       disciplines: [
         {
-          id: '1',
+          id: 'arts',
           name: 'Arts',
           code: 'arts',
           subjects: [
             {
-              id: '2',
+              id: 'arts-subject-1',
               name: 'Performing Arts',
             },
             {
-              id: '3',
+              id: 'arts-subject-2',
               name: 'Art History',
             },
           ],

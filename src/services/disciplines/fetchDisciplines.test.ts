@@ -19,10 +19,10 @@ test('fetch all disciplines', async () => {
   const disciplines = await fetchDisciplines(links);
 
   expect(disciplines).toHaveLength(2);
-  expect(disciplines[0].id).toEqual('1');
+  expect(disciplines[0].id).toEqual('arts');
   expect(disciplines[0].name).toEqual('Arts');
   expect(disciplines[0].code).toEqual('arts');
   expect(disciplines[0].subjects.length).toEqual(2);
-  expect(disciplines[0].subjects[0].id).toEqual('2');
+  expect(disciplines[0].subjects[0].id).toEqual('arts-subject-1');
   expect(disciplines[0].subjects[0].name).toEqual('Performing Arts');
 });
