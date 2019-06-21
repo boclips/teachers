@@ -60,6 +60,8 @@ export function onClearSearchFilterParameters(
   const clearAllFiltersQuery: UpdateAllFilters = {
     duration_min: undefined,
     duration_max: undefined,
+    age_range_min: undefined,
+    age_range_max: undefined,
   };
 
   const newQuery = {

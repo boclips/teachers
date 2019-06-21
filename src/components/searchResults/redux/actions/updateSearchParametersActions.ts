@@ -22,7 +22,7 @@ interface UpdateSearchMode {
   mode: string;
 }
 
-export type UpdateAllFilters = UpdateDurationFilter;
+export type UpdateAllFilters = UpdateDurationFilter | UpdateAgeRangeFilter;
 
 export type UpdateSearchParamsRequest =
   | UpdateDurationFilter

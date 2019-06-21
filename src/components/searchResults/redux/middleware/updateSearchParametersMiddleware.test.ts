@@ -113,7 +113,7 @@ it('updates mode in url parameters', async () => {
   });
 });
 
-it('updates mutliple url parameters in one dispatch', async () => {
+it('updates multiple url parameters in one dispatch', async () => {
   const store = setupStore('mode=hello&q=hi');
 
   const durationUpdate = {
@@ -142,7 +142,7 @@ it('removes parameters if they are undefined', async () => {
   });
 });
 
-it('ignores all previous values on override aciton', async () => {
+it('ignores all previous values on override action', async () => {
   const store = setupStore(
     'mode=hello&q=hi&test=1&blah=123&duration_max=hello',
   );
@@ -156,7 +156,7 @@ it('ignores all previous values on override aciton', async () => {
 
 it('clears filter on clear search filters action', async () => {
   const store = setupStore(
-    'mode=hello&q=hi&duration_max=hello&duration_min=123',
+    'mode=hello&q=hi&duration_max=hello&duration_min=123&age_range_min=5&age_range_max=11',
   );
 
   store.dispatch(clearSearchFilterParametersAction());
