@@ -26,3 +26,32 @@ describe('generating an array', () => {
     expect(ageRange.generateRangeArray()).toEqual([]);
   });
 });
+
+describe('resolving the minimum age', () => {
+  test('returns the default min age if no min age set', () => {
+    const ageRange = new AgeRange({ min: null, max: 11 });
+
+    expect(ageRange.resolveMin()).toEqual(3);
+  });
+  test('returns the default min age if given out of bounds min age', () => {
+    const ageRange = new AgeRange({ min: -1, max: 11 });
+
+    expect(ageRange.resolveMin()).toEqual(3);
+  });
+  test('returns the min age if set', () => {
+    const ageRange = new AgeRange({ min: 5, max: 11 });
+
+    expect(ageRange.resolveMin()).toEqual(5);
+  });
+});
+
+describe('resolving the maximum age', () => {
+  test('returns the default max age if no max age set', () => {
+    const ageRange = new AgeRange({ min: 3, max: null });
+    expect(ageRange.resolveMax()).toEqual(19);
+  });
+  test('returns the max age if set', () => {
+    const ageRange = new AgeRange({ min: 3, max: 16 });
+    expect(ageRange.resolveMax()).toEqual(16);
+  });
+});

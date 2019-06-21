@@ -16,7 +16,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max}',
       templated: true,
     }),
   });
@@ -30,6 +30,8 @@ beforeEach(async () => {
         excludeTags: [Constants.NEWS],
         duration_min: 100,
         duration_max: 200,
+        age_range_min: 5,
+        age_range_max: 11,
       },
       sortBy: 'RELEASE_DATE',
     },
@@ -64,4 +66,9 @@ test('includes sort_by when provided', () => {
 test('converts durations to ISO-8601', () => {
   expect(queryParams.duration_min).toEqual('PT1M40S');
   expect(queryParams.duration_max).toEqual('PT3M20S');
+});
+
+test('includes age range min and max when provided', () => {
+  expect(queryParams.age_range_min).toEqual('5');
+  expect(queryParams.age_range_max).toEqual('11');
 });

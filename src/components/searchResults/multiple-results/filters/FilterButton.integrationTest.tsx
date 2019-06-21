@@ -9,6 +9,7 @@ import {
   RouterFactory,
 } from '../../../../../test-support/factories';
 import { setWidth } from '../../../../../test-support/setWidth';
+import AgeRangeSlider from '../../../common/AgeRangeSlider';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationSlider from './DurationSlider';
 import FilterButtonConnected, {
@@ -82,6 +83,31 @@ describe('when a filter is submitted', () => {
     });
   });
 
+  it('calls back with an updated age range', () => {
+    const spy = jest.fn();
+    const wrapper = mount(<FilterButton onSubmit={spy} />);
+    const simulator = new EventSimulator(wrapper);
+
+    simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
+
+    wrapper
+      .find(AgeRangeSlider)
+      .find(Slider)
+      .props()
+      .onChange([5, 11]);
+
+    simulator.click(
+      wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),
+    );
+
+    expect(spy).toHaveBeenCalledWith({
+      ageRange: {
+        min: 5,
+        max: 11,
+      },
+    });
+  });
+
   it("doesn't call back at all if there's no change to filters", () => {
     const spy = jest.fn();
     const wrapper = mount(<FilterButton onSubmit={spy} />);
@@ -97,7 +123,7 @@ describe('when a filter is submitted', () => {
   });
 });
 
-describe('default values', () => {
+describe('default slider values', () => {
   it('can set default duration values', () => {
     const wrapper = mount(
       <FilterButton
@@ -118,10 +144,26 @@ describe('default values', () => {
         .props().defaultValue,
     ).toEqual([4, 10]);
   });
+  it('can set default age range values', () => {
+    const wrapper = mount(
+      <FilterButton onSubmit={jest.fn} ageRangeMax={10} ageRangeMin={7} />,
+    );
+
+    const simulator = new EventSimulator(wrapper);
+
+    simulator.click(wrapper.find(By.dataQa('open-filter-modal')).first());
+
+    expect(
+      wrapper
+        .find(AgeRangeSlider)
+        .find(Slider)
+        .props().defaultValue,
+    ).toEqual([7, 10]);
+  });
 });
 
 describe('url changes', () => {
-  it('updates with the correct duration', () => {
+  it('updates with the correct duration and age range', () => {
     const store = MockStoreFactory.sample({
       router: RouterFactory.sample({
         location: {
@@ -147,14 +189,69 @@ describe('url changes', () => {
           min: 70,
           max: 130,
         },
+        ageRange: {
+          min: 10,
+          max: 15,
+        },
       });
 
     expect(store.getActions().length).toEqual(1);
     expect(store.getActions()[0]).toEqual(
       bulkUpdateSearchParamsAction([
         {
-          duration_min: 70,
           duration_max: 130,
+          duration_min: 70,
+        },
+        {
+          age_range_max: 15,
+          age_range_min: 10,
+        },
+      ]),
+    );
+  });
+
+  it('does not pass null values to url', () => {
+    const store = MockStoreFactory.sample({
+      router: RouterFactory.sample({
+        location: {
+          pathname: '',
+          search: `?q=hi`,
+          hash: '',
+          state: null,
+        },
+      }),
+    });
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <FilterButtonConnected />
+      </Provider>,
+    );
+
+    wrapper
+      .find(FilterButton)
+      .props()
+      .onSubmit({
+        duration: {
+          min: 70,
+          max: null,
+        },
+        ageRange: {
+          min: 10,
+          max: null,
+        },
+      });
+
+    expect(store.getActions().length).toEqual(1);
+    expect(store.getActions()[0]).toEqual(
+      bulkUpdateSearchParamsAction([
+        {
+          duration_max: undefined,
+          duration_min: 70,
+        },
+        {
+          age_range_max: undefined,
+          age_range_min: 10,
         },
       ]),
     );

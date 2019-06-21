@@ -17,7 +17,11 @@ import './FilterButton.less';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 
 interface FilterRequest {
-  duration: {
+  duration?: {
+    min: number;
+    max: number;
+  };
+  ageRange?: {
     min: number;
     max: number;
   };
@@ -38,6 +42,7 @@ type Props = AppliedFiltersInjectedProps &
 class FilterButton extends React.Component<Props, State> {
   private svg = filterIconSvg as React.ComponentType<CustomIconComponentProps>;
   private formRef: any;
+
   constructor(props: DispatchProps & WithMediaBreakPointProps) {
     super(props);
 
@@ -66,8 +71,16 @@ class FilterButton extends React.Component<Props, State> {
     const form = this.formRef.props.form;
 
     form.validateFields((_, values: FilterFormEditableFields) => {
+      const filterRequest: FilterRequest = {};
+
       if (values.duration) {
-        this.props.onSubmit({ duration: values.duration });
+        filterRequest.duration = values.duration;
+      }
+      if (values.ageRange) {
+        filterRequest.ageRange = values.ageRange;
+      }
+      if (filterRequest.ageRange || filterRequest.duration) {
+        this.props.onSubmit(filterRequest);
       }
     });
   };
@@ -105,6 +118,8 @@ class FilterButton extends React.Component<Props, State> {
           <FilterButtonForm
             durationMin={this.props.durationMin}
             durationMax={this.props.durationMax}
+            ageRangeMin={this.props.ageRangeMin}
+            ageRangeMax={this.props.ageRangeMax}
             wrappedComponentRef={this.saveFormRef}
           />
         </Bodal>
@@ -115,12 +130,17 @@ class FilterButton extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    onSubmit: (fields: FilterFormEditableFields) => {
+    onSubmit: (fields: FilterRequest) => {
       dispatch(
         bulkUpdateSearchParamsAction([
           {
-            duration_min: fields.duration.min || undefined,
-            duration_max: fields.duration.max || undefined,
+            duration_min: fields.duration && fields.duration.min,
+            duration_max: (fields.duration && fields.duration.max) || undefined,
+          },
+          {
+            age_range_min: fields.ageRange && fields.ageRange.min,
+            age_range_max:
+              (fields.ageRange && fields.ageRange.max) || undefined,
           },
         ]),
       );

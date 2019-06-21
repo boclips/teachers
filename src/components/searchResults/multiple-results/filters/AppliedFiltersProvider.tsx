@@ -6,6 +6,8 @@ import State from '../../../../types/State';
 export interface StateProps {
   durationMin?: number;
   durationMax?: number;
+  ageRangeMax?: number;
+  ageRangeMin?: number;
 }
 
 export interface AppliedFiltersInjectedProps extends StateProps {
@@ -18,7 +20,13 @@ interface Props {
 
 class AppliedFiltersProvider extends React.Component<StateProps & Props> {
   public render() {
-    const { children, durationMin, durationMax } = this.props;
+    const {
+      children,
+      durationMin,
+      durationMax,
+      ageRangeMax,
+      ageRangeMin,
+    } = this.props;
 
     let numberOfFiltersApplied = 0;
 
@@ -26,9 +34,15 @@ class AppliedFiltersProvider extends React.Component<StateProps & Props> {
       numberOfFiltersApplied += 1;
     }
 
+    if (ageRangeMin !== null || ageRangeMax != null) {
+      numberOfFiltersApplied += 1;
+    }
+
     return React.cloneElement(children, {
       durationMin,
       durationMax,
+      ageRangeMax,
+      ageRangeMin,
       numberOfFiltersApplied,
     });
   }
@@ -44,6 +58,8 @@ const mapStateToProps = ({ router }: State): StateProps => {
   return {
     durationMin: searchFilters.durationMin,
     durationMax: searchFilters.durationMax,
+    ageRangeMax: searchFilters.ageRangeMax,
+    ageRangeMin: searchFilters.ageRangeMin,
   };
 };
 

@@ -10,6 +10,8 @@ export interface RequestFilters {
   excludeTags: string[];
   duration_min?: number;
   duration_max?: number;
+  age_range_min?: number;
+  age_range_max?: number;
 }
 
 export type SortBy = null | 'RELEASE_DATE';

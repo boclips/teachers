@@ -8,6 +8,8 @@ export default class SearchFiltersConverter {
     return {
       durationMin: +parsedUrl.duration_min || null,
       durationMax: +parsedUrl.duration_max || null,
+      ageRangeMin: +parsedUrl.age_range_min || null,
+      ageRangeMax: +parsedUrl.age_range_max || null,
     };
   }
 }

@@ -4,6 +4,7 @@ import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../../common/higerOrderComponents/withMediaBreakPoint';
+import AgeRangeFilterTag from './AgeRangeFilterTag';
 import AppliedFiltersProvider, {
   AppliedFiltersInjectedProps,
 } from './AppliedFiltersProvider';
@@ -28,6 +29,10 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
           <DurationFilterTag
             durationMin={this.props.durationMin}
             durationMax={this.props.durationMax}
+          />
+          <AgeRangeFilterTag
+            ageRangeMin={this.props.ageRangeMin}
+            ageRangeMax={this.props.ageRangeMax}
           />
           <ClearAllButton />
         </Row>
