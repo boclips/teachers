@@ -11,6 +11,7 @@ import AppliedFiltersProvider, {
 import ClearAllButton from './ClearAllButton';
 import DurationFilterTag from './DurationFilterTag';
 import './FiltersBar.less';
+import SubjectFilterTag from './SubjectFilterTag';
 
 export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
   public render() {
@@ -34,6 +35,10 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
             ageRangeMin={this.props.ageRangeMin}
             ageRangeMax={this.props.ageRangeMax}
           />
+          {this.props.subjects &&
+            this.props.subjects.forEach(subject => (
+              <SubjectFilterTag subjectId={subject} />
+            ))}
           <ClearAllButton />
         </Row>
       </div>

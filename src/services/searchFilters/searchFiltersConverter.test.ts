@@ -8,6 +8,7 @@ it('converts duration search url string to SearchFilterParameters', () => {
     durationMax: 11,
     ageRangeMin: null,
     ageRangeMax: null,
+    subjects: null,
   });
 });
 
@@ -19,5 +20,30 @@ it('converts age range search url string to SearchFilterParameters', () => {
     durationMax: null,
     ageRangeMin: 1,
     ageRangeMax: 11,
+    subjects: null,
+  });
+});
+
+it('converts a single subject in the search url string to SearchFilterParameters', () => {
+  const converter = new SearchFiltersConverter();
+
+  expect(converter.fromSearchUrl('?subject=1')).toEqual({
+    durationMin: null,
+    durationMax: null,
+    ageRangeMin: null,
+    ageRangeMax: null,
+    subjects: ['1'],
+  });
+});
+
+it('converts multiple subjects in the search url string to SearchFilterParameters', () => {
+  const converter = new SearchFiltersConverter();
+
+  expect(converter.fromSearchUrl('?subject=1,2,3')).toEqual({
+    durationMin: null,
+    durationMax: null,
+    ageRangeMin: null,
+    ageRangeMax: null,
+    subjects: ['1', '2', '3'],
   });
 });

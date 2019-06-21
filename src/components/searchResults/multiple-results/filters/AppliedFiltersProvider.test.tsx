@@ -35,6 +35,7 @@ describe('duration filters', () => {
       ageRangeMin: null,
       durationMin: 60,
       durationMax: 180,
+      subjects: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -46,6 +47,7 @@ describe('duration filters', () => {
       ageRangeMax: null,
       durationMin: 180,
       durationMax: null,
+      subjects: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -57,6 +59,7 @@ describe('duration filters', () => {
       durationMax: 180,
       ageRangeMin: null,
       ageRangeMax: null,
+      subjects: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -74,6 +77,7 @@ describe('age range filters', () => {
       ageRangeMax: 11,
       durationMin: null,
       durationMax: null,
+      subjects: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -86,6 +90,7 @@ describe('age range filters', () => {
       ageRangeMax: 11,
       durationMin: null,
       durationMax: null,
+      subjects: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -98,7 +103,35 @@ describe('age range filters', () => {
       ageRangeMax: null,
       durationMin: null,
       durationMax: null,
+      subjects: null,
       numberOfFiltersApplied: 1,
+    });
+  });
+});
+describe('subject filters', () => {
+  it('provides single subject filter', () => {
+    const wrapper = getWrapper(`?q=hi&subject=5`, <div />);
+
+    expect(wrapper.props()).toEqual({
+      ageRangeMin: null,
+      ageRangeMax: null,
+      durationMin: null,
+      durationMax: null,
+      subjects: ['5'],
+      numberOfFiltersApplied: 1,
+    });
+  });
+
+  it('provides multiple subject filter', () => {
+    const wrapper = getWrapper(`?q=hi&subject=11,10`, <div />);
+
+    expect(wrapper.props()).toEqual({
+      ageRangeMin: null,
+      ageRangeMax: null,
+      durationMin: null,
+      durationMax: null,
+      subjects: ['11', '10'],
+      numberOfFiltersApplied: 2,
     });
   });
 });
@@ -115,6 +148,7 @@ describe('number of filters applied', () => {
       ageRangeMax: 11,
       durationMin: 60,
       durationMax: 180,
+      subjects: null,
       numberOfFiltersApplied: 2,
     });
   });

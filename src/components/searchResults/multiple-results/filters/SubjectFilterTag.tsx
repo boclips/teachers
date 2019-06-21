@@ -1,11 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import State from '../../../../types/State';
 import { Subject } from '../../../../types/Subject';
 import { ClosableTag } from '../../../video/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 
 interface Props {
+  subjectId?: string;
+}
+
+interface StateProps {
   subject?: Subject;
 }
 
@@ -13,9 +18,12 @@ interface DispatchProps {
   onClose: () => void;
 }
 
-class SubjectFilterTag extends React.Component<Props & DispatchProps> {
+class SubjectFilterTag extends React.Component<
+  Props & DispatchProps & StateProps
+> {
   public render() {
-    return this.props.subject == null ? null : (
+    return this.props.subjectId == null &&
+      this.props.subject === undefined ? null : (
       <ClosableTag
         dataQa="subject-filter-tag"
         label="Subject"
@@ -24,6 +32,14 @@ class SubjectFilterTag extends React.Component<Props & DispatchProps> {
       />
     );
   }
+}
+
+function mapStateToProps(state: State, ownProps: Props): StateProps {
+  return {
+    subject: state.subjects.filter(
+      subject => subject.id === ownProps.subjectId,
+    )[0],
+  };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
@@ -37,6 +53,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(SubjectFilterTag);

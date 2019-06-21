@@ -26,7 +26,10 @@ interface UpdateSubjectFilter {
   subject: string;
 }
 
-export type UpdateAllFilters = UpdateDurationFilter | UpdateAgeRangeFilter;
+export type UpdateAllFilters =
+  | UpdateDurationFilter
+  | UpdateAgeRangeFilter
+  | UpdateSubjectFilter;
 
 export type UpdateSearchParamsRequest =
   | UpdateDurationFilter
