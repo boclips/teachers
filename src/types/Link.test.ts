@@ -38,6 +38,20 @@ describe('templated link', () => {
     );
   });
 
+  test('can interpolate multiple query params', () => {
+    const link = new Link({
+      href:
+        'https://teachers.testing-boclips.com/v1/videos?query={query}{&subject}',
+      templated: true,
+    });
+
+    expect(
+      link.getTemplatedLink({ query: 'perro', subject: ['foo', 'bar'] }),
+    ).toEqual(
+      'https://teachers.testing-boclips.com/v1/videos?query=perro&subject=foo,bar',
+    );
+  });
+
   test('ignores a null optional query params', () => {
     const link = new Link({
       href:

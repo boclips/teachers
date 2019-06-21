@@ -22,23 +22,24 @@ test('displays maths collections', async () => {
   });
 });
 
-// test('displays arts discipline', async () => {
-//   new ApiStub()
-//     .defaultUser()
-//     .fetchCollections()
-//     // art disciple contains arts-subject-1 and art-subjects-2
-//     .fetchCollectionsBySubjects('arts-subject-1', 'arts-subject-2')
-//     .fetchVideo();
-//
-//   const collectionPage = await DiscoverCollectionListPage.loadByDiscipline(
-//     'arts',
-//   );
-//
-//   expect(collectionPage.getCollections()).toHaveLength(1);
-//   expect(collectionPage.getCollections()[0]).toMatchObject({
-//     title: 'funky collection',
-//     numberOfVideos: 1,
-//     updatedAt: 'Jan 16, 2019',
-//     createdBy: 'AI',
-//   });
-// });
+test('displays arts discipline', async () => {
+  new ApiStub()
+    .defaultUser()
+    .fetchCollections()
+    // art disciple contains arts-subject-1 and art-subjects-2
+    .fetchDisciplines()
+    .fetchCollectionsBySubjects('arts-subject-1', 'arts-subject-2')
+    .fetchVideo();
+
+  const collectionPage = await DiscoverCollectionListPage.loadByDiscipline(
+    'arts',
+  );
+
+  expect(collectionPage.getCollections()).toHaveLength(1);
+  expect(collectionPage.getCollections()[0]).toMatchObject({
+    title: 'funky collection',
+    numberOfVideos: 1,
+    updatedAt: 'Jan 16, 2019',
+    createdBy: 'AI',
+  });
+});

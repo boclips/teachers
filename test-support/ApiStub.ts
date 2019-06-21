@@ -117,9 +117,7 @@ export default class ApiStub {
 
   public fetchCollectionsBySubjects(...subjectIds: string[]) {
     MockFetchVerify.get(
-      `${this.prefix}/v1/collections?${subjectIds
-        .map(subjectId => `subject=${subjectId}`)
-        .join('&')}`,
+      `${this.prefix}/v1/collections?subject=${subjectIds.join(',')}`,
       collectionsResponse(),
     );
     return this;

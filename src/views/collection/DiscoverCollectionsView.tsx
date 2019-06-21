@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import collectionsImg from '../../../resources/images/collections.png';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
-import SubjectLogo from '../../components/disciplines/SubjectLogo';
+import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Discipline } from '../../types/Discipline';
@@ -17,7 +17,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-  subject?: Subject;
+  subjects: Subject[];
   discipline: Discipline;
 }
 
@@ -43,11 +43,13 @@ export class DiscoverCollectionsView extends PureComponent<
                     <strong className="discipline-name">
                       {`${this.props.discipline.name} > `}
                     </strong>
-                    {this.props.subject.name}
+                    {this.props.subjects &&
+                      this.props.subjects.length === 1 &&
+                      this.props.subjects[0].name}
                   </h1>
                   <section className="discover-collections__header-logo">
-                    <SubjectLogo
-                      subjectId={this.props.subject.id}
+                    <DisciplineLogo
+                      discipline={this.props.discipline}
                       large={true}
                     />
                   </section>
@@ -68,7 +70,9 @@ export class DiscoverCollectionsView extends PureComponent<
               }
               grid={true}
               collectionKey="discoverCollections"
-              collectionFiler={{ subject: this.props.subject.id }}
+              collectionFiler={{
+                subject: this.props.subjects.map(s => s.id),
+              }}
               shouldRefresh={refresh}
             />
           </section>
@@ -105,6 +109,21 @@ function getDisciplineById(disciplines: Discipline[], disciplineId: string) {
   return disciplineId && disciplines.find(d => d.id === disciplineId);
 }
 
+function getSubjectIfOneDefined(discipline: Discipline, subjectIds: string[]) {
+  const subject =
+    subjectIds &&
+    subjectIds.length === 1 &&
+    discipline &&
+    discipline.subjects &&
+    discipline.subjects.find(s => s.id === subjectIds[0]);
+
+  return subject && [subject];
+}
+
+function getDisciplineSubjects(discipline) {
+  return discipline && discipline.subjects;
+}
+
 function mapStateToProps(
   state: DisciplineState,
   ownProps: OwnProps,
@@ -114,12 +133,10 @@ function mapStateToProps(
     getDisciplineBySubject(state.disciplines, ownProps.subjectIds);
   return {
     discipline,
-    subject:
-      ownProps.subjectIds &&
-      ownProps.subjectIds.length === 1 &&
-      discipline &&
-      discipline.subjects &&
-      discipline.subjects.find(s => s.id === ownProps.subjectIds[0]),
+    subjects:
+      getSubjectIfOneDefined(discipline, ownProps.subjectIds) ||
+      getDisciplineSubjects(discipline) ||
+      [],
   };
 }
 
