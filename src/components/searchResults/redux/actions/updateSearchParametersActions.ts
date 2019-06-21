@@ -22,11 +22,16 @@ interface UpdateSearchMode {
   mode: string;
 }
 
+interface UpdateSubjectFilter {
+  subject: string;
+}
+
 export type UpdateAllFilters = UpdateDurationFilter | UpdateAgeRangeFilter;
 
 export type UpdateSearchParamsRequest =
   | UpdateDurationFilter
   | UpdateAgeRangeFilter
+  | UpdateSubjectFilter
   | UpdateSearchQuery
   | UpdateSearchPage
   | UpdateSearchMode;
