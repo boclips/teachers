@@ -9,7 +9,6 @@ interface Props {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
-  onClick?: React.MouseEventHandler;
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
@@ -19,11 +18,9 @@ export class CollectionCard extends React.PureComponent<Props> {
         key={`card-${this.props.collection.id}`}
         className={classnames('collection-card', {
           tiny: this.props.tiny,
-          clickable: !!this.props.onClick,
         })}
         data-qa="collection-card"
         data-state={this.props.collection.title}
-        onClick={this.props.onClick}
       >
         <CollectionCardHeader
           collection={this.props.collection}

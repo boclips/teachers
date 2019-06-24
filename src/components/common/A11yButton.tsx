@@ -1,6 +1,7 @@
 import React from 'react';
 
 export interface Props {
+  disableClick?: boolean;
   callback: (
     event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
   ) => void;
@@ -20,7 +21,7 @@ export interface Props {
  * @param children
  * @constructor
  */
-export const A11yButton = ({ callback, children }: Props) => {
+export const A11yButton = ({ callback, children, disableClick }: Props) => {
   const onKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (
       event.key === ' ' ||
@@ -40,7 +41,9 @@ export const A11yButton = ({ callback, children }: Props) => {
   };
 
   const onClick = (event: React.MouseEvent<HTMLElement>) => {
-    callback(event);
+    if (!disableClick) {
+      callback(event);
+    }
     if (children.props.onClick) {
       children.props.onClick(event);
     }

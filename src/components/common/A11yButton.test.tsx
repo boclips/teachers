@@ -46,6 +46,17 @@ it('Should call the provided callback function when the element receives a click
   expect(spy.mock.calls).toHaveLength(1);
 });
 
+it('Should not call the provided callback function if disabled when the element receives a click', () => {
+  const spy = jest.fn();
+
+  const component = getComponent({ callback: spy, disableClick: true });
+  const element = component.childAt(0);
+
+  element.simulate('click');
+
+  expect(spy.mock.calls).toHaveLength(0);
+});
+
 it('Should call the provided callback function when the element receives a space key press', () => {
   const spy = jest.fn();
 
