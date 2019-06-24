@@ -14,6 +14,7 @@ class StopClickPropagation extends React.PureComponent<Props> {
 
   private handleOnClick = (event: React.MouseEvent) => {
     event.stopPropagation();
+    event.preventDefault();
   };
 
   public render() {

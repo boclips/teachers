@@ -7,9 +7,8 @@ import {
   collectionsResponse,
   video177,
   videos as videoResults,
-  videosResponse,
 } from '../../../test-support/video-service-responses';
-import { findElement, waitForElement } from '../../../testSetup';
+import { findElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
 import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
 import DurationSlider from '../../components/searchResults/multiple-results/filters/DurationSlider';
@@ -182,56 +181,4 @@ test('redirects when clicking on first title', async () => {
   const searchPage = await SearchPage.load(query);
   searchPage.clickOnFirstTitle();
   await searchPage.isOnDetailsPage();
-});
-
-test('removing a video from a collection', async () => {
-  const query = 'some video';
-  new ApiStub()
-    .defaultUser()
-    .queryVideos({ query, results: videosResponse([video177]) })
-    .queryCollections({ query, results: collectionsResponse() })
-    .fetchVideo()
-    .fetchCollections()
-    .removeFromCollection();
-
-  const searchPage = await SearchPage.load(query);
-
-  const collectionMenuButton = searchPage.wrapper
-    .find(By.dataQa('video-collection-menu'))
-    .first();
-
-  collectionMenuButton.simulate('click');
-
-  const removeFromCollection = await waitForElement(
-    "[data-qa='remove-from-collection']",
-  );
-
-  expect(removeFromCollection.checked).toBeTruthy();
-  removeFromCollection.click();
-});
-
-test('adding a video to a collection', async () => {
-  const query = 'some video';
-  new ApiStub()
-    .defaultUser()
-    .queryVideos({ query, results: videosResponse([video177]) })
-    .queryCollections({ query, results: collectionsResponse() })
-    .fetchVideo()
-    .fetchCollections(collectionsResponse([]))
-    .addToCollection();
-
-  const searchPage = await SearchPage.load(query);
-
-  const collectionMenuButton = searchPage.wrapper
-    .find(By.dataQa('video-collection-menu'))
-    .first();
-
-  expect(collectionMenuButton.text()).toContain('Save');
-
-  collectionMenuButton.simulate('click');
-
-  const addToCollection = await waitForElement("[data-qa='add-to-collection']");
-
-  expect(addToCollection.checked).toBeFalsy();
-  addToCollection.click();
 });
