@@ -3,12 +3,16 @@ import { Player } from 'boclips-player-react';
 import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import React from 'react';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { Video } from '../../../types/Video';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../common/higerOrderComponents/withMediaBreakPoint';
 
-interface Props {
+interface Props extends WithMediaBreakPointProps {
   video: Video;
   videoIndex?: number;
-  mode?: 'default' | 'thumbnail';
+  mode?: 'default' | 'card';
 }
 
 export class VideoPlayer extends React.PureComponent<Props> {
@@ -40,9 +44,35 @@ export class VideoPlayer extends React.PureComponent<Props> {
       },
     };
 
-    if (this.props.mode === 'thumbnail') {
+    if (
+      this.props.mode === 'card' ||
+      this.props.mediaBreakpoint.width <= MediaBreakpoints.xs.width
+    ) {
       options.player = {
-        controls: ['play-large'],
+        controls: [
+          'play-large',
+          'play',
+          'progress',
+          'current-time',
+          'mute',
+          'captions',
+          'settings',
+        ],
+      };
+    } else {
+      options.player = {
+        controls: [
+          'rewind',
+          'play',
+          'fast-forward',
+          'progress',
+          'current-time',
+          'mute',
+          'volume',
+          'captions',
+          'settings',
+          'fullscreen',
+        ],
       };
     }
 
@@ -50,4 +80,4 @@ export class VideoPlayer extends React.PureComponent<Props> {
   }
 }
 
-export default VideoPlayer;
+export default withMediaBreakPoint(VideoPlayer);

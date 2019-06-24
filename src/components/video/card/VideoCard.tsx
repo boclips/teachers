@@ -44,6 +44,7 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
             <VideoPlayer
               video={this.props.video}
               videoIndex={this.props.videoIndex}
+              mode="card"
             />
           </div>
         </StopClickPropagation>
