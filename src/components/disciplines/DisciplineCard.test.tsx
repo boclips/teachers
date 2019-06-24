@@ -73,3 +73,43 @@ test('renders at subjects when less than 4', () => {
       .text();
   }
 });
+
+test('renders view all when more than 4 subjects', () => {
+  const wrapper = mount(
+    <MemoryRouter>
+      <DisciplineCard
+        discipline={DisciplineFactory.sample({
+          subjects: [
+            SubjectFactory.sample({ name: 'subject 1' }),
+            SubjectFactory.sample({ name: 'subject 2' }),
+            SubjectFactory.sample({ name: 'subject 3' }),
+            SubjectFactory.sample({ name: 'subject 4' }),
+            SubjectFactory.sample({ name: 'subject 5' }),
+            SubjectFactory.sample({ name: 'subject 6' }),
+          ],
+        })}
+      />
+    </MemoryRouter>,
+  );
+
+  expect(wrapper.find(By.dataQa('view-all-subjects'))).toExist();
+});
+
+test('does not render view all when 4 subjects or less', () => {
+  const wrapper = mount(
+    <MemoryRouter>
+      <DisciplineCard
+        discipline={DisciplineFactory.sample({
+          subjects: [
+            SubjectFactory.sample({ name: 'subject 1' }),
+            SubjectFactory.sample({ name: 'subject 2' }),
+            SubjectFactory.sample({ name: 'subject 3' }),
+            SubjectFactory.sample({ name: 'subject 4' }),
+          ],
+        })}
+      />
+    </MemoryRouter>,
+  );
+
+  expect(wrapper.find(By.dataQa('view-all-subjects'))).not.toExist();
+});

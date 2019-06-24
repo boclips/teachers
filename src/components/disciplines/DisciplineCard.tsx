@@ -49,6 +49,19 @@ export class DisciplineCard extends React.PureComponent<Props> {
                 </li>
               ))}
           </ul>
+          {this.props.discipline &&
+          this.props.discipline.subjects &&
+          this.props.discipline.subjects.length > 4 ? (
+            <Link
+              data-qa="view-all-subjects"
+              className="discipline-card__view-all no-underline"
+              to={`/discover-collections?discipline=${
+                this.props.discipline.id
+              }`}
+            >
+              view all ({this.props.discipline.subjects.length}) >
+            </Link>
+          ) : null}
         </Card>
       )
     );
