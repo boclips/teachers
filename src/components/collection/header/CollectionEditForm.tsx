@@ -18,16 +18,16 @@ export interface EditableFields {
   ageRange?: number[];
 }
 
-export interface Props extends EditableFields {
+export interface Props
+  extends EditableFields,
+    WithMediaBreakPointProps,
+    FormComponentProps {
   onAgeRangeChange: (e) => void;
   sliderRange: { min: number; max: number };
 }
 
 class CollectionEditForm extends React.PureComponent<
-  Props &
-    ReturnType<typeof mapStateToProps> &
-    FormComponentProps &
-    WithMediaBreakPointProps
+  Props & ReturnType<typeof mapStateToProps>
 > {
   private getMarks = () => ({
     3: '3',
@@ -95,5 +95,5 @@ const mapStateToProps = (state: State) => ({
 });
 
 export default withMediaBreakPoint(
-  connect(mapStateToProps)(Form.create<EditableFields>()(CollectionEditForm)),
+  connect(mapStateToProps)(Form.create<Props>()(CollectionEditForm)),
 );

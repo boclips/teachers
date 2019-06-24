@@ -1,9 +1,12 @@
 .ant-input-search {
   .ant-input {
     background-image: '~/';
+    @media (max-width: @screen-md) {
+      border-radius: 8px !important;
+    }
   }
 
-  .ant-input-suffix {
+  .ant-input-group-addon {
     @media (max-width: @screen-md) {
       display: none;
     }

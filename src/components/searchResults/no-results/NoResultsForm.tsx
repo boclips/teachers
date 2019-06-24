@@ -123,4 +123,4 @@ class NoResultsForm extends React.PureComponent<Props & FormComponentProps> {
   }
 }
 
-export default Form.create<Props>()(NoResultsForm);
+export default Form.create<Props & FormComponentProps>()(NoResultsForm);

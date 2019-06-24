@@ -329,4 +329,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export default connect<CreateAccountProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps,
-)(Form.create<CreateAccountProps>()(RegistrationForm));
+)(Form.create<CreateAccountProps & FormComponentProps>()(RegistrationForm));

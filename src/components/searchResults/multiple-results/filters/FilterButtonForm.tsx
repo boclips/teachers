@@ -5,21 +5,17 @@ import { FormComponentProps } from '../../../account/form/FormComponentProps';
 import AgeRangeSlider from '../../../common/AgeRangeSlider';
 import DurationSlider from './DurationSlider';
 
-export interface FilterFormEditableFields {
+export interface FilterFormEditableFields extends FormComponentProps {
   duration?: Range;
   ageRange?: Range;
-}
 
-export interface FilterProps {
   durationMin?: number;
   durationMax?: number;
   ageRangeMin?: number;
   ageRangeMax?: number;
 }
 
-class FilterButtonForm extends React.Component<
-  FormComponentProps & FilterProps
-> {
+class FilterButtonForm extends React.Component<FilterFormEditableFields> {
   private onDurationChange = (duration: Range) => {
     this.props.form.setFieldsValue({ duration });
   };

@@ -14,6 +14,7 @@ test('displays maths collections', async () => {
   );
 
   expect(collectionPage.getCollections()).toHaveLength(1);
+  expect(collectionPage.getDisciplineSubjects()).toHaveLength(0);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
     numberOfVideos: 1,
@@ -36,6 +37,10 @@ test('displays arts discipline', async () => {
   );
 
   expect(collectionPage.getCollections()).toHaveLength(1);
+  expect(collectionPage.getDisciplineSubjects()).toMatchObject([
+    'Performing Arts',
+    'Art History',
+  ]);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
     numberOfVideos: 1,

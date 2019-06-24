@@ -115,13 +115,16 @@ class FilterButton extends React.Component<Props, State> {
           onOk={this.handleOk}
           visible={this.state.visible}
         >
-          <FilterButtonForm
-            durationMin={this.props.durationMin}
-            durationMax={this.props.durationMax}
-            ageRangeMin={this.props.ageRangeMin}
-            ageRangeMax={this.props.ageRangeMax}
-            wrappedComponentRef={this.saveFormRef}
-          />
+          {
+            // @ts-ignore
+            <FilterButtonForm
+              durationMin={this.props.durationMin}
+              durationMax={this.props.durationMax}
+              ageRangeMin={this.props.ageRangeMin}
+              ageRangeMax={this.props.ageRangeMax}
+              wrappedComponentRef={this.saveFormRef}
+            />
+          }
         </Bodal>
       </React.Fragment>
     );

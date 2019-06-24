@@ -13,6 +13,12 @@ export abstract class AbstractCollectionListPage {
       createdBy: findOne(el, 'collection-created-by').text(),
     }));
   }
+
+  public getDisciplineSubjects(): string[] {
+    return this.wrapper
+      .find(By.dataQa('discipline-subject-link'))
+      .map(el => el.text());
+  }
 }
 
 export interface Collection {

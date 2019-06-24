@@ -1,9 +1,10 @@
-import { Breakpoint as NamedBreakpoint } from 'antd/lib/grid/row';
+import { Breakpoint as AntBreakpoint } from 'antd/es/_util/responsiveObserve';
+
 export interface Breakpoint {
   width: number;
-  label: NamedBreakpoint;
+  label: AntBreakpoint;
 }
-type Breakpoints = { [name in NamedBreakpoint]: Breakpoint };
+type Breakpoints = { [name in AntBreakpoint]: Breakpoint };
 
 const MediaBreakpoints: Breakpoints = {
   xs: { width: 480, label: 'xs' },

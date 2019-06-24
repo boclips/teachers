@@ -1,7 +1,11 @@
+import { Col, Icon, Row } from 'antd';
+import { CustomIconComponentProps } from 'antd/lib/icon';
 import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import collectionsImg from '../../../resources/images/collections.png';
+import subjectsSvg from '../../../resources/images/subjects.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import PageLayout from '../../components/layout/PageLayout';
@@ -10,6 +14,10 @@ import { Discipline } from '../../types/Discipline';
 import { DisciplineState } from '../../types/State';
 import { Subject } from '../../types/Subject';
 import './DiscoverCollectionsView.less';
+
+const subjectsIcon = subjectsSvg as React.ComponentType<
+  CustomIconComponentProps
+>;
 
 interface OwnProps {
   subjectIds?: string[];
@@ -41,10 +49,16 @@ export class DiscoverCollectionsView extends PureComponent<
                 <section className="discover-collections__header">
                   <h1>
                     <strong className="discipline-name">
-                      {`${this.props.discipline.name}`}
+                      <Link
+                        to={`/discover-collections?discipline=${
+                          this.props.discipline.id
+                        }`}
+                      >
+                        {this.props.discipline.name}
+                      </Link>
                     </strong>
                     {this.props.subjects && this.props.subjects.length === 1 && (
-                      <span>
+                      <span className="discipline-subject">
                         <strong> > </strong>
                         {this.props.subjects[0].name}
                       </span>
@@ -61,11 +75,38 @@ export class DiscoverCollectionsView extends PureComponent<
             </section>
           }
         >
+          {!this.props.subjectIds || this.props.subjectIds.length === 0 ? (
+            <section
+              className="discover-collections__subjects"
+              data-qa="discover-collections-discipline-subjects"
+            >
+              <h1 className="big-title alt">
+                <Icon component={subjectsIcon} /> Subjects
+              </h1>
+              <Row gutter={16}>
+                {this.props.discipline.subjects.map(subject => (
+                  <Col md={6}>
+                    <Link
+                      className="ant-btn discover-collections__subject-button ant-btn-lg"
+                      to={`/discover-collections?subject=${subject.id}`}
+                    >
+                      <span data-qa="discipline-subject-link">
+                        {subject.name}
+                      </span>
+                    </Link>
+                  </Col>
+                ))}
+              </Row>
+            </section>
+          ) : null}
+
           <section
             className="discover-collections__container collection-list"
             data-qa="discover-collections-list-page"
+            key={`container-${this.props.subjects.map(s => s.id).join()}`}
           >
             <PageableCollectionCardList
+              key={this.props.subjects.map(s => s.id).join()}
               title={
                 <span>
                   <img src={collectionsImg} alt="" /> Video collections
@@ -73,9 +114,7 @@ export class DiscoverCollectionsView extends PureComponent<
               }
               grid={true}
               collectionKey="discoverCollections"
-              collectionFiler={{
-                subject: this.props.subjects.map(s => s.id),
-              }}
+              collectionFiler={{ subject: this.props.subjects.map(s => s.id) }}
               shouldRefresh={refresh}
             />
           </section>

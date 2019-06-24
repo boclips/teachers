@@ -1,9 +1,9 @@
 @import '../../../resources/styles/_antd-theme.less';
 @import '../../../resources/styles/_colours.less';
 
-.discover-collections__{
-
+.discover-collections__ {
   &container {
+    animation: slide-in 0.5s 0.5s both;
     margin-top: 0px !important;
   }
 
@@ -11,6 +11,7 @@
     margin-bottom: 42px;
     background-color: @shade-4;
     padding: 4px 0px;
+    animation: slide-in 0.5s 0s both;
   }
 
   &header {
@@ -19,10 +20,14 @@
     align-items: center;
 
     h1 {
-
       strong {
         color: @dark-blue;
         font-weight: normal;
+        a {
+          color: @dark-blue;
+          font-weight: normal;
+          text-decoration: none;
+        }
       }
 
       color: @mid-blue;
@@ -31,11 +36,25 @@
       line-height: 32px;
       margin: 0px;
       padding: 0px;
+
+      .discipline-subject {
+        animation: slide-right 0.5s 0s both;
+      }
     }
 
     &-logo {
-
     }
   }
 
+  &subjects {
+    animation: slide-in 0.5s 0.2s both;
+    margin-bottom: 40px;
+  }
+
+  &subject-button {
+    width: 100%;
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
