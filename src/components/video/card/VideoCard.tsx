@@ -1,6 +1,6 @@
 import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
@@ -10,7 +10,7 @@ import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';
 import './VideoCard.less';
 
-export interface Props extends RouteComponentProps {
+export interface Props {
   video: Video | null;
   videoIndex?: number;
   currentCollection?: VideoCollection;
@@ -23,13 +23,11 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
     }
 
     return (
-      <Card
-        className="video-card"
-        bordered={false}
-        onClick={this.navigateToVideo}
-      >
-        <section data-qa="video-card">{this.renderContent()}</section>
-      </Card>
+      <Link className="no-underline" to={`/videos/${this.props.video.id}`}>
+        <Card className="video-card" bordered={false}>
+          <section data-qa="video-card">{this.renderContent()}</section>
+        </Card>
+      </Link>
     );
   }
 
@@ -87,12 +85,8 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
       />
     </Card>
   );
-
-  private navigateToVideo = () => {
-    this.props.history.push(`/videos/${this.props.video.id}`);
-  };
 }
 
-const VideoCard = withRouter(VideoCardForRouter);
+const VideoCard = VideoCardForRouter;
 
 export default VideoCard;
