@@ -9,6 +9,7 @@ import {
 import { setWidth } from '../../../../../test-support/setWidth';
 import FiltersBarWrapper, { FiltersBar } from './FiltersBar';
 import FilterBarWrapper from './FiltersBar';
+import SubjectFilterTag from './SubjectFilterTag';
 
 it('does not render anything if there are no filters', () => {
   const store = MockStoreFactory.sample({
@@ -47,6 +48,32 @@ it('renders text when there are valid filters', () => {
   expect(
     wrapper.find(FiltersBar).find(By.dataQa('filters-bar-label')),
   ).toExist();
+});
+
+it('renders a subject tag when there is a subject filter', () => {
+  const store = MockStoreFactory.sample({
+    router: RouterFactory.sample({
+      location: {
+        pathname: '',
+        search:
+          '?q=hashtagfilter&duration_min=1&subjects=subject-one-id,subject-two-id',
+        hash: '',
+        state: null,
+      },
+    }),
+  });
+
+  const wrapper = mount(
+    <Provider store={store}>
+      <FiltersBarWrapper />
+    </Provider>,
+  );
+
+  const subjectTags = wrapper.find(SubjectFilterTag);
+  expect(subjectTags).toHaveLength(2);
+
+  expect(subjectTags.get(0).props.subjectId).toEqual('subject-one-id');
+  expect(subjectTags.get(1).props.subjectId).toEqual('subject-two-id');
 });
 
 it('does not render filter bar with width less than md', () => {

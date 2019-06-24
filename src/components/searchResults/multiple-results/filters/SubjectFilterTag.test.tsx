@@ -11,9 +11,12 @@ import SubjectFilterTag from './SubjectFilterTag';
 const getWrapper = (subjectId?: string) => {
   const store = MockStoreFactory.sample();
 
-  return shallow(<SubjectFilterTag subjectId={subjectId} />, {
-    context: { store },
-  }).dive();
+  return shallow(
+    <SubjectFilterTag subjectIds={[subjectId]} subjectId={subjectId} />,
+    {
+      context: { store },
+    },
+  ).dive();
 };
 
 it('renders subject with correct name', () => {
@@ -25,9 +28,8 @@ it('does not render anything if no subject', () => {
   const wrapper = getWrapper(null);
   expect(wrapper).toBeEmptyRender();
 });
-
 it('removes subject from url on close', () => {
-  const subjectId = 'subject-one-id'
+  const subjectId = 'subject-one-id';
   const store = MockStoreFactory.sample({
     router: RouterFactory.sample({
       location: {
@@ -39,9 +41,12 @@ it('removes subject from url on close', () => {
     }),
   });
 
-  const wrapper = shallow(<SubjectFilterTag subjectId={subjectId} />, {
-    context: { store },
-  }).dive();
+  const wrapper = shallow(
+    <SubjectFilterTag subjectIds={['subject-one-id']} subjectId={subjectId} />,
+    {
+      context: { store },
+    },
+  ).dive();
 
   wrapper
     .find(ClosableTag)
@@ -51,7 +56,43 @@ it('removes subject from url on close', () => {
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
-      subject: undefined,
+      subjects: [],
+    }),
+  );
+});
+
+it('removes only one subject from url on close', () => {
+  const subjectId = 'subject-one-id';
+  const store = MockStoreFactory.sample({
+    router: RouterFactory.sample({
+      location: {
+        pathname: '',
+        search: '?hi&subject=subject-one-id,subject-two-id',
+        hash: '',
+        state: null,
+      },
+    }),
+  });
+
+  const wrapper = shallow(
+    <SubjectFilterTag
+      subjectIds={['subject-one-id', 'subject-two-id']}
+      subjectId={subjectId}
+    />,
+    {
+      context: { store },
+    },
+  ).dive();
+
+  wrapper
+    .find(ClosableTag)
+    .props()
+    .onClose();
+
+  expect(store.getActions().length).toEqual(1);
+  expect(store.getActions()).toContainEqual(
+    updateSearchParamsAction({
+      subjects: ['subject-two-id'],
     }),
   );
 });

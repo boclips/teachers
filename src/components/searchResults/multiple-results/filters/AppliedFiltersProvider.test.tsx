@@ -35,7 +35,7 @@ describe('duration filters', () => {
       ageRangeMin: null,
       durationMin: 60,
       durationMax: 180,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 1,
     });
   });
@@ -47,7 +47,7 @@ describe('duration filters', () => {
       ageRangeMax: null,
       durationMin: 180,
       durationMax: null,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 1,
     });
   });
@@ -59,7 +59,7 @@ describe('duration filters', () => {
       durationMax: 180,
       ageRangeMin: null,
       ageRangeMax: null,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 1,
     });
   });
@@ -77,7 +77,7 @@ describe('age range filters', () => {
       ageRangeMax: 11,
       durationMin: null,
       durationMax: null,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 1,
     });
   });
@@ -90,7 +90,7 @@ describe('age range filters', () => {
       ageRangeMax: 11,
       durationMin: null,
       durationMax: null,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 1,
     });
   });
@@ -103,34 +103,37 @@ describe('age range filters', () => {
       ageRangeMax: null,
       durationMin: null,
       durationMax: null,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 1,
     });
   });
 });
 describe('subject filters', () => {
   it('provides single subject filter', () => {
-    const wrapper = getWrapper(`?q=hi&subject=5`, <div />);
+    const wrapper = getWrapper(`?q=hi&subjects=subject-one-id`, <div />);
 
     expect(wrapper.props()).toEqual({
       ageRangeMin: null,
       ageRangeMax: null,
       durationMin: null,
       durationMax: null,
-      subjects: ['5'],
+      subjectIds: ['subject-one-id'],
       numberOfFiltersApplied: 1,
     });
   });
 
   it('provides multiple subject filter', () => {
-    const wrapper = getWrapper(`?q=hi&subject=11,10`, <div />);
+    const wrapper = getWrapper(
+      `?q=hi&subjects=subject-one-id,subject-two-id`,
+      <div />,
+    );
 
     expect(wrapper.props()).toEqual({
       ageRangeMin: null,
       ageRangeMax: null,
       durationMin: null,
       durationMax: null,
-      subjects: ['11', '10'],
+      subjectIds: ['subject-one-id', 'subject-two-id'],
       numberOfFiltersApplied: 2,
     });
   });
@@ -148,7 +151,7 @@ describe('number of filters applied', () => {
       ageRangeMax: 11,
       durationMin: 60,
       durationMax: 180,
-      subjects: null,
+      subjectIds: [],
       numberOfFiltersApplied: 2,
     });
   });

@@ -1,21 +1,35 @@
 import { Form } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Range } from '../../../../types/Range';
+import { SubjectState } from '../../../../types/State';
+import { Subject } from '../../../../types/Subject';
 import { FormComponentProps } from '../../../account/form/FormComponentProps';
+import { SubjectsForm } from '../../../account/form/SubjectsForm';
 import AgeRangeSlider from '../../../common/AgeRangeSlider';
 import DurationSlider from './DurationSlider';
 
-export interface FilterFormEditableFields extends FormComponentProps {
+export interface FilterFormEditableFields {
   duration?: Range;
   ageRange?: Range;
+  subjects?: string[];
+}
 
+export interface FilterProps {
   durationMin?: number;
   durationMax?: number;
   ageRangeMin?: number;
   ageRangeMax?: number;
+  subjectIds?: string[];
 }
 
-class FilterButtonForm extends React.Component<FilterFormEditableFields> {
+interface StateProps {
+  subjects?: Subject[];
+}
+
+interface Props extends FormComponentProps, FilterProps, StateProps {}
+
+class FilterButtonForm extends React.Component<Props> {
   private onDurationChange = (duration: Range) => {
     this.props.form.setFieldsValue({ duration });
   };
@@ -25,11 +39,15 @@ class FilterButtonForm extends React.Component<FilterFormEditableFields> {
 
   public render() {
     const { getFieldDecorator } = this.props.form;
-
     return (
       <Form className="filter-form">
         <Form.Item className="filter-form__item" label="Duration">
-          {getFieldDecorator('duration')(
+          {getFieldDecorator('duration', {
+            initialValue: {
+              min: this.props.durationMin,
+              max: this.props.durationMax,
+            },
+          })(
             <DurationSlider
               min={this.props.durationMin}
               max={this.props.durationMax}
@@ -38,7 +56,12 @@ class FilterButtonForm extends React.Component<FilterFormEditableFields> {
           )}
         </Form.Item>
         <Form.Item className="filter-form__item" label="Age Range">
-          {getFieldDecorator('ageRange')(
+          {getFieldDecorator('ageRange', {
+            initialValue: {
+              min: this.props.ageRangeMin,
+              max: this.props.ageRangeMax,
+            },
+          })(
             <AgeRangeSlider
               minAge={this.props.ageRangeMin}
               maxAge={this.props.ageRangeMax}
@@ -46,9 +69,24 @@ class FilterButtonForm extends React.Component<FilterFormEditableFields> {
             />,
           )}
         </Form.Item>
+        <SubjectsForm
+          subjects={this.props.subjects}
+          placeholder="Choose from our list.."
+          label="Subject"
+          initialValue={this.props.subjectIds}
+          form={this.props.form}
+        />
       </Form>
     );
   }
 }
 
-export default Form.create<FilterFormEditableFields>()(FilterButtonForm);
+function mapStateToProps(state: SubjectState): StateProps {
+  return {
+    subjects: state.subjects,
+  };
+}
+
+export default connect(mapStateToProps)(
+  Form.create<Props & FilterFormEditableFields>()(FilterButtonForm),
+);

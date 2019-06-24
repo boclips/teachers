@@ -4,7 +4,7 @@ import { Link } from '../../types/Link';
 import { LinksFactory } from './../../../test-support/factories';
 import { fetchUser } from './fetchUser';
 
-describe('fetch user ', async () => {
+describe('fetch user ', () => {
   it('can fetch and convert user response', async () => {
     new ApiStub().fetchUser(userResponse('123'));
 

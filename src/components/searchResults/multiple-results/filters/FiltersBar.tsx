@@ -1,13 +1,9 @@
-import { Row } from 'antd';
+import {Row} from 'antd';
 import React from 'react';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
-import withMediaBreakPoint, {
-  WithMediaBreakPointProps,
-} from '../../../common/higerOrderComponents/withMediaBreakPoint';
+import withMediaBreakPoint, {WithMediaBreakPointProps,} from '../../../common/higerOrderComponents/withMediaBreakPoint';
 import AgeRangeFilterTag from './AgeRangeFilterTag';
-import AppliedFiltersProvider, {
-  AppliedFiltersInjectedProps,
-} from './AppliedFiltersProvider';
+import AppliedFiltersProvider, {AppliedFiltersInjectedProps,} from './AppliedFiltersProvider';
 import ClearAllButton from './ClearAllButton';
 import DurationFilterTag from './DurationFilterTag';
 import './FiltersBar.less';
@@ -35,11 +31,15 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
             ageRangeMin={this.props.ageRangeMin}
             ageRangeMax={this.props.ageRangeMax}
           />
-          {this.props.subjects &&
-            this.props.subjects.forEach(subject => (
-              <SubjectFilterTag subjectId={subject} />
-            ))}
-          <ClearAllButton />
+          {this.props.subjectIds &&
+          this.props.subjectIds.map(subjectId => (
+            <SubjectFilterTag
+              subjectIds={this.props.subjectIds}
+              key={subjectId}
+              subjectId={subjectId}
+            />
+          ))}
+          <ClearAllButton/>
         </Row>
       </div>
     );
@@ -49,9 +49,9 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
 class FilterBarWrapper extends React.Component<WithMediaBreakPointProps> {
   public render() {
     return this.props.mediaBreakpoint.width <=
-      MediaBreakpoints.md.width ? null : (
+    MediaBreakpoints.md.width ? null : (
       <AppliedFiltersProvider>
-        <FiltersBar />
+        <FiltersBar/>
       </AppliedFiltersProvider>
     );
   }

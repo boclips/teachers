@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import filterIconSvg from '../../../../../resources/images/filter-icon.svg';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
+import { Range } from '../../../../types/Range';
 import Bodal from '../../../common/Bodal';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
@@ -17,14 +18,9 @@ import './FilterButton.less';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 
 interface FilterRequest {
-  duration?: {
-    min: number;
-    max: number;
-  };
-  ageRange?: {
-    min: number;
-    max: number;
-  };
+  duration?: Range;
+  ageRange?: Range;
+  subjects?: string[];
 }
 
 interface DispatchProps {
@@ -69,17 +65,14 @@ class FilterButton extends React.Component<Props, State> {
     });
 
     const form = this.formRef.props.form;
-
     form.validateFields((_, values: FilterFormEditableFields) => {
       const filterRequest: FilterRequest = {};
 
-      if (values.duration) {
-        filterRequest.duration = values.duration;
-      }
-      if (values.ageRange) {
-        filterRequest.ageRange = values.ageRange;
-      }
-      if (filterRequest.ageRange || filterRequest.duration) {
+      filterRequest.duration = values.duration;
+      filterRequest.ageRange = values.ageRange;
+      filterRequest.subjects = values.subjects;
+
+      if (form.isFieldsTouched() || values.subjects !== this.props.subjectIds) {
         this.props.onSubmit(filterRequest);
       }
     });
@@ -115,16 +108,14 @@ class FilterButton extends React.Component<Props, State> {
           onOk={this.handleOk}
           visible={this.state.visible}
         >
-          {
-            // @ts-ignore
-            <FilterButtonForm
-              durationMin={this.props.durationMin}
-              durationMax={this.props.durationMax}
-              ageRangeMin={this.props.ageRangeMin}
-              ageRangeMax={this.props.ageRangeMax}
-              wrappedComponentRef={this.saveFormRef}
-            />
-          }
+          <FilterButtonForm
+            durationMin={this.props.durationMin}
+            durationMax={this.props.durationMax}
+            ageRangeMin={this.props.ageRangeMin}
+            ageRangeMax={this.props.ageRangeMax}
+            subjectIds={this.props.subjectIds}
+            wrappedComponentRef={this.saveFormRef}
+          />
         </Bodal>
       </React.Fragment>
     );
@@ -133,17 +124,23 @@ class FilterButton extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    onSubmit: (fields: FilterRequest) => {
+    onSubmit: (filterRequest: FilterRequest) => {
       dispatch(
         bulkUpdateSearchParamsAction([
           {
-            duration_min: fields.duration && fields.duration.min,
-            duration_max: (fields.duration && fields.duration.max) || undefined,
+            duration_min: filterRequest.duration && filterRequest.duration.min,
+            duration_max:
+              (filterRequest.duration && filterRequest.duration.max) ||
+              undefined,
           },
           {
-            age_range_min: fields.ageRange && fields.ageRange.min,
+            age_range_min: filterRequest.ageRange && filterRequest.ageRange.min,
             age_range_max:
-              (fields.ageRange && fields.ageRange.max) || undefined,
+              (filterRequest.ageRange && filterRequest.ageRange.max) ||
+              undefined,
+          },
+          {
+            subjects: filterRequest.subjects,
           },
         ]),
       );

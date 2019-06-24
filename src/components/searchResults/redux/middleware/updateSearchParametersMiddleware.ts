@@ -24,7 +24,11 @@ export function onUpdateSearchParameter(
     ...request,
   };
 
-  store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
+  store.dispatch(
+    push(
+      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+    ),
+  );
 }
 
 export function onBulkUpdateSearchParameter(
@@ -34,13 +38,17 @@ export function onBulkUpdateSearchParameter(
   const query = store.getState().router.location.search;
   const parsedQuery = queryString.parse(query);
 
-  const newQuery = request.reduce((acc, value: any) => {
+  const newQuery = request.reduce((acc, value: UpdateSearchParamsRequest) => {
     return { ...acc, ...value };
   }, parsedQuery);
 
   AnalyticsFactory.getInstance().trackSearchFiltersApplied(request);
 
-  store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
+  store.dispatch(
+    push(
+      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+    ),
+  );
 }
 
 export function onBulkUpdateOverrideParams(
@@ -51,7 +59,11 @@ export function onBulkUpdateOverrideParams(
     return { ...acc, ...value };
   }, {});
 
-  store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
+  store.dispatch(
+    push(
+      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+    ),
+  );
 }
 
 export function onClearSearchFilterParameters(
@@ -65,7 +77,7 @@ export function onClearSearchFilterParameters(
     duration_max: undefined,
     age_range_min: undefined,
     age_range_max: undefined,
-    subject: undefined,
+    subjects: undefined,
   };
 
   const newQuery = {
@@ -73,7 +85,11 @@ export function onClearSearchFilterParameters(
     ...clearAllFiltersQuery,
   };
 
-  store.dispatch(push('/videos?' + queryString.stringify(newQuery)));
+  store.dispatch(
+    push(
+      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+    ),
+  );
 }
 
 export default [

@@ -10,13 +10,13 @@ export default class SearchFiltersConverter {
       durationMax: +parsedUrl.duration_max || null,
       ageRangeMin: +parsedUrl.age_range_min || null,
       ageRangeMax: +parsedUrl.age_range_max || null,
-      subjects: this.parseSubjects(parsedUrl.subject) || null,
+      subjects: this.parseSubjects(parsedUrl.subjects),
     };
   }
 
   private parseSubjects(subjects: string[] | string): string[] {
     if (subjects == null) {
-      return;
+      return [];
     }
     return subjects.toString().split(',');
   }

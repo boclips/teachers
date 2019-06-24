@@ -8,6 +8,7 @@ import { updateSearchParamsAction } from '../../redux/actions/updateSearchParame
 
 interface Props {
   subjectId?: string;
+  subjectIds: string[];
 }
 
 interface StateProps {
@@ -42,11 +43,16 @@ function mapStateToProps(state: State, ownProps: Props): StateProps {
   };
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: Props,
+): DispatchProps => ({
   onClose: () => {
     dispatch(
       updateSearchParamsAction({
-        subject: undefined,
+        subjects: ownProps.subjectIds.filter(
+          item => item !== ownProps.subjectId,
+        ),
       }),
     );
   },

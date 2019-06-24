@@ -8,7 +8,7 @@ export interface StateProps {
   durationMax?: number;
   ageRangeMax?: number;
   ageRangeMin?: number;
-  subjects?: string[];
+  subjectIds?: string[];
 }
 
 export interface AppliedFiltersInjectedProps extends StateProps {
@@ -27,7 +27,7 @@ class AppliedFiltersProvider extends React.Component<StateProps & Props> {
       durationMax,
       ageRangeMax,
       ageRangeMin,
-      subjects,
+      subjectIds,
     } = this.props;
 
     let numberOfFiltersApplied = 0;
@@ -39,8 +39,8 @@ class AppliedFiltersProvider extends React.Component<StateProps & Props> {
     if (ageRangeMin !== null || ageRangeMax != null) {
       numberOfFiltersApplied += 1;
     }
-    if (subjects != null && subjects.length > 0) {
-      numberOfFiltersApplied += subjects.length;
+    if (subjectIds != null && subjectIds.length > 0) {
+      numberOfFiltersApplied += subjectIds.length;
     }
 
     return React.cloneElement(children, {
@@ -48,7 +48,7 @@ class AppliedFiltersProvider extends React.Component<StateProps & Props> {
       durationMax,
       ageRangeMax,
       ageRangeMin,
-      subjects,
+      subjectIds,
       numberOfFiltersApplied,
     });
   }
@@ -56,9 +56,9 @@ class AppliedFiltersProvider extends React.Component<StateProps & Props> {
 
 const searchFiltersConverter = new SearchFiltersConverter();
 
-const mapStateToProps = ({ router }: State): StateProps => {
+const mapStateToProps = (state: State): StateProps => {
   const searchFilters = searchFiltersConverter.fromSearchUrl(
-    router.location.search,
+    state.router.location.search,
   );
 
   return {
@@ -66,7 +66,7 @@ const mapStateToProps = ({ router }: State): StateProps => {
     durationMax: searchFilters.durationMax,
     ageRangeMax: searchFilters.ageRangeMax,
     ageRangeMin: searchFilters.ageRangeMin,
-    subjects: searchFilters.subjects,
+    subjectIds: searchFilters.subjects,
   };
 };
 
