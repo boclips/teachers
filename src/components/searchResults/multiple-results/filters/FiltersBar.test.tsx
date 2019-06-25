@@ -56,7 +56,7 @@ it('renders a subject tag when there is a subject filter', () => {
       location: {
         pathname: '',
         search:
-          '?q=hashtagfilter&duration_min=1&subjects=subject-one-id,subject-two-id',
+          '?q=hashtagfilter&duration_min=1&subject=subject-one-id,subject-two-id',
         hash: '',
         state: null,
       },

@@ -77,12 +77,12 @@ it('updates subject filter in url parameters', async () => {
 
   store.dispatch(
     updateSearchParamsAction({
-      subjects: ['5'],
+      subject: ['5'],
     }),
   );
 
   await eventually(() => {
-    expect(store.getActions()).toContainEqual(push('/videos?q=hi&subjects=5'));
+    expect(store.getActions()).toContainEqual(push('/videos?q=hi&subject=5'));
   });
 });
 
@@ -170,7 +170,7 @@ it('ignores all previous values on override action', async () => {
 
 it('clears filter on clear search filters action', async () => {
   const store = setupStore(
-    'mode=hello&q=hi&duration_max=hello&duration_min=123&age_range_min=5&age_range_max=11&subjects=1',
+    'mode=hello&q=hi&duration_max=hello&duration_min=123&age_range_min=5&age_range_max=11&subject=1',
   );
 
   store.dispatch(clearSearchFilterParametersAction());

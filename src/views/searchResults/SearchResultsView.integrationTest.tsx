@@ -36,19 +36,53 @@ test('search shows video results', async () => {
     .fetchVideo()
     .fetchCollections();
 
-  const searchPage = await SearchPage.load(query);
+  const searchPage = await SearchPage.load({ q: query });
 
   expect(searchPage.getVideoResults()).toHaveLength(2);
-  expect(searchPage.getVideoResults()[0]).toMatchObject({
-    title: 'KS3/4 Science: Demonstrating Chemistry',
-    description: 'Matthew Tosh shows us the science.',
-    contentPartner: 'cp1',
-    duration: ' 1m 2s',
-    releasedOn: 'Feb 11, 2018',
-    badgeAlt: 'Ad free',
-    subjects: ['Maths', 'Physics'],
-    playerVideoUri: 'https://api.example.com/v1/videos/177',
+});
+
+test('search with subjects shows video results', async () => {
+  const query = 'some video';
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({
+      query,
+      subject: ['a-subject', 'another-subject'],
+      results: videoResults,
+    })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
+    .fetchCollections();
+
+  const searchPage = await SearchPage.load({
+    q: query,
+    subject: ['a-subject', 'another-subject'],
   });
+
+  expect(searchPage.getVideoResults()).toHaveLength(2);
+});
+
+test('search with age range shows video results', async () => {
+  const query = 'some video';
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({
+      query,
+      results: videoResults,
+      age_range_min: 1,
+      age_range_max: 6,
+    })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
+    .fetchCollections();
+
+  const searchPage = await SearchPage.load({
+    q: query,
+    age_range_min: 1,
+    age_range_max: 6,
+  });
+
+  expect(searchPage.getVideoResults()).toHaveLength(2);
 });
 
 test('search shows collection results', async () => {
@@ -60,7 +94,7 @@ test('search shows collection results', async () => {
     .fetchVideo()
     .fetchCollections();
 
-  const searchPage = await SearchPage.load(query);
+  const searchPage = await SearchPage.load({ q: query });
   await searchPage.hasCollections();
 
   expect(searchPage.getCollectionResults()).toHaveLength(1);
@@ -101,7 +135,7 @@ test('should render news box', async () => {
     .fetchVideo()
     .fetchCollections();
 
-  const searchPage = await SearchPage.load(query);
+  const searchPage = await SearchPage.load({ q: query });
   const newsBox = searchPage.wrapper.find(By.dataQa('news-side-panel'));
 
   expect(newsBox.text()).toContain(query);
@@ -111,7 +145,7 @@ test('should render news box', async () => {
   expect(button.text()).toContain('View News');
 });
 
-test('duraiton filter labels are updated when applying filters', async () => {
+test('duration filter labels are updated when applying filters', async () => {
   const query = 'some video';
   new ApiStub()
     .defaultUser()
@@ -120,7 +154,7 @@ test('duraiton filter labels are updated when applying filters', async () => {
     .fetchVideo()
     .fetchCollections();
 
-  const searchPage = await SearchPage.load(query);
+  const searchPage = await SearchPage.load({ q: query });
 
   searchPage.wrapper
     .find(FilterButton)
@@ -163,7 +197,7 @@ test('shows total count of videos', async () => {
     .fetchVideo()
     .fetchCollections();
 
-  const searchPage = await SearchPage.load(query);
+  const searchPage = await SearchPage.load({ q: query });
 
   expect(searchPage.getCount()).toBe(2);
 });
@@ -178,7 +212,7 @@ test('redirects when clicking on first title', async () => {
     .fetchCollections()
     .fetchVideo({ video: video177 });
 
-  const searchPage = await SearchPage.load(query);
+  const searchPage = await SearchPage.load({ q: query });
   searchPage.clickOnFirstTitle();
   await searchPage.isOnDetailsPage();
 });

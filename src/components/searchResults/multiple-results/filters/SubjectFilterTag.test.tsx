@@ -56,7 +56,7 @@ it('removes subject from url on close', () => {
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
-      subjects: [],
+      subject: [],
     }),
   );
 });
@@ -92,7 +92,7 @@ it('removes only one subject from url on close', () => {
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
-      subjects: ['subject-two-id'],
+      subject: ['subject-two-id'],
     }),
   );
 });

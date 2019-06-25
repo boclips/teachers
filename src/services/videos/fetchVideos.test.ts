@@ -16,7 +16,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max,subject}',
       templated: true,
     }),
   });
@@ -32,6 +32,7 @@ beforeEach(async () => {
         duration_max: 200,
         age_range_min: 5,
         age_range_max: 11,
+        subject: ['subject-one-id', 'subject-two-id'],
       },
       sortBy: 'RELEASE_DATE',
     },
@@ -39,7 +40,7 @@ beforeEach(async () => {
   );
 
   const url = axiosMock.history.get[0].url;
-  queryParams = queryString.parse(url.split('?')[1]);
+  queryParams = queryString.parse(url.split('?')[1], { arrayFormat: 'comma' });
 });
 
 test('requests the correct search query', () => {
@@ -71,4 +72,7 @@ test('converts durations to ISO-8601', () => {
 test('includes age range min and max when provided', () => {
   expect(queryParams.age_range_min).toEqual('5');
   expect(queryParams.age_range_max).toEqual('11');
+});
+test('includes a subject when provided', () => {
+  expect(queryParams.subject).toEqual(['subject-one-id', 'subject-two-id']);
 });

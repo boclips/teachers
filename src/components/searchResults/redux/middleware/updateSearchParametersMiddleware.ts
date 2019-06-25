@@ -77,7 +77,7 @@ export function onClearSearchFilterParameters(
     duration_max: undefined,
     age_range_min: undefined,
     age_range_max: undefined,
-    subjects: undefined,
+    subject: undefined,
   };
 
   const newQuery = {

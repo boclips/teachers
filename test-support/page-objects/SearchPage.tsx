@@ -2,6 +2,8 @@ import { Player } from 'boclips-player-react';
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
+import URI from 'urijs';
+import 'urijs/src/URITemplate';
 import App from '../../src/app/App';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
@@ -10,13 +12,21 @@ import eventually from '../eventually';
 export class SearchPage {
   constructor(public wrapper: ReactWrapper) {}
 
-  public static async load(query: string) {
-    const escapedQuery = encodeURIComponent(query);
+  public static async load(params: {
+    q: string;
+    subject?: string[];
+    age_range_min?: number;
+    age_range_max?: number;
+  }) {
+    const browserUrl = URI.expand(
+      '/videos?page=1{&q,subject,age_range_min,age_range_max}',
+      params,
+    );
     const page = new SearchPage(
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: [`/videos?page=1&q=${escapedQuery}`],
+            initialEntries: [browserUrl.href()],
           })}
           apiPrefix="https://api.example.com"
         />,

@@ -110,7 +110,7 @@ describe('age range filters', () => {
 });
 describe('subject filters', () => {
   it('provides single subject filter', () => {
-    const wrapper = getWrapper(`?q=hi&subjects=subject-one-id`, <div />);
+    const wrapper = getWrapper(`?q=hi&subject=subject-one-id`, <div />);
 
     expect(wrapper.props()).toEqual({
       ageRangeMin: null,
@@ -124,7 +124,7 @@ describe('subject filters', () => {
 
   it('provides multiple subject filter', () => {
     const wrapper = getWrapper(
-      `?q=hi&subjects=subject-one-id,subject-two-id`,
+      `?q=hi&subject=subject-one-id,subject-two-id`,
       <div />,
     );
 

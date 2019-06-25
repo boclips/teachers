@@ -13,6 +13,9 @@ import {
 interface VideoQueryOptions {
   query: string;
   tag?: string;
+  subject?: string[];
+  age_range_min?: number;
+  age_range_max?: number;
   results: any;
 }
 
@@ -39,9 +42,15 @@ export default class ApiStub {
 
   public queryVideos(options: VideoQueryOptions) {
     const escapedQuery = encodeURIComponent(options.query);
-    const url = options.tag
-      ? `/v1/videos?.*query=${escapedQuery}?.*&include_tag=${options.tag}`
-      : `/v1/videos?.*query=${escapedQuery}`;
+    let url = `/v1/videos?.*query=${escapedQuery}`;
+    url += options.tag ? `?.*&include_tag=${options.tag}` : '';
+    url += options.subject ? `?.*&subject=${options.subject.join(',')}` : '';
+    url += options.age_range_min
+      ? `?.*&age_range_min=${options.age_range_min}`
+      : '';
+    url += options.age_range_max
+      ? `?.*&age_range_max=${options.age_range_max}`
+      : '';
 
     MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
     return this;

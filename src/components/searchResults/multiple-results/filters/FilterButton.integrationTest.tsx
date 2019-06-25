@@ -252,7 +252,7 @@ describe('url changes', () => {
           age_range_min: 10,
         },
         {
-          subjects: undefined,
+          subject: undefined,
         },
       ]),
     );
@@ -298,7 +298,7 @@ describe('url changes', () => {
           age_range_max: undefined,
         },
         {
-          subjects: undefined,
+          subject: undefined,
         },
       ]),
     );
@@ -348,7 +348,7 @@ describe('url changes', () => {
           age_range_min: 10,
         },
         {
-          subjects: undefined,
+          subject: undefined,
         },
       ]),
     );

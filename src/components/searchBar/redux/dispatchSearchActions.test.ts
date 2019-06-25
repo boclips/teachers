@@ -126,4 +126,40 @@ describe('when on the videos page', () => {
     expect(action.payload.filters.duration_min).toBeUndefined();
     expect(action.payload.filters.duration_max).toBeUndefined();
   });
+
+  it('filters by subject', () => {
+    const store = getStore('subject=subject-one-id');
+    dispatchSearchActions(store);
+
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    expect(action.payload.filters.subject).toContain('subject-one-id');
+  });
+
+  it('filters by multiple subjects', () => {
+    const store = getStore('subject=subject-one-id,subject-two-id');
+    dispatchSearchActions(store);
+
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    expect(action.payload.filters.subject).toEqual([
+      'subject-one-id',
+      'subject-two-id',
+    ]);
+  });
+
+  it('filters by age range', () => {
+    const store = getStore('age_range_min=4&age_range_max=12');
+    dispatchSearchActions(store);
+
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    expect(action.payload.filters.age_range_min).toEqual(4);
+    expect(action.payload.filters.age_range_max).toEqual(12);
+  });
+
+  it('defaults subjects to undefined if not present', () => {
+    const store = getStore();
+    dispatchSearchActions(store);
+
+    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    expect(action.payload.filters.subject).toBeUndefined();
+  });
 });

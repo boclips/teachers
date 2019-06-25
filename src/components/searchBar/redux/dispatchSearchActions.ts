@@ -18,10 +18,13 @@ const getFilters = (queryParams: any): RequestFilters => {
   }
 
   return {
+    subject: queryParams.subject || undefined,
     includeTags,
     excludeTags,
     duration_min: +queryParams.duration_min || undefined,
     duration_max: +queryParams.duration_max || undefined,
+    age_range_min: +queryParams.age_range_min || undefined,
+    age_range_max: +queryParams.age_range_max || undefined,
   };
 };
 
@@ -36,9 +39,10 @@ const getSortBy = (mode: string): SortBy => {
 export const dispatchSearchActions = (store: Store<RouterState>) => {
   const { router } = store.getState();
   const location = router.location;
-
   if (location.pathname === '/videos' && location.search.indexOf('q')) {
-    const queryParams = queryString.parse(location.search);
+    const queryParams = queryString.parse(location.search, {
+      arrayFormat: 'comma',
+    });
     const query = queryParams.q as string;
     const page = parseInt(queryParams.page as string, 10);
     const mode = queryParams.mode as string;

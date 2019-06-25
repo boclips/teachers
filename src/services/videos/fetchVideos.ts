@@ -26,6 +26,7 @@ export default function fetchVideos(
     ),
     age_range_min: searchRequest.filters.age_range_min,
     age_range_max: searchRequest.filters.age_range_max,
+    subject: searchRequest.filters.subject,
   });
   return axios
     .get(url)

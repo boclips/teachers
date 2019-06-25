@@ -66,7 +66,7 @@ const mapStateToProps = (state: State): StateProps => {
     durationMax: searchFilters.durationMax,
     ageRangeMax: searchFilters.ageRangeMax,
     ageRangeMin: searchFilters.ageRangeMin,
-    subjectIds: searchFilters.subjects,
+    subjectIds: searchFilters.subject,
   };
 };
 

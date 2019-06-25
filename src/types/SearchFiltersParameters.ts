@@ -3,5 +3,5 @@ export interface SearchFiltersParameters {
   durationMax?: number;
   ageRangeMin?: number;
   ageRangeMax?: number;
-  subjects?: string[];
+  subject?: string[];
 }

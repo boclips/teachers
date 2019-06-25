@@ -140,7 +140,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
               undefined,
           },
           {
-            subjects: filterRequest.subjects,
+            subject: filterRequest.subjects,
           },
         ]),
       );

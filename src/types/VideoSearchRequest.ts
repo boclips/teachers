@@ -12,6 +12,7 @@ export interface RequestFilters {
   duration_max?: number;
   age_range_min?: number;
   age_range_max?: number;
+  subject?: string[];
 }
 
 export type SortBy = null | 'RELEASE_DATE';

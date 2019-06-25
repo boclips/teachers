@@ -23,7 +23,7 @@ interface UpdateSearchMode {
 }
 
 interface UpdateSubjectFilter {
-  subjects?: string[];
+  subject?: string[];
 }
 
 export type UpdateAllFilters =

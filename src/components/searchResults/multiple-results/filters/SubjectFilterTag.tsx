@@ -23,15 +23,14 @@ class SubjectFilterTag extends React.Component<
   Props & DispatchProps & StateProps
 > {
   public render() {
-    return this.props.subjectId == null &&
-      this.props.subject === undefined ? null : (
+    return this.props.subject ? (
       <ClosableTag
         dataQa="subject-filter-tag"
         label="Subject"
         value={this.props.subject.name}
         onClose={this.props.onClose}
       />
-    );
+    ) : null;
   }
 }
 
@@ -50,7 +49,7 @@ const mapDispatchToProps = (
   onClose: () => {
     dispatch(
       updateSearchParamsAction({
-        subjects: ownProps.subjectIds.filter(
+        subject: ownProps.subjectIds.filter(
           item => item !== ownProps.subjectId,
         ),
       }),
