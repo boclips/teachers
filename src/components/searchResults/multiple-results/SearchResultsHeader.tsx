@@ -20,7 +20,7 @@ class SearchResultsHeader extends React.Component<Props> {
           <SearchResultsCount count={this.props.totalElements} />
         </Col>
         <Col>
-          <FilterButton />
+          <FilterButton data-qa="filter-button" />
         </Col>
       </Row>
     );

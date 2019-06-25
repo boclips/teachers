@@ -52,6 +52,7 @@ class FilterButtonForm extends React.Component<Props> {
               min={this.props.durationMin}
               max={this.props.durationMax}
               onChange={this.onDurationChange}
+              data-qa="duration-slider"
             />,
           )}
         </Form.Item>
@@ -66,6 +67,7 @@ class FilterButtonForm extends React.Component<Props> {
               minAge={this.props.ageRangeMin}
               maxAge={this.props.ageRangeMax}
               onChange={this.onAgeRangeChange}
+              data-qa="age-range-slider"
             />,
           )}
         </Form.Item>
@@ -75,6 +77,7 @@ class FilterButtonForm extends React.Component<Props> {
           label="Subject"
           initialValue={this.props.subjectIds}
           form={this.props.form}
+          data-qa="subject-filter-form"
         />
       </Form>
     );
