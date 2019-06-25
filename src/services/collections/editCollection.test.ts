@@ -1,5 +1,6 @@
 import { VideoCollectionFactory } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { AgeRange } from '../../types/AgeRange';
 import { Link } from '../../types/Link';
 import { VideoCollectionLinksFactory } from './../../../test-support/factories';
 import { editCollection } from './editCollection';
@@ -58,7 +59,7 @@ test('change age range on collection', async () => {
       }),
     }),
     title: 'avideo',
-    ageRange: { min: 7, max: 11 },
+    ageRange: new AgeRange(7, 11),
   });
 
   expect(success).toEqual(true);

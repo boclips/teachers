@@ -4,7 +4,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import Bodal from '../../common/Bodal';
 import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
 
-import { AgeRange } from '../../../types/AgeRange';
+import { AgeRange, isEqualTo } from '../../../types/AgeRange';
 import './CollectionEditButton.less';
 import CollectionEditForm, { EditableFields } from './CollectionEditForm';
 
@@ -17,6 +17,7 @@ interface Props {
 interface State {
   visible: boolean;
   hasAgeRangeBeenTouched: boolean;
+  ageRange: AgeRange;
 }
 
 export default class CollectionEditButton extends React.PureComponent<
@@ -25,21 +26,23 @@ export default class CollectionEditButton extends React.PureComponent<
 > {
   private formRef: any;
 
-  private sliderRange = {
-    min: 3,
-    max: 19,
-  };
-
   constructor(props: Props) {
     super(props);
 
     this.state = {
       visible: false,
       hasAgeRangeBeenTouched: false,
+      ageRange: this.props.collection.ageRange
+        ? this.props.collection.ageRange
+        : new AgeRange(),
     };
   }
 
-  private onAgeRangeChange = () => {
+  private onAgeRangeChange = (ageRange: number[]) => {
+    this.formRef.props.form.setFieldsValue({
+      ageRange,
+    });
+
     this.setState({ hasAgeRangeBeenTouched: true });
   };
 
@@ -49,6 +52,11 @@ export default class CollectionEditButton extends React.PureComponent<
       if (formErrors) {
         return;
       }
+
+      const updatedAgeRange = new AgeRange(
+        values.ageRange[0],
+        values.ageRange[1],
+      );
 
       const collectionChanges = {
         originalCollection: this.props.collection,
@@ -62,14 +70,17 @@ export default class CollectionEditButton extends React.PureComponent<
           values.subjects !== this.props.collection.subjects
             ? values.subjects
             : null,
-        ageRange: this.hasAgeRangeChanged(values.ageRange)
-          ? this.convertArrayToAgeRange(values.ageRange).getData()
-          : null,
+        ageRange: this.hasAgeRangeChanged(updatedAgeRange)
+          ? updatedAgeRange
+          : new AgeRange(),
       };
 
       form.resetFields();
 
-      if (this.hasFieldsChanged(values)) {
+      if (
+        this.hasFieldsChanged(values) ||
+        this.hasAgeRangeChanged(updatedAgeRange)
+      ) {
         this.props.onUpdate(collectionChanges);
       }
 
@@ -114,9 +125,8 @@ export default class CollectionEditButton extends React.PureComponent<
             isPublic={this.props.collection.isPublic}
             subjects={this.props.collection.subjects}
             wrappedComponentRef={this.saveFormRef}
-            ageRange={this.getAgeRangeValue(this.props.collection.ageRange)}
+            ageRange={this.state.ageRange}
             onAgeRangeChange={this.onAgeRangeChange}
-            sliderRange={this.sliderRange}
           />
         </Bodal>
       </React.Fragment>
@@ -132,48 +142,16 @@ export default class CollectionEditButton extends React.PureComponent<
   private hasFieldsChanged = (values: EditableFields) =>
     values.title !== this.props.collection.title ||
     values.isPublic !== this.props.collection.isPublic ||
-    values.subjects !== this.props.collection.subjects ||
-    this.hasAgeRangeChanged(values.ageRange);
+    values.subjects !== this.props.collection.subjects;
 
   private saveFormRef = formRef => {
     this.formRef = formRef;
   };
 
-  private getAgeRangeValue(ageRange?: AgeRange): number[] {
-    if (ageRange == null) {
-      return [this.sliderRange.min, this.sliderRange.max];
-    } else {
-      return [
-        ageRange.getData().min,
-        ageRange.getData().max || this.sliderRange.max,
-      ];
-    }
-  }
-
-  private convertArrayToAgeRange(ageRangeFromForm?: number[]): AgeRange {
-    if (ageRangeFromForm == null) {
-      return null;
-    }
-
-    if (ageRangeFromForm[1] === this.sliderRange.max) {
-      return new AgeRange({ min: ageRangeFromForm[0] });
-    } else {
-      return new AgeRange({
-        min: ageRangeFromForm[0],
-        max: ageRangeFromForm[1],
-      });
-    }
-  }
-
-  private hasAgeRangeChanged(ageRange: number[]) {
-    if (this.props.collection.ageRange == null) {
-      return this.state.hasAgeRangeBeenTouched;
-    } else {
-      return (
-        this.state.hasAgeRangeBeenTouched &&
-        this.convertArrayToAgeRange(ageRange).getLabel() !==
-          this.props.collection.ageRange.getLabel()
-      );
-    }
+  private hasAgeRangeChanged(ageRange: AgeRange) {
+    return (
+      this.state.hasAgeRangeBeenTouched &&
+      !isEqualTo(this.props.collection.ageRange, ageRange)
+    );
   }
 }

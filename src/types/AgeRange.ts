@@ -1,56 +1,57 @@
-export interface AgeRangeData {
-  label?: string;
-  min?: number;
-  max?: number;
-}
-
 export class AgeRange {
-  private ageRange;
-  private readonly AGE_RANGE_MIN = 3;
-  private readonly AGE_RANGE_MAX = 19;
+  private readonly min: number;
+  private readonly max?: number;
 
-  constructor(ageRange: AgeRangeData) {
-    this.ageRange = ageRange;
+  private static AGE_RANGE_MIN = 3;
+  private static AGE_RANGE_MAX = 19;
+
+  constructor(min: number = null, max: number = null) {
+    this.min = min;
+    this.max = max;
   }
 
   public getLabel() {
-    if (this.ageRange.max) {
-      return `${this.ageRange.min || this.AGE_RANGE_MIN} - ${
-        this.ageRange.max
-      }`;
+    if (this.max) {
+      return `${this.resolveMin()} - ${this.max}`;
     } else {
-      return `${this.ageRange.min} +`;
+      return `${this.resolveMin()} +`;
     }
   }
 
-  public getData() {
-    return this.ageRange;
-  }
-
   public generateRangeArray() {
-    if (!this.ageRange.max) {
+    if (!this.max) {
       return [];
     }
     const arr = [];
 
-    for (let i = this.ageRange.min; i <= this.ageRange.max; i++) {
+    for (let i = this.min; i <= this.max; i++) {
       arr.push(i);
     }
 
     return arr;
   }
+
   public resolveMin() {
-    if (this.ageRange.min && this.ageRange.min > 2) {
-      return this.ageRange.min;
+    if (this.min && this.min > 2) {
+      return this.min;
     } else {
-      return this.AGE_RANGE_MIN;
+      return AgeRange.AGE_RANGE_MIN;
     }
   }
+
   public resolveMax() {
-    if (this.ageRange.max) {
-      return this.ageRange.max;
+    if (this.max) {
+      return this.max;
     } else {
-      return this.AGE_RANGE_MAX;
+      return AgeRange.AGE_RANGE_MAX;
     }
   }
 }
+
+export const isEqualTo = (a: AgeRange, b: AgeRange) => {
+  if (a == null || b == null) {
+    return false;
+  }
+
+  return a.resolveMin() === b.resolveMin() && a.resolveMax() === b.resolveMax();
+};

@@ -1,4 +1,3 @@
-import { Slider } from 'antd';
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -12,6 +11,7 @@ import {
 import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
+import AgeRangeSlider from '../../common/AgeRangeSlider';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { editCollectionAction } from '../redux/actions/editCollectionAction';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
@@ -37,7 +37,7 @@ describe('when can edit collection', () => {
         title: 'test',
         isPublic: null,
         subjects: null,
-        ageRange: null,
+        ageRange: new AgeRange(),
       }),
     );
   });
@@ -64,7 +64,7 @@ describe('when can edit collection', () => {
         isPublic: true,
         title: null,
         subjects: null,
-        ageRange: null,
+        ageRange: new AgeRange(),
       }),
     );
   });
@@ -93,7 +93,7 @@ describe('when can edit collection', () => {
         isPublic: null,
         title: null,
         subjects: ['subject-one-id', 'subject-two-id'],
-        ageRange: null,
+        ageRange: new AgeRange(),
       }),
     );
   });
@@ -104,51 +104,53 @@ describe('when can edit collection', () => {
         links: VideoCollectionLinksFactory.sample({
           edit: new Link({ href: 'something', templated: false }),
         }),
-        ageRange: new AgeRange({ min: 3, max: 9 }),
+        ageRange: new AgeRange(3, 9),
       });
+
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
+
       CollectionEditModalHelper.openModal(wrapper);
-      const slider = wrapper.find(Slider);
-      slider.props().onChange([5, 9]);
+      const slider = wrapper.find(AgeRangeSlider);
+      slider.props().onChange([5, 11]);
 
       CollectionEditModalHelper.confirmModal(wrapper);
+
       expect(store.getActions()).toHaveLength(1);
       expect(store.getActions()[0]).toEqual(
         editCollectionAction({
           originalCollection: collection,
           title: null,
-          ageRange: {
-            min: 5,
-            max: 9,
-          },
+          ageRange: new AgeRange(5, 11),
           subjects: null,
           isPublic: null,
         }),
       );
     });
+
     it('when age range is increased to max', () => {
       const collection = VideoCollectionFactory.sample({
         links: VideoCollectionLinksFactory.sample({
           edit: new Link({ href: 'something', templated: false }),
         }),
-        ageRange: new AgeRange({ min: 11, max: 16 }),
+        ageRange: new AgeRange(11, 16),
       });
+
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
+
       CollectionEditModalHelper.openModal(wrapper);
-      const slider = wrapper.find(Slider);
+      const slider = wrapper.find(AgeRangeSlider);
       slider.props().onChange([11, 19]);
 
       CollectionEditModalHelper.confirmModal(wrapper);
+
       expect(store.getActions()).toHaveLength(1);
       expect(store.getActions()[0]).toEqual(
         editCollectionAction({
           originalCollection: collection,
           title: null,
-          ageRange: {
-            min: 11,
-          },
+          ageRange: new AgeRange(11, 19),
           subjects: null,
           isPublic: null,
         }),
@@ -164,7 +166,7 @@ describe('when can edit collection', () => {
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
       CollectionEditModalHelper.openModal(wrapper);
-      const slider = wrapper.find(Slider);
+      const slider = wrapper.find(AgeRangeSlider);
       slider.props().onChange([11, 16]);
 
       CollectionEditModalHelper.confirmModal(wrapper);
@@ -173,10 +175,7 @@ describe('when can edit collection', () => {
         editCollectionAction({
           originalCollection: collection,
           title: null,
-          ageRange: {
-            min: 11,
-            max: 16,
-          },
+          ageRange: new AgeRange(11, 16),
           subjects: null,
           isPublic: null,
         }),
@@ -252,6 +251,7 @@ export class CollectionFormHelper {
     });
   }
 }
+
 export class CollectionEditModalHelper {
   public static openModal(wrapper) {
     wrapper

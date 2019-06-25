@@ -47,12 +47,7 @@ describe('user collections', () => {
     expect(collections.items[0].videos).toEqual({});
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
-    expect(collections.items[0].ageRange).toEqual(
-      new AgeRange({
-        min: 3,
-        max: 9,
-      }),
-    );
+    expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
     expect(collections.items[0].subjects).toContain(subject.id);
   });
 });
@@ -74,12 +69,7 @@ describe('public collections', () => {
     expect(collections.items[0].videos).toEqual({});
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
-    expect(collections.items[0].ageRange).toEqual(
-      new AgeRange({
-        min: 3,
-        max: 9,
-      }),
-    );
+    expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
 
     expect(collections.links.next.getOriginalLink()).toEqual(
       'http://localhost/v1/collections/next',
@@ -104,11 +94,6 @@ describe('public collections', () => {
     expect(collections.items[0].videoIds[0].id).toEqual('177');
     expect(collections.items[0].videos).toEqual({});
     expect(collections.items[0].isPublic).toEqual(true);
-    expect(collections.items[0].ageRange).toEqual(
-      new AgeRange({
-        min: 3,
-        max: 9,
-      }),
-    );
+    expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
   });
 });

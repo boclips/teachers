@@ -7,7 +7,7 @@ import { SelectAgeRange } from './SelectAgeRange';
 it('renders a list of age ranges', () => {
   const wrapper = shallow(
     <SelectAgeRange
-      ageRanges={[new AgeRange({ min: 3, max: 5 })]}
+      ageRanges={[new AgeRange(3, 5)]}
       onUpdateAgeRange={jest.fn()}
     />,
   );
@@ -19,7 +19,7 @@ it('renders a list of age ranges', () => {
 it('serialises value prop to a json array', () => {
   const wrapper = shallow(
     <SelectAgeRange
-      ageRanges={[new AgeRange({ min: 3, max: 5 })]}
+      ageRanges={[new AgeRange(3, 5)]}
       onUpdateAgeRange={jest.fn()}
     />,
   );
@@ -32,10 +32,7 @@ it('callback gets called with unique ages', () => {
   const callback = jest.fn();
   const wrapper = mount(
     <SelectAgeRange
-      ageRanges={[
-        new AgeRange({ min: 3, max: 5 }),
-        new AgeRange({ min: 5, max: 7 }),
-      ]}
+      ageRanges={[new AgeRange(3, 5), new AgeRange(5, 7)]}
       onUpdateAgeRange={callback}
     />,
   );

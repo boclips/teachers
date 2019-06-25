@@ -3,44 +3,12 @@ import createReducer from '../../../../app/redux/createReducer';
 import { AgeRange } from './../../../../types/AgeRange';
 
 export const ageRangeReducer: Reducer<AgeRange[]> = createReducer([
-  new AgeRange({
-    label: '3 - 5',
-    min: 3,
-    max: 5,
-  }),
-  new AgeRange({
-    label: '5 - 7',
-    min: 5,
-    max: 7,
-  }),
-  new AgeRange({
-    label: '7 - 9',
-    min: 7,
-    max: 9,
-  }),
-  new AgeRange({
-    label: '9 - 11',
-    min: 9,
-    max: 11,
-  }),
-  new AgeRange({
-    label: '11 - 14',
-    min: 11,
-    max: 14,
-  }),
-  new AgeRange({
-    label: '14 - 16',
-    min: 14,
-    max: 16,
-  }),
-  new AgeRange({
-    label: '16 - 18',
-    min: 16,
-    max: 18,
-  }),
-  new AgeRange({
-    label: '19 +',
-    min: 19,
-    max: null,
-  }),
+  new AgeRange(3, 5),
+  new AgeRange(5, 7),
+  new AgeRange(7, 9),
+  new AgeRange(9, 11),
+  new AgeRange(11, 14),
+  new AgeRange(14, 16),
+  new AgeRange(16, 18),
+  new AgeRange(19),
 ]);

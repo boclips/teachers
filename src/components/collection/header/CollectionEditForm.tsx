@@ -2,48 +2,26 @@ import { Checkbox, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
+import { AgeRange } from '../../../types/AgeRange';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
-import { BoclipsSlider } from '../../common/BoclipsSlider';
-import withMediaBreakPoint, {
-  WithMediaBreakPointProps,
-} from '../../common/higerOrderComponents/withMediaBreakPoint';
+import AgeRangeSlider from '../../common/AgeRangeSlider';
 import './CollectionEditForm.less';
 
 export interface EditableFields {
   title: string;
   isPublic: boolean;
   subjects: string[];
-  ageRange?: number[];
+  ageRange: AgeRange;
 }
 
-export interface Props
-  extends EditableFields,
-    WithMediaBreakPointProps,
-    FormComponentProps {
+export interface Props extends EditableFields, FormComponentProps {
   onAgeRangeChange: (e) => void;
-  sliderRange: { min: number; max: number };
 }
 
 class CollectionEditForm extends React.PureComponent<
   Props & ReturnType<typeof mapStateToProps>
 > {
-  private getMarks = () => ({
-    3: '3',
-    5: '5',
-    7: '7',
-    9: '9',
-    11: '11',
-    14: '14',
-    16: '16',
-    18: '18',
-    19:
-      this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width
-        ? '+'
-        : '19+',
-  });
-
   public render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -68,13 +46,9 @@ class CollectionEditForm extends React.PureComponent<
           {getFieldDecorator('ageRange', {
             initialValue: this.props.ageRange,
           })(
-            <BoclipsSlider
-              min={this.props.sliderRange.min}
-              max={this.props.sliderRange.max}
-              range={true}
-              marks={this.getMarks()}
+            <AgeRangeSlider
+              ageRange={this.props.ageRange}
               onChange={this.props.onAgeRangeChange}
-              step={null}
             />,
           )}
         </Form.Item>
@@ -94,6 +68,6 @@ const mapStateToProps = (state: State) => ({
   subjectsInStore: state.subjects,
 });
 
-export default withMediaBreakPoint(
-  connect(mapStateToProps)(Form.create<Props>()(CollectionEditForm)),
+export default connect(mapStateToProps)(
+  Form.create<Props>()(CollectionEditForm),
 );

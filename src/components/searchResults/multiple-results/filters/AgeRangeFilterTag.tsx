@@ -15,10 +15,10 @@ interface DispatchProps {
 }
 
 class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
-  private ageRange = new AgeRange({
-    min: this.props.ageRangeMin,
-    max: this.props.ageRangeMax,
-  });
+  private ageRange = new AgeRange(
+    this.props.ageRangeMin,
+    this.props.ageRangeMax,
+  );
   public render() {
     return this.props.ageRangeMin == null &&
       this.props.ageRangeMax == null ? null : (

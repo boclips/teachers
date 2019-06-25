@@ -1,4 +1,3 @@
-import { Slider } from 'antd';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import eventually from '../../../test-support/eventually';
@@ -13,6 +12,7 @@ import {
   CollectionEditModalHelper,
   CollectionFormHelper,
 } from '../../components/collection/header/CollectionEditButton.test';
+import AgeRangeSlider from '../../components/common/AgeRangeSlider';
 
 describe('when video collection', () => {
   test('displays collection basic details', async () => {
@@ -95,7 +95,12 @@ describe('when editable collection', () => {
     const newTitle = 'this is a shiny new title';
     MockFetchVerify.patch(
       'https://api.example.com/v1/collections/id',
-      { title: newTitle, isPublic: null, subjects: null, ageRange: null },
+      {
+        title: newTitle,
+        isPublic: null,
+        subjects: null,
+        ageRange: { min: null, max: null },
+      },
       204,
     );
 
@@ -103,6 +108,7 @@ describe('when editable collection', () => {
     const wrapper = collectionPage.wrapper;
 
     expect(collectionPage.isEditable()).toBeTruthy();
+
     CollectionEditModalHelper.openModal(wrapper);
     CollectionFormHelper.editCollectionText(wrapper, newTitle);
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
@@ -137,7 +143,7 @@ describe('when editable collection', () => {
     expect(collectionPage.isEditable()).toBeTruthy();
     CollectionEditModalHelper.openModal(wrapper);
 
-    const slider = wrapper.find(Slider);
+    const slider = wrapper.find(AgeRangeSlider);
 
     slider.props().onChange([5, 11]);
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));

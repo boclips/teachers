@@ -2,6 +2,7 @@ import { Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
+import { AgeRange } from '../../../../types/AgeRange';
 import { Range } from '../../../../types/Range';
 import { SubjectState } from '../../../../types/State';
 import { Subject } from '../../../../types/Subject';
@@ -64,8 +65,9 @@ class FilterButtonForm extends React.Component<Props> {
             },
           })(
             <AgeRangeSlider
-              minAge={this.props.ageRangeMin}
-              maxAge={this.props.ageRangeMax}
+              ageRange={
+                new AgeRange(this.props.ageRangeMin, this.props.ageRangeMax)
+              }
               onChange={this.onAgeRangeChange}
               data-qa="age-range-slider"
             />,
