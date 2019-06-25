@@ -31,4 +31,6 @@ module.exports = {
   },
 
   setupFilesAfterEnv: ['./testSetup.ts'],
+
+  reporters: [['jest-simple-dot-reporter', { color: true }]],
 };
