@@ -1,8 +1,9 @@
-import { Slider } from 'antd';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MockStoreFactory } from '../../../../test-support/factories';
+import { AgeRange } from '../../../types/AgeRange';
+import { BoclipsSlider } from '../../common/BoclipsSlider';
 import CollectionEditForm from './CollectionEditForm';
 
 test('can set correct initial age range for slider when age range is an interval', () => {
@@ -17,13 +18,12 @@ test('can set correct initial age range for slider when age range is an interval
           title="irrelevant"
           isPublic={true}
           subjects={[]}
-          ageRange={[3, 9]}
+          ageRange={new AgeRange({ min: 3, max: 9 })}
           onAgeRangeChange={ageRangeChange}
-          sliderRange={{ min: 3, max: 19 }}
         />
       </>
     </Provider>,
   );
 
-  expect(wrapper.find(Slider).props().value).toEqual([3, 9]);
+  expect(wrapper.find(BoclipsSlider).props().defaultValue).toEqual([3, 9]);
 });

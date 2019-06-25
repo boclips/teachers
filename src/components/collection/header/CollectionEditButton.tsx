@@ -39,7 +39,8 @@ export default class CollectionEditButton extends React.PureComponent<
     };
   }
 
-  private onAgeRangeChange = () => {
+  private onAgeRangeChange = (ageRange: Range) => {
+    this.formRef.props.form.setFieldsValue({ ageRange });
     this.setState({ hasAgeRangeBeenTouched: true });
   };
 
@@ -63,7 +64,7 @@ export default class CollectionEditButton extends React.PureComponent<
             ? values.subjects
             : null,
         ageRange: this.hasAgeRangeChanged(values.ageRange)
-          ? this.convertArrayToAgeRange(values.ageRange).getData()
+          ? this.convertArrayToAgeRange(values.ageRange)
           : null,
       };
 
@@ -114,9 +115,8 @@ export default class CollectionEditButton extends React.PureComponent<
             isPublic={this.props.collection.isPublic}
             subjects={this.props.collection.subjects}
             wrappedComponentRef={this.saveFormRef}
-            ageRange={this.getAgeRangeValue(this.props.collection.ageRange)}
+            ageRange={this.props.collection.ageRange}
             onAgeRangeChange={this.onAgeRangeChange}
-            sliderRange={this.sliderRange}
           />
         </Bodal>
       </React.Fragment>
@@ -165,6 +165,17 @@ export default class CollectionEditButton extends React.PureComponent<
     }
   }
 
+  // private hasAgeRangeChanged(ageRange: AgeRange) {
+  //   if (this.props.collection.ageRange == null) {
+  //     return this.state.hasAgeRangeBeenTouched;
+  //   } else {
+  //     return (
+  //       this.state.hasAgeRangeBeenTouched &&
+  //       ageRange.getLabel() !== this.props.collection.ageRange.getLabel()
+  //     );
+  //   }
+  // }
+
   private hasAgeRangeChanged(ageRange: number[]) {
     if (this.props.collection.ageRange == null) {
       return this.state.hasAgeRangeBeenTouched;
@@ -172,7 +183,7 @@ export default class CollectionEditButton extends React.PureComponent<
       return (
         this.state.hasAgeRangeBeenTouched &&
         this.convertArrayToAgeRange(ageRange).getLabel() !==
-          this.props.collection.ageRange.getLabel()
+        this.props.collection.ageRange.getLabel()
       );
     }
   }

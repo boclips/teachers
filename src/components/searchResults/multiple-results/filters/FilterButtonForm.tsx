@@ -40,8 +40,8 @@ class FilterButtonForm extends React.Component<FilterFormEditableFields> {
         <Form.Item className="filter-form__item" label="Age Range">
           {getFieldDecorator('ageRange')(
             <AgeRangeSlider
-              minAge={this.props.ageRangeMin}
-              maxAge={this.props.ageRangeMax}
+              min={this.props.ageRangeMin}
+              max={this.props.ageRangeMax}
               onChange={this.onAgeRangeChange}
             />,
           )}

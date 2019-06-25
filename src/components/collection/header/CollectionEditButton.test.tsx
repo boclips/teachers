@@ -12,6 +12,7 @@ import {
 import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
+import AgeRangeSlider from '../../common/AgeRangeSlider';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { editCollectionAction } from '../redux/actions/editCollectionAction';
 import CollectionEditButtonContainer from './CollectionEditButtonContainer';
@@ -109,7 +110,7 @@ describe('when can edit collection', () => {
       const store = MockStoreFactory.sample();
       const wrapper = mountComponent(collection, store);
       CollectionEditModalHelper.openModal(wrapper);
-      const slider = wrapper.find(Slider);
+      const slider = wrapper.find(AgeRangeSlider);
       slider.props().onChange([5, 9]);
 
       CollectionEditModalHelper.confirmModal(wrapper);
@@ -148,6 +149,7 @@ describe('when can edit collection', () => {
           title: null,
           ageRange: {
             min: 11,
+            max: null,
           },
           subjects: null,
           isPublic: null,
