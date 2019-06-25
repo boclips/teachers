@@ -1,7 +1,7 @@
 import { Checkbox, Form } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import BlankTargetLink from '../../common/BlankTargetLink';
-import { FormComponentProps } from './FormComponentProps';
 import { PrivacyPolicyLink } from './PrivacyPolicyLink';
 
 export class PrivacyPolicyAgreementForm extends React.Component<

@@ -1,10 +1,10 @@
 import { Form } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Range } from '../../../../types/Range';
 import { SubjectState } from '../../../../types/State';
 import { Subject } from '../../../../types/Subject';
-import { FormComponentProps } from '../../../account/form/FormComponentProps';
 import { SubjectsForm } from '../../../account/form/SubjectsForm';
 import AgeRangeSlider from '../../../common/AgeRangeSlider';
 import DurationSlider from './DurationSlider';
@@ -87,6 +87,6 @@ function mapStateToProps(state: SubjectState): StateProps {
   };
 }
 
-export default connect(mapStateToProps)(
-  Form.create<Props & FilterFormEditableFields>()(FilterButtonForm),
+export default Form.create<Props & FilterFormEditableFields>()(
+  connect(mapStateToProps)(FilterButtonForm),
 );

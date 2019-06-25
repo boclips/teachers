@@ -1,6 +1,6 @@
 import { Checkbox, Form } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { FormComponentProps } from './FormComponentProps';
 import { PrivacyPolicyLink } from './PrivacyPolicyLink';
 
 export class MarketingAgreementForm extends React.Component<

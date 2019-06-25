@@ -1,6 +1,6 @@
 import { Input } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { FormComponentProps } from './FormComponentProps';
 import TwoColumnInlineForm from './TwoColumnInlineFormItem';
 
 export class NameForm extends React.Component<FormComponentProps> {

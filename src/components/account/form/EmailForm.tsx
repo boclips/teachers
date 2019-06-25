@@ -1,6 +1,6 @@
 import { Col, Form, Input, Row } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { FormComponentProps } from './FormComponentProps';
 
 export class EmailForm extends React.Component<FormComponentProps> {
   public render() {
