@@ -114,6 +114,22 @@ test('does not render tags container when no tags are present', () => {
   expect(wrapper.find('.tags-container')).not.toExist();
 });
 
+test('does not render tags container when no tags are present - age range min and max both null', () => {
+  const collection = VideoCollectionFactory.sample({
+    ageRange: new AgeRange(),
+    subjects: [],
+  });
+  const wrapper = shallow(
+    <CollectionCardHeader
+      collection={collection}
+      showRemoveButton={false}
+      showTagsIfEmpty={false}
+    />,
+  );
+
+  expect(wrapper.find('.tags-container')).not.toExist();
+});
+
 test('does render tags container when no tags are present but show tags is true', () => {
   const collection = VideoCollectionFactory.sample({
     ageRange: null,

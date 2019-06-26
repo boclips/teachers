@@ -146,7 +146,7 @@ describe('when editable collection', () => {
 
     const slider = wrapper.find(AgeRangeSlider);
 
-    slider.props().onChange([5, 11]);
+    slider.props().onChange(new AgeRange(5, 11));
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
 
     await eventually(() => {

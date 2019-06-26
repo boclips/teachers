@@ -112,7 +112,7 @@ describe('when can edit collection', () => {
 
       CollectionEditModalHelper.openModal(wrapper);
       const slider = wrapper.find(AgeRangeSlider);
-      slider.props().onChange([5, 11]);
+      slider.props().onChange(new AgeRange(5, 11));
 
       CollectionEditModalHelper.confirmModal(wrapper);
 
@@ -141,7 +141,7 @@ describe('when can edit collection', () => {
 
       CollectionEditModalHelper.openModal(wrapper);
       const slider = wrapper.find(AgeRangeSlider);
-      slider.props().onChange([11, 19]);
+      slider.props().onChange(new AgeRange(11, 19));
 
       CollectionEditModalHelper.confirmModal(wrapper);
 
@@ -167,7 +167,7 @@ describe('when can edit collection', () => {
       const wrapper = mountComponent(collection, store);
       CollectionEditModalHelper.openModal(wrapper);
       const slider = wrapper.find(AgeRangeSlider);
-      slider.props().onChange([11, 16]);
+      slider.props().onChange(new AgeRange(11, 16));
 
       CollectionEditModalHelper.confirmModal(wrapper);
       expect(store.getActions()).toHaveLength(1);

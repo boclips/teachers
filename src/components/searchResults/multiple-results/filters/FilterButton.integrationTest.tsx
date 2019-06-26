@@ -11,6 +11,7 @@ import {
   RouterFactory,
 } from '../../../../../test-support/factories';
 import { setWidth } from '../../../../../test-support/setWidth';
+import { AgeRange } from '../../../../types/AgeRange';
 import { SubjectsForm } from '../../../account/form/SubjectsForm';
 import AgeRangeSlider from '../../../common/AgeRangeSlider';
 import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
@@ -136,9 +137,8 @@ describe('when a filter is submitted', () => {
 
     wrapper
       .find(AgeRangeSlider)
-      .find(Slider)
       .props()
-      .onChange([5, 11]);
+      .onChange(new AgeRange(5, 11));
 
     simulator.click(
       wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),

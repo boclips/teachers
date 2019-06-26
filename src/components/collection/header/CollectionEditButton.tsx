@@ -53,11 +53,6 @@ export default class CollectionEditButton extends React.PureComponent<
         return;
       }
 
-      const updatedAgeRange = new AgeRange(
-        values.ageRange[0],
-        values.ageRange[1],
-      );
-
       const collectionChanges = {
         originalCollection: this.props.collection,
         title:
@@ -70,8 +65,8 @@ export default class CollectionEditButton extends React.PureComponent<
           values.subjects !== this.props.collection.subjects
             ? values.subjects
             : null,
-        ageRange: this.hasAgeRangeChanged(updatedAgeRange)
-          ? updatedAgeRange
+        ageRange: this.hasAgeRangeChanged(values.ageRange)
+          ? values.ageRange
           : new AgeRange(),
       };
 
@@ -79,7 +74,7 @@ export default class CollectionEditButton extends React.PureComponent<
 
       if (
         this.hasFieldsChanged(values) ||
-        this.hasAgeRangeChanged(updatedAgeRange)
+        this.hasAgeRangeChanged(values.ageRange)
       ) {
         this.props.onUpdate(collectionChanges);
       }
