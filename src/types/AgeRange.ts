@@ -46,6 +46,10 @@ export class AgeRange {
       return AgeRange.AGE_RANGE_MAX;
     }
   }
+
+  public hasMin() {
+    return this.min !== null;
+  }
 }
 
 export const isEqualTo = (a: AgeRange, b: AgeRange) => {

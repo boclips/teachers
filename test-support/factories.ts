@@ -5,6 +5,7 @@ import {
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfile } from '../src/services/users/UserProfile';
+import { AgeRange } from '../src/types/AgeRange';
 import { Discipline } from '../src/types/Discipline';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
@@ -79,7 +80,7 @@ export class VideoCollectionFactory {
       isMine: arg.isMine || true,
       createdBy: 'Le Factory',
       subjects: arg.subjects || [],
-      ageRange: arg.ageRange || null,
+      ageRange: arg.ageRange || new AgeRange(),
     });
   }
 

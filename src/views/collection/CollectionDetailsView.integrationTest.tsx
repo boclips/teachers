@@ -13,6 +13,7 @@ import {
   CollectionFormHelper,
 } from '../../components/collection/header/CollectionEditButton.test';
 import AgeRangeSlider from '../../components/common/AgeRangeSlider';
+import { AgeRange } from '../../types/AgeRange';
 
 describe('when video collection', () => {
   test('displays collection basic details', async () => {
@@ -99,7 +100,7 @@ describe('when editable collection', () => {
         title: newTitle,
         isPublic: null,
         subjects: null,
-        ageRange: { min: null, max: null },
+        ageRange: new AgeRange(),
       },
       204,
     );

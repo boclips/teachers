@@ -8,7 +8,7 @@ import { editCollection } from './editCollection';
 test('edit collection', async () => {
   MockFetchVerify.patch(
     '/v1/collections/the-id',
-    { title: 'avideo', isPublic: false },
+    { title: 'avideo', isPublic: false, ageRange: { min: null, max: null } },
     204,
   );
 
@@ -20,6 +20,7 @@ test('edit collection', async () => {
     }),
     title: 'avideo',
     isPublic: false,
+    ageRange: new AgeRange(),
   });
 
   expect(success).toEqual(true);
@@ -28,7 +29,11 @@ test('edit collection', async () => {
 test('change subjects on collection', async () => {
   MockFetchVerify.patch(
     '/v1/collections/the-id',
-    { title: 'avideo', subjects: ['id-one', 'id-two'] },
+    {
+      title: 'avideo',
+      subjects: ['id-one', 'id-two'],
+      ageRange: { min: null, max: null },
+    },
     204,
   );
 
@@ -40,6 +45,7 @@ test('change subjects on collection', async () => {
     }),
     title: 'avideo',
     subjects: ['id-one', 'id-two'],
+    ageRange: new AgeRange(),
   });
 
   expect(success).toEqual(true);
