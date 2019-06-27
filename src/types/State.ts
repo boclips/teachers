@@ -105,6 +105,14 @@ export function getIndexOfCollection(
   return indexOfCollection;
 }
 
+export function isMyCollection(
+  collections: VideoCollection[],
+  collectionId: string,
+) {
+  const indexOfCollection = getIndexOfCollection(collections, collectionId);
+  return indexOfCollection >= 0;
+}
+
 export default interface State
   extends LinksState,
     SearchState,

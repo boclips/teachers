@@ -1,12 +1,14 @@
 import { Col, Row } from 'antd';
-import React from 'react';
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import EmptyCollection from '../../../../resources/images/empty-collection.svg';
 import SadTeacher from '../../../../resources/images/sad-teacher.svg';
 import { Links } from '../../../types/Links';
-import State, { getIndexOfCollection } from '../../../types/State';
+import State, {
+  getIndexOfCollection,
+  isMyCollection,
+} from '../../../types/State';
 import { VideoId } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
@@ -141,22 +143,24 @@ class CollectionDetails extends PureComponent<
 }
 
 function mapStateToProps(state: State, props: OwnProps): StateProps {
-  const indexOfCollection = getIndexOfCollection(
-    state.collections.myCollections.items,
-    props.collectionId,
-  );
+  if (
+    isMyCollection(state.collections.myCollections.items, props.collectionId)
+  ) {
+    const indexOfCollection = getIndexOfCollection(
+      state.collections.myCollections.items,
+      props.collectionId,
+    );
 
-  if (indexOfCollection >= 0) {
     return {
       collection: state.collections.myCollections.items[indexOfCollection],
       links: state.links,
     };
+  } else {
+    return {
+      collection: state.collections.collectionBeingViewed,
+      links: state.links,
+    };
   }
-
-  return {
-    collection: state.collections.collectionBeingViewed,
-    links: state.links,
-  };
 }
 
 function mapDispatchToProps(

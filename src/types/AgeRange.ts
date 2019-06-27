@@ -47,7 +47,7 @@ export class AgeRange {
     }
   }
 
-  public hasMin() {
+  public isBounded() {
     return this.min !== null;
   }
 }

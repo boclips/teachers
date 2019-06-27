@@ -17,7 +17,6 @@ interface Props {
 interface State {
   visible: boolean;
   hasAgeRangeBeenTouched: boolean;
-  ageRange: AgeRange;
 }
 
 export default class CollectionEditButton extends React.PureComponent<
@@ -32,9 +31,6 @@ export default class CollectionEditButton extends React.PureComponent<
     this.state = {
       visible: false,
       hasAgeRangeBeenTouched: false,
-      ageRange: this.props.collection.ageRange
-        ? this.props.collection.ageRange
-        : new AgeRange(),
     };
   }
 
@@ -120,7 +116,7 @@ export default class CollectionEditButton extends React.PureComponent<
             isPublic={this.props.collection.isPublic}
             subjects={this.props.collection.subjects}
             wrappedComponentRef={this.saveFormRef}
-            ageRange={this.state.ageRange}
+            ageRange={this.props.collection.ageRange}
             onAgeRangeChange={this.onAgeRangeChange}
           />
         </Bodal>

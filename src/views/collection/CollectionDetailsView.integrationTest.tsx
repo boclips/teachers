@@ -93,31 +93,35 @@ describe('when editable collection', () => {
       .fetchCollections()
       .fetchVideo();
 
-    const newTitle = 'this is a shiny new title';
-    MockFetchVerify.patch(
-      'https://api.example.com/v1/collections/id',
-      {
-        title: newTitle,
-        isPublic: null,
-        subjects: null,
-        ageRange: new AgeRange(),
-      },
-      204,
-    );
-
     const collectionPage = await CollectionPage.load();
     const wrapper = collectionPage.wrapper;
 
     expect(collectionPage.isEditable()).toBeTruthy();
 
     CollectionEditModalHelper.openModal(wrapper);
+    const newTitle = 'this is a shiny new title';
     CollectionFormHelper.editCollectionText(wrapper, newTitle);
+    MockFetchVerify.patch(
+      'https://api.example.com/v1/collections/id',
+      {
+        title: newTitle,
+        isPublic: null,
+        subjects: null,
+        ageRange: { min: null, max: null },
+      },
+      204,
+    );
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
 
     await eventually(() => {
       expect(wrapper.find(By.dataQa('collection-name')).text()).toEqual(
         newTitle,
       );
+    });
+
+    await eventually(() => {
+      // TODO: wrapper.html() does not contain an element with data-qa="age-range". Yet, wrapper.find will find one.
+      expect(wrapper.html().indexOf('data-qa="age-range"')).toBeGreaterThan(0);
     });
   });
 

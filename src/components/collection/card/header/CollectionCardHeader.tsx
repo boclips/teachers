@@ -14,7 +14,7 @@ interface Props {
 }
 
 const hasAgeRange = (collection: VideoCollection) =>
-  collection.ageRange && collection.ageRange.hasMin();
+  collection.ageRange.isBounded();
 const hasSubjects = (collection: VideoCollection) =>
   collection.subjects.length > 0;
 
