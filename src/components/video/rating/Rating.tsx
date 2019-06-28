@@ -39,7 +39,12 @@ class Rating extends React.Component<Props & DispatchProps, State> {
     return (
       <span className="rating--container">
         {rating !== null && rating !== undefined ? (
-          <Rate disabled={true} defaultValue={this.props.video.rating} />
+          <Rate
+            data-qa="rating-score"
+            data-state={this.props.video.rating}
+            disabled={true}
+            defaultValue={this.props.video.rating}
+          />
         ) : (
           <React.Fragment>
             <a
@@ -56,7 +61,7 @@ class Rating extends React.Component<Props & DispatchProps, State> {
               visible={this.state.visible}
               onOk={this.rate}
               onCancel={this.closeModal}
-              okButtonProps={{ size: 'large' }}
+              okButtonProps={{ size: 'large', dataQa: 'rate-button' }}
               cancelButtonProps={{ size: 'large' }}
               okText="Done"
               cancelText="Cancel"
