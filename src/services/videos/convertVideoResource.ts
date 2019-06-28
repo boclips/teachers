@@ -26,9 +26,11 @@ export default function convertVideoResource(resource: any): Video {
     playback: getPlaybackProperties(resource),
     subjects: resource.subjects,
     badges: resource.badges,
+    rating: resource.rating,
     type: { name: resource.type.name },
     links: {
       self: new Link(resource._links.self),
+      rate: resource._links.rate ? new Link(resource._links.rate) : null,
     },
   };
 

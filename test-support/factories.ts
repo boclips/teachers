@@ -36,6 +36,7 @@ export class VideoFactory {
       releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33Z'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',
       subjects: arg.subjects || ['Maths'],
+      rating: arg.rating || null,
       playback:
         (arg.playback as StreamPlayback) ||
         new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
@@ -43,6 +44,10 @@ export class VideoFactory {
       type: arg.type || { name: 'educational' },
       links: arg.links || {
         self: new Link({ href: '/v1/videos/123' }),
+        rate: new Link({
+          href: '/v1/videos/177?rating={rating}',
+          templated: true,
+        }),
       },
     });
   }

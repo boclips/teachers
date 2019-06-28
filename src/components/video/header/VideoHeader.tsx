@@ -3,7 +3,9 @@ import React from 'react';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
+import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoPreviewBadge from '../card/VideoBadge';
+import Rating from '../rating/Rating';
 import './VideoHeader.less';
 
 interface Props {
@@ -22,13 +24,16 @@ export const VideoHeader = React.memo((props: Props) => (
         <DurationFormatter duration={props.video.duration} />
       </p>
     </section>
-    <p className="subtitle">
+    <section className="subtitle">
+      <StopClickPropagation wrapper={'span'}>
+        <Rating video={props.video} />
+      </StopClickPropagation>
       Released on{' '}
       <span data-qa="video-released-on">
         <DateFormatter date={props.video.releasedOn} />
       </span>{' '}
       by{' '}
       <span data-qa="video-content-partner">{props.video.contentPartner}</span>
-    </p>
+    </section>
   </section>
 ));

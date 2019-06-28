@@ -7,6 +7,13 @@ import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
 import { CollectionKey } from './../../../../types/CollectionKey';
 
+const collectionKeys: CollectionKey[] = [
+  'myCollections',
+  'bookmarkedCollections',
+  'publicCollections',
+  'discoverCollections',
+];
+
 export const onStoreCollectionsAction = (
   state: CollectionsStateValue,
   request: StoreCollectionsRequest,
@@ -31,34 +38,41 @@ export const onStoreCollectionAction = (
   };
 };
 
+function replaceVideoMap(videoMap, video: Video) {
+  if (videoMap[video.id]) {
+    const output = { ...videoMap };
+    output[video.id] = video;
+    return output;
+  }
+
+  return videoMap;
+}
+
+export const onStoreVideoForCollectionAction = (
+  state: CollectionsStateValue,
+  video: Video,
+): CollectionsStateValue => {
+  state = collectionKeys.reduce<CollectionsStateValue>(
+    (currentState, key) =>
+      reduceStoreVideoForPageableCollections(currentState, key, video),
+    state,
+  );
+  return reduceStoreVideoForCollectionDetails(state, video);
+};
+
 export const onStoreVideosForCollectionAction = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
-  state = reduceStoreVideoForPageableCollections(
+  state = collectionKeys.reduce<CollectionsStateValue>(
+    (currentState, key) =>
+      reduceStoreVideosForPageableCollections(currentState, key, request),
     state,
-    'myCollections',
-    request,
   );
-  state = reduceStoreVideoForPageableCollections(
-    state,
-    'bookmarkedCollections',
-    request,
-  );
-  state = reduceStoreVideoForPageableCollections(
-    state,
-    'publicCollections',
-    request,
-  );
-  state = reduceStoreVideoForPageableCollections(
-    state,
-    'discoverCollections',
-    request,
-  );
-  return reduceStoreVideoForCollectionDetails(state, request);
+  return reduceStoreVideosForCollectionDetails(state, request);
 };
 
-const reduceStoreVideoForPageableCollections = (
+const reduceStoreVideosForPageableCollections = (
   state: CollectionsStateValue,
   key: CollectionKey,
   request: {
@@ -84,7 +98,30 @@ const reduceStoreVideoForPageableCollections = (
   };
 };
 
-const reduceStoreVideoForCollectionDetails = (
+const reduceStoreVideoForPageableCollections = (
+  state: CollectionsStateValue,
+  key: CollectionKey,
+  video: Video,
+): CollectionsStateValue => {
+  if (!state[key] || !state[key].items) {
+    return state;
+  }
+
+  const collectionItems = updateMatchingCollectionWithVideo(
+    video,
+    state[key].items,
+  );
+
+  return {
+    ...state,
+    [key]: {
+      ...state[key],
+      items: collectionItems,
+    },
+  };
+};
+
+const reduceStoreVideosForCollectionDetails = (
   state: CollectionsStateValue,
   request: { videos: Video[]; collection: VideoCollection },
 ): CollectionsStateValue => {
@@ -100,6 +137,22 @@ const reduceStoreVideoForCollectionDetails = (
   return {
     ...state,
     collectionBeingViewed: collectionDetails,
+  };
+};
+
+const reduceStoreVideoForCollectionDetails = (
+  state: CollectionsStateValue,
+  video: Video,
+): CollectionsStateValue => {
+  if (!state.collectionBeingViewed || !state.collectionBeingViewed.videos) {
+    return state;
+  }
+  return {
+    ...state,
+    collectionBeingViewed: {
+      ...state.collectionBeingViewed,
+      videos: replaceVideoMap(state.collectionBeingViewed.videos, video),
+    },
   };
 };
 
@@ -126,6 +179,17 @@ export const updateMatchingCollectionWithVideos = (
   collectionItems[indexOfCollectionToUpdate] = updatedCollection;
 
   return collectionItems;
+};
+
+export const updateMatchingCollectionWithVideo = (
+  video: Video,
+  collections: Readonly<VideoCollection[]>,
+): VideoCollection[] => {
+  const collectionItems = [...collections];
+  return collectionItems.map(c => ({
+    ...c,
+    videos: replaceVideoMap(c.videos, video),
+  }));
 };
 
 const addVideosToCollection = (request: {

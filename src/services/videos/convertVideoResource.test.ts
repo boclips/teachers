@@ -14,6 +14,7 @@ test('converts a video with stream playback', () => {
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
   expect(video.releasedOn).toEqual(new Date('2018-02-11T10:12:33Z'));
+  expect(video.rating).toEqual(3);
   expect(video.contentPartner).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
   expect(video.subjects).toEqual(['Maths', 'Physics']);
@@ -23,6 +24,8 @@ test('converts a video with stream playback', () => {
   );
   expect(video.badges).toEqual(['ad-free']);
   expect(video.type.name).toEqual('educational');
+
+  expect(video.links.rate.getOriginalLink()).toBeTruthy();
 });
 
 test('converts a video with youtube playback', () => {

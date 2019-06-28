@@ -48,7 +48,13 @@ export const links = {
 
 export const video177Slim = Object.freeze({
   id: '177',
-  _links: { self: { href: `${prefix}/v1/videos/177` } },
+  _links: {
+    self: { href: `${prefix}/v1/videos/177` },
+    rate: {
+      href: `${prefix}/v1/videos/177?rating={rating}`,
+      templated: true,
+    },
+  },
 });
 
 export const video177 = Object.freeze({
@@ -58,6 +64,7 @@ export const video177 = Object.freeze({
   releasedOn: '2018-02-11T10:12:33Z',
   contentPartner: 'cp1',
   subjects: ['Maths', 'Physics'],
+  rating: 3,
   playback: {
     type: 'STREAM',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',

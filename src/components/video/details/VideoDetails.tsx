@@ -6,6 +6,7 @@ import DurationFormatter from '../../common/formatters/DurationFormatter';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import VideoPreviewBadge from '../card/VideoBadge';
 import VideoPlayer from '../player/VideoPlayer';
+import Rating from '../rating/Rating';
 import { SubjectTag } from '../tags/SubjectTag';
 import './VideoDetails.less';
 
@@ -35,7 +36,8 @@ class VideoDetailsContent extends React.PureComponent<Props> {
           >
             {this.props.video.title}
           </h1>
-          <p className="subtitle">
+          <section className="subtitle">
+            <Rating video={this.props.video} />
             Released on{' '}
             <span data-qa="video-released-on">
               <DateFormatter date={this.props.video.releasedOn} />
@@ -44,7 +46,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
             <span data-qa="video-content-partner">
               {this.props.video.contentPartner}
             </span>
-          </p>
+          </section>
         </section>
         <section className="buttons-row">
           <VideoButtons video={this.props.video} />

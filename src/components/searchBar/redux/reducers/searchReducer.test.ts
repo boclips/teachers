@@ -12,6 +12,7 @@ import {
 } from '../../../../types/State';
 import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/onCollectionBookmarkedAction';
 import { storeVideoForCollectionAction } from '../../../collection/redux/actions/storeVideoForCollectionAction';
+import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
@@ -84,6 +85,29 @@ describe('searching videos', () => {
       loading: false,
       videos: [VideoFactory.sample({ title: 'dog video' })],
       query: 'dogs',
+      paging: defaultPaging,
+    };
+
+    expect(newState).toEqual(expectedState);
+  });
+
+  test('Updates video on video store action', () => {
+    const state: VideoSearchStateValue = {
+      loading: false,
+      videos: [VideoFactory.sample({ title: 'dog video' })],
+      query: 'pancakes',
+      paging: defaultPaging,
+    };
+
+    const newState = videoSearchReducer(
+      state,
+      storeVideoAction(VideoFactory.sample({ title: 'cat video' })),
+    );
+
+    const expectedState: VideoSearchStateValue = {
+      loading: false,
+      videos: [VideoFactory.sample({ title: 'cat video' })],
+      query: 'pancakes',
       paging: defaultPaging,
     };
 

@@ -4,6 +4,7 @@ import { Link } from './Link';
 export interface VideoLinks {
   self: Link;
   transcript?: Link;
+  rate?: Link;
 }
 
 export interface VideoId {
@@ -23,6 +24,7 @@ export interface Video {
   thumbnailUrl: string;
   badges: string[];
   type: VideoType;
+  rating: number;
   links: VideoLinks;
 }
 

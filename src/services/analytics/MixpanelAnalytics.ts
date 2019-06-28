@@ -201,6 +201,10 @@ export default class MixpanelAnalytics {
     );
   }
 
+  public trackVideoRatingModalOpened() {
+    this.mixpanelInstance.track(EventTypes.VIDEO_RATING_MODAL_OPENED);
+  }
+
   public trackReferAFriendModalOpened() {
     this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_OPENED);
   }
