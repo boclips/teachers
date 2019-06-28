@@ -71,6 +71,7 @@ class Rating extends React.Component<Props & DispatchProps, State> {
                 you give "{this.props.video.title}".
               </p>
               <Rate
+                data-qa="rate-video"
                 className="rating--rate"
                 tooltips={desc}
                 onChange={this.changeRating}
