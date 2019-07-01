@@ -31,7 +31,11 @@ export class ClosableTag extends React.Component<ClosableTagProps> {
       <div className="tag">
         <span className="tag__type">{this.props.label}:</span>
         <span data-qa={this.props.dataQa}>{this.props.value}</span>
-        <span className="tag__close" onClick={this.props.onClose}>
+        <span
+          className="tag__close"
+          data-qa="close-tag"
+          onClick={this.props.onClose}
+        >
           <Icon
             component={
               CloseSvg as React.ComponentType<CustomIconComponentProps>
