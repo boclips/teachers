@@ -70,12 +70,13 @@ class Rating extends React.Component<Props & DispatchProps, State> {
                 We want to know what you think of our videos. What rating would
                 you give "{this.props.video.title}".
               </p>
-              <Rate
-                data-qa="rate-video"
-                className="rating--rate"
-                tooltips={desc}
-                onChange={this.changeRating}
-              />
+              <section data-qa="rate-video">
+                <Rate
+                  className="rating--rate"
+                  tooltips={desc}
+                  onChange={this.changeRating}
+                />
+              </section>
             </Bodal>
           </React.Fragment>
         )}
