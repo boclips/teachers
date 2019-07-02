@@ -22,6 +22,7 @@ import { ageRangeReducer } from '../components/multipleSelect/redux/reducers/age
 import { subjectsReducer } from '../components/multipleSelect/redux/reducers/subjectsReducer';
 import searchMiddleware from '../components/searchBar/redux/middleware/searchMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
+import updatePageActionMiddleware from '../components/searchResults/redux/middleware/updatePageActionMiddleware';
 import updateSearchParametersMiddleware from '../components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
@@ -74,6 +75,7 @@ export default class App extends PureComponent<Props> {
         ...collectionMiddleware,
         fetchSubjectsMiddleware,
         ...updateSearchParametersMiddleware,
+        updatePageActionMiddleware,
         fetchDisciplinesMiddleware,
       ),
     ),
