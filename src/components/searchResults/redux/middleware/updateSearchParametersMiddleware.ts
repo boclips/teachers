@@ -6,11 +6,11 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import State from '../../../../types/State';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
-  bulkUpdateSearchParamsAction,
   UpdateAllFilters,
   updateSearchParamsAction,
   UpdateSearchParamsRequest,
 } from '../actions/updateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../actions/updateSearchParametersActions';
 import { bulkOverrideSearchParamsAction } from './../actions/updateSearchParametersActions';
 
 export function onUpdateSearchParameter(
@@ -22,7 +22,6 @@ export function onUpdateSearchParameter(
   const newQuery = {
     ...parsedQuery,
     ...request,
-    page: 1,
   };
 
   store.dispatch(
@@ -39,12 +38,9 @@ export function onBulkUpdateSearchParameter(
   const query = store.getState().router.location.search;
   const parsedQuery = queryString.parse(query);
 
-  const newQuery = {
-    ...request.reduce((acc, value: UpdateSearchParamsRequest) => {
-      return { ...acc, ...value };
-    }, parsedQuery),
-    page: 1,
-  };
+  const newQuery = request.reduce((acc, value: UpdateSearchParamsRequest) => {
+    return { ...acc, ...value };
+  }, parsedQuery);
 
   AnalyticsFactory.getInstance().trackSearchFiltersApplied(request);
 
@@ -59,12 +55,9 @@ export function onBulkUpdateOverrideParams(
   store: MiddlewareAPI<any, State>,
   request: UpdateSearchParamsRequest[],
 ) {
-  const newQuery = {
-    ...request.reduce((acc, value: any) => {
-      return { ...acc, ...value };
-    }, {}),
-    page: 1,
-  };
+  const newQuery = request.reduce((acc, value: any) => {
+    return { ...acc, ...value };
+  }, {});
 
   store.dispatch(
     push(
@@ -73,7 +66,9 @@ export function onBulkUpdateOverrideParams(
   );
 }
 
-export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
+export function onClearSearchFilterParameters(
+  store: MiddlewareAPI<any, State>,
+) {
   const query = store.getState().router.location.search;
   const parsedQuery = queryString.parse(query);
 
@@ -88,7 +83,6 @@ export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
   const newQuery = {
     ...parsedQuery,
     ...clearAllFiltersQuery,
-    page: 1,
   };
 
   store.dispatch(
@@ -102,5 +96,5 @@ export default [
   sideEffect(updateSearchParamsAction, onUpdateSearchParameter),
   sideEffect(bulkUpdateSearchParamsAction, onBulkUpdateSearchParameter),
   sideEffect(bulkOverrideSearchParamsAction, onBulkUpdateOverrideParams),
-  sideEffect(clearSearchFilterParametersAction, onAllFilterReset),
+  sideEffect(clearSearchFilterParametersAction, onClearSearchFilterParameters),
 ];
