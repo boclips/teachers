@@ -205,6 +205,14 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance.track(EventTypes.VIDEO_RATING_MODAL_OPENED);
   }
 
+  public trackVideoRating(video: Video, rating: number) {
+    this.mixpanelInstance.track(EventTypes.VIDEO_RATING, {
+      video_id: video.id,
+      video_title: video.title,
+      rating,
+    });
+  }
+
   public trackReferAFriendModalOpened() {
     this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_OPENED);
   }
