@@ -61,7 +61,7 @@ class Rating extends React.Component<Props & DispatchProps, State> {
               visible={this.state.visible}
               onOk={this.rate}
               onCancel={this.closeModal}
-              okButtonProps={{ size: 'large', dataQa: 'rate-button' }}
+              okButtonProps={{ size: 'large', 'data-qa': 'rate-button' }}
               cancelButtonProps={{ size: 'large' }}
               okText="Done"
               cancelText="Cancel"
