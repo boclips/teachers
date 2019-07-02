@@ -1,4 +1,4 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import BookmarkEmpty from '../../../../../resources/images/bookmarked.svg';
@@ -56,9 +56,9 @@ export class BookmarkCollectionButtonInner extends PureComponent<
 
   private onClick = (event: React.SyntheticEvent<HTMLElement>) => {
     if (this.props.collection.links.bookmark) {
-      this.bookmarkCollection(event);
+      this.bookmarkCollection();
     } else {
-      this.unbookmarkCollection(event);
+      this.unBookmarkCollection();
     }
 
     if (event.type === 'click') {
@@ -66,20 +66,14 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     }
   };
 
-  private bookmarkCollection = (event: SyntheticEvent) => {
-    if (event && event.stopPropagation) {
-      event.stopPropagation();
-    }
+  private bookmarkCollection = () => {
     AnalyticsFactory.getInstance().trackCollectionBookmarked(
       this.props.collection,
     );
     this.props.onBookmarkCollectionAction(this.props.collection);
   };
 
-  private unbookmarkCollection = (event: SyntheticEvent) => {
-    if (event && event.stopPropagation) {
-      event.stopPropagation();
-    }
+  private unBookmarkCollection = () => {
     AnalyticsFactory.getInstance().trackCollectionUnbookmarked(
       this.props.collection,
     );
