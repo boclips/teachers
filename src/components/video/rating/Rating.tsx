@@ -39,13 +39,10 @@ class Rating extends React.Component<Props & DispatchProps, State> {
     return (
       <span className="rating--container">
         {rating !== null && rating !== undefined ? (
-          <Rate
-            data-qa="rating-score"
-            data-state={this.props.video.rating}
-            disabled={true}
-            defaultValue={this.props.video.rating}
-          />
-        ) : (
+          <span data-qa="rating-score" data-state={this.props.video.rating}>
+            <Rate disabled={true} defaultValue={this.props.video.rating} />
+          </span>
+        ) : this.props.video.links.rate ? (
           <React.Fragment>
             <a
               className="rating--rate-button"
@@ -79,7 +76,7 @@ class Rating extends React.Component<Props & DispatchProps, State> {
               </section>
             </Bodal>
           </React.Fragment>
-        )}
+        ) : null}
       </span>
     );
   }
