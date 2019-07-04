@@ -56,7 +56,6 @@ export class VideoPlayer extends React.PureComponent<Props> {
           'current-time',
           'mute',
           'captions',
-          'settings',
         ],
       };
     } else {
