@@ -202,8 +202,8 @@ describe('searching collections', () => {
   });
 
   // TODO: fix this bug
-  describe.skip('interacting with results', () => {
-    test('bookmaring results updates collection search results', () => {
+  describe('interacting with results', () => {
+    test('bookmarking results updates collection search results', () => {
       const toBeUpdatedCollection = VideoCollectionFactory.sample({
         id: '123',
         title: 'jose carlos',

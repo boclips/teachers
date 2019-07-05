@@ -67,6 +67,7 @@ class CollectionCardContainer extends React.PureComponent<
   private shouldFetchVideosForCollection(): boolean {
     const { videos, videoIds } = this.props.collection;
     const numberOfVideosLoaded = Object.keys(videos).length;
+
     return (
       numberOfVideosLoaded !== videoIds.length &&
       numberOfVideosLoaded < NUMBER_OF_PREVIEWS

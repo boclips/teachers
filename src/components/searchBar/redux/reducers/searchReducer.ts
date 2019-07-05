@@ -7,6 +7,7 @@ import PageSpec from '../../../../types/PageSpec';
 import {
   CollectionSearchResults,
   CollectionSearchStateValue,
+  getIndexOfCollection,
   SearchStateValue,
   VideoSearchResults,
   VideoSearchStateValue,
@@ -14,6 +15,8 @@ import {
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
+import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/onCollectionBookmarkedAction';
+import { onCollectionUnbookmarkedAction } from '../../../collection/redux/actions/onCollectionUnbookmarkedAction';
 import { storeVideoForCollectionAction } from '../../../collection/redux/actions/storeVideoForCollectionAction';
 import { updateMatchingCollectionWithVideos } from '../../../collection/redux/reducers/storeCollectionsReducer';
 import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
@@ -118,6 +121,33 @@ function onStoreVideoAction(
   };
 }
 
+function onCollectionBookmarkUpdate(
+  state: CollectionSearchStateValue,
+  updatedCollection: VideoCollection,
+): CollectionSearchStateValue {
+  if (state.collections === undefined) {
+    return state;
+  }
+
+  const indexOfCollectionToUpdate = getIndexOfCollection(
+    state.collections,
+    updatedCollection.id,
+  );
+
+  if (indexOfCollectionToUpdate < 0) {
+    return state;
+  }
+
+  const newCollections = [...state.collections];
+
+  newCollections[indexOfCollectionToUpdate] = updatedCollection;
+
+  return {
+    ...state,
+    collections: newCollections,
+  };
+}
+
 export const videoSearchReducer: Reducer<VideoSearchStateValue> = createReducer(
   initialState,
   actionHandler(searchVideosAction, onSearchVideosAction),
@@ -138,6 +168,8 @@ export const collectionSearchReducer: Reducer<
     storeVideoForCollectionAction,
     onStoreVideosForSearchCollection,
   ),
+  actionHandler(onCollectionUnbookmarkedAction, onCollectionBookmarkUpdate),
+  actionHandler(onCollectionBookmarkedAction, onCollectionBookmarkUpdate),
 );
 
 export const searchReducer: Reducer<SearchStateValue> = combineReducers({
