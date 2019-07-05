@@ -12,9 +12,9 @@ export class AgeRange {
 
   public getLabel() {
     if (this.max) {
-      return `${this.resolveMin()} - ${this.max}`;
+      return `${this.resolveMin()}-${this.max}`;
     } else {
-      return `${this.resolveMin()} +`;
+      return `${this.resolveMin()}+`;
     }
   }
 

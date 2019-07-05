@@ -95,7 +95,7 @@ test('renders age range when present', () => {
     />,
   );
 
-  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3 - 9');
+  expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3-9');
 });
 
 test('does not render tags container when no tags are present', () => {

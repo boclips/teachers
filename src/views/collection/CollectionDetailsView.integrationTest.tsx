@@ -29,7 +29,7 @@ describe('when video collection', () => {
       isPublic: true,
       subjects: [],
       lastUpdated: 'Jan 16, 2019',
-      ageRange: '3 - 9',
+      ageRange: '3-9',
     });
   });
 
@@ -154,7 +154,7 @@ describe('when editable collection', () => {
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
 
     await eventually(() => {
-      expect(wrapper.find(By.dataQa('age-range')).text()).toEqual('5 - 11');
+      expect(wrapper.find(By.dataQa('age-range')).text()).toEqual('5-11');
     });
   });
 
