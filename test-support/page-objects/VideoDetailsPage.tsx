@@ -3,6 +3,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
+import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
@@ -36,7 +37,9 @@ export class VideoDetailsPage {
       contentPartner: findOne(el, 'video-content-partner').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
-      subjects: findAll(el, 'subject').map(tag => tag.text()),
+      subjects: findAll(el, 'subject')
+        .find(By.dataQa('filter-tag'))
+        .map(tag => tag.text()),
       playerVideoUri: el.find(Player).prop('videoUri'),
     }))[0];
   }

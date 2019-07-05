@@ -154,7 +154,12 @@ describe('when editable collection', () => {
     CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
 
     await eventually(() => {
-      expect(wrapper.find(By.dataQa('age-range')).text()).toEqual('5-11');
+      expect(
+        wrapper
+          .find(By.dataQa('age-range'))
+          .find(By.dataQa('filter-tag'))
+          .text(),
+      ).toEqual('5-11');
     });
   });
 

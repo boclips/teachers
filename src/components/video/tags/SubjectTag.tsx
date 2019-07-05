@@ -10,7 +10,11 @@ interface SubjectTagProps {
 
 export class SubjectTag extends React.Component<SubjectTagProps> {
   public render(): React.ReactNode {
-    return <Tag value={this.props.subject} dataQa="subject" label="Subject" />;
+    return (
+      <span data-qa="subject">
+        <Tag value={this.props.subject} label="Subject" />
+      </span>
+    );
   }
 }
 

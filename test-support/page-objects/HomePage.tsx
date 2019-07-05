@@ -33,7 +33,9 @@ export class HomePage {
     return this.wrapper
       .find(By.dataQa('collection-card'))
       .map(collectionCard => {
-        const subjectWrapper = collectionCard.find(By.dataQa('subject'));
+        const subjectWrapper = collectionCard
+          .find(By.dataQa('subject'))
+          .find(By.dataQa('filter-tag'));
 
         return {
           title: findOne(collectionCard, 'collection-title').text(),

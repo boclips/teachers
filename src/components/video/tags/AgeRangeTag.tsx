@@ -7,6 +7,10 @@ interface AgeRangeProps {
 
 export class AgeRangeTag extends React.Component<AgeRangeProps> {
   public render(): React.ReactNode {
-    return <Tag value={this.props.ageRange} dataQa="age-range" label="Ages" />;
+    return (
+      <span data-qa="age-range">
+        <Tag value={this.props.ageRange} label="Ages" />
+      </span>
+    );
   }
 }

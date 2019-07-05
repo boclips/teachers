@@ -24,12 +24,13 @@ class SubjectFilterTag extends React.Component<
 > {
   public render() {
     return this.props.subject ? (
-      <ClosableTag
-        dataQa="subject-filter-tag"
-        label="Subject"
-        value={this.props.subject.name}
-        onClose={this.props.onClose}
-      />
+      <span data-qa="subject-filter-tag">
+        <ClosableTag
+          label="Subject"
+          value={this.props.subject.name}
+          onClose={this.props.onClose}
+        />
+      </span>
     ) : null;
   }
 }

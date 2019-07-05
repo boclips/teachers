@@ -28,12 +28,13 @@ class DurationFilterTag extends React.Component<Props & DispatchProps> {
 
   public render() {
     return this.shouldRender() ? null : (
-      <ClosableTag
-        dataQa="duration-filter-tag"
-        label="Duration"
-        value={this.getDurationLabel()}
-        onClose={this.props.onClose}
-      />
+      <span data-qa="duration-filter-tag">
+        <ClosableTag
+          label="Duration"
+          value={this.getDurationLabel()}
+          onClose={this.props.onClose}
+        />
+      </span>
     );
   }
 }

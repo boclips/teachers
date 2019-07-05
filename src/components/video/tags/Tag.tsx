@@ -6,7 +6,6 @@ import './Tag.less';
 
 interface TagProps {
   value: string;
-  dataQa: string;
   label: string;
 }
 
@@ -15,7 +14,7 @@ export class Tag extends React.Component<TagProps> {
     return (
       <div className="tag">
         <span className="tag__type">{this.props.label}:</span>
-        <span data-qa={this.props.dataQa}>{this.props.value}</span>
+        <span data-qa="filter-tag">{this.props.value}</span>
       </div>
     );
   }
@@ -30,7 +29,7 @@ export class ClosableTag extends React.Component<ClosableTagProps> {
     return (
       <div className="tag">
         <span className="tag__type">{this.props.label}:</span>
-        <span data-qa={this.props.dataQa}>{this.props.value}</span>
+        <span data-qa="filter-tag">{this.props.value}</span>
         <span
           className="tag__close"
           data-qa="close-tag"

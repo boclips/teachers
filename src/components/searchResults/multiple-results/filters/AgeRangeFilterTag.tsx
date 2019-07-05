@@ -22,12 +22,13 @@ class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
   public render() {
     return this.props.ageRangeMin == null &&
       this.props.ageRangeMax == null ? null : (
-      <ClosableTag
-        dataQa="age-range-filter-tag"
-        label="Age"
-        value={this.ageRange.getLabel()}
-        onClose={this.props.onClose}
-      />
+      <span data-qa="age-range-filter-tag">
+        <ClosableTag
+          label="Age"
+          value={this.ageRange.getLabel()}
+          onClose={this.props.onClose}
+        />
+      </span>
     );
   }
 }

@@ -37,7 +37,10 @@ export class CollectionPage {
       releasedOn: findOne(el, 'video-released-on').text(),
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
-      subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
+      subjects: el
+        .find(By.dataQa('subject'))
+        .find(By.dataQa('filter-tag'))
+        .map(tag => tag.text()),
       playerVideoUri: el.find(Player).prop('videoUri'),
     }));
   }
@@ -48,7 +51,10 @@ export class CollectionPage {
       isPublic: el.find(CollectionTitle).props().isPublic,
       subjects: el.find(By.dataQa('subject')).map(s => s.text()),
       lastUpdated: findOne(el, 'collection-updated-at').text(),
-      ageRange: el.find(By.dataQa('age-range')).text(),
+      ageRange: el
+        .find(By.dataQa('age-range'))
+        .find(By.dataQa('filter-tag'))
+        .text(),
     }))[0];
   }
 
