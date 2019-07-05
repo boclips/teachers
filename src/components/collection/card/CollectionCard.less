@@ -28,16 +28,18 @@
   .tags-container {
     margin: 5px 0 10px;
     display: flex;
+
+    .tag {
+      background-color: @shade-1;
+      max-width: 198px;
+    }
+
+    span:last-child > .tag {
+      margin-right: 0;
+    }
   }
 
-  .tag {
-    background-color: @shade-1;
-    max-width: 198px;
-  }
 
-  .tag:last-child {
-    margin-right: 0;
-  }
 
   &.tiny {
     min-height: 316px;
