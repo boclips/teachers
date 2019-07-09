@@ -139,8 +139,14 @@ function onCollectionBookmarkUpdate(
   }
 
   const newCollections = [...state.collections];
+  const originalCollection = newCollections[indexOfCollectionToUpdate];
 
-  newCollections[indexOfCollectionToUpdate] = updatedCollection;
+  const collectionToUpdate = {
+    ...updatedCollection,
+    videos: originalCollection.videos,
+  };
+
+  newCollections[indexOfCollectionToUpdate] = collectionToUpdate;
 
   return {
     ...state,
