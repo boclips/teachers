@@ -23,6 +23,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
                 to={`/discover-collections?discipline=${
                   this.props.discipline.id
                 }`}
+                className="link--tabbable"
               >
                 {this.props.discipline.name}
                 <section className="discipline-card__icon">
@@ -42,7 +43,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
                 >
                   <Link
                     to={`/discover-collections?subject=${subject.id}`}
-                    className="discipline-card__subject-link"
+                    className="discipline-card__subject-link link--tabbable"
                   >
                     {subject.name}
                   </Link>
@@ -54,7 +55,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
           this.props.discipline.subjects.length > 4 ? (
             <Link
               data-qa="view-all-subjects"
-              className="discipline-card__view-all no-underline"
+              className="discipline-card__view-all no-underline link--tabbable"
               to={`/discover-collections?discipline=${
                 this.props.discipline.id
               }`}
