@@ -1,8 +1,7 @@
+import BoclipsSecurity from 'boclips-js-security';
 import { PlayerOptions } from 'boclips-player';
 import { Player } from 'boclips-player-react';
-import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import React from 'react';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { Video } from '../../../types/Video';
 import withMediaBreakPoint, {
@@ -29,17 +28,24 @@ export class VideoPlayer extends React.PureComponent<Props> {
     );
   }
 
-  private handleOnPlayback = (event: PlaybackEvent) => {
-    AnalyticsFactory.getInstance().trackVideoPlayback(this.props.video, event);
-  };
-
   private getPlayerOptions(): Partial<PlayerOptions> {
+    const security = BoclipsSecurity.getInstance();
+    const tokenFactory = security.getTokenFactory(5);
     const options: Partial<PlayerOptions> = {
       analytics: {
-        handleOnPlayback: this.handleOnPlayback,
         metadata: {
           videoId: this.props.video.id,
           videoIndex: this.props.videoIndex || null,
+        },
+      },
+      api: {
+        tokenFactory: async () => {
+          try {
+            return await tokenFactory();
+          } catch (error) {
+            // The video details page can be viewed anonymously. In that case, return null.
+            return null;
+          }
         },
       },
     };
@@ -48,7 +54,7 @@ export class VideoPlayer extends React.PureComponent<Props> {
       this.props.mode === 'card' ||
       this.props.mediaBreakpoint.width <= MediaBreakpoints.xs.width
     ) {
-      options.player = {
+      options.interface = {
         controls: [
           'play-large',
           'play',
@@ -59,7 +65,7 @@ export class VideoPlayer extends React.PureComponent<Props> {
         ],
       };
     } else {
-      options.player = {
+      options.interface = {
         controls: [
           'rewind',
           'play',
