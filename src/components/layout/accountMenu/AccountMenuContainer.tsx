@@ -1,5 +1,5 @@
 import { Modal } from 'antd';
-import { logout } from 'boclips-js-security';
+import BoclipsSecurity from 'boclips-js-security';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import AccountMenuComponent from './AccountMenuComponent';
@@ -26,7 +26,9 @@ export class AccountMenuContainer extends PureComponent {
       title: 'Are you sure you want to log out?',
       onOk() {
         AnalyticsFactory.getInstance().reset();
-        logout({ redirectUri: `${window.location.origin}/bye` });
+        BoclipsSecurity.getInstance().logout({
+          redirectUri: `${window.location.origin}/bye`,
+        });
       },
       okText: 'Log out',
       okButtonProps: {

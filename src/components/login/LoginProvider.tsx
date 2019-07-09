@@ -1,4 +1,4 @@
-import { authenticate as keycloakAuthenticate } from 'boclips-js-security';
+import BoclipsSecurity from 'boclips-js-security';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -14,7 +14,7 @@ interface DispatchProps {
   authenticateIfLoggedIn: () => void;
 }
 
-class PrivateRoute extends React.Component<StateProps & DispatchProps> {
+class LoginProvider extends React.Component<StateProps & DispatchProps> {
   public render(): React.ReactNode {
     const { children } = this.props;
     return children;
@@ -36,7 +36,7 @@ function mapStateToProps(state: LoginState): StateProps {
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     authenticateIfLoggedIn: () => {
-      keycloakAuthenticate({
+      BoclipsSecurity.createInstance({
         onLogin: keycloak => {
           dispatch(userLoggedIn(keycloak));
         },
@@ -52,4 +52,4 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(PrivateRoute);
+)(LoginProvider);
