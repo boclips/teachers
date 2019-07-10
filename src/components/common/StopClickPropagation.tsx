@@ -17,11 +17,22 @@ class StopClickPropagation extends React.PureComponent<Props> {
     event.preventDefault();
   };
 
+  private handleOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (
+      event.key === ' ' ||
+      event.key === 'Enter' ||
+      event.key === 'Spacebar'
+    ) {
+      event.stopPropagation();
+    }
+  };
+
   public render() {
     return React.createElement(this.props.wrapper, {
       ...this.props.wrapperProps,
       children: this.props.children,
       onClick: this.handleOnClick,
+      onKeyDown: this.handleOnKeyDown,
     });
   }
 }

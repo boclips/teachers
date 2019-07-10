@@ -2,6 +2,7 @@ import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import StopClickPropagation from '../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
@@ -41,7 +42,9 @@ export default class CollectionHeader extends React.PureComponent<Props> {
           <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
             <Row>
               {this.props.collection.subjects.map(subjectId => (
-                <ConnectedSubjectTag key={subjectId} id={subjectId} />
+                <StopClickPropagation>
+                  <ConnectedSubjectTag key={subjectId} id={subjectId} />
+                </StopClickPropagation>
               ))}
               {this.props.collection.ageRange.isBounded() && (
                 <AgeRangeTag

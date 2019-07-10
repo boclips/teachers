@@ -32,7 +32,9 @@ const CollectionCardHeader = React.memo(
       {hasValidTags(collection) || showTagsIfEmpty ? (
         <div className="tags-container">
           {hasSubjects(collection) && (
-            <ConnectedSubjectTag id={collection.subjects[0]} />
+            <StopClickPropagation>
+              <ConnectedSubjectTag id={collection.subjects[0]} />
+            </StopClickPropagation>
           )}
           {hasAgeRange(collection) && (
             <AgeRangeTag ageRange={collection.ageRange.getLabel()} />

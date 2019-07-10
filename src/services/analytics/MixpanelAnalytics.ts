@@ -234,4 +234,10 @@ export default class MixpanelAnalytics {
   public trackSearchFiltersApplied(formData: any) {
     this.mixpanelInstance.track(EventTypes.SEARCH_FILTERS_APPLIED, formData);
   }
+
+  public trackSubjectTagClicked(subjectId: string) {
+    this.mixpanelInstance.track(EventTypes.SUBJECT_TAG_CLICKED, {
+      subject_id: subjectId,
+    });
+  }
 }

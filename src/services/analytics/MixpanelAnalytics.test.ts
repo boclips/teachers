@@ -231,4 +231,12 @@ describe('MixpanelAnalytics', () => {
 
     expect(mock.track).toHaveBeenCalledWith('SEARCH_FILTERS_APPLIED', data);
   });
+
+  it('tracks subject tags clicked', () => {
+    mixpanelAnalytics.trackSubjectTagClicked('1234');
+
+    expect(mock.track).toHaveBeenCalledWith('SUBJECT_TAG_CLICKED', {
+      subject_id: '1234',
+    });
+  });
 });
