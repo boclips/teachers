@@ -11,6 +11,5 @@ export const toMixpanelVideo = (video: Video) => {
     video_subjects: video.subjects.join(', '),
     video_playback: video.playback,
     video_badges: video.badges.join(', '),
-    video_type: video.type.name,
   };
 };

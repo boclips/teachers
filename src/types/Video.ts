@@ -23,13 +23,8 @@ export interface Video {
   playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;
   badges: string[];
-  type: VideoType;
   rating: number;
   links: VideoLinks;
-}
-
-export interface VideoType {
-  name: string;
 }
 
 export class StreamPlayback {

@@ -23,7 +23,6 @@ test('converts a video with stream playback', () => {
     'https://cdn.kaltura.com/stream/147.mpd',
   );
   expect(video.badges).toEqual(['ad-free']);
-  expect(video.type.name).toEqual('educational');
 
   expect(video.links.rate.getOriginalLink()).toBeTruthy();
 });
@@ -40,5 +39,4 @@ test('converts a video with youtube playback', () => {
   expect(video.playback instanceof YoutubePlayback).toBeTruthy();
   expect((video.playback as YoutubePlayback).getId()).toEqual('youtubeId');
   expect(video.badges).toEqual(['youtube']);
-  expect(video.type.name).toEqual('educational');
 });

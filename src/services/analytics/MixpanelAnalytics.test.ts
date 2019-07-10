@@ -135,7 +135,6 @@ describe('MixpanelAnalytics', () => {
       releasedOn: new Date('2018-06-20T10:12:33Z'),
       subjects: ['Maths'],
       title: 'my video title',
-      type: { name: 'news' },
     });
 
     mixpanelAnalytics.trackVideoLinkCopied(video);
@@ -150,7 +149,6 @@ describe('MixpanelAnalytics', () => {
       video_releasedOn: '2018-06-20T10:12:33.000Z',
       video_subjects: 'Maths',
       video_title: 'my video title',
-      video_type: 'news',
     });
   });
 
@@ -165,7 +163,6 @@ describe('MixpanelAnalytics', () => {
       releasedOn: new Date('2018-06-20T10:12:33Z'),
       subjects: ['Maths'],
       title: 'my video title',
-      type: { name: 'news' },
     });
 
     mixpanelAnalytics.trackVideoPlayback(video, {} as PlaybackEvent);
@@ -183,7 +180,6 @@ describe('MixpanelAnalytics', () => {
       video_releasedOn: '2018-06-20T10:12:33.000Z',
       video_subjects: 'Maths',
       video_title: 'my video title',
-      video_type: 'news',
     });
   });
 
