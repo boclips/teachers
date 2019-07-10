@@ -38,7 +38,7 @@ export class CollectionPage {
       badgeAlt: el.find('.video-badge').prop('alt'),
       isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
       subjects: el
-        .find(By.dataQa('subject'))
+        .find(By.dataQa('subject-tag'))
         .find(By.dataQa('filter-tag'))
         .map(tag => tag.text()),
       playerVideoUri: el.find(Player).prop('videoUri'),
@@ -49,7 +49,7 @@ export class CollectionPage {
     return this.wrapper.find(CollectionHeader).map(el => ({
       title: findOne(el, 'collection-name').text(),
       isPublic: el.find(CollectionTitle).props().isPublic,
-      subjects: el.find(By.dataQa('subject')).map(s => s.text()),
+      subjects: el.find(By.dataQa('subject-tag')).map(s => s.text()),
       lastUpdated: findOne(el, 'collection-updated-at').text(),
       ageRange: el
         .find(By.dataQa('age-range'))

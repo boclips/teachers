@@ -37,7 +37,7 @@ export class VideoDetailsPage {
       contentPartner: findOne(el, 'video-content-partner').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
-      subjects: findAll(el, 'subject')
+      subjects: findAll(el, 'subject-tag')
         .find(By.dataQa('filter-tag'))
         .map(tag => tag.text()),
       playerVideoUri: el.find(Player).prop('videoUri'),

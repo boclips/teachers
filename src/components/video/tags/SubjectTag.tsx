@@ -14,7 +14,7 @@ export class SubjectTag extends React.Component<SubjectTagProps> {
   public render(): React.ReactNode {
     return (
       <ClickableTag
-        data-qa="subject"
+        dataQa={'subject-tag'}
         value={this.props.subjectName}
         label="Subject"
         link={`/discover-collections?subject=${this.props.subjectId}`}

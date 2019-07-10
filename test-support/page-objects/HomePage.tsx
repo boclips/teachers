@@ -34,7 +34,7 @@ export class HomePage {
       .find(By.dataQa('collection-card'))
       .map(collectionCard => {
         const subjectWrapper = collectionCard
-          .find(By.dataQa('subject'))
+          .find(By.dataQa('subject-tag'))
           .find(By.dataQa('filter-tag'));
 
         return {

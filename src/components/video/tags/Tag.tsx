@@ -24,6 +24,7 @@ export class Tag extends React.Component<TagProps> {
 interface ClickableTagProps extends TagProps {
   link: string;
   onClick: () => void;
+  dataQa?: string;
 }
 
 export class ClickableTag extends React.Component<ClickableTagProps> {
@@ -33,6 +34,7 @@ export class ClickableTag extends React.Component<ClickableTagProps> {
         to={this.props.link}
         className={'link--tabbable tag'}
         onClick={this.props.onClick}
+        data-qa={this.props.dataQa}
       >
         <span className="tag__type">{this.props.label}:</span>
         <span data-qa="filter-tag">{this.props.value}</span>
