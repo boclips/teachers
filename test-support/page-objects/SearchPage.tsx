@@ -58,7 +58,7 @@ export class SearchPage {
     return findAll(this.wrapper, 'video-card').map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
-      contentPartner: findOne(el, 'video-content-partner').text(),
+      source: findOne(el, 'video-source').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       badgeAlt: el.find('.video-badge').prop('alt'),

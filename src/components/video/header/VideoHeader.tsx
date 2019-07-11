@@ -32,8 +32,7 @@ export const VideoHeader = React.memo((props: Props) => (
       <span data-qa="video-released-on">
         <DateFormatter date={props.video.releasedOn} />
       </span>{' '}
-      by{' '}
-      <span data-qa="video-content-partner">{props.video.contentPartner}</span>
+      by <span data-qa="video-source">{props.video.source}</span>
     </section>
   </section>
 ));

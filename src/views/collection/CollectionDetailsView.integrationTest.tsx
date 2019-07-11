@@ -46,7 +46,7 @@ describe('when video collection', () => {
     expect(collectionPage.getVideos()[0]).toMatchObject({
       title: 'KS3/4 Science: Demonstrating Chemistry',
       description: 'Matthew Tosh shows us the science.',
-      contentPartner: 'cp1',
+      source: 'cp1',
       duration: ' 1m 2s',
       releasedOn: 'Feb 11, 2018',
       badgeAlt: 'Ad free',
