@@ -21,6 +21,10 @@
     "member-ordering": false,
     "max-classes-per-file": false,
     "prettier": [ true, ".prettierrc" ],
-    "no-empty": false
+    "no-empty": false,
+    "ban-types": [
+      true,
+      ["CustomIconComponentProps", "See https://boclips.slab.com/posts/how-to-include-an-svg-in-teachers-yryxjpkj"]
+    ]
   }
 }
