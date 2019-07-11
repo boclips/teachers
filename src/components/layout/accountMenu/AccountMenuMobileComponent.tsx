@@ -5,8 +5,8 @@ import './AccountMenuMobileComponent.less';
 import {
   BookmarkedCollectionsLink,
   LogoutLink,
+  MyCollectionsLink,
   ReferAFriendLink,
-  VideoCollectionsLink,
 } from './MenuOptions';
 
 interface State {
@@ -52,7 +52,7 @@ export default class AccountMenuMobile extends React.PureComponent<
         >
           <Menu selectable={false}>
             <Menu.Item key="1" className="account-menu-mobile__menu-item">
-              <VideoCollectionsLink onClick={this.onClose} />
+              <MyCollectionsLink onClick={this.onClose} />
             </Menu.Item>
             <Menu.Divider key="lovely-divider-1" />
             <Menu.Item key="2" className="account-menu-mobile__menu-item">

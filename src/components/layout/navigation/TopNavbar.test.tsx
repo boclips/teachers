@@ -2,12 +2,14 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link, MemoryRouter } from 'react-router-dom';
-import { By } from '../../../test-support/By';
+import { By } from '../../../../test-support/By';
 import {
   MockStoreFactory,
   UserProfileFactory,
-} from '../../../test-support/factories';
-import { AccountMenuContainer } from './accountMenu/AccountMenuContainer';
+} from '../../../../test-support/factories';
+import { setWidth } from '../../../../test-support/setWidth';
+import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
+import { NavBarButtonsContainer } from './NavBarButtonsContainer';
 import TopNavbarContainer from './TopNavbarContainer';
 
 const user = UserProfileFactory.sample({ authenticated: true });
@@ -47,6 +49,23 @@ describe('when authenticated', () => {
     const wrapper = mountAuthenticatedLayout();
 
     expect(wrapper.find(AccountMenuContainer)).toExist();
+  });
+
+  test('renders navbar buttons container', () => {
+    const wrapper = mountAuthenticatedLayout();
+
+    expect(wrapper.find(NavBarButtonsContainer)).toExist();
+  });
+
+  describe('mobile view', () => {
+    test('does not render navbar buttons container and only renders account menu container', () => {
+      setWidth(400);
+
+      const wrapper = mountAuthenticatedLayout();
+
+      expect(wrapper.find(NavBarButtonsContainer)).not.toExist();
+      expect(wrapper.find(AccountMenuContainer)).toExist();
+    });
   });
 
   function mountAuthenticatedLayout() {
@@ -91,6 +110,12 @@ describe('when not authenticated', () => {
     const wrapper = mountAnonymousLayout();
 
     expect(wrapper.find(AccountMenuContainer)).not.toExist();
+  });
+
+  test('does not render navbar buttons container', () => {
+    const wrapper = mountAnonymousLayout();
+
+    expect(wrapper.find(NavBarButtonsContainer)).not.toExist();
   });
 
   function mountAnonymousLayout() {

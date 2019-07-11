@@ -3,8 +3,9 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import BoclipsFooter from '../common/BoclipsFooter';
+import { MobileNavBar } from './navigation/MobileNavBar';
+import TopNavbarContainer from './navigation/TopNavbarContainer';
 import './PageLayout.less';
-import TopNavbarContainer from './TopNavbarContainer';
 
 const { Header, Content } = Layout;
 
@@ -37,6 +38,7 @@ class PageLayout extends PureComponent<Props> {
               </Col>
             </Row>
           </Content>
+          <MobileNavBar />
           {!this.props.hideFooter && <BoclipsFooter />}
         </section>
       </Layout>

@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { LoginState } from '../../types/State';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
+import { LoginState } from '../../../types/State';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../common/higerOrderComponents/withMediaBreakPoint';
 import TopNavbarComponent from './TopNavbarComponent';
 
-interface Props {
+interface Props extends WithMediaBreakPointProps {
   showTabs?: boolean;
   showSearchBar?: boolean;
 }
@@ -24,12 +28,17 @@ class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
         showTabs={this.props.showTabs}
         authorized={this.props.authorized}
         showSearchBar={this.showSearchBar()}
+        isMobile={this.isMobile()}
       />
     );
   }
 
   private showSearchBar(): boolean {
     return this.props.authorized && this.props.showSearchBar;
+  }
+
+  private isMobile(): boolean {
+    return this.props.mediaBreakpoint.width <= MediaBreakpoints.md.width;
   }
 }
 
@@ -39,4 +48,6 @@ function mapStateToProps(state: LoginState): StateProps {
   };
 }
 
-export default connect(mapStateToProps)(TopNavbarContainer);
+export default connect(mapStateToProps)(
+  withMediaBreakPoint(TopNavbarContainer),
+);

@@ -6,7 +6,6 @@ import {
   BookmarkedCollectionsLink,
   LogoutLink,
   ReferAFriendLink,
-  VideoCollectionsLink,
 } from './MenuOptions';
 
 interface Props {
@@ -16,15 +15,12 @@ interface Props {
 const menu = (props: Props) => (
   <Menu className="account-menu account-menu--desktop">
     <Menu.Item key="1">
-      <VideoCollectionsLink />
-    </Menu.Item>
-    <Menu.Item key="2">
       <BookmarkedCollectionsLink />
     </Menu.Item>
-    <Menu.Item key="3">
+    <Menu.Item key="2">
       <ReferAFriendLink />
     </Menu.Item>
-    <Menu.Item key="4">
+    <Menu.Item key="3">
       <LogoutLink onClick={props.onLogout} />
     </Menu.Item>
   </Menu>
