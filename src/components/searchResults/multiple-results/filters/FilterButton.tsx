@@ -1,9 +1,8 @@
 import { Button, Icon } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import filterIconSvg from '../../../../../resources/images/filter-icon.svg';
+import FilterIconSVG from '../../../../../resources/images/filter-icon.svg';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 import { Range } from '../../../../types/Range';
 import Bodal from '../../../common/Bodal';
@@ -36,7 +35,6 @@ type Props = AppliedFiltersInjectedProps &
   WithMediaBreakPointProps;
 
 class FilterButton extends React.Component<Props, State> {
-  private svg = filterIconSvg as React.ComponentType<CustomIconComponentProps>;
   private formRef: any;
 
   constructor(props: DispatchProps & WithMediaBreakPointProps) {
@@ -96,7 +94,7 @@ class FilterButton extends React.Component<Props, State> {
           data-qa="open-filter-modal"
           className="filter-button"
         >
-          <Icon component={this.svg} />
+          <Icon component={FilterIconSVG} />
           <span data-qa="filter-button-text">
             Filter {this.getFiltersAppliedText()}
           </span>

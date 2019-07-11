@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import BookmarkEmpty from '../../../../../resources/images/bookmarked.svg';
-import BookmarkFilled from '../../../../../resources/images/unbookmarked.svg';
+import BookmarkEmptySVG from '../../../../../resources/images/bookmarked.svg';
+import BookmarkFilledSVG from '../../../../../resources/images/unbookmarked.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { A11yButton } from '../../../common/A11yButton';
@@ -37,14 +37,14 @@ export class BookmarkCollectionButtonInner extends PureComponent<
           className="top-right-icon bookmark-icon bookmark-button"
         >
           {this.props.collection.links.bookmark && (
-            <BookmarkFilled
+            <BookmarkFilledSVG
               data-qa="bookmark-collection"
               aria-label="Bookmark a collection"
             />
           )}
 
           {this.props.collection.links.unbookmark && (
-            <BookmarkEmpty
+            <BookmarkEmptySVG
               data-qa="unbookmark-collection"
               aria-label="Unbookmark a collection"
             />

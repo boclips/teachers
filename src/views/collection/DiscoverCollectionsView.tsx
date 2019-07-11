@@ -1,11 +1,10 @@
 import { Col, Icon, Row } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import collectionsImg from '../../../resources/images/collections.png';
-import subjectsSvg from '../../../resources/images/subjects.svg';
+import SubjectsSVG from '../../../resources/images/subjects.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import PageLayout from '../../components/layout/PageLayout';
@@ -14,10 +13,6 @@ import { Discipline } from '../../types/Discipline';
 import { DisciplineState } from '../../types/State';
 import { Subject } from '../../types/Subject';
 import './DiscoverCollectionsView.less';
-
-const subjectsIcon = subjectsSvg as React.ComponentType<
-  CustomIconComponentProps
->;
 
 interface OwnProps {
   subjectIds?: string[];
@@ -81,7 +76,7 @@ export class DiscoverCollectionsView extends PureComponent<
               data-qa="discover-collections-discipline-subjects"
             >
               <h1 className="big-title alt">
-                <Icon component={subjectsIcon} /> Subjects
+                <Icon component={SubjectsSVG} /> Subjects
               </h1>
               <Row gutter={16}>
                 {this.props.discipline.subjects.map(subject => (

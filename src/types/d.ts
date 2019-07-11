@@ -4,8 +4,7 @@ declare module '*.png' {
 }
 
 declare module '*.svg' {
-  import { HTMLAttributes } from 'react';
-  const value: React.ComponentType<HTMLAttributes<SVGElement>>;
+  const value: React.ComponentType<any>;
   export default value;
 }
 

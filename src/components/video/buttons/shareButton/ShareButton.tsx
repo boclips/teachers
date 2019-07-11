@@ -1,8 +1,7 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
-import closeSvg from '../../../../../resources/images/close.svg';
-import shareSvg from '../../../../../resources/images/share.svg';
+import CloseSVG from '../../../../../resources/images/close.svg';
+import ShareSVG from '../../../../../resources/images/share.svg';
 import { Video } from '../../../../types/Video';
 import CopyLinkButton from '../copyLink/CopyLinkButton';
 import { GoogleClassroomShareButton } from '../gclassroom/GoogleClassroomShareButton';
@@ -16,8 +15,6 @@ interface Props {
 interface MenuProps {
   video: Video;
 }
-const share = shareSvg as React.ComponentType<CustomIconComponentProps>;
-const close = closeSvg as React.ComponentType<CustomIconComponentProps>;
 
 const menu = (props: MenuProps) => (
   <Menu className="share-menu">
@@ -26,7 +23,7 @@ const menu = (props: MenuProps) => (
       <Icon
         className="share-menu__header-close-button"
         data-qa="close-button"
-        component={close}
+        component={CloseSVG}
       />
     </Menu.Item>
     <Menu.Item key="2" className="share-menu__item">
@@ -42,7 +39,7 @@ const ShareButton = React.memo((props: Props) => (
   <Dropdown overlay={menu(props)} trigger={['click']}>
     <Button className="video-menu-button video-menu-button--bordered">
       <section className="share-button">
-        <Icon component={share} className="share-button__icon" />
+        <Icon component={ShareSVG} className="share-button__icon" />
         <span>Share</span>
       </section>
     </Button>

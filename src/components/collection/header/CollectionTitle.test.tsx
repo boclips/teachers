@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import PublicLogo from '../../../../resources/images/global.svg';
-import PrivateLogo from '../../../../resources/images/private.svg';
+import PublicLogoSVG from '../../../../resources/images/global.svg';
+import PrivateLogoSVG from '../../../../resources/images/private.svg';
 import { By } from '../../../../test-support/By';
 import { CollectionTitle } from './CollectionTitle';
 
@@ -27,7 +27,7 @@ it('Renders globe icon when collection is public and is mine', () => {
     />,
   );
   const logo = wrapper.find(By.dataQa('collection-visibility'));
-  expect(logo.type()).toEqual(PublicLogo);
+  expect(logo.type()).toEqual(PublicLogoSVG);
 });
 
 it('Renders padlock icon when collection is private and is mine', () => {
@@ -39,7 +39,7 @@ it('Renders padlock icon when collection is private and is mine', () => {
     />,
   );
   const logo = wrapper.find(By.dataQa('collection-visibility')).type();
-  expect(logo).toEqual(PrivateLogo);
+  expect(logo).toEqual(PrivateLogoSVG);
 });
 
 it('Does not render a padlock icon when collection is private but is not mine', () => {

@@ -2,8 +2,8 @@ import { Col, Row } from 'antd';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import EmptyCollection from '../../../../resources/images/empty-collection.svg';
-import SadTeacher from '../../../../resources/images/sad-teacher.svg';
+import EmptyCollectionSVG from '../../../../resources/images/empty-collection.svg';
+import SadTeacherSVG from '../../../../resources/images/sad-teacher.svg';
 import { Links } from '../../../types/Links';
 import State, {
   getIndexOfCollection,
@@ -64,7 +64,7 @@ class CollectionDetails extends PureComponent<
     return (
       <Row data-qa="collection-view-empty" className="collection-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
-          <EmptyCollection />
+          <EmptyCollectionSVG />
           <h1 data-qa="collection-empty-title">
             This video collection is empty
           </h1>
@@ -83,7 +83,7 @@ class CollectionDetails extends PureComponent<
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 8 }}>
             <section className="illustration">
-              <SadTeacher />
+              <SadTeacherSVG />
             </section>
           </Col>
           <Col sm={{ span: 24 }} md={{ span: 16 }}>

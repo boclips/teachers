@@ -1,7 +1,6 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
-import moreSvg from '../../../../../resources/images/more.svg';
+import MoreSVG from '../../../../../resources/images/more.svg';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import CopyLinkButton from '../copyLink/CopyLinkButton';
@@ -15,7 +14,6 @@ interface OwnProps {
   video: Video;
   collection?: VideoCollection;
 }
-const svg = moreSvg as React.ComponentType<CustomIconComponentProps>;
 
 export default class VideoButtons extends React.PureComponent<OwnProps> {
   public render() {
@@ -82,7 +80,7 @@ const MobileButtons = (props: OwnProps) => {
       />
       <Dropdown overlay={menu()} trigger={['click']}>
         <Button className={'video-menu-button video-menu-button--bordered'}>
-          <Icon component={svg} />
+          <Icon component={MoreSVG} />
         </Button>
       </Dropdown>
     </Button.Group>

@@ -1,17 +1,12 @@
 import { Col, Icon, Row } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import subjectsSvg from '../../../resources/images/subjects.svg';
+import SubjectsSVG from '../../../resources/images/subjects.svg';
 import { Discipline } from '../../types/Discipline';
 import State from '../../types/State';
 import { DisciplineCard } from './DisciplineCard';
 import './DisciplineCardList.less';
-
-const subjectsIcon = subjectsSvg as React.ComponentType<
-  CustomIconComponentProps
->;
 
 export interface DisciplineCardListProps {
   disciplines: Discipline[];
@@ -23,7 +18,7 @@ class DisciplineCardList extends React.PureComponent<DisciplineCardListProps> {
       <section className="discipline-card-list__container">
         <h1 className="big-title alt discipline-card-list__title">
           <Icon
-            component={subjectsIcon}
+            component={SubjectsSVG}
             className="discipline-card-list__icon"
           />{' '}
           Our subjects

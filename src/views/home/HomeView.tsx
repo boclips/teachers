@@ -4,8 +4,8 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
-import ReferAFriendBannerMobile from '../../../resources/images/refer-a-friend-banner-mobile.svg';
-import ReferAFriendBanner from '../../../resources/images/refer-a-friend-banner.svg';
+import ReferAFriendBannerMobileSVG from '../../../resources/images/refer-a-friend-banner-mobile.svg';
+import ReferAFriendBannerSVG from '../../../resources/images/refer-a-friend-banner.svg';
 import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import ReferAFriend from '../../components/ReferAFriend';
@@ -85,13 +85,13 @@ export default class HomeView extends PureComponent {
             <Row>
               <Col>
                 <ReferAFriend>
-                  <ReferAFriendBanner
+                  <ReferAFriendBannerSVG
                     className="refer-a-friend-banner__img display-tablet-and-desktop"
                     tabIndex={0}
                     role="button"
                     aria-label="Refer a friend"
                   />
-                  <ReferAFriendBannerMobile
+                  <ReferAFriendBannerMobileSVG
                     className="refer-a-friend-banner__img display-mobile"
                     tabIndex={0}
                     role="button"

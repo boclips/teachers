@@ -1,8 +1,7 @@
 import { Icon } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CloseSvg from '../../../../resources/images/close.svg';
+import CloseSVG from '../../../../resources/images/close.svg';
 import './Tag.less';
 
 interface TagProps {
@@ -58,11 +57,7 @@ export class ClosableTag extends React.Component<ClosableTagProps> {
           data-qa="close-tag"
           onClick={this.props.onClose}
         >
-          <Icon
-            component={
-              CloseSvg as React.ComponentType<CustomIconComponentProps>
-            }
-          />
+          <Icon component={CloseSVG} />
         </span>
       </div>
     );

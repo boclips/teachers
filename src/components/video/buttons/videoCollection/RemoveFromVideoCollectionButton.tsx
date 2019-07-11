@@ -1,9 +1,8 @@
 import { Button, Icon } from 'antd';
-import { CustomIconComponentProps } from 'antd/es/icon';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import removeSvg from '../../../../../resources/images/remove-video.svg';
+import RemoveSVG from '../../../../../resources/images/remove-video.svg';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
@@ -21,14 +20,13 @@ class RemoveFromVideoCollectionButton extends React.PureComponent<
   DispatchProps & Props
 > {
   public render() {
-    const svg = removeSvg as React.ComponentType<CustomIconComponentProps>;
     return (
       <Button
         className="toggle-collection-button video-menu-button video-menu-button--bordered"
         data-qa="remove-from-collection"
         onClick={this.props.onRemoveFromCollection}
       >
-        <Icon component={svg} /> <span>Remove</span>
+        <Icon component={RemoveSVG} /> <span>Remove</span>
       </Button>
     );
   }

@@ -1,9 +1,8 @@
 import { Button, Icon } from 'antd';
-import { CustomIconComponentProps } from 'antd/lib/icon';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
-import copyLinkSvg from '../../../../../resources/images/copy-link.svg';
+import CopyLinkSVG from '../../../../../resources/images/copy-link.svg';
 import { Constants } from '../../../../app/AppConstants';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { LoginState } from '../../../../types/State';
@@ -28,7 +27,6 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
   };
 
   public render() {
-    const svg = copyLinkSvg as React.ComponentType<CustomIconComponentProps>;
     return (
       <CopyToClipboard
         text={this.getLink()}
@@ -42,7 +40,7 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
           }
           tabIndex={0}
         >
-          <Icon component={svg} /> Copy link
+          <Icon component={CopyLinkSVG} /> Copy link
         </Button>
       </CopyToClipboard>
     );
