@@ -13,8 +13,7 @@
     "compile": "tsc -p . --noEmit",
     "watch": "npm run compile -- cd--watch",
     "lint": "tslint -c tslint.json -p .",
-    "lint:fix": "npm run lint -- --fix",
-    "check": "npm run compile && npm run lint && npm test"
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -53,7 +52,7 @@
     "axios-logger": "^1.0.0",
     "axios-mock-adapter": "^1.15.0",
     "boclips-js-security": "^3.0.0",
-    "boclips-player": "^2.1.1",
+    "boclips-player": "^2.1.2",
     "boclips-player-react": "^1.0.0",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^0.1.19",
