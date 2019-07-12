@@ -109,7 +109,7 @@ export default class CollectionEditButton extends React.PureComponent<
           cancelButtonProps={{ size: 'large' }}
           closable={false}
           width={655}
-          wrapClassName="generic-modal edit-collection-modal"
+          wrapClassName="edit-collection-modal"
         >
           <CollectionEditForm
             title={this.props.collection.title}
