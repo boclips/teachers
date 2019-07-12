@@ -10,7 +10,7 @@ import './ShareButton.less';
 
 interface Props {
   video: Video;
-  needsBorder: boolean;
+  mobileView: boolean;
 }
 
 interface State {
@@ -36,7 +36,7 @@ class ShareButton extends React.Component<Props, State> {
           onClick={this.handleOpen}
           className={classnames('video-menu-button', {
             // TODO: This should be able to be replaced by smart CSS: .ant-btn-group > button + button
-            'video-menu-button--bordered': this.props.needsBorder,
+            'video-menu-button--bordered': !this.props.mobileView,
           })}
         >
           <section className="share-button">
@@ -45,7 +45,9 @@ class ShareButton extends React.Component<Props, State> {
           </section>
         </Button>
         <Bodal
-          title={`Share ${this.props.video.title}`}
+          title={`Share ${
+            this.props.mobileView ? 'video' : this.props.video.title
+          }`}
           visible={this.state.visible}
           onCancel={this.handleClose}
           footer={
