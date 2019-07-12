@@ -8,10 +8,14 @@
     background-color: @shade-1;
     border-radius: @border-radius;
 
+    display: inline-block;
+    width: 100%;
+
     .ant-modal-header {
       background: @shade-1;
       border-bottom: none;
-      padding: 36px 0px 20px 36px;
+      padding: 0;
+      margin: 36px 0 20px 36px;
       border-radius: @border-radius;
 
       .ant-modal-title {
@@ -22,24 +26,27 @@
     }
 
     .ant-modal-body {
-      padding: 0px 36px 0px 36px;
+      padding: 0;
+      margin: 0 36px 0 36px;
     }
 
     .ant-modal-footer {
       border-top: none;
-      padding: 40px 36px 36px 0px;
+      padding: 0;
+      margin: 40px 36px 36px 0;
     }
 
     @media (max-width: @screen-sm) {
-      .ant-modal-body, .ant-modal-footer, .ant-modal-header {
-        padding-left: 16px;
-        padding-right: 16px;
+      .ant-modal-body,
+      .ant-modal-footer,
+      .ant-modal-header {
+        margin-left: 16px;
+        margin-right: 16px;
       }
 
       .ant-modal-footer {
-
-        padding-top: 8px;
-        padding-bottom: 24px;
+        margin-top: 8px;
+        margin-bottom: 24px;
         > div {
           display: flex;
 
