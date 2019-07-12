@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
+import classnames from 'classnames';
 import React from 'react';
 import './SavingButton.less';
 
@@ -52,24 +53,26 @@ export default class SavingButton extends React.PureComponent<Props, State> {
   }
 
   public render() {
-    const btnProps = { ...this.props };
-    delete btnProps.saving;
+    const { saving: _, ...btnProps } = this.props;
+
     return (
       <Button
         {...btnProps}
         className="video-menu-button video-menu-button--bordered"
       >
         <section
-          className={`saving-button__container ${
-            this.props.saving ? 'saving' : ' '
-          } ${this.state.justSaved ? 'saved' : ' '}`}
+          className={classnames('saving-button__container', {
+            saving: this.props.saving,
+            saved: this.state.justSaved,
+          })}
         >
           {this.props.children}
           {this.props.saving || this.state.justSaved ? (
             <section
-              className={`saving-button__tick-container ${
-                this.props.saving ? 'saving' : ' '
-              } ${this.state.justSaved ? 'saved' : ' '}`}
+              className={classnames('saving-button__tick-container', {
+                saving: this.props.saving,
+                saved: this.state.justSaved,
+              })}
             >
               <div className="circle-loader">
                 <div className="checkmark draw" data-qa="saved-ack" />
