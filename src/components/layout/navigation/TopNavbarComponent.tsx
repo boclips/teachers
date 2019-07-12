@@ -6,7 +6,7 @@ import boclipsLogo from '../../../../resources/images/boclips-logo.png';
 import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import ConnectedTabsContainer from '../tabs/TabsContainer';
-import { NavBarButtonsContainer } from './NavBarButtonsContainer';
+import NavbarButtonsContainer from './NavbarButtonsContainer';
 
 interface Props {
   showTabs: boolean;
@@ -21,24 +21,24 @@ const TopNavbarComponent = React.memo((props: Props) => (
   <React.Fragment>
     <Content>
       <Row>
-        <Col sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }}>
-          <section>
-            <Link to="/" data-qa="boclips-logo">
+        <Col sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} className={"navbar__col"}>
+          <section className='logo-wrapper'>
+            <Link to="/" data-qa="boclips-logo" className="link--tabbable">
               <img className="logo" src={boclipsLogo} alt="Boclips" />
             </Link>
           </section>
         </Col>
-        <Col xs={{ span: 19 }} sm={{ span: 20 }} md={{ span: 12 }}>
+        <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 12 }} className={"navbar__col"}>
           {props.showSearchBar ? <SearchBar /> : null}
         </Col>
-        <Col xs={{ span: 5 }} sm={{ span: 4 }} md={{ span: 6 }}>
+        <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 6 }} className={"navbar__col"}>
           {props.authorized && (
             <div>
               {props.isMobile ? (
                 <AccountMenuContainer />
               ) : (
-                <NavBarButtonsContainer />
-              )}
+                  <NavbarButtonsContainer />
+                )}
             </div>
           )}
         </Col>

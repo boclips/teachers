@@ -3,23 +3,23 @@ import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import {
   MyCollectionsLink,
   PublicCollectionsLink,
-} from '../accountMenu/MenuOptions';
-import './NavBarButtons.less';
+  HomeLink
+} from '../navigation/NavbarButtons';
+import './NavbarButtons.less';
 
-export class NavBarButtonsContainer extends React.Component {
-  public render() {
-    return (
-      <ul className={'navbar-buttons'}>
-        <li>
-          <MyCollectionsLink />
-        </li>
-        <li>
-          <AccountMenuContainer />
-        </li>
-        <li>
-          <PublicCollectionsLink />
-        </li>
-      </ul>
-    );
-  }
-}
+const NavbarButtonsContainer = React.memo(() =>
+  <ul className={'navbar-buttons'}>
+    <li className={'navbar-buttons__list-item display-mobile'}><HomeLink /></li>
+    <li className={'navbar-buttons__list-item'}>
+      <MyCollectionsLink />
+    </li>
+    <li className={'navbar-buttons__list-item display-tablet-and-desktop'}>
+      <AccountMenuContainer />
+    </li>
+    <li className={'navbar-buttons__list-item'}>
+      <PublicCollectionsLink />
+    </li>
+  </ul>
+)
+
+export default NavbarButtonsContainer;

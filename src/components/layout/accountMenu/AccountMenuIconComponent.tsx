@@ -1,20 +1,25 @@
 import React from 'react';
 import MyAccountImg from '../../../../resources/images/my-account.svg';
-import NavbarButton from '../navigation/NavbarButton';
+import { A11yButton } from '../../common/A11yButton';
 
 interface Props {
   onClick?: () => void;
 }
 
 const AccountMenuIconComponent = React.memo((props: Props) => (
-  <NavbarButton
-    onClick={props.onClick}
-    icon={<MyAccountImg />}
-    label={'My account'}
-    data-qa="account-menu-open"
-    aria-label="My account menu"
-    aria-haspopup="true"
-  />
+  <A11yButton callback={props.onClick}>
+    <div className={'navbar-buttons__button'}>
+      <MyAccountImg
+        className="account-menu-icon ant-dropdown-link"
+        data-qa="account-menu-open"
+        tabIndex={0}
+        role="button"
+        aria-label="My account menu"
+        aria-haspopup="true"
+      />
+      <span className={'icon-label'}>My account</span>
+    </div>
+  </A11yButton>
 ));
 
 export default AccountMenuIconComponent;

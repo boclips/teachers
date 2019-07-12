@@ -9,7 +9,7 @@ import {
 } from '../../../../test-support/factories';
 import { setWidth } from '../../../../test-support/setWidth';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
-import { NavBarButtonsContainer } from './NavBarButtonsContainer';
+import { NavbarButtonsContainer } from './NavbarButtonsContainer';
 import TopNavbarContainer from './TopNavbarContainer';
 
 const user = UserProfileFactory.sample({ authenticated: true });
@@ -54,7 +54,7 @@ describe('when authenticated', () => {
   test('renders navbar buttons container', () => {
     const wrapper = mountAuthenticatedLayout();
 
-    expect(wrapper.find(NavBarButtonsContainer)).toExist();
+    expect(wrapper.find(NavbarButtonsContainer)).toExist();
   });
 
   describe('mobile view', () => {
@@ -63,7 +63,7 @@ describe('when authenticated', () => {
 
       const wrapper = mountAuthenticatedLayout();
 
-      expect(wrapper.find(NavBarButtonsContainer)).not.toExist();
+      expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
       expect(wrapper.find(AccountMenuContainer)).toExist();
     });
   });
@@ -115,7 +115,7 @@ describe('when not authenticated', () => {
   test('does not render navbar buttons container', () => {
     const wrapper = mountAnonymousLayout();
 
-    expect(wrapper.find(NavBarButtonsContainer)).not.toExist();
+    expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
   });
 
   function mountAnonymousLayout() {

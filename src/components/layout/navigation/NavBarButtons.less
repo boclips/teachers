@@ -3,40 +3,44 @@
 .navbar-buttons {
   display: inline-flex;
   padding: 0;
-}
 
-.nav-buttons {
-  margin: 0;
-  padding: 0;
-  height: 20px;
-  align-items: center;
-  font-size: 16px;
-  color: @cta-blue;
-  list-style: none;
-
-  .icon-container {
-    margin-right: 14px;
-    width: 24px;
-    height: 24px;
+  &__list-item {
+    list-style: none;
+    margin-left: 20px;
     text-align: center;
-    line-height: 1;
-    cursor: pointer;
   }
-
-  .icon-label {
-    display: block;
-    text-decoration: none;
-  }
-
+  
   &__button {
+    margin: 0;
+    padding: 0;
+    height: 62px;
+    align-items: center;
+    color: @cta-blue;
+    text-decoration: none;
     cursor: pointer;
 
-    &:hover path {
-      fill: @shade-5;
+
+    &:hover {
+      text-decoration: none;
+
+      path {
+        fill: @shade-5;
+      }
     }
 
-    svg {
-      padding-right: 14px;
+    .icon-container {
+      width: 24px;
+      height: 24px;
+    }
+
+    .icon-label {
+      display: block;
+      font-size: 12px;
+      line-height: 12px;
+      margin-top: -14px;
+      white-space: nowrap;
     }
   }
 }
+
+

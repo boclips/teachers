@@ -28,7 +28,7 @@ const menu = (props: Props) => (
 
 const AccountMenuComponent = React.memo((props: Props) => (
   <div className="display-tablet-and-desktop">
-    <Dropdown overlay={menu(props)} trigger={['click']}>
+    <Dropdown overlay={menu(props)} trigger={['click']} placement="bottomRight">
       <AccountMenuIconComponent />
     </Dropdown>
   </div>

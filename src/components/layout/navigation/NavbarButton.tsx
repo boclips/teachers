@@ -1,29 +1,35 @@
 import React from 'react';
-import { A11yButton } from '../../common/A11yButton';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 
-interface Props {
+interface Props extends RouteComponentProps {
   onClick?: () => void;
   icon: React.ReactNode;
+  activeIcon: React.ReactNode;
   label: string;
+  link?: string;
+  dataQa?: string;
 }
 
-const NavbarButton = React.memo((props: Props) => {
-  const { icon, label } = props;
+class NavbarButton extends React.PureComponent<Props> {
+  public render() {
+    return (
+      <Link
+        to={this.props.link}
+        className="navbar-buttons__button link--tabbable"
+        tabIndex={0}
+        data-qa={this.props.dataQa}
+      >
+        <>
+          <span className={'icon-container'}>{this.isActive() && this.props.activeIcon || this.props.icon}</span>
+          <span className={'icon-label'}>{this.props.label}</span>
+        </>
+      </Link>
+    );
+  }
 
-  return (
-    <A11yButton
-      callback={props.onClick}
-      className="ant-dropdown-link navbar-buttons__button"
-      tabIndex={0}
-      role="button"
-      {...props}
-    >
-      <>
-        {icon}
-        <span className={'icon-label'}>{label}</span>
-      </>
-    </A11yButton>
-  );
-});
+  private isActive = () => {
+    return this.props.location.pathname === this.props.link;
+  }
+};
 
-export default NavbarButton;
+export default withRouter(NavbarButton);
