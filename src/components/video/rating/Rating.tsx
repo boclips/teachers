@@ -1,4 +1,4 @@
-import { Rate } from 'antd';
+import { Rate, Tooltip } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -38,10 +38,34 @@ class Rating extends React.Component<Props & DispatchProps, State> {
 
     return (
       <span className="rating--container">
+        {this.props.video.links.rate && (
+          <Bodal
+            title="Help us improve the information on this video"
+            closable={false}
+            visible={this.state.visible}
+            onOk={this.rate}
+            onCancel={this.closeModal}
+            okButtonProps={{ size: 'large', 'data-qa': 'rate-button' }}
+            cancelButtonProps={{ size: 'large' }}
+            okText="Done"
+            cancelText="Cancel"
+          >
+            <p data-qa="rating-description">
+              We want to know what you think of our videos. What rating would
+              you give "{this.props.video.title}".
+            </p>
+            <section data-qa="rate-video">
+              <Rate
+                className="rating--rate"
+                tooltips={desc}
+                onChange={this.changeRating}
+              />
+            </section>
+          </Bodal>
+        )}
+
         {rating !== null && rating !== undefined ? (
-          <span data-qa="rating-score" data-state={this.props.video.rating}>
-            <Rate disabled={true} defaultValue={this.props.video.rating} />
-          </span>
+          this.getRatingStars(this.props.video)
         ) : this.props.video.links.rate ? (
           <React.Fragment>
             <a
@@ -52,33 +76,31 @@ class Rating extends React.Component<Props & DispatchProps, State> {
             >
               Rate this video
             </a>
-            <Bodal
-              title="Help us improve the information on this video"
-              closable={false}
-              visible={this.state.visible}
-              onOk={this.rate}
-              onCancel={this.closeModal}
-              okButtonProps={{ size: 'large', 'data-qa': 'rate-button' }}
-              cancelButtonProps={{ size: 'large' }}
-              okText="Done"
-              cancelText="Cancel"
-            >
-              <p data-qa="rating-description">
-                We want to know what you think of our videos. What rating would
-                you give "{this.props.video.title}".
-              </p>
-              <section data-qa="rate-video">
-                <Rate
-                  className="rating--rate"
-                  tooltips={desc}
-                  onChange={this.changeRating}
-                />
-              </section>
-            </Bodal>
           </React.Fragment>
         ) : null}
       </span>
     );
+  }
+
+  private getRatingStars(video: Video) {
+    const stars = (
+      <span data-qa="rating-score" data-state={video.rating}>
+        <Rate disabled={true} defaultValue={video.rating} />
+      </span>
+    );
+    if (video.links.rate) {
+      return (
+        <span onClick={this.openModal} className="rating--rate-stars">
+          <Tooltip
+            title="Help us improve the information on this video and give it a rating"
+            data-qa="rating-video-stars"
+          >
+            {stars}
+          </Tooltip>
+        </span>
+      );
+    }
+    return <span className="rating--stars--non-editable">{stars}</span>;
   }
 
   private changeRating = rating => this.setState({ rating });

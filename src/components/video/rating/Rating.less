@@ -8,4 +8,21 @@
   &rate {
     font-size: 32px !important;
   }
+
+  &rate-stars,&rate-stars * {
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  &rate-stars:hover {
+    box-shadow: 0 0 4px 1px @cta-blue;
+    transition: all 800ms ease;
+    .ant-rate-star {
+      color: #e8e8e8 !important;
+    }
+  }
+
+  &stars--non-editable,&stars--non-editable * {
+    cursor: default ;
+  }
 }
