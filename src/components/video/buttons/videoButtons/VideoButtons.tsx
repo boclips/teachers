@@ -6,6 +6,7 @@ import { VideoCollection } from '../../../../types/VideoCollection';
 import CopyLinkButton from '../copyLink/CopyLinkButton';
 import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
 import { GoogleClassroomShareButton } from '../gclassroom/GoogleClassroomShareButton';
+import RateButton from '../rate/RateButton';
 import ShareButton from '../shareButton/ShareButton';
 import VideoCollectionButton from '../videoCollection/VideoCollectionButton';
 import './VideoButtons.less';
@@ -65,6 +66,13 @@ const MobileButtons = (props: OwnProps) => {
           className="video-menu-button video-menu-button--un-padded"
           video={props.video}
         />
+      </Menu.Item>,
+    );
+  }
+  if (props.video.links.rate) {
+    items.push(
+      <Menu.Item key="4">
+        <RateButton video={props.video} />
       </Menu.Item>,
     );
   }

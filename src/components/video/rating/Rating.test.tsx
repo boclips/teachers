@@ -39,8 +39,18 @@ describe('when video has rating', () => {
     const rating = mountRating(VideoFactory.sample({ rating: 3 }));
 
     test('it renders clickable rating component', () => {
-      expect(rating.find(Rate).prop('defaultValue')).toEqual(3);
-      expect(rating.find(Rate).prop('disabled')).toEqual(true);
+      expect(
+        rating
+          .find(Rate)
+          .first()
+          .prop('defaultValue'),
+      ).toEqual(3);
+      expect(
+        rating
+          .find(Rate)
+          .first()
+          .prop('disabled'),
+      ).toEqual(true);
       expect(rating.find(By.dataQa('rating-video-stars'))).toExist();
     });
   });

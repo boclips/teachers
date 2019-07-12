@@ -3,6 +3,9 @@
 .rating--{
   &container {
     margin-right: 20px;
+    @media (max-width: @screen-md) {
+      display: block;
+    }
   }
 
   &rate {
@@ -12,17 +15,30 @@
   &rate-stars,&rate-stars * {
     cursor: pointer;
     border-radius: 4px;
+    @media (max-width: @screen-md) {
+      display: none;
+    }
   }
 
   &rate-stars:hover {
     box-shadow: 0 0 4px 1px @cta-blue;
     transition: all 800ms ease;
     .ant-rate-star {
-      color: #e8e8e8 !important;
+      color: @shade-3 !important;
     }
   }
 
   &stars--non-editable,&stars--non-editable * {
     cursor: default ;
+
+    .ant-rate-star > div:hover, .ant-rate-star > div:focus {
+      transform: none;
+    }
+
+    &.mobile {
+      @media (min-width: @screen-md) {
+        display: none;
+      }
+    }
   }
 }
