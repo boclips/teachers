@@ -33,7 +33,9 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
         onClick={this.handleClick}
       >
         <img width="24" height="24" src={GoogleClassroomIcon} />
-        <span className="google-classroom-button__label">Google Classroom</span>
+        <span className="google-classroom-button__label">
+          Send to Google Classroom
+        </span>
       </Button>
     );
   }

@@ -3,9 +3,7 @@ import React from 'react';
 import MoreSVG from '../../../../../resources/images/more.svg';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import CopyLinkButton from '../copyLink/CopyLinkButton';
 import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
-import { GoogleClassroomShareButton } from '../gclassroom/GoogleClassroomShareButton';
 import RateButton from '../rate/RateButton';
 import ShareButton from '../shareButton/ShareButton';
 import VideoCollectionButton from '../videoCollection/VideoCollectionButton';
@@ -38,7 +36,7 @@ const DesktopButtons = (props: OwnProps) => {
         video={props.video}
         collection={props.collection}
       />
-      <ShareButton video={props.video} />
+      <ShareButton video={props.video} needsBorder={true} />
       <DownloadTranscriptButton
         className="video-menu-button video-menu-button--bordered"
         video={props.video}
@@ -51,17 +49,12 @@ const MobileButtons = (props: OwnProps) => {
   const items = [];
   items.push(
     <Menu.Item key="1">
-      <CopyLinkButton video={props.video} />
-    </Menu.Item>,
-  );
-  items.push(
-    <Menu.Item key="2">
-      <GoogleClassroomShareButton video={props.video} />
+      <ShareButton video={props.video} needsBorder={false} />
     </Menu.Item>,
   );
   if (props.video.links.transcript) {
     items.push(
-      <Menu.Item key="3">
+      <Menu.Item key="2">
         <DownloadTranscriptButton
           className="video-menu-button video-menu-button--un-padded"
           video={props.video}
@@ -71,7 +64,7 @@ const MobileButtons = (props: OwnProps) => {
   }
   if (props.video.links.rate) {
     items.push(
-      <Menu.Item key="4">
+      <Menu.Item key="3">
         <RateButton video={props.video} />
       </Menu.Item>,
     );
