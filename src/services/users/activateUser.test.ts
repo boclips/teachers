@@ -11,8 +11,6 @@ import activateUser from './activateUser';
 
 jest.mock('../analytics/AnalyticsFactory');
 
-const analyticsFactoryMock = AnalyticsFactory;
-
 const links = LinksFactory.sample({
   activate: new Link({ href: '/activate' }),
 });
@@ -23,7 +21,7 @@ const userProfile = UserProfileFactory.sample({
   lastName: 'boclips',
 });
 
-analyticsFactoryMock.getInstance = jest.fn(() => analyticsMock);
+AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
 
 describe('when activate link present', () => {
   describe('when user activated successfully', () => {

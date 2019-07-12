@@ -28,7 +28,7 @@ describe('when form is submitted', () => {
   });
 
   it('renders confirmation message', async () => {
-    axios.post = jest.fn(() => Promise.resolve({ data: {} }));
+    axios.post = jest.fn(() => Promise.resolve({ data: {} } as any));
     form.fillValidForm();
     form.submit();
 
@@ -55,7 +55,7 @@ describe('when form is submitted', () => {
   });
 
   it('sends no-results event', async () => {
-    axios.post = jest.fn(() => Promise.resolve({ data: {} }));
+    axios.post = jest.fn(() => Promise.resolve({ data: {} } as any));
     form.fillValidForm('name', 'query', 'email@boclips.com', 'description');
     form.submit();
 

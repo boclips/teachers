@@ -1,4 +1,6 @@
-export const analyticsMock = {
+import MixpanelAnalytics from '../src/services/analytics/MixpanelAnalytics';
+
+export const analyticsMock = ({
   trackAccountActivation: jest.fn(),
   trackSearch: jest.fn(),
   setUserId: jest.fn(),
@@ -7,4 +9,4 @@ export const analyticsMock = {
   trackVideoRemovedFromDefaultCollection: jest.fn(),
   trackDefaultCollectionVisited: jest.fn(),
   trackVideoVisited: jest.fn(),
-};
+} as any) as MixpanelAnalytics;
