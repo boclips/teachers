@@ -36,7 +36,7 @@ const DesktopButtons = (props: OwnProps) => {
         video={props.video}
         collection={props.collection}
       />
-      <ShareButton video={props.video} needsBorder={true} />
+      <ShareButton video={props.video} mobileView={false} />
       <DownloadTranscriptButton
         className="video-menu-button video-menu-button--bordered"
         video={props.video}
@@ -46,31 +46,25 @@ const DesktopButtons = (props: OwnProps) => {
 };
 
 const MobileButtons = (props: OwnProps) => {
-  const items = [];
-  items.push(
-    <Menu.Item key="1">
-      <ShareButton video={props.video} needsBorder={false} />
-    </Menu.Item>,
-  );
-  if (props.video.links.transcript) {
-    items.push(
-      <Menu.Item key="2">
-        <DownloadTranscriptButton
-          className="video-menu-button video-menu-button--un-padded"
-          video={props.video}
-        />
-      </Menu.Item>,
-    );
-  }
-  if (props.video.links.rate) {
-    items.push(
-      <Menu.Item key="3">
-        <RateButton video={props.video} />
-      </Menu.Item>,
-    );
-  }
   const menu = () => (
-    <Menu className="video-buttons__dropdown">{...items}</Menu>
+    <Menu className="video-buttons__dropdown">
+      <Menu.Item>
+        <ShareButton video={props.video} mobileView={true} />
+      </Menu.Item>
+      {props.video.links.transcript && (
+        <Menu.Item>
+          <DownloadTranscriptButton
+            className="video-menu-button video-menu-button--un-padded"
+            video={props.video}
+          />
+        </Menu.Item>
+      )}
+      {props.video.links.rate && (
+        <Menu.Item>
+          <RateButton video={props.video} />
+        </Menu.Item>
+      )}
+    </Menu>
   );
 
   return (
