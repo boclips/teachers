@@ -1,4 +1,5 @@
 @import '../../../../../resources/styles/_antd-theme.less';
+
 .share-button {
   position: relative;
   display: flex;
@@ -13,40 +14,27 @@
   }
 }
 
-.share-menu {
-  width: 243px;
-  padding-bottom: 20px;
+.share-modal .ant-modal-content .ant-modal-footer div {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 2px solid #e8efff;
+  justify-content: space-between;
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 20px 0px 20px;
+  button {
+    padding: 10px 0;
+    margin: 0 0 -10px 0;
+
+    width: auto;
+
+    flex-grow: 0;
+
+    i.anticon {
+      height: 24px;
+    }
+    span {
+      white-space: normal;
+      text-align: left;
+    }
   }
-
-  &__header-label {
-    height: 24px;
-    width: 45px;
-    color: #434656;
-    font-family: Heebo;
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  &__header-close-button {
-    width: 13px;
-    height: 13px;
-  }
-
-  &__item {
-    padding: 0px;
-  }
-}
-
-.share-menu__header:hover {
-  cursor: default;
-  background-color: white;
-}
-
-.share-menu__header-close-button:hover {
-  cursor: pointer;
 }
