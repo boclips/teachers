@@ -56,10 +56,7 @@ export default class SavingButton extends React.PureComponent<Props, State> {
     const { saving: _, ...btnProps } = this.props;
 
     return (
-      <Button
-        {...btnProps}
-        className="video-menu-button video-menu-button--bordered"
-      >
+      <Button {...btnProps}>
         <section
           className={classnames('saving-button__container', {
             saving: this.props.saving,

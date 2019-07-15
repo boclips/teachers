@@ -22,6 +22,15 @@
   justify-content: space-between;
 
   button {
+    .ant-btn--borderless();
+
+    & > * {
+      vertical-align: top;
+    }
+
+    text-align: left;
+
+    height: auto;
     padding: 10px 0;
     margin: 0 0 -10px 0;
 
@@ -30,8 +39,10 @@
     flex-grow: 0;
 
     i.anticon {
+      font-size: 24px;
       height: 24px;
     }
+
     span {
       white-space: normal;
       text-align: left;

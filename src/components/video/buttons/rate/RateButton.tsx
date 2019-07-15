@@ -23,34 +23,26 @@ export default class RateButton extends React.Component<RatingProps, State> {
   }
 
   public render() {
+    if (!this.props.video.links.rate) {
+      return null;
+    }
+
     return (
-      <span className="rating--container">
+      <React.Fragment>
         <RatingModal
           visible={this.state.visible}
           video={this.props.video}
           onRated={this.closeModal}
           onRatingCancelled={this.closeModal}
         />
-
-        {this.props.video.links.rate ? (
-          <React.Fragment>
-            <Button
-              data-qa="rating-video-button"
-              onClick={this.openModal}
-              className={
-                'secondary video-menu-button video-menu-button--un-padded video-menu-button--wide'
-              }
-              tabIndex={0}
-            >
-              <Icon
-                component={RateIcon}
-                style={{ fontSize: '20px', margin: '0 3px' }}
-              />{' '}
-              Rate this video
-            </Button>
-          </React.Fragment>
-        ) : null}
-      </span>
+        <Button
+          data-qa="rating-video-button"
+          onClick={this.openModal}
+          tabIndex={0}
+        >
+          <Icon component={RateIcon} /> Rate this video
+        </Button>
+      </React.Fragment>
     );
   }
 

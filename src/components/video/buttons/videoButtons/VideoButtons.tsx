@@ -37,26 +37,20 @@ const DesktopButtons = (props: OwnProps) => {
         collection={props.collection}
       />
       <ShareButton video={props.video} mobileView={false} />
-      <DownloadTranscriptButton
-        className="video-menu-button video-menu-button--bordered"
-        video={props.video}
-      />
+      <DownloadTranscriptButton video={props.video} />
     </Button.Group>
   );
 };
 
 const MobileButtons = (props: OwnProps) => {
   const menu = () => (
-    <Menu className="video-buttons__dropdown">
+    <Menu className="video-buttons__container">
       <Menu.Item>
         <ShareButton video={props.video} mobileView={true} />
       </Menu.Item>
       {props.video.links.transcript && (
         <Menu.Item>
-          <DownloadTranscriptButton
-            className="video-menu-button video-menu-button--un-padded"
-            video={props.video}
-          />
+          <DownloadTranscriptButton video={props.video} />
         </Menu.Item>
       )}
       {props.video.links.rate && (
@@ -74,7 +68,7 @@ const MobileButtons = (props: OwnProps) => {
         collection={props.collection}
       />
       <Dropdown overlay={menu()} trigger={['click']}>
-        <Button className={'video-menu-button video-menu-button--bordered'}>
+        <Button>
           <Icon component={MoreSVG} />
         </Button>
       </Dropdown>
