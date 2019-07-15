@@ -22,7 +22,7 @@ class RemoveFromVideoCollectionButton extends React.PureComponent<
   public render() {
     return (
       <Button
-        className="toggle-collection-button video-menu-button video-menu-button--bordered"
+        className="video-menu-button video-menu-button--bordered"
         data-qa="remove-from-collection"
         onClick={this.props.onRemoveFromCollection}
       >
