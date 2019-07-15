@@ -106,7 +106,6 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     return (
       <SavingButton
         saving={this.state.isSaving}
-        className="toggle-collection-button"
         data-qa={'video-collection-menu'}
         size={'large'}
         onClick={onClick}
