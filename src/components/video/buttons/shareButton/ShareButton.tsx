@@ -1,5 +1,4 @@
 import { Button, Icon } from 'antd';
-import classnames from 'classnames';
 import React from 'react';
 import ShareSVG from '../../../../../resources/images/share.svg';
 import { Video } from '../../../../types/Video';
@@ -32,17 +31,9 @@ class ShareButton extends React.Component<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <Button
-          onClick={this.handleOpen}
-          className={classnames('video-menu-button', {
-            // TODO: This should be able to be replaced by smart CSS: .ant-btn-group > button + button
-            'video-menu-button--bordered': !this.props.mobileView,
-          })}
-        >
-          <section className="share-button">
-            <Icon component={ShareSVG} className="share-button__icon" />
-            <span>Share</span>
-          </section>
+        <Button onClick={this.handleOpen}>
+          <Icon component={ShareSVG} />
+          <span>Share</span>
         </Button>
         <Bodal
           title={`Share ${

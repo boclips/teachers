@@ -33,13 +33,7 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
         onCopy={this.showCopiedNotification(this.props.video)}
         options={{ debug: true }}
       >
-        <Button
-          data-qa="copy-link"
-          className={
-            'secondary video-menu-button video-menu-button--un-padded video-menu-button--wide'
-          }
-          tabIndex={0}
-        >
+        <Button data-qa="copy-link" tabIndex={0}>
           <Icon component={CopyLinkSVG} /> Copy link
         </Button>
       </CopyToClipboard>

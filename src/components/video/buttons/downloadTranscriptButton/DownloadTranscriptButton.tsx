@@ -6,7 +6,6 @@ import { Video } from '../../../../types/Video';
 
 interface OwnProps {
   video: Video;
-  className?: string;
 }
 
 export default class DownloadTranscriptButton extends React.PureComponent<
@@ -19,7 +18,6 @@ export default class DownloadTranscriptButton extends React.PureComponent<
           size={'large'}
           onClick={this.handleTranscriptClick}
           data-qa="download-transcript"
-          className={this.props.className}
         >
           <Icon component={DownloadTranscriptSVG} /> Transcript
         </Button>
