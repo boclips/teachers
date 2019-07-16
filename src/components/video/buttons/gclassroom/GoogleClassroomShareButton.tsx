@@ -1,13 +1,15 @@
 import { Button } from 'antd';
+import queryString from 'query-string';
 import React from 'react';
 import GoogleClassroomIcon from '../../../../../resources/images/google-classroom-logo.png';
 import { Constants } from '../../../../app/AppConstants';
-import { Video } from '../../../../types/Video';
+import { Segment, Video } from '../../../../types/Video';
 import './GoogleClassroomShareButton.less';
 import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
 
 interface Props {
   video: Video;
+  segment?: Segment;
 }
 export class GoogleClassroomShareButton extends React.Component<Props> {
   constructor(props: Props) {
@@ -15,9 +17,23 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
   }
 
   private handleClick = () => {
+    const baseUrlToVideo = `${Constants.HOST}/videos/${this.props.video.id}`;
+
+    const params = queryString.stringify({
+      segmentStart: this.props.segment && this.props.segment.start,
+      segmentEnd: this.props.segment && this.props.segment.end,
+    });
+
+    let urlToVideo = null;
+    if (params) {
+      urlToVideo = `${baseUrlToVideo}?${params}`;
+    } else {
+      urlToVideo = baseUrlToVideo;
+    }
+
     const url: string = new GoogleClassroomUrlBuilder()
       .setTitle(this.props.video.title)
-      .setVideoUrl(`${Constants.HOST}/videos/${this.props.video.id}`)
+      .setVideoUrl(urlToVideo)
       .build();
 
     window.open(url, '_blank', 'height=570,width=520');

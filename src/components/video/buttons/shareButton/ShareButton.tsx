@@ -2,9 +2,7 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import ShareSVG from '../../../../../resources/images/share.svg';
 import { Video } from '../../../../types/Video';
-import Bodal from '../../../common/Bodal';
-import CopyLinkButton from '../copyLink/CopyLinkButton';
-import { GoogleClassroomShareButton } from '../gclassroom/GoogleClassroomShareButton';
+import { ShareModal } from '../../sharing/ShareModal';
 import './ShareButton.less';
 
 interface Props {
@@ -24,6 +22,7 @@ class ShareButton extends React.Component<Props, State> {
   private handleClose = () => {
     this.setState({ visible: false });
   };
+
   private handleOpen = () => {
     this.setState({ visible: true });
   };
@@ -35,19 +34,11 @@ class ShareButton extends React.Component<Props, State> {
           <Icon component={ShareSVG} />
           <span>Share</span>
         </Button>
-        <Bodal
-          title={`Share ${
-            this.props.mobileView ? 'video' : this.props.video.title
-          }`}
+        <ShareModal
+          video={this.props.video}
+          handleClose={this.handleClose}
+          mobileView={this.props.mobileView}
           visible={this.state.visible}
-          onCancel={this.handleClose}
-          footer={
-            <div>
-              <CopyLinkButton video={this.props.video} />
-              <GoogleClassroomShareButton video={this.props.video} />
-            </div>
-          }
-          wrapClassName="share-modal"
         />
       </React.Fragment>
     );

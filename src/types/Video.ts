@@ -42,3 +42,8 @@ export class YoutubePlayback {
     return this.youtubeId;
   }
 }
+
+export interface Segment {
+  start: number;
+  end: number;
+}

@@ -1,0 +1,46 @@
+@import "../../../../resources/styles/_colours.less";
+
+.share-form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .ant-form-item-label label {
+    color: @shade-6;
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  .hidden-label .ant-form-item-label {
+    display: none;
+  }
+
+  .ant-form-item {
+    .ant-form-item-label,
+    .ant-form-item-control-wrapper {
+      vertical-align: bottom;
+      width: auto;
+    }
+
+    &,
+    .ant-form-item-label {
+      margin-right: 12px;
+    }
+  }
+
+  .ant-time-picker {
+    width: 70px;
+
+    input {
+      text-align: center;
+    }
+
+    .anticon {
+      display: none;
+    }
+  }
+
+  section .ant-form-item:last-of-type {
+    margin-right: 0;
+  }
+}
