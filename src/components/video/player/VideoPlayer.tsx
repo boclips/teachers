@@ -48,6 +48,7 @@ export class VideoPlayer extends React.PureComponent<Props> {
           }
         },
       },
+      debug: false,
     };
 
     if (
