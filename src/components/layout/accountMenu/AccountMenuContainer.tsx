@@ -10,7 +10,7 @@ import './AccountMenuContainer.less';
 export class AccountMenuContainer extends PureComponent {
   public render() {
     return (
-      <div className="logout-container">
+      <div>
         <AccountMenuComponent onLogout={this.confirmLogout} />
         <AccountMenuMobile onLogout={this.confirmLogout} />
       </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CollectionsIconSVG from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
 import BookmarkedIconSVG from '../../../../resources/images/my-bookmarks.svg';
 import ReferAFriendIconSVG from '../../../../resources/images/refer-a-friend-icon.svg';
@@ -19,21 +18,6 @@ class BookmarkedCollectionsLink extends React.PureComponent<Props> {
         <BookmarkedIconSVG aria-hidden="true" />
       </span>
       <span>My bookmarks</span>
-    </Link>
-  );
-}
-
-class VideoCollectionsLink extends React.PureComponent<Props> {
-  public render = () => (
-    <Link
-      to={'/collections'}
-      data-qa="video-collection"
-      onClick={this.props.onClick}
-    >
-      <span className="icon-container">
-        <CollectionsIconSVG aria-hidden="true" />
-      </span>
-      <span>My collections</span>
     </Link>
   );
 }
@@ -64,9 +48,4 @@ class ReferAFriendLink extends React.PureComponent<{}> {
   }
 }
 
-export {
-  VideoCollectionsLink,
-  BookmarkedCollectionsLink,
-  LogoutLink,
-  ReferAFriendLink,
-};
+export { BookmarkedCollectionsLink, LogoutLink, ReferAFriendLink };

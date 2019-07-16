@@ -1,0 +1,46 @@
+@import '../../../../resources/styles/_colours.less';
+
+.navbar-buttons {
+  display: inline-flex;
+  padding: 0;
+
+  &__list-item {
+    list-style: none;
+    margin-left: 20px;
+    text-align: center;
+  }
+  
+  &__button {
+    margin: 0;
+    padding: 0;
+    height: 62px;
+    align-items: center;
+    color: @cta-blue;
+    text-decoration: none;
+    cursor: pointer;
+
+
+    &:hover {
+      text-decoration: none;
+
+      path {
+        fill: @shade-5;
+      }
+    }
+
+    .icon-container {
+      width: 24px;
+      height: 24px;
+    }
+
+    .icon-label {
+      display: block;
+      font-size: 12px;
+      line-height: 12px;
+      margin-top: -14px;
+      white-space: nowrap;
+    }
+  }
+}
+
+

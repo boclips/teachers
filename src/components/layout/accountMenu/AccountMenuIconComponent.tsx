@@ -2,22 +2,23 @@ import React from 'react';
 import MyAccountSVG from '../../../../resources/images/my-account.svg';
 import { A11yButton } from '../../common/A11yButton';
 
-import './AccountMenuIconComponent.less';
-
 interface Props {
   onClick?: () => void;
 }
 
 const AccountMenuIconComponent = React.memo((props: Props) => (
   <A11yButton callback={props.onClick}>
-    <MyAccountSVG
-      className="account-menu-icon ant-dropdown-link"
-      data-qa="account-menu-open"
-      tabIndex={0}
-      role="button"
-      aria-label="My account menu"
-      aria-haspopup="true"
-    />
+    <div className={'navbar-buttons__button'}>
+      <MyAccountSVG
+        className="account-menu-icon ant-dropdown-link"
+        data-qa="account-menu-open"
+        tabIndex={0}
+        role="button"
+        aria-label="My account menu"
+        aria-haspopup="true"
+      />
+      <span className={'icon-label'}>My account</span>
+    </div>
   </A11yButton>
 ));
 
