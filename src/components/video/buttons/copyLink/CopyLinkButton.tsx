@@ -1,4 +1,5 @@
 import { Button, Icon } from 'antd';
+import queryString from 'query-string';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
@@ -6,11 +7,12 @@ import CopyLinkSVG from '../../../../../resources/images/copy-link.svg';
 import { Constants } from '../../../../app/AppConstants';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { LoginState } from '../../../../types/State';
-import { Video } from '../../../../types/Video';
+import { Segment, Video } from '../../../../types/Video';
 import NotificationFactory from '../../../common/NotificationFactory';
 
 interface OwnProps {
   video: Video;
+  segment?: Segment;
 }
 
 interface StateProps {
@@ -41,11 +43,15 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
   }
 
   private getLink() {
-    const link = `${Constants.HOST}/videos/${this.props.video.id}`;
-    if (this.props.userId) {
-      return `${link}?referer=${this.props.userId}`;
-    }
-    return link;
+    const url = `${Constants.HOST}/videos/${this.props.video.id}`;
+
+    const params = queryString.stringify({
+      referer: this.props.userId || undefined,
+      segmentStart: this.props.segment && this.props.segment.start,
+      segmentEnd: this.props.segment && this.props.segment.end,
+    });
+
+    return `${url}?${params}`;
   }
 }
 
