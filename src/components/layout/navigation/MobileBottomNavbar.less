@@ -1,35 +1,29 @@
 section.mobile-bottom-navbar {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 53px;
+  z-index: 1000;
+  background-color: white;
+  border-top: 1px solid #c3d3f5;
+
+  .navbar-buttons {
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    height: 53px;
-    z-index: 1000;
-    background-color: white;
-    border-top: 1px solid #C3D3F5;
 
-    .navbar-buttons {
-        width: 100%;
+    &__list-item {
+      margin-top: 6px;
+      width: 33%;
+      margin-left: 0;
 
-        &__list-item {
-            margin-top: 6px;
-            width: 33%;
-            margin-left: 0;
-    
-            .icon-label {
-                margin-top: 6px;
-            }
-        }
+      .icon-label {
+        margin-top: 6px;
+      }
     }
+  }
 
-    .navbar-buttons__list-item:first-child {
-        .navbar-buttons__button {
-            float: left;
-        }
+  .navbar-buttons__list-item:first-child {
+    .navbar-buttons__button {
+      margin-left: 60px;
     }
-
-    .navbar-buttons__list-item:last-child {
-        .navbar-buttons__button {
-            float: right;
-        }
-    }
+  }
 }

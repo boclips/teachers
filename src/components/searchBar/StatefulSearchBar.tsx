@@ -55,7 +55,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     };
 
     return (
-      <form action="" onSubmit={onsubmit} className='searchbar__form'>
+      <form action="" onSubmit={onsubmit} className="searchbar">
         <AutoComplete
           defaultActiveFirstOption={false}
           backfill={true}

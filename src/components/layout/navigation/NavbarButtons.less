@@ -1,24 +1,28 @@
 @import '../../../../resources/styles/_colours.less';
+@import '../../../../resources/styles/_antd-theme.less';
 
 .navbar-buttons {
   display: inline-flex;
   padding: 0;
+
+  @media (min-width: @screen-lg) {
+    margin-left: 40px;
+  }
 
   &__list-item {
     list-style: none;
     margin-left: 20px;
     text-align: center;
   }
-  
+
   &__button {
     margin: 0;
     padding: 0;
-    height: 62px;
+    height: 70px;
     align-items: center;
     color: @cta-blue;
     text-decoration: none;
     cursor: pointer;
-
 
     &:hover {
       text-decoration: none;
@@ -35,12 +39,11 @@
 
     .icon-label {
       display: block;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: 500;
       line-height: 12px;
       margin-top: -14px;
       white-space: nowrap;
     }
   }
 }
-
-

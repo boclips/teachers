@@ -19,7 +19,7 @@ interface Props {
 export default class AccountMenuMobile extends React.PureComponent<
   Props,
   State
-  > {
+> {
   constructor(props: any) {
     super(props);
 

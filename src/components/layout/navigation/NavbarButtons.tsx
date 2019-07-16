@@ -32,7 +32,7 @@ const HomeLink = React.memo(() => (
   <NavbarButton
     link={'/'}
     icon={<HomeIcon />}
-    label={'Home'}
+    label={'Home page'}
     activeIcon={<ActiveHomeIcon />}
     dataQa={'video-collections'}
   />

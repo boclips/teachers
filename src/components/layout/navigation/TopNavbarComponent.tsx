@@ -21,24 +21,39 @@ const TopNavbarComponent = React.memo((props: Props) => (
   <React.Fragment>
     <Content>
       <Row>
-        <Col sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 6 }} className={"navbar__col"}>
-          <section className='logo-wrapper'>
+        <Col
+          sm={{ span: 24 }}
+          md={{ span: 6 }}
+          lg={{ span: 5 }}
+          className={'navbar__col'}
+        >
+          <section className="logo-wrapper">
             <Link to="/" data-qa="boclips-logo" className="link--tabbable">
               <img className="logo" src={boclipsLogo} alt="Boclips" />
             </Link>
           </section>
         </Col>
-        <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 12 }} className={"navbar__col"}>
+        <Col
+          xs={{ span: 20 }}
+          sm={{ span: 20 }}
+          md={{ span: 12 }}
+          className={'navbar__col'}
+        >
           {props.showSearchBar ? <SearchBar /> : null}
         </Col>
-        <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 6 }} className={"navbar__col"}>
+        <Col
+          xs={{ span: 4 }}
+          sm={{ span: 4 }}
+          md={{ span: 6 }}
+          className={'navbar__col'}
+        >
           {props.authorized && (
             <div>
               {props.isMobile ? (
                 <AccountMenuContainer />
               ) : (
-                  <NavbarButtonsContainer />
-                )}
+                <NavbarButtonsContainer />
+              )}
             </div>
           )}
         </Col>
