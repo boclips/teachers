@@ -42,8 +42,8 @@ export default class CollectionHeader extends React.PureComponent<Props> {
           <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
             <Row>
               {this.props.collection.subjects.map(subjectId => (
-                <StopClickPropagation>
-                  <ConnectedSubjectTag key={subjectId} id={subjectId} />
+                <StopClickPropagation wrapper="span" key={subjectId}>
+                  <ConnectedSubjectTag id={subjectId} />
                 </StopClickPropagation>
               ))}
               {this.props.collection.ageRange.isBounded() && (

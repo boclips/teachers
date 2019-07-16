@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface Props extends RouteComponentProps {
   onClick?: () => void;
@@ -20,7 +20,9 @@ class NavbarButton extends React.PureComponent<Props> {
         data-qa={this.props.dataQa}
       >
         <>
-          <span className={'icon-container'}>{this.isActive() && this.props.activeIcon || this.props.icon}</span>
+          <span className={'icon-container'}>
+            {(this.isActive() && this.props.activeIcon) || this.props.icon}
+          </span>
           <span className={'icon-label'}>{this.props.label}</span>
         </>
       </Link>
@@ -29,7 +31,7 @@ class NavbarButton extends React.PureComponent<Props> {
 
   private isActive = () => {
     return this.props.location.pathname === this.props.link;
-  }
-};
+  };
+}
 
 export default withRouter(NavbarButton);
