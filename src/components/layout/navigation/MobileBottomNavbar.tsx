@@ -1,16 +1,16 @@
-import React from 'react'
-import NavbarButtonsContainer from "./NavbarButtonsContainer";
-import './MobileBottomNavbar.less'
 import { Layout } from 'antd';
+import React from 'react';
+import './MobileBottomNavbar.less';
+import NavbarButtonsContainer from './NavbarButtonsContainer';
 
 const { Content } = Layout;
 
 const MobileBottomNavbar = React.memo(() => (
-  <section className="mobile-bottom-navbar display-mobile" >
+  <section className="mobile-bottom-navbar display-mobile">
     <Content>
       <NavbarButtonsContainer />
     </Content>
-  </section>)
-)
+  </section>
+));
 
 export default MobileBottomNavbar;
