@@ -240,4 +240,14 @@ export default class MixpanelAnalytics {
       subject_id: subjectId,
     });
   }
+
+  public trackMyCollectionsNavbarButtonClicked() {
+    this.mixpanelInstance.track(
+      EventTypes.MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED,
+    );
+  }
+
+  public trackCollectionsNavbarButtonClicked() {
+    this.mixpanelInstance.track(EventTypes.COLLECTIONS_NAVBAR_BUTTON_CLICKED);
+  }
 }

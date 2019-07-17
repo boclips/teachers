@@ -6,6 +6,7 @@ import HomeIcon from '../../../../resources/images/home.svg';
 import ActiveMyVideosIcon from '../../../../resources/images/my-videos-on.svg';
 import MyVideosIcon from '../../../../resources/images/my-videos.svg';
 
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import NavbarButton from '../navigation/NavbarButton';
 
 const MyCollectionsLink = React.memo(() => (
@@ -15,6 +16,7 @@ const MyCollectionsLink = React.memo(() => (
     label={'My videos'}
     activeIcon={<ActiveMyVideosIcon />}
     dataQa={'my-videos'}
+    onClick={trackClickMyCollections}
   />
 ));
 
@@ -25,6 +27,7 @@ const PublicCollectionsLink = React.memo(() => (
     label={'Collections'}
     activeIcon={<ActiveCollectionsIcon />}
     dataQa={'video-collections'}
+    onClick={trackClickCollections}
   />
 ));
 
@@ -37,5 +40,13 @@ const HomeLink = React.memo(() => (
     dataQa={'video-collections'}
   />
 ));
+
+const trackClickCollections = () => {
+  AnalyticsFactory.getInstance().trackCollectionsNavbarButtonClicked();
+};
+
+const trackClickMyCollections = () => {
+  AnalyticsFactory.getInstance().trackMyCollectionsNavbarButtonClicked();
+};
 
 export { MyCollectionsLink, PublicCollectionsLink, HomeLink };

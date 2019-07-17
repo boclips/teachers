@@ -18,9 +18,10 @@ class NavbarButton extends React.PureComponent<Props> {
         className="navbar-buttons__button link--tabbable"
         tabIndex={0}
         data-qa={this.props.dataQa}
+        onClick={this.props.onClick}
       >
         <>
-          <span className={'icon-container'}>
+          <span className={'icon-container'} aria-hidden={true}>
             {(this.isActive() && this.props.activeIcon) || this.props.icon}
           </span>
           <span className={'icon-label'}>{this.props.label}</span>

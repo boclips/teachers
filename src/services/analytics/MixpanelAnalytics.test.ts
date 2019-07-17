@@ -235,4 +235,20 @@ describe('MixpanelAnalytics', () => {
       subject_id: '1234',
     });
   });
+
+  it('tracks my collections icon clicked', () => {
+    mixpanelAnalytics.trackMyCollectionsNavbarButtonClicked();
+
+    expect(mock.track).toHaveBeenCalledWith(
+      'MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED',
+    );
+  });
+
+  it('tracks collections icon clicked', () => {
+    mixpanelAnalytics.trackCollectionsNavbarButtonClicked();
+
+    expect(mock.track).toHaveBeenCalledWith(
+      'COLLECTIONS_NAVBAR_BUTTON_CLICKED',
+    );
+  });
 });

@@ -13,9 +13,8 @@ const AccountMenuIconComponent = React.memo((props: Props) => (
         className="account-menu-icon ant-dropdown-link"
         data-qa="account-menu-open"
         tabIndex={0}
-        role="button"
-        aria-label="My account menu"
         aria-haspopup="true"
+        aria-hidden="true"
       />
       <span className={'icon-label'}>My account</span>
     </div>
