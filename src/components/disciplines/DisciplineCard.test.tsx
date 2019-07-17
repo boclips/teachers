@@ -24,12 +24,12 @@ test('renders at most 4 first subjects', () => {
       <DisciplineCard
         discipline={DisciplineFactory.sample({
           subjects: [
-            SubjectFactory.sample({ name: 'subject 1' }),
-            SubjectFactory.sample({ name: 'subject 2' }),
-            SubjectFactory.sample({ name: 'subject 3' }),
-            SubjectFactory.sample({ name: 'subject 4' }),
-            SubjectFactory.sample({ name: 'subject 5' }),
-            SubjectFactory.sample({ name: 'subject 6' }),
+            SubjectFactory.sample({ id: '1', name: 'subject 1' }),
+            SubjectFactory.sample({ id: '2', name: 'subject 2' }),
+            SubjectFactory.sample({ id: '3', name: 'subject 3' }),
+            SubjectFactory.sample({ id: '4', name: 'subject 4' }),
+            SubjectFactory.sample({ id: '5', name: 'subject 5' }),
+            SubjectFactory.sample({ id: '6', name: 'subject 6' }),
           ],
         })}
       />
@@ -80,12 +80,12 @@ test('renders view all when more than 4 subjects', () => {
       <DisciplineCard
         discipline={DisciplineFactory.sample({
           subjects: [
-            SubjectFactory.sample({ name: 'subject 1' }),
-            SubjectFactory.sample({ name: 'subject 2' }),
-            SubjectFactory.sample({ name: 'subject 3' }),
-            SubjectFactory.sample({ name: 'subject 4' }),
-            SubjectFactory.sample({ name: 'subject 5' }),
-            SubjectFactory.sample({ name: 'subject 6' }),
+            SubjectFactory.sample({ id: '1', name: 'subject 1' }),
+            SubjectFactory.sample({ id: '2', name: 'subject 2' }),
+            SubjectFactory.sample({ id: '3', name: 'subject 3' }),
+            SubjectFactory.sample({ id: '4', name: 'subject 4' }),
+            SubjectFactory.sample({ id: '5', name: 'subject 5' }),
+            SubjectFactory.sample({ id: '6', name: 'subject 6' }),
           ],
         })}
       />
@@ -101,10 +101,10 @@ test('does not render view all when 4 subjects or less', () => {
       <DisciplineCard
         discipline={DisciplineFactory.sample({
           subjects: [
-            SubjectFactory.sample({ name: 'subject 1' }),
-            SubjectFactory.sample({ name: 'subject 2' }),
-            SubjectFactory.sample({ name: 'subject 3' }),
-            SubjectFactory.sample({ name: 'subject 4' }),
+            SubjectFactory.sample({ id: '1', name: 'subject 1' }),
+            SubjectFactory.sample({ id: '2', name: 'subject 2' }),
+            SubjectFactory.sample({ id: '3', name: 'subject 3' }),
+            SubjectFactory.sample({ id: '4', name: 'subject 4' }),
           ],
         })}
       />

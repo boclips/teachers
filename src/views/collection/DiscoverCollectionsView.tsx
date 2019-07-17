@@ -85,7 +85,10 @@ export class DiscoverCollectionsView extends PureComponent<
               <Row gutter={12}>
                 <ul className="discover-collections__subjects-list">
                   {this.props.discipline.subjects.map(subject => (
-                    <li className="discover-collections__subject-list-item">
+                    <li
+                      className="discover-collections__subject-list-item"
+                      key={subject.id}
+                    >
                       <Col md={6}>
                         <Link
                           className={this.subjectClassName()}

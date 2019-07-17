@@ -60,7 +60,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
           <section className="badges-row">
             <div className="subjects-container">
               {this.props.video.subjects.map(subject => (
-                <StopClickPropagation>
+                <StopClickPropagation key={subject}>
                   <SubjectTag subjectName={subject} key={subject} />
                 </StopClickPropagation>
               ))}
