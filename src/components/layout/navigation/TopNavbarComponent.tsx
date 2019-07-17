@@ -28,10 +28,10 @@ const TopNavbarComponent = React.memo((props: Props) => (
             </Link>
           </section>
         </Col>
-        <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 12 }}>
+        <Col xs={{ span: 18 }} sm={{ span: 20 }} md={{ span: 12 }}>
           {props.showSearchBar ? <SearchBar /> : null}
         </Col>
-        <Col xs={{ span: 4 }} sm={{ span: 4 }} md={{ span: 6 }}>
+        <Col xs={{ span: 6 }} sm={{ span: 4 }} md={{ span: 6 }}>
           {props.authorized && (
             <div>
               {props.isMobile ? (
