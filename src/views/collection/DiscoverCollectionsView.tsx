@@ -80,7 +80,7 @@ export class DiscoverCollectionsView extends PureComponent<
               </h1>
               <Row gutter={16}>
                 {this.props.discipline.subjects.map(subject => (
-                  <Col md={6}>
+                  <Col md={6} key={subject.id}>
                     <Link
                       className="ant-btn discover-collections__subject-button ant-btn-lg"
                       to={`/discover-collections?subject=${subject.id}`}
