@@ -1,32 +1,66 @@
 import BoclipsSecurity from 'boclips-js-security';
-import { PlayerOptions } from 'boclips-player';
-import { Player } from 'boclips-player-react';
+import { Player, PlayerOptions } from 'boclips-player';
+import { Player as PlayerComponent } from 'boclips-player-react';
+import querystring from 'query-string';
 import React from 'react';
+import { connect } from 'react-redux';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import { Video } from '../../../types/Video';
+import State from '../../../types/State';
+import { Segment, Video } from '../../../types/Video';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
 
-interface Props extends WithMediaBreakPointProps {
+export interface OwnProps extends WithMediaBreakPointProps {
   video: Video;
   videoIndex?: number;
   mode?: 'default' | 'card';
 }
 
-export class VideoPlayer extends React.PureComponent<Props> {
-  public static defaultProps: Partial<Props> = {
+interface StateProps {
+  segment?: Segment;
+}
+
+class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
+  public static defaultProps: Partial<OwnProps> = {
     mode: 'default',
   };
 
+  private player: Player;
+
   public render() {
     return (
-      <Player
-        videoUri={this.props.video.links.self.getOriginalLink()}
+      <PlayerComponent
+        playerRef={this.getPlayerRef}
         options={this.getPlayerOptions()}
       />
     );
   }
+
+  private getPlayerRef = player => {
+    this.player = player;
+  };
+
+  public componentDidMount(): void {
+    this.loadVideo();
+  }
+
+  public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>): void {
+    if (prevProps.video !== this.props.video) {
+      this.loadVideo();
+    }
+  }
+
+  private loadVideo = () => {
+    if (this.props.segment.start || this.props.segment.end) {
+      this.player.loadVideo(
+        this.props.video.links.self.getOriginalLink(),
+        this.props.segment,
+      );
+    } else {
+      this.player.loadVideo(this.props.video.links.self.getOriginalLink());
+    }
+  };
 
   private getPlayerOptions(): Partial<PlayerOptions> {
     const security = BoclipsSecurity.getInstance();
@@ -86,4 +120,20 @@ export class VideoPlayer extends React.PureComponent<Props> {
   }
 }
 
-export default withMediaBreakPoint(VideoPlayer);
+const mapStateToProps = (state: State): StateProps => {
+  const params = querystring.parse(state.router.location.search);
+
+  const segment: Segment = {};
+
+  if (typeof params.segmentStart === 'string') {
+    segment.start = parseInt(params.segmentStart, 10);
+  }
+  if (typeof params.segmentEnd === 'string') {
+    segment.end = parseInt(params.segmentEnd, 10);
+  }
+
+  return {
+    segment,
+  };
+};
+export default connect(mapStateToProps)(withMediaBreakPoint(VideoPlayer));

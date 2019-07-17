@@ -1,8 +1,8 @@
-import { Player } from 'boclips-player-react';
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
+import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
@@ -40,7 +40,7 @@ export class VideoDetailsPage {
       subjects: findAll(el, 'subject-tag')
         .find(By.dataQa('filter-tag'))
         .map(tag => tag.text()),
-      playerVideoUri: el.find(Player).prop('videoUri'),
+      playerVideoId: el.find(VideoPlayer).prop('video').id,
     }))[0];
   }
 }

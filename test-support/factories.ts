@@ -27,8 +27,9 @@ import {
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
+    const id = arg.id || '123';
     return Object.freeze({
-      id: arg.id || '123',
+      id,
       title: arg.title || 'my video title',
       description: arg.description || 'my video description',
       source: arg.source || 'Bodevs Productions',
@@ -42,9 +43,9 @@ export class VideoFactory {
         new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
       badges: arg.badges || ['ad-free'],
       links: arg.links || {
-        self: new Link({ href: '/v1/videos/123' }),
+        self: new Link({ href: `/v1/videos/${id}` }),
         rate: new Link({
-          href: '/v1/videos/177?rating={rating}',
+          href: `/v1/videos/${id}?rating={rating}`,
           templated: true,
         }),
       },

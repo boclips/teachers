@@ -17,6 +17,6 @@ test('video details shows data', async () => {
     duration: ' 1m 2s',
     releasedOn: 'Feb 11, 2018',
     subjects: ['Maths', 'Physics'],
-    playerVideoUri: 'https://api.example.com/v1/videos/177',
+    playerVideoId: '177',
   });
 });

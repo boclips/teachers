@@ -1,4 +1,3 @@
-import { Player } from 'boclips-player-react';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -9,6 +8,7 @@ import {
   MockStoreFactory,
   VideoFactory,
 } from '../../../test-support/factories';
+import VideoPlayer from '../../components/video/player/VideoPlayer';
 import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
 
 test('dispatches FETCH_VIDEO when mounted', () => {
@@ -29,8 +29,9 @@ test('dispatches FETCH_VIDEO when mounted', () => {
 });
 
 test('renders video details when the video has loaded', () => {
+  const video = VideoFactory.sample();
   const store = MockStoreFactory.sample({
-    video: { loading: false, item: VideoFactory.sample() },
+    video: { loading: false, item: video },
     links: LinksFactory.sample(),
   });
 
@@ -54,5 +55,5 @@ test('renders video details when the video has loaded', () => {
   expect(wrapper.find(By.dataQa('video-released-on'))).toHaveText(
     'Jun 20, 2018',
   );
-  expect(wrapper.find(Player)).toHaveProp('videoUri', '/v1/videos/123');
+  expect(wrapper.find(VideoPlayer)).toHaveProp('video', video);
 });
