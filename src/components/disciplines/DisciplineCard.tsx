@@ -33,36 +33,38 @@ export class DisciplineCard extends React.PureComponent<Props> {
             </h1>
           }
         >
-          <ul className="discipline-card__subjects">
-            {this.props.discipline.subjects &&
-              this.props.discipline.subjects.slice(0, 4).map(subject => (
-                <li
-                  className="discipline-card__subject-item"
-                  data-qa="discipline-subject"
-                  key={`subject-${subject.id}`}
-                >
-                  <Link
-                    to={`/discover-collections?subject=${subject.id}`}
-                    className="discipline-card__subject-link link--tabbable"
+          <div className="discipline-card__body display-tablet-and-desktop">
+            <ul className="discipline-card__subjects">
+              {this.props.discipline.subjects &&
+                this.props.discipline.subjects.slice(0, 4).map(subject => (
+                  <li
+                    className="discipline-card__subject-item"
+                    data-qa="discipline-subject"
+                    key={`subject-${subject.id}`}
                   >
-                    {subject.name}
-                  </Link>
-                </li>
-              ))}
-          </ul>
-          {this.props.discipline &&
-          this.props.discipline.subjects &&
-          this.props.discipline.subjects.length > 4 ? (
-            <Link
-              data-qa="view-all-subjects"
-              className="discipline-card__view-all no-underline link--tabbable"
-              to={`/discover-collections?discipline=${
-                this.props.discipline.id
-              }`}
-            >
-              view all ({this.props.discipline.subjects.length}) >
-            </Link>
-          ) : null}
+                    <Link
+                      to={`/discover-collections?subject=${subject.id}`}
+                      className="discipline-card__subject-link link--tabbable"
+                    >
+                      {subject.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+            {this.props.discipline &&
+            this.props.discipline.subjects &&
+            this.props.discipline.subjects.length > 4 ? (
+              <Link
+                data-qa="view-all-subjects"
+                className="discipline-card__view-all no-underline link--tabbable"
+                to={`/discover-collections?discipline=${
+                  this.props.discipline.id
+                }`}
+              >
+                view all ({this.props.discipline.subjects.length}) >
+              </Link>
+            ) : null}
+          </div>
         </Card>
       )
     );

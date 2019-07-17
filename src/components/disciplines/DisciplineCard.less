@@ -70,3 +70,29 @@
     bottom: 16px;
   }
 }
+
+@media (max-width: @screen-sm) {
+  .discipline-card__ {
+    &title {
+      font-size: 22px;
+      line-height: 26px;
+    }
+
+    &container {
+      min-height: 60px;
+
+      .ant-card-body {
+        padding: 0;
+      }
+
+      .ant-card-head {
+        border-radius: 8px;
+        height: 60px;
+      }
+    }
+
+    &icon__image {
+      height: 44px;
+    }
+  }
+}

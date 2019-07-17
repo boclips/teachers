@@ -16,6 +16,8 @@ import { Discipline } from '../../types/Discipline';
 const DisciplineLogo = (props: { discipline: Discipline; large?: boolean }) => (
   <img
     src={ImagesMap[`${props.discipline.code}${props.large ? '-large' : ''}`]}
+    alt=""
+    className="discipline-card__icon__image"
   />
 );
 const ImagesMap = {

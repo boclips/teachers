@@ -24,7 +24,11 @@ class DisciplineCardList extends React.PureComponent<DisciplineCardListProps> {
           Our subjects
         </h1>
 
-        <p className={'discipline-card-list__description'}>
+        <p
+          className={
+            'discipline-card-list__description display-tablet-and-desktop'
+          }
+        >
           Browse our range of videos for the subjects that you teach and find
           collections tailored to your students' needs.
         </p>
