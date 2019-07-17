@@ -1,10 +1,10 @@
-import { Player } from 'boclips-player-react';
 import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
 import CollectionHeader from '../../src/components/collection/header/CollectionHeader';
 import { CollectionTitle } from '../../src/components/collection/header/CollectionTitle';
+import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
@@ -41,7 +41,7 @@ export class CollectionPage {
         .find(By.dataQa('subject-tag'))
         .find(By.dataQa('filter-tag'))
         .map(tag => tag.text()),
-      playerVideoUri: el.find(Player).prop('videoUri'),
+      playerVideoId: el.find(VideoPlayer).prop('video').id,
     }));
   }
 

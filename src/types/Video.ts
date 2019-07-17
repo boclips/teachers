@@ -44,6 +44,6 @@ export class YoutubePlayback {
 }
 
 export interface Segment {
-  start: number;
-  end: number;
+  start?: number;
+  end?: number;
 }

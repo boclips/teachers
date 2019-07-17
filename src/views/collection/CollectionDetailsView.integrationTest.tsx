@@ -51,7 +51,7 @@ describe('when video collection', () => {
       releasedOn: 'Feb 11, 2018',
       badgeAlt: 'Ad free',
       subjects: ['Maths', 'Physics'],
-      playerVideoUri: 'https://api.example.com/v1/videos/177',
+      playerVideoId: '177',
     });
   });
 });
