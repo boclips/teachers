@@ -18,19 +18,19 @@ export class DisciplineCard extends React.PureComponent<Props> {
           className="discipline-card__container"
           bordered={false}
           title={
-            <h1 data-qa="discipline-title" className="discipline-card__title">
-              <Link
-                to={`/discover-collections?discipline=${
-                  this.props.discipline.id
-                }`}
-                className="link--tabbable"
-              >
+            <Link
+              to={`/discover-collections?discipline=${
+                this.props.discipline.id
+              }`}
+              className="link--tabbable discipline-card__link"
+            >
+              <h1 data-qa="discipline-title" className="discipline-card__title">
                 {this.props.discipline.name}
-                <section className="discipline-card__icon">
+                <span className="discipline-card__icon">
                   <DisciplineLogo discipline={this.props.discipline} />
-                </section>
-              </Link>
-            </h1>
+                </span>
+              </h1>
+            </Link>
           }
         >
           <div className="discipline-card__body display-tablet-and-desktop">
