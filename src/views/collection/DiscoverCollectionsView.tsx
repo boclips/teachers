@@ -6,10 +6,14 @@ import { Link } from 'react-router-dom';
 import collectionsImg from '../../../resources/images/collections.png';
 import SubjectsSVG from '../../../resources/images/subjects.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Discipline } from '../../types/Discipline';
+import MediaBreakpoints from '../../types/MediaBreakpoints';
 import { DisciplineState } from '../../types/State';
 import { Subject } from '../../types/Subject';
 import './DiscoverCollectionsView.less';
@@ -28,7 +32,7 @@ const { Content } = Layout;
 const refresh = () => true;
 
 export class DiscoverCollectionsView extends PureComponent<
-  OwnProps & StateProps
+  OwnProps & StateProps & WithMediaBreakPointProps
 > {
   public render() {
     if (!this.props.discipline) {
@@ -59,7 +63,7 @@ export class DiscoverCollectionsView extends PureComponent<
                       </span>
                     )}
                   </h1>
-                  <section className="discover-collections__header-logo">
+                  <section className="discover-collections__header-logo display-tablet-and-desktop">
                     <DisciplineLogo
                       discipline={this.props.discipline}
                       large={true}
@@ -75,22 +79,26 @@ export class DiscoverCollectionsView extends PureComponent<
               className="discover-collections__subjects"
               data-qa="discover-collections-discipline-subjects"
             >
-              <h1 className="big-title alt">
+              <h1 className="big-title alt display-tablet-and-desktop">
                 <Icon component={SubjectsSVG} /> Subjects
               </h1>
               <Row gutter={16}>
-                {this.props.discipline.subjects.map(subject => (
-                  <Col md={6}>
-                    <Link
-                      className="ant-btn discover-collections__subject-button ant-btn-lg"
-                      to={`/discover-collections?subject=${subject.id}`}
-                    >
-                      <span data-qa="discipline-subject-link">
-                        {subject.name}
-                      </span>
-                    </Link>
-                  </Col>
-                ))}
+                <ul className="discover-collections__subjects-list">
+                  {this.props.discipline.subjects.map(subject => (
+                    <li className="discover-collections__subject-list-item">
+                      <Col md={6}>
+                        <Link
+                          className={this.subjectClassName()}
+                          to={`/discover-collections?subject=${subject.id}`}
+                        >
+                          <span data-qa="discipline-subject-link">
+                            {subject.name}
+                          </span>
+                        </Link>
+                      </Col>
+                    </li>
+                  ))}
+                </ul>
               </Row>
             </section>
           ) : null}
@@ -123,6 +131,16 @@ export class DiscoverCollectionsView extends PureComponent<
       this.props.subjectIds,
       this.props.disciplineId,
     );
+  }
+
+  private isMobile(): boolean {
+    return this.props.mediaBreakpoint.width <= MediaBreakpoints.md.width;
+  }
+
+  private subjectClassName(): string {
+    return this.isMobile()
+      ? 'discover-collections__subject-link'
+      : 'discover-collections__subject-link ant-btn ant-btn-lg';
   }
 }
 
@@ -177,4 +195,6 @@ function mapStateToProps(
   };
 }
 
-export default connect(mapStateToProps)(DiscoverCollectionsView);
+export default connect(mapStateToProps)(
+  withMediaBreakPoint(DiscoverCollectionsView),
+);
