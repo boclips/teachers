@@ -139,8 +139,8 @@ export class DiscoverCollectionsView extends PureComponent<
 
   private subjectClassName(): string {
     return this.isMobile()
-      ? 'discover-collections__subject-link'
-      : 'discover-collections__subject-link ant-btn ant-btn-lg';
+      ? 'discover-collections__subject-link link--tabbable'
+      : 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg';
   }
 }
 
