@@ -191,16 +191,19 @@ input[type='checkbox'].ant-checkbox-input {
   line-height: normal;
 }
 
-.ant-layout-header,
 .ant-layout-footer,
 .ant-layout-content {
   padding-left: 16px;
   padding-right: 16px;
 
-  @media (min-width: 768px) {
+  @media (min-width: @screen-md) {
     padding-left: 50px;
     padding-right: 50px;
   }
+}
+
+.ant-layout-header {
+  padding: 0;
 }
 
 .ant-skeleton-paragraph {

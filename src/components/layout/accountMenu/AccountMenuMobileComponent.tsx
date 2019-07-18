@@ -40,7 +40,7 @@ export default class AccountMenuMobile extends React.PureComponent<
 
   public render() {
     return (
-      <div className="display-mobile">
+      <div className="display-mobile-and-tablet">
         <AccountMenuIconComponent onClick={this.showDrawer} />
         <Drawer
           className="account-menu account-menu-mobile__drawer"

@@ -37,7 +37,7 @@ const HomeLink = React.memo(() => (
     icon={<HomeIcon />}
     label={'Home page'}
     activeIcon={<ActiveHomeIcon />}
-    dataQa={'video-collections'}
+    dataQa={'home-page-icon'}
   />
 ));
 

@@ -38,7 +38,7 @@ class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
   }
 
   private isMobile(): boolean {
-    return this.props.mediaBreakpoint.width <= MediaBreakpoints.md.width;
+    return this.props.mediaBreakpoint.width <= MediaBreakpoints.lg.width;
   }
 }
 
