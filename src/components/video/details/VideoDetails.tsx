@@ -43,7 +43,8 @@ class VideoDetailsContent extends React.PureComponent<Props> {
             <span data-qa="video-released-on">
               <DateFormatter date={this.props.video.releasedOn} />
             </span>{' '}
-            by <span data-qa="video-source">{this.props.video.source}</span>
+            by{' '}
+            <span data-qa="video-created-by">{this.props.video.createdBy}</span>
           </section>
         </section>
         <section className="buttons-row">

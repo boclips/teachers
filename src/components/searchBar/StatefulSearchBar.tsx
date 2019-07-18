@@ -3,7 +3,7 @@ import Search from 'antd/lib/input/Search';
 import React from 'react';
 import logo from '../../../resources/images/search-icon.png';
 import { Completion, CompletionChunk, completionsFor } from './completions';
-import completionsSources from './completionsSources.json';
+import completionsCratedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';
 import './StatefulSearchBar.less';
 
@@ -11,7 +11,7 @@ const { Option } = AutoComplete;
 
 const getCompletions = completionsFor([
   ...completionsTopics,
-  ...completionsSources,
+  ...completionsCratedBy,
 ]);
 
 interface Props {

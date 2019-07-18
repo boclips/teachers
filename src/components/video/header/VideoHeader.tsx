@@ -32,7 +32,7 @@ export const VideoHeader = React.memo((props: Props) => (
       <span data-qa="video-released-on">
         <DateFormatter date={props.video.releasedOn} />
       </span>{' '}
-      by <span data-qa="video-source">{props.video.source}</span>
+      by <span data-qa="video-created-by">{props.video.createdBy}</span>
     </section>
   </section>
 ));

@@ -18,7 +18,7 @@ export interface Video {
   description: string;
   duration: Duration;
   releasedOn: Date;
-  source: string;
+  createdBy: string;
   subjects: string[];
   playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;

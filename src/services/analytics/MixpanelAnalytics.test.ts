@@ -127,7 +127,7 @@ describe('MixpanelAnalytics', () => {
   it('tracks video link copied', () => {
     const video = VideoFactory.sample({
       badges: ['ad-free'],
-      source: 'Bodevs Productions',
+      createdBy: 'Bodevs Productions',
       description: 'my video description',
       duration: moment.duration(2, 'minutes'),
       id: '123',
@@ -155,7 +155,7 @@ describe('MixpanelAnalytics', () => {
   it('tracks playback of videos', () => {
     const video = VideoFactory.sample({
       badges: ['ad-free'],
-      source: 'Bodevs Productions',
+      createdBy: 'Bodevs Productions',
       description: 'my video description',
       duration: moment.duration(2, 'minutes'),
       id: '123',

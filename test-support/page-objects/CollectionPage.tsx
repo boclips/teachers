@@ -32,7 +32,7 @@ export class CollectionPage {
     return this.wrapper.find(By.dataQa('video-card')).map(el => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
-      source: findOne(el, 'video-source').text(),
+      createdBy: findOne(el, 'video-created-by').text(),
       duration: findOne(el, 'video-duration').text(),
       releasedOn: findOne(el, 'video-released-on').text(),
       badgeAlt: el.find('.video-badge').prop('alt'),

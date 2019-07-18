@@ -21,7 +21,7 @@ export default function convertVideoResource(resource: any): Video {
     description: resource.description,
     duration: moment.duration(resource.playback.duration),
     releasedOn: new Date(resource.releasedOn),
-    source: resource.source,
+    createdBy: resource.createdBy,
     thumbnailUrl: resource.playback.thumbnailUrl,
     playback: getPlaybackProperties(resource),
     subjects: resource.subjects,

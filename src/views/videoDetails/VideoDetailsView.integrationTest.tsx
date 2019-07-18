@@ -13,7 +13,7 @@ test('video details shows data', async () => {
   expect(videoDetailsPage.getVideoDetails()).toEqual({
     title: 'KS3/4 Science: Demonstrating Chemistry',
     description: 'Matthew Tosh shows us the science.',
-    source: 'cp1',
+    createdBy: 'cp1',
     duration: ' 1m 2s',
     releasedOn: 'Feb 11, 2018',
     subjects: ['Maths', 'Physics'],
