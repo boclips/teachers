@@ -29,15 +29,15 @@ const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
     private getMediaBreakpoint(): Breakpoint {
       const innerWidth = window.innerWidth;
 
-      if (innerWidth <= MediaBreakpoints.xs.width) {
+      if (innerWidth < MediaBreakpoints.xs.width) {
         return MediaBreakpoints.xs;
-      } else if (innerWidth <= MediaBreakpoints.sm.width) {
+      } else if (innerWidth < MediaBreakpoints.sm.width) {
         return MediaBreakpoints.sm;
-      } else if (innerWidth <= MediaBreakpoints.md.width) {
+      } else if (innerWidth < MediaBreakpoints.md.width) {
         return MediaBreakpoints.md;
-      } else if (innerWidth <= MediaBreakpoints.lg.width) {
+      } else if (innerWidth < MediaBreakpoints.lg.width) {
         return MediaBreakpoints.lg;
-      } else if (innerWidth <= MediaBreakpoints.xl.width) {
+      } else if (innerWidth < MediaBreakpoints.xl.width) {
         return MediaBreakpoints.xl;
       } else {
         return MediaBreakpoints.xxl;

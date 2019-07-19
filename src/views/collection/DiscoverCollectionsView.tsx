@@ -133,14 +133,14 @@ export class DiscoverCollectionsView extends PureComponent<
     );
   }
 
-  private isMobile(): boolean {
-    return this.props.mediaBreakpoint.width <= MediaBreakpoints.md.width;
+  private isDesktop(): boolean {
+    return this.props.mediaBreakpoint.width > MediaBreakpoints.md.width;
   }
 
   private subjectClassName(): string {
-    return this.isMobile()
-      ? 'discover-collections__subject-link link--tabbable'
-      : 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg';
+    return this.isDesktop()
+      ? 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg'
+      : 'discover-collections__subject-link link--tabbable';
   }
 }
 

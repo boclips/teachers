@@ -23,7 +23,7 @@ const renderComponent = () => {
 
 describe('breakpoints', () => {
   it('injects correct props to child component when xs width', () => {
-    setWidth(480);
+    setWidth(479);
     const wrapper = renderComponent();
     expect(
       (wrapper.find(Button).prop('mediaBreakpoint') as Breakpoint).label,
@@ -31,7 +31,7 @@ describe('breakpoints', () => {
   });
 
   it('injects correct props to child component when sm width', () => {
-    setWidth(576);
+    setWidth(575);
     const wrapper = renderComponent();
     expect(
       (wrapper.find(Button).prop('mediaBreakpoint') as Breakpoint).label,
@@ -39,7 +39,7 @@ describe('breakpoints', () => {
   });
 
   it('injects correct props to child component when md width', () => {
-    setWidth(768);
+    setWidth(767);
     const wrapper = renderComponent();
     expect(
       (wrapper.find(Button).prop('mediaBreakpoint') as Breakpoint).label,
@@ -47,7 +47,7 @@ describe('breakpoints', () => {
   });
 
   it('injects correct props to child component when lg width', () => {
-    setWidth(992);
+    setWidth(991);
     const wrapper = renderComponent();
     expect(
       (wrapper.find(Button).prop('mediaBreakpoint') as Breakpoint).label,
@@ -55,7 +55,7 @@ describe('breakpoints', () => {
   });
 
   it('injects correct props to child component when xl width', () => {
-    setWidth(1200);
+    setWidth(1199);
     const wrapper = renderComponent();
     expect(
       (wrapper.find(Button).prop('mediaBreakpoint') as Breakpoint).label,
@@ -63,7 +63,7 @@ describe('breakpoints', () => {
   });
 
   it('injects correct props to child component when xl width', () => {
-    setWidth(1600);
+    setWidth(1599);
     const wrapper = renderComponent();
     expect(
       (wrapper.find(Button).prop('mediaBreakpoint') as Breakpoint).label,

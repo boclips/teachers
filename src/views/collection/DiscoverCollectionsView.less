@@ -1,69 +1,71 @@
 @import '../../../resources/styles/_antd-theme.less';
 @import '../../../resources/styles/_colours.less';
 
-.discover-collections__ {
-  &container {
-    animation: slide-in 0.5s 0.5s both;
-    margin-top: 0px !important;
-  }
+  .discover-collections__ {
+    &container {
+      animation: slide-in 0.5s 0.5s both;
+      margin-top: 0px !important;
+    }
 
-  &header-container {
-    margin-bottom: 42px;
-    background-color: @shade-4;
-    padding: 4px 0px;
-    animation: slide-in 0.5s 0s both;
-  }
+    &header-container {
+      margin-bottom: 42px;
+      background-color: @shade-4;
+      padding: 4px 0px;
+      animation: slide-in 0.5s 0s both;
+    }
 
-  &header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    &header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-    h1 {
-      strong {
-        color: @dark-blue;
-        font-weight: normal;
-        a {
+      h1 {
+        strong {
           color: @dark-blue;
           font-weight: normal;
-          text-decoration: none;
+          a {
+            color: @dark-blue;
+            font-weight: normal;
+            text-decoration: none;
+          }
+        }
+
+        color: @mid-blue;
+        font-weight: normal;
+        font-size: 32px;
+        line-height: 32px;
+        margin: 0px;
+        padding: 0px;
+
+        .discipline-subject {
+          animation: slide-right 0.5s 0s both;
         }
       }
+    }
 
-      color: @mid-blue;
-      font-weight: normal;
-      font-size: 32px;
-      line-height: 32px;
-      margin: 0px;
-      padding: 0px;
+    &subjects {
+      animation: slide-in 0.5s 0.2s both;
+      margin-bottom: 40px;
+    }
 
-      .discipline-subject {
-        animation: slide-right 0.5s 0s both;
-      }
+    &subjects-list {
+      padding-left: 0;
+    }
+
+    &subject-link {
+      width: 100%;
+      margin-bottom: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &subject-list-item {
+      list-style-type: none;
     }
   }
 
-  &subjects {
-    animation: slide-in 0.5s 0.2s both;
-    margin-bottom: 40px;
-  }
 
-  &subjects-list {
-    padding-left: 0;
-  }
-
-  &subject-link {
-    width: 100%;
-    margin-bottom: 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &subject-list-item {
-    list-style-type: none;
-  }
-}
-@media (max-width: @screen-md) {
+@media (max-width: @screen-sm-max) {
   .discover-collections__header {
     height: 60px;
 
