@@ -5,7 +5,7 @@ export interface Props {
   callback: (
     event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
   ) => void;
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 /**
@@ -22,6 +22,10 @@ export interface Props {
  * @constructor
  */
 export const A11yButton = ({ callback, children, disableClick }: Props) => {
+  const childComponents: React.ReactElement[] = Array.isArray(children)
+    ? children
+    : [children];
+
   const onKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (
       event.key === ' ' ||
@@ -33,10 +37,14 @@ export const A11yButton = ({ callback, children, disableClick }: Props) => {
       event.preventDefault();
 
       callback(event);
-      if (children.props.onKeyDown) {
-        children.props.onKeyDown(event);
-      }
+
+      childComponents.forEach(child => {
+        if (child.props.onKeyDown) {
+          child.props.onKeyDown(event);
+        }
+      });
     }
+
     return true;
   };
 
@@ -44,9 +52,24 @@ export const A11yButton = ({ callback, children, disableClick }: Props) => {
     if (!disableClick) {
       callback(event);
     }
-    if (children.props.onClick) {
-      children.props.onClick(event);
-    }
+
+    childComponents.forEach(child => {
+      if (child.props.onClick) {
+        child.props.onClick(event);
+      }
+    });
   };
-  return React.cloneElement(children, { onClick, onKeyDown, role: 'button' });
+
+  return (
+    <React.Fragment>
+      {childComponents.map((child, index) =>
+        React.cloneElement(child, {
+          onClick,
+          onKeyDown,
+          role: 'button',
+          key: index,
+        }),
+      )}
+    </React.Fragment>
+  );
 };

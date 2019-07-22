@@ -9,7 +9,7 @@ import Bodal from './common/Bodal';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactElement | React.ReactElement[];
 }
 
 interface State {
@@ -51,9 +51,7 @@ class ReferAFriend extends React.Component<Props & StateProps, State> {
   public render() {
     return (
       <React.Fragment>
-        <A11yButton callback={this.openModal}>
-          <div>{this.props.children}</div>
-        </A11yButton>
+        <A11yButton callback={this.openModal}>{this.props.children}</A11yButton>
 
         <Bodal
           title="Refer a friend"

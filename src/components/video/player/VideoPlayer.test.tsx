@@ -151,7 +151,7 @@ describe('controls are specific to the context', () => {
   const testData = [
     {
       message: 'mobile',
-      innerWidth: MediaBreakpoints.xs.width,
+      innerWidth: MediaBreakpoints.xs.width - 1,
       mode: 'default',
       controls: [
         'play-large',
@@ -164,7 +164,7 @@ describe('controls are specific to the context', () => {
     },
     {
       message: 'card',
-      innerWidth: MediaBreakpoints.lg.width,
+      innerWidth: MediaBreakpoints.lg.width - 1,
       mode: 'card',
       controls: [
         'play-large',
@@ -177,7 +177,7 @@ describe('controls are specific to the context', () => {
     },
     {
       message: 'desktop non-card',
-      innerWidth: MediaBreakpoints.lg.width,
+      innerWidth: MediaBreakpoints.lg.width - 1,
       mode: 'default',
       controls: [
         'rewind',
@@ -199,6 +199,8 @@ describe('controls are specific to the context', () => {
       Object.defineProperty(window, 'innerWidth', {
         value: data.innerWidth,
       });
+
+      window.dispatchEvent(new Event('resize'));
 
       getComponent({ mode: data.mode as any });
 
