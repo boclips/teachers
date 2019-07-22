@@ -15,7 +15,7 @@ class NavbarButton extends React.PureComponent<Props> {
     return (
       <Link
         to={this.props.link}
-        className="navbar-buttons__button link--tabbable"
+        className="navbar-buttons__link link--tabbable"
         tabIndex={0}
         data-qa={this.props.dataQa}
         onClick={this.props.onClick}

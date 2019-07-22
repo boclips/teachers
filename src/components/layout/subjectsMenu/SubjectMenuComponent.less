@@ -1,0 +1,71 @@
+@import '../../../../resources/styles/_antd-theme.less';
+@import '../../../../resources/styles/_colours.less';
+
+.subject-menu {
+  &__list {
+    display: inline-flex;
+    width: 100%;
+
+
+    &-item-group {
+      width: 16%;
+
+      a {
+        text-decoration: none;
+      }
+
+    }
+
+    &-item:hover,
+    &-item-heading:hover {
+      background-color: inherit;
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    &-item-heading {
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+      margin-left: -20px;
+      a {
+        font-size: 20px;
+        line-height: 28px;
+        color: @dark-blue;
+      }
+    }
+
+    &-item {
+      overflow-wrap: normal;
+      white-space: normal;
+      list-style-type: disc;
+      color: @shade-4;
+
+      a {
+        font-size: 16px;
+        line-height: 20px;
+        color: @cta-blue;
+        font-family: Heebo;
+        padding-left: 0px;
+      }
+    }
+
+    &__dropdown.ant-dropdown {
+      min-width: 992px;
+      max-width: none;
+      position: absolute;
+      left: 0px !important;
+      top: 84px !important;
+    }
+  }
+}
+
+@media (min-width: @screen-xl) {
+  .subject-menu__dropdown {
+    width: @screen-xl;
+    margin-left: -(@screen-xl / 2);
+    left: 50%!important;
+  }
+}

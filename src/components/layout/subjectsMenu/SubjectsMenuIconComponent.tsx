@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
-import MyAccountSVG from '../../../../resources/images/my-account.svg';
+import MySubjectSVG from '../../../../resources/images/subjects.svg';
 import { A11yButton } from '../../common/A11yButton';
 
 interface Props {
@@ -8,19 +8,19 @@ interface Props {
   className?: string;
 }
 
-const AccountMenuIconComponent = React.memo((props: Props) => (
+const SubjectsMenuIconComponent = React.memo((props: Props) => (
   <A11yButton callback={props.onClick}>
     <div className={classnames('navbar-buttons__button', props.className)}>
-      <MyAccountSVG
+      <MySubjectSVG
         className="account-menu-icon ant-dropdown-link"
-        data-qa="account-menu-open"
+        data-qa="subjects-menu-open"
         tabIndex={0}
         aria-haspopup="true"
         aria-hidden="true"
       />
-      <span className={'icon-label'}>Your account</span>
+      <span className={'icon-label'}>Subjects</span>
     </div>
   </A11yButton>
 ));
 
-export default AccountMenuIconComponent;
+export default SubjectsMenuIconComponent;

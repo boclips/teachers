@@ -15,7 +15,8 @@
     text-align: center;
   }
 
-  &__button {
+  &__button,
+  &__link {
     margin: 0;
     padding: 0;
     height: 70px;
@@ -26,10 +27,6 @@
 
     &:hover {
       text-decoration: none;
-
-      path {
-        fill: @shade-5;
-      }
     }
 
     .icon-container {
@@ -45,5 +42,9 @@
       margin-top: -14px;
       white-space: nowrap;
     }
+  }
+
+  &__button:not(:hover):not(.ant-dropdown-open) path {
+    fill: @shade-4;
   }
 }

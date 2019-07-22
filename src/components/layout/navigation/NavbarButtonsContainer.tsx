@@ -1,10 +1,7 @@
 import React from 'react';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
-import {
-  HomeLink,
-  MyCollectionsLink,
-  PublicCollectionsLink,
-} from '../navigation/NavbarButtons';
+import { HomeLink, PublicCollectionsLink } from '../navigation/NavbarButtons';
+import SubjectMenuComponent from '../subjectsMenu/SubjectMenuComponent';
 import './NavbarButtons.less';
 
 const NavbarButtonsContainer = React.memo(() => (
@@ -13,13 +10,13 @@ const NavbarButtonsContainer = React.memo(() => (
       <HomeLink />
     </li>
     <li className={'navbar-buttons__list-item'}>
-      <MyCollectionsLink />
-    </li>
-    <li className={'navbar-buttons__list-item display-desktop'}>
-      <AccountMenuContainer />
+      <SubjectMenuComponent />
     </li>
     <li className={'navbar-buttons__list-item'}>
       <PublicCollectionsLink />
+    </li>
+    <li className={'navbar-buttons__list-item display-desktop'}>
+      <AccountMenuContainer />
     </li>
   </ul>
 ));

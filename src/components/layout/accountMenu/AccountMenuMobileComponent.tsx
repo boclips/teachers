@@ -6,6 +6,7 @@ import {
   BookmarkedCollectionsLink,
   LogoutLink,
   ReferAFriendLink,
+  UserCollectionsLink,
 } from './MenuOptions';
 
 interface State {
@@ -52,14 +53,18 @@ export default class AccountMenuMobile extends React.PureComponent<
           <Menu selectable={false}>
             <Menu.Divider key="lovely-divider-1" />
             <Menu.Item key="1" className="account-menu-mobile__menu-item">
-              <BookmarkedCollectionsLink onClick={this.onClose} />
+              <UserCollectionsLink onClick={this.onClose} />
             </Menu.Item>
             <Menu.Divider key="lovely-divider-2" />
             <Menu.Item key="2" className="account-menu-mobile__menu-item">
-              <ReferAFriendLink />
+              <BookmarkedCollectionsLink onClick={this.onClose} />
             </Menu.Item>
             <Menu.Divider key="lovely-divider-3" />
             <Menu.Item key="3" className="account-menu-mobile__menu-item">
+              <ReferAFriendLink />
+            </Menu.Item>
+            <Menu.Divider key="lovely-divider-4" />
+            <Menu.Item key="4" className="account-menu-mobile__menu-item">
               <LogoutLink onClick={this.props.onLogout} />
             </Menu.Item>
           </Menu>
