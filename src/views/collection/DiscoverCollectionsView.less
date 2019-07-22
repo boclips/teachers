@@ -53,10 +53,20 @@
     }
 
     &subject-link {
+      display: block;
+
       width: 100%;
       margin-bottom: 12px;
+
       overflow: hidden;
       text-overflow: ellipsis;
+      white-space: nowrap;
+
+      text-decoration: none;
+
+      span {
+        display: inline;
+      }
     }
 
     &subject-list-item {
