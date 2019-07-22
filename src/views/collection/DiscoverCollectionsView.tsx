@@ -82,7 +82,7 @@ export class DiscoverCollectionsView extends PureComponent<
               <h1 className="big-title alt display-tablet-and-desktop">
                 <Icon component={SubjectsSVG} /> Subjects
               </h1>
-              <Row gutter={16}>
+              <Row gutter={12}>
                 <ul className="discover-collections__subjects-list">
                   {this.props.discipline.subjects.map(subject => (
                     <li className="discover-collections__subject-list-item">
