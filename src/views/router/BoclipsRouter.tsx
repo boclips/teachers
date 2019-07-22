@@ -15,6 +15,7 @@ import CollectionDetailsView from '../collection/CollectionDetailsView';
 import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import MyCollectionListView from '../collection/MyCollectionListView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
+import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
@@ -101,6 +102,11 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             <PrivateRoute
               path="/collections/:collectionId"
               component={collectionView}
+            />
+            <PrivateRoute
+              path="/our-subjects"
+              component={SubjectsView}
+              exact={true}
             />
             <PrivateRoute path="/">
               <HomeView />

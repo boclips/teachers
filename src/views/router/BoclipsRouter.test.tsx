@@ -8,6 +8,7 @@ import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MockStoreFactory } from '../../../test-support/factories';
+import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
@@ -218,6 +219,19 @@ describe('when authorised', () => {
     const tabs = wrapper.find(ConnectedTabsContainer);
     expect(tabs).not.toExist();
   });
+
+  test('shows our subjects page', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/our-subjects')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const subjectView = wrapper.find(DisciplineCardList);
+    expect(subjectView).toExist();
+  });
 });
 
 describe('when not authorised', () => {
@@ -284,6 +298,19 @@ describe('when not authorised', () => {
 
     const loggedOutView = wrapper.find(LoggedOutView);
     expect(loggedOutView).toExist();
+  });
+
+  test('does not show subjects page', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/our-subjects', '', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const ourSubjectsView = wrapper.find(DisciplineCardList);
+    expect(ourSubjectsView).not.toExist();
   });
 });
 
