@@ -137,7 +137,12 @@ describe('MixpanelAnalytics', () => {
       title: 'my video title',
     });
 
-    mixpanelAnalytics.trackVideoLinkCopied(video);
+    const segment = {
+      start: 0,
+      end: 33,
+    };
+
+    mixpanelAnalytics.trackVideoLinkCopied(video, segment);
 
     expect(mock.track).toHaveBeenCalledWith('VIDEO_LINK_COPIED', {
       video_badges: 'ad-free',
@@ -149,6 +154,8 @@ describe('MixpanelAnalytics', () => {
       video_releasedOn: '2018-06-20T10:12:33.000Z',
       video_subjects: 'Maths',
       video_title: 'my video title',
+      share_segment_start: 0,
+      share_segment_end: 33,
     });
   });
 

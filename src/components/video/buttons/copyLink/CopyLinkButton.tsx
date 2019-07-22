@@ -20,8 +20,11 @@ interface StateProps {
 }
 
 class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
-  private showCopiedNotification = (video: Video) => () => {
-    AnalyticsFactory.getInstance().trackVideoLinkCopied(video);
+  private showCopiedNotification = () => {
+    AnalyticsFactory.getInstance().trackVideoLinkCopied(
+      this.props.video,
+      this.props.segment,
+    );
     NotificationFactory.success({
       message: 'Copied!',
       description: 'The video link has been copied to your clipboard.',
@@ -32,7 +35,7 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
     return (
       <CopyToClipboard
         text={this.getLink()}
-        onCopy={this.showCopiedNotification(this.props.video)}
+        onCopy={this.showCopiedNotification}
         options={{ debug: true }}
       >
         <Button data-qa="copy-link" tabIndex={0}>

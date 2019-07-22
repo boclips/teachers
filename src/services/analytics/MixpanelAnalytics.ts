@@ -1,7 +1,7 @@
 import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
-import { Video } from '../../types/Video';
+import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { CreateCollectionRequest } from '../collections/createCollection';
@@ -174,9 +174,11 @@ export default class MixpanelAnalytics {
     });
   }
 
-  public trackVideoLinkCopied(video: Video): void {
+  public trackVideoLinkCopied(video: Video, segment: Segment): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, {
       ...toMixpanelVideo(video),
+      share_segment_start: segment && segment.start,
+      share_segment_end: segment && segment.end,
     });
   }
 
