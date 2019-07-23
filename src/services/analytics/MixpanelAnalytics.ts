@@ -1,4 +1,3 @@
-import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
 import { Segment, Video } from '../../types/Video';
@@ -182,10 +181,14 @@ export default class MixpanelAnalytics {
     });
   }
 
-  public trackVideoPlayback(video: Video, watchedSegment: PlaybackEvent): void {
+  public trackVideoPlayback(
+    video: Video,
+    startSeconds: number,
+    endSeconds: number,
+  ): void {
     this.mixpanelInstance.track(EventTypes.VIDEO_PLAYBACK, {
       ...toMixpanelVideo(video),
-      ...toMixpanelSegment(watchedSegment),
+      ...toMixpanelSegment(video, startSeconds, endSeconds),
     });
   }
 

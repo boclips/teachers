@@ -4,6 +4,7 @@ import { Player as PlayerComponent } from 'boclips-player-react';
 import querystring from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import { Segment, Video } from '../../../types/Video';
@@ -62,6 +63,14 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
     }
   };
 
+  private handleOnPlayback = (_, startSeconds: number, endSeconds: number) => {
+    AnalyticsFactory.getInstance().trackVideoPlayback(
+      this.props.video,
+      startSeconds,
+      endSeconds,
+    );
+  };
+
   private getPlayerOptions(): Partial<PlayerOptions> {
     const security = BoclipsSecurity.getInstance();
     const tokenFactory = security.getTokenFactory(5);
@@ -71,6 +80,7 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
           videoId: this.props.video.id,
           videoIndex: this.props.videoIndex || null,
         },
+        handleOnSegmentPlayback: this.handleOnPlayback,
       },
       api: {
         tokenFactory: async () => {

@@ -1,4 +1,3 @@
-import { PlaybackEvent } from 'boclips-player/esm/Events/AnalyticsEvents';
 import { Mixpanel } from 'mixpanel-browser';
 import * as moment from 'moment';
 import {
@@ -172,12 +171,12 @@ describe('MixpanelAnalytics', () => {
       title: 'my video title',
     });
 
-    mixpanelAnalytics.trackVideoPlayback(video, {} as PlaybackEvent);
+    mixpanelAnalytics.trackVideoPlayback(video, 50, 60);
 
     expect(mock.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
-      playback_segment_end_seconds: undefined,
-      playback_segment_start_seconds: undefined,
-      playback_video_duration_seconds: undefined,
+      playback_segment_end_seconds: 60,
+      playback_segment_start_seconds: 50,
+      playback_video_duration_seconds: 120,
       video_badges: 'ad-free',
       video_contentPartner: 'Bodevs Productions',
       video_description: 'my video description',
