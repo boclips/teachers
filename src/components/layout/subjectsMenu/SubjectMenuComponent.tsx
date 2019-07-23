@@ -40,14 +40,12 @@ class SubjectMenuComponent extends React.Component<Props> {
                 className="subject-menu__list-item-heading"
                 key={discipline.id}
               >
-                <h1>
-                  <Link
-                    to={`/discover-collections?discipline=${discipline.id}`}
-                    className="link--tabbable"
-                  >
-                    {discipline.name}
-                  </Link>
-                </h1>
+                <Link
+                  to={`/discover-collections?discipline=${discipline.id}`}
+                  className="link--tabbable"
+                >
+                  {discipline.name}
+                </Link>
               </Menu.Item>
             }
             {discipline.subjects &&

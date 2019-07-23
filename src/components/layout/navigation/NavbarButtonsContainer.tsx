@@ -14,6 +14,9 @@ const NavbarButtonsContainer = React.memo(() => (
       <HomeLink />
     </li>
     <li className={'navbar-buttons__list-item display-desktop'}>
+      <AccountMenuContainer />
+    </li>
+    <li className={'navbar-buttons__list-item display-desktop'}>
       <SubjectMenuComponent />
     </li>
     <li className={'navbar-buttons__list-item display-mobile-and-tablet'}>
@@ -21,9 +24,6 @@ const NavbarButtonsContainer = React.memo(() => (
     </li>
     <li className={'navbar-buttons__list-item'}>
       <PublicCollectionsLink />
-    </li>
-    <li className={'navbar-buttons__list-item display-desktop'}>
-      <AccountMenuContainer />
     </li>
   </ul>
 ));

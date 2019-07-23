@@ -4,15 +4,19 @@
 .navbar-buttons {
   display: inline-flex;
   padding: 0;
-
-  @media (min-width: @screen-lg) {
-    margin-left: 40px;
-  }
+  float: right;
 
   &__list-item {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 72px;
     list-style: none;
     margin-left: 20px;
     text-align: center;
+
+    > div {
+      margin: 0 auto;
+    }
   }
 
   &__button,
@@ -22,11 +26,13 @@
     height: 70px;
     align-items: center;
     color: @cta-blue;
+    transition: color 200ms ease-in !important;
     text-decoration: none;
     cursor: pointer;
 
     &:hover {
       text-decoration: none;
+      color: @mid-blue;
     }
 
     .icon-container {
@@ -36,7 +42,7 @@
 
     .icon-label {
       display: block;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 500;
       line-height: 12px;
       margin-top: -14px;
@@ -44,8 +50,25 @@
     }
   }
 
+  &__button.ant-dropdown-open,
+  .active {
+    color: @mid-blue;
+  }
+
+  path {
+    transition: fill 300ms ease-in-out;
+  }
+
   &__button:not(:hover):not(.ant-dropdown-open) path,
   &__link:not(:hover):not(.active) path {
+    transition: fill 300ms ease-in-out;
     fill: @shade-4;
+  }
+
+  &__button:hover:not(.ant-dropdown-open) path {
+    @media (max-width: @screen-md) {
+      transition: fill 300ms ease-in-out;
+      fill: @shade-2;
+    }
   }
 }
