@@ -43,6 +43,7 @@ class SubjectMenuComponent extends React.Component<Props> {
                 <h1>
                   <Link
                     to={`/discover-collections?discipline=${discipline.id}`}
+                    className="link--tabbable"
                   >
                     {discipline.name}
                   </Link>
@@ -52,7 +53,10 @@ class SubjectMenuComponent extends React.Component<Props> {
             {discipline.subjects &&
               discipline.subjects.map(subject => (
                 <Menu.Item className="subject-menu__list-item" key={subject.id}>
-                  <Link to={`/discover-collections?subject=${subject.id}`}>
+                  <Link
+                    to={`/discover-collections?subject=${subject.id}`}
+                    className="link--tabbable"
+                  >
                     {subject.name}
                   </Link>
                 </Menu.Item>
