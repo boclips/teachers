@@ -7,6 +7,7 @@ import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import ConnectedTabsContainer from '../tabs/TabsContainer';
 import NavbarButtonsContainer from './NavbarButtonsContainer';
+import './TopNavbarComponent.less';
 
 interface Props {
   showTabs: boolean;
@@ -19,7 +20,7 @@ const { Content } = Layout;
 
 const TopNavbarComponent = React.memo((props: Props) => (
   <React.Fragment>
-    <Content>
+    <Content className="top-navbar">
       <Row>
         <Col sm={{ span: 24 }} md={{ span: 6 }} lg={{ span: 4 }}>
           <section className="logo-wrapper">
