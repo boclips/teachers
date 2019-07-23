@@ -254,7 +254,7 @@ class RegistrationForm extends React.Component<
                 password: 'redacted',
               };
 
-              if (error.response.status === 409) {
+              if (error && error.response.status === 409) {
                 handleUserExists(formDetailsRedacted);
               } else {
                 handleError(formDetailsRedacted);
