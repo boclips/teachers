@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
-import { ClickableTag } from './Tag';
+import { ClickableTag, Tag } from './Tag';
 
 interface SubjectTagProps {
   subjectName: string;
@@ -12,7 +12,7 @@ interface SubjectTagProps {
 
 export class SubjectTag extends React.Component<SubjectTagProps> {
   public render(): React.ReactNode {
-    return (
+    return this.props.subjectId != null ? (
       <ClickableTag
         dataQa={'subject-tag'}
         value={this.props.subjectName}
@@ -20,6 +20,8 @@ export class SubjectTag extends React.Component<SubjectTagProps> {
         link={`/discover-collections?subject=${this.props.subjectId}`}
         onClick={this.trackClick}
       />
+    ) : (
+      <Tag value={this.props.subjectName} label={'Subject'} />
     );
   }
 
