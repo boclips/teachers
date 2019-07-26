@@ -1,5 +1,6 @@
 import { Duration } from 'moment';
 import { Link } from './Link';
+import { Subject } from './Subject';
 
 export interface VideoLinks {
   self: Link;
@@ -20,7 +21,7 @@ export interface Video {
   duration: Duration;
   releasedOn: Date;
   createdBy: string;
-  subjects: string[];
+  subjects: Subject[];
   playback: StreamPlayback | YoutubePlayback;
   thumbnailUrl: string;
   badges: string[];

@@ -54,8 +54,11 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
           {this.props.video.subjects.length !== 0 && (
             <div className="subjects-container">
               {this.props.video.subjects.map(subject => (
-                <StopClickPropagation key={subject}>
-                  <SubjectTag subjectName={subject} />
+                <StopClickPropagation key={subject.name}>
+                  <SubjectTag
+                    subjectName={subject.name}
+                    subjectId={subject.id}
+                  />
                 </StopClickPropagation>
               ))}
             </div>

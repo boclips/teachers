@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { SubjectFactory } from '../../../test-support/factories';
 import {
   video177,
   youtubeVideo1,
@@ -8,6 +9,14 @@ import convertVideoResource from './convertVideoResource';
 
 test('converts a video with stream playback', () => {
   const video = convertVideoResource(video177);
+  const mathsSubject = SubjectFactory.sample({
+    id: 'maths-subject-id',
+    name: 'Maths',
+  });
+  const physicsSubject = SubjectFactory.sample({
+    id: 'physics-subject-id',
+    name: 'Physics',
+  });
 
   expect(video.id).toEqual('177');
   expect(video.title).toEqual('KS3/4 Science: Demonstrating Chemistry');
@@ -17,7 +26,7 @@ test('converts a video with stream playback', () => {
   expect(video.rating).toEqual(3);
   expect(video.createdBy).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
-  expect(video.subjects).toEqual(['Maths', 'Physics']);
+  expect(video.subjects).toEqual([mathsSubject, physicsSubject]);
   expect(video.playback instanceof StreamPlayback).toBeTruthy();
   expect((video.playback as StreamPlayback).getUrl()).toEqual(
     'https://cdn.kaltura.com/stream/147.mpd',

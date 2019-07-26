@@ -8,7 +8,7 @@ export const toMixpanelVideo = (video: Video) => {
     video_duration: video.duration.toISOString(),
     video_releasedOn: video.releasedOn.toISOString(),
     video_contentPartner: video.createdBy,
-    video_subjects: video.subjects.join(', '),
+    video_subjects: video.subjects,
     video_playback: video.playback,
     video_badges: video.badges.join(', '),
   };

@@ -67,7 +67,10 @@ export const video177 = Object.freeze({
   description: 'Matthew Tosh shows us the science.',
   releasedOn: '2018-02-11T10:12:33Z',
   createdBy: 'cp1',
-  subjects: ['Maths', 'Physics'],
+  subjects: [
+    { id: 'maths-subject-id', name: 'Maths' },
+    { id: 'physics-subject-id', name: 'Physics' },
+  ],
   rating: 3,
   playback: {
     type: 'STREAM',
@@ -89,7 +92,10 @@ const video147 = Object.freeze({
   description: 'The winners of the North West round.',
   releasedOn: '2018-02-12T10:12:33Z',
   createdBy: 'cp2',
-  subjects: [],
+  subjects: [
+    { id: 'maths-subject-id', name: 'Maths' },
+    { id: 'physics-subject-id', name: 'Physics' },
+  ],
   playback: {
     type: 'STREAM',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/147.jpg',

@@ -132,7 +132,7 @@ describe('MixpanelAnalytics', () => {
       id: '123',
       playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
       releasedOn: new Date('2018-06-20T10:12:33Z'),
-      subjects: ['Maths'],
+      subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
       title: 'my video title',
     });
 
@@ -151,7 +151,7 @@ describe('MixpanelAnalytics', () => {
       video_id: '123',
       video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
       video_releasedOn: '2018-06-20T10:12:33.000Z',
-      video_subjects: 'Maths',
+      video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
       video_title: 'my video title',
       share_segment_start: 0,
       share_segment_end: 33,
@@ -167,7 +167,7 @@ describe('MixpanelAnalytics', () => {
       id: '123',
       playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
       releasedOn: new Date('2018-06-20T10:12:33Z'),
-      subjects: ['Maths'],
+      subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
       title: 'my video title',
     });
 
@@ -184,7 +184,7 @@ describe('MixpanelAnalytics', () => {
       video_id: '123',
       video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
       video_releasedOn: '2018-06-20T10:12:33.000Z',
-      video_subjects: 'Maths',
+      video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
       video_title: 'my video title',
     });
   });
