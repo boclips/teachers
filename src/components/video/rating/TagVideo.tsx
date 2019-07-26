@@ -30,6 +30,7 @@ class TagVideo extends React.PureComponent<Props & StateProps> {
             {this.props.tags.map(t => (
               <Col md={8} xs={24} key={t.id}>
                 <span
+                  data-state={t.label}
                   data-qa="tag-radio"
                   className="tag-video--radio"
                   onClick={this.triggerChange(t)}
