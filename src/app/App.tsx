@@ -27,6 +27,8 @@ import updateSearchParametersMiddleware from '../components/searchResults/redux/
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
+import fetchTagsMiddleware from '../components/video/tags/redux/middleware/fetchTagsMiddleware';
+import { tagsReducer } from '../components/video/tags/redux/reducers/tagsReducer';
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import ConfigLoader from './configLoader/ConfigLoader';
@@ -44,6 +46,7 @@ const rootReducer: Reducer<any> = combineReducers({
   user: userDetailsFetchedReducer,
   collections: collectionsReducer,
   subjects: subjectsReducer,
+  tags: tagsReducer,
   disciplines: disciplinesReducer,
   ageRanges: ageRangeReducer,
   apiPrefix: (state = {}) => state,
@@ -74,6 +77,7 @@ export default class App extends PureComponent<Props> {
         onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,
         fetchSubjectsMiddleware,
+        fetchTagsMiddleware,
         ...updateSearchParametersMiddleware,
         updatePageActionMiddleware,
         fetchDisciplinesMiddleware,

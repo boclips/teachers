@@ -5,6 +5,7 @@ import {
   disciplinesResponse,
   links,
   subjectsResponse,
+  tagsResponse,
   userResponse,
   video177,
   video177Slim,
@@ -37,7 +38,9 @@ export default class ApiStub {
 
   constructor(linksDefault: any = links) {
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
-    this.fetchSubjects().fetchDisciplines();
+    this.fetchSubjects()
+      .fetchDisciplines()
+      .fetchTags();
   }
 
   public queryVideos(options: VideoQueryOptions) {
@@ -84,6 +87,14 @@ export default class ApiStub {
     MockFetchVerify.get(
       `${this.prefix}/v1/disciplines`,
       JSON.stringify(disciplinesResponse()),
+    );
+    return this;
+  }
+
+  public fetchTags() {
+    MockFetchVerify.get(
+      `${this.prefix}/v1/tags`,
+      JSON.stringify(tagsResponse()),
     );
     return this;
   }

@@ -5,6 +5,7 @@ export interface VideoLinks {
   self: Link;
   transcript?: Link;
   rate?: Link;
+  tag?: Link;
 }
 
 export interface VideoId {
@@ -25,6 +26,7 @@ export interface Video {
   badges: string[];
   rating: number;
   links: VideoLinks;
+  bestFor?: string;
 }
 
 export class StreamPlayback {

@@ -16,5 +16,6 @@ export interface Links {
   profile?: Link;
   createAccount?: Link;
   subjects?: Link;
+  tags?: Link;
   disciplines?: Link;
 }

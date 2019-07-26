@@ -3,7 +3,7 @@ import React from 'react';
 import RateIcon from '../../../../../resources/images/rate.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../../types/Video';
-import RatingModal from '../../rating/RatingModal';
+import VideoFeedbackModal from '../../rating/VideoFeedbackModal';
 
 export interface RatingProps {
   video: Video;
@@ -29,11 +29,11 @@ export default class RateButton extends React.Component<RatingProps, State> {
 
     return (
       <React.Fragment>
-        <RatingModal
+        <VideoFeedbackModal
           visible={this.state.visible}
           video={this.props.video}
-          onRated={this.closeModal}
-          onRatingCancelled={this.closeModal}
+          onSaved={this.closeModal}
+          onModalCancelled={this.closeModal}
         />
         <Button
           data-qa="rating-video-button"

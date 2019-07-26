@@ -17,6 +17,7 @@ import State, {
   VideoSearchStateValue,
 } from '../src/types/State';
 import { Subject } from '../src/types/Subject';
+import { Tag } from '../src/types/Tag';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
@@ -42,6 +43,7 @@ export class VideoFactory {
         (arg.playback as StreamPlayback) ||
         new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
       badges: arg.badges || ['ad-free'],
+      bestFor: arg.bestFor || null,
       links: arg.links || {
         self: new Link({ href: `/v1/videos/${id}` }),
         rate: new Link({
@@ -171,6 +173,7 @@ export class LinksFactory {
       collection: arg.collection || new Link({ href: '/collections/xxx' }),
       createAccount: arg.createAccount || new Link({ href: '/users' }),
       subjects: arg.subjects || new Link({ href: '/subjects' }),
+      tags: arg.tags || new Link({ href: '/tags' }),
       disciplines: arg.disciplines || new Link({ href: '/disciplines' }),
     });
   }
@@ -338,6 +341,41 @@ export class DisciplinesFactory {
   }
 }
 
+export class TagsFactory {
+  public static sample(arg: Tag[] = []): Tag[] {
+    return Object.freeze([
+      {
+        id: 'tag-one-id',
+        label: 'tag one',
+        links: {
+          self: new Link({ href: 'http://localhost/v1/tags/1' }),
+        },
+      },
+      {
+        id: 'tag-two-id',
+        label: 'tag two',
+        links: {
+          self: new Link({ href: 'http://localhost/v1/tags/2' }),
+        },
+      },
+      ...arg,
+    ]) as Tag[];
+  }
+}
+
+export class TagFactory {
+  public static sample(arg: Partial<Tag> = {}): Tag {
+    return Object.freeze({
+      id: 'tag-one-id',
+      label: 'tag one',
+      links: {
+        self: new Link({ href: 'http://localhost/v1/tags/1' }),
+      },
+      ...arg,
+    }) as Tag;
+  }
+}
+
 export class MockStoreFactory {
   public static sample(store: Partial<State> = {}): MockStoreEnhanced<State> {
     const mockStore = configureStore<State>();
@@ -355,6 +393,7 @@ export class MockStoreFactory {
       router: RouterFactory.sample(),
       subjects: SubjectsFactory.sample(),
       disciplines: DisciplinesFactory.sample(),
+      tags: TagsFactory.sample(),
       ageRanges: [],
       ...store,
     });

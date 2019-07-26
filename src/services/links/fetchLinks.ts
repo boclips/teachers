@@ -71,6 +71,10 @@ export default function fetchLinks(prefix: string) {
           links.disciplines = new Link(body._links.disciplines);
         }
 
+        if (body._links.tags) {
+          links.tags = new Link(body._links.tags);
+        }
+
         return links;
       },
     )

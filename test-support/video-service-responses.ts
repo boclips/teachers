@@ -40,6 +40,9 @@ export const links = {
     subjects: {
       href: `${prefix}/v1/subjects`,
     },
+    tags: {
+      href: `${prefix}/v1/tags`,
+    },
     disciplines: {
       href: `${prefix}/v1/disciplines`,
     },
@@ -50,6 +53,7 @@ export const video177Slim = Object.freeze({
   id: '177',
   _links: {
     self: { href: `${prefix}/v1/videos/177` },
+    tag: { href: `${prefix}/v1/videos/177/tag` },
     rate: {
       href: `${prefix}/v1/videos/177?rating={rating}`,
       templated: true,
@@ -72,6 +76,7 @@ export const video177 = Object.freeze({
     duration: 'PT1M2S',
   },
   badges: ['ad-free'],
+  bestFor: { label: 'Hook' },
   type: {
     name: 'educational',
     id: 1,
@@ -261,6 +266,29 @@ export function subjectsResponse() {
         {
           id: '3',
           name: 'German',
+        },
+      ],
+    },
+  };
+}
+
+export function tagsResponse() {
+  return {
+    _embedded: {
+      tags: [
+        {
+          id: '1',
+          label: 'Explainer',
+          _links: {
+            self: { href: 'http://localhost/v1/tags/1' },
+          },
+        },
+        {
+          id: '2',
+          label: 'Fake news',
+          _links: {
+            self: { href: 'http://localhost/v1/tags/2' },
+          },
         },
       ],
     },

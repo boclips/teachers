@@ -3,7 +3,7 @@ import React from 'react';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import './Rating.less';
-import RatingModal from './RatingModal';
+import VideoFeedbackModal from './VideoFeedbackModal';
 
 export interface RatingProps {
   video: Video;
@@ -27,11 +27,11 @@ export default class Rating extends React.Component<RatingProps, State> {
 
     return (
       <span className="rating--container">
-        <RatingModal
+        <VideoFeedbackModal
           visible={this.state.visible}
           video={this.props.video}
-          onRated={this.closeModal}
-          onRatingCancelled={this.closeModal}
+          onSaved={this.closeModal}
+          onModalCancelled={this.closeModal}
         />
 
         {rating !== null && rating !== undefined ? (

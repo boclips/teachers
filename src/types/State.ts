@@ -6,6 +6,7 @@ import { Link } from './Link';
 import { Links } from './Links';
 import PageSpec from './PageSpec';
 import { Subject } from './Subject';
+import { Tag } from './Tag';
 import { Video } from './Video';
 import { VideoCollection } from './VideoCollection';
 
@@ -66,6 +67,10 @@ export interface SubjectState {
   subjects: Subject[];
 }
 
+export interface TagState {
+  tags: Tag[];
+}
+
 export interface DisciplineState {
   disciplines: Discipline[];
 }
@@ -121,6 +126,7 @@ export default interface State
     RouterState,
     CollectionState,
     SubjectState,
+    TagState,
     DisciplineState,
     AgeRangeState,
     Environment {}

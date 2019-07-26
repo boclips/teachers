@@ -8,6 +8,7 @@ import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import { SubjectTag } from '../tags/SubjectTag';
+import { Tag } from '../tags/Tag';
 import './VideoCard.less';
 
 export interface Props {
@@ -57,6 +58,12 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
                   <SubjectTag subjectName={subject} />
                 </StopClickPropagation>
               ))}
+            </div>
+          )}
+
+          {this.props.video.bestFor && (
+            <div className="best-for-container">
+              <Tag label="Best for" value={this.props.video.bestFor} />
             </div>
           )}
 

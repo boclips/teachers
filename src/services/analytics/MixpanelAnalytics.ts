@@ -1,5 +1,6 @@
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
+import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
@@ -215,6 +216,14 @@ export default class MixpanelAnalytics {
       video_id: video.id,
       video_title: video.title,
       rating,
+    });
+  }
+
+  public trackVideoTagging(video: Video, tag: Tag) {
+    this.mixpanelInstance.track(EventTypes.VIDEO_TAGGING, {
+      video_id: video.id,
+      video_title: video.title,
+      tag: tag.id,
     });
   }
 

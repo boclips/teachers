@@ -11,6 +11,7 @@ import { Links } from '../../../../types/Links';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
+import { fetchTagsAction } from '../../../video/tags/redux/actions/fetchTagsAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
@@ -22,6 +23,7 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
     .then((links: Links) => {
       store.dispatch(storeLinksAction(links));
       store.dispatch(fetchSubjectsAction());
+      store.dispatch(fetchTagsAction());
       store.dispatch(fetchDisciplinesAction());
       fetchPageableCollections(links, { key: 'myCollections' })
         .then(collections => {
