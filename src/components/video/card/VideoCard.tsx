@@ -62,7 +62,7 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
           )}
 
           {this.props.video.bestFor && (
-            <div className="best-for-container">
+            <div data-qa="best-for-tags" className="best-for-container">
               <Tag label="Best for" value={this.props.video.bestFor} />
             </div>
           )}
