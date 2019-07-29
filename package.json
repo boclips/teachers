@@ -60,7 +60,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
     "boclips-js-security": "^3.0.0",
-    "boclips-player": "^2.1.5",
+    "boclips-player": "^2.1.6",
     "boclips-player-react": "^1.0.1",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^0.1.19",
