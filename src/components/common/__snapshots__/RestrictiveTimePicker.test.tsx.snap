@@ -33,6 +33,7 @@ exports[`matches the snapshot when rendering a restricted timepicker 1`] = `
       format="mm:ss"
       hideDisabledOptions={true}
       onChange={[Function]}
+      onOpenChange={[Function]}
       placement="bottomLeft"
       transitionName="slide-up"
       value={"1970-01-01T00:00:00.000Z"}

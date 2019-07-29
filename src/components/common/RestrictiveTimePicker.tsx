@@ -55,12 +55,41 @@ export class RestrictiveTimePicker extends React.Component<Props, State> {
             format={this.upperBound.hours > 0 ? 'hh:mm:ss' : 'mm:ss'}
             hideDisabledOptions={true}
             onChange={this.handleChange}
+            onOpenChange={this.handleOpen}
             value={this.state.value}
           />
         </Form.Item>
       </section>
     );
   }
+
+  private handleOpen = (open: boolean) =>
+    setTimeout(() => {
+      if (open) {
+        // A bit hacky, but the only way we can reliably get the other options to show.
+        // Antd won't give us a reference for the DOM element
+        const selectContainers = document.querySelectorAll(
+          '.ant-time-picker-panel-select',
+        );
+        if (selectContainers.length) {
+          selectContainers.forEach(selectContainer => {
+            const selected = selectContainer.querySelector(
+              '.ant-time-picker-panel-select-option-selected',
+            ) as HTMLDivElement;
+
+            let scrollTop = 0;
+            if (selected) {
+              scrollTop =
+                selected.offsetTop +
+                selected.clientHeight / 2 -
+                selectContainer.clientHeight / 2;
+            }
+
+            selectContainer.scroll(0, Math.max(0, scrollTop));
+          });
+        }
+      }
+    }, 0);
 
   private boundToComponents = (bound: number) => ({
     hours: Math.floor(bound / 60 / 60),
