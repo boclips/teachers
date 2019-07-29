@@ -1,7 +1,6 @@
 import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { A11yButton } from '../../common/A11yButton';
@@ -32,17 +31,12 @@ class CollectionCardContainer extends React.PureComponent<
         disableClick={true}
         callback={this.props.goToCollectionDetails(this.props.collection)}
       >
-        <Link
-          className="no-underline"
-          to={'/collections/' + this.props.collection.id}
-        >
-          <CollectionCard
-            tiny={this.props.tiny}
-            key={`card-container-${this.props.collection.id}`}
-            collection={this.props.collection}
-            numberOfPreviews={NUMBER_OF_PREVIEWS}
-          />
-        </Link>
+        <CollectionCard
+          tiny={this.props.tiny}
+          key={`card-container-${this.props.collection.id}`}
+          collection={this.props.collection}
+          numberOfPreviews={NUMBER_OF_PREVIEWS}
+        />
       </A11yButton>
     );
   }

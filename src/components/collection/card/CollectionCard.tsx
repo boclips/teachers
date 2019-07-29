@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { VideoCollection } from '../../../types/VideoCollection';
 import './CollectionCard.less';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
@@ -34,6 +35,10 @@ export class CollectionCard extends React.PureComponent<Props> {
           )}
           isGrid={this.props.tiny}
           id={this.props.collection.id}
+        />
+        <Link
+          className="no-underline collection-card__link"
+          to={'/collections/' + this.props.collection.id}
         />
       </section>
     );
