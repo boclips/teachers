@@ -110,9 +110,37 @@ it('will load a different video if the video changes', () => {
     },
   });
 
+  expect(player.loadVideo).toBeCalledTimes(2);
   expect(player.loadVideo).toHaveBeenLastCalledWith(
     newVideo.links.self.getOriginalLink(),
   );
+});
+
+it('will not reload the same video on props change', () => {
+  const constantVideo = VideoFactory.sample({
+    id: 'a-constant-video',
+  });
+
+  const component = getComponent({
+    video: constantVideo,
+  });
+
+  expect(PlayerFactory.get).toHaveBeenCalled();
+
+  const player: Player = mocked(PlayerFactory.get).mock.results[0].value;
+
+  expect(player.loadVideo).toHaveBeenCalledWith(
+    constantVideo.links.self.getOriginalLink(),
+  );
+
+  component.setProps({
+    childProps: {
+      ...component.prop('childProps'),
+      video: { ...constantVideo },
+    },
+  });
+
+  expect(player.loadVideo).toHaveBeenCalledTimes(1);
 });
 
 describe('it passes a permissive token factory to the player', () => {

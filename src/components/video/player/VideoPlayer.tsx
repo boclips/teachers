@@ -47,7 +47,7 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
   }
 
   public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>): void {
-    if (prevProps.video !== this.props.video) {
+    if (prevProps.video.id !== this.props.video.id) {
       this.loadVideo();
     }
   }
