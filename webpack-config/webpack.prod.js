@@ -54,7 +54,7 @@ module.exports = merge(common, {
       template: path.resolve(srcPath, 'index.html'),
       ga: googleAnalyticsId,
     }),
-    new CleanWebpackPlugin([distPath], {root: path.resolve(__dirname, '..')}),
+    new CleanWebpackPlugin([distPath], { root: path.resolve(__dirname, '..') }),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
@@ -65,6 +65,7 @@ module.exports = merge(common, {
       test: /\.js$|\.css$|\.svg$|\.png$/,
     }),
     new DynamicCdnWebpackPlugin(),
+    new webpack.EnvironmentPlugin(['SENTRY_RELEASE']),
   ],
 
   devtool: 'source-map',

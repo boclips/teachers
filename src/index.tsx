@@ -21,8 +21,11 @@ const addHubspotScript = () => {
 };
 
 if (environment === 'production') {
+  const sentryRelease = process.env.SENTRY_RELEASE;
+
   Sentry.init({
     dsn: 'https://0da84012df0643bd8876a2336cbe5d92@sentry.io/1402914',
+    release: sentryRelease,
   });
 
   addHubspotScript();
