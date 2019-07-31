@@ -7,9 +7,8 @@ import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
-import { SubjectTag } from '../tags/SubjectTag';
-import { Tag } from '../tags/Tag';
 import './VideoCard.less';
+import VideoCardTagList from './VideoCardTagList';
 
 export interface Props {
   video: Video | null;
@@ -51,29 +50,10 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
         </StopClickPropagation>
 
         <section className="video-details">
-          {this.props.video.subjects.length !== 0 && (
-            <div className="subjects-container">
-              {this.props.video.subjects.map(subject => (
-                <StopClickPropagation key={subject.name}>
-                  <SubjectTag
-                    subjectName={subject.name}
-                    subjectId={subject.id}
-                  />
-                </StopClickPropagation>
-              ))}
-            </div>
-          )}
-
-          {this.props.video.bestFor && (
-            <div data-qa="best-for-tags" className="best-for-container">
-              <Tag label="Best for" value={this.props.video.bestFor} />
-            </div>
-          )}
-
+          <VideoCardTagList video={this.props.video} />
           <p data-qa="video-description" className="description clamp-3-lines">
             {this.props.video.description}
           </p>
-
           <Row className="buttons-row">
             <StopClickPropagation>
               <VideoButtons
