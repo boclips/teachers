@@ -7,11 +7,11 @@ import {
   collectionResponse,
   video177Slim,
 } from '../../../test-support/video-service-responses';
-import CollectionEditButton from '../../components/collection/header/CollectionEditButton';
+import EditCollectionButton from '../../components/collection/buttons/EditCollectionButton';
 import {
   CollectionEditModalHelper,
   CollectionFormHelper,
-} from '../../components/collection/header/CollectionEditButton.test';
+} from '../../components/collection/buttons/EditCollectionButton.test';
 import AgeRangeSlider from '../../components/common/AgeRangeSlider';
 import { AgeRange } from '../../types/AgeRange';
 
@@ -111,7 +111,7 @@ describe('when editable collection', () => {
       },
       204,
     );
-    CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
+    CollectionEditModalHelper.confirmModal(wrapper.find(EditCollectionButton));
 
     await eventually(() => {
       expect(wrapper.find(By.dataQa('collection-name')).text()).toEqual(
@@ -151,7 +151,7 @@ describe('when editable collection', () => {
     const slider = wrapper.find(AgeRangeSlider);
 
     slider.props().onChange(new AgeRange(5, 11));
-    CollectionEditModalHelper.confirmModal(wrapper.find(CollectionEditButton));
+    CollectionEditModalHelper.confirmModal(wrapper.find(EditCollectionButton));
 
     await eventually(() => {
       expect(

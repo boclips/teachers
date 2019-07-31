@@ -1,14 +1,17 @@
 import { Icon, Modal } from 'antd';
+import Button from 'antd/lib/button';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import { deleteCollectionAction } from '../../redux/actions/deleteCollectionAction';
+import DeleteIconSVG from '../../../../resources/images/delete-collection.svg';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { VideoCollection } from '../../../types/VideoCollection';
+import { deleteCollectionAction } from '../redux/actions/deleteCollectionAction';
 import './RemoveCollectionButton.less';
 
 interface OwnProps {
   collection: VideoCollection;
+  classNameModifier?: string;
 }
 
 interface DispatchProps {
@@ -20,15 +23,16 @@ export class RemoveCollectionButtonInner extends PureComponent<
 > {
   public render() {
     return this.props.collection.links.remove ? (
-      <Icon
-        data-qa="delete-collection"
-        className="delete-collection__icon top-right-icon"
+      <Button
         onClick={this.removeCollection}
-        type="delete"
-        theme="filled"
-        role="button"
+        data-qa="delete-collection"
+        size={'large'}
         aria-label="Delete collection"
-      />
+        className={`collection-edit__button ${this.props.classNameModifier}`}
+      >
+        <Icon component={DeleteIconSVG} aria-label="Delete collection" />
+        Delete
+      </Button>
     ) : null;
   }
 
@@ -74,8 +78,9 @@ export class RemoveCollectionButtonInner extends PureComponent<
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onDeleteCollectionAction: (colleciton: VideoCollection) =>
-      dispatch(deleteCollectionAction(colleciton)),
+    onDeleteCollectionAction: (collection: VideoCollection) => {
+      dispatch(deleteCollectionAction(collection));
+    },
   };
 }
 

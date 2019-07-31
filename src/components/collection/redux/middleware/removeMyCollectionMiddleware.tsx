@@ -1,3 +1,4 @@
+import { push } from 'connected-react-router';
 import React from 'react';
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
@@ -13,6 +14,9 @@ export function onDeleteCollection(
   request: VideoCollection,
 ) {
   deleteCollection(request)
+    .then(() => {
+      store.dispatch(push('/collections'));
+    })
     .then(() => {
       NotificationFactory.success({
         message: (

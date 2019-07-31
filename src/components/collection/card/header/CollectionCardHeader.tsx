@@ -4,12 +4,13 @@ import StopClickPropagation from '../../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from '../../buttons/bookmark/BookmarkCollectionButton';
+import CollectionButtonsContainer from '../../buttons/CollectionButtonsContainer';
+import '../../buttons/CollectionButtonsContainer.less';
 import CollectionCardTitle from './CollectionCardTitle';
-import RemoveCollectionButton from './RemoveCollectionButton';
 
 interface Props {
   collection: VideoCollection;
-  showRemoveButton: boolean;
+  showCollectionButtons: boolean;
   showTagsIfEmpty: boolean;
 }
 
@@ -22,12 +23,17 @@ const hasValidTags = (collection: VideoCollection) =>
   hasAgeRange(collection) || hasSubjects(collection);
 
 const CollectionCardHeader = React.memo(
-  ({ collection, showRemoveButton, showTagsIfEmpty }: Props) => (
+  ({ collection, showCollectionButtons, showTagsIfEmpty }: Props) => (
     <>
       <CollectionCardTitle collection={collection} />
       <StopClickPropagation>
         <BookmarkingButton collection={collection} />
-        {showRemoveButton && <RemoveCollectionButton collection={collection} />}
+        {showCollectionButtons && (
+          <CollectionButtonsContainer
+            collection={collection}
+            className="collection-edit__card "
+          />
+        )}
       </StopClickPropagation>
       {hasValidTags(collection) || showTagsIfEmpty ? (
         <div className="tags-container">

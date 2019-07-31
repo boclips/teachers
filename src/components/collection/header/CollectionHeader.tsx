@@ -6,8 +6,8 @@ import StopClickPropagation from '../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
+import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import { CollectionSubtitle } from '../CollectionSubtitle';
-import CollectionEditButtonContainer from './CollectionEditButtonContainer';
 import './CollectionHeader.less';
 import { CollectionTitle } from './CollectionTitle';
 
@@ -20,7 +20,7 @@ export default class CollectionHeader extends React.PureComponent<Props> {
     return (
       <React.Fragment>
         <Row type="flex" justify="space-between">
-          <Col xs={{ span: 24, order: 1 }} md={{ span: 19, order: 1 }}>
+          <Col>
             <CollectionTitle
               title={this.props.collection.title}
               isPublic={this.props.collection.isPublic}
@@ -30,16 +30,16 @@ export default class CollectionHeader extends React.PureComponent<Props> {
               <BookmarkCollectionButton collection={this.props.collection} />
             </span>
           </Col>
-          <Col xs={{ span: 24, order: 3 }} md={{ span: 5, order: 2 }}>
-            <CollectionEditButtonContainer
-              className="collection-header__edit-button"
+          <Col>
+            <CollectionButtonsContainer
+              className="collection-edit__header"
               collection={this.props.collection}
             />
             <span className="collection-header__bookmark-button display-tablet-and-desktop">
               <BookmarkCollectionButton collection={this.props.collection} />
             </span>
           </Col>
-          <Col xs={{ span: 24, order: 2 }} md={{ span: 24, order: 3 }}>
+          <Col xs={{ span: 24 }} md={{ span: 24 }}>
             <Row>
               {this.props.collection.subjects.map(subjectId => (
                 <StopClickPropagation wrapper="span" key={subjectId}>

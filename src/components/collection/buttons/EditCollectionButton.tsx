@@ -1,17 +1,19 @@
 import { Button } from 'antd';
+import Icon from 'antd/lib/icon';
 import React from 'react';
+import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
+import { AgeRange, isEqualTo } from '../../../types/AgeRange';
 import { VideoCollection } from '../../../types/VideoCollection';
 import Bodal from '../../common/Bodal';
 import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
-
-import { AgeRange, isEqualTo } from '../../../types/AgeRange';
-import './CollectionEditButton.less';
-import CollectionEditForm, { EditableFields } from './CollectionEditForm';
+import './EditCollectionButton.less';
+import CollectionEditForm, { EditableFields } from './EditCollectionForm';
 
 interface Props {
   collection: VideoCollection;
   canSave: boolean;
   onUpdate: (request: EditCollectionRequest) => void;
+  classNameModifier?: string;
 }
 
 interface State {
@@ -19,7 +21,7 @@ interface State {
   hasAgeRangeBeenTouched: boolean;
 }
 
-export default class CollectionEditButton extends React.PureComponent<
+export default class EditCollectionButton extends React.PureComponent<
   Props,
   State
 > {
@@ -87,13 +89,18 @@ export default class CollectionEditButton extends React.PureComponent<
     return (
       <React.Fragment>
         <Button
-          type="primary"
-          size="large"
+          size={'large'}
           onClick={this.showModal}
+          className={`collection-edit__button ${this.props.classNameModifier}`}
           data-qa="collection-edit-button"
           disabled={!this.props.canSave || this.state.visible}
         >
-          Edit Collection
+          <Icon
+            theme="filled"
+            aria-label="Edit collection"
+            component={EditCollectionSVG}
+          />
+          Edit
         </Button>
         <Bodal
           title="Edit collection"

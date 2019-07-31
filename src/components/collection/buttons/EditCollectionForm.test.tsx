@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MockStoreFactory } from '../../../../test-support/factories';
 import { AgeRange } from '../../../types/AgeRange';
 import { BoclipsSlider } from '../../common/BoclipsSlider';
-import CollectionEditForm from './CollectionEditForm';
+import CollectionEditForm from './EditCollectionForm';
 
 test('can set correct initial age range for slider when age range is an interval', () => {
   const ageRangeChange = () => {

@@ -6,7 +6,7 @@ import { AgeRange } from '../../../types/AgeRange';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
 import AgeRangeSlider from '../../common/AgeRangeSlider';
-import './CollectionEditForm.less';
+import './EditCollectionForm.less';
 
 export interface EditableFields {
   title: string;
@@ -19,7 +19,7 @@ export interface Props extends EditableFields, FormComponentProps {
   onAgeRangeChange: (e) => void;
 }
 
-class CollectionEditForm extends React.PureComponent<
+class EditCollectionForm extends React.PureComponent<
   Props & ReturnType<typeof mapStateToProps>
 > {
   public render() {
@@ -69,5 +69,5 @@ const mapStateToProps = (state: State) => ({
 });
 
 export default connect(mapStateToProps)(
-  Form.create<Props>()(CollectionEditForm),
+  Form.create<Props>()(EditCollectionForm),
 );

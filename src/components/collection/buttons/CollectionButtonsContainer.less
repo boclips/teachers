@@ -1,0 +1,63 @@
+@import '../../../../resources/styles/_antd-theme.less';
+
+.collection-edit {
+  font-size: 16px;
+  color: @btn-primary-bg;
+
+  &__header {
+    font-size: 16px;
+    color: @btn-primary-bg;
+    cursor: pointer;
+    z-index: 1;
+    display: inline-flex;
+    top: 20px;
+
+  }
+
+  &__card {
+    font-size: 16px;
+    color: @btn-primary-bg;
+    cursor: pointer;
+    z-index: 1;
+    display: inline-flex;
+    top: 20px;
+    right: 20px;
+    position: absolute;
+
+    min-width: 0;
+
+    @media(max-width: @screen-sm-max) {
+      right: 0px;
+    }
+  }
+
+  &__button {
+    border:none;
+    border-right: 3px solid @shade-3;
+    border-radius: 0;
+    box-shadow: none;
+    height:20px;
+    min-width: 0;
+    padding: 0 20px 0 20px;
+    &:hover {
+      border-right: 3px solid @shade-3;
+    }
+
+    &--dropdown-padding {
+      padding: 10px;
+    }
+
+    &:last-child {
+      border: none;
+      padding-right: 0px;
+    }
+
+  }
+  &__mobile {
+    position: absolute;
+    min-width: 0;
+    box-shadow: none;
+    border: none;
+    font-size: 24px;
+  }
+}

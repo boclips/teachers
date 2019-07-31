@@ -14,7 +14,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import AgeRangeSlider from '../../common/AgeRangeSlider';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { editCollectionAction } from '../redux/actions/editCollectionAction';
-import CollectionEditButtonContainer from './CollectionEditButtonContainer';
+import CollectionButtonsContainer from './CollectionButtonsContainer';
 
 describe('when can edit collection', () => {
   it('changing the title fires a patch action', () => {
@@ -222,7 +222,7 @@ const mountComponent = (collection: VideoCollection, store) =>
   mount(
     <Provider store={store}>
       <span>
-        <CollectionEditButtonContainer collection={collection} />
+        <CollectionButtonsContainer collection={collection} />
       </span>
     </Provider>,
   );
