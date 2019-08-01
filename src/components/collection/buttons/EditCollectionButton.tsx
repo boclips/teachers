@@ -91,7 +91,8 @@ export default class EditCollectionButton extends React.PureComponent<
         <Button
           size={'large'}
           onClick={this.showModal}
-          className={`collection-edit__button ${this.props.classNameModifier}`}
+          className={`collection-edit__button ${this.props.classNameModifier ||
+            ''}`}
           data-qa="collection-edit-button"
           disabled={!this.props.canSave || this.state.visible}
         >

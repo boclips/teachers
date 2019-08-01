@@ -11,7 +11,6 @@
     z-index: 1;
     display: inline-flex;
     top: 20px;
-
   }
 
   &__card {
@@ -26,17 +25,17 @@
 
     min-width: 0;
 
-    @media(max-width: @screen-sm-max) {
+    @media (max-width: @screen-sm-max) {
       right: 0px;
     }
   }
 
   &__button {
-    border:none;
+    border: none;
     border-right: 3px solid @shade-3;
     border-radius: 0;
     box-shadow: none;
-    height:20px;
+    height: 20px;
     min-width: 0;
     padding: 0 20px 0 20px;
     &:hover {
@@ -51,8 +50,13 @@
       border: none;
       padding-right: 0px;
     }
-
   }
+
+  &__button,
+  .ant-btn:disabled {
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+
   &__mobile {
     position: absolute;
     min-width: 0;

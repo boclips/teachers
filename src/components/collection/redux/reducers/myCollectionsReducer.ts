@@ -101,19 +101,26 @@ export const onMyCollectionEdited = (
     editedCollection.id,
   );
 
-  const myCollections = { ...state.myCollections };
+  const myCollections = state.myCollections;
 
-  if (indexOfCollection > -1) {
-    myCollections.items[indexOfCollection] = {
-      ...myCollections.items[indexOfCollection],
+  const items = myCollections.items.map((item, index) => {
+    if (index !== indexOfCollection) {
+      return item;
+    }
+
+    return {
+      ...item,
       ...editedCollection,
     };
-  }
+  });
 
   return {
     ...state,
     updating: false,
-    myCollections,
+    myCollections: {
+      ...myCollections,
+      items,
+    },
   };
 };
 
