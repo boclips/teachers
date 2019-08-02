@@ -24,6 +24,7 @@ test('converts a video with stream playback', () => {
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
   expect(video.releasedOn).toEqual(new Date('2018-02-11T10:12:33Z'));
   expect(video.rating).toEqual(3);
+  expect(video.yourRating).toEqual(5);
   expect(video.createdBy).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
   expect(video.subjects).toEqual([mathsSubject, physicsSubject]);

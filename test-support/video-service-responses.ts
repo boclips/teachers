@@ -72,6 +72,7 @@ export const video177 = Object.freeze({
     { id: 'physics-subject-id', name: 'Physics' },
   ],
   rating: 3,
+  yourRating: 5,
   playback: {
     type: 'STREAM',
     thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',

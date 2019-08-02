@@ -26,6 +26,7 @@ export interface Video {
   thumbnailUrl: string;
   badges: string[];
   rating: number;
+  yourRating?: number;
   links: VideoLinks;
   bestFor?: string;
 }
