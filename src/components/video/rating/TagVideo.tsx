@@ -23,7 +23,7 @@ class TagVideo extends React.PureComponent<Props & StateProps> {
     }
 
     return (
-      <section data-qa="tag-video">
+      <section data-qa="tag-video" className="tag-video--container">
         <h2>How would you use it in class?</h2>
         <Radio.Group value={this.props.selectedTag}>
           <Row>

@@ -42,6 +42,14 @@ class VideoFeedbackModal extends React.Component<
     };
   }
 
+  private alreadyRated() {
+    try {
+      return desc[this.props.video.yourRating - 1] && true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   public render() {
     return this.props.video.links.rate ? (
       <Bodal
@@ -61,12 +69,17 @@ class VideoFeedbackModal extends React.Component<
           data-qa="rate-video"
         >
           <h2 data-qa="rating-description">
-            What rating would you give "{this.props.video.title}"?
+            {this.alreadyRated()
+              ? `You have already rated this video as "${
+                  desc[this.props.video.yourRating - 1]
+                }". If you would like to change this, select a new rating.`
+              : `What rating would you give "${this.props.video.title}"?`}
           </h2>
           <Rate
             className="rating--rate"
             tooltips={desc}
             onChange={this.changeRating}
+            defaultValue={this.props.video.yourRating}
           />
         </section>
 

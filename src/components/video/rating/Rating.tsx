@@ -55,7 +55,11 @@ export default class Rating extends React.Component<RatingProps, State> {
   private getRatingStars(video: Video) {
     const stars = (
       <span data-qa="rating-score" data-state={video.rating}>
-        <Rate disabled={true} defaultValue={video.rating} />
+        <Rate
+          disabled={true}
+          defaultValue={video.rating}
+          key={`rate-${video.id}-${video.rating}`}
+        />
       </span>
     );
     if (video.links.rate) {
