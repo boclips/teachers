@@ -38,6 +38,7 @@ describe('when can edit collection', () => {
         isPublic: null,
         subjects: null,
         ageRange: new AgeRange(),
+        description: null,
       }),
     );
   });
@@ -65,6 +66,7 @@ describe('when can edit collection', () => {
         title: null,
         subjects: null,
         ageRange: new AgeRange(),
+        description: null,
       }),
     );
   });
@@ -94,6 +96,35 @@ describe('when can edit collection', () => {
         title: null,
         subjects: ['subject-one-id', 'subject-two-id'],
         ageRange: new AgeRange(),
+        description: null,
+      }),
+    );
+  });
+
+  it('changing the description of a collection fires a patch', () => {
+    const collection = VideoCollectionFactory.sample({
+      links: VideoCollectionLinksFactory.sample({
+        edit: new Link({ href: 'something', templated: false }),
+      }),
+    });
+
+    const store = MockStoreFactory.sample();
+
+    const wrapper = mountComponent(collection, store);
+
+    CollectionEditModalHelper.openModal(wrapper);
+    CollectionFormHelper.editCollectionDescription(wrapper, 'new description');
+    CollectionEditModalHelper.confirmModal(wrapper);
+
+    expect(store.getActions()).toHaveLength(1);
+    expect(store.getActions()).toContainEqual(
+      editCollectionAction({
+        originalCollection: collection,
+        isPublic: null,
+        title: null,
+        description: 'new description',
+        ageRange: new AgeRange(),
+        subjects: null,
       }),
     );
   });
@@ -117,13 +148,14 @@ describe('when can edit collection', () => {
       CollectionEditModalHelper.confirmModal(wrapper);
 
       expect(store.getActions()).toHaveLength(1);
-      expect(store.getActions()[0]).toEqual(
+      expect(store.getActions()).toContainEqual(
         editCollectionAction({
           originalCollection: collection,
           title: null,
           ageRange: new AgeRange(5, 11),
           subjects: null,
           isPublic: null,
+          description: null,
         }),
       );
     });
@@ -146,13 +178,14 @@ describe('when can edit collection', () => {
       CollectionEditModalHelper.confirmModal(wrapper);
 
       expect(store.getActions()).toHaveLength(1);
-      expect(store.getActions()[0]).toEqual(
+      expect(store.getActions()).toContainEqual(
         editCollectionAction({
           originalCollection: collection,
           title: null,
           ageRange: new AgeRange(11, 19),
           subjects: null,
           isPublic: null,
+          description: null,
         }),
       );
     });
@@ -171,13 +204,14 @@ describe('when can edit collection', () => {
 
       CollectionEditModalHelper.confirmModal(wrapper);
       expect(store.getActions()).toHaveLength(1);
-      expect(store.getActions()[0]).toEqual(
+      expect(store.getActions()).toContainEqual(
         editCollectionAction({
           originalCollection: collection,
           title: null,
           ageRange: new AgeRange(11, 16),
           subjects: null,
           isPublic: null,
+          description: null,
         }),
       );
     });
@@ -231,6 +265,14 @@ export class CollectionFormHelper {
   public static editCollectionText(wrapper, text: string) {
     const events = new EventSimulator(wrapper);
     events.setText(text, wrapper.find(By.dataQa('title-edit', 'input')));
+  }
+
+  public static editCollectionDescription(wrapper, text: string) {
+    const events = new EventSimulator(wrapper);
+    events.setText(
+      text,
+      wrapper.find(By.dataQa('description-edit', 'textarea')),
+    );
   }
 
   public static editVisiblity(wrapper, visiblity) {

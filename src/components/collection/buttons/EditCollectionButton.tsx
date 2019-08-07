@@ -51,29 +51,32 @@ export default class EditCollectionButton extends React.PureComponent<
         return;
       }
 
-      const collectionChanges = {
-        originalCollection: this.props.collection,
-        title:
-          values.title !== this.props.collection.title ? values.title : null,
-        isPublic:
-          values.isPublic !== this.props.collection.isPublic
-            ? values.isPublic
-            : null,
-        subjects:
-          values.subjects !== this.props.collection.subjects
-            ? values.subjects
-            : null,
-        ageRange: this.hasAgeRangeChanged(values.ageRange)
-          ? values.ageRange
-          : new AgeRange(),
-      };
-
-      form.resetFields();
-
       if (
         this.hasFieldsChanged(values) ||
         this.hasAgeRangeChanged(values.ageRange)
       ) {
+        const collectionChanges = {
+          originalCollection: this.props.collection,
+          title:
+            values.title !== this.props.collection.title ? values.title : null,
+          isPublic:
+            values.isPublic !== this.props.collection.isPublic
+              ? values.isPublic
+              : null,
+          subjects:
+            values.subjects !== this.props.collection.subjects
+              ? values.subjects
+              : null,
+          ageRange: this.hasAgeRangeChanged(values.ageRange)
+            ? values.ageRange
+            : new AgeRange(),
+          description:
+            values.description !== this.props.collection.description
+              ? values.description
+              : null,
+        };
+
+        form.resetFields();
         this.props.onUpdate(collectionChanges);
       }
 
@@ -126,6 +129,7 @@ export default class EditCollectionButton extends React.PureComponent<
             wrappedComponentRef={this.saveFormRef}
             ageRange={this.props.collection.ageRange}
             onAgeRangeChange={this.onAgeRangeChange}
+            description={this.props.collection.description}
           />
         </Bodal>
       </React.Fragment>
@@ -141,7 +145,8 @@ export default class EditCollectionButton extends React.PureComponent<
   private hasFieldsChanged = (values: EditableFields) =>
     values.title !== this.props.collection.title ||
     values.isPublic !== this.props.collection.isPublic ||
-    values.subjects !== this.props.collection.subjects;
+    values.subjects !== this.props.collection.subjects ||
+    values.description !== this.props.collection.description;
 
   private saveFormRef = formRef => {
     this.formRef = formRef;

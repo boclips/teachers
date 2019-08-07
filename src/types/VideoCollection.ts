@@ -24,6 +24,7 @@ export interface VideoCollection {
   isMine: boolean;
   createdBy: string;
   ageRange?: AgeRange;
+  description?: string;
 }
 
 // tslint:disable-next-line:interface-over-type-literal

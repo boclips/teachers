@@ -5,12 +5,13 @@ import './CollectionSubtitle.less';
 
 export interface Props {
   collection: VideoCollection;
+  classname: string;
 }
 
 export class CollectionSubtitle extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
-      <span className="highlight">
+      <span className={this.props.classname}>
         <span>
           <span data-qa="collection-number-of-videos">
             {this.props.collection.videoIds.length}

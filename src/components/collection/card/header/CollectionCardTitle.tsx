@@ -1,6 +1,5 @@
 import React from 'react';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { CollectionSubtitle } from '../../CollectionSubtitle';
 import './CollectionCardTitle.less';
 
 interface Props {
@@ -17,7 +16,6 @@ const CollectionCardTitle = React.memo((props: Props) => (
     >
       {props.collection.title}
     </h1>
-    <CollectionSubtitle collection={props.collection} />
   </>
 ));
 

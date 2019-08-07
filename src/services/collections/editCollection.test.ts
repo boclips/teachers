@@ -70,3 +70,28 @@ test('change age range on collection', async () => {
 
   expect(success).toEqual(true);
 });
+
+test('change description of collection', async () => {
+  MockFetchVerify.patch(
+    '/v1/collections/the-id',
+    {
+      title: 'avideo',
+      description: 'new description',
+      ageRange: { min: null, max: null },
+    },
+    204,
+  );
+
+  const success = await editCollection({
+    originalCollection: VideoCollectionFactory.sample({
+      links: VideoCollectionLinksFactory.sample({
+        edit: new Link({ href: '/v1/collections/the-id' }),
+      }),
+    }),
+    title: 'avideo',
+    description: 'new description',
+    ageRange: new AgeRange(),
+  });
+
+  expect(success).toEqual(true);
+});

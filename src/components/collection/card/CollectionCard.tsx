@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { CollectionSubtitle } from '../CollectionSubtitle';
 import './CollectionCard.less';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 import CollectionCardHeader from './header/CollectionCardHeader';
@@ -25,9 +26,18 @@ export class CollectionCard extends React.PureComponent<Props> {
       >
         <CollectionCardHeader
           collection={this.props.collection}
-          showCollectionButtons={!this.props.tiny}
+          showFullCard={!this.props.tiny}
           showTagsIfEmpty={this.props.tiny}
         />
+        {!this.props.tiny && (
+          <div
+            data-qa="collection-description"
+            className="collection-header__description-preview"
+          >
+            {this.props.collection.description}
+          </div>
+        )}
+
         <CollectionCardVideoPreviews
           numberOfPreviews={this.props.numberOfPreviews}
           videos={this.props.collection.videoIds.map(
@@ -36,6 +46,20 @@ export class CollectionCard extends React.PureComponent<Props> {
           isGrid={this.props.tiny}
           id={this.props.collection.id}
         />
+        {this.props.tiny && (
+          <span>
+            <CollectionSubtitle
+              classname="highlight collection-subtitle tiny"
+              collection={this.props.collection}
+            />
+            <div
+              data-qa="collection-description"
+              className="collection-header__description-preview tiny"
+            >
+              {this.props.collection.description}
+            </div>
+          </span>
+        )}
         <Link
           className="no-underline collection-card__link"
           to={'/collections/' + this.props.collection.id}

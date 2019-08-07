@@ -225,6 +225,7 @@ export function collectionsResponse(
             min: 3,
             max: 9,
           },
+          description: 'my description',
           subjects,
           _links: {
             edit: {

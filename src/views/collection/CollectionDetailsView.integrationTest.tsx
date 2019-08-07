@@ -30,6 +30,7 @@ describe('when video collection', () => {
       subjects: [],
       lastUpdated: 'Jan 16, 2019',
       ageRange: '3-9',
+      description: 'my description',
     });
   });
 
@@ -108,6 +109,7 @@ describe('when editable collection', () => {
         isPublic: null,
         subjects: null,
         ageRange: { min: null, max: null },
+        description: null,
       },
       204,
     );
@@ -138,6 +140,7 @@ describe('when editable collection', () => {
         isPublic: null,
         subjects: null,
         ageRange: { min: 5, max: 11 },
+        description: null,
       },
       204,
     );

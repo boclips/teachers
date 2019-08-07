@@ -58,6 +58,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     ageRange: data.ageRange
       ? new AgeRange(data.ageRange.min, data.ageRange.max)
       : new AgeRange(),
+    description: data.description,
   };
 };
 

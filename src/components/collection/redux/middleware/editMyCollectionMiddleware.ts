@@ -52,6 +52,10 @@ const createUpdatedCollection = (request: EditCollectionRequest) => {
     ageRange: request.ageRange.isBounded()
       ? request.ageRange
       : request.originalCollection.ageRange,
+    description:
+      request.description != null
+        ? request.description
+        : request.originalCollection.description,
   };
 };
 

@@ -6,11 +6,12 @@ import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from '../../buttons/bookmark/BookmarkCollectionButton';
 import CollectionButtonsContainer from '../../buttons/CollectionButtonsContainer';
 import '../../buttons/CollectionButtonsContainer.less';
+import { CollectionSubtitle } from '../../CollectionSubtitle';
 import CollectionCardTitle from './CollectionCardTitle';
 
 interface Props {
   collection: VideoCollection;
-  showCollectionButtons: boolean;
+  showFullCard: boolean;
   showTagsIfEmpty: boolean;
 }
 
@@ -23,12 +24,18 @@ const hasValidTags = (collection: VideoCollection) =>
   hasAgeRange(collection) || hasSubjects(collection);
 
 const CollectionCardHeader = React.memo(
-  ({ collection, showCollectionButtons, showTagsIfEmpty }: Props) => (
+  ({ collection, showFullCard, showTagsIfEmpty }: Props) => (
     <>
       <CollectionCardTitle collection={collection} />
+      {showFullCard && (
+        <CollectionSubtitle
+          classname="highlight collection-subtitle"
+          collection={collection}
+        />
+      )}
       <StopClickPropagation>
         <BookmarkingButton collection={collection} />
-        {showCollectionButtons && (
+        {showFullCard && (
           <CollectionButtonsContainer
             collection={collection}
             className="collection-edit__card "

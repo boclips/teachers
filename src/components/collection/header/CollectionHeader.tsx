@@ -51,10 +51,22 @@ export default class CollectionHeader extends React.PureComponent<Props> {
                   ageRange={this.props.collection.ageRange.getLabel()}
                 />
               )}
+
+              <CollectionSubtitle
+                collection={this.props.collection}
+                classname="highlight collection-subtitle header"
+              />
             </Row>
-            <Row>
-              <CollectionSubtitle collection={this.props.collection} />
-            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div
+              data-qa="collection-description"
+              className="collection-header__description"
+            >
+              {this.props.collection.description}
+            </div>
           </Col>
         </Row>
       </React.Fragment>

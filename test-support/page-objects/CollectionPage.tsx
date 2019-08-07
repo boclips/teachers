@@ -55,6 +55,7 @@ export class CollectionPage {
         .find(By.dataQa('age-range'))
         .find(By.dataQa('filter-tag'))
         .text(),
+      description: findOne(el, 'collection-description').text(),
     }))[0];
   }
 

@@ -6,6 +6,7 @@ import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
 import BookmarkingButton from '../../buttons/bookmark/BookmarkCollectionButton';
 import CollectionButtonsContainer from '../../buttons/CollectionButtonsContainer';
+import { CollectionSubtitle } from '../../CollectionSubtitle';
 import CollectionCardHeader from './CollectionCardHeader';
 import CollectionCardTitle from './CollectionCardTitle';
 
@@ -14,7 +15,7 @@ test('renders title', () => {
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={true}
+      showFullCard={true}
       showTagsIfEmpty={false}
     />,
   );
@@ -29,7 +30,7 @@ test('renders bookmarking button', () => {
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={true}
+      showFullCard={true}
       showTagsIfEmpty={false}
     />,
   );
@@ -44,7 +45,7 @@ test('renders edit collection buttons', () => {
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={true}
+      showFullCard={true}
       showTagsIfEmpty={true}
     />,
   );
@@ -54,16 +55,17 @@ test('renders edit collection buttons', () => {
   );
 });
 
-test('does not render remove collection button', () => {
+test('does not render buttons or subtitle when not showing full card', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={false}
+      showFullCard={false}
       showTagsIfEmpty={false}
     />,
   );
 
+  expect(wrapper.find(CollectionSubtitle)).not.toExist();
   expect(wrapper.find(CollectionButtonsContainer)).not.toExist();
 });
 
@@ -74,7 +76,7 @@ test('renders first subject when present', () => {
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={false}
+      showFullCard={false}
       showTagsIfEmpty={false}
     />,
   );
@@ -90,12 +92,24 @@ test('renders age range when present', () => {
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={false}
+      showFullCard={false}
       showTagsIfEmpty={false}
     />,
   );
 
   expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3-9');
+});
+
+test('renders collection subtitle when buttons are rendered', () => {
+  const collection = VideoCollectionFactory.sample({ title: 'hello' });
+  const wrapper = shallow(
+    <CollectionCardHeader
+      collection={collection}
+      showFullCard={true}
+      showTagsIfEmpty={false}
+    />,
+  );
+  expect(wrapper.find(CollectionSubtitle)).toExist();
 });
 
 test('does not render tags container when no tags are present', () => {
@@ -106,7 +120,7 @@ test('does not render tags container when no tags are present', () => {
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={false}
+      showFullCard={false}
       showTagsIfEmpty={false}
     />,
   );
@@ -122,7 +136,7 @@ test('does not render tags container when no tags are present - age range min an
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={false}
+      showFullCard={false}
       showTagsIfEmpty={false}
     />,
   );
@@ -138,7 +152,7 @@ test('does render tags container when no tags are present but show tags is true'
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
-      showCollectionButtons={false}
+      showFullCard={false}
       showTagsIfEmpty={true}
     />,
   );

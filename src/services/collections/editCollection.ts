@@ -19,6 +19,7 @@ export const editCollection = (
       ageRange: request.ageRange.isBounded()
         ? request.ageRange
         : new AgeRange(),
+      description: request.description,
     })
     .then(() => {
       return true;

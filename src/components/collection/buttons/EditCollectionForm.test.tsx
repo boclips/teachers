@@ -20,6 +20,7 @@ test('can set correct initial age range for slider when age range is an interval
           subjects={[]}
           ageRange={new AgeRange(3, 9)}
           onAgeRangeChange={ageRangeChange}
+          description=""
         />
       </>
     </Provider>,

@@ -8,6 +8,7 @@ export interface EditCollectionRequest {
   subjects?: string[];
   ageRange?: AgeRange;
   originalCollection: VideoCollection;
+  description?: string;
 }
 
 export const editCollectionAction = actionCreatorFactory<EditCollectionRequest>(
