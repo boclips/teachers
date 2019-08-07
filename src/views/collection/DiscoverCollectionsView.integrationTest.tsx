@@ -27,9 +27,9 @@ test('displays arts discipline', async () => {
   new ApiStub()
     .defaultUser()
     .fetchCollections()
-    // art disciple contains arts-subject-1 and art-subjects-2
+    // art discipline contains arts-subject-1 and art-subjects-2
     .fetchDisciplines()
-    .fetchCollectionsBySubjects('arts-subject-1', 'arts-subject-2')
+    .fetchCollectionsBySubjects('arts-subject-2', 'arts-subject-1')
     .fetchVideo();
 
   const collectionPage = await DiscoverCollectionListPage.loadByDiscipline(
@@ -38,8 +38,8 @@ test('displays arts discipline', async () => {
 
   expect(collectionPage.getCollections()).toHaveLength(1);
   expect(collectionPage.getDisciplineSubjects()).toMatchObject([
-    'Performing Arts',
     'Art History',
+    'Performing Arts',
   ]);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
