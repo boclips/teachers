@@ -11,7 +11,6 @@ const CollectionCardTitle = React.memo((props: Props) => (
     <h1
       className="collection-card-title collection-card-title--clamp-2-lines"
       data-qa="collection-title"
-      role="button"
       tabIndex={0}
     >
       {props.collection.title}

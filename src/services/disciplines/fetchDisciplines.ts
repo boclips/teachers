@@ -17,9 +17,23 @@ function convertDisciplinesResource(data: any): Discipline[] {
       name: rawDiscipline.name,
       subjects:
         rawDiscipline.subjects &&
-        rawDiscipline.subjects.map(rawSubject => {
-          return { id: rawSubject.id, name: rawSubject.name };
-        }),
+        sortSubjects(
+          rawDiscipline.subjects.map(rawSubject => {
+            return { id: rawSubject.id, name: rawSubject.name };
+          }),
+        ),
     };
+  });
+}
+
+function sortSubjects(subjects) {
+  return [...subjects].sort((a, b) => {
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    return 0;
   });
 }
