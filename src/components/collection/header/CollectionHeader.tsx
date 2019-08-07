@@ -26,16 +26,13 @@ export default class CollectionHeader extends React.PureComponent<Props> {
               isPublic={this.props.collection.isPublic}
               isMine={this.props.collection.isMine}
             />
-            <span className="collection-header__bookmark-button display-mobile">
-              <BookmarkCollectionButton collection={this.props.collection} />
-            </span>
           </Col>
           <Col>
             <CollectionButtonsContainer
               className="collection-edit__header"
               collection={this.props.collection}
             />
-            <span className="collection-header__bookmark-button display-tablet-and-desktop">
+            <span className="collection-header__bookmark-button">
               <BookmarkCollectionButton collection={this.props.collection} />
             </span>
           </Col>
