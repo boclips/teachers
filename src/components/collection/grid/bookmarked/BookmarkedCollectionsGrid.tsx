@@ -17,7 +17,7 @@ class BookmarkedCollectionsGrid extends React.PureComponent<Props> {
       <PageableCollectionCardList
         title={
           <span>
-            <img src={bookmarkedCollectionsImg} alt="" /> My bookmarked
+            <img src={bookmarkedCollectionsImg} alt="" /> Your bookmarked
             collections
           </span>
         }

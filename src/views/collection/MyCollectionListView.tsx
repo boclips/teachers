@@ -23,7 +23,7 @@ export default class MyCollectionListView extends PureComponent {
       <PageableCollectionCardList
         title={
           <span>
-            <img src={collections} alt="" /> My video collections
+            <img src={collections} alt="" /> Your video collections
           </span>
         }
         collectionKey="myCollections"
