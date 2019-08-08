@@ -13,11 +13,7 @@ import CollectionCardTitle from './CollectionCardTitle';
 test('renders title', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={true}
-      showTagsIfEmpty={false}
-    />,
+    <CollectionCardHeader collection={collection} showFullCard={true} />,
   );
 
   expect(wrapper.find(CollectionCardTitle).props().collection).toEqual(
@@ -28,26 +24,21 @@ test('renders title', () => {
 test('renders bookmarking button', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={true}
-      showTagsIfEmpty={false}
-    />,
+    <CollectionCardHeader collection={collection} showFullCard={true} />,
   );
 
-  expect(wrapper.find(BookmarkingButton).props().collection).toEqual(
-    collection,
-  );
+  expect(
+    wrapper
+      .find(BookmarkingButton)
+      .first()
+      .props().collection,
+  ).toEqual(collection);
 });
 
 test('renders edit collection buttons', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });
   const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={true}
-      showTagsIfEmpty={true}
-    />,
+    <CollectionCardHeader collection={collection} showFullCard={true} />,
   );
 
   expect(wrapper.find(CollectionButtonsContainer).props().collection).toEqual(
@@ -69,15 +60,15 @@ test('does not render buttons or subtitle when not showing full card', () => {
   expect(wrapper.find(CollectionButtonsContainer)).not.toExist();
 });
 
-test('renders first subject when present', () => {
+test('renders first subject when present  and showAllSubjects is false', () => {
   const collection = VideoCollectionFactory.sample({
     subjects: ['hello', 'world'],
   });
   const wrapper = shallow(
     <CollectionCardHeader
       collection={collection}
+      showAllSubjects={false}
       showFullCard={false}
-      showTagsIfEmpty={false}
     />,
   );
 
@@ -85,16 +76,27 @@ test('renders first subject when present', () => {
   expect(wrapper.find(ConnectedSubjectTag).props().id).toEqual('hello');
 });
 
+test('renders all subjects when present and showAllSubjects is true', () => {
+  const collection = VideoCollectionFactory.sample({
+    subjects: ['hello', 'world'],
+  });
+  const wrapper = shallow(
+    <CollectionCardHeader
+      collection={collection}
+      showAllSubjects={true}
+      showFullCard={true}
+    />,
+  );
+
+  expect(wrapper.find(ConnectedSubjectTag).length).toEqual(2);
+});
+
 test('renders age range when present', () => {
   const collection = VideoCollectionFactory.sample({
     ageRange: new AgeRange(3, 9),
   });
   const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={false}
-      showTagsIfEmpty={false}
-    />,
+    <CollectionCardHeader collection={collection} showFullCard={false} />,
   );
 
   expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3-9');
@@ -118,11 +120,7 @@ test('does not render tags container when no tags are present', () => {
     subjects: [],
   });
   const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={false}
-      showTagsIfEmpty={false}
-    />,
+    <CollectionCardHeader collection={collection} showFullCard={false} />,
   );
 
   expect(wrapper.find('.tags-container')).not.toExist();
@@ -134,28 +132,8 @@ test('does not render tags container when no tags are present - age range min an
     subjects: [],
   });
   const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={false}
-      showTagsIfEmpty={false}
-    />,
+    <CollectionCardHeader collection={collection} showFullCard={false} />,
   );
 
   expect(wrapper.find('.tags-container')).not.toExist();
-});
-
-test('does render tags container when no tags are present but show tags is true', () => {
-  const collection = VideoCollectionFactory.sample({
-    ageRange: null,
-    subjects: [],
-  });
-  const wrapper = shallow(
-    <CollectionCardHeader
-      collection={collection}
-      showFullCard={false}
-      showTagsIfEmpty={true}
-    />,
-  );
-
-  expect(wrapper.find('.tags-container')).toExist();
 });

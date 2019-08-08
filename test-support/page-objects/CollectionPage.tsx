@@ -2,8 +2,8 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
-import CollectionHeader from '../../src/components/collection/header/CollectionHeader';
-import { CollectionTitle } from '../../src/components/collection/header/CollectionTitle';
+import CollectionCardHeader from '../../src/components/collection/card/header/CollectionCardHeader';
+import CollectionCardTitle from '../../src/components/collection/card/header/CollectionCardTitle';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
@@ -46,9 +46,9 @@ export class CollectionPage {
   }
 
   public getCollectionDetails() {
-    return this.wrapper.find(CollectionHeader).map(el => ({
-      title: findOne(el, 'collection-name').text(),
-      isPublic: el.find(CollectionTitle).props().isPublic,
+    return this.wrapper.find(CollectionCardHeader).map(el => ({
+      title: findOne(el, 'collection-title').text(),
+      isPublic: el.find(CollectionCardTitle).props().collection.isPublic,
       subjects: el.find(By.dataQa('subject-tag')).map(s => s.text()),
       lastUpdated: findOne(el, 'collection-updated-at').text(),
       ageRange: el

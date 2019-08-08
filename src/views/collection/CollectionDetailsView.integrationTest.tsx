@@ -116,7 +116,7 @@ describe('when editable collection', () => {
     CollectionEditModalHelper.confirmModal(wrapper.find(EditCollectionButton));
 
     await eventually(() => {
-      expect(wrapper.find(By.dataQa('collection-name')).text()).toEqual(
+      expect(wrapper.find(By.dataQa('collection-title')).text()).toEqual(
         newTitle,
       );
     });

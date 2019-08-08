@@ -13,6 +13,7 @@ import { CollectionCard } from './CollectionCard';
 interface Props {
   collection: VideoCollection;
   tiny?: boolean;
+  showPrivacy?: boolean;
 }
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -36,6 +37,7 @@ class CollectionCardContainer extends React.PureComponent<
           key={`card-container-${this.props.collection.id}`}
           collection={this.props.collection}
           numberOfPreviews={NUMBER_OF_PREVIEWS}
+          showPrivacy={this.props.showPrivacy}
         />
       </A11yButton>
     );

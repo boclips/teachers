@@ -12,7 +12,7 @@ import State, {
 import { VideoId } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
-import CollectionHeader from '../header/CollectionHeader';
+import CollectionCardHeader from '../card/header/CollectionCardHeader';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import {
   fetchVideosForCollectionAction,
@@ -47,7 +47,11 @@ class CollectionDetails extends PureComponent<
 
     return (
       <section className="collection-view__collection-details">
-        <CollectionHeader collection={this.props.collection} />
+        <CollectionCardHeader
+          collection={this.props.collection}
+          showPrivacy={this.props.collection.isMine}
+          showAllSubjects={true}
+        />
         {this.props.collection.videoIds.length === 0
           ? this.renderEmptyCollection()
           : this.props.collection.videos && (
