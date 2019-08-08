@@ -28,6 +28,7 @@ export default class MyCollectionListView extends PureComponent {
         }
         collectionKey="myCollections"
         renderIfEmptyCollection={this.renderEmptyCollection()}
+        showPrivacy={true}
       />
     );
   }

@@ -7,9 +7,9 @@ import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
+import CollectionCardTitle from '../card/header/CollectionCardTitle';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import './CollectionHeader.less';
-import { CollectionTitle } from './CollectionTitle';
 
 interface Props {
   collection: VideoCollection;
@@ -21,10 +21,9 @@ export default class CollectionHeader extends React.PureComponent<Props> {
       <React.Fragment>
         <Row type="flex" justify="space-between">
           <Col>
-            <CollectionTitle
-              title={this.props.collection.title}
-              isPublic={this.props.collection.isPublic}
-              isMine={this.props.collection.isMine}
+            <CollectionCardTitle
+              collection={this.props.collection}
+              showPrivacy={this.props.collection.isMine}
             />
           </Col>
           <Col>

@@ -11,6 +11,7 @@ interface Props {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
+  showPrivacy?: boolean;
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
@@ -26,6 +27,7 @@ export class CollectionCard extends React.PureComponent<Props> {
       >
         <CollectionCardHeader
           collection={this.props.collection}
+          showPrivacy={this.props.showPrivacy}
           showFullCard={!this.props.tiny}
           showTagsIfEmpty={this.props.tiny}
         />
