@@ -29,17 +29,8 @@ export class CollectionCard extends React.PureComponent<Props> {
           collection={this.props.collection}
           showPrivacy={this.props.showPrivacy}
           showFullCard={!this.props.tiny}
-          showTagsIfEmpty={this.props.tiny}
+          showTagsContainerIfEmpty={this.props.tiny}
         />
-        {!this.props.tiny && (
-          <div
-            data-qa="collection-description"
-            className="collection-header__description-preview"
-          >
-            {this.props.collection.description}
-          </div>
-        )}
-
         <CollectionCardVideoPreviews
           numberOfPreviews={this.props.numberOfPreviews}
           videos={this.props.collection.videoIds.map(

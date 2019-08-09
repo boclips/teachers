@@ -15,6 +15,7 @@ interface Props {
   showPrivacy?: boolean;
   showAllSubjects?: boolean;
   showFullCard: boolean;
+  showTagsContainerIfEmpty?: boolean;
 }
 
 const hasAgeRange = (collection: VideoCollection) =>
@@ -30,55 +31,65 @@ class CollectionCardHeader extends React.PureComponent<Props> {
     return (
       <>
         <Row type="flex" justify="space-between">
-          <Col>
-            <CollectionCardTitle
-              collection={this.props.collection}
-              showPrivacy={this.props.showPrivacy}
-            />
+          <Row>
+            <Col md={{ span: 20 }}>
+              <CollectionCardTitle
+                collection={this.props.collection}
+                showPrivacy={this.props.showPrivacy}
+              />
+            </Col>
+            <Col md={{ span: 4 }}>
+              <StopClickPropagation>
+                <span className="collection-header__bookmark-button">
+                  <BookmarkCollectionButton
+                    collection={this.props.collection}
+                  />
+                </span>
+                {this.props.showFullCard && (
+                  <CollectionButtonsContainer
+                    collection={this.props.collection}
+                    className="collection-edit__card"
+                  />
+                )}
+              </StopClickPropagation>
+            </Col>
+          </Row>
+          <Col xs={{ span: 24 }} md={{ span: 24 }}>
+            {hasValidTags(this.props.collection) ||
+            this.props.showTagsContainerIfEmpty ? (
+              <div className="tags-container">
+                {hasSubjects(this.props.collection) &&
+                  this.subjectsToDisplay().map(subjectId => {
+                    return (
+                      <StopClickPropagation wrapper="span" key={subjectId}>
+                        <ConnectedSubjectTag id={subjectId} />
+                      </StopClickPropagation>
+                    );
+                  })}
+                {hasAgeRange(this.props.collection) && (
+                  <AgeRangeTag
+                    ageRange={this.props.collection.ageRange.getLabel()}
+                  />
+                )}
+              </div>
+            ) : null}
             {this.props.showFullCard && (
               <CollectionSubtitle
-                classname="highlight collection-subtitle"
+                classname="highlight collection-subtitle header"
                 collection={this.props.collection}
               />
             )}
           </Col>
-          <Col>
-            <StopClickPropagation>
-              <span className="collection-header__bookmark-button">
-                <BookmarkCollectionButton collection={this.props.collection} />
-              </span>
-              {this.props.showFullCard && (
-                <CollectionButtonsContainer
-                  collection={this.props.collection}
-                  className="collection-edit__card"
-                />
-              )}
-            </StopClickPropagation>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 24 }}>
-            <Row>
-              {hasValidTags(this.props.collection) ? (
-                <div className="tags-container">
-                  {hasSubjects(this.props.collection) &&
-                    this.subjectsToDisplay().map(subjectId => {
-                      return (
-                        <StopClickPropagation wrapper="span" key={subjectId}>
-                          <ConnectedSubjectTag id={subjectId} />
-                        </StopClickPropagation>
-                      );
-                    })}
-                  {hasAgeRange(this.props.collection) && (
-                    <AgeRangeTag
-                      ageRange={this.props.collection.ageRange.getLabel()}
-                    />
-                  )}
-                </div>
-              ) : null}
-            </Row>
-            <Row>
-              <CollectionSubtitle collection={this.props.collection} />
-            </Row>
-          </Col>
+          <Row>
+            <Col>
+              <div
+                data-qa="collection-description"
+                className="collection-header__description"
+              >
+                {this.props.collection.description}
+              </div>
+            </Col>
+          </Row>
         </Row>
       </>
     );

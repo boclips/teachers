@@ -35,9 +35,7 @@
   }
 
   .tags-container {
-    margin-top: 5px;
-    display: flex;
-    min-height: 38px;
+    display: inline-block;
 
     .tag {
       background-color: @shade-1;
@@ -92,6 +90,10 @@
         display: none;
       }
     }
+
+    .tags-container {
+      display: flex;
+    }
   }
 
   &.skeleton {
@@ -124,4 +126,9 @@
   .collection-video-previews {
     margin-top: auto;
   }
+}
+
+.tags-container {
+  min-height: 38px;
+  margin: 5px 0px 10px;
 }
