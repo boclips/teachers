@@ -36,23 +36,21 @@ export default class CollectionHeader extends React.PureComponent<Props> {
             </span>
           </Col>
           <Col xs={{ span: 24 }} md={{ span: 24 }}>
-            <Row>
-              {this.props.collection.subjects.map(subjectId => (
-                <StopClickPropagation wrapper="span" key={subjectId}>
-                  <ConnectedSubjectTag id={subjectId} />
-                </StopClickPropagation>
-              ))}
-              {this.props.collection.ageRange.isBounded() && (
-                <AgeRangeTag
-                  ageRange={this.props.collection.ageRange.getLabel()}
-                />
-              )}
-
-              <CollectionSubtitle
-                collection={this.props.collection}
-                classname="highlight collection-subtitle header"
+            {this.props.collection.subjects.map(subjectId => (
+              <StopClickPropagation wrapper="span" key={subjectId}>
+                <ConnectedSubjectTag id={subjectId} />
+              </StopClickPropagation>
+            ))}
+            {this.props.collection.ageRange.isBounded() && (
+              <AgeRangeTag
+                ageRange={this.props.collection.ageRange.getLabel()}
               />
-            </Row>
+            )}
+
+            <CollectionSubtitle
+              collection={this.props.collection}
+              classname="highlight collection-subtitle header"
+            />
           </Col>
         </Row>
         <Row>

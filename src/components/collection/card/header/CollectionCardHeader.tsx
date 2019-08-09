@@ -10,6 +10,8 @@ import '../../buttons/CollectionButtonsContainer.less';
 import { CollectionSubtitle } from '../../CollectionSubtitle';
 import CollectionCardTitle from './CollectionCardTitle';
 
+import './CollectionCardHeader.less';
+
 interface Props {
   collection: VideoCollection;
   showPrivacy?: boolean;
@@ -30,66 +32,66 @@ class CollectionCardHeader extends React.PureComponent<Props> {
   public render() {
     return (
       <>
-        <Row type="flex" justify="space-between">
-          <Row>
-            <Col md={{ span: 20 }}>
-              <CollectionCardTitle
-                collection={this.props.collection}
-                showPrivacy={this.props.showPrivacy}
-              />
-            </Col>
-            <Col md={{ span: 4 }}>
-              <StopClickPropagation>
-                <span className="collection-header__bookmark-button">
-                  <BookmarkCollectionButton
-                    collection={this.props.collection}
-                  />
-                </span>
-                {this.props.showFullCard && (
-                  <CollectionButtonsContainer
-                    collection={this.props.collection}
-                    className="collection-edit__card"
-                  />
-                )}
-              </StopClickPropagation>
-            </Col>
-          </Row>
-          <Col xs={{ span: 24 }} md={{ span: 24 }}>
-            {hasValidTags(this.props.collection) ||
-            this.props.showTagsContainerIfEmpty ? (
-              <div className="tags-container">
-                {hasSubjects(this.props.collection) &&
-                  this.subjectsToDisplay().map(subjectId => {
-                    return (
-                      <StopClickPropagation wrapper="span" key={subjectId}>
-                        <ConnectedSubjectTag id={subjectId} />
-                      </StopClickPropagation>
-                    );
-                  })}
-                {hasAgeRange(this.props.collection) && (
-                  <AgeRangeTag
-                    ageRange={this.props.collection.ageRange.getLabel()}
-                  />
-                )}
-              </div>
-            ) : null}
-            {this.props.showFullCard && (
-              <CollectionSubtitle
-                classname="highlight collection-subtitle header"
-                collection={this.props.collection}
-              />
-            )}
+        <Row
+          type="flex"
+          justify="space-between"
+          className="collection-header__title-row"
+        >
+          <Col>
+            <CollectionCardTitle
+              collection={this.props.collection}
+              showPrivacy={this.props.showPrivacy}
+            />
           </Col>
-          <Row>
-            <Col>
-              <div
-                data-qa="collection-description"
-                className="collection-header__description"
-              >
-                {this.props.collection.description}
-              </div>
-            </Col>
-          </Row>
+          <Col>
+            <StopClickPropagation>
+              <span className="collection-header__bookmark-button">
+                <BookmarkCollectionButton collection={this.props.collection} />
+              </span>
+              {this.props.showFullCard && (
+                <CollectionButtonsContainer
+                  collection={this.props.collection}
+                  className="collection-edit__card"
+                />
+              )}
+            </StopClickPropagation>
+          </Col>
+        </Row>
+        <Row className="collection-header__row">
+          {hasValidTags(this.props.collection) ||
+          this.props.showTagsContainerIfEmpty ? (
+            <div className="tags-container">
+              {hasSubjects(this.props.collection) &&
+                this.subjectsToDisplay().map(subjectId => {
+                  return (
+                    <StopClickPropagation wrapper="span" key={subjectId}>
+                      <ConnectedSubjectTag id={subjectId} />
+                    </StopClickPropagation>
+                  );
+                })}
+              {hasAgeRange(this.props.collection) && (
+                <AgeRangeTag
+                  ageRange={this.props.collection.ageRange.getLabel()}
+                />
+              )}
+            </div>
+          ) : null}
+          {this.props.showFullCard && (
+            <CollectionSubtitle
+              classname="highlight collection-subtitle header"
+              collection={this.props.collection}
+            />
+          )}
+        </Row>
+        <Row>
+          <Col>
+            <div
+              data-qa="collection-description"
+              className="collection-header__description"
+            >
+              {this.props.collection.description}
+            </div>
+          </Col>
         </Row>
       </>
     );

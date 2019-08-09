@@ -42,10 +42,6 @@
       max-width: 198px;
     }
 
-    span:last-child > .tag {
-      margin-right: 0;
-    }
-
     a.tag:hover {
       text-decoration: none;
       background-color: @shade-4;
@@ -58,6 +54,12 @@
     display: flex;
     flex-direction: column;
     align-content: space-between;
+
+    .tags-container {
+      span:last-child > .tag {
+        margin-right: 0;
+      }
+    }
 
     .collection-title {
       max-height: 24px;
