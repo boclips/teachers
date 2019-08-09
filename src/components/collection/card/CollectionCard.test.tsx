@@ -7,9 +7,9 @@ import {
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
+import CollectionHeader from '../header/CollectionHeader';
 import { CollectionCard } from './CollectionCard';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
-import CollectionCardHeader from './header/CollectionCardHeader';
 
 const NUMBER_OF_PREVIEWS = 4;
 
@@ -39,7 +39,7 @@ describe('CollectionCard', () => {
   });
 
   test('renders collection header', () => {
-    expect(wrapper.find(CollectionCardHeader).props().collection).toEqual(
+    expect(wrapper.find(CollectionHeader).props().collection).toEqual(
       collection,
     );
   });

@@ -1,15 +1,15 @@
 import React from 'react';
-import PublicLogoSVG from '../../../../../resources/images/global.svg';
-import PrivateLogoSVG from '../../../../../resources/images/private.svg';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import './CollectionCardTitle.less';
+import PublicLogoSVG from '../../../../resources/images/global.svg';
+import PrivateLogoSVG from '../../../../resources/images/private.svg';
+import { VideoCollection } from '../../../types/VideoCollection';
+import './CollectionTitle.less';
 
 interface Props {
   collection: VideoCollection;
   showPrivacy?: boolean;
 }
 
-export class CollectionCardTitle extends React.Component<Props> {
+export class CollectionTitle extends React.Component<Props> {
   public render() {
     const Logo = this.props.collection.isPublic
       ? PublicLogoSVG
@@ -35,4 +35,4 @@ export class CollectionCardTitle extends React.Component<Props> {
   }
 }
 
-export default CollectionCardTitle;
+export default CollectionTitle;

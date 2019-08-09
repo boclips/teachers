@@ -1,17 +1,17 @@
 import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import StopClickPropagation from '../../../common/StopClickPropagation';
-import { AgeRangeTag } from '../../../video/tags/AgeRangeTag';
-import { ConnectedSubjectTag } from '../../../video/tags/SubjectTag';
-import BookmarkCollectionButton from '../../buttons/bookmark/BookmarkCollectionButton';
-import CollectionButtonsContainer from '../../buttons/CollectionButtonsContainer';
-import '../../buttons/CollectionButtonsContainer.less';
-import { CollectionSubtitle } from '../../CollectionSubtitle';
-import CollectionCardTitle from './CollectionCardTitle';
+import { VideoCollection } from '../../../types/VideoCollection';
+import StopClickPropagation from '../../common/StopClickPropagation';
+import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
+import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
+import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
+import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
+import '../buttons/CollectionButtonsContainer.less';
+import { CollectionSubtitle } from '../CollectionSubtitle';
+import CollectionTitle from './CollectionTitle';
 
-import './CollectionCardHeader.less';
+import './CollectionHeader.less';
 
 interface Props {
   collection: VideoCollection;
@@ -29,7 +29,7 @@ const hasSubjects = (collection: VideoCollection) =>
 const hasValidTags = (collection: VideoCollection) =>
   hasAgeRange(collection) || hasSubjects(collection);
 
-class CollectionCardHeader extends React.PureComponent<Props> {
+class CollectionHeader extends React.PureComponent<Props> {
   public render() {
     return (
       <>
@@ -39,7 +39,7 @@ class CollectionCardHeader extends React.PureComponent<Props> {
           className="collection-header__title-row"
         >
           <Col>
-            <CollectionCardTitle
+            <CollectionTitle
               collection={this.props.collection}
               showPrivacy={this.props.showPrivacy}
             />
@@ -84,16 +84,18 @@ class CollectionCardHeader extends React.PureComponent<Props> {
             />
           )}
         </Row>
-        <Row>
-          <Col>
-            <div
-              data-qa="collection-description"
-              className="collection-header__description"
-            >
-              {this.props.collection.description}
-            </div>
-          </Col>
-        </Row>
+        {this.props.showFullCard && (
+          <Row>
+            <Col>
+              <div
+                data-qa="collection-description"
+                className="collection-header__description"
+              >
+                {this.props.collection.description}
+              </div>
+            </Col>
+          </Row>
+        )}
       </>
     );
   }
@@ -119,4 +121,4 @@ class CollectionCardHeader extends React.PureComponent<Props> {
   );
 }
 
-export default CollectionCardHeader;
+export default CollectionHeader;

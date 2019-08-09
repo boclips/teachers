@@ -3,9 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionSubtitle } from '../CollectionSubtitle';
+import CollectionHeader from '../header/CollectionHeader';
 import './CollectionCard.less';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
-import CollectionCardHeader from './header/CollectionCardHeader';
 
 interface Props {
   collection: VideoCollection;
@@ -25,7 +25,7 @@ export class CollectionCard extends React.PureComponent<Props> {
         data-qa="collection-card"
         data-state={this.props.collection.title}
       >
-        <CollectionCardHeader
+        <CollectionHeader
           collection={this.props.collection}
           showPrivacy={this.props.showPrivacy}
           showFullCard={!this.props.tiny}
