@@ -20,8 +20,8 @@ interface Props extends WithMediaBreakPointProps {
 class CollectionCardVideoPreview extends React.PureComponent<Props> {
   private renderThumbnailContainer() {
     return (
-      <section className="colleciton-card-video-container">
-        <section className="colleciton-card-video-container__inner">
+      <section className="collection-card-video-container">
+        <section className="collection-card-video-container__inner">
           <section
             className="collection-card-thumbnail-container"
             style={{ backgroundImage: `url(${this.props.video.thumbnailUrl})` }}
@@ -33,8 +33,8 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
 
   private renderVideoContainer() {
     return (
-      <section className="colleciton-card-video-container">
-        <section className="colleciton-card-video-container__inner">
+      <section className="collection-card-video-container">
+        <section className="collection-card-video-container__inner">
           <VideoPlayer video={this.props.video} mode="card" />
         </section>
       </section>
@@ -43,7 +43,7 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
 
   public static VideoPreviewSkeleton = () => (
     <section className="collection-video-preview skeleton">
-      <section className="colleciton-card-video-container" />
+      <section className="collection-card-video-container" />
       <section className={'title'} />
       <section className={'subtitle'} />
     </section>
