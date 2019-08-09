@@ -34,6 +34,7 @@ describe('CollectionCard', () => {
       <CollectionCard
         collection={collection}
         numberOfPreviews={NUMBER_OF_PREVIEWS}
+        onClick={jest.fn}
       />,
     );
   });

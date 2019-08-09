@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { A11yButton } from '../../common/A11yButton';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionHeader from '../header/CollectionHeader';
 import './CollectionCard.less';
@@ -12,52 +12,51 @@ interface Props {
   numberOfPreviews: number;
   tiny?: boolean;
   showPrivacy?: boolean;
+  onClick: () => void;
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
   public render() {
     return (
-      <section
-        key={`card-${this.props.collection.id}`}
-        className={classnames('collection-card', {
-          tiny: this.props.tiny,
-        })}
-        data-qa="collection-card"
-        data-state={this.props.collection.title}
-      >
-        <CollectionHeader
-          collection={this.props.collection}
-          showPrivacy={this.props.showPrivacy}
-          showFullCard={!this.props.tiny}
-          showTagsContainerIfEmpty={this.props.tiny}
-        />
-        <CollectionCardVideoPreviews
-          numberOfPreviews={this.props.numberOfPreviews}
-          videos={this.props.collection.videoIds.map(
-            videoId => this.props.collection.videos[videoId.id],
+      <A11yButton callback={this.props.onClick} disableClick={false}>
+        <section
+          key={`card-${this.props.collection.id}`}
+          className={classnames('collection-card', {
+            tiny: this.props.tiny,
+          })}
+          data-qa="collection-card"
+          data-state={this.props.collection.title}
+        >
+          <CollectionHeader
+            collection={this.props.collection}
+            showPrivacy={this.props.showPrivacy}
+            showFullCard={!this.props.tiny}
+            showTagsContainerIfEmpty={this.props.tiny}
+          />
+          <CollectionCardVideoPreviews
+            numberOfPreviews={this.props.numberOfPreviews}
+            videos={this.props.collection.videoIds.map(
+              videoId => this.props.collection.videos[videoId.id],
+            )}
+            isGrid={this.props.tiny}
+            id={this.props.collection.id}
+          />
+          {this.props.tiny && (
+            <span>
+              <CollectionSubtitle
+                classname="highlight collection-subtitle tiny"
+                collection={this.props.collection}
+              />
+              <div
+                data-qa="collection-description"
+                className="collection-header__description-preview tiny"
+              >
+                {this.props.collection.description}
+              </div>
+            </span>
           )}
-          isGrid={this.props.tiny}
-          id={this.props.collection.id}
-        />
-        {this.props.tiny && (
-          <span>
-            <CollectionSubtitle
-              classname="highlight collection-subtitle tiny"
-              collection={this.props.collection}
-            />
-            <div
-              data-qa="collection-description"
-              className="collection-header__description-preview tiny"
-            >
-              {this.props.collection.description}
-            </div>
-          </span>
-        )}
-        <Link
-          className="no-underline collection-card__link"
-          to={'/collections/' + this.props.collection.id}
-        />
-      </section>
+        </section>
+      </A11yButton>
     );
   }
 

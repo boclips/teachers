@@ -28,7 +28,8 @@ export class RemoveCollectionButtonInner extends PureComponent<
         data-qa="delete-collection"
         size={'large'}
         aria-label="Delete collection"
-        className={`collection-edit__button ${this.props.classNameModifier}`}
+        className={`collection-edit__button ${this.props.classNameModifier ||
+          ''}`}
       >
         <Icon component={DeleteIconSVG} aria-label="Delete collection" />
         Delete

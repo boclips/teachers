@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { A11yButton } from '../../common/A11yButton';
 import {
   fetchVideosForCollectionAction,
   VideosForCollectionRequest,
@@ -28,18 +27,14 @@ class CollectionCardContainer extends React.PureComponent<
 > {
   public render() {
     return (
-      <A11yButton
-        disableClick={true}
-        callback={this.props.goToCollectionDetails(this.props.collection)}
-      >
-        <CollectionCard
-          tiny={this.props.tiny}
-          key={`card-container-${this.props.collection.id}`}
-          collection={this.props.collection}
-          numberOfPreviews={NUMBER_OF_PREVIEWS}
-          showPrivacy={this.props.showPrivacy}
-        />
-      </A11yButton>
+      <CollectionCard
+        tiny={this.props.tiny}
+        key={`card-container-${this.props.collection.id}`}
+        collection={this.props.collection}
+        numberOfPreviews={NUMBER_OF_PREVIEWS}
+        showPrivacy={this.props.showPrivacy}
+        onClick={this.props.goToCollectionDetails(this.props.collection)}
+      />
     );
   }
 
