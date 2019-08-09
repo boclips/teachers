@@ -1,4 +1,5 @@
-import { Col, Row } from 'antd';
+import { Card, Col, Row } from 'antd';
+import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import StopClickPropagation from '../../../common/StopClickPropagation';
@@ -102,6 +103,20 @@ class CollectionCardHeader extends React.PureComponent<Props> {
       ? this.props.collection.subjects
       : this.props.collection.subjects.slice(0, 1);
   };
+
+  public static Skeleton = () => (
+    <section className="collection-header__skeleton">
+      <Card className="video-card" bordered={false}>
+        <AntSkeleton
+          loading={true}
+          title={true}
+          paragraph={false}
+          active={true}
+          avatar={{ size: 'small', shape: 'circle' }}
+        />
+      </Card>
+    </section>
+  );
 }
 
 export default CollectionCardHeader;
