@@ -51,6 +51,7 @@ class CollectionDetails extends PureComponent<
           collection={this.props.collection}
           showPrivacy={this.props.collection.isMine}
           showAllSubjects={true}
+          showFullCard={true}
         />
         {this.props.collection.videoIds.length === 0
           ? this.renderEmptyCollection()
