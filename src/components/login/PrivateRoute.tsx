@@ -1,4 +1,3 @@
-import BoclipsSecurity from 'boclips-js-security';
 import React, { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -8,9 +7,8 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { authenticationChanged } from '../../app/redux/authentication/actions/authenticationChanged';
-import { UserState } from '../../types/State';
-import { defaultAuthEndpoint } from './authEndpoint';
+import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
+import { AuthenticationState, UserState } from '../../types/State';
 
 export interface PrivateRouteComponentProps<TParams>
   extends RouteComponentProps<any> {
@@ -26,7 +24,7 @@ interface Props {
 }
 
 interface StateProps {
-  authorized: boolean;
+  authenticated: boolean;
 }
 
 interface DispatchProps {
@@ -39,7 +37,7 @@ class PrivateRoute extends React.Component<
 > {
   public render(): React.ReactNode {
     const props = this.props;
-    const { authorized, component, children, ...rest } = props;
+    const { authenticated, component, children, ...rest } = props;
     return <Route {...rest} render={renderRoute} />;
 
     function renderRoute() {
@@ -55,7 +53,7 @@ class PrivateRoute extends React.Component<
         );
       }
 
-      if (!authorized) {
+      if (!authenticated) {
         return null;
       }
 
@@ -68,41 +66,30 @@ class PrivateRoute extends React.Component<
   }
 
   public componentDidMount(): void {
-    if (!this.props.authorized) {
+    if (!this.props.authenticated) {
       this.props.authenticate();
     }
   }
 }
 
-function mapStateToProps(state: UserState): StateProps {
+function mapStateToProps(state: AuthenticationState & UserState): StateProps {
   return {
-    authorized: state.user && state.user.authenticated,
+    authenticated:
+      state.authentication.status === 'authenticated' &&
+      /**
+       * TODO: It would be nice to move the dependencies on these state properties to the component using it, in order
+       * to make a better experience and make the site appear faster. Spinners. Caution: this will lead to a jumpy
+       * layout if not managed correctly with placeholder/skeletons
+       */
+      state.user &&
+      state.user.authenticated,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     authenticate: () => {
-      BoclipsSecurity.createInstance({
-        onLogin: keycloak => {
-          dispatch(
-            authenticationChanged({
-              keycloakInstance: keycloak,
-              success: true,
-            }),
-          );
-        },
-        onFailure: () => {
-          dispatch(
-            authenticationChanged({
-              success: false,
-            }),
-          );
-        },
-        realm: 'boclips',
-        clientId: 'teachers',
-        authEndpoint: defaultAuthEndpoint,
-      });
+      dispatch(requestAuthentication({ authenticationRequired: true }));
     },
   };
 }

@@ -33,6 +33,7 @@ import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import ConfigLoader from './configLoader/ConfigLoader';
 import onAuthenticationChangedMiddleware from './redux/authentication/middleware/authenticationChangedMiddleware';
+import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';
 import { authenticationReducer } from './redux/authentication/reducers/authenticationReducer';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
 import { linksReducer } from './redux/links/reducers/linksReducer';
@@ -77,6 +78,7 @@ export default class App extends PureComponent<Props> {
         fetchLinksMiddleware,
         onStoreLoginMiddleware,
         onAuthenticationChangedMiddleware,
+        requestAuthenticationMiddleware,
         onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,
         fetchSubjectsMiddleware,

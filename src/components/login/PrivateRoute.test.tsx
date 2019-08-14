@@ -1,61 +1,36 @@
 import { mount } from 'enzyme';
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import { By } from '../../../test-support/By';
-import {
-  MockStoreFactory,
-  UserProfileFactory,
-} from '../../../test-support/factories';
+import { MockStoreFactory } from '../../../test-support/factories';
+import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
 import PrivateRoute from './PrivateRoute';
 
-jest.mock('boclips-js-security');
-
-class TestComponent extends PureComponent {
-  public render(): React.ReactNode {
-    return <span data-qa="restricted-content" />;
-  }
-}
-
-function render(store: Store<any>) {
-  return mount(
-    <Provider store={store}>
-      <MemoryRouter initialEntries={['/']}>
-        <PrivateRoute path="/" component={TestComponent} />
-      </MemoryRouter>
-    </Provider>,
-  );
-}
-
-describe('when not logged in', () => {
-  test('does not render component', () => {
+describe('conditional rendering of components', () => {
+  it('does render a component when authentication is complete', () => {
     const wrapper = render(
       MockStoreFactory.sample({
-        user: null,
+        authentication: {
+          status: 'authenticated',
+        },
       }),
     );
-
-    const content = wrapper.find(By.dataQa('restricted-content'));
-    expect(content).not.toExist();
-  });
-});
-
-describe('when logged in', () => {
-  test('Renders component', () => {
-    const user = UserProfileFactory.sample({ authenticated: true });
-
-    const wrapper = render(MockStoreFactory.sample({ user }));
 
     const content = wrapper.find(By.dataQa('restricted-content'));
     expect(content).toExist();
   });
 
-  test('Renders children', () => {
-    const user = UserProfileFactory.sample({ authenticated: true });
-
+  it('does render children when authentication is complete', () => {
     const wrapper = mount(
-      <Provider store={MockStoreFactory.sample({ user })}>
+      <Provider
+        store={MockStoreFactory.sample({
+          authentication: {
+            status: 'authenticated',
+          },
+        })}
+      >
         <MemoryRouter initialEntries={['/']}>
           <PrivateRoute path="/">
             <TestComponent />
@@ -67,4 +42,57 @@ describe('when logged in', () => {
     const content = wrapper.find(By.dataQa('restricted-content'));
     expect(content).toExist();
   });
+
+  it('does not render when authentication is pending', () => {
+    const wrapper = render(
+      MockStoreFactory.sample({
+        authentication: {
+          status: 'pending',
+        },
+      }),
+    );
+
+    const content = wrapper.find(By.dataQa('restricted-content'));
+    expect(content).not.toExist();
+  });
+  it('does not render when authentication is anonymous', () => {
+    const wrapper = render(
+      MockStoreFactory.sample({
+        authentication: {
+          status: 'anonymous',
+        },
+      }),
+    );
+
+    const content = wrapper.find(By.dataQa('restricted-content'));
+    expect(content).not.toExist();
+  });
 });
+
+it('should dispatch a request for authentication on mount when not authenticated', () => {
+  const store = MockStoreFactory.sample({
+    authentication: {
+      status: 'pending',
+    },
+  });
+
+  render(store);
+
+  expect(store.getActions()).toHaveLength(1);
+  const requestAction = store.getActions()[0];
+
+  expect(requestAction.type).toEqual(requestAuthentication.type);
+  expect(requestAction.payload).toEqual({ authenticationRequired: true });
+});
+
+const TestComponent = () => <span data-qa="restricted-content" />;
+
+function render(store: Store<any>) {
+  return mount(
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/']}>
+        <PrivateRoute path="/" component={TestComponent} />
+      </MemoryRouter>
+    </Provider>,
+  );
+}

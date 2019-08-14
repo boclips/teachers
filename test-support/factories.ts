@@ -389,6 +389,9 @@ export class MockStoreFactory {
         loading: false,
         item: VideoFactory.sample(),
       },
+      authentication: {
+        status: 'authenticated',
+      },
       collections: CollectionsFactory.sample(),
       router: RouterFactory.sample(),
       subjects: SubjectsFactory.sample(),

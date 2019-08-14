@@ -5,8 +5,6 @@ import { By } from '../../../test-support/By';
 import { MockStoreFactory } from '../../../test-support/factories';
 import LoginProvider from './LoginProvider';
 
-jest.mock('boclips-js-security');
-
 class TestComponent extends PureComponent {
   public render(): React.ReactNode {
     return <span data-qa="restricted-content" />;
@@ -15,7 +13,13 @@ class TestComponent extends PureComponent {
 
 test('Renders children', () => {
   const wrapper = mount(
-    <Provider store={MockStoreFactory.sample({ user: undefined })}>
+    <Provider
+      store={MockStoreFactory.sample({
+        authentication: {
+          status: 'authenticated',
+        },
+      })}
+    >
       <LoginProvider>
         <TestComponent />
       </LoginProvider>
