@@ -2,6 +2,7 @@ import { Card } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Discipline } from '../../types/Discipline';
+import { Subject } from '../../types/Subject';
 import './DisciplineCard.less';
 import DisciplineLogo from './DisciplineLogo';
 
@@ -36,7 +37,9 @@ export class DisciplineCard extends React.PureComponent<Props> {
           <div className="discipline-card__body display-tablet-and-desktop">
             <ul className="discipline-card__subjects">
               {this.props.discipline.subjects &&
-                this.props.discipline.subjects.slice(0, 4).map(subject => (
+                this.sortSubjects(
+                  this.props.discipline.subjects.slice(0, 4),
+                ).map(subject => (
                   <li
                     className="discipline-card__subject-item"
                     data-qa="discipline-subject"
@@ -91,4 +94,16 @@ export class DisciplineCard extends React.PureComponent<Props> {
       </section>
     </section>
   );
+
+  private sortSubjects = (subjects: Subject[]) => {
+    return [...subjects].sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return -1;
+      }
+      return 0;
+    });
+  };
 }

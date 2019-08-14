@@ -29,7 +29,7 @@ test('displays arts discipline', async () => {
     .fetchCollections()
     // art discipline contains arts-subject-1 and art-subjects-2
     .fetchDisciplines()
-    .fetchCollectionsBySubjects('arts-subject-2', 'arts-subject-1')
+    .fetchCollectionsBySubjects('arts-subject-1', 'arts-subject-2')
     .fetchVideo();
 
   const collectionPage = await DiscoverCollectionListPage.loadByDiscipline(
@@ -38,8 +38,8 @@ test('displays arts discipline', async () => {
 
   expect(collectionPage.getCollections()).toHaveLength(1);
   expect(collectionPage.getDisciplineSubjects()).toMatchObject([
-    'Art History',
     'Performing Arts',
+    'Art History',
   ]);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
