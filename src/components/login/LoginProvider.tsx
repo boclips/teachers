@@ -2,7 +2,7 @@ import BoclipsSecurity from 'boclips-js-security';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { LoginState } from '../../types/State';
+import { UserState } from '../../types/State';
 import { defaultAuthEndpoint } from './authEndpoint';
 import { userLoggedIn } from './redux/actions/userLoggedIn';
 
@@ -27,7 +27,7 @@ class LoginProvider extends React.Component<StateProps & DispatchProps> {
   }
 }
 
-function mapStateToProps(state: LoginState): StateProps {
+function mapStateToProps(state: UserState): StateProps {
   return {
     authorized: state.user && state.user.authenticated,
   };

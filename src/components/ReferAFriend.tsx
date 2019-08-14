@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AnalyticsFactory from '../services/analytics/AnalyticsFactory';
 import { UserProfile } from '../services/users/UserProfile';
-import { LoginState } from '../types/State';
+import { UserState } from '../types/State';
 import { A11yButton } from './common/A11yButton';
 import Bodal from './common/Bodal';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
@@ -86,7 +86,7 @@ class ReferAFriend extends React.Component<Props & StateProps, State> {
   };
 }
 
-function mapStateToProps(state: LoginState): StateProps {
+function mapStateToProps(state: UserState): StateProps {
   return {
     user: state.user,
   };

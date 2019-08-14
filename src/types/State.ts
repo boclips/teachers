@@ -55,7 +55,7 @@ export interface RouterState {
   router: ReactRouterState;
 }
 
-export interface LoginState {
+export interface UserState {
   user?: UserProfile;
 }
 
@@ -121,7 +121,7 @@ export function isMyCollection(
 export default interface State
   extends LinksState,
     SearchState,
-    LoginState,
+    UserState,
     VideoDetailsState,
     RouterState,
     CollectionState,

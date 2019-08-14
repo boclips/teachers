@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import { LoginState } from '../../../types/State';
+import { UserState } from '../../../types/State';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
@@ -42,7 +42,7 @@ class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
   }
 }
 
-function mapStateToProps(state: LoginState): StateProps {
+function mapStateToProps(state: UserState): StateProps {
   return {
     authorized: state.user && state.user.authenticated,
   };

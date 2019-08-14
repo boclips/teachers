@@ -8,7 +8,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { LoginState } from '../../types/State';
+import { UserState } from '../../types/State';
 import { defaultAuthEndpoint } from './authEndpoint';
 import { userLoggedIn } from './redux/actions/userLoggedIn';
 
@@ -74,7 +74,7 @@ class PrivateRoute extends React.Component<
   }
 }
 
-function mapStateToProps(state: LoginState): StateProps {
+function mapStateToProps(state: UserState): StateProps {
   return {
     authorized: state.user && state.user.authenticated,
   };

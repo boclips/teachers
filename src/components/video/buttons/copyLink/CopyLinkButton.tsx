@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CopyLinkSVG from '../../../../../resources/images/copy-link.svg';
 import { Constants } from '../../../../app/AppConstants';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { LoginState } from '../../../../types/State';
+import { UserState } from '../../../../types/State';
 import { Segment, Video } from '../../../../types/Video';
 import NotificationFactory from '../../../common/NotificationFactory';
 
@@ -58,7 +58,7 @@ class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
   }
 }
 
-function mapStateToProps(state: LoginState): StateProps {
+function mapStateToProps(state: UserState): StateProps {
   return {
     userId: state.user ? state.user.id : null,
   };
