@@ -81,8 +81,7 @@ function mapStateToProps(state: AuthenticationState & UserState): StateProps {
        * to make a better experience and make the site appear faster. Spinners. Caution: this will lead to a jumpy
        * layout if not managed correctly with placeholder/skeletons
        */
-      state.user &&
-      state.user.authenticated,
+      !!state.user,
   };
 }
 

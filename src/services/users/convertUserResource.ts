@@ -8,7 +8,6 @@ export default function convertUserResource(resource: any): UserProfile {
     lastName: resource.lastName,
     email: resource.email,
     analyticsId: resource.analyticsId,
-    authenticated: true,
     links: { self: new Link(resource._links.self) },
   };
 }

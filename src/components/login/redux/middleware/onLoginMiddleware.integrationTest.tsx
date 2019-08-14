@@ -86,7 +86,6 @@ describe('on store login', () => {
       expect(store.getActions()).toContainEqual(
         userDetailsFetched({
           analyticsId: '123',
-          authenticated: true,
           email: 'bob@someone.com',
           firstName: 'Bob',
           id: 'user-id',

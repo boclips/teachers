@@ -182,7 +182,6 @@ export class LinksFactory {
 export class UserProfileFactory {
   public static sample(arg: Partial<UserProfile> = {}): UserProfile {
     return Object.freeze({
-      authenticated: arg.authenticated || true,
       email: arg.email || 'joe@boclips.com',
       firstName: arg.firstName || 'joe',
       lastName: arg.lastName || 'boclips',
@@ -195,7 +194,6 @@ export class UserProfileFactory {
 export class LoginFactory {
   public static sample(arg: Partial<UserProfile> = {}): UserProfile {
     return Object.freeze({
-      authenticated: arg.authenticated || true,
       email: arg.email || 'joe@boclips.com',
       firstName: arg.firstName || 'joe',
       lastName: arg.lastName || 'boclips',

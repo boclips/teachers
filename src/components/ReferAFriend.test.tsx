@@ -17,7 +17,6 @@ const user = UserProfileFactory.sample({
   lastName: 'Jones',
   email: 'matt@boclips.com',
   id: '123',
-  authenticated: true,
 });
 
 beforeEach(() => {

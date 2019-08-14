@@ -44,7 +44,7 @@ class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
 
 function mapStateToProps(state: UserState): StateProps {
   return {
-    authorized: state.user && state.user.authenticated,
+    authorized: !!state.user,
   };
 }
 

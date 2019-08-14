@@ -332,7 +332,6 @@ function buildStore(
   let user = null;
   if (authorised) {
     user = Keycloak();
-    user.authenticated = true;
   }
 
   const store = MockStoreFactory.sample({

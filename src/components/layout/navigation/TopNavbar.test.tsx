@@ -12,7 +12,7 @@ import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import NavbarButtonsContainer from './NavbarButtonsContainer';
 import TopNavbarContainer from './TopNavbarContainer';
 
-const user = UserProfileFactory.sample({ authenticated: true });
+const user = UserProfileFactory.sample({});
 
 describe('when authenticated', () => {
   test('renders search bar', () => {
