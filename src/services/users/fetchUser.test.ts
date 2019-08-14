@@ -24,4 +24,24 @@ describe('fetch user ', () => {
     expect(userProfile.lastName).toBeDefined();
     expect(userProfile.email).toBeDefined();
   });
+
+  it('tolerates non templated links', async () => {
+    new ApiStub().fetchUser(userResponse('123'));
+
+    const userProfile = await fetchUser(
+      LinksFactory.sample({
+        profile: new Link({
+          href: 'https://api.example.com/v1/users/123',
+          templated: false,
+        }),
+      }),
+      'will be ignored',
+    );
+
+    expect(userProfile.id).toBeDefined();
+    expect(userProfile.analyticsId).toBeDefined();
+    expect(userProfile.firstName).toBeDefined();
+    expect(userProfile.lastName).toBeDefined();
+    expect(userProfile.email).toBeDefined();
+  });
 });
