@@ -11,7 +11,7 @@ export default function activateUser(
     return;
   }
 
-  return axios.post(links.activate.getOriginalLink()).then(() => {
+  return axios.put(links.activate.getOriginalLink()).then(() => {
     AnalyticsFactory.getInstance().trackAccountActivation();
     AnalyticsFactory.getInstance().createUserProfile(userProfile);
   });

@@ -26,7 +26,7 @@ AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
 describe('when activate link present', () => {
   describe('when user activated successfully', () => {
     beforeEach(() => {
-      MockFetchVerify.post('/activate', undefined, 201);
+      MockFetchVerify.put('/activate', undefined, 201);
     });
 
     it('registers activation complete event', async () => {
@@ -49,7 +49,7 @@ describe('when activate link present', () => {
 
 describe('when user cannot be activated', () => {
   beforeEach(() => {
-    MockFetchVerify.post('/activate', null, 403);
+    MockFetchVerify.put('/activate', null, 403);
   });
 
   it('does not publish event to web analytics', () => {
