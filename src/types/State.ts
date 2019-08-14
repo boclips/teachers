@@ -33,6 +33,10 @@ export interface CollectionSearchStateValue extends CollectionSearchResults {
   loading: boolean;
 }
 
+export interface AuthenticationStateValue {
+  status: 'authenticated' | 'anonymous' | 'pending';
+}
+
 export interface VideoStateValue {
   loading: boolean;
   item: Video;
@@ -57,6 +61,10 @@ export interface RouterState {
 
 export interface UserState {
   user?: UserProfile;
+}
+
+export interface AuthenticationState {
+  authentication?: AuthenticationStateValue;
 }
 
 export interface CollectionState {
@@ -119,7 +127,8 @@ export function isMyCollection(
 }
 
 export default interface State
-  extends LinksState,
+  extends AuthenticationState,
+    LinksState,
     SearchState,
     UserState,
     VideoDetailsState,

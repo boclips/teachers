@@ -2,9 +2,9 @@ import BoclipsSecurity from 'boclips-js-security';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { authenticationChanged } from '../../app/redux/authentication/actions/authenticationChanged';
 import { UserState } from '../../types/State';
 import { defaultAuthEndpoint } from './authEndpoint';
-import { userLoggedIn } from './redux/actions/userLoggedIn';
 
 interface StateProps {
   authorized: boolean;
@@ -38,7 +38,19 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     authenticateIfLoggedIn: () => {
       BoclipsSecurity.createInstance({
         onLogin: keycloak => {
-          dispatch(userLoggedIn(keycloak));
+          dispatch(
+            authenticationChanged({
+              keycloakInstance: keycloak,
+              success: true,
+            }),
+          );
+        },
+        onFailure: () => {
+          dispatch(
+            authenticationChanged({
+              success: false,
+            }),
+          );
         },
         realm: 'boclips',
         clientId: 'teachers',

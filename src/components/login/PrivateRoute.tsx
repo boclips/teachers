@@ -8,9 +8,9 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
+import { authenticationChanged } from '../../app/redux/authentication/actions/authenticationChanged';
 import { UserState } from '../../types/State';
 import { defaultAuthEndpoint } from './authEndpoint';
-import { userLoggedIn } from './redux/actions/userLoggedIn';
 
 export interface PrivateRouteComponentProps<TParams>
   extends RouteComponentProps<any> {
@@ -85,7 +85,19 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
     authenticate: () => {
       BoclipsSecurity.createInstance({
         onLogin: keycloak => {
-          dispatch(userLoggedIn(keycloak));
+          dispatch(
+            authenticationChanged({
+              keycloakInstance: keycloak,
+              success: true,
+            }),
+          );
+        },
+        onFailure: () => {
+          dispatch(
+            authenticationChanged({
+              success: false,
+            }),
+          );
         },
         realm: 'boclips',
         clientId: 'teachers',
