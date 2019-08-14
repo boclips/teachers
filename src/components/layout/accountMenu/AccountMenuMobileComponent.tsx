@@ -1,6 +1,7 @@
 import { Drawer, Menu } from 'antd';
 import React, { SyntheticEvent } from 'react';
-import AccountMenuIconComponent from './AccountMenuIconComponent';
+import MyAccountSVG from '../../../../resources/images/my-account.svg';
+import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import './AccountMenuMobileComponent.less';
 import {
   BookmarkedCollectionsLink,
@@ -42,7 +43,19 @@ export default class AccountMenuMobile extends React.PureComponent<
   public render() {
     return (
       <div className="display-mobile-and-tablet">
-        <AccountMenuIconComponent onClick={this.showDrawer} />
+        <DropdownMenuIconComponent
+          onClick={this.showDrawer}
+          dataQa={'account-menu-open'}
+          icon={
+            <MyAccountSVG
+              className="account-menu-icon ant-dropdown-link"
+              tabIndex={0}
+              aria-haspopup="true"
+              aria-hidden="true"
+            />
+          }
+          label={'Your account'}
+        />
         <Drawer
           className="account-menu account-menu-mobile__drawer"
           visible={this.state.visible}

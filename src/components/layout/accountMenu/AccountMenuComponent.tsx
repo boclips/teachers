@@ -1,7 +1,7 @@
 import { Dropdown, Menu } from 'antd';
 import React, { SyntheticEvent } from 'react';
-
-import AccountMenuIconComponent from './AccountMenuIconComponent';
+import MyAccountSVG from '../../../../resources/images/my-account.svg';
+import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import {
   BookmarkedCollectionsLink,
   LogoutLink,
@@ -32,8 +32,23 @@ const menu = (props: Props) => (
 
 const AccountMenuComponent = React.memo((props: Props) => (
   <div className="display-desktop">
-    <Dropdown overlay={menu(props)} trigger={['click']} placement="bottomRight">
-      <AccountMenuIconComponent />
+    <Dropdown
+      overlay={menu(props)}
+      trigger={['hover', 'click']}
+      placement="bottomRight"
+    >
+      <DropdownMenuIconComponent
+        dataQa={'account-menu-open'}
+        icon={
+          <MyAccountSVG
+            className="account-menu-icon ant-dropdown-link"
+            tabIndex={0}
+            aria-haspopup="true"
+            aria-hidden="true"
+          />
+        }
+        label={'Your account'}
+      />
     </Dropdown>
   </div>
 ));

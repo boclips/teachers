@@ -2,26 +2,49 @@ import { Dropdown, Menu } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import MySubjectSVG from '../../../../resources/images/subjects.svg';
 import { Discipline } from '../../../types/Discipline';
 import { DisciplineState } from '../../../types/State';
+import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import './SubjectMenuComponent.less';
-import SubjectsMenuIconComponent from './SubjectsMenuIconComponent';
 
 interface Props {
   disciplines: Discipline[];
 }
 
-class SubjectMenuComponent extends React.Component<Props> {
+interface State {
+  dropdownVisible: boolean;
+}
+
+class SubjectMenuComponent extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      dropdownVisible: false,
+    };
+  }
   public render() {
     return (
       <div className="display-desktop">
         <Dropdown
           overlay={this.props.disciplines && this.renderMenu()}
-          trigger={['click']}
+          trigger={['hover', 'click']}
           overlayClassName="subject-menu__dropdown"
           placement="bottomCenter"
         >
-          <SubjectsMenuIconComponent />
+          <DropdownMenuIconComponent
+            dataQa={'subjects-menu-open'}
+            icon={
+              <MySubjectSVG
+                className="account-menu-icon ant-dropdown-link"
+                aria-haspopup="true"
+                aria-hidden="true"
+                tabIndex={0}
+              />
+            }
+            label={'Subjects'}
+          />
         </Dropdown>
       </div>
     );
