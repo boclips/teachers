@@ -5,9 +5,9 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import { ConditionalRouteComponentParams } from '../../components/login/ConditionalRoute';
-import { PrivateRoute } from '../../components/login/PrivateRoute';
-import { PublicRoute } from '../../components/login/PublicRoute';
+import PrivateRoute, {
+  PrivateRouteComponentParams,
+} from '../../components/login/PrivateRoute';
 import { RouterState } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
@@ -24,23 +24,19 @@ import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 export const defaultHistory = createBrowserHistory();
 
-function videoDetailsView(
-  props: ConditionalRouteComponentParams<{ videoId: string }>,
-) {
-  return <VideoDetailsView videoId={props.computedMatch.params.videoId} />;
-}
+const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
+  <VideoDetailsView videoId={props.match.params.videoId} />
+);
 
-function collectionView(
-  props: ConditionalRouteComponentParams<{ collectionId: string }>,
-) {
-  return (
-    <CollectionDetailsView
-      collectionId={props.computedMatch.params.collectionId}
-    />
-  );
-}
+const collectionView = (
+  props: PrivateRouteComponentParams<{ collectionId: string }>,
+) => (
+  <CollectionDetailsView
+    collectionId={props.computedMatch.params.collectionId}
+  />
+);
 
-function discoverCollectionsView(props: RouteComponentProps) {
+const discoverCollectionsView = (props: RouteComponentProps) => {
   const queryParams = queryString.parse(props.location.search);
   const subjectIdQuery = queryParams.subject as string[] | string;
   const disciplineId = queryParams.discipline as string;
@@ -60,7 +56,7 @@ function discoverCollectionsView(props: RouteComponentProps) {
       disciplineId={disciplineId}
     />
   );
-}
+};
 
 interface StateProps {
   pathname: string;
@@ -77,10 +73,7 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             <Route path="/create-account" component={CreateAccountView} />
             <Route path="/videos">
               <Switch>
-                <PublicRoute
-                  path="/videos/:videoId"
-                  component={videoDetailsView}
-                />
+                <Route path="/videos/:videoId" component={videoDetailsView} />
                 <PrivateRoute path="/videos" component={SearchResultsView} />
               </Switch>
             </Route>
@@ -123,12 +116,11 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
   }
 }
 
-function mapStateToProps(state: RouterState): StateProps {
-  const location = state.router.location;
-  return {
-    pathname: location.pathname,
-    search: location.search,
-  };
-}
+const mapStateToProps = ({
+  router: { location },
+}: RouterState): StateProps => ({
+  pathname: location.pathname,
+  search: location.search,
+});
 
 export default connect(mapStateToProps)(BoclipsRouter);

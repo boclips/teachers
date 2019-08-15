@@ -1,4 +1,3 @@
-import { Icon } from 'antd';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { History } from 'history';
 import React, { PureComponent } from 'react';
@@ -31,7 +30,7 @@ import fetchTagsMiddleware from '../components/video/tags/redux/middleware/fetch
 import { tagsReducer } from '../components/video/tags/redux/reducers/tagsReducer';
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
-import ConfigLoader from './configLoader/ConfigLoader';
+import LinkLoader from './config/LinkLoader';
 import onAuthenticationChangedMiddleware from './redux/authentication/middleware/authenticationChangedMiddleware';
 import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';
 import { authenticationReducer } from './redux/authentication/reducers/authenticationReducer';
@@ -89,25 +88,13 @@ export default class App extends PureComponent<Props> {
     ),
   );
 
-  public getStore() {
-    return this.store;
-  }
-
   public render() {
     return (
       <Provider store={this.store}>
-        <ConfigLoader loadingComponent={this.loadingComponent}>
+        <LinkLoader>
           <BoclipsRouter history={this.props.history} />
-        </ConfigLoader>
+        </LinkLoader>
       </Provider>
     );
   }
-
-  private loadingComponent = () => (
-    <div className={'loading-site'}>
-      <h3>
-        <Icon type="loading" /> loading
-      </h3>
-    </div>
-  );
 }

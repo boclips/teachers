@@ -34,7 +34,7 @@ export interface CollectionSearchStateValue extends CollectionSearchResults {
 }
 
 export interface AuthenticationStateValue {
-  status: 'authenticated' | 'anonymous' | 'pending';
+  status: 'authenticated' | 'anonymous';
 }
 
 export interface VideoStateValue {
@@ -112,10 +112,7 @@ export function getIndexOfCollection(
   collections: VideoCollection[],
   collectionId: string,
 ) {
-  const indexOfCollection = collections.findIndex(
-    col => col.id === collectionId,
-  );
-  return indexOfCollection;
+  return collections.findIndex(col => col.id === collectionId);
 }
 
 export function isMyCollection(
