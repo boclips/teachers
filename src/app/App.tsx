@@ -66,7 +66,6 @@ export default class App extends PureComponent<Props> {
     connectRouter(defaultHistory)(rootReducer),
     {
       apiPrefix: this.props.apiPrefix,
-      authentication: { status: 'pending' },
     },
     composeEnhancers(
       applyMiddleware(

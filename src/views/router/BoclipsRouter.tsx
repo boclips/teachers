@@ -5,9 +5,9 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import PrivateRoute, {
-  PrivateRouteComponentProps,
-} from '../../components/login/PrivateRoute';
+import { ConditionalRouteComponentParams } from '../../components/login/ConditionalRoute';
+import { PrivateRoute } from '../../components/login/PrivateRoute';
+import { PublicRoute } from '../../components/login/PublicRoute';
 import { RouterState } from '../../types/State';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
@@ -24,12 +24,14 @@ import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 export const defaultHistory = createBrowserHistory();
 
-function videoDetailsView(props: RouteComponentProps<{ videoId: string }>) {
-  return <VideoDetailsView videoId={props.match.params.videoId} />;
+function videoDetailsView(
+  props: ConditionalRouteComponentParams<{ videoId: string }>,
+) {
+  return <VideoDetailsView videoId={props.computedMatch.params.videoId} />;
 }
 
 function collectionView(
-  props: PrivateRouteComponentProps<{ collectionId: string }>,
+  props: ConditionalRouteComponentParams<{ collectionId: string }>,
 ) {
   return (
     <CollectionDetailsView
@@ -75,7 +77,10 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             <Route path="/create-account" component={CreateAccountView} />
             <Route path="/videos">
               <Switch>
-                <Route path="/videos/:videoId" component={videoDetailsView} />
+                <PublicRoute
+                  path="/videos/:videoId"
+                  component={videoDetailsView}
+                />
                 <PrivateRoute path="/videos" component={SearchResultsView} />
               </Switch>
             </Route>
