@@ -376,9 +376,9 @@ export class TagFactory {
 
 export class MockStoreFactory {
   public static sample(store: Partial<State> = {}): MockStoreEnhanced<State> {
-    const mockStore = configureStore<State>();
+    const mockStoreCreator = configureStore<State>();
 
-    return mockStore({
+    return mockStoreCreator({
       apiPrefix: 'https://api.example.com',
       links: LinksFactory.sample(),
       search: SearchFactory.sample(),
