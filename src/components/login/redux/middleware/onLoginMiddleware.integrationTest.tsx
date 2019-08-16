@@ -1,9 +1,8 @@
-import Mock = jest.Mock;
+import { push } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
 import { links, userResponse } from '../../../../../test-support/api-responses';
 import ApiStub from '../../../../../test-support/ApiStub';
 import eventually from '../../../../../test-support/eventually';
-import activateUser from '../../../../services/users/activateUser';
 import { Link, RawLink } from '../../../../types/Link';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
@@ -16,9 +15,7 @@ import onRegisterAnalyticsMiddleware from './onRegisterAnalyticsMiddleware';
 
 jest.mock('../../../searchBar/redux/dispatchSearchActions');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
-jest.mock('../../../../services/users/activateUser');
-
-const activateUserMock = activateUser as Mock;
+jest.mock('../../../../services/users/updateUser');
 
 const mockStore = configureStore<{}>([
   onStoreLoginMiddleware,
@@ -28,71 +25,103 @@ const store = mockStore({
   apiPrefix: 'https://api.example.com',
 });
 
+beforeEach(() => {
+  store.clearActions();
+});
+
 describe('on store login', () => {
-  beforeEach(() => {
-    new ApiStub({
-      ...links,
-      activate: { href: 'https://api.example.com/v1/activate' },
-    })
-      .fetchUser(userResponse())
-      .fetchCollections();
+  describe('when account needs to be activated', () => {
+    beforeEach(() => {
+      new ApiStub({
+        _links: {
+          ...links._links,
+          activate: { href: 'https://api.example.com/v1/activate' },
+        },
+      })
+        .fetchUser(userResponse())
+        .fetchCollections();
 
-    store.dispatch(userLoggedIn());
-  });
+      store.dispatch(userLoggedIn());
+    });
 
-  it('fetches my collections', async () => {
-    await eventually(() => {
-      expect(store.getActions().map(action => action.type)).toContain(
-        storeCollectionsAction({ collections: undefined, key: 'myCollections' })
-          .type,
-      );
+    it('fetches my collections', async () => {
+      await eventually(() => {
+        expect(store.getActions().map(action => action.type)).toContain(
+          storeCollectionsAction({
+            collections: undefined,
+            key: 'myCollections',
+          }).type,
+        );
+      });
+    });
+
+    it('fetches disciplines', async () => {
+      await eventually(() => {
+        expect(store.getActions().map(action => action.type)).toContain(
+          fetchDisciplinesAction().type,
+        );
+      });
+    });
+
+    it('fetches tags', async () => {
+      await eventually(() => {
+        expect(store.getActions().map(action => action.type)).toContain(
+          fetchTagsAction().type,
+        );
+      });
+    });
+
+    it('sets up web analytics', async () => {
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(registerAnalytics('123'));
+      });
+    });
+
+    it('sets up user', async () => {
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(
+          userDetailsFetched({
+            analyticsId: '123',
+            email: 'bob@someone.com',
+            firstName: 'Bob',
+            id: 'my-user-id',
+            lastName: 'Someone',
+            links: {
+              self: new Link({
+                href: 'http://localhost/v1/users/my-user-id',
+              } as RawLink),
+            },
+          }),
+        );
+      });
+    });
+
+    it('redirects to the onboarding page', async () => {
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(push('/onboarding'));
+      });
     });
   });
 
-  it('fetches disciplines', async () => {
-    await eventually(() => {
-      expect(store.getActions().map(action => action.type)).toContain(
-        fetchDisciplinesAction().type,
-      );
-    });
-  });
+  describe('when account already activated', () => {
+    beforeEach(() => {
+      new ApiStub({
+        _links: {
+          ...links._links,
+          activate: undefined,
+        },
+      })
+        .fetchUser(userResponse())
+        .fetchCollections();
 
-  it('fetches tags', async () => {
-    await eventually(() => {
-      expect(store.getActions().map(action => action.type)).toContain(
-        fetchTagsAction().type,
-      );
+      store.dispatch(userLoggedIn());
     });
-  });
 
-  it('sets up web analytics', async () => {
-    await eventually(() => {
-      expect(store.getActions()).toContainEqual(registerAnalytics('123'));
-    });
-  });
-
-  it('sets up user', async () => {
-    await eventually(() => {
-      expect(store.getActions()).toContainEqual(
-        userDetailsFetched({
-          analyticsId: '123',
-          email: 'bob@someone.com',
-          firstName: 'Bob',
-          id: 'my-user-id',
-          lastName: 'Someone',
-          links: {
-            self: new Link({
-              href: 'http://localhost/v1/users/my-user-id',
-            } as RawLink),
-          },
-        }),
-      );
-    });
-  });
-
-  it('activates account', async () => {
-    await eventually(() => {
-      expect(activateUserMock).toBeCalled();
+    it('does not redirect to the onboarding page', async () => {
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(registerAnalytics('123')); // Necessary to avoid false positives
+        expect(store.getActions()).not.toContainEqual(push('/onboarding'));
+      });
     });
   });
 });

@@ -17,15 +17,10 @@ test('create account', async () => {
   MockFetchVerify.post(
     '/v1/users',
     {
-      firstName: 'jane',
-      lastName: 'doe',
-      subjects: 'some subjects',
-      ageRange: [1, 2, 3],
       email: 'jane@doe.com',
       password: 'Champagn3',
       analyticsId: 'mixpanel-123',
       referralCode: 'SCAM-123',
-      hasOptedIntoMarketing: false,
       utmSource: 'some-source',
       utmContent: 'some-content',
       utmTerm: 'some-term',
@@ -35,15 +30,10 @@ test('create account', async () => {
   );
 
   const success = await createAccount(links, {
-    firstName: 'jane',
-    lastName: 'doe',
-    subjects: 'some subjects',
-    ageRange: [1, 2, 3],
     email: 'jane@doe.com',
     password: 'Champagn3',
     analyticsId: 'mixpanel-123',
     referralCode: 'SCAM-123',
-    hasOptedIntoMarketing: false,
     utmSource: 'some-source',
     utmContent: 'some-content',
     utmTerm: 'some-term',

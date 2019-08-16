@@ -2,7 +2,6 @@ import { Button, Col, Form, Input, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import RegistrationLogoSVG from '../../../resources/images/registration-logo.svg';
 import {
   createAccount,
@@ -10,23 +9,15 @@ import {
 } from '../../services/account/createAccount';
 import Utm from '../../services/account/Utm';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import { AgeRange } from '../../types/AgeRange';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
-import { Subject } from '../../types/Subject';
-import { fetchSubjectsAction } from '../multipleSelect/redux/actions/fetchSubjectsAction';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
-import { AgeRangeForm } from './form/AgeRangeForm';
 import { CaptchaNotice } from './form/CaptchaNotice';
 import { EmailForm } from './form/EmailForm';
 import { ErrorAnnouncement } from './form/ErrorAnnouncement';
 import { LoginLink } from './form/LoginLink';
-import { MarketingAgreementForm } from './form/MarketingAgreementForm';
-import { NameForm } from './form/NameForm';
-import { PrivacyPolicyAgreementForm } from './form/PrivacyPolicyAgreementForm';
-import { SubjectsForm } from './form/SubjectsForm';
 import TwoColumnInlineForm from './form/TwoColumnInlineFormItem';
 import { Recaptcha } from './recaptcha/Recaptcha';
 import { extractQueryParam } from './referral/extractQueryParam';
@@ -34,8 +25,6 @@ import { extractQueryParam } from './referral/extractQueryParam';
 interface CreateAccountProps {
   links: Links;
   referralCode: string;
-  subjects: Subject[];
-  ageRanges: AgeRange[];
   utm: Utm;
 }
 
@@ -47,12 +36,8 @@ interface InternalState {
   formErrors: object;
 }
 
-interface DispatchProps {
-  fetchSubjects: () => void;
-}
-
 class RegistrationForm extends React.Component<
-  CreateAccountProps & FormComponentProps & DispatchProps,
+  CreateAccountProps & FormComponentProps,
   InternalState
 > {
   public state = {
@@ -65,8 +50,6 @@ class RegistrationForm extends React.Component<
 
   public componentDidMount() {
     AnalyticsFactory.getInstance().trackAccountRegistration();
-
-    this.props.fetchSubjects();
   }
 
   public render() {
@@ -95,17 +78,6 @@ class RegistrationForm extends React.Component<
               <h1 className="alt create-account-form__title">Create account</h1>
 
               <section className="create-account-form__form">
-                <NameForm form={this.props.form} />
-                <SubjectsForm
-                  form={this.props.form}
-                  subjects={this.props.subjects}
-                  placeholder="Subjects I teach.."
-                  initialValue={[]}
-                />
-                <AgeRangeForm
-                  form={this.props.form}
-                  ageRanges={this.props.ageRanges}
-                />
                 <EmailForm form={this.props.form} />
 
                 <TwoColumnInlineForm
@@ -150,8 +122,6 @@ class RegistrationForm extends React.Component<
                   )}
                 />
 
-                <PrivacyPolicyAgreementForm form={this.props.form} />
-                <MarketingAgreementForm form={this.props.form} />
                 <CaptchaNotice />
               </section>
 
@@ -308,8 +278,6 @@ function mapStateToProps(state: State): CreateAccountProps {
   return {
     links: state.links,
     referralCode: extractQueryParam(queryParam, 'REFERRALCODE'),
-    subjects: state.subjects,
-    ageRanges: state.ageRanges,
     utm: {
       source: extractQueryParam(queryParam, 'utm_source'),
       term: extractQueryParam(queryParam, 'utm_term'),
@@ -320,13 +288,6 @@ function mapStateToProps(state: State): CreateAccountProps {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    fetchSubjects: () => dispatch(fetchSubjectsAction()),
-  };
-}
-
-export default connect<CreateAccountProps, DispatchProps, {}>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create<CreateAccountProps & FormComponentProps>()(RegistrationForm));
+export default connect<CreateAccountProps, {}, {}>(mapStateToProps)(
+  Form.create<CreateAccountProps & FormComponentProps>()(RegistrationForm),
+);

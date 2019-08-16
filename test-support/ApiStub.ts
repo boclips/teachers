@@ -37,8 +37,10 @@ export default class ApiStub {
   private readonly prefix: string = 'https://api.example.com';
 
   constructor(linksDefault: any = links) {
+    MockFetchVerify.clear();
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
     this.fetchSubjects()
+      .fetchCollections()
       .fetchDisciplines()
       .fetchTags();
   }

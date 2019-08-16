@@ -14,7 +14,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
       <MultiSelect
         filterOption={this.filter}
         mode="multiple"
-        placeholder="Age(s) I teach"
+        placeholder="Choose ages"
         data-qa="ageRange"
         onChange={this.onChange}
         aria-label="Ages I teach"
@@ -47,6 +47,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
         <Option
           key={ageRange.getLabel()}
           title={ageRange.getLabel()}
+          data-qa={ageRange.getLabel()}
           value={JSON.stringify(ageRange.generateRangeArray())}
         >
           {ageRange.getLabel()}

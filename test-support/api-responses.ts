@@ -337,9 +337,9 @@ export function disciplinesResponse() {
   };
 }
 
-export function userResponse() {
+export function userResponse(id: string = 'my-user-id') {
   return {
-    id: 'my-user-id',
+    id,
     firstName: 'Bob',
     lastName: 'Someone',
     email: 'bob@someone.com',

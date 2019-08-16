@@ -1,9 +1,9 @@
+import { push } from 'connected-react-router';
 import { Store } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
 import { fetchPageableCollections } from '../../../../services/collections/fetchCollections';
 import fetchLinks from '../../../../services/links/fetchLinks';
-import activateUser from '../../../../services/users/activateUser';
 import { fetchUser } from '../../../../services/users/fetchUser';
 import { UserProfile } from '../../../../services/users/UserProfile';
 import { Links } from '../../../../types/Links';
@@ -22,6 +22,9 @@ const onLoggedIn = (store: Store) => {
       store.dispatch(fetchSubjectsAction());
       store.dispatch(fetchTagsAction());
       store.dispatch(fetchDisciplinesAction());
+      if (links.activate) {
+        store.dispatch(push('/onboarding'));
+      }
       fetchPageableCollections(links, { key: 'myCollections' })
         .then(collections => {
           store.dispatch(
@@ -29,11 +32,7 @@ const onLoggedIn = (store: Store) => {
           );
         })
         .catch(e => console.error('Cannot fetch collections', e));
-      const userProfilePromise = fetchUser(links);
-      userProfilePromise.then((userProfile: UserProfile) => {
-        return activateUser(links, userProfile);
-      });
-      return userProfilePromise;
+      return fetchUser(links);
     })
     .then((user: UserProfile) => {
       store.dispatch(userDetailsFetched(user));

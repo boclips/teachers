@@ -6,6 +6,7 @@ import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 
 interface Props {
   ageRanges: AgeRange[];
+  label?: string;
 }
 
 export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
@@ -15,7 +16,7 @@ export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
 
   public render() {
     return (
-      <Form.Item>
+      <Form.Item label={this.props.label}>
         {this.props.form.getFieldDecorator('ageRange', {
           rules: [{ type: 'array' }],
           initialValue: [],

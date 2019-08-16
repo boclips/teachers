@@ -13,6 +13,7 @@ import {
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import { CreateAccountView } from '../account/CreateAccountView';
+import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionDetailsView from '../collection/CollectionDetailsView';
 import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
@@ -194,6 +195,19 @@ describe('when authorised', () => {
 
     const collectionsView = wrapper.find(CreateAccountView);
     expect(collectionsView).toExist();
+  });
+
+  test('shows new account form on /onboarding', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/onboarding')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const view = wrapper.find(OnboardingView);
+    expect(view).toExist();
   });
 
   test('shows default collection view on /collections/default', () => {

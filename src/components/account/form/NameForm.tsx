@@ -3,10 +3,17 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import TwoColumnInlineForm from './TwoColumnInlineFormItem';
 
-export class NameForm extends React.Component<FormComponentProps> {
+interface NameFormProps {
+  label?: string;
+}
+
+export class NameForm extends React.Component<
+  FormComponentProps & NameFormProps
+> {
   public render() {
     return (
       <TwoColumnInlineForm
+        label={this.props.label}
         leftColumn={this.props.form.getFieldDecorator('firstName', {
           rules: [
             {

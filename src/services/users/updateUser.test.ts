@@ -7,12 +7,12 @@ import { analyticsMock } from '../../../test-support/getAnalyticsMock';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
-import activateUser from './activateUser';
+import updateUser from './updateUser';
 
 jest.mock('../analytics/AnalyticsFactory');
 
 const links = LinksFactory.sample({
-  activate: new Link({ href: '/activate' }),
+  profile: new Link({ href: '/activate' }),
 });
 
 const userProfile = UserProfileFactory.sample({
@@ -30,14 +30,14 @@ describe('when activate link present', () => {
     });
 
     it('registers activation complete event', async () => {
-      activateUser(links, userProfile);
+      updateUser(links, userProfile);
       await eventually(() => {
         expect(analyticsMock.trackAccountActivation).toHaveBeenCalled();
       });
     });
 
     it('creates user profile in analytics', async () => {
-      activateUser(links, userProfile);
+      updateUser(links, userProfile);
       await eventually(() => {
         expect(analyticsMock.createUserProfile).toHaveBeenCalledWith(
           userProfile,
@@ -53,15 +53,13 @@ describe('when user cannot be activated', () => {
   });
 
   it('does not publish event to web analytics', () => {
-    activateUser(links, userProfile);
+    updateUser(links, userProfile);
     expect(analyticsMock.trackAccountActivation).not.toHaveBeenCalled();
   });
 });
 
 describe('when no activate link', () => {
   it('does not throw', () => {
-    expect(() =>
-      activateUser(LinksFactory.sample(), userProfile),
-    ).not.toThrow();
+    expect(() => updateUser(LinksFactory.sample(), userProfile)).not.toThrow();
   });
 });

@@ -2,10 +2,6 @@ import axios from 'axios';
 import { Links } from '../../types/Links';
 
 export interface CreateAccountRequest {
-  firstName: string;
-  lastName: string;
-  subjects: string;
-  ageRange: number[];
   email: string;
   password: string;
   analyticsId: string;
@@ -15,7 +11,6 @@ export interface CreateAccountRequest {
   utmCampaign: string;
   utmMedium: string;
   referralCode: string;
-  hasOptedIntoMarketing: boolean;
 }
 
 export const createAccount = (
