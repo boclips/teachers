@@ -1,3 +1,3 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
+import { actionCreatorFactoryVoid } from '../../../../app/redux/actions';
 
-export const userLoggedIn = actionCreatorFactory('LOGGED_IN');
+export const userLoggedIn = actionCreatorFactoryVoid('LOGGED_IN');

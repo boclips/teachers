@@ -13,10 +13,9 @@ const onAuthenticationRequested = (
   { authenticationRequired },
 ) => {
   BoclipsSecurity.createInstance({
-    onLogin: keycloak => {
+    onLogin: () => {
       store.dispatch(
         authenticationChanged({
-          keycloakInstance: keycloak,
           success: true,
         }),
       );

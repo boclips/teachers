@@ -1,6 +1,6 @@
+import { video177 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { VideoDetailsPage } from '../../../test-support/page-objects/VideoDetailsPage';
-import { video177 } from '../../../test-support/video-service-responses';
 
 test('video details shows data', async () => {
   new ApiStub()

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { subjectsResponse } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
-import { subjectsResponse } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
 import { fetchSubjects } from './fetchSubjects';
 

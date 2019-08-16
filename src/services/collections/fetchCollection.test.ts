@@ -1,11 +1,11 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { LinksFactory } from '../../../test-support/factories';
 import {
   collectionResponse,
   collectionResponseWithSubject,
   video177Slim,
-} from '../../../test-support/video-service-responses';
+} from '../../../test-support/api-responses';
+import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
 import { fetchCollection } from './fetchCollection';
 

@@ -1,4 +1,3 @@
-import MockFetchVerify from './MockFetchVerify';
 import {
   collectionResponse,
   collectionsResponse,
@@ -9,7 +8,8 @@ import {
   userResponse,
   video177,
   video177Slim,
-} from './video-service-responses';
+} from './api-responses';
+import MockFetchVerify from './MockFetchVerify';
 
 interface VideoQueryOptions {
   query: string;
@@ -203,7 +203,7 @@ export default class ApiStub {
   }
 
   public defaultUser() {
-    this.fetchUser(userResponse('my-user-id'));
+    this.fetchUser(userResponse());
     return this;
   }
 }

@@ -1,4 +1,3 @@
-import { KeycloakInstance } from 'keycloak-js';
 import { Store } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
@@ -16,9 +15,7 @@ import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 
-const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
-  const userId = keycloak.subject;
-
+const onLoggedIn = (store: Store) => {
   fetchLinks(store.getState().apiPrefix)
     .then((links: Links) => {
       store.dispatch(storeLinksAction(links));
@@ -32,7 +29,7 @@ const onLoggedIn = (store: Store, keycloak: KeycloakInstance) => {
           );
         })
         .catch(e => console.error('Cannot fetch collections', e));
-      const userProfilePromise = fetchUser(links, userId);
+      const userProfilePromise = fetchUser(links);
       userProfilePromise.then((userProfile: UserProfile) => {
         return activateUser(links, userProfile);
       });

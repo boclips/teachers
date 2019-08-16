@@ -1,13 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
+  collectionsResponse,
+  video177Slim,
+} from '../../../test-support/api-responses';
+import {
   LinksFactory,
   PageableCollectionsFactory,
 } from '../../../test-support/factories';
-import {
-  collectionsResponse,
-  video177Slim,
-} from '../../../test-support/video-service-responses';
 import { AgeRange } from '../../types/AgeRange';
 import { Link } from '../../types/Link';
 import {

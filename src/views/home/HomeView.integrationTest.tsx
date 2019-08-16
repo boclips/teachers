@@ -1,9 +1,9 @@
-import ApiStub from '../../../test-support/ApiStub';
-import { HomePage } from '../../../test-support/page-objects/HomePage';
 import {
   collectionsResponse,
   video177,
-} from '../../../test-support/video-service-responses';
+} from '../../../test-support/api-responses';
+import ApiStub from '../../../test-support/ApiStub';
+import { HomePage } from '../../../test-support/page-objects/HomePage';
 
 describe('Home page', () => {
   test('loads public collections', async () => {

@@ -1,12 +1,12 @@
+import {
+  collectionResponse,
+  video177Slim,
+} from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
 import eventually from '../../../test-support/eventually';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
-import {
-  collectionResponse,
-  video177Slim,
-} from '../../../test-support/video-service-responses';
 import EditCollectionButton from '../../components/collection/buttons/EditCollectionButton';
 import {
   CollectionEditModalHelper,

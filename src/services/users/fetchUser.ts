@@ -3,11 +3,8 @@ import { Links } from '../../types/Links';
 import convertUserResource from './convertUserResource';
 import { UserProfile } from './UserProfile';
 
-export const fetchUser = (
-  links: Links,
-  userId: string,
-): Promise<UserProfile> => {
-  const userLink = links.profile.getTemplatedLink({ id: userId });
+export const fetchUser = (links: Links): Promise<UserProfile> => {
+  const userLink = links.profile.getOriginalLink();
 
   return axios
     .get(userLink)

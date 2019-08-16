@@ -34,8 +34,7 @@ export const links = {
       href: `${prefix}/v1/collections`,
     },
     profile: {
-      href: `${prefix}/v1/users/{id}`,
-      templated: true,
+      href: `${prefix}/v1/users/my-user-id`,
     },
     subjects: {
       href: `${prefix}/v1/subjects`,
@@ -338,13 +337,13 @@ export function disciplinesResponse() {
   };
 }
 
-export function userResponse(id: string = 'user-id') {
+export function userResponse() {
   return {
-    id,
+    id: 'my-user-id',
     firstName: 'Bob',
     lastName: 'Someone',
     email: 'bob@someone.com',
     analyticsId: '123',
-    _links: { self: { href: 'http://localhost/v1/users/user-id' } },
+    _links: { self: { href: `http://localhost/v1/users/my-user-id` } },
   };
 }

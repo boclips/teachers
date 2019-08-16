@@ -4,10 +4,12 @@ import {
 } from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
-import Keycloak from 'keycloak-js';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MockStoreFactory } from '../../../test-support/factories';
+import {
+  MockStoreFactory,
+  UserProfileFactory,
+} from '../../../test-support/factories';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import { CreateAccountView } from '../account/CreateAccountView';
@@ -329,15 +331,8 @@ function buildStore(
     action: 'PUSH' as RouterActionType,
   };
 
-  let user = null;
-  if (authorised) {
-    user = Keycloak();
-  }
-
-  const store = MockStoreFactory.sample({
+  return MockStoreFactory.sample({
     router,
-    user,
+    user: authorised ? UserProfileFactory.sample() : null,
   });
-
-  return store;
 }

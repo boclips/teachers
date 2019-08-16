@@ -69,7 +69,6 @@ class PrivateRoute extends React.Component<
   };
 
   public componentDidMount(): void {
-    console.warn('private route is authenticated', this.props.isAuthenticated);
     if (!this.props.isAuthenticated) {
       this.props.authenticate();
     }

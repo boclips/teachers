@@ -88,9 +88,9 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('sets a user id', () => {
-    mixpanelAnalytics.setUserId('user-id');
+    mixpanelAnalytics.setUserId('my-user-id');
 
-    expect(mock.identify).toHaveBeenCalledWith('user-id');
+    expect(mock.identify).toHaveBeenCalledWith('my-user-id');
   });
 
   it('tracks video added to collection', () => {

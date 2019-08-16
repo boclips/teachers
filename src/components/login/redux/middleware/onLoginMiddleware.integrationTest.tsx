@@ -1,12 +1,8 @@
 import Mock = jest.Mock;
 import configureStore from 'redux-mock-store';
+import { links, userResponse } from '../../../../../test-support/api-responses';
 import ApiStub from '../../../../../test-support/ApiStub';
 import eventually from '../../../../../test-support/eventually';
-import KeycloakInstanceFake from '../../../../../test-support/KeycloakInstanceFake';
-import {
-  links,
-  userResponse,
-} from '../../../../../test-support/video-service-responses';
 import activateUser from '../../../../services/users/activateUser';
 import { Link, RawLink } from '../../../../types/Link';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
@@ -41,13 +37,7 @@ describe('on store login', () => {
       .fetchUser(userResponse())
       .fetchCollections();
 
-    store.dispatch(
-      userLoggedIn(
-        new KeycloakInstanceFake({
-          userId: 'user-id',
-        }),
-      ),
-    );
+    store.dispatch(userLoggedIn());
   });
 
   it('fetches my collections', async () => {
@@ -88,11 +78,11 @@ describe('on store login', () => {
           analyticsId: '123',
           email: 'bob@someone.com',
           firstName: 'Bob',
-          id: 'user-id',
+          id: 'my-user-id',
           lastName: 'Someone',
           links: {
             self: new Link({
-              href: 'http://localhost/v1/users/user-id',
+              href: 'http://localhost/v1/users/my-user-id',
             } as RawLink),
           },
         }),

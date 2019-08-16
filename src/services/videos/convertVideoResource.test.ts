@@ -1,9 +1,6 @@
 import * as moment from 'moment';
+import { video177, youtubeVideo1 } from '../../../test-support/api-responses';
 import { SubjectFactory } from '../../../test-support/factories';
-import {
-  video177,
-  youtubeVideo1,
-} from '../../../test-support/video-service-responses';
 import { StreamPlayback, YoutubePlayback } from '../../types/Video';
 import convertVideoResource from './convertVideoResource';
 

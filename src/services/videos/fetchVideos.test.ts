@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
+import { videos } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
-import { videos } from '../../../test-support/video-service-responses';
 import { Constants } from '../../app/AppConstants';
 import { Link } from '../../types/Link';
 import fetchVideos from './fetchVideos';

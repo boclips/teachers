@@ -1,5 +1,5 @@
+import { collectionResponse } from '../../../test-support/api-responses';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { collectionResponse } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
 import {
   VideoCollectionFactory,

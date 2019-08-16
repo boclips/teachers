@@ -1,6 +1,6 @@
+import { video177 } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { video177 } from '../../../test-support/video-service-responses';
 import { Link } from '../../types/Link';
 import fetchVideo, { fetchVideoFromSelfLink } from './fetchVideo';
 

@@ -1,13 +1,13 @@
 import Button from 'antd/lib/button/button';
-import ApiStub from '../../../test-support/ApiStub';
-import { By } from '../../../test-support/By';
-import eventually from '../../../test-support/eventually';
-import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import {
   collectionsResponse,
   video177,
   videos as videoResults,
-} from '../../../test-support/video-service-responses';
+} from '../../../test-support/api-responses';
+import ApiStub from '../../../test-support/ApiStub';
+import { By } from '../../../test-support/By';
+import eventually from '../../../test-support/eventually';
+import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import { findElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
 import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
