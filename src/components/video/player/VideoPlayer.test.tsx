@@ -40,6 +40,62 @@ const getComponent = (
   );
 };
 
+describe('analytics data', () => {
+  const testData = [
+    {
+      message: 'will pass videoId to Player',
+      videoPlayerProps: { video },
+      expectedAnalyticMetadata: {
+        videoId: video.id,
+      },
+    },
+    {
+      message: 'will pass undefined videoIndex to Player',
+      videoPlayerProps: { video, videoIndex: undefined },
+      expectedAnalyticMetadata: {
+        videoIndex: undefined,
+      },
+    },
+
+    {
+      message: 'will pass 0 videoIndex to Player',
+      videoPlayerProps: { video, videoIndex: 0 },
+      expectedAnalyticMetadata: {
+        videoIndex: 0,
+      },
+    },
+    {
+      message: 'will pass 1 videoIndex to Player',
+      videoPlayerProps: { video, videoIndex: 1 },
+      expectedAnalyticMetadata: {
+        videoIndex: 1,
+      },
+    },
+    {
+      message: 'will pass 2 videoIndex to Player',
+      videoPlayerProps: { video, videoIndex: 2 },
+      expectedAnalyticMetadata: {
+        videoIndex: 2,
+      },
+    },
+  ];
+
+  testData.forEach(
+    ({ message, videoPlayerProps, expectedAnalyticMetadata }) => {
+      it(message, () => {
+        getComponent(videoPlayerProps);
+
+        expect(PlayerFactory.get).toHaveBeenCalled();
+
+        const optionsPassed = mocked(PlayerFactory.get).mock.calls[0][1];
+        expect(optionsPassed.analytics.metadata).toEqual(
+          expect.objectContaining(expectedAnalyticMetadata),
+        );
+      });
+    },
+  );
+});
+
 describe('loading the video', () => {
   const testData = [
     {

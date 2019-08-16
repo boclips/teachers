@@ -78,7 +78,7 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
       analytics: {
         metadata: {
           videoId: this.props.video.id,
-          videoIndex: this.props.videoIndex || null,
+          videoIndex: this.props.videoIndex,
         },
         handleOnSegmentPlayback: this.handleOnPlayback,
       },
