@@ -1,11 +1,11 @@
-import { authenticationChanged } from '../actions/authenticationChanged';
+import { authenticationResolved } from '../actions/authenticationResolved';
 import { authenticationReducer } from './authenticationReducer';
 
-describe('on authenticationChanged', () => {
+describe('on authenticationResolved', () => {
   it('will change status to authenticated if authentication succeeds', () => {
     const resultingState = authenticationReducer(
       undefined,
-      authenticationChanged({
+      authenticationResolved({
         success: true,
       }),
     );
@@ -16,7 +16,7 @@ describe('on authenticationChanged', () => {
   it('will change status to anonymous if authentication fails', () => {
     const resultingState = authenticationReducer(
       undefined,
-      authenticationChanged({
+      authenticationResolved({
         success: false,
       }),
     );

@@ -1,17 +1,17 @@
 import configureStore from 'redux-mock-store';
 import { userLoggedIn } from '../../../../components/login/redux/actions/userLoggedIn';
-import { authenticationChanged } from '../actions/authenticationChanged';
-import authenticationChangedMiddleware from './authenticationChangedMiddleware';
+import { authenticationResolved } from '../actions/authenticationResolved';
+import onAuthenticationResolvedMiddleware from './onAuthenticationResolvedMiddleware';
 
 it('will dispatch a user logged in action, when successful', () => {
   const mockStore = configureStore<{}>();
   const store = mockStore({});
 
-  const action = authenticationChanged({
+  const action = authenticationResolved({
     success: true,
   });
 
-  authenticationChangedMiddleware(store)(jest.fn())(action);
+  onAuthenticationResolvedMiddleware(store)(jest.fn())(action);
 
   expect(store.getActions()).toHaveLength(1);
 
@@ -23,10 +23,10 @@ it('will not dispatch a user logged in action, when unsuccessful', () => {
   const mockStore = configureStore<{}>();
   const store = mockStore({});
 
-  const action = authenticationChanged({
+  const action = authenticationResolved({
     success: false,
   });
 
-  authenticationChangedMiddleware(store)(jest.fn())(action);
+  onAuthenticationResolvedMiddleware(store)(jest.fn())(action);
   expect(store.getActions()).toHaveLength(0);
 });

@@ -1,7 +1,7 @@
 import BoclipsSecurity from 'boclips-js-security';
 import { Store } from 'redux';
 import { sideEffect } from '../../actions';
-import { authenticationChanged } from '../actions/authenticationChanged';
+import { authenticationResolved } from '../actions/authenticationResolved';
 import { requestAuthentication } from '../actions/requestAuthentication';
 
 const defaultAuthEndpoint =
@@ -15,14 +15,14 @@ const onAuthenticationRequested = (
   BoclipsSecurity.createInstance({
     onLogin: () => {
       store.dispatch(
-        authenticationChanged({
+        authenticationResolved({
           success: true,
         }),
       );
     },
     onFailure: () => {
       store.dispatch(
-        authenticationChanged({
+        authenticationResolved({
           success: false,
         }),
       );

@@ -31,7 +31,7 @@ import { tagsReducer } from '../components/video/tags/redux/reducers/tagsReducer
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import LinkLoader from './config/LinkLoader';
-import onAuthenticationChangedMiddleware from './redux/authentication/middleware/authenticationChangedMiddleware';
+import onAuthenticationResolvedMiddleware from './redux/authentication/middleware/onAuthenticationResolvedMiddleware';
 import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';
 import { authenticationReducer } from './redux/authentication/reducers/authenticationReducer';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
@@ -75,7 +75,7 @@ export default class App extends PureComponent<Props> {
         ...fetchVideosMiddleware,
         fetchLinksMiddleware,
         onStoreLoginMiddleware,
-        onAuthenticationChangedMiddleware,
+        onAuthenticationResolvedMiddleware,
         requestAuthenticationMiddleware,
         onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,

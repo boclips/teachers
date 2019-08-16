@@ -1,12 +1,12 @@
 import { Store } from 'redux';
 import { userLoggedIn } from '../../../../components/login/redux/actions/userLoggedIn';
 import { sideEffect } from '../../actions';
-import { authenticationChanged } from '../actions/authenticationChanged';
+import { authenticationResolved } from '../actions/authenticationResolved';
 
-const onAuthenticationChange = (store: Store, { success }) => {
+const onAuthenticationResolved = (store: Store, { success }) => {
   if (success) {
     store.dispatch(userLoggedIn());
   }
 };
 
-export default sideEffect(authenticationChanged, onAuthenticationChange);
+export default sideEffect(authenticationResolved, onAuthenticationResolved);
