@@ -1,6 +1,8 @@
 app: teachers
 port: 80
 scale: Tiny
+bootTime: Fast
+healthPath: /
 environments:
   production:
     replicas: 3
