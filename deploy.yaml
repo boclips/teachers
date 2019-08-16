@@ -3,6 +3,10 @@ port: 80
 scale: Tiny
 bootTime: Fast
 healthPath: /
+preStop:
+- sh
+- -c
+- "sleep 10 && /usr/sbin/nginx -s quit"
 environments:
   production:
     replicas: 3
