@@ -8,7 +8,7 @@ import ReferAFriendBannerMobileSVG from '../../../resources/images/refer-a-frien
 import ReferAFriendBannerSVG from '../../../resources/images/refer-a-friend-banner.svg';
 import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
-import ReferAFriend from '../../components/ReferAFriend';
+import ReferAFriend from '../../components/referAFriend/ReferAFriend';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 

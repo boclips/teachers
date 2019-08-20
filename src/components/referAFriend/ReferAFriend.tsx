@@ -1,11 +1,11 @@
 import { Button } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import AnalyticsFactory from '../services/analytics/AnalyticsFactory';
-import { UserProfile } from '../services/users/UserProfile';
-import { UserState } from '../types/State';
-import { A11yButton } from './common/A11yButton';
-import Bodal from './common/Bodal';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+import { UserProfile } from '../../services/users/UserProfile';
+import { UserState } from '../../types/State';
+import { A11yButton } from '../common/A11yButton';
+import Bodal from '../common/Bodal';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 
 interface Props {

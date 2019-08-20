@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router';
 import {
   MockStoreFactory,
   UserProfileFactory,
-} from '../../test-support/factories';
+} from '../../../test-support/factories';
 import ReferAFriend from './ReferAFriend';
 import ReferAFriendUrlBuilder from './ReferAFriendUrlBuilder';
 

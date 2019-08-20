@@ -4,7 +4,7 @@ import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
 import BookmarkedIconSVG from '../../../../resources/images/my-bookmarks.svg';
 import ReferAFriendIconSVG from '../../../../resources/images/refer-a-friend-icon.svg';
-import ReferAFriend from '../../ReferAFriend';
+import ReferAFriend from '../../referAFriend/ReferAFriend';
 
 type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
