@@ -4,6 +4,7 @@ import {
 } from 'connected-react-router';
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
+import { UserProfileLinks } from '../src/services/users/UserProfile';
 import { UserProfile } from '../src/services/users/UserProfile';
 import { AgeRange } from '../src/types/AgeRange';
 import { Discipline } from '../src/types/Discipline';
@@ -19,12 +20,11 @@ import State, {
 import { Subject } from '../src/types/Subject';
 import { Tag } from '../src/types/Tag';
 import { StreamPlayback, Video, VideoId } from '../src/types/Video';
-import { UserProfileLinks } from './../src/services/users/UserProfile';
 import {
   VideoCollection,
   VideoCollectionLinks,
   VideoMap,
-} from './../src/types/VideoCollection';
+} from '../src/types/VideoCollection';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
@@ -88,6 +88,7 @@ export class VideoCollectionFactory {
       createdBy: 'Le Factory',
       subjects: arg.subjects || [],
       ageRange: arg.ageRange || new AgeRange(),
+      attachments: [],
     });
   }
 

@@ -131,6 +131,13 @@ export const youtubeVideo1 = {
   _links: { self: { href: 'http://localhost/v1/videos/177' } },
 };
 
+export const sampleAttachmentResponse = {
+  id: 'attachment-id-1',
+  type: 'LESSON_PLAN',
+  description: 'Attachment Description',
+  _links: { download: { href: 'https://example.com/download' } },
+};
+
 export const videos = videosResponse([video177, video147]);
 
 export function videosResponse(data: any[]) {
@@ -202,6 +209,17 @@ export function collectionResponseWithSubject(
   return {
     ...collectionResponse(videosWithin, id, editble),
     subjects: [{ id: '1', name: null }, { id: '2', name: null }],
+  };
+}
+
+export function collectionResponseWithAttachment(
+  videosWithin: any[] = [video177Slim],
+  id: string = 'id',
+  attachments: any[] = [sampleAttachmentResponse],
+) {
+  return {
+    ...collectionResponse(videosWithin, id),
+    attachments,
   };
 }
 

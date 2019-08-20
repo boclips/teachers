@@ -1,4 +1,5 @@
 import { AgeRange } from './AgeRange';
+import { Attachment } from './Attachment';
 import { Link } from './Link';
 import { Video, VideoId } from './Video';
 
@@ -25,6 +26,7 @@ export interface VideoCollection {
   createdBy: string;
   ageRange?: AgeRange;
   description?: string;
+  attachments: Attachment[];
 }
 
 // tslint:disable-next-line:interface-over-type-literal
