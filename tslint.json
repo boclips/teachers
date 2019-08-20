@@ -13,6 +13,7 @@
   },
   "rulesDirectory": ["tslint-plugin-prettier"],
   "rules": {
+    "no-unused-variable": true,
     "interface-name": false,
     "no-empty-interface": false,
     "unified-signatures": false,
