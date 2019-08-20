@@ -9,6 +9,8 @@ import {
 } from '../../services/account/createAccount';
 import Utm from '../../services/account/Utm';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+import { RegistrationContext } from '../../services/session/RegistrationContext';
+import { RegistrationContextService } from '../../services/session/RegistrationContextService';
 import { Links } from '../../types/Links';
 import State from '../../types/State';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
@@ -50,6 +52,18 @@ class RegistrationForm extends React.Component<
 
   public componentDidMount() {
     AnalyticsFactory.getInstance().trackAccountRegistration();
+
+    const registrationContextService = new RegistrationContextService();
+    const registrationContext: RegistrationContext = {
+      referralCode: this.props.referralCode,
+      utmSource: this.props.utm.source,
+      utmTerm: this.props.utm.term,
+      utmMedium: this.props.utm.medium,
+      utmCampaign: this.props.utm.campaign,
+      utmContent: this.props.utm.content,
+    };
+
+    registrationContextService.store(registrationContext);
   }
 
   public render() {
