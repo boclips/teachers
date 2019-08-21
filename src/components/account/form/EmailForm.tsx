@@ -7,7 +7,7 @@ export class EmailForm extends React.Component<FormComponentProps> {
     return (
       <Row>
         <Col xs={{ span: 24 }} md={{ span: 16 }} xl={{ span: 16 }}>
-          <Form.Item>
+          <Form.Item label="Email" required={false}>
             {this.props.form.getFieldDecorator('email', {
               rules: [
                 {
@@ -23,7 +23,7 @@ export class EmailForm extends React.Component<FormComponentProps> {
               <Input
                 data-qa="email"
                 size="large"
-                placeholder="Email"
+                placeholder="Enter your email"
                 aria-required={true}
               />,
             )}

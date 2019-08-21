@@ -86,6 +86,13 @@ export {
 export {
   default as EyeOutline,
 } from '@ant-design/icons/lib/outline/EyeOutline';
+export { default as EyeFill } from '@ant-design/icons/lib/fill/EyeFill';
+export {
+  default as EyeInvisibleFill,
+} from '@ant-design/icons/lib/fill/EyeInvisibleFill';
+export {
+  default as EyeInvisibleOutline,
+} from '@ant-design/icons/lib/outline/EyeInvisibleOutline';
 export {
   default as DeleteOutline,
 } from '@ant-design/icons/lib/outline/DeleteOutline';

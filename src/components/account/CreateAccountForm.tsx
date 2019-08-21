@@ -1,8 +1,7 @@
-import { Button, Col, Form, Input, Row } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
-import RegistrationLogoSVG from '../../../resources/images/registration-logo.svg';
 import {
   createAccount,
   CreateAccountRequest,
@@ -20,7 +19,7 @@ import { CaptchaNotice } from './form/CaptchaNotice';
 import { EmailForm } from './form/EmailForm';
 import { ErrorAnnouncement } from './form/ErrorAnnouncement';
 import { LoginLink } from './form/LoginLink';
-import TwoColumnInlineForm from './form/TwoColumnInlineFormItem';
+import { PasswordForm } from './form/PasswordForm';
 import { Recaptcha } from './recaptcha/Recaptcha';
 import { extractQueryParam } from './referral/extractQueryParam';
 
@@ -38,7 +37,7 @@ interface InternalState {
   formErrors: object;
 }
 
-class RegistrationForm extends React.Component<
+class CreateAccountForm extends React.Component<
   CreateAccountProps & FormComponentProps,
   InternalState
 > {
@@ -79,135 +78,90 @@ class RegistrationForm extends React.Component<
 
     return (
       <section className="create-account-form__container">
-        <Row>
-          <Col xs={{ span: 0 }} lg={{ span: 12 }}>
-            <RegistrationLogoSVG className="create-account__logo" />
-          </Col>
-          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-            <section className="visually-hidden">
-              <ErrorAnnouncement error={this.state.formErrors} />
-            </section>
+        <section className="visually-hidden">
+          <ErrorAnnouncement error={this.state.formErrors} />
+        </section>
 
-            <Form onSubmit={this.handleSubmit}>
-              <h1 className="alt create-account-form__title">Create account</h1>
+        <Form onSubmit={this.handleSubmit}>
+          <h1 className="alt create-account-form__title">Create account</h1>
 
-              <section className="create-account-form__form">
-                <EmailForm form={this.props.form} />
+          <section className="create-account-form__form">
+            <EmailForm form={this.props.form} />
 
-                <TwoColumnInlineForm
-                  leftColumn={getFieldDecorator('password', {
-                    rules: [
-                      {
-                        required: true,
-                        min: 8,
-                        message:
-                          'Please enter at least 8 characters for your password',
-                      },
-                      {
-                        validator: this.validateToNextPassword,
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="password"
-                      size="large"
-                      type="password"
-                      placeholder="Password"
-                    />,
-                  )}
-                  rightColumn={getFieldDecorator('confirmPassword', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please confirm your password',
-                      },
-                      {
-                        validator: this.compareToFirstPassword,
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="password-confirm"
-                      size="large"
-                      type="password"
-                      onBlur={this.handleConfirmBlur}
-                      placeholder="Confirm password"
-                    />,
-                  )}
-                />
+            <PasswordForm form={this.props.form} />
+          </section>
 
-                <CaptchaNotice />
-              </section>
+          <div style={{ display: 'none' }}>
+            <Form.Item>
+              {getFieldDecorator('referralCode', {
+                rules: [],
+                initialValue: this.props.referralCode,
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('analyticsId', {
+                rules: [],
+                initialValue: AnalyticsFactory.getInstance().getId(),
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('utmSource', {
+                rules: [],
+                initialValue: this.props.utm.source,
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('utmTerm', {
+                rules: [],
+                initialValue: this.props.utm.term,
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('utmContent', {
+                rules: [],
+                initialValue: this.props.utm.content,
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('utmMedium', {
+                rules: [],
+                initialValue: this.props.utm.medium,
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('utmCampaign', {
+                rules: [],
+                initialValue: this.props.utm.campaign,
+              })(<Input type="text" />)}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('recaptchaToken', {
+                rules: [],
+                initialValue: '',
+              })(<Input type="text" />)}
+            </Form.Item>
+            {this.state.renderRecaptcha && (
+              <Recaptcha verifyCallback={this.updateRecaptchaToken} />
+            )}
+          </div>
 
-              <div style={{ display: 'none' }}>
-                <Form.Item>
-                  {getFieldDecorator('referralCode', {
-                    rules: [],
-                    initialValue: this.props.referralCode,
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('analyticsId', {
-                    rules: [],
-                    initialValue: AnalyticsFactory.getInstance().getId(),
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('utmSource', {
-                    rules: [],
-                    initialValue: this.props.utm.source,
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('utmTerm', {
-                    rules: [],
-                    initialValue: this.props.utm.term,
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('utmContent', {
-                    rules: [],
-                    initialValue: this.props.utm.content,
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('utmMedium', {
-                    rules: [],
-                    initialValue: this.props.utm.medium,
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('utmCampaign', {
-                    rules: [],
-                    initialValue: this.props.utm.campaign,
-                  })(<Input type="text" />)}
-                </Form.Item>
-                <Form.Item>
-                  {getFieldDecorator('recaptchaToken', {
-                    rules: [],
-                    initialValue: '',
-                  })(<Input type="text" />)}
-                </Form.Item>
-                {this.state.renderRecaptcha && (
-                  <Recaptcha verifyCallback={this.updateRecaptchaToken} />
-                )}
-              </div>
+          <Button
+            data-qa="register-button"
+            className="create-account-form__submit"
+            size="large"
+            type="primary"
+            htmlType="submit"
+            disabled={this.state.creating}
+            loading={this.state.creating}
+          >
+            Create account
+          </Button>
+        </Form>
+        <LoginLink />
 
-              <Button
-                data-qa="register-button"
-                className="create-account-form__submit"
-                size="large"
-                type="primary"
-                htmlType="submit"
-                disabled={this.state.creating}
-                loading={this.state.creating}
-              >
-                Register
-              </Button>
-            </Form>
-            <LoginLink />
-          </Col>
-        </Row>
+        <section className="create-account-form__recaptcha">
+          <CaptchaNotice />
+        </section>
       </section>
     );
   }
@@ -256,31 +210,6 @@ class RegistrationForm extends React.Component<
       },
     );
   };
-
-  private handleConfirmBlur = e => {
-    const value = e.target.value;
-    this.setState({
-      ...this.state,
-      confirmDirty: this.state.confirmDirty || !!value,
-    });
-  };
-
-  private compareToFirstPassword = (_, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('The passwords are not the same');
-    } else {
-      callback();
-    }
-  };
-
-  private validateToNextPassword = (_, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirmPassword'], { force: true });
-    }
-    callback();
-  };
 }
 
 function mapStateToProps(state: State): CreateAccountProps {
@@ -300,5 +229,5 @@ function mapStateToProps(state: State): CreateAccountProps {
 }
 
 export default connect<CreateAccountProps, {}, {}>(mapStateToProps)(
-  Form.create<CreateAccountProps & FormComponentProps>()(RegistrationForm),
+  Form.create<CreateAccountProps & FormComponentProps>()(CreateAccountForm),
 );
