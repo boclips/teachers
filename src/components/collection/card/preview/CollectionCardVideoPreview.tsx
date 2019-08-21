@@ -51,6 +51,7 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
 
   public render() {
     const video = this.props.video;
+
     return video ? (
       <StopClickPropagation key={`video-${video.id}`}>
         <section

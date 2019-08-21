@@ -2,6 +2,8 @@ import { notification } from 'antd';
 import React from 'react';
 import tickIcon from '../../../resources/images/green-check.png';
 
+import './NotificationFactory.less';
+
 export interface NotificationOptions {
   message: React.ReactNode;
   description?: React.ReactNode;
@@ -18,10 +20,7 @@ export default class NotificationFactory {
       ),
       placement: 'bottomRight',
       icon: <img src={tickIcon} alt="Tick icon" />,
-      style: {
-        background: '#008F52',
-        color: '#FFFFFF',
-      },
+      className: 'notification--success',
       duration: 6,
     });
   }
@@ -34,12 +33,9 @@ export default class NotificationFactory {
           {options.description}
         </div>
       ),
+      className: 'notification--error',
       placement: 'bottomRight',
       duration: 6,
-      style: {
-        background: '	#db0000',
-        color: '#FFFFFF',
-      },
     });
   }
 }
