@@ -1,6 +1,7 @@
 import { Mixpanel } from 'mixpanel-browser';
 import * as moment from 'moment';
 import {
+  AttachmentFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../test-support/factories';
@@ -11,10 +12,10 @@ import { UserProfile } from '../users/UserProfile';
 import MixpanelAnalytics from './MixpanelAnalytics';
 
 let mixpanelAnalytics: MixpanelAnalytics;
-let mock: Mixpanel;
+let mockMixpanel: Mixpanel;
 
 beforeEach(() => {
-  mock = {
+  mockMixpanel = {
     init: () => jest.fn(),
     track: jest.fn(),
     people: {
@@ -24,14 +25,14 @@ beforeEach(() => {
     identify: jest.fn(),
   } as Mixpanel;
 
-  mixpanelAnalytics = new MixpanelAnalytics(mock as Mixpanel);
+  mixpanelAnalytics = new MixpanelAnalytics(mockMixpanel as Mixpanel);
 });
 
 describe('MixpanelAnalytics', () => {
   it('tracks account activation', () => {
     mixpanelAnalytics.trackAccountActivation();
 
-    expect(mock.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
+    expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
   });
 
   it('tracks default collection visited', () => {
@@ -44,7 +45,7 @@ describe('MixpanelAnalytics', () => {
 
     mixpanelAnalytics.trackCollectionVisited(collection);
 
-    expect(mock.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
+    expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
       video_collection_id: 'doggy',
       video_collection_title: 'style',
       video_collection_is_owner: true,
@@ -67,7 +68,7 @@ describe('MixpanelAnalytics', () => {
       } as VideoSearchResults,
     );
 
-    expect(mock.track).toHaveBeenCalledWith('VIDEO_SEARCH', {
+    expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_SEARCH', {
       video_search_number_of_results: 1,
       video_search_page_number: 1,
       video_search_query: undefined,
@@ -78,19 +79,19 @@ describe('MixpanelAnalytics', () => {
   it('creates a user profile', () => {
     mixpanelAnalytics.createUserProfile({} as UserProfile);
 
-    expect(mock.people.set).toHaveBeenCalled();
+    expect(mockMixpanel.people.set).toHaveBeenCalled();
   });
 
   it('resets mixpanel', () => {
     mixpanelAnalytics.reset();
 
-    expect(mock.reset).toHaveBeenCalled();
+    expect(mockMixpanel.reset).toHaveBeenCalled();
   });
 
   it('sets a user id', () => {
     mixpanelAnalytics.setUserId('my-user-id');
 
-    expect(mock.identify).toHaveBeenCalledWith('my-user-id');
+    expect(mockMixpanel.identify).toHaveBeenCalledWith('my-user-id');
   });
 
   it('tracks video added to collection', () => {
@@ -101,7 +102,7 @@ describe('MixpanelAnalytics', () => {
     });
     mixpanelAnalytics.trackVideoAddedToCollection(video, collection);
 
-    expect(mock.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
+    expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
       video_collection_id: 'doggy',
       video_collection_title: 'style',
       video_title: 'gangnam style',
@@ -116,11 +117,14 @@ describe('MixpanelAnalytics', () => {
     });
     mixpanelAnalytics.trackVideoRemovedFromCollection(video, collection);
 
-    expect(mock.track).toHaveBeenCalledWith('COLLECTION_VIDEO_REMOVED', {
-      video_collection_id: 'doggy',
-      video_collection_title: 'style',
-      video_title: 'gangnam style',
-    });
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'COLLECTION_VIDEO_REMOVED',
+      {
+        video_collection_id: 'doggy',
+        video_collection_title: 'style',
+        video_title: 'gangnam style',
+      },
+    );
   });
 
   it('tracks video link copied', () => {
@@ -143,7 +147,7 @@ describe('MixpanelAnalytics', () => {
 
     mixpanelAnalytics.trackVideoLinkCopied(video, segment);
 
-    expect(mock.track).toHaveBeenCalledWith('VIDEO_LINK_COPIED', {
+    expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_LINK_COPIED', {
       video_badges: 'ad-free',
       video_contentPartner: 'Bodevs Productions',
       video_description: 'my video description',
@@ -173,7 +177,7 @@ describe('MixpanelAnalytics', () => {
 
     mixpanelAnalytics.trackVideoPlayback(video, 50, 60);
 
-    expect(mock.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
+    expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
       playback_segment_end_seconds: 60,
       playback_segment_start_seconds: 50,
       playback_video_duration_seconds: 120,
@@ -193,7 +197,7 @@ describe('MixpanelAnalytics', () => {
     const data = { some: 'data' };
     mixpanelAnalytics.trackFailedAccountCreation(data);
 
-    expect(mock.track).toHaveBeenCalledWith(
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
       'REGISTRATION_ATTEMPT_FAILED',
       data,
     );
@@ -203,7 +207,7 @@ describe('MixpanelAnalytics', () => {
     const data = { some: 'data' };
     mixpanelAnalytics.trackAccountAlreadyExists(data);
 
-    expect(mock.track).toHaveBeenCalledWith(
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
       'REGISTRATION_ACCOUNT_EXISTS',
       data,
     );
@@ -212,32 +216,41 @@ describe('MixpanelAnalytics', () => {
   it('track when refer a friend modal opened', () => {
     mixpanelAnalytics.trackReferAFriendModalOpened();
 
-    expect(mock.track).toHaveBeenCalledWith('REFER_A_FRIEND_MODAL_OPENED');
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'REFER_A_FRIEND_MODAL_OPENED',
+    );
   });
 
   it('track when refer a friend modal closed', () => {
     mixpanelAnalytics.trackReferAFriendModalClosed();
 
-    expect(mock.track).toHaveBeenCalledWith('REFER_A_FRIEND_MODAL_CLOSED');
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'REFER_A_FRIEND_MODAL_CLOSED',
+    );
   });
 
   it('track user explores more collections on homepage', () => {
     mixpanelAnalytics.trackHomepageExploreCollections();
 
-    expect(mock.track).toHaveBeenCalledWith('HOMEPAGE_EXPLORE_COLLECTIONS');
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'HOMEPAGE_EXPLORE_COLLECTIONS',
+    );
   });
 
   it('track when user applies search filters', () => {
     const data = { some: 'data' };
     mixpanelAnalytics.trackSearchFiltersApplied(data);
 
-    expect(mock.track).toHaveBeenCalledWith('SEARCH_FILTERS_APPLIED', data);
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'SEARCH_FILTERS_APPLIED',
+      data,
+    );
   });
 
   it('tracks subject tags clicked', () => {
     mixpanelAnalytics.trackSubjectTagClicked('1234');
 
-    expect(mock.track).toHaveBeenCalledWith('SUBJECT_TAG_CLICKED', {
+    expect(mockMixpanel.track).toHaveBeenCalledWith('SUBJECT_TAG_CLICKED', {
       subject_id: '1234',
     });
   });
@@ -245,7 +258,7 @@ describe('MixpanelAnalytics', () => {
   it('tracks my collections icon clicked', () => {
     mixpanelAnalytics.trackMyCollectionsNavbarButtonClicked();
 
-    expect(mock.track).toHaveBeenCalledWith(
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
       'MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED',
     );
   });
@@ -253,8 +266,30 @@ describe('MixpanelAnalytics', () => {
   it('tracks collections icon clicked', () => {
     mixpanelAnalytics.trackCollectionsNavbarButtonClicked();
 
-    expect(mock.track).toHaveBeenCalledWith(
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTIONS_NAVBAR_BUTTON_CLICKED',
+    );
+  });
+
+  it('tracks collection attachment link visited', () => {
+    const collectionId = 'collection-id';
+    const attachment = AttachmentFactory.sample({
+      id: 'attachment-id',
+      type: 'ATTACHMENT_TYPE' as any,
+    });
+
+    mixpanelAnalytics.trackCollectionAttachmentLinkVisited(
+      collectionId,
+      attachment,
+    );
+
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'COLLECTION_ATTACHMENT_VISITED',
+      {
+        video_collection_id: 'collection-id',
+        attachment_id: 'attachment-id',
+        attachment_type: 'ATTACHMENT_TYPE',
+      },
     );
   });
 });

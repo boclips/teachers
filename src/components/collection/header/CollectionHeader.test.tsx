@@ -290,12 +290,14 @@ describe('lesson plan when one exists', () => {
         <CollectionHeader collection={collection} mode={mode} />,
       );
 
+      const lessonPlan = wrapper.find(LessonPlan);
+
       if (expectRendered) {
-        const lessonPlan = wrapper.find(LessonPlan);
         expect(lessonPlan).toExist();
         expect(lessonPlan.prop('attachment')).toEqual(lessonPlanAttachment);
+        expect(lessonPlan.prop('collectionId')).toEqual(collection.id);
       } else {
-        expect(wrapper.find(LessonPlan)).not.toExist();
+        expect(lessonPlan).not.toExist();
       }
     });
   });

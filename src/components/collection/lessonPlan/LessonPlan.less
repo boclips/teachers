@@ -26,12 +26,12 @@
       color: @shade-1;
     }
 
-    ol {
+    & > ol {
       list-style: none;
       counter-reset: lesson-plan-counter;
       padding: 0;
 
-      li {
+      & > li {
         counter-increment: lesson-plan-counter;
 
         &::before {

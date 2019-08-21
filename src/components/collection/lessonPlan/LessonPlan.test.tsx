@@ -3,8 +3,14 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { AttachmentFactory } from '../../../../test-support/factories';
+import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Attachment } from '../../../types/Attachment';
 import { LessonPlan } from './LessonPlan';
+
+jest.mock('../../../services/analytics/AnalyticsFactory');
+
+AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
 
 it('will render a lesson plan container', () => {
   const attachment: Attachment = AttachmentFactory.sample();
@@ -49,4 +55,21 @@ it('will add a link to the content', () => {
     attachment.links.download.getOriginalLink(),
   );
   expect(link.prop('children')).toEqual('Visit plan');
+});
+
+it('will emit a mixpanel, when the link is clicked', () => {
+  const collectionId = 'collectionId';
+  const attachment: Attachment = AttachmentFactory.sample();
+
+  const component = shallow(
+    <LessonPlan collectionId={collectionId} attachment={attachment} />,
+  );
+
+  const link = component.find(Button);
+
+  link.simulate('click');
+
+  expect(
+    analyticsMock.trackCollectionAttachmentLinkVisited,
+  ).toHaveBeenCalledWith(collectionId, attachment);
 });

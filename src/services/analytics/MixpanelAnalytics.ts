@@ -1,4 +1,5 @@
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
+import { Attachment } from '../../types/Attachment';
 import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
 import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
@@ -103,6 +104,17 @@ export default class MixpanelAnalytics {
 
   public trackMyCollectionsVisited(): void {
     this.mixpanelInstance.track(EventTypes.MY_COLLECTIONS_VISITED);
+  }
+
+  public trackCollectionAttachmentLinkVisited(
+    collectionId: VideoCollection['id'],
+    attachment: Attachment,
+  ): void {
+    this.mixpanelInstance.track(EventTypes.COLLECTION_ATTACHMENT_VISITED, {
+      video_collection_id: collectionId,
+      attachment_id: attachment.id,
+      attachment_type: attachment.type,
+    });
   }
 
   public trackVideoAddedToCollection(

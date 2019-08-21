@@ -108,7 +108,10 @@ class CollectionHeader extends React.PureComponent<Props> {
         </Col>
         {lessonPlanToRender && (
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
-            <LessonPlan attachment={lessonPlanToRender} />
+            <LessonPlan
+              collectionId={this.props.collection.id}
+              attachment={lessonPlanToRender}
+            />
           </Col>
         )}
       </Row>
