@@ -7,6 +7,9 @@
     animation: slide-in 0.5s 0s both;
     font-size: 24px;
     line-height: 28px;
+    @media (max-width: @screen-md) {
+      margin: 30px 0;
+    }
   }
 
   &form {
@@ -18,12 +21,19 @@
     width: 250px;
     margin-bottom: 32px;
     margin-top: 12px;
+
+    @media (max-width: @screen-md) {
+      width: 100%;
+    }
   }
 
   &existing {
     animation: slide-in 0.5s 0.6s both;
     width: 100%;
     padding-top: 10px;
+    @media (max-width: @screen-md) {
+      text-align: center;
+    }
   }
 
   &recaptcha {
