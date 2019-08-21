@@ -3,6 +3,7 @@ import Layout from 'antd/lib/layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import boclipsLogo from '../../../../resources/images/boclips-logo.png';
+import BoclipsMobileLogo from '../../../../resources/images/boclips-mobile-logo.svg';
 import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import ConnectedTabsContainer from '../tabs/TabsContainer';
@@ -28,6 +29,13 @@ const TopNavbarComponent = React.memo((props: Props) => (
               <img className="logo" src={boclipsLogo} alt="Boclips" />
             </Link>
           </section>
+          {!props.showSearchBar && props.isMobile && (
+            <section className="mobile-logo-wrapper">
+              <Link to="/" data-qa="boclips-logo" className="link--tabbable">
+                <BoclipsMobileLogo alt="Boclips" />
+              </Link>
+            </section>
+          )}
         </Col>
         <Col
           xs={{ span: 18 }}
