@@ -20,9 +20,9 @@ import { CaptchaNotice } from './form/CaptchaNotice';
 import { EmailForm } from './form/EmailForm';
 import { ErrorAnnouncement } from './form/ErrorAnnouncement';
 import { LoginLink } from './form/LoginLink';
-import TwoColumnInlineForm from './form/TwoColumnInlineFormItem';
 import { Recaptcha } from './recaptcha/Recaptcha';
 import { extractQueryParam } from './referral/extractQueryParam';
+import {PasswordForm} from "./form/PasswordForm";
 
 interface CreateAccountProps {
   links: Links;
@@ -94,47 +94,7 @@ class RegistrationForm extends React.Component<
               <section className="create-account-form__form">
                 <EmailForm form={this.props.form} />
 
-                <TwoColumnInlineForm
-                  leftColumn={getFieldDecorator('password', {
-                    rules: [
-                      {
-                        required: true,
-                        min: 8,
-                        message:
-                          'Please enter at least 8 characters for your password',
-                      },
-                      {
-                        validator: this.validateToNextPassword,
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="password"
-                      size="large"
-                      type="password"
-                      placeholder="Password"
-                    />,
-                  )}
-                  rightColumn={getFieldDecorator('confirmPassword', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please confirm your password',
-                      },
-                      {
-                        validator: this.compareToFirstPassword,
-                      },
-                    ],
-                  })(
-                    <Input
-                      data-qa="password-confirm"
-                      size="large"
-                      type="password"
-                      onBlur={this.handleConfirmBlur}
-                      placeholder="Confirm password"
-                    />,
-                  )}
-                />
+                <PasswordForm form={this.props.form} />
 
                 <CaptchaNotice />
               </section>
@@ -255,31 +215,6 @@ class RegistrationForm extends React.Component<
         }
       },
     );
-  };
-
-  private handleConfirmBlur = e => {
-    const value = e.target.value;
-    this.setState({
-      ...this.state,
-      confirmDirty: this.state.confirmDirty || !!value,
-    });
-  };
-
-  private compareToFirstPassword = (_, value, callback) => {
-    const form = this.props.form;
-    if (value && value !== form.getFieldValue('password')) {
-      callback('The passwords are not the same');
-    } else {
-      callback();
-    }
-  };
-
-  private validateToNextPassword = (_, value, callback) => {
-    const form = this.props.form;
-    if (value && this.state.confirmDirty) {
-      form.validateFields(['confirmPassword'], { force: true });
-    }
-    callback();
   };
 }
 
