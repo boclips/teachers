@@ -1,7 +1,5 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import PublicLogoSVG from '../../../../../resources/images/global.svg';
-import PrivateLogoSVG from '../../../../../resources/images/private.svg';
 import { By } from '../../../../test-support/By';
 import { VideoCollectionFactory } from '../../../../test-support/factories';
 import CollectionTitle from './CollectionTitle';
@@ -13,39 +11,43 @@ test('renders title', () => {
   expect(wrapper.find(By.dataQa('collection-title')).text()).toEqual('hello');
 });
 
-test('Renders globe icon when collection is public and showPrivacy is true', () => {
+test('Renders globe icon when collection is public and mine', () => {
   const collection = VideoCollectionFactory.sample({
-    title: 'hello',
     isPublic: true,
+    isMine: true,
   });
 
-  const wrapper = shallow(
-    <CollectionTitle collection={collection} showPrivacy={true} />,
-  );
+  const wrapper = shallow(<CollectionTitle collection={collection} />);
   const logo = wrapper.find(By.dataQa('collection-visibility'));
-  expect(logo.type()).toEqual(PublicLogoSVG);
+  expect(logo.prop('className')).toContain('collection-title__logo--public');
 });
 
-test('Renders padlock icon when collection is private and showPrivacy is true', () => {
+test('Renders padlock icon when collection is private and mine', () => {
   const collection = VideoCollectionFactory.sample({
-    title: 'hello',
+    isPublic: false,
+    isMine: true,
+  });
+
+  const wrapper = shallow(<CollectionTitle collection={collection} />);
+  const logo = wrapper.find(By.dataQa('collection-visibility'));
+  expect(logo.prop('className')).toContain('collection-title__logo--private');
+});
+
+test('Does not render padlock icon when not mine', () => {
+  const collection = VideoCollectionFactory.sample({
     isPublic: true,
+    isMine: false,
   });
 
-  const wrapper = shallow(
-    <CollectionTitle collection={collection} showPrivacy={true} />,
-  );
-  const logo = wrapper.find(By.dataQa('collection-visibility')).type();
-  expect(logo).toEqual(PrivateLogoSVG);
+  const wrapper = shallow(<CollectionTitle collection={collection} />);
+  expect(wrapper.find(By.dataQa('collection-visibility'))).toHaveLength(0);
 });
-
-test('Does not render any icon when showPrivacy is false', () => {
+test('Does not render globe icon when not mine', () => {
   const collection = VideoCollectionFactory.sample({
-    title: 'hello',
+    isPublic: false,
+    isMine: false,
   });
 
-  const wrapper = shallow(
-    <CollectionTitle collection={collection} showPrivacy={false} />,
-  );
+  const wrapper = shallow(<CollectionTitle collection={collection} />);
   expect(wrapper.find(By.dataQa('collection-visibility'))).toHaveLength(0);
 });

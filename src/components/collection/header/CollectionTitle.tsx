@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React from 'react';
 import PublicLogoSVG from '../../../../resources/images/global.svg';
 import PrivateLogoSVG from '../../../../resources/images/private.svg';
@@ -6,14 +7,14 @@ import './CollectionTitle.less';
 
 interface Props {
   collection: VideoCollection;
-  showPrivacy?: boolean;
 }
 
-export class CollectionTitle extends React.Component<Props> {
+export class CollectionTitle extends React.PureComponent<Props> {
   public render() {
-    const Logo = this.props.collection.isPublic
-      ? PublicLogoSVG
-      : PrivateLogoSVG;
+    const isPublic = this.props.collection.isPublic;
+
+    const Logo = isPublic ? PublicLogoSVG : PrivateLogoSVG;
+
     return (
       <section>
         <h1
@@ -22,9 +23,12 @@ export class CollectionTitle extends React.Component<Props> {
           className="collection-title"
         >
           {this.props.collection.title}
-          {this.props.showPrivacy && (
+          {this.props.collection.isMine && (
             <Logo
-              className="collection-title__logo"
+              className={classnames('collection-title__logo', {
+                'collection-title__logo--public': isPublic,
+                'collection-title__logo--private': !isPublic,
+              })}
               data-qa="collection-visibility"
               data-state={this.props.collection.isPublic + ''}
             />

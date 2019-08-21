@@ -16,7 +16,6 @@ export interface CollectionCardListProps
   extends PageableCollectionCardListProps {
   collections: VideoCollection[];
   infiniteScroll?: InfiniteScrollProps;
-  showPrivacy?: boolean;
 }
 
 export class CollectionCardList extends React.PureComponent<
@@ -93,7 +92,6 @@ export class CollectionCardList extends React.PureComponent<
                     <CollectionCardContainer
                       tiny={this.props.grid || this.props.sidebar}
                       collection={collection}
-                      showPrivacy={this.props.showPrivacy}
                     />
                   </Col>
                 </CSSTransition>

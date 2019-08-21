@@ -16,7 +16,6 @@ export interface PageableCollectionCardListProps {
   sidebar?: boolean;
   maxNumberOfCollections?: number;
   shouldRefresh?: () => boolean;
-  showPrivacy?: boolean;
 }
 
 class PageableCollectionCardList extends React.PureComponent<
@@ -47,7 +46,6 @@ class PageableCollectionCardList extends React.PureComponent<
                 hasMore: this.props.hasMoreCollections,
               }
         }
-        showPrivacy={this.props.showPrivacy}
       />
     );
   }

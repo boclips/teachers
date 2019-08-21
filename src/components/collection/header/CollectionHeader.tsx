@@ -11,99 +11,108 @@ import '../buttons/CollectionButtonsContainer.less';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionTitle from './CollectionTitle';
 
+import { LessonPlan } from '../lessonPlan/LessonPlan';
 import './CollectionHeader.less';
 
-interface Props {
+export interface Props {
+  mode?: 'tiny-card' | 'card' | 'details';
   collection: VideoCollection;
-  showPrivacy?: boolean;
-  showAllSubjects?: boolean;
-  showFullCard: boolean;
-  showTagsContainerIfEmpty?: boolean;
 }
-
-const hasAgeRange = (collection: VideoCollection) =>
-  collection.ageRange.isBounded();
-const hasSubjects = (collection: VideoCollection) =>
-  collection.subjects.length > 0;
-
-const hasValidTags = (collection: VideoCollection) =>
-  hasAgeRange(collection) || hasSubjects(collection);
 
 class CollectionHeader extends React.PureComponent<Props> {
   public render() {
     return (
-      <>
-        <Row
-          type="flex"
-          justify="space-between"
-          className="collection-header__title-row"
-        >
-          <Col>
-            <CollectionTitle
-              collection={this.props.collection}
-              showPrivacy={this.props.showPrivacy}
-            />
-          </Col>
-          <Col>
-            <StopClickPropagation>
-              <span className="collection-header__bookmark-button">
-                <BookmarkCollectionButton collection={this.props.collection} />
-              </span>
-              {this.props.showFullCard && (
-                <CollectionButtonsContainer
-                  collection={this.props.collection}
-                  className="collection-edit__card"
-                />
-              )}
-            </StopClickPropagation>
-          </Col>
-        </Row>
-        <Row className="collection-header__row">
-          {hasValidTags(this.props.collection) ||
-          this.props.showTagsContainerIfEmpty ? (
-            <div className="tags-container">
-              {hasSubjects(this.props.collection) &&
-                this.subjectsToDisplay().map(subjectId => {
-                  return (
-                    <StopClickPropagation wrapper="span" key={subjectId}>
-                      <ConnectedSubjectTag id={subjectId} />
-                    </StopClickPropagation>
-                  );
-                })}
-              {hasAgeRange(this.props.collection) && (
-                <AgeRangeTag
-                  ageRange={this.props.collection.ageRange.getLabel()}
-                />
-              )}
-            </div>
-          ) : null}
-          {this.props.showFullCard && (
-            <CollectionSubtitle
-              classname="highlight collection-subtitle header"
-              collection={this.props.collection}
-            />
-          )}
-        </Row>
-        {this.props.showFullCard && (
-          <Row>
-            <Col>
-              <div
-                data-qa="collection-description"
-                className="collection-header__description"
-              >
-                {this.props.collection.description}
-              </div>
-            </Col>
-          </Row>
-        )}
-      </>
+      <React.Fragment>
+        {this.renderTitleRow()}
+        {this.renderSubtitleRow()}
+        {this.renderDescriptionRow()}
+      </React.Fragment>
     );
   }
 
-  private subjectsToDisplay = () => {
-    return this.props.showAllSubjects
-      ? this.props.collection.subjects
-      : this.props.collection.subjects.slice(0, 1);
+  private renderTitleRow = () => {
+    return (
+      <Row
+        type="flex"
+        justify="space-between"
+        className="collection-header__title-row"
+      >
+        <Col>
+          <CollectionTitle collection={this.props.collection} />
+        </Col>
+        <Col>
+          <StopClickPropagation>
+            <span className="collection-header__bookmark-button">
+              <BookmarkCollectionButton collection={this.props.collection} />
+            </span>
+            {this.props.mode !== 'tiny-card' && (
+              <CollectionButtonsContainer
+                collection={this.props.collection}
+                className="collection-edit__card"
+              />
+            )}
+          </StopClickPropagation>
+        </Col>
+      </Row>
+    );
+  };
+
+  private renderSubtitleRow = () => {
+    const tags = this.shouldRenderTagContainer() && (
+      <div className="tags-container">
+        <StopClickPropagation wrapper="span">
+          {this.subjectTagsToRender().map(subjectId => (
+            <ConnectedSubjectTag key={subjectId} id={subjectId} />
+          ))}
+        </StopClickPropagation>
+        {this.hasAgeRange() && (
+          <AgeRangeTag ageRange={this.props.collection.ageRange.getLabel()} />
+        )}
+      </div>
+    );
+
+    const subtitle = this.props.mode !== 'tiny-card' && (
+      <CollectionSubtitle
+        classname="highlight collection-subtitle header"
+        collection={this.props.collection}
+      />
+    );
+
+    return (
+      <Row className="collection-header__subtitle-row">
+        {tags}
+        {subtitle}
+      </Row>
+    );
+  };
+
+  private renderDescriptionRow = () => {
+    if (this.props.mode === 'tiny-card') {
+      return null;
+    }
+
+    const lessonPlanToRender = this.getLessonPlan();
+
+    return (
+      <Row className="collection-header__description-row">
+        <Col
+          {...lessonPlanToRender && {
+            sm: { span: 24 },
+            md: { span: 12 },
+            lg: { span: 16 },
+          }}
+        >
+          <div data-qa="collection-description">
+            {this.props.collection.description}
+          </div>
+        </Col>
+        {lessonPlanToRender && (
+          <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
+            <LessonPlan attachment={lessonPlanToRender} />
+          </Col>
+        )}
+      </Row>
+    );
   };
 
   public static Skeleton = () => (
@@ -119,6 +128,27 @@ class CollectionHeader extends React.PureComponent<Props> {
       </Card>
     </section>
   );
+
+  /**
+   * We need to render the tag container when tiny-card, because we need to
+   * keep vertical alignment for the video previews
+   */
+  private shouldRenderTagContainer = () =>
+    this.props.mode === 'tiny-card' || this.hasAgeRange() || this.hasSubjects();
+
+  private subjectTagsToRender = () =>
+    this.props.mode === 'details'
+      ? this.props.collection.subjects
+      : this.props.collection.subjects.slice(0, 1);
+
+  private getLessonPlan = () =>
+    this.props.mode === 'details' &&
+    this.props.collection.attachments.find(
+      attachment => attachment.type === 'LESSON_PLAN',
+    );
+
+  private hasAgeRange = () => this.props.collection.ageRange.isBounded();
+  private hasSubjects = () => this.props.collection.subjects.length > 0;
 }
 
 export default CollectionHeader;

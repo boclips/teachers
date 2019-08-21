@@ -99,6 +99,7 @@
     "react-dom": "^16.4.2",
     "react-html-parser": "^2.0.2",
     "react-infinite-scroll-component": "^4.5.2",
+    "react-markdown": "^4.1.0",
     "react-recaptcha-v3": "^1.1.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

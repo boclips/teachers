@@ -47,12 +47,7 @@ class CollectionDetails extends PureComponent<
 
     return (
       <section className="collection-view__collection-details">
-        <CollectionHeader
-          collection={this.props.collection}
-          showPrivacy={this.props.collection.isMine}
-          showAllSubjects={true}
-          showFullCard={true}
-        />
+        <CollectionHeader collection={this.props.collection} mode="details" />
         {this.props.collection.videoIds.length === 0
           ? this.renderEmptyCollection()
           : this.props.collection.videos && (

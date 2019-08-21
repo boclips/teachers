@@ -7,6 +7,7 @@ import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfileLinks } from '../src/services/users/UserProfile';
 import { UserProfile } from '../src/services/users/UserProfile';
 import { AgeRange } from '../src/types/AgeRange';
+import { Attachment } from '../src/types/Attachment';
 import { Discipline } from '../src/types/Discipline';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
@@ -84,11 +85,11 @@ export class VideoCollectionFactory {
           })),
       links: arg.links || VideoCollectionLinksFactory.sample(),
       isPublic: arg.isPublic || false,
-      isMine: arg.isMine || true,
+      isMine: typeof arg.isMine === 'undefined' ? true : arg.isMine,
       createdBy: 'Le Factory',
       subjects: arg.subjects || [],
       ageRange: arg.ageRange || new AgeRange(),
-      attachments: [],
+      attachments: arg.attachments || [],
     });
   }
 
@@ -98,6 +99,18 @@ export class VideoCollectionFactory {
       return map;
     }, {});
   }
+}
+
+export class AttachmentFactory {
+  public static sample = (arg: Partial<Attachment> = {}): Attachment => ({
+    id: 'attachment-id',
+    description: '1. Point 1\n1. Point 2\n1. Point 3',
+    type: 'LESSON_PLAN',
+    links: {
+      download: new Link({ href: 'http://google.com' }),
+    },
+    ...arg,
+  });
 }
 
 export class VideoCollectionLinksFactory {
