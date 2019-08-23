@@ -27,11 +27,10 @@ describe('registration context', () => {
 
   it('does not store an empty registration context', () => {
     const registrationContextService = new RegistrationContextService();
-    const registrationContext = {};
 
-    registrationContextService.store(registrationContext as any);
+    registrationContextService.store({} as any);
 
-    expect(registrationContextService.retrieve()).toEqual(registrationContext);
+    expect(registrationContextService.retrieve()).toBeUndefined();
   });
 
   it('does not store a registration context with all undefined fields', () => {

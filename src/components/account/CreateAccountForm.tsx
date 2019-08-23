@@ -89,45 +89,9 @@ class CreateAccountForm extends React.Component<
 
           <div style={{ display: 'none' }}>
             <Form.Item>
-              {getFieldDecorator('referralCode', {
-                rules: [],
-                initialValue: this.props.referralCode,
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
               {getFieldDecorator('analyticsId', {
                 rules: [],
                 initialValue: AnalyticsFactory.getInstance().getId(),
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('utmSource', {
-                rules: [],
-                initialValue: this.props.utm.source,
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('utmTerm', {
-                rules: [],
-                initialValue: this.props.utm.term,
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('utmContent', {
-                rules: [],
-                initialValue: this.props.utm.content,
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('utmMedium', {
-                rules: [],
-                initialValue: this.props.utm.medium,
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('utmCampaign', {
-                rules: [],
-                initialValue: this.props.utm.campaign,
               })(<Input type="text" />)}
             </Form.Item>
             <Form.Item>
@@ -211,18 +175,34 @@ class CreateAccountForm extends React.Component<
 function mapStateToProps(state: State): CreateAccountProps {
   const queryParam = state.router.location.search;
 
+  const utm = extraxtUtmParams(queryParam);
+
   return {
     links: state.links,
     referralCode: extractQueryParam(queryParam, 'REFERRALCODE'),
-    utm: {
-      source: extractQueryParam(queryParam, 'utm_source'),
-      term: extractQueryParam(queryParam, 'utm_term'),
-      medium: extractQueryParam(queryParam, 'utm_medium'),
-      campaign: extractQueryParam(queryParam, 'utm_campaign'),
-      content: extractQueryParam(queryParam, 'utm_content'),
-    },
+    utm,
   };
 }
+
+const extraxtUtmParams = queryParam => {
+  const source = extractQueryParam(queryParam, 'utm_source');
+  const term = extractQueryParam(queryParam, 'utm_term');
+  const medium = extractQueryParam(queryParam, 'utm_medium');
+  const campaign = extractQueryParam(queryParam, 'utm_campaign');
+  const content = extractQueryParam(queryParam, 'utm_content');
+
+  if (source || term || medium || campaign || content) {
+    return {
+      ...(source && { source }),
+      ...(term && { term }),
+      ...(medium && { medium }),
+      ...(campaign && { campaign }),
+      ...(content && { content }),
+    };
+  } else {
+    return undefined;
+  }
+};
 
 export default connect<CreateAccountProps, {}, {}>(mapStateToProps)(
   Form.create<CreateAccountProps & FormComponentProps>()(CreateAccountForm),
