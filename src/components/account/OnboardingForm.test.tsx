@@ -1,4 +1,5 @@
 import { mount } from 'enzyme';
+import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
 import {
@@ -7,12 +8,13 @@ import {
   SubjectFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
+import Mock = jest.Mock;
+import { RegistrationContext } from '../../services/session/RegistrationContext';
 import updateUser from '../../services/users/updateUser';
 import { AgeRange } from '../../types/AgeRange';
 import { Link } from '../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
-import Mock = jest.Mock;
 
 jest.mock('../../services/users/updateUser');
 
@@ -53,6 +55,61 @@ describe('onboarding form', () => {
       subjects: ['1'],
       ages: [3, 4, 5],
       hasOptedIntoMarketing: true,
+    });
+  });
+
+  it('sends marketing information from cookies with full form', () => {
+    const marketingData: RegistrationContext = {
+      referralCode: 'REFERRALCODE',
+      utm: {
+        source: 'some-source-value',
+        term: 'some-term-value',
+        medium: 'some-medium-value',
+        campaign: 'some-campaign-value',
+        content: 'some-content-value',
+      },
+    };
+
+    Cookies.set('registrationContext', marketingData);
+    fillValidForm(wrapper);
+    OnboardingFormHelper.save(wrapper);
+
+    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
+      ...UserProfileFactory.sample(),
+      firstName: 'Rebecca',
+      lastName: 'Sanchez',
+      subjects: ['1'],
+      ages: [3, 4, 5],
+      hasOptedIntoMarketing: true,
+      referralCode: 'REFERRALCODE',
+      utm: {
+        source: 'some-source-value',
+        term: 'some-term-value',
+        medium: 'some-medium-value',
+        campaign: 'some-campaign-value',
+        content: 'some-content-value',
+      },
+    });
+  });
+
+  it('sends partial marketing information from the cookie', () => {
+    const marketingData: RegistrationContext = {
+      referralCode: 'REFERRALCODE',
+      utm: undefined,
+    };
+
+    Cookies.set('registrationContext', marketingData);
+    fillValidForm(wrapper);
+    OnboardingFormHelper.save(wrapper);
+
+    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
+      ...UserProfileFactory.sample(),
+      firstName: 'Rebecca',
+      lastName: 'Sanchez',
+      subjects: ['1'],
+      ages: [3, 4, 5],
+      hasOptedIntoMarketing: true,
+      referralCode: 'REFERRALCODE',
     });
   });
 

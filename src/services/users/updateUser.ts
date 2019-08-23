@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Links } from '../../types/Links';
+import Utm from '../account/Utm';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import { UserProfile } from './UserProfile';
 
@@ -9,6 +10,8 @@ export interface UpdateUserRequest {
   subjects: string;
   ages: number[];
   hasOptedIntoMarketing: boolean;
+  referralCode: string;
+  utm: Utm;
 }
 
 export default function updateUser(
@@ -25,6 +28,8 @@ export default function updateUser(
     subjects: userProfile.subjects,
     ages: userProfile.ages,
     hasOptedIntoMarketing: userProfile.hasOptedIntoMarketing,
+    referralCode: userProfile.referralCode,
+    utm: userProfile.utm,
   };
 
   return axios.put(links.profile.getOriginalLink(), request).then(() => {

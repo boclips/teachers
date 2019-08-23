@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import OnboardingLogoSVG from '../../../resources/images/dwarf-with-pencil.svg';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+import { RegistrationContext } from '../../services/session/RegistrationContext';
+import { RegistrationContextService } from '../../services/session/RegistrationContextService';
 import updateUser from '../../services/users/updateUser';
 import { UserProfile } from '../../services/users/UserProfile';
 import { AgeRange } from '../../types/AgeRange';
@@ -135,6 +137,8 @@ class OnboardingForm extends React.Component<
 
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
+        const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
+
         this.setState({ ...this.state, updating: true });
         updateUser(this.props.links, {
           ...this.props.userProfile,
@@ -143,6 +147,8 @@ class OnboardingForm extends React.Component<
           ages: values.ageRange,
           subjects: values.subjects,
           hasOptedIntoMarketing: values.hasOptedIntoMarketing,
+          referralCode: registrationContext && registrationContext.referralCode,
+          utm: registrationContext && registrationContext.utm,
         })
           .then(() => {
             this.props.goToHomepage();

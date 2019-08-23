@@ -1,4 +1,5 @@
 import { Link } from '../../types/Link';
+import Utm from '../account/Utm';
 
 export interface UserProfile {
   id: string;
@@ -9,6 +10,8 @@ export interface UserProfile {
   subjects?: string;
   ages?: number[];
   hasOptedIntoMarketing?: boolean;
+  referralCode?: string;
+  utm?: Utm;
   links: UserProfileLinks;
 }
 

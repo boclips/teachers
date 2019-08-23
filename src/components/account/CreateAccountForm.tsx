@@ -52,13 +52,12 @@ class CreateAccountForm extends React.Component<
   public componentDidMount() {
     AnalyticsFactory.getInstance().trackAccountRegistration();
 
-    const registrationContextService = new RegistrationContextService();
     const registrationContext: RegistrationContext = {
       referralCode: this.props.referralCode,
       utm: this.props.utm,
     };
 
-    registrationContextService.store(registrationContext);
+    RegistrationContextService.store(registrationContext);
   }
 
   public render() {

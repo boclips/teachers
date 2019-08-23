@@ -4,7 +4,7 @@ import { RegistrationContext } from './RegistrationContext';
 export class RegistrationContextService {
   public static REGISTRATION_CONTEXT_COOKIE_NAME = 'registrationContext';
 
-  public store(registrationContext: RegistrationContext) {
+  public static store(registrationContext: RegistrationContext) {
     const stringifiedContext = JSON.stringify(registrationContext);
 
     if (Object.keys(JSON.parse(stringifiedContext)).length === 0) {
@@ -17,7 +17,7 @@ export class RegistrationContextService {
     );
   }
 
-  public retrieve() {
+  public static retrieve() {
     const registrationContextCookie = Cookies.get(
       RegistrationContextService.REGISTRATION_CONTEXT_COOKIE_NAME,
     );

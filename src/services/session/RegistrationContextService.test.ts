@@ -8,7 +8,6 @@ describe('registration context', () => {
   });
 
   it('can store and retrieve a registration context', async () => {
-    const registrationContextService = new RegistrationContextService();
     const registrationContext: RegistrationContext = {
       referralCode: '1234',
       utm: {
@@ -20,26 +19,22 @@ describe('registration context', () => {
       },
     };
 
-    registrationContextService.store(registrationContext);
+    RegistrationContextService.store(registrationContext);
 
-    expect(registrationContextService.retrieve()).toEqual(registrationContext);
+    expect(RegistrationContextService.retrieve()).toEqual(registrationContext);
   });
 
   it('does not store an empty registration context', () => {
-    const registrationContextService = new RegistrationContextService();
+    RegistrationContextService.store({} as any);
 
-    registrationContextService.store({} as any);
-
-    expect(registrationContextService.retrieve()).toBeUndefined();
+    expect(RegistrationContextService.retrieve()).toBeUndefined();
   });
 
   it('does not store a registration context with all undefined fields', () => {
-    const registrationContextService = new RegistrationContextService();
-
-    registrationContextService.store({
+    RegistrationContextService.store({
       referralCode: undefined,
     } as any);
 
-    expect(registrationContextService.retrieve()).toBeUndefined();
+    expect(RegistrationContextService.retrieve()).toBeUndefined();
   });
 });
