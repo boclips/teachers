@@ -55,11 +55,7 @@ class CreateAccountForm extends React.Component<
     const registrationContextService = new RegistrationContextService();
     const registrationContext: RegistrationContext = {
       referralCode: this.props.referralCode,
-      utmSource: this.props.utm.source,
-      utmTerm: this.props.utm.term,
-      utmMedium: this.props.utm.medium,
-      utmCampaign: this.props.utm.campaign,
-      utmContent: this.props.utm.content,
+      utm: this.props.utm,
     };
 
     registrationContextService.store(registrationContext);

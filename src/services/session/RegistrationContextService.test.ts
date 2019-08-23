@@ -11,11 +11,13 @@ describe('registration context', () => {
     const registrationContextService = new RegistrationContextService();
     const registrationContext: RegistrationContext = {
       referralCode: '1234',
-      utmSource: 'some-source-value',
-      utmTerm: 'some-term-value',
-      utmMedium: 'some-medium-value',
-      utmCampaign: 'some-campaign-value',
-      utmContent: 'some-content-value',
+      utm: {
+        source: 'some-source-value',
+        term: 'some-term-value',
+        medium: 'some-medium-value',
+        campaign: 'some-campaign-value',
+        content: 'some-content-value',
+      },
     };
 
     registrationContextService.store(registrationContext);
@@ -25,10 +27,11 @@ describe('registration context', () => {
 
   it('does not store an empty registration context', () => {
     const registrationContextService = new RegistrationContextService();
+    const registrationContext = {};
 
-    registrationContextService.store({} as any);
+    registrationContextService.store(registrationContext as any);
 
-    expect(registrationContextService.retrieve()).toBeUndefined();
+    expect(registrationContextService.retrieve()).toEqual(registrationContext);
   });
 
   it('does not store a registration context with all undefined fields', () => {

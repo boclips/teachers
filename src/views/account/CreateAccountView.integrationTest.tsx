@@ -38,10 +38,10 @@ describe('when view is mounted', () => {
       Cookies.get(RegistrationContextService.REGISTRATION_CONTEXT_COOKIE_NAME),
     );
 
-    expect(cookies.utmSource).toEqual('hubspot');
-    expect(cookies.utmTerm).toEqual('term');
-    expect(cookies.utmMedium).toEqual('medium');
-    expect(cookies.utmCampaign).toEqual('campaign');
-    expect(cookies.utmContent).toEqual('content');
+    expect(cookies.utm.source).toEqual('hubspot');
+    expect(cookies.utm.term).toEqual('term');
+    expect(cookies.utm.medium).toEqual('medium');
+    expect(cookies.utm.campaign).toEqual('campaign');
+    expect(cookies.utm.content).toEqual('content');
   });
 });

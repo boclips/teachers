@@ -6,9 +6,6 @@ export class RegistrationContextService {
 
   public store(registrationContext: RegistrationContext) {
     const stringifiedContext = JSON.stringify(registrationContext);
-    if (Object.keys(JSON.parse(stringifiedContext)).length === 0) {
-      return;
-    }
 
     Cookies.set(
       RegistrationContextService.REGISTRATION_CONTEXT_COOKIE_NAME,
