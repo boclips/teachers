@@ -1,18 +1,18 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
-.collection-header__ {
-  &skeleton {
+.collection-header {
+  &__skeleton {
     margin-top: 24px;
     width: 40%;
   }
 
-  @media (min-width: @screen-md) {
-    &edit-button {
+  &__edit-button {
+    @media (min-width: @screen-md) {
       float: right;
     }
   }
 
-  &bookmark-button {
+  &__bookmark-button {
     float: right;
     width: 20px;
 
@@ -21,34 +21,17 @@
     }
   }
 
-  &description-preview {
-    font-size: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    max-height: 72px;
-    margin-bottom: 20px;
-
-    .tiny & {
-      min-height: 72px;
-      margin-bottom: 0px;
-      margin-top: 8px;
-    }
-  }
-
-  &title-row {
+  &__title-row {
     flex-wrap: nowrap;
   }
 
-  &subtitle-row {
+  &__subtitle-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
   }
 
-  &description-row {
+  &__description-row {
     font-size: 16px;
     padding-bottom: 4px;
 
@@ -59,6 +42,10 @@
       .lesson-plan {
         margin-top: 0;
       }
+    }
+
+    .collection-header__description {
+      white-space: pre-line;
     }
   }
 }

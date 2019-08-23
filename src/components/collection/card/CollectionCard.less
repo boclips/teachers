@@ -85,6 +85,24 @@
     }
   }
 
+  &__description-preview {
+    white-space: pre-line;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-height: 72px;
+    margin-bottom: 20px;
+
+    .tiny & {
+      min-height: 72px;
+      margin-bottom: 0px;
+      margin-top: 8px;
+    }
+  }
+
   &.skeleton {
     background-color: white;
     border: 1px solid @shade-2;

@@ -102,7 +102,10 @@ class CollectionHeader extends React.PureComponent<Props> {
             lg: { span: 16 },
           }}
         >
-          <div data-qa="collection-description">
+          <div
+            className="collection-header__description"
+            data-qa="collection-description"
+          >
             {this.props.collection.description}
           </div>
         </Col>

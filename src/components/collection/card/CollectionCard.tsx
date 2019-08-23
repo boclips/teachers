@@ -4,8 +4,9 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import { A11yButton } from '../../common/A11yButton';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionHeader from '../header/CollectionHeader';
-import './CollectionCard.less';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
+
+import './CollectionCard.less';
 
 interface Props {
   collection: VideoCollection;
@@ -46,7 +47,7 @@ export class CollectionCard extends React.PureComponent<Props> {
               />
               <div
                 data-qa="collection-description"
-                className="collection-header__description-preview tiny"
+                className="collection-card__description-preview tiny"
               >
                 {this.props.collection.description}
               </div>
