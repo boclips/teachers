@@ -76,7 +76,7 @@ export default class App extends PureComponent<Props> {
         fetchLinksMiddleware,
         onStoreLoginMiddleware,
         onAuthenticationResolvedMiddleware,
-        requestAuthenticationMiddleware,
+        ...requestAuthenticationMiddleware,
         onRegisterAnalyticsMiddleware,
         ...collectionMiddleware,
         fetchSubjectsMiddleware,

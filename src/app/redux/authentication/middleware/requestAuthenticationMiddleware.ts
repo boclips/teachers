@@ -1,8 +1,10 @@
 import BoclipsSecurity from 'boclips-js-security';
 import { Store } from 'redux';
+import { Constants } from '../../../AppConstants';
 import { sideEffect } from '../../actions';
 import { authenticationResolved } from '../actions/authenticationResolved';
 import { requestAuthentication } from '../actions/requestAuthentication';
+import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 
 const defaultAuthEndpoint =
   process.env.ENVIRONMENT_DOMAIN &&
@@ -13,6 +15,27 @@ const onAuthenticationRequested = (
   { authenticationRequired },
 ) => {
   BoclipsSecurity.createInstance({
+    ...getDefaultSecurityOptions(store),
+    mode: authenticationRequired ? 'login-required' : 'check-sso',
+  });
+};
+
+const onSsoAuthenticationRequested = (
+  store: Store,
+  identityProvider: string,
+) => {
+  const boclipsSecurity = BoclipsSecurity.createInstance(
+    getDefaultSecurityOptions(store),
+  );
+
+  boclipsSecurity.ssoLogin({
+    idpHint: identityProvider,
+    redirectUri: Constants.HOST,
+  });
+};
+
+const getDefaultSecurityOptions = (store: Store) => {
+  return {
     onLogin: () => {
       store.dispatch(
         authenticationResolved({
@@ -29,9 +52,11 @@ const onAuthenticationRequested = (
     },
     realm: 'boclips',
     clientId: 'teachers',
-    mode: authenticationRequired ? 'login-required' : 'check-sso',
     authEndpoint: defaultAuthEndpoint,
-  });
+  };
 };
 
-export default sideEffect(requestAuthentication, onAuthenticationRequested);
+export default [
+  sideEffect(requestAuthentication, onAuthenticationRequested),
+  sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested),
+];

@@ -16,15 +16,18 @@
     animation: slide-in 0.5s 0.2s both;
   }
 
-  &submit {
+  &button {
     animation: slide-in 0.5s 0.3s both;
     width: 250px;
-    margin-bottom: 32px;
-    margin-top: 12px;
 
     @media (max-width: @screen-md) {
       width: 100%;
     }
+  }
+
+  &submit {
+    margin-bottom: 32px;
+    margin-top: 12px;
   }
 
   &existing {
@@ -55,6 +58,47 @@
     }
   }
 
+  &divider-container {
+    position: relative;
+  }
+
+  &divider-label {
+    position: absolute;
+    top: -12px;
+    left: calc(50% - 18.5px);
+    padding: 0 12px;
+    background-color: @shade-1;
+    font-weight: bold;
+  }
+
+  &divider {
+    border-top: 2px solid @shade-3;
+    margin: 40px 0px;
+  }
+
+  &social-buttons-container {
+    & > [data-qa='google-button'] {
+      background-color: @shade-1;
+      font-weight: bold;
+      color: #0e69ff;
+      line-height: 36px;
+      border: 2px solid #0e69ff;
+      border-radius: 8px;
+
+      &:active,
+      &:focus,
+      &:hover {
+        background-color: @shade-1;
+        border: 2px solid @mid-blue;
+        color: @mid-blue;
+      }
+    }
+  }
+
+  &social-button-icon {
+    padding-right: 14px;
+    margin-left: -35px;
+  }
 }
 
 .visually-hidden {

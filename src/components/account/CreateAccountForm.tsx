@@ -2,6 +2,9 @@ import { Button, Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import GoogleSVG from '../../../resources/images/google.svg';
+import { requestSsoAuthentication } from '../../app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
   CreateAccountRequest,
@@ -37,8 +40,12 @@ interface InternalState {
   formErrors: object;
 }
 
+interface DispatchProps {
+  onSsoLogin: (idpHint: string) => void;
+}
+
 class CreateAccountForm extends React.Component<
-  CreateAccountProps & FormComponentProps,
+  CreateAccountProps & FormComponentProps & DispatchProps,
   InternalState
 > {
   public state = {
@@ -106,7 +113,7 @@ class CreateAccountForm extends React.Component<
 
           <Button
             data-qa="register-button"
-            className="create-account-form__submit"
+            className="create-account-form__button create-account-form__submit"
             size="large"
             type="primary"
             htmlType="submit"
@@ -118,6 +125,29 @@ class CreateAccountForm extends React.Component<
         </Form>
         <LoginLink />
 
+        <section className="create-account-form__divider-container">
+          <label className="create-account-form__divider-label">or</label>
+          <hr className="create-account-form__divider" />
+        </section>
+
+        <section className="create-account-form__social-buttons-container">
+          <Button
+            data-qa="google-button"
+            className="create-account-form__button create-account-form__social-button"
+            size="large"
+            type="primary"
+            htmlType="submit"
+            disabled={this.state.creating}
+            loading={this.state.creating}
+            onClick={this.handleGoogleSsoLogin}
+          >
+            <span className="create-account-form__social-button-icon">
+              <GoogleSVG aria-hidden={true} />
+            </span>
+            <span>Continue with Google</span>
+          </Button>
+        </section>
+
         <section className="create-account-form__recaptcha">
           <CaptchaNotice />
         </section>
@@ -128,6 +158,10 @@ class CreateAccountForm extends React.Component<
   private updateRecaptchaToken = recaptchaToken => {
     this.props.form.setFieldsValue({ recaptchaToken });
     this.setState({ renderRecaptcha: false });
+  };
+
+  private handleGoogleSsoLogin = () => {
+    this.props.onSsoLogin('google');
   };
 
   private handleSubmit = e => {
@@ -183,6 +217,13 @@ function mapStateToProps(state: State): CreateAccountProps {
   };
 }
 
+function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+  return {
+    onSsoLogin: (idpHint: string) =>
+      dispatch(requestSsoAuthentication(idpHint)),
+  };
+}
+
 const extraxtUtmParams = queryParam => {
   const source = extractQueryParam(queryParam, 'utm_source');
   const term = extractQueryParam(queryParam, 'utm_term');
@@ -203,6 +244,7 @@ const extraxtUtmParams = queryParam => {
   }
 };
 
-export default connect<CreateAccountProps, {}, {}>(mapStateToProps)(
-  Form.create<CreateAccountProps & FormComponentProps>()(CreateAccountForm),
-);
+export default connect<CreateAccountProps, {}, {}>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Form.create<CreateAccountProps & FormComponentProps>()(CreateAccountForm));
