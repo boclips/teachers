@@ -29,12 +29,6 @@ describe('Google SSO button', () => {
     );
   });
 
-  it('when the page loads it renders the button', () => {
-    const googleSsoButton = wrapper.find(By.dataQa('google-button'));
-
-    expect(googleSsoButton).toExist();
-  });
-
   it('when the button is clicked, the identity provider is called', () => {
     const googleSsoButton = wrapper
       .find(By.dataQa('google-button'))
@@ -44,6 +38,35 @@ describe('Google SSO button', () => {
 
     expect(store.getActions()).toContainEqual(
       requestSsoAuthentication('google'),
+    );
+  });
+});
+
+describe('Microsoft SSO button', () => {
+  let wrapper;
+  const store = MockStoreFactory.sample({
+    router: RouterFactory.sample(),
+    links: LinksFactory.sample(),
+  });
+  beforeEach(() => {
+    wrapper = mount(
+      <Provider store={store}>
+        <Router>
+          <CreateAccountForm />
+        </Router>
+      </Provider>,
+    );
+  });
+
+  it('when the button is clicked, the identity provider is called', () => {
+    const microsoftSsoButton = wrapper
+      .find(By.dataQa('microsoft-button'))
+      .hostNodes();
+
+    microsoftSsoButton.simulate('click');
+
+    expect(store.getActions()).toContainEqual(
+      requestSsoAuthentication('microsoft'),
     );
   });
 });

@@ -18,6 +18,11 @@
 
   &button {
     animation: slide-in 0.5s 0.3s both;
+  }
+
+  &submit {
+    margin-bottom: 32px;
+    margin-top: 12px;
     width: 250px;
 
     @media (max-width: @screen-md) {
@@ -25,9 +30,8 @@
     }
   }
 
-  &submit {
-    margin-bottom: 32px;
-    margin-top: 12px;
+  &social-button {
+    width: 100%;
   }
 
   &existing {
@@ -76,28 +80,40 @@
     margin: 40px 0px;
   }
 
-  &social-buttons-container {
-    & > [data-qa='google-button'] {
-      background-color: @shade-1;
-      font-weight: bold;
-      color: #0e69ff;
-      line-height: 36px;
-      border: 2px solid #0e69ff;
-      border-radius: 8px;
+  &social-button {
+    background-color: @shade-1;
+    font-weight: bold;
+    color: #0e69ff;
+    line-height: 36px;
+    border: 2px solid #0e69ff;
+    border-radius: 8px;
+  }
 
-      &:active,
-      &:focus,
-      &:hover {
-        background-color: @shade-1;
-        border: 2px solid @mid-blue;
-        color: @mid-blue;
-      }
-    }
+  &social-buttons-list {
+    width: 100%;
+    padding-left: 0px;
+    margin-top: -10px;
+  }
+
+  &social-buttons-list-item {
+    display: inline-block;
+    list-style-type: none;
+    margin-top: 10px;
+    width: 100%;
   }
 
   &social-button-icon {
-    padding-right: 14px;
-    margin-left: -35px;
+    padding-right: 10px;
+  }
+}
+
+button.create-account-form__social-button.ant-btn {
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: @shade-1;
+    border: 2px solid @mid-blue;
+    color: @mid-blue;
   }
 }
 

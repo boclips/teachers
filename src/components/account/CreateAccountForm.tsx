@@ -1,9 +1,10 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Col, Form, Input, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import GoogleSVG from '../../../resources/images/google.svg';
+import MicrosoftSVG from '../../../resources/images/office-365.svg';
 import { requestSsoAuthentication } from '../../app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
@@ -131,21 +132,48 @@ class CreateAccountForm extends React.Component<
         </section>
 
         <section className="create-account-form__social-buttons-container">
-          <Button
-            data-qa="google-button"
-            className="create-account-form__button create-account-form__social-button"
-            size="large"
-            type="primary"
-            htmlType="submit"
-            disabled={this.state.creating}
-            loading={this.state.creating}
-            onClick={this.handleGoogleSsoLogin}
-          >
-            <span className="create-account-form__social-button-icon">
-              <GoogleSVG aria-hidden={true} />
-            </span>
-            <span>Continue with Google</span>
-          </Button>
+          <Row gutter={16}>
+            <ul className="create-account-form__social-buttons-list">
+              <Col sm={24} md={12}>
+                <li className="create-account-form__social-buttons-list-item">
+                  <Button
+                    data-qa="google-button"
+                    className="create-account-form__button create-account-form__social-button"
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    disabled={this.state.creating}
+                    loading={this.state.creating}
+                    onClick={this.handleGoogleSsoLogin}
+                  >
+                    <span className="create-account-form__social-button-icon">
+                      <GoogleSVG aria-hidden={true} />
+                    </span>
+                    <span>Continue with Google</span>
+                  </Button>
+                </li>
+              </Col>
+              <Col sm={24} md={12}>
+                <li className="create-account-form__social-buttons-list-item">
+                  <Button
+                    data-qa="microsoft-button"
+                    className="create-account-form__button create-account-form__social-button"
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    disabled={this.state.creating}
+                    loading={this.state.creating}
+                    onClick={this.handleMicrosoftSsoLogin}
+                  >
+                    <span className="create-account-form__social-button-icon">
+                      <MicrosoftSVG aria-hidden={true} />
+                    </span>
+                    <span>Continue with Office 365</span>
+                  </Button>
+                </li>
+              </Col>
+            </ul>
+          </Row>
         </section>
 
         <section className="create-account-form__recaptcha">
@@ -162,6 +190,10 @@ class CreateAccountForm extends React.Component<
 
   private handleGoogleSsoLogin = () => {
     this.props.onSsoLogin('google');
+  };
+
+  private handleMicrosoftSsoLogin = () => {
+    this.props.onSsoLogin('microsoft');
   };
 
   private handleSubmit = e => {
