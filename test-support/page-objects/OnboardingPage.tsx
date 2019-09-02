@@ -2,7 +2,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import App from '../../src/app/App';
-import { OnboardingFormHelper } from '../../src/components/account/OnboardingFormHelper';
+import { OnboardingFormHelper } from '../../src/components/account/onboarding/OnboardingFormHelper';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 

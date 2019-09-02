@@ -10,6 +10,7 @@ import TopNavbarComponent from './TopNavbarComponent';
 interface Props extends WithMediaBreakPointProps {
   showTabs?: boolean;
   showSearchBar?: boolean;
+  hideNavigation?: boolean;
 }
 
 interface StateProps {
@@ -29,6 +30,7 @@ class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
         authorized={this.props.authorized}
         showSearchBar={this.showSearchBar()}
         isMobile={this.isMobile()}
+        hideNavigation={this.props.hideNavigation}
       />
     );
   }

@@ -55,6 +55,16 @@ describe('when authenticated', () => {
     const wrapper = mountAuthenticatedLayout();
 
     expect(wrapper.find(NavbarButtonsContainer)).toExist();
+    expect(wrapper.find('Connect(SearchBar)')).toExist();
+  });
+
+  describe('onboarding view', () => {
+    test('does not render any navigation buttons or search bar during onboarding', () => {
+      const wrapper = mountOnboardingLayout();
+      expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
+      expect(wrapper.find('Connect(SearchBar)')).not.toExist();
+      expect(wrapper.find(Link)).not.toExist();
+    });
   });
 
   describe('mobile view', () => {
@@ -93,6 +103,19 @@ describe('when authenticated', () => {
       <Provider store={MockStoreFactory.sample({ user })}>
         <MemoryRouter>
           <TopNavbarContainer showTabs={true} />
+        </MemoryRouter>
+      </Provider>,
+    );
+  }
+  function mountOnboardingLayout() {
+    return mount(
+      <Provider store={MockStoreFactory.sample({ user })}>
+        <MemoryRouter>
+          <TopNavbarContainer
+            hideNavigation={true}
+            showTabs={false}
+            showSearchBar={false}
+          />
         </MemoryRouter>
       </Provider>,
     );

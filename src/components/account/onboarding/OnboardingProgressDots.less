@@ -1,0 +1,22 @@
+@import "../../../../resources/styles/_colours.less";
+
+@step-height: 12px;
+
+.navigation-tracker {
+  line-height: @step-height;
+  text-align: center;
+  .step {
+    border: @v2-shade-3 3px solid;
+    display: inline-block;
+    width: @step-height;
+    height: @step-height;
+    line-height: @step-height;
+    margin: 0 4px;
+    border-radius: 50%;
+  }
+
+  .step--complete,
+  .step--current {
+    background: @v2-shade-3;
+  }
+}

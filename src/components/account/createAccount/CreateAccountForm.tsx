@@ -3,29 +3,28 @@ import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import GoogleSVG from '../../../resources/images/google.svg';
-import MicrosoftSVG from '../../../resources/images/office-365.svg';
-import { requestSsoAuthentication } from '../../app/redux/authentication/actions/requestSsoAuthentication';
+import GoogleSVG from '../../../../resources/images/google.svg';
+import MicrosoftSVG from '../../../../resources/images/office-365.svg';
+import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
   CreateAccountRequest,
-} from '../../services/account/createAccount';
-import Utm from '../../services/account/Utm';
-import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import { RegistrationContext } from '../../services/session/RegistrationContext';
-import { RegistrationContextService } from '../../services/session/RegistrationContextService';
-import { Links } from '../../types/Links';
-import State from '../../types/State';
+} from '../../../services/account/createAccount';
+import Utm from '../../../services/account/Utm';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { RegistrationContext } from '../../../services/session/RegistrationContext';
+import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
+import { Links } from '../../../types/Links';
+import State from '../../../types/State';
+import { extractQueryParam } from '../referral/extractQueryParam';
+import { CaptchaNotice } from './CaptchaNotice';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
-import { CaptchaNotice } from './form/CaptchaNotice';
-import { EmailForm } from './form/EmailForm';
-import { ErrorAnnouncement } from './form/ErrorAnnouncement';
-import { LoginLink } from './form/LoginLink';
-import { PasswordForm } from './form/PasswordForm';
+import { EmailForm } from './EmailForm';
+import { LoginLink } from './LoginLink';
+import { PasswordForm } from './PasswordForm';
 import { Recaptcha } from './recaptcha/Recaptcha';
-import { extractQueryParam } from './referral/extractQueryParam';
 
 interface CreateAccountProps {
   links: Links;
@@ -38,7 +37,6 @@ interface InternalState {
   confirmDirty: boolean;
   creating: boolean;
   renderRecaptcha: boolean;
-  formErrors: object;
 }
 
 interface DispatchProps {
@@ -54,7 +52,6 @@ class CreateAccountForm extends React.Component<
     confirmDirty: false,
     creating: false,
     renderRecaptcha: true,
-    formErrors: null,
   };
 
   public componentDidMount() {
@@ -81,10 +78,6 @@ class CreateAccountForm extends React.Component<
 
     return (
       <section className="create-account-form__container">
-        <section className="visually-hidden">
-          <ErrorAnnouncement error={this.state.formErrors} />
-        </section>
-
         <Form onSubmit={this.handleSubmit}>
           <h1 className="alt create-account-form__title">Create account</h1>
 
@@ -226,11 +219,6 @@ class CreateAccountForm extends React.Component<
                 renderRecaptcha: true,
               });
             });
-        } else {
-          this.setState({
-            ...this.state,
-            formErrors: err,
-          });
         }
       },
     );

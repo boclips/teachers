@@ -15,6 +15,7 @@ interface Props {
   authorized: boolean;
   showSearchBar: boolean;
   isMobile: boolean;
+  hideNavigation?: boolean;
 }
 
 const { Content } = Layout;
@@ -29,21 +30,29 @@ const TopNavbarComponent = React.memo((props: Props) => (
           lg={{ span: props.showSearchBar ? 4 : 16 }}
         >
           <section className="logo-wrapper">
-            <Link to="/" data-qa="boclips-logo" className="link--tabbable">
+            {props.hideNavigation ? (
               <img className="logo" src={boclipsLogo} alt="Boclips" />
-            </Link>
+            ) : (
+              <Link to="/" data-qa="boclips-logo" className="link--tabbable">
+                <img className="logo" src={boclipsLogo} alt="Boclips" />
+              </Link>
+            )}
           </section>
         </Col>
         {!props.showSearchBar && props.isMobile && (
           <Col xs={{ span: 18 }} md={{ span: 20 }}>
             <section className="mobile-logo-wrapper">
-              <Link to="/" data-qa="boclips-logo" className="link--tabbable">
+              {!props.hideNavigation ? (
+                <Link to="/" data-qa="boclips-logo" className="link--tabbable">
+                  <BoclipsMobileLogo alt="Boclips" />
+                </Link>
+              ) : (
                 <BoclipsMobileLogo alt="Boclips" />
-              </Link>
+              )}
             </section>
           </Col>
         )}
-        {props.showSearchBar ? (
+        {props.showSearchBar && !props.hideNavigation ? (
           <Col
             xs={{ span: 18 }}
             sm={{ span: 20 }}
@@ -59,7 +68,7 @@ const TopNavbarComponent = React.memo((props: Props) => (
           md={{ span: 4 }}
           lg={{ span: 8 }}
         >
-          {props.authorized && (
+          {props.authorized && !props.hideNavigation && (
             <div>
               {props.isMobile ? (
                 <AccountMenuContainer />

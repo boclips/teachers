@@ -14,6 +14,7 @@ interface Props {
   showTabs?: boolean;
   showSearchBar?: boolean;
   hideFooter?: boolean;
+  hideNavigation?: boolean;
   subheader?: React.ReactFragment;
 }
 
@@ -24,6 +25,7 @@ class PageLayout extends PureComponent<Props> {
         <section>
           <Header className="top-search-bar fixed">
             <TopNavbarContainer
+              hideNavigation={this.props.hideNavigation}
               showSearchBar={this.props.showSearchBar}
               showTabs={this.props.showTabs}
             />
@@ -38,9 +40,7 @@ class PageLayout extends PureComponent<Props> {
               </Col>
             </Row>
           </Content>
-          <Row>
-            <MobileBottomNavbar />
-          </Row>
+          <Row>{!this.props.hideNavigation && <MobileBottomNavbar />}</Row>
           {!this.props.hideFooter && <BoclipsFooter />}
         </section>
       </Layout>

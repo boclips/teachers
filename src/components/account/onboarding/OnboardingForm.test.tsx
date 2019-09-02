@@ -7,16 +7,16 @@ import {
   MockStoreFactory,
   SubjectFactory,
   UserProfileFactory,
-} from '../../../test-support/factories';
+} from '../../../../test-support/factories';
 import Mock = jest.Mock;
-import { RegistrationContext } from '../../services/session/RegistrationContext';
-import updateUser from '../../services/users/updateUser';
-import { AgeRange } from '../../types/AgeRange';
-import { Link } from '../../types/Link';
+import { RegistrationContext } from '../../../services/session/RegistrationContext';
+import updateUser from '../../../services/users/updateUser';
+import { AgeRange } from '../../../types/AgeRange';
+import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
 
-jest.mock('../../services/users/updateUser');
+jest.mock('../../../services/users/updateUser');
 
 const mockUpdateUser = updateUser as Mock;
 const links = LinksFactory.sample({

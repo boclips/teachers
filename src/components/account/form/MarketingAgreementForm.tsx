@@ -17,9 +17,8 @@ export class MarketingAgreementForm extends React.Component<
             className="create-account-form__checkbox"
             data-qa="marketing-optin"
           >
-            I want to receive marketing information about Boclips's similar
-            products or services which may be of interest to me in accordance
-            with the <PrivacyPolicyLink />.
+            I would like to receive marketing information about Boclips in
+            accordance with the <PrivacyPolicyLink />.
           </Checkbox>,
         )}
       </Form.Item>

@@ -1,8 +1,8 @@
 import { ReactWrapper } from 'enzyme';
-import { By } from '../../../test-support/By';
-import EventSimulator from '../../../test-support/EventSimulator';
-import { SelectAgeRange } from '../multipleSelect/SelectAgeRange';
-import { SelectSubjects } from '../multipleSelect/SelectSubjects';
+import { By } from '../../../../test-support/By';
+import EventSimulator from '../../../../test-support/EventSimulator';
+import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
+import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 
 export class OnboardingFormHelper {
   public static editName(wrapper, firstName: string, lastName: string) {

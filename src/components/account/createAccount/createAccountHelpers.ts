@@ -1,5 +1,5 @@
-import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import NotificationFactory from '../common/NotificationFactory';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import NotificationFactory from '../../common/NotificationFactory';
 
 export const handleUserExists = (values: any) => {
   NotificationFactory.error({
