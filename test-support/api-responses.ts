@@ -297,6 +297,27 @@ export function subjectsResponse() {
   };
 }
 
+export function countriesResponse() {
+  return {
+    _embedded: {
+      countries: [
+        {
+          id: '1',
+          name: 'Spain',
+        },
+        {
+          id: '2',
+          name: 'Poland',
+        },
+        {
+          id: '3',
+          name: 'Gana',
+        },
+      ],
+    },
+  };
+}
+
 export function tagsResponse() {
   return {
     _embedded: {

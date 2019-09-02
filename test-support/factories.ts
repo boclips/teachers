@@ -189,6 +189,7 @@ export class LinksFactory {
       subjects: arg.subjects || new Link({ href: '/subjects' }),
       tags: arg.tags || new Link({ href: '/tags' }),
       disciplines: arg.disciplines || new Link({ href: '/disciplines' }),
+      countries: arg.countries || new Link({ href: '/countries' }),
     });
   }
 }

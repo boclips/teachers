@@ -18,4 +18,5 @@ export interface Links {
   subjects?: Link;
   tags?: Link;
   disciplines?: Link;
+  countries?: Link;
 }
