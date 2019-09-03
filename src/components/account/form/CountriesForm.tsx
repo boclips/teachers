@@ -22,7 +22,7 @@ export class CountriesForm extends React.Component<
     return (
       <Form.Item className="form__item" label={this.props.label}>
         {this.props.form.getFieldDecorator('country', {
-          rules: [{ required: true }],
+          rules: [{ required: true, message: 'Please enter your country' }],
           initialValue: this.props.initialValue,
         })(
           <Select
