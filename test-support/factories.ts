@@ -8,6 +8,7 @@ import { UserProfileLinks } from '../src/services/users/UserProfile';
 import { UserProfile } from '../src/services/users/UserProfile';
 import { AgeRange } from '../src/types/AgeRange';
 import { Attachment } from '../src/types/Attachment';
+import { Country } from '../src/types/Country';
 import { Discipline } from '../src/types/Discipline';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
@@ -327,6 +328,22 @@ export class SubjectsFactory {
   }
 }
 
+export class CountriesFactory {
+  public static sample(arg: Country[] = []): Country[] {
+    return Object.freeze([
+      {
+        id: 'country-one-id',
+        name: 'country one',
+      },
+      {
+        id: 'country-two-id',
+        name: 'country two',
+      },
+      ...arg,
+    ]) as Country[];
+  }
+}
+
 export class DisciplineFactory {
   public static sample(arg: Partial<Discipline> = {}): Discipline {
     return Object.freeze({
@@ -408,6 +425,7 @@ export class MockStoreFactory {
       collections: CollectionsFactory.sample(),
       router: RouterFactory.sample(),
       subjects: SubjectsFactory.sample(),
+      countries: CountriesFactory.sample(),
       disciplines: DisciplinesFactory.sample(),
       tags: TagsFactory.sample(),
       ageRanges: [],

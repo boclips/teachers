@@ -10,12 +10,15 @@ import { RegistrationContextService } from '../../../services/session/Registrati
 import updateUser from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
+import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
+import { fetchCountriesAction } from '../createAccount/redux/actions/fetchCountriesAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';
+import { CountriesForm } from '../form/CountriesForm';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
 import { NameForm } from '../form/NameForm';
 import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
@@ -24,11 +27,13 @@ import SvgStep2 from './dwarf-with-pencil.svg';
 import './OnboardingForm.less';
 import { OnboardingProgressDots } from './OnboardingProgressDots';
 import SvgStep4 from './teacher-presenting.svg';
+import SvgStep3 from './teachers-waving.svg';
 import SvgStep1 from './teachers-waving.svg';
 
 interface OnboardingProps {
   links: Links;
   subjects: Subject[];
+  countries: Country[];
   ageRanges: AgeRange[];
   userProfile: UserProfile;
 }
@@ -42,6 +47,7 @@ interface InternalState {
 
 interface DispatchProps {
   fetchSubjects: () => void;
+  fetchCountries: () => void;
   goToHomepage: () => void;
 }
 
@@ -63,6 +69,7 @@ class OnboardingForm extends React.Component<
     AnalyticsFactory.getInstance().trackAccountRegistration();
 
     this.props.fetchSubjects();
+    this.props.fetchCountries();
     this.setState({
       ...this.state,
       formCarousel: this.formCarousel,
@@ -86,6 +93,7 @@ class OnboardingForm extends React.Component<
             >
               <SvgStep1 className="onboarding__logo" />
               <SvgStep2 className="onboarding__logo" />
+              <SvgStep3 className="onboarding__logo" />
               <SvgStep4 className="onboarding__logo" />
             </Carousel>
           </Col>
@@ -144,6 +152,14 @@ class OnboardingForm extends React.Component<
                       label="Your age groups"
                       form={this.props.form}
                       ageRanges={this.props.ageRanges}
+                    />
+                  </section>
+                  <section>
+                    <CountriesForm
+                      label="Your country"
+                      form={this.props.form}
+                      countries={this.props.countries}
+                      placeholder="Choose country"
                     />
                   </section>
                   <section>
@@ -273,6 +289,7 @@ function mapStateToProps(state: State): OnboardingProps {
   return {
     links: state.links,
     subjects: state.subjects,
+    countries: state.countries,
     ageRanges: state.ageRanges,
     userProfile: state.user,
   };
@@ -281,6 +298,7 @@ function mapStateToProps(state: State): OnboardingProps {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchSubjects: () => dispatch(fetchSubjectsAction()),
+    fetchCountries: () => dispatch(fetchCountriesAction()),
     goToHomepage: () => dispatch(push('/')),
   };
 }

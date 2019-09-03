@@ -39,6 +39,16 @@ export class OnboardingFormHelper {
     wrapper.find(SelectSubjects).simulate('click');
   }
 
+  public static editCountry(wrapper: ReactWrapper, countryId: string) {
+    wrapper.find(SelectSubjects).simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
+
+    menuItems.find(`[value="${countryId}"]`).simulate('click');
+
+    wrapper.find(SelectSubjects).simulate('click');
+  }
+
   public static editAgeRange(wrapper: ReactWrapper, ageRanges: string[]) {
     wrapper
       .find(SelectAgeRange)

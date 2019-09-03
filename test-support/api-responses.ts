@@ -302,16 +302,16 @@ export function countriesResponse() {
     _embedded: {
       countries: [
         {
-          id: '1',
+          id: 'ES',
           name: 'Spain',
         },
         {
-          id: '2',
+          id: 'PL',
           name: 'Poland',
         },
         {
-          id: '3',
-          name: 'Gana',
+          id: 'GH',
+          name: 'Ghana',
         },
       ],
     },
