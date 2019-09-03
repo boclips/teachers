@@ -66,9 +66,12 @@ export default function fetchLinks(prefix: string) {
         if (body._links.subjects) {
           links.subjects = new Link(body._links.subjects);
         }
-
         if (body._links.disciplines) {
           links.disciplines = new Link(body._links.disciplines);
+        }
+
+        if (body._links.countries) {
+          links.countries = new Link(body._links.countries);
         }
 
         if (body._links.tags) {

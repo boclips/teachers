@@ -8,6 +8,7 @@ export interface UpdateUserRequest {
   firstName: string;
   lastName: string;
   subjects: string;
+  country: string;
   ages: number[];
   hasOptedIntoMarketing: boolean;
   referralCode: string;
@@ -26,6 +27,7 @@ export default function updateUser(
     firstName: userProfile.firstName,
     lastName: userProfile.lastName,
     subjects: userProfile.subjects,
+    country: userProfile.country,
     ages: userProfile.ages,
     hasOptedIntoMarketing: userProfile.hasOptedIntoMarketing,
     referralCode: userProfile.referralCode,

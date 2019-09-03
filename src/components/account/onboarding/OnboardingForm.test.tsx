@@ -35,6 +35,10 @@ describe('onboarding form', () => {
             SubjectFactory.sample({ id: '1', name: 's1' }),
             SubjectFactory.sample({ id: '2', name: 's2' }),
           ],
+          countries: [
+            SubjectFactory.sample({ id: 'ES', name: 'Spain' }),
+            SubjectFactory.sample({ id: 'EU', name: 'England' }),
+          ],
           links,
         })}
       >
@@ -54,6 +58,7 @@ describe('onboarding form', () => {
       lastName: 'Sanchez',
       subjects: ['1'],
       ages: [3, 4, 5],
+      country: 'ES',
       hasOptedIntoMarketing: true,
     });
   });
@@ -80,6 +85,7 @@ describe('onboarding form', () => {
       lastName: 'Sanchez',
       subjects: ['1'],
       ages: [3, 4, 5],
+      country: 'ES',
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
       utm: {
@@ -108,6 +114,7 @@ describe('onboarding form', () => {
       lastName: 'Sanchez',
       subjects: ['1'],
       ages: [3, 4, 5],
+      country: 'ES',
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
     });
@@ -147,6 +154,7 @@ describe('onboarding form', () => {
 function fillValidForm(wrapper) {
   OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
+  OnboardingFormHelper.editCountry(wrapper, 'ES');
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);
   OnboardingFormHelper.setTermsAndConditions(wrapper, true);

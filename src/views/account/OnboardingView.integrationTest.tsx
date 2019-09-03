@@ -37,6 +37,7 @@ describe('When user is not activated', () => {
 
     onboardingPage.setName('Rebecca', 'Sanchez');
     onboardingPage.setSubjects(['1', '3']);
+    onboardingPage.setCountry('ES');
     onboardingPage.setAgeRanges(['3-5']);
     onboardingPage.setMarketingOptIn(true);
     onboardingPage.setAgreeTerms(true);
@@ -50,6 +51,7 @@ describe('When user is not activated', () => {
         firstName: 'Rebecca',
         lastName: 'Sanchez',
         subjects: ['1', '3'],
+        country: 'ES',
         ages: [3, 4, 5],
         hasOptedIntoMarketing: true,
       });

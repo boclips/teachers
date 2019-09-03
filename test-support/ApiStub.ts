@@ -1,6 +1,7 @@
 import {
   collectionResponse,
   collectionsResponse,
+  countriesResponse,
   disciplinesResponse,
   links,
   subjectsResponse,
@@ -40,6 +41,7 @@ export default class ApiStub {
     MockFetchVerify.clear();
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
     this.fetchSubjects()
+      .fetchCountries()
       .fetchCollections()
       .fetchDisciplines()
       .fetchTags();
@@ -81,6 +83,14 @@ export default class ApiStub {
     MockFetchVerify.get(
       `${this.prefix}/v1/subjects`,
       JSON.stringify(subjectsResponse()),
+    );
+    return this;
+  }
+
+  public fetchCountries() {
+    MockFetchVerify.get(
+      `${this.prefix}/v1/countries`,
+      JSON.stringify(countriesResponse()),
     );
     return this;
   }

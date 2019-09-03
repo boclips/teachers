@@ -56,6 +56,10 @@ export class OnboardingPage {
     OnboardingFormHelper.editSubjects(this.wrapper, subjectIds);
   }
 
+  public setCountry(countryId: string) {
+    OnboardingFormHelper.editCountry(this.wrapper, countryId);
+  }
+
   public setMarketingOptIn(optIn: boolean) {
     OnboardingFormHelper.setMarketingOptIn(this.wrapper, optIn);
   }

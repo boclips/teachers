@@ -1,6 +1,7 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
 import { UserProfile } from '../services/users/UserProfile';
 import { AgeRange } from './AgeRange';
+import { Country } from './Country';
 import { Discipline } from './Discipline';
 import { Link } from './Link';
 import { Links } from './Links';
@@ -75,6 +76,10 @@ export interface SubjectState {
   subjects: Subject[];
 }
 
+export interface CountryState {
+  countries: Country[];
+}
+
 export interface TagState {
   tags: Tag[];
 }
@@ -132,6 +137,7 @@ export default interface State
     RouterState,
     CollectionState,
     SubjectState,
+    CountryState,
     TagState,
     DisciplineState,
     AgeRangeState,

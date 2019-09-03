@@ -1,8 +1,10 @@
+import { Select } from 'antd';
 import { ReactWrapper } from 'enzyme';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
+import { CountriesForm } from '../form/CountriesForm';
 
 export class OnboardingFormHelper {
   public static editName(wrapper, firstName: string, lastName: string) {
@@ -35,6 +37,19 @@ export class OnboardingFormHelper {
     subjectIds.forEach(subjectId => {
       menuItems.find(`[value="${subjectId}"]`).simulate('click');
     });
+
+    wrapper.find(SelectSubjects).simulate('click');
+  }
+
+  public static editCountry(wrapper: ReactWrapper, countryId: string) {
+    wrapper
+      .find(CountriesForm)
+      .find(Select)
+      .simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
+
+    menuItems.find(`[value="${countryId}"]`).simulate('click');
 
     wrapper.find(SelectSubjects).simulate('click');
   }

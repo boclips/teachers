@@ -10,7 +10,7 @@ export class PrivacyPolicyAgreementForm extends React.Component<
   public render() {
     return (
       <Form.Item>
-        {this.props.form.getFieldDecorator('privacy_policy', {
+        {this.props.form.getFieldDecorator('privacyPolicy', {
           rules: [
             {
               required: true,

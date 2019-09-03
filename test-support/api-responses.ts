@@ -39,6 +39,9 @@ export const links = {
     subjects: {
       href: `${prefix}/v1/subjects`,
     },
+    countries: {
+      href: `${prefix}/v1/countries`,
+    },
     tags: {
       href: `${prefix}/v1/tags`,
     },
@@ -302,16 +305,16 @@ export function countriesResponse() {
     _embedded: {
       countries: [
         {
-          id: '1',
+          id: 'ES',
           name: 'Spain',
         },
         {
-          id: '2',
+          id: 'PL',
           name: 'Poland',
         },
         {
-          id: '3',
-          name: 'Gana',
+          id: 'GH',
+          name: 'Ghana',
         },
       ],
     },

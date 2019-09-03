@@ -10,12 +10,15 @@ import { RegistrationContextService } from '../../../services/session/Registrati
 import updateUser from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
+import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
+import { fetchCountriesAction } from '../createAccount/redux/actions/fetchCountriesAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';
+import { CountriesForm } from '../form/CountriesForm';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
 import { NameForm } from '../form/NameForm';
 import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
@@ -23,12 +26,21 @@ import { SubjectsForm } from '../form/SubjectsForm';
 import SvgStep2 from './dwarf-with-pencil.svg';
 import './OnboardingForm.less';
 import { OnboardingProgressDots } from './OnboardingProgressDots';
+import SvgStep3 from './teacher-micromanaging.svg';
 import SvgStep4 from './teacher-presenting.svg';
 import SvgStep1 from './teachers-waving.svg';
+
+const validationFields = [
+  ['firstName', 'lastName'],
+  ['ageRange', 'subjects'],
+  ['country'],
+  ['hasOptedIntoMarketing', 'privacyPolicy'],
+];
 
 interface OnboardingProps {
   links: Links;
   subjects: Subject[];
+  countries: Country[];
   ageRanges: AgeRange[];
   userProfile: UserProfile;
 }
@@ -38,10 +50,12 @@ interface InternalState {
   currentSlide: number;
   formCarousel: Carousel;
   imageCarousel: Carousel;
+  numberOfSlides: number;
 }
 
 interface DispatchProps {
   fetchSubjects: () => void;
+  fetchCountries: () => void;
   goToHomepage: () => void;
 }
 
@@ -57,16 +71,20 @@ class OnboardingForm extends React.Component<
     currentSlide: 0,
     formCarousel: null,
     imageCarousel: null,
+    numberOfSlides: 0,
   };
 
   public componentDidMount() {
     AnalyticsFactory.getInstance().trackAccountRegistration();
 
     this.props.fetchSubjects();
+    this.props.fetchCountries();
     this.setState({
       ...this.state,
       formCarousel: this.formCarousel,
       imageCarousel: this.imageCarousel,
+      numberOfSlides: React.Children.toArray(this.imageCarousel.props.children)
+        .length,
     });
   }
 
@@ -86,6 +104,7 @@ class OnboardingForm extends React.Component<
             >
               <SvgStep1 className="onboarding__logo" />
               <SvgStep2 className="onboarding__logo" />
+              <SvgStep3 className="onboarding__logo" />
               <SvgStep4 className="onboarding__logo" />
             </Carousel>
           </Col>
@@ -94,7 +113,7 @@ class OnboardingForm extends React.Component<
               key={`counter-${this.state.currentSlide}`}
               className="onboarding-form__page-count"
             >
-              {this.state.currentSlide + 1} of 3
+              {this.state.currentSlide + 1} of {this.state.numberOfSlides}
             </span>
             <Form
               onSubmit={this.handleSubmit}
@@ -148,6 +167,21 @@ class OnboardingForm extends React.Component<
                   </section>
                   <section>
                     <h1 className="alt onboarding-form__title big-title">
+                      Your school
+                    </h1>
+                    <p className="onboarding-form__text">
+                      We'd like to know where you teach so that we can provide
+                      your community with the most relevant resources.
+                    </p>
+                    <CountriesForm
+                      label="Your country"
+                      form={this.props.form}
+                      countries={this.props.countries}
+                      placeholder="Choose country"
+                    />
+                  </section>
+                  <section>
+                    <h1 className="alt onboarding-form__title big-title">
                       Almost there!
                     </h1>
                     <p className="onboarding-form__text">
@@ -162,7 +196,7 @@ class OnboardingForm extends React.Component<
                   </section>
                 </Carousel>
                 <OnboardingProgressDots
-                  numberOfSteps={3}
+                  numberOfSteps={this.state.numberOfSlides}
                   currentStep={this.state.currentSlide + 1}
                 />
               </section>
@@ -207,7 +241,8 @@ class OnboardingForm extends React.Component<
     );
   }
 
-  private isLastSlide = () => this.state.currentSlide === 2;
+  private isLastSlide = () =>
+    this.state.currentSlide === this.state.numberOfSlides - 1;
   private isFirstSlide = () => this.state.currentSlide === 0;
 
   private changeSlide = (_, currentSlide) =>
@@ -217,11 +252,14 @@ class OnboardingForm extends React.Component<
     this.state.formCarousel.prev();
   };
   private next = () => {
-    this.props.form.validateFieldsAndScroll(['firstName', 'lastName'], err => {
-      if (!err) {
-        this.state.formCarousel.next();
-      }
-    });
+    this.props.form.validateFieldsAndScroll(
+      validationFields[this.state.currentSlide],
+      err => {
+        if (!err) {
+          this.state.formCarousel.next();
+        }
+      },
+    );
   };
 
   private handleSubmit = e => {
@@ -241,6 +279,7 @@ class OnboardingForm extends React.Component<
           lastName: values.lastName,
           ages: values.ageRange,
           subjects: values.subjects,
+          country: values.country,
           hasOptedIntoMarketing: values.hasOptedIntoMarketing,
           referralCode: registrationContext && registrationContext.referralCode,
           utm: registrationContext && registrationContext.utm,
@@ -273,6 +312,7 @@ function mapStateToProps(state: State): OnboardingProps {
   return {
     links: state.links,
     subjects: state.subjects,
+    countries: state.countries,
     ageRanges: state.ageRanges,
     userProfile: state.user,
   };
@@ -281,6 +321,7 @@ function mapStateToProps(state: State): OnboardingProps {
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchSubjects: () => dispatch(fetchSubjectsAction()),
+    fetchCountries: () => dispatch(fetchCountriesAction()),
     goToHomepage: () => dispatch(push('/')),
   };
 }

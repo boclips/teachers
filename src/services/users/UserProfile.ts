@@ -9,6 +9,7 @@ export interface UserProfile {
   lastName: string;
   subjects?: string;
   ages?: number[];
+  country?: string;
   hasOptedIntoMarketing?: boolean;
   referralCode?: string;
   utm?: Utm;

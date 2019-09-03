@@ -19,6 +19,6 @@ test('fetch all countries', async () => {
   const countries = await fetchCountries(links);
 
   expect(countries).toHaveLength(3);
-  expect(countries[0].id).toEqual('1');
+  expect(countries[0].id).toEqual('ES');
   expect(countries[0].name).toEqual('Spain');
 });
