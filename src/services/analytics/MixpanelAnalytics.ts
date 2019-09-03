@@ -52,6 +52,10 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
   }
 
+  public trackOnboardingProgress(onboardingPage: number): any {
+    return onboardingPage;
+  }
+
   public trackVideoSearch(
     searchRequest: VideoSearchRequest,
     searchResults: VideoSearchResults,
@@ -275,5 +279,19 @@ export default class MixpanelAnalytics {
 
   public trackCollectionsNavbarButtonClicked() {
     this.mixpanelInstance.track(EventTypes.COLLECTIONS_NAVBAR_BUTTON_CLICKED);
+  }
+
+  public trackOnboardingStarted() {
+    this.mixpanelInstance.track(EventTypes.ONBOARDING_STARTED);
+  }
+
+  public trackOnboardingCompleted() {
+    this.mixpanelInstance.track(EventTypes.ONBOARDING_COMPLETED);
+  }
+
+  public trackOnboardingPageChanged(pageIndex: number) {
+    this.mixpanelInstance.track(EventTypes.ONBOARDING_PAGE_CHANGED, {
+      page_index: pageIndex,
+    });
   }
 }

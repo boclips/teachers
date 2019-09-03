@@ -292,4 +292,22 @@ describe('MixpanelAnalytics', () => {
       },
     );
   });
+
+  it('tracks onboarding being started', () => {
+    mixpanelAnalytics.trackOnboardingStarted();
+    expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_STARTED');
+  });
+
+  it('tracks onboarding being finished', () => {
+    mixpanelAnalytics.trackOnboardingCompleted();
+    expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_COMPLETED');
+  });
+
+  it('tracks onboarding page changing', () => {
+    const pageIndex = 3;
+    mixpanelAnalytics.trackOnboardingPageChanged(pageIndex);
+    expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_PAGE_CHANGED', {
+      page_index: pageIndex,
+    });
+  });
 });
