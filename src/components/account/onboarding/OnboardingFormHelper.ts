@@ -69,6 +69,21 @@ export class OnboardingFormHelper {
         .simulate('click');
     });
   }
+  public static forwardCarouselPage(wrapper: ReactWrapper) {
+    wrapper
+      .find(By.dataQa('onboard-next-button'))
+      .first()
+      .simulate('click');
+    wrapper.update();
+  }
+
+  public static backCarouselPage(wrapper: ReactWrapper) {
+    wrapper
+      .find(By.dataQa('onboard-back-button'))
+      .first()
+      .simulate('click');
+    wrapper.update();
+  }
 
   public static save(wrapper) {
     const events = new EventSimulator(wrapper);

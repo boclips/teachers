@@ -8,7 +8,9 @@ import {
   SubjectFactory,
   UserProfileFactory,
 } from '../../../../test-support/factories';
+import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
 import Mock = jest.Mock;
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import updateUser from '../../../services/users/updateUser';
 import { AgeRange } from '../../../types/AgeRange';
@@ -17,6 +19,8 @@ import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
 
 jest.mock('../../../services/users/updateUser');
+
+AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
 
 const mockUpdateUser = updateUser as Mock;
 const links = LinksFactory.sample({
@@ -148,6 +152,24 @@ describe('onboarding form', () => {
     OnboardingFormHelper.save(wrapper);
 
     expect(mockUpdateUser).not.toHaveBeenCalled();
+  });
+
+  it('sends a page changed event if page has not already been visited', () => {
+    fillValidForm(wrapper);
+
+    OnboardingFormHelper.forwardCarouselPage(wrapper);
+
+    expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(0);
+  });
+
+  it('does not send page changed event if page has already been visited', () => {
+    fillValidForm(wrapper);
+
+    OnboardingFormHelper.forwardCarouselPage(wrapper);
+    OnboardingFormHelper.backCarouselPage(wrapper);
+    OnboardingFormHelper.forwardCarouselPage(wrapper);
+
+    expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
   });
 });
 

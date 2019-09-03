@@ -12,4 +12,5 @@ export const analyticsMock = ({
   trackDefaultCollectionVisited: jest.fn(),
   trackVideoVisited: jest.fn(),
   trackCollectionAttachmentLinkVisited: jest.fn(),
+  trackAccountRegistration: jest.fn(),
 } as any) as MixpanelAnalytics;

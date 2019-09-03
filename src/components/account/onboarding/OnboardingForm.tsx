@@ -47,10 +47,11 @@ interface OnboardingProps {
 
 interface InternalState {
   updating: boolean;
-  currentSlide: number;
+  currentIndex: number;
   formCarousel: Carousel;
   imageCarousel: Carousel;
   numberOfSlides: number;
+  visitedIndices: Set<number>;
 }
 
 interface DispatchProps {
@@ -68,10 +69,11 @@ class OnboardingForm extends React.Component<
 
   public state = {
     updating: false,
-    currentSlide: 0,
+    currentIndex: 0,
     formCarousel: null,
     imageCarousel: null,
     numberOfSlides: 0,
+    visitedIndices: new Set(),
   };
 
   public componentDidMount() {
@@ -110,10 +112,10 @@ class OnboardingForm extends React.Component<
           </Col>
           <Col xs={{ span: 24 }} lg={{ span: 12 }}>
             <span
-              key={`counter-${this.state.currentSlide}`}
+              key={`counter-${this.state.currentIndex}`}
               className="onboarding-form__page-count"
             >
-              {this.state.currentSlide + 1} of {this.state.numberOfSlides}
+              {this.state.currentIndex + 1} of {this.state.numberOfSlides}
             </span>
             <Form
               onSubmit={this.handleSubmit}
@@ -125,7 +127,6 @@ class OnboardingForm extends React.Component<
                 <Carousel
                   ref={formCarousel => (this.formCarousel = formCarousel)}
                   infinite={false}
-                  beforeChange={this.changeSlide}
                   asNavFor={this.state.imageCarousel}
                   dots={false}
                 >
@@ -197,7 +198,7 @@ class OnboardingForm extends React.Component<
                 </Carousel>
                 <OnboardingProgressDots
                   numberOfSteps={this.state.numberOfSlides}
-                  currentStep={this.state.currentSlide + 1}
+                  currentStep={this.state.currentIndex + 1}
                 />
               </section>
               {!this.isFirstSlide() && (
@@ -242,20 +243,40 @@ class OnboardingForm extends React.Component<
   }
 
   private isLastSlide = () =>
-    this.state.currentSlide === this.state.numberOfSlides - 1;
-  private isFirstSlide = () => this.state.currentSlide === 0;
+    this.state.currentIndex === this.state.numberOfSlides;
 
-  private changeSlide = (_, currentSlide) =>
-    this.setState({ ...this.state, currentSlide });
+  private isFirstSlide = () => this.state.currentIndex === 0;
 
   private back = () => {
+    this.setState({
+      ...this.state,
+      currentIndex: --this.state.currentIndex,
+    });
     this.state.formCarousel.prev();
   };
+
   private next = () => {
+    const currentIndex = this.state.currentIndex;
+    const nextIndex = currentIndex + 1;
     this.props.form.validateFieldsAndScroll(
-      validationFields[this.state.currentSlide],
-      err => {
-        if (!err) {
+      validationFields[currentIndex],
+      validationErrors => {
+        if (!validationErrors) {
+          const visitedIndices = new Set(this.state.visitedIndices);
+          if (!this.state.visitedIndices.has(currentIndex)) {
+            AnalyticsFactory.getInstance().trackOnboardingPageChanged(
+              currentIndex,
+            );
+
+            visitedIndices.add(currentIndex);
+          }
+
+          this.setState({
+            ...this.state,
+            currentIndex: nextIndex,
+            visitedIndices,
+          });
+
           this.state.formCarousel.next();
         }
       },
