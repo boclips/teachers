@@ -5,7 +5,7 @@ import { UserState } from '../../../types/State';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
-import TopNavbarComponent from './TopNavbarComponent';
+import TopNavbar from './TopNavbar';
 
 interface Props extends WithMediaBreakPointProps {
   showTabs?: boolean;
@@ -25,7 +25,7 @@ class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
 
   public render() {
     return (
-      <TopNavbarComponent
+      <TopNavbar
         showTabs={this.props.showTabs}
         authorized={this.props.authorized}
         showSearchBar={this.showSearchBar()}
