@@ -32,7 +32,7 @@ describe('when activate link present', () => {
     it('registers activation complete event', async () => {
       updateUser(links, userProfile);
       await eventually(() => {
-        expect(analyticsMock.trackAccountActivation).toHaveBeenCalled();
+        expect(analyticsMock.trackOnboardingCompleted).toHaveBeenCalled();
       });
     });
 
@@ -54,7 +54,7 @@ describe('when user cannot be activated', () => {
 
   it('does not publish event to web analytics', () => {
     updateUser(links, userProfile);
-    expect(analyticsMock.trackAccountActivation).not.toHaveBeenCalled();
+    expect(analyticsMock.trackOnboardingCompleted).not.toHaveBeenCalled();
   });
 });
 

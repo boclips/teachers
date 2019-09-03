@@ -30,7 +30,7 @@ beforeEach(() => {
 
 describe('MixpanelAnalytics', () => {
   it('tracks account activation', () => {
-    mixpanelAnalytics.trackAccountActivation();
+    mixpanelAnalytics.trackOnboardingCompleted();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
   });
@@ -301,6 +301,7 @@ describe('MixpanelAnalytics', () => {
   it('tracks onboarding being finished', () => {
     mixpanelAnalytics.trackOnboardingCompleted();
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_COMPLETED');
+    expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
   });
 
   it('tracks onboarding page changing', () => {

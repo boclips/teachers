@@ -44,16 +44,8 @@ export default class MixpanelAnalytics {
     return this.mixpanelInstance.get_distinct_id();
   }
 
-  public trackAccountActivation() {
-    this.mixpanelInstance.track(EventTypes.ACTIVATION_COMPLETE);
-  }
-
   public trackAccountRegistration(): any {
     this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
-  }
-
-  public trackOnboardingProgress(onboardingPage: number): any {
-    return onboardingPage;
   }
 
   public trackVideoSearch(
@@ -286,6 +278,7 @@ export default class MixpanelAnalytics {
   }
 
   public trackOnboardingCompleted() {
+    this.mixpanelInstance.track(EventTypes.ACTIVATION_COMPLETE);
     this.mixpanelInstance.track(EventTypes.ONBOARDING_COMPLETED);
   }
 

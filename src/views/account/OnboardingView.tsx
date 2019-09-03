@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import OnboardingForm from '../../components/account/onboarding/OnboardingForm';
 import PageLayout from '../../components/layout/PageLayout';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import './OnboardingView.less';
 
 export class OnboardingView extends PureComponent {
@@ -14,5 +15,9 @@ export class OnboardingView extends PureComponent {
         </section>
       </PageLayout>
     );
+  }
+
+  public componentDidMount(): void {
+    AnalyticsFactory.getInstance().trackOnboardingStarted();
   }
 }

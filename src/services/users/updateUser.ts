@@ -33,7 +33,7 @@ export default function updateUser(
   };
 
   return axios.put(links.profile.getOriginalLink(), request).then(() => {
-    AnalyticsFactory.getInstance().trackAccountActivation();
+    AnalyticsFactory.getInstance().trackOnboardingCompleted();
     AnalyticsFactory.getInstance().createUserProfile(userProfile);
   });
 }
