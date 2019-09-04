@@ -33,7 +33,7 @@ class UserCollectionsLink extends React.PureComponent<Props> {
       <span className="icon-container">
         <CollectionsIcon aria-hidden="true" />
       </span>
-      <span>Your videos</span>
+      <span>Your collections</span>
     </Link>
   );
 }
