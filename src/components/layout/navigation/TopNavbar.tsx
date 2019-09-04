@@ -8,19 +8,19 @@ import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import ConnectedTabsContainer from '../tabs/TabsContainer';
 import NavbarButtonsContainer from './NavbarButtonsContainer';
-import './TopNavbarComponent.less';
+import './TopNavbar.less';
 
 interface Props {
   showTabs: boolean;
   authorized: boolean;
   showSearchBar: boolean;
   isMobile: boolean;
-  hideNavigation?: boolean;
+  showNavigation?: boolean;
 }
 
 const { Content } = Layout;
 
-const TopNavbarComponent = React.memo((props: Props) => (
+const TopNavbar = React.memo((props: Props) => (
   <React.Fragment>
     <Content className="top-navbar">
       <Row>
@@ -30,29 +30,16 @@ const TopNavbarComponent = React.memo((props: Props) => (
           lg={{ span: props.showSearchBar ? 4 : 16 }}
         >
           <section className="logo-wrapper">
-            {props.hideNavigation ? (
-              <img className="logo" src={boclipsLogo} alt="Boclips" />
-            ) : (
+            {props.showNavigation ? (
               <Link to="/" data-qa="boclips-logo" className="link--tabbable">
                 <img className="logo" src={boclipsLogo} alt="Boclips" />
               </Link>
+            ) : (
+              <img className="logo" src={boclipsLogo} alt="Boclips" />
             )}
           </section>
         </Col>
-        {!props.showSearchBar && props.isMobile && (
-          <Col xs={{ span: 18 }} md={{ span: 20 }}>
-            <section className="mobile-logo-wrapper">
-              {!props.hideNavigation ? (
-                <Link to="/" data-qa="boclips-logo" className="link--tabbable">
-                  <BoclipsMobileLogo alt="Boclips" />
-                </Link>
-              ) : (
-                <BoclipsMobileLogo alt="Boclips" />
-              )}
-            </section>
-          </Col>
-        )}
-        {props.showSearchBar && !props.hideNavigation ? (
+        {props.showSearchBar ? (
           <Col
             xs={{ span: 18 }}
             sm={{ span: 20 }}
@@ -61,14 +48,32 @@ const TopNavbarComponent = React.memo((props: Props) => (
           >
             <SearchBar />
           </Col>
-        ) : null}
+        ) : (
+          props.isMobile && (
+            <Col xs={{ span: 18 }} md={{ span: 20 }}>
+              <section className="mobile-logo-wrapper">
+                {!props.showNavigation ? (
+                  <Link
+                    to="/"
+                    data-qa="boclips-logo"
+                    className="link--tabbable"
+                  >
+                    <BoclipsMobileLogo alt="Boclips" />
+                  </Link>
+                ) : (
+                  <BoclipsMobileLogo alt="Boclips" />
+                )}
+              </section>
+            </Col>
+          )
+        )}
         <Col
           xs={{ span: 6 }}
           sm={{ span: 4 }}
           md={{ span: 4 }}
           lg={{ span: 8 }}
         >
-          {props.authorized && !props.hideNavigation && (
+          {props.authorized && props.showNavigation && (
             <div>
               {props.isMobile ? (
                 <AccountMenuContainer />
@@ -84,4 +89,4 @@ const TopNavbarComponent = React.memo((props: Props) => (
   </React.Fragment>
 ));
 
-export default TopNavbarComponent;
+export default TopNavbar;

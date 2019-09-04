@@ -14,140 +14,130 @@ import TopNavbarContainer from './TopNavbarContainer';
 
 const user = UserProfileFactory.sample({});
 
-describe('when authenticated', () => {
-  test('renders search bar', () => {
-    const wrapper = mountAuthenticatedLayout();
+test('renders search bar', () => {
+  const wrapper = mountTopNavBarWithSearchBar();
 
-    expect(wrapper.find('Connect(SearchBar)')).toExist();
-  });
-
-  test('renders tabs', () => {
-    const wrapper = mountAuthenticatedLayoutWithTabs();
-
-    expect(wrapper.find(By.dataQa('navbar-tabs'))).toExist();
-  });
-
-  test('does not render tabs', () => {
-    const wrapper = mountAuthenticatedLayout();
-
-    expect(wrapper.find(By.dataQa('navbar-tabs'))).not.toExist();
-  });
-
-  test('does not render search bar when configured appropriately', () => {
-    const wrapper = mountAuthenticatedLayoutWithoutSearch();
-
-    expect(wrapper.find('Connect(SearchBar)')).not.toExist();
-  });
-
-  test('renders Link in logo', () => {
-    const wrapper = mountAuthenticatedLayout();
-
-    expect(wrapper.find(Link)).toExist();
-  });
-
-  test('renders logout button', () => {
-    const wrapper = mountAuthenticatedLayout();
-
-    expect(wrapper.find(AccountMenuContainer)).toExist();
-  });
-
-  test('renders navbar buttons container', () => {
-    const wrapper = mountAuthenticatedLayout();
-
-    expect(wrapper.find(NavbarButtonsContainer)).toExist();
-    expect(wrapper.find('Connect(SearchBar)')).toExist();
-  });
-
-  describe('onboarding view', () => {
-    test('does not render any navigation buttons or search bar during onboarding', () => {
-      const wrapper = mountOnboardingLayout();
-      expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
-      expect(wrapper.find('Connect(SearchBar)')).not.toExist();
-      expect(wrapper.find(Link)).not.toExist();
-    });
-  });
-
-  describe('mobile view', () => {
-    test('does not render navbar buttons container and only renders account menu container', () => {
-      setWidth(400);
-
-      const wrapper = mountAuthenticatedLayout();
-
-      expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
-      expect(wrapper.find(AccountMenuContainer)).toExist();
-    });
-  });
-
-  function mountAuthenticatedLayout() {
-    return mount(
-      <Provider store={MockStoreFactory.sample({ user })}>
-        <MemoryRouter>
-          <TopNavbarContainer />
-        </MemoryRouter>
-      </Provider>,
-    );
-  }
-
-  function mountAuthenticatedLayoutWithoutSearch() {
-    return mount(
-      <Provider store={MockStoreFactory.sample({ user })}>
-        <MemoryRouter>
-          <TopNavbarContainer showSearchBar={false} />
-        </MemoryRouter>
-      </Provider>,
-    );
-  }
-
-  function mountAuthenticatedLayoutWithTabs() {
-    return mount(
-      <Provider store={MockStoreFactory.sample({ user })}>
-        <MemoryRouter>
-          <TopNavbarContainer showTabs={true} />
-        </MemoryRouter>
-      </Provider>,
-    );
-  }
-  function mountOnboardingLayout() {
-    return mount(
-      <Provider store={MockStoreFactory.sample({ user })}>
-        <MemoryRouter>
-          <TopNavbarContainer
-            hideNavigation={true}
-            showTabs={false}
-            showSearchBar={false}
-          />
-        </MemoryRouter>
-      </Provider>,
-    );
-  }
+  expect(wrapper.find('Connect(SearchBar)')).toExist();
 });
 
-describe('when not authenticated', () => {
-  test('does not render search bar', () => {
-    const wrapper = mountAnonymousLayout();
+test('renders tabs', () => {
+  const wrapper = mountTopNavBarWithTabs();
 
-    expect(wrapper.find('Connect(SearchBar)')).not.toExist();
-  });
-
-  test('renders logout button', () => {
-    const wrapper = mountAnonymousLayout();
-
-    expect(wrapper.find(AccountMenuContainer)).not.toExist();
-  });
-
-  test('does not render navbar buttons container', () => {
-    const wrapper = mountAnonymousLayout();
-
-    expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
-  });
-
-  function mountAnonymousLayout() {
-    return mount(
-      <Provider store={MockStoreFactory.sample({ user: undefined })}>
-        <MemoryRouter>
-          <TopNavbarContainer />
-        </MemoryRouter>
-      </Provider>,
-    );
-  }
+  expect(wrapper.find(By.dataQa('navbar-tabs'))).toExist();
 });
+
+test('renders account menu', () => {
+  const wrapper = mountTopNavBarWithAccountMenu();
+
+  expect(wrapper.find(AccountMenuContainer)).toExist();
+});
+
+test('renders navbar with account menu and search bar', () => {
+  const wrapper = mountTopNavBarWithAccountMenuAndSearchBar();
+
+  expect(wrapper.find(NavbarButtonsContainer)).toExist();
+  expect(wrapper.find('Connect(SearchBar)')).toExist();
+});
+
+test('renders top navbar with navigation', () => {
+  const wrapper = mountTopNavBarWithNavigation();
+
+  expect(wrapper.find(NavbarButtonsContainer)).toExist();
+  expect(wrapper.find('Connect(SearchBar)')).not.toExist();
+  expect(wrapper.find(Link)).toExist();
+});
+
+test('renders navbar without any elements but always with a logo', () => {
+  const wrapper = mountTopNavBarWithoutAnything();
+
+  expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
+  expect(wrapper.find('Connect(SearchBar)')).not.toExist();
+  expect(wrapper.find(Link)).not.toExist();
+});
+
+test('does not render navbar buttons container and only renders account menu container', () => {
+  setWidth(400);
+
+  const wrapper = mountTopNavBarWithAccountMenu();
+
+  expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
+  expect(wrapper.find(AccountMenuContainer)).toExist();
+});
+
+test('does not render search bar', () => {
+  const wrapper = mountTopNavBarWithoutUser();
+
+  expect(wrapper.find('Connect(SearchBar)')).not.toExist();
+  expect(wrapper.find(AccountMenuContainer)).not.toExist();
+  expect(wrapper.find(NavbarButtonsContainer)).not.toExist();
+});
+
+function mountTopNavBarWithoutUser() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user: undefined })}>
+      <MemoryRouter>
+        <TopNavbarContainer />
+      </MemoryRouter>
+    </Provider>,
+  );
+}
+
+function mountTopNavBarWithAccountMenu() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user })}>
+      <MemoryRouter>
+        <TopNavbarContainer showNavigation={true} />
+      </MemoryRouter>
+    </Provider>,
+  );
+}
+
+function mountTopNavBarWithAccountMenuAndSearchBar() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user })}>
+      <MemoryRouter>
+        <TopNavbarContainer showNavigation={true} showSearchBar={true} />
+      </MemoryRouter>
+    </Provider>,
+  );
+}
+
+function mountTopNavBarWithSearchBar() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user })}>
+      <MemoryRouter>
+        <TopNavbarContainer showSearchBar={true} />
+      </MemoryRouter>
+    </Provider>,
+  );
+}
+
+function mountTopNavBarWithTabs() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user })}>
+      <MemoryRouter>
+        <TopNavbarContainer showTabs={true} />
+      </MemoryRouter>
+    </Provider>,
+  );
+}
+
+function mountTopNavBarWithNavigation() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user })}>
+      <MemoryRouter>
+        <TopNavbarContainer showNavigation={true} />
+      </MemoryRouter>
+    </Provider>,
+  );
+}
+
+function mountTopNavBarWithoutAnything() {
+  return mount(
+    <Provider store={MockStoreFactory.sample({ user })}>
+      <MemoryRouter>
+        <TopNavbarContainer />
+      </MemoryRouter>
+    </Provider>,
+  );
+}

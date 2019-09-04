@@ -37,7 +37,16 @@ class SearchResultsView extends React.PureComponent<
   StateProps & DispatchProps & NewsNavigationProps
 > {
   public render() {
-    return <PageLayout showTabs={true}>{this.renderContent()}</PageLayout>;
+    return (
+      <PageLayout
+        showTabs={true}
+        showNavigation={true}
+        showFooter={true}
+        showSearchBar={true}
+      >
+        {this.renderContent()}
+      </PageLayout>
+    );
   }
 
   private renderContent() {

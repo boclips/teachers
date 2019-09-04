@@ -14,7 +14,7 @@ interface Props {
 export class CollectionDetailsView extends PureComponent<Props> {
   public render() {
     return (
-      <PageLayout>
+      <PageLayout showSearchBar={true} showFooter={true} showNavigation={true}>
         <section data-qa="collection-page">
           <CollectionsLoaded
             showWhenLoading={this.renderCollectionPlaceholders()}

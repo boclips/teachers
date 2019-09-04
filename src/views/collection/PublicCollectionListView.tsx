@@ -5,7 +5,7 @@ import PageLayout from '../../components/layout/PageLayout';
 export class PublicCollectionListView extends PureComponent {
   public render() {
     return (
-      <PageLayout>
+      <PageLayout showNavigation={true} showSearchBar={true} showFooter={true}>
         <section
           className="public-collection-list collection-list"
           data-qa="public-collection-list-page"

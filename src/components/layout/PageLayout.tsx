@@ -13,8 +13,8 @@ interface Props {
   children: React.ReactNode;
   showTabs?: boolean;
   showSearchBar?: boolean;
-  hideFooter?: boolean;
-  hideNavigation?: boolean;
+  showFooter?: boolean;
+  showNavigation?: boolean;
   subheader?: React.ReactFragment;
 }
 
@@ -25,7 +25,7 @@ class PageLayout extends PureComponent<Props> {
         <section>
           <Header className="top-search-bar fixed">
             <TopNavbarContainer
-              hideNavigation={this.props.hideNavigation}
+              showNavigation={this.props.showNavigation}
               showSearchBar={this.props.showSearchBar}
               showTabs={this.props.showTabs}
             />
@@ -40,8 +40,8 @@ class PageLayout extends PureComponent<Props> {
               </Col>
             </Row>
           </Content>
-          <Row>{!this.props.hideNavigation && <MobileBottomNavbar />}</Row>
-          {!this.props.hideFooter && <BoclipsFooter />}
+          <Row>{this.props.showNavigation && <MobileBottomNavbar />}</Row>
+          {this.props.showFooter && <BoclipsFooter />}
         </section>
       </Layout>
     );

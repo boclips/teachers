@@ -42,6 +42,9 @@ export class DiscoverCollectionsView extends PureComponent<
     return (
       <section>
         <PageLayout
+          showNavigation={true}
+          showSearchBar={true}
+          showFooter={true}
           subheader={
             <section className="discover-collections__header-container">
               <Content>

@@ -26,7 +26,7 @@ export class VideoDetailsView extends PureComponent<
 > {
   public render() {
     return (
-      <PageLayout>
+      <PageLayout showNavigation={true} showFooter={true} showSearchBar={true}>
         <section data-qa="video-details-page">
           <section className="video-details-page" data-qa="video-details">
             <VideoDetails video={this.props.video} />

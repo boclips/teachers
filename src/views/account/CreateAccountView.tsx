@@ -8,7 +8,7 @@ import './CreateAccountView.less';
 export class CreateAccountView extends PureComponent {
   public render() {
     return (
-      <PageLayout>
+      <PageLayout showNavigation={true} showFooter={true}>
         <section className="create-account" data-qa="create-account-page">
           <Row>
             <Col xs={{ span: 0 }} lg={{ span: 12 }}>

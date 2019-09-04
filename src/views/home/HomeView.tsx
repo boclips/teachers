@@ -22,11 +22,7 @@ export default class HomeView extends PureComponent {
     return (
       <section className="home-page">
         <section className="search-section">
-          <PageLayout
-            data-qa="home-page"
-            showSearchBar={false}
-            hideFooter={true}
-          >
+          <PageLayout data-qa="home-page" showNavigation={true}>
             <Row>
               <Col
                 xs={{ span: 22, offset: 1 }}

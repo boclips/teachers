@@ -7,7 +7,7 @@ import './OnboardingView.less';
 export class OnboardingView extends PureComponent {
   public render() {
     return (
-      <PageLayout showSearchBar={false} showTabs={false} hideNavigation={true}>
+      <PageLayout showFooter={true}>
         <section className="onboarding" data-qa="onboarding-page">
           <div className="onboarding__form">
             <OnboardingForm />
