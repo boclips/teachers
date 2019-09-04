@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import React from 'react';
 import GoogleClassroomIcon from '../../../../../resources/images/google-classroom-logo.png';
 import { Constants } from '../../../../app/AppConstants';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { Segment, Video } from '../../../../types/Video';
 import './GoogleClassroomShareButton.less';
 import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
@@ -30,7 +31,10 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
     } else {
       urlToVideo = baseUrlToVideo;
     }
-
+    AnalyticsFactory.getInstance().trackVideoSharedInGoogle(
+      this.props.video,
+      this.props.segment,
+    );
     const url: string = new GoogleClassroomUrlBuilder()
       .setTitle(this.props.video.title)
       .setVideoUrl(urlToVideo)

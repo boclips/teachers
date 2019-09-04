@@ -190,6 +190,14 @@ export default class MixpanelAnalytics {
     });
   }
 
+  public trackVideoSharedInGoogle(video: Video, segment: Segment): void {
+    this.mixpanelInstance.track(EventTypes.VIDEO_SHARED_GOOGLE_CLASSROOM, {
+      ...toMixpanelVideo(video),
+      share_segment_start: segment && segment.start,
+      share_segment_end: segment && segment.end,
+    });
+  }
+
   public trackVideoPlayback(
     video: Video,
     startSeconds: number,
