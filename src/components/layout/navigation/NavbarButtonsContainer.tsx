@@ -1,10 +1,6 @@
 import React from 'react';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
-import {
-  HomeLink,
-  PublicCollectionsLink,
-  SubjectsLink,
-} from '../navigation/NavbarButtons';
+import { HomeLink, SubjectsLink } from '../navigation/NavbarButtons';
 import SubjectMenuComponent from '../subjectsMenu/SubjectMenuComponent';
 import './NavbarButtons.less';
 
@@ -21,9 +17,6 @@ const NavbarButtonsContainer = React.memo(() => (
     </li>
     <li className={'navbar-buttons__list-item display-mobile-and-tablet'}>
       <SubjectsLink />
-    </li>
-    <li className={'navbar-buttons__list-item'}>
-      <PublicCollectionsLink />
     </li>
   </ul>
 ));

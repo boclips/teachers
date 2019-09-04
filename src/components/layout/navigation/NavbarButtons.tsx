@@ -1,20 +1,7 @@
 import React from 'react';
-import CollectionsIcon from '../../../../resources/images/collections-on.svg';
 import HomeIcon from '../../../../resources/images/home-on.svg';
 import SubjectsIcon from '../../../../resources/images/subjects.svg';
-
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import NavbarButton from '../navigation/NavbarButton';
-
-const PublicCollectionsLink = React.memo(() => (
-  <NavbarButton
-    link={'/public-collections'}
-    icon={<CollectionsIcon />}
-    label={'Collections'}
-    dataQa={'video-collections'}
-    onClick={trackClickCollections}
-  />
-));
 
 const HomeLink = React.memo(() => (
   <NavbarButton
@@ -34,8 +21,4 @@ const SubjectsLink = React.memo(() => (
   />
 ));
 
-const trackClickCollections = () => {
-  AnalyticsFactory.getInstance().trackCollectionsNavbarButtonClicked();
-};
-
-export { PublicCollectionsLink, HomeLink, SubjectsLink };
+export { HomeLink, SubjectsLink };
