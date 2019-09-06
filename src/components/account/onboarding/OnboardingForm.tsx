@@ -258,7 +258,7 @@ class OnboardingForm extends React.Component<
 
               {this.isLastSlide() ? (
                 <Button
-                  data-qa="onboard-button"
+                  data-qa="onboard-submit-button"
                   className="onboarding-form__submit"
                   size="large"
                   type="primary"
