@@ -67,14 +67,14 @@ export class BookmarkCollectionButtonInner extends PureComponent<
   };
 
   private bookmarkCollection = () => {
-    AnalyticsFactory.getInstance().trackCollectionBookmarked(
+    AnalyticsFactory.mixpanel().trackCollectionBookmarked(
       this.props.collection,
     );
     this.props.onBookmarkCollectionAction(this.props.collection);
   };
 
   private unBookmarkCollection = () => {
-    AnalyticsFactory.getInstance().trackCollectionUnbookmarked(
+    AnalyticsFactory.mixpanel().trackCollectionUnbookmarked(
       this.props.collection,
     );
     this.props.onUnbookmarkCollectionAction(this.props.collection);

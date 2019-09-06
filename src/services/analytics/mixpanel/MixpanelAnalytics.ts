@@ -1,12 +1,15 @@
-import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
-import { Attachment } from '../../types/Attachment';
-import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
-import { Tag } from '../../types/Tag';
-import { Segment, Video } from '../../types/Video';
-import { VideoCollection } from '../../types/VideoCollection';
-import { VideoSearchRequest } from '../../types/VideoSearchRequest';
-import { CreateCollectionRequest } from '../collections/createCollection';
-import { UserProfile } from '../users/UserProfile';
+import { EditCollectionRequest } from '../../../components/collection/redux/actions/editCollectionAction';
+import { Attachment } from '../../../types/Attachment';
+import {
+  CollectionSearchResults,
+  VideoSearchResults,
+} from '../../../types/State';
+import { Tag } from '../../../types/Tag';
+import { Segment, Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
+import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
+import { CreateCollectionRequest } from '../../collections/createCollection';
+import { UserProfile } from '../../users/UserProfile';
 import EventTypes from './EventTypes';
 import { toMixpanelSegment } from './toMixpanelSegment';
 import { toMixpanelVideo } from './toMixpanelVideo';

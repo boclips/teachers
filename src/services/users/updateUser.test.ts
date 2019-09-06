@@ -21,7 +21,7 @@ const userProfile = UserProfileFactory.sample({
   lastName: 'boclips',
 });
 
-AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
+AnalyticsFactory.mixpanel = jest.fn(() => analyticsMock);
 
 describe('when activate link present', () => {
   describe('when user activated successfully', () => {

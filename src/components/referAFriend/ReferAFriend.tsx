@@ -77,12 +77,12 @@ class ReferAFriend extends React.Component<Props & StateProps, State> {
 
   private openModal = () => {
     this.setState({ visible: true });
-    AnalyticsFactory.getInstance().trackReferAFriendModalOpened();
+    AnalyticsFactory.mixpanel().trackReferAFriendModalOpened();
   };
 
   private closeModal = () => {
     this.setState({ visible: false });
-    AnalyticsFactory.getInstance().trackReferAFriendModalClosed();
+    AnalyticsFactory.mixpanel().trackReferAFriendModalClosed();
   };
 }
 

@@ -4,7 +4,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { registerAnalytics } from '../actions/registerAnalytics';
 
 const onRegisterAnalytics = (_: Store, analyticsId: string) => {
-  AnalyticsFactory.getInstance().setUserId(analyticsId);
+  AnalyticsFactory.mixpanel().setUserId(analyticsId);
 };
 
 export default sideEffect(registerAnalytics, onRegisterAnalytics);

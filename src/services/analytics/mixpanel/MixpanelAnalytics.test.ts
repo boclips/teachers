@@ -4,11 +4,11 @@ import {
   AttachmentFactory,
   VideoCollectionFactory,
   VideoFactory,
-} from '../../../test-support/factories';
-import { VideoSearchResults } from '../../types/State';
-import { StreamPlayback } from '../../types/Video';
-import { VideoSearchRequest } from '../../types/VideoSearchRequest';
-import { UserProfile } from '../users/UserProfile';
+} from '../../../../test-support/factories';
+import { VideoSearchResults } from '../../../types/State';
+import { StreamPlayback } from '../../../types/Video';
+import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
+import { UserProfile } from '../../users/UserProfile';
 import MixpanelAnalytics from './MixpanelAnalytics';
 
 let mixpanelAnalytics: MixpanelAnalytics;

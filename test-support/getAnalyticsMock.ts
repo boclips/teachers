@@ -1,4 +1,4 @@
-import MixpanelAnalytics from '../src/services/analytics/MixpanelAnalytics';
+import MixpanelAnalytics from '../src/services/analytics/mixpanel/MixpanelAnalytics';
 
 export const analyticsMock = ({
   trackOnboardingCompleted: jest.fn(),

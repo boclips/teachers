@@ -4,6 +4,7 @@ import AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
+import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
 import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
 
@@ -35,3 +36,11 @@ export async function waitForElement(selector: string) {
 export function findElement(selector: string) {
   return global['document'].querySelector(selector);
 }
+
+jest.mock('./src/services/analytics/boclips/BoclipsAnalytics', () => {
+  return FakeBoclipsAnalytics;
+});
+
+beforeEach(() => {
+  FakeBoclipsAnalytics.reset();
+});

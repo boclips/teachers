@@ -79,7 +79,7 @@ class OnboardingForm extends React.Component<
   };
 
   public componentDidMount() {
-    AnalyticsFactory.getInstance().trackAccountRegistration();
+    AnalyticsFactory.mixpanel().trackAccountRegistration();
 
     this.props.fetchSubjects();
     this.props.fetchCountries();
@@ -306,7 +306,7 @@ class OnboardingForm extends React.Component<
         if (!validationErrors) {
           const visitedIndices = new Set(this.state.visitedIndices);
           if (!this.state.visitedIndices.has(currentIndex)) {
-            AnalyticsFactory.getInstance().trackOnboardingPageChanged(
+            AnalyticsFactory.mixpanel().trackOnboardingPageChanged(
               currentIndex,
             );
 

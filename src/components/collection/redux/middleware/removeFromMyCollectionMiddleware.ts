@@ -22,7 +22,7 @@ export function onRemoveFromCollection(
       );
     })
     .catch(console.error);
-  AnalyticsFactory.getInstance().trackVideoRemovedFromCollection(
+  AnalyticsFactory.mixpanel().trackVideoRemovedFromCollection(
     request.video,
     request.collection,
   );

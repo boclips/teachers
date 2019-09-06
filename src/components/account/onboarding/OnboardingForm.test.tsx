@@ -20,7 +20,7 @@ import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 
-AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
+AnalyticsFactory.mixpanel = jest.fn(() => analyticsMock);
 
 const mockUpdateUser = updateUser as Mock;
 const links = LinksFactory.sample({

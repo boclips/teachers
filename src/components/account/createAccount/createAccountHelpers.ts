@@ -7,7 +7,7 @@ export const handleUserExists = (values: any) => {
     description: 'If you forgot your password, try to reset it instead.',
   });
 
-  AnalyticsFactory.getInstance().trackAccountAlreadyExists({
+  AnalyticsFactory.mixpanel().trackAccountAlreadyExists({
     ...values,
     password: 'redacted',
   });
@@ -19,7 +19,7 @@ export const handleError = (values: any) => {
     description: 'Please try again or contact our support team.',
   });
 
-  AnalyticsFactory.getInstance().trackAccountAlreadyExists({
+  AnalyticsFactory.mixpanel().trackAccountAlreadyExists({
     ...values,
     password: 'redacted',
   });

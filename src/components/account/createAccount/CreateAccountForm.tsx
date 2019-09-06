@@ -55,7 +55,7 @@ class CreateAccountForm extends React.Component<
   };
 
   public componentDidMount() {
-    AnalyticsFactory.getInstance().trackAccountRegistration();
+    AnalyticsFactory.mixpanel().trackAccountRegistration();
 
     const registrationContext: RegistrationContext = {
       referralCode: this.props.referralCode,
@@ -91,7 +91,7 @@ class CreateAccountForm extends React.Component<
             <Form.Item>
               {getFieldDecorator('analyticsId', {
                 rules: [],
-                initialValue: AnalyticsFactory.getInstance().getId(),
+                initialValue: AnalyticsFactory.mixpanel().getId(),
               })(<Input type="text" />)}
             </Form.Item>
             <Form.Item>

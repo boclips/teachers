@@ -133,7 +133,7 @@ export class DiscoverCollectionsView extends PureComponent<
   }
 
   public componentDidMount(): void {
-    AnalyticsFactory.getInstance().trackDiscoveryPage(
+    AnalyticsFactory.mixpanel().trackDiscoveryPage(
       this.props.subjectIds,
       this.props.disciplineId,
     );

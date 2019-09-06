@@ -60,6 +60,9 @@ export const video177Slim = Object.freeze({
       href: `${prefix}/v1/videos/177?rating={rating}`,
       templated: true,
     },
+    logInteraction: {
+      href: `${prefix}/v1/videos/177/events?createVideoInteractedWith=true&type={type}`,
+    },
   },
 });
 

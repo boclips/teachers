@@ -2,6 +2,7 @@ import { Button } from 'antd';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { VideoFactory } from '../../../../../test-support/factories';
+import FakeBoclipsAnalytics from '../../../../services/analytics/boclips/FakeBoclipsAnalytics';
 import { GoogleClassroomShareButton } from './GoogleClassroomShareButton';
 
 it('opens a new window with the correct url', () => {
@@ -20,4 +21,16 @@ it('opens a new window with the correct url', () => {
     '_blank',
     'height=570,width=520',
   );
+});
+
+it('triggers a Boclips event', () => {
+  const video = VideoFactory.sample({ title: 'a video title', id: '123' });
+  const wrapper = shallow(<GoogleClassroomShareButton video={video} />);
+
+  wrapper.find(Button).simulate('click');
+
+  expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
+    video,
+    interactionType: 'VIDEO_SHARED_TO_GOOGLE_CLASSROOM',
+  });
 });

@@ -28,11 +28,11 @@ export function onEditCollection(
     });
 
   if (request.title != null) {
-    AnalyticsFactory.getInstance().trackCollectionRenamed(request);
+    AnalyticsFactory.mixpanel().trackCollectionRenamed(request);
   }
 
   if (request.isPublic != null) {
-    AnalyticsFactory.getInstance().trackCollectionVisiblityChange(request);
+    AnalyticsFactory.mixpanel().trackCollectionVisiblityChange(request);
   }
 }
 

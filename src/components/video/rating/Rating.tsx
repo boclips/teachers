@@ -82,7 +82,7 @@ export default class Rating extends React.Component<RatingProps, State> {
 
   private openModal = () => {
     this.setState({ visible: true });
-    AnalyticsFactory.getInstance().trackVideoRatingModalOpened();
+    AnalyticsFactory.mixpanel().trackVideoRatingModalOpened();
   };
 
   private closeModal = () => {

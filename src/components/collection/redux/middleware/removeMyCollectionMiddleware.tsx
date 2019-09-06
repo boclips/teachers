@@ -30,7 +30,7 @@ export function onDeleteCollection(
     .catch(() => {
       NotificationFactory.error({ message: 'Error deleting collection.' });
     });
-  AnalyticsFactory.getInstance().trackCollectionRemoved(request);
+  AnalyticsFactory.mixpanel().trackCollectionRemoved(request);
 }
 
 export default sideEffect(deleteCollectionAction, onDeleteCollection);

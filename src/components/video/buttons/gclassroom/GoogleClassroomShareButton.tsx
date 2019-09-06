@@ -31,10 +31,13 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
     } else {
       urlToVideo = baseUrlToVideo;
     }
-    AnalyticsFactory.getInstance().trackVideoSharedInGoogle(
+    AnalyticsFactory.mixpanel().trackVideoSharedInGoogle(
       this.props.video,
       this.props.segment,
     );
+    AnalyticsFactory.boclips()
+      .trackVideoSharedInGoogle(this.props.video)
+      .catch(console.error);
     const url: string = new GoogleClassroomUrlBuilder()
       .setTitle(this.props.video.title)
       .setVideoUrl(urlToVideo)

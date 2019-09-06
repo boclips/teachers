@@ -7,6 +7,7 @@ export interface VideoLinks {
   transcript?: Link;
   rate?: Link;
   tag?: Link;
+  logInteraction?: Link;
 }
 
 export interface VideoId {

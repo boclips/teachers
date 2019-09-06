@@ -22,7 +22,7 @@ export function onAddToCollection(
       );
     })
     .catch(console.error);
-  AnalyticsFactory.getInstance().trackVideoAddedToCollection(
+  AnalyticsFactory.mixpanel().trackVideoAddedToCollection(
     request.video,
     request.collection,
   );

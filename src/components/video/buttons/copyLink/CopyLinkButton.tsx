@@ -21,7 +21,7 @@ interface StateProps {
 
 class CopyLinkButton extends React.PureComponent<OwnProps & StateProps> {
   private showCopiedNotification = () => {
-    AnalyticsFactory.getInstance().trackVideoLinkCopied(
+    AnalyticsFactory.mixpanel().trackVideoLinkCopied(
       this.props.video,
       this.props.segment,
     );

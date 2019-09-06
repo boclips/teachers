@@ -23,7 +23,7 @@ export function onCreateCollection(
     .catch(() => {
       NotificationFactory.error({ message: 'Error creating collection.' });
     });
-  AnalyticsFactory.getInstance().trackCollectionCreated(request);
+  AnalyticsFactory.mixpanel().trackCollectionCreated(request);
 }
 
 export default sideEffect(createCollectionAction, onCreateCollection);

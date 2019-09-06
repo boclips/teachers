@@ -1,13 +1,18 @@
 import { Constants } from '../../app/AppConstants';
-import { initializeMixpanel } from './initializeMixpanel';
-import MixpanelAnalytics from './MixpanelAnalytics';
+import boclipsAnalytics, { BoclipsAnalytics } from './boclips/BoclipsAnalytics';
+import { initializeMixpanel } from './mixpanel/initializeMixpanel';
+import MixpanelAnalytics from './mixpanel/MixpanelAnalytics';
 
 const mixpanelAnalytics = new MixpanelAnalytics(
   initializeMixpanel(Constants.ENVIRONMENT),
 );
 
 export default class AnalyticsFactory {
-  public static getInstance() {
+  public static mixpanel(): MixpanelAnalytics {
     return mixpanelAnalytics;
+  }
+
+  public static boclips(): BoclipsAnalytics {
+    return boclipsAnalytics;
   }
 }

@@ -34,7 +34,7 @@ export class LessonPlan extends React.PureComponent<Props> {
   }
 
   private emitLessonPlanClickEvent = () => {
-    AnalyticsFactory.getInstance().trackCollectionAttachmentLinkVisited(
+    AnalyticsFactory.mixpanel().trackCollectionAttachmentLinkVisited(
       this.props.collectionId,
       this.props.attachment,
     );

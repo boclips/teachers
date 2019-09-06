@@ -25,7 +25,7 @@ export class AccountMenuContainer extends PureComponent {
     confirm({
       title: 'Are you sure you want to log out?',
       onOk() {
-        AnalyticsFactory.getInstance().reset();
+        AnalyticsFactory.mixpanel().reset();
         BoclipsSecurity.getInstance().logout({
           redirectUri: `${window.location.origin}/bye`,
         });

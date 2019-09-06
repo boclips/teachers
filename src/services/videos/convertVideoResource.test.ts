@@ -33,6 +33,7 @@ test('converts a video with stream playback', () => {
   expect(video.bestFor).toEqual('Hook');
   expect(video.links.rate.getOriginalLink()).toBeTruthy();
   expect(video.links.tag.getOriginalLink()).toBeTruthy();
+  expect(video.links.logInteraction.getOriginalLink()).toBeTruthy();
 });
 
 test('converts a video with youtube playback', () => {

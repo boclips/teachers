@@ -10,7 +10,7 @@ import { LessonPlan } from './LessonPlan';
 
 jest.mock('../../../services/analytics/AnalyticsFactory');
 
-AnalyticsFactory.getInstance = jest.fn(() => analyticsMock);
+AnalyticsFactory.mixpanel = jest.fn(() => analyticsMock);
 
 it('will render a lesson plan container', () => {
   const attachment: Attachment = AttachmentFactory.sample();
