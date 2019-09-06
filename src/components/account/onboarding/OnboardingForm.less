@@ -3,15 +3,10 @@
 
 .onboarding-form__ {
 
-  &slide {
-
-    &__invisible {
+  &slide__invisible {
       visibility: hidden;
-    }
-
   }
   &title {
-    margin-bottom: 40px;
     animation: slide-in 0.5s 0s both;
     font-size: 24px;
     line-height: 28px;
@@ -56,16 +51,33 @@
   }
 
   &submit {
-    //animation: slide-in 0.5s 0.8s both;
     float: right;
-    width: 151px;
     margin-top: 47px;
+    width: 151px;
+
+    @media (max-width: @screen-sm-max) {
+      width: 139px;
+    }
   }
+
   &next {
-    //animation: slide-in 0.5s 0.8s both;
     float: right;
-    width: 151px;
     margin-top: 47px;
+    width: 151px;
+
+    @media (max-width: @screen-sm-max) {
+      width: 139px;
+    }
+  }
+
+  &back {
+    float: left;
+    margin-top: 47px;
+    width: 151px;
+
+    @media (max-width: @screen-sm-max) {
+      width: 139px;
+    }
   }
 
   &existing {
@@ -77,11 +89,6 @@
   }
 
 
-  &back {
-    width: 151px;
-    float: left;
-    margin-top: 47px;
-  }
 
   &inline-item.ant-row.ant-form-item {
     margin-bottom: 0;
@@ -125,7 +132,6 @@
 
 .name-form__ {
   &first-name {
-    margin: 0 4px;
     width: 290px;
 
     @media (max-width: @screen-sm-max) {
@@ -134,11 +140,10 @@
   }
 
   &last-name {
-    margin: 0 4px;
     width: 290px;
 
     @media (max-width: @screen-sm-max) {
-      width: 100%
+      width: 100%;
     }
   }
 }
