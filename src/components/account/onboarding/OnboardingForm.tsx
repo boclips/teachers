@@ -52,6 +52,7 @@ interface InternalState {
   imageCarousel: Carousel;
   numberOfSlides: number;
   visitedIndices: Set<number>;
+  invisibleSlides: boolean[];
 }
 
 interface DispatchProps {
@@ -74,6 +75,7 @@ class OnboardingForm extends React.Component<
     imageCarousel: null,
     numberOfSlides: 0,
     visitedIndices: new Set(),
+    invisibleSlides: [false, true, true, true],
   };
 
   public componentDidMount() {
@@ -93,6 +95,21 @@ class OnboardingForm extends React.Component<
   public render() {
     return this.renderForm();
   }
+
+  private beforeSlideChange = (prev, next) => {
+    const invisibleSlides = [true, true, true, true];
+    invisibleSlides[prev] = false;
+    invisibleSlides[next] = false;
+
+    this.setState({ ...this.state, invisibleSlides });
+  };
+
+  private afterSlideChange = curr => {
+    const invisibleSlides = [true, true, true, true];
+    invisibleSlides[curr] = false;
+
+    this.setState({ ...this.state, invisibleSlides });
+  };
 
   public renderForm() {
     return (
@@ -129,8 +146,17 @@ class OnboardingForm extends React.Component<
                   infinite={false}
                   asNavFor={this.state.imageCarousel}
                   dots={false}
+                  swipe={false}
+                  beforeChange={this.beforeSlideChange}
+                  afterChange={this.afterSlideChange}
                 >
-                  <section>
+                  <section
+                    className={
+                      this.state.invisibleSlides[0]
+                        ? 'onboarding-form__slide__invisible'
+                        : ''
+                    }
+                  >
                     <h1 className="alt onboarding-form__title big-title">
                       Hello
                     </h1>
@@ -145,7 +171,13 @@ class OnboardingForm extends React.Component<
                       Required field
                     </p>
                   </section>
-                  <section>
+                  <section
+                    className={
+                      this.state.invisibleSlides[1]
+                        ? 'onboarding-form__slide__invisible'
+                        : ''
+                    }
+                  >
                     <h1 className="alt onboarding-form__title big-title">
                       Your students
                     </h1>
@@ -166,7 +198,13 @@ class OnboardingForm extends React.Component<
                       ageRanges={this.props.ageRanges}
                     />
                   </section>
-                  <section>
+                  <section
+                    className={
+                      this.state.invisibleSlides[2]
+                        ? 'onboarding-form__slide__invisible'
+                        : ''
+                    }
+                  >
                     <h1 className="alt onboarding-form__title big-title">
                       Your school
                     </h1>
@@ -181,7 +219,13 @@ class OnboardingForm extends React.Component<
                       placeholder="Choose country"
                     />
                   </section>
-                  <section>
+                  <section
+                    className={
+                      this.state.invisibleSlides[3]
+                        ? 'onboarding-form__slide__invisible'
+                        : ''
+                    }
+                  >
                     <h1 className="alt onboarding-form__title big-title">
                       Almost there!
                     </h1>
@@ -218,9 +262,7 @@ class OnboardingForm extends React.Component<
                   className="onboarding-form__submit"
                   size="large"
                   type="primary"
-                  htmlType="submit"
-                  disabled={this.state.updating}
-                  loading={this.state.updating}
+                  onClick={this.handleSubmit}
                 >
                   Finish
                 </Button>
@@ -243,7 +285,7 @@ class OnboardingForm extends React.Component<
   }
 
   private isLastSlide = () =>
-    this.state.currentIndex === this.state.numberOfSlides;
+    this.state.currentIndex === this.state.numberOfSlides - 1;
 
   private isFirstSlide = () => this.state.currentIndex === 0;
 
@@ -283,12 +325,7 @@ class OnboardingForm extends React.Component<
     );
   };
 
-  private handleSubmit = e => {
-    e.preventDefault();
-    if (e.stopPropagation) {
-      e.stopPropagation();
-    }
-
+  private handleSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const registrationContext: RegistrationContext = RegistrationContextService.retrieve();

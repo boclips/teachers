@@ -1,4 +1,4 @@
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -9,7 +9,6 @@ import {
   UserProfileFactory,
 } from '../../../../test-support/factories';
 import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
-import Mock = jest.Mock;
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import updateUser from '../../../services/users/updateUser';
@@ -17,6 +16,7 @@ import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
+import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 
@@ -155,7 +155,7 @@ describe('onboarding form', () => {
   });
 
   it('sends a page changed event if page has not already been visited', () => {
-    fillValidForm(wrapper);
+    OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
 
     OnboardingFormHelper.forwardCarouselPage(wrapper);
 
@@ -163,7 +163,7 @@ describe('onboarding form', () => {
   });
 
   it('does not send page changed event if page has already been visited', () => {
-    fillValidForm(wrapper);
+    OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
 
     OnboardingFormHelper.forwardCarouselPage(wrapper);
     OnboardingFormHelper.backCarouselPage(wrapper);
@@ -173,11 +173,14 @@ describe('onboarding form', () => {
   });
 });
 
-function fillValidForm(wrapper) {
+function fillValidForm(wrapper: ReactWrapper) {
   OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
+  OnboardingFormHelper.forwardCarouselPage(wrapper);
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
-  OnboardingFormHelper.editCountry(wrapper, 'ES');
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
+  OnboardingFormHelper.forwardCarouselPage(wrapper);
+  OnboardingFormHelper.editCountry(wrapper, 'ES');
+  OnboardingFormHelper.forwardCarouselPage(wrapper);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);
   OnboardingFormHelper.setTermsAndConditions(wrapper, true);
 }
