@@ -11,6 +11,10 @@ export default abstract class AbstractBoclipsAnalytics
     return this.logInteraction(video, 'VIDEO_LINK_COPIED');
   }
 
+  public trackVideoLinkClicked(video: Video): Promise<void> {
+    return this.logInteraction(video, 'NAVIGATE_TO_VIDEO_DETAILS');
+  }
+
   public abstract logInteraction(
     video: Video,
     interactionType: string,
