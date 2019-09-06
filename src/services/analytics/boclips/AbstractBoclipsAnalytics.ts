@@ -7,6 +7,10 @@ export default abstract class AbstractBoclipsAnalytics
     return this.logInteraction(video, 'VIDEO_SHARED_TO_GOOGLE_CLASSROOM');
   }
 
+  public trackVideoLinkCopied(video: Video): Promise<void> {
+    return this.logInteraction(video, 'VIDEO_LINK_COPIED');
+  }
+
   public abstract logInteraction(
     video: Video,
     interactionType: string,
