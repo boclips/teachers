@@ -19,22 +19,29 @@ interface State {
 class SubjectMenuComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
     this.state = {
       dropdownVisible: false,
     };
   }
+
+  private setActive = visible => {
+    this.setState({ dropdownVisible: visible });
+    console.log(`setting to visible: ${this.state.dropdownVisible}`);
+  };
+
   public render() {
     return (
       <div className="display-desktop">
         <Dropdown
           overlay={this.props.disciplines && this.renderMenu()}
-          trigger={['hover', 'click']}
+          trigger={['click']}
           overlayClassName="subject-menu__dropdown"
           placement="bottomCenter"
+          onVisibleChange={this.setActive}
         >
           <DropdownMenuIconComponent
             dataQa={'subjects-menu-open'}
+            active={this.state.dropdownVisible}
             icon={
               <MySubjectSVG
                 className="account-menu-icon ant-dropdown-link"

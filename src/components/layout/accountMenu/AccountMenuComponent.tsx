@@ -13,44 +13,63 @@ interface Props {
   onLogout: (e: SyntheticEvent) => void;
 }
 
-const menu = (props: Props) => (
-  <Menu className="account-menu account-menu--desktop">
-    <Menu.Item key="1">
-      <UserCollectionsLink />
-    </Menu.Item>
-    <Menu.Item key="2">
-      <BookmarkedCollectionsLink />
-    </Menu.Item>
-    <Menu.Item key="3">
-      <ReferAFriendLink />
-    </Menu.Item>
-    <Menu.Item key="4">
-      <LogoutLink onClick={props.onLogout} />
-    </Menu.Item>
-  </Menu>
-);
+interface State {
+  visible: boolean;
+}
+class AccountMenuComponent extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      visible: false,
+    };
+  }
 
-const AccountMenuComponent = React.memo((props: Props) => (
-  <div className="display-desktop">
-    <Dropdown
-      overlay={menu(props)}
-      trigger={['hover', 'click']}
-      placement="bottomRight"
-    >
-      <DropdownMenuIconComponent
-        dataQa={'account-menu-open'}
-        icon={
-          <MyAccountSVG
-            className="account-menu-icon ant-dropdown-link"
-            tabIndex={0}
-            aria-haspopup="true"
-            aria-hidden="true"
+  private setVisible = visible => {
+    this.setState({ visible });
+  };
+
+  private renderMenu = (): React.ReactFragment => (
+    <Menu className="account-menu account-menu--desktop">
+      <Menu.Item key="1">
+        <UserCollectionsLink />
+      </Menu.Item>
+      <Menu.Item key="2">
+        <BookmarkedCollectionsLink />
+      </Menu.Item>
+      <Menu.Item key="3">
+        <ReferAFriendLink />
+      </Menu.Item>
+      <Menu.Item key="4">
+        <LogoutLink onClick={this.props.onLogout} />
+      </Menu.Item>
+    </Menu>
+  );
+
+  public render() {
+    return (
+      <div className="display-desktop">
+        <Dropdown
+          overlay={this.renderMenu}
+          trigger={['click']}
+          placement="bottomRight"
+          onVisibleChange={this.setVisible}
+        >
+          <DropdownMenuIconComponent
+            dataQa={'account-menu-open'}
+            active={this.state.visible}
+            icon={
+              <MyAccountSVG
+                className="account-menu-icon ant-dropdown-link"
+                tabIndex={0}
+                aria-haspopup="true"
+                aria-hidden="true"
+              />
+            }
+            label={'Your account'}
           />
-        }
-        label={'Your account'}
-      />
-    </Dropdown>
-  </div>
-));
-
+        </Dropdown>
+      </div>
+    );
+  }
+}
 export default AccountMenuComponent;
