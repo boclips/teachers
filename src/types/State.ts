@@ -8,6 +8,7 @@ import { Links } from './Links';
 import PageSpec from './PageSpec';
 import { Subject } from './Subject';
 import { Tag } from './Tag';
+import { UsaState } from './UsaState';
 import { Video } from './Video';
 import { VideoCollection } from './VideoCollection';
 
@@ -80,6 +81,10 @@ export interface CountryState {
   countries: Country[];
 }
 
+export interface UsaStatesState {
+  states: UsaState[];
+}
+
 export interface TagState {
   tags: Tag[];
 }
@@ -138,6 +143,7 @@ export default interface State
     CollectionState,
     SubjectState,
     CountryState,
+    UsaStatesState,
     TagState,
     DisciplineState,
     AgeRangeState,

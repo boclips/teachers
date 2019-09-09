@@ -72,9 +72,10 @@ describe('onboarding form', () => {
   });
 
   describe('when USA', () => {
-    it('renders school input but not state', () => {
+    it('renders school and state', () => {
       OnboardingFormHelper.editCountry(wrapper, 'USA');
 
+      expect(wrapper.find(By.dataQa('states-filter-select'))).toExist();
       expect(wrapper.find(By.dataQa('school-name'))).not.toExist();
     });
   });
@@ -84,6 +85,7 @@ describe('onboarding form', () => {
       OnboardingFormHelper.editCountry(wrapper, 'ES');
 
       expect(wrapper.find(By.dataQa('school'))).toExist();
+      expect(wrapper.find(By.dataQa('states-filter-select'))).not.toExist();
     });
   });
 

@@ -14,15 +14,18 @@ import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
+import { UsaState } from '../../../types/UsaState';
 import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
 import { fetchCountriesAction } from '../createAccount/redux/actions/fetchCountriesAction';
+import { fetchStatesAction } from '../createAccount/redux/actions/fetchStatesAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';
 import { CountriesForm } from '../form/CountriesForm';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
 import { NameForm } from '../form/NameForm';
 import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
 import { SchoolForm } from '../form/SchoolForm';
+import { StatesForm } from '../form/StatesForm';
 import { SubjectsForm } from '../form/SubjectsForm';
 import SvgStep2 from './dwarf-with-pencil.svg';
 import './OnboardingForm.less';
@@ -42,6 +45,7 @@ interface OnboardingProps {
   links: Links;
   subjects: Subject[];
   countries: Country[];
+  states: UsaState[];
   ageRanges: AgeRange[];
   userProfile: UserProfile;
 }
@@ -55,11 +59,13 @@ interface InternalState {
   visitedIndices: Set<number>;
   invisibleSlides: boolean[];
   country?: Country;
+  state?: UsaState;
 }
 
 interface DispatchProps {
   fetchSubjects: () => void;
   fetchCountries: () => void;
+  fetchStates: (country: Country) => void;
   goToHomepage: () => void;
 }
 
@@ -79,6 +85,7 @@ class OnboardingForm extends React.Component<
     visitedIndices: new Set(),
     invisibleSlides: [false, true, true, true],
     country: null,
+    state: null,
   };
 
   public componentDidMount() {
@@ -222,18 +229,27 @@ class OnboardingForm extends React.Component<
                       placeholder="Choose country"
                       onCountryChange={this.onCountryChange}
                     />
-                    {this.state.country && this.state.country.id !== 'USA' ? (
-                      <section data-qa="non-usa-school-details">
-                        <SchoolForm
-                          form={this.props.form}
-                          country={this.state.country}
-                          placeholder="Enter the name of your school"
-                          label="School"
-                        />
-                      </section>
-                    ) : (
-                      <section data-qa="usa-school-details" />
-                    )}
+                    {this.state.country &&
+                      (this.state.country.id === 'USA' ? (
+                        <section data-qa="usa-school-details">
+                          <StatesForm
+                            label="Your state"
+                            form={this.props.form}
+                            states={this.props.states}
+                            placeholder="Choose state"
+                            onCountryChange={this.onStateChange}
+                          />
+                        </section>
+                      ) : (
+                        <section data-qa="non-usa-school-details">
+                          <SchoolForm
+                            form={this.props.form}
+                            country={this.state.country}
+                            placeholder="Enter the name of your school"
+                            label="School"
+                          />
+                        </section>
+                      ))}
                   </section>
                   <section
                     className={
@@ -341,8 +357,16 @@ class OnboardingForm extends React.Component<
     );
   };
 
-  private onCountryChange = country =>
-    this.setState({ ...this.state, country });
+  private onCountryChange = country => {
+    if (country.id === 'USA') {
+      this.props.fetchStates(country);
+    }
+    return this.setState({ ...this.state, country });
+  };
+
+  private onStateChange = state => {
+    return this.setState({ ...this.state, state });
+  };
 
   private handleSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -394,6 +418,7 @@ function mapStateToProps(state: State): OnboardingProps {
     links: state.links,
     subjects: state.subjects,
     countries: state.countries,
+    states: state.states,
     ageRanges: state.ageRanges,
     userProfile: state.user,
   };
@@ -403,6 +428,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchSubjects: () => dispatch(fetchSubjectsAction()),
     fetchCountries: () => dispatch(fetchCountriesAction()),
+    fetchStates: (country: Country) => dispatch(fetchStatesAction(country)),
     goToHomepage: () => dispatch(push('/')),
   };
 }
