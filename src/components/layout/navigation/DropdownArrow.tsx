@@ -8,8 +8,7 @@ interface Props {
 
 class DropdownArrow extends React.PureComponent<Props> {
   public render() {
-    console.log(`rendering arrow active: ${this.props.active}`);
-    return this.props.active ? <DownArrowSvg /> : <UpArrowSvg />;
+    return this.props.active ? <UpArrowSvg /> : <DownArrowSvg />;
   }
 }
 
