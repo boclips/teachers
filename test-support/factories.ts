@@ -12,6 +12,7 @@ import { Country } from '../src/types/Country';
 import { Discipline } from '../src/types/Discipline';
 import { Link } from '../src/types/Link';
 import { Links } from '../src/types/Links';
+import { School } from '../src/types/School';
 import State, {
   CollectionSearchStateValue,
   CollectionsStateValue,
@@ -334,10 +335,38 @@ export class CountriesFactory {
       {
         id: 'country-one-id',
         name: 'country one',
+        links: { schools: new Link({ href: '' }) },
       },
       {
         id: 'country-two-id',
         name: 'country two',
+        links: { schools: new Link({ href: '' }) },
+      },
+      ...arg,
+    ];
+  }
+}
+
+export class CountryFactory {
+  public static sample(arg: Partial<Country> = {}): Country {
+    return Object.freeze({
+      id: arg.id || 'id',
+      name: arg.name || 'name',
+      links: arg.links || { schools: new Link({ href: '' }) },
+    });
+  }
+}
+
+export class SchoolsFactory {
+  public static sample(arg: School[] = []): School[] {
+    return [
+      {
+        id: 'school-one-id',
+        name: 'school one',
+      },
+      {
+        id: 'school-two-id',
+        name: 'school two',
       },
       ...arg,
     ];

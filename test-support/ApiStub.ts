@@ -4,6 +4,7 @@ import {
   countriesResponse,
   disciplinesResponse,
   links,
+  schoolsResponse,
   subjectsResponse,
   tagsResponse,
   userResponse,
@@ -91,6 +92,14 @@ export default class ApiStub {
     MockFetchVerify.get(
       `${this.prefix}/v1/countries`,
       JSON.stringify(countriesResponse()),
+    );
+    return this;
+  }
+
+  public fetchSchools(countryCode = 'ES', query = 'school') {
+    MockFetchVerify.get(
+      `${this.prefix}/v1/schools?countryCode=${countryCode}&query=${query}`,
+      JSON.stringify(schoolsResponse()),
     );
     return this;
   }

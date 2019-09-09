@@ -5,6 +5,7 @@ import EventSimulator from '../../../../test-support/EventSimulator';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { CountriesForm } from '../form/CountriesForm';
+import { SchoolForm } from '../form/SchoolForm';
 
 export class OnboardingFormHelper {
   public static editName(wrapper, firstName: string, lastName: string) {
@@ -50,6 +51,24 @@ export class OnboardingFormHelper {
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 
     menuItems.find(`[value="${countryId}"]`).simulate('click');
+
+    wrapper.find(SelectSubjects).simulate('click');
+  }
+
+  public static enterSchool(wrapper: ReactWrapper, schoolName: string) {
+    const events = new EventSimulator(wrapper);
+    events.setText(schoolName, wrapper.find(By.dataQa('school')).find('input'));
+  }
+
+  public static selectSchool(wrapper: ReactWrapper, schoolId: string) {
+    wrapper
+      .find(SchoolForm)
+      .find(Select)
+      .simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
+
+    menuItems.find(`[value="${schoolId}"]`).simulate('click');
 
     wrapper.find(SelectSubjects).simulate('click');
   }

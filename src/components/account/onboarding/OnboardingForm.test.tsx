@@ -2,7 +2,10 @@ import { mount, ReactWrapper } from 'enzyme';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
+import Mock = jest.Mock;
+import { By } from '../../../../test-support/By';
 import {
+  CountryFactory,
   LinksFactory,
   MockStoreFactory,
   SubjectFactory,
@@ -16,7 +19,6 @@ import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
-import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 
@@ -40,8 +42,9 @@ describe('onboarding form', () => {
             SubjectFactory.sample({ id: '2', name: 's2' }),
           ],
           countries: [
-            SubjectFactory.sample({ id: 'ES', name: 'Spain' }),
-            SubjectFactory.sample({ id: 'EU', name: 'England' }),
+            CountryFactory.sample({ id: 'ES', name: 'Spain' }),
+            CountryFactory.sample({ id: 'EU', name: 'England' }),
+            CountryFactory.sample({ id: 'USA', name: 'Trumpity Trump' }),
           ],
           links,
         })}
@@ -64,6 +67,23 @@ describe('onboarding form', () => {
       ages: [3, 4, 5],
       country: 'ES',
       hasOptedIntoMarketing: true,
+      school: { name: 'school', id: null },
+    });
+  });
+
+  describe('when USA', () => {
+    it('renders school input but not state', () => {
+      OnboardingFormHelper.editCountry(wrapper, 'USA');
+
+      expect(wrapper.find(By.dataQa('school-name'))).not.toExist();
+    });
+  });
+
+  describe('when not USA', () => {
+    it('renders school input', () => {
+      OnboardingFormHelper.editCountry(wrapper, 'ES');
+
+      expect(wrapper.find(By.dataQa('school'))).toExist();
     });
   });
 
@@ -90,6 +110,7 @@ describe('onboarding form', () => {
       subjects: ['1'],
       ages: [3, 4, 5],
       country: 'ES',
+      school: { name: 'school', id: null },
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
       utm: {
@@ -119,6 +140,7 @@ describe('onboarding form', () => {
       subjects: ['1'],
       ages: [3, 4, 5],
       country: 'ES',
+      school: { name: 'school', id: null },
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
     });
@@ -180,6 +202,7 @@ function fillValidForm(wrapper: ReactWrapper) {
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
   OnboardingFormHelper.forwardCarouselPage(wrapper);
   OnboardingFormHelper.editCountry(wrapper, 'ES');
+  OnboardingFormHelper.enterSchool(wrapper, 'school');
   OnboardingFormHelper.forwardCarouselPage(wrapper);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);
   OnboardingFormHelper.setTermsAndConditions(wrapper, true);

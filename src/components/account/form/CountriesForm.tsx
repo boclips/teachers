@@ -9,13 +9,15 @@ interface CountriesFormProps {
   placeholder: string;
   label?: string;
   initialValue?: string;
+  onCountryChange?: (value: Country) => void;
 }
 
 export class CountriesForm extends React.Component<
   FormComponentProps & CountriesFormProps
 > {
-  public onUpdateCountry = (value: string[]) => {
+  public onUpdateCountry = (value: string) => {
     this.props.form.setFieldsValue({ country: value });
+    this.props.onCountryChange(this.props.countries.find(c => c.id === value));
   };
 
   public render() {

@@ -18,7 +18,10 @@ test('fetch all countries', async () => {
 
   const countries = await fetchCountries(links);
 
-  expect(countries).toHaveLength(3);
+  expect(countries).toHaveLength(4);
   expect(countries[0].id).toEqual('ES');
   expect(countries[0].name).toEqual('Spain');
+  expect(countries[0].links.schools.getOriginalLink()).toEqual(
+    'https://api.example.com/v1/schools?countryCode=ES{&query,state}',
+  );
 });

@@ -310,14 +310,62 @@ export function countriesResponse() {
         {
           id: 'ES',
           name: 'Spain',
+          _links: {
+            schools: {
+              href: `${prefix}/v1/schools?countryCode=ES{&query,state}`,
+              templated: true,
+            },
+          },
         },
         {
           id: 'PL',
           name: 'Poland',
+          _links: {
+            schools: {
+              href: `${prefix}/v1/schools?countryCode=PL{&query,state}`,
+              templated: true,
+            },
+          },
         },
         {
           id: 'GH',
           name: 'Ghana',
+          _links: {
+            schools: {
+              href: `${prefix}/v1/schools?countryCode=GH{&query,state}`,
+              templated: true,
+            },
+          },
+        },
+        {
+          id: 'USA',
+          name: 'United States of America',
+          _links: {
+            schools: {
+              href: `${prefix}/v1/schools?countryCode=USA{&query,state}`,
+              templated: true,
+            },
+            states: {
+              href: `${prefix}/v1/countries/USA/states`,
+            },
+          },
+        },
+      ],
+    },
+  };
+}
+
+export function schoolsResponse() {
+  return {
+    _embedded: {
+      schools: [
+        {
+          id: 'S1',
+          name: 'One school',
+        },
+        {
+          id: 'S2',
+          name: 'Another school',
         },
       ],
     },

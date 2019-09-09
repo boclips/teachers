@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Country } from '../../types/Country';
+import { Link } from '../../types/Link';
 import { Links } from '../../types/Links';
 
 export function fetchCountries(links: Links): Promise<Country[]> {
@@ -9,8 +10,12 @@ export function fetchCountries(links: Links): Promise<Country[]> {
     .then(convertCountriesResource);
 }
 
-function convertCountriesResource(data: any) {
+function convertCountriesResource(data: any): Country[] {
   return data._embedded.countries.map(rawCountry => {
-    return { id: rawCountry.id, name: rawCountry.name };
+    return {
+      id: rawCountry.id,
+      name: rawCountry.name,
+      links: { schools: new Link(rawCountry._links.schools) },
+    };
   });
 }

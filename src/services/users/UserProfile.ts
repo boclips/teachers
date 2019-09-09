@@ -1,4 +1,5 @@
 import { Link } from '../../types/Link';
+import { School } from '../../types/School';
 import Utm from '../account/Utm';
 
 export interface UserProfile {
@@ -13,6 +14,7 @@ export interface UserProfile {
   hasOptedIntoMarketing?: boolean;
   referralCode?: string;
   utm?: Utm;
+  school?: School;
   links: UserProfileLinks;
 }
 

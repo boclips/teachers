@@ -22,6 +22,7 @@ import { CountriesForm } from '../form/CountriesForm';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
 import { NameForm } from '../form/NameForm';
 import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
+import { SchoolForm } from '../form/SchoolForm';
 import { SubjectsForm } from '../form/SubjectsForm';
 import SvgStep2 from './dwarf-with-pencil.svg';
 import './OnboardingForm.less';
@@ -33,7 +34,7 @@ import SvgStep1 from './teachers-waving.svg';
 const validationFields = [
   ['firstName', 'lastName'],
   ['ageRange', 'subjects'],
-  ['country'],
+  ['country', 'school'],
   ['hasOptedIntoMarketing', 'privacyPolicy'],
 ];
 
@@ -53,6 +54,7 @@ interface InternalState {
   numberOfSlides: number;
   visitedIndices: Set<number>;
   invisibleSlides: boolean[];
+  country?: Country;
 }
 
 interface DispatchProps {
@@ -76,6 +78,7 @@ class OnboardingForm extends React.Component<
     numberOfSlides: 0,
     visitedIndices: new Set(),
     invisibleSlides: [false, true, true, true],
+    country: null,
   };
 
   public componentDidMount() {
@@ -217,7 +220,20 @@ class OnboardingForm extends React.Component<
                       form={this.props.form}
                       countries={this.props.countries}
                       placeholder="Choose country"
+                      onCountryChange={this.onCountryChange}
                     />
+                    {this.state.country && this.state.country.id !== 'USA' ? (
+                      <section data-qa="non-usa-school-details">
+                        <SchoolForm
+                          form={this.props.form}
+                          country={this.state.country}
+                          placeholder="Enter the name of your school"
+                          label="School"
+                        />
+                      </section>
+                    ) : (
+                      <section data-qa="usa-school-details" />
+                    )}
                   </section>
                   <section
                     className={
@@ -325,6 +341,9 @@ class OnboardingForm extends React.Component<
     );
   };
 
+  private onCountryChange = country =>
+    this.setState({ ...this.state, country });
+
   private handleSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -338,6 +357,10 @@ class OnboardingForm extends React.Component<
           ages: values.ageRange,
           subjects: values.subjects,
           country: values.country,
+          school: {
+            name: values.school,
+            id: null,
+          },
           hasOptedIntoMarketing: values.hasOptedIntoMarketing,
           referralCode: registrationContext && registrationContext.referralCode,
           utm: registrationContext && registrationContext.utm,

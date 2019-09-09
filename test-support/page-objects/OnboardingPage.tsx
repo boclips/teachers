@@ -60,6 +60,10 @@ export class OnboardingPage {
     OnboardingFormHelper.editCountry(this.wrapper, countryId);
   }
 
+  public enterSchool(schoolName: string) {
+    OnboardingFormHelper.enterSchool(this.wrapper, schoolName);
+  }
+
   public setMarketingOptIn(optIn: boolean) {
     OnboardingFormHelper.setMarketingOptIn(this.wrapper, optIn);
   }

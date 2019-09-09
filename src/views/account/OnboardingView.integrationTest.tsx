@@ -29,6 +29,7 @@ describe('When user is not activated', () => {
       },
     })
       .fetchUser(userResponse('user-id'))
+      .fetchSchools('ES', 'school')
       .fetchPublicCollections()
       .fetchVideo()
       .fetchSubjects();
@@ -38,6 +39,7 @@ describe('When user is not activated', () => {
     onboardingPage.setName('Rebecca', 'Sanchez');
     onboardingPage.setSubjects(['1', '3']);
     onboardingPage.setCountry('ES');
+    onboardingPage.enterSchool('school');
     onboardingPage.setAgeRanges(['3-5']);
     onboardingPage.setMarketingOptIn(true);
     onboardingPage.setAgreeTerms(true);
@@ -54,6 +56,8 @@ describe('When user is not activated', () => {
         country: 'ES',
         ages: [3, 4, 5],
         hasOptedIntoMarketing: true,
+        schoolName: 'school',
+        schoolId: null,
       });
     });
 

@@ -1,8 +1,11 @@
+import { CountryFactory } from '../../../../../../test-support/factories';
 import { fetchedCountriesAction } from '../actions/fetchedCountriesAction';
 import { countriesReducer } from './countriesReducer';
 
-test('reduces subjects', () => {
-  const action = fetchedCountriesAction([{ id: '1', name: 'French' }]);
+test('reduces countries', () => {
+  const action = fetchedCountriesAction([
+    CountryFactory.sample({ id: '1', name: 'French' }),
+  ]);
 
   const stateAfter = countriesReducer([], action);
 

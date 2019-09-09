@@ -13,6 +13,8 @@ export interface UpdateUserRequest {
   hasOptedIntoMarketing: boolean;
   referralCode: string;
   utm: Utm;
+  schoolName: String;
+  schoolId: String;
 }
 
 export default function updateUser(
@@ -32,6 +34,8 @@ export default function updateUser(
     hasOptedIntoMarketing: userProfile.hasOptedIntoMarketing,
     referralCode: userProfile.referralCode,
     utm: userProfile.utm,
+    schoolName: userProfile.school && userProfile.school.name,
+    schoolId: userProfile.school && userProfile.school.id,
   };
 
   return axios.put(links.profile.getOriginalLink(), request).then(() => {
