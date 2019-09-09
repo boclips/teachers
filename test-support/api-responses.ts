@@ -355,6 +355,23 @@ export function countriesResponse() {
   };
 }
 
+export function statesResponse() {
+  return {
+    _embedded: {
+      states: [
+        {
+          id: 'S1',
+          name: 'One state',
+        },
+        {
+          id: 'S2',
+          name: 'Another state',
+        },
+      ],
+    },
+  };
+}
+
 export function schoolsResponse() {
   return {
     _embedded: {
