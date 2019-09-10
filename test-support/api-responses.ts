@@ -340,6 +340,16 @@ export function countriesResponse() {
         {
           id: 'USA',
           name: 'United States of America',
+          states: [
+            {
+              id: 'state-1',
+              name: 'state 1',
+            },
+            {
+              id: 'state-2',
+              name: 'state 2',
+            },
+          ],
           _links: {
             schools: {
               href: `${prefix}/v1/schools?countryCode=USA{&query,state}`,

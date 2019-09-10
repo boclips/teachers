@@ -9,8 +9,8 @@ import {
   createStore,
   Reducer,
 } from 'redux';
-import fetchCountriesMiddleware from '../components/account/createAccount/redux/middleware/fetchCountriesMiddleware';
-import { countriesReducer } from '../components/account/createAccount/redux/reducers/countriesReducer';
+import fetchCountriesMiddleware from '../components/account/onboarding/redux/middleware/fetchCountriesMiddleware';
+import { countriesReducer } from '../components/account/onboarding/redux/reducers/countriesReducer';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';

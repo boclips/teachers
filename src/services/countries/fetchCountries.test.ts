@@ -24,4 +24,8 @@ test('fetch all countries', async () => {
   expect(countries[0].links.schools.getOriginalLink()).toEqual(
     'https://api.example.com/v1/schools?countryCode=ES{&query,state}',
   );
+  expect(countries[3].id).toEqual('USA');
+  expect(countries[3].states).toHaveLength(2);
+  expect(countries[3].states[0].id).toEqual('1');
+  expect(countries[3].states[0].name).toEqual('state 1');
 });

@@ -54,28 +54,30 @@ describe('onboarding form', () => {
     );
   });
 
-  it('sends all information with full form', () => {
-    fillValidForm(wrapper);
-
-    OnboardingFormHelper.save(wrapper);
-
-    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-      ...UserProfileFactory.sample(),
-      firstName: 'Rebecca',
-      lastName: 'Sanchez',
-      subjects: ['1'],
-      ages: [3, 4, 5],
-      country: 'ES',
-      hasOptedIntoMarketing: true,
-      school: { name: 'school', id: null },
-    });
-  });
-
   describe('when USA', () => {
-    it('renders school input but not state', () => {
+    it('renders school and state', () => {
       OnboardingFormHelper.editCountry(wrapper, 'USA');
 
+      expect(wrapper.find(By.dataQa('states-filter-select'))).toExist();
       expect(wrapper.find(By.dataQa('school-name'))).not.toExist();
+    });
+
+    it('sends all information with full form', () => {
+      fillValidForm(wrapper, 'USA');
+
+      OnboardingFormHelper.save(wrapper);
+
+      expect(mockUpdateUser).toHaveBeenCalledWith(links, {
+        ...UserProfileFactory.sample(),
+        firstName: 'Rebecca',
+        lastName: 'Sanchez',
+        subjects: ['1'],
+        ages: [3, 4, 5],
+        country: 'ES',
+        state: '1',
+        hasOptedIntoMarketing: true,
+        school: { name: 'school', id: null },
+      });
     });
   });
 
@@ -84,6 +86,24 @@ describe('onboarding form', () => {
       OnboardingFormHelper.editCountry(wrapper, 'ES');
 
       expect(wrapper.find(By.dataQa('school'))).toExist();
+      expect(wrapper.find(By.dataQa('states-filter-select'))).not.toExist();
+    });
+
+    it('sends all information with full form', () => {
+      fillValidForm(wrapper);
+
+      OnboardingFormHelper.save(wrapper);
+
+      expect(mockUpdateUser).toHaveBeenCalledWith(links, {
+        ...UserProfileFactory.sample(),
+        firstName: 'Rebecca',
+        lastName: 'Sanchez',
+        subjects: ['1'],
+        ages: [3, 4, 5],
+        country: 'ES',
+        hasOptedIntoMarketing: true,
+        school: { name: 'school', id: null },
+      });
     });
   });
 
@@ -195,14 +215,18 @@ describe('onboarding form', () => {
   });
 });
 
-function fillValidForm(wrapper: ReactWrapper) {
+function fillValidForm(wrapper: ReactWrapper, country = 'ES') {
   OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
   OnboardingFormHelper.forwardCarouselPage(wrapper);
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
   OnboardingFormHelper.forwardCarouselPage(wrapper);
-  OnboardingFormHelper.editCountry(wrapper, 'ES');
-  OnboardingFormHelper.enterSchool(wrapper, 'school');
+  OnboardingFormHelper.editCountry(wrapper, country);
+  if (country === 'USA') {
+    OnboardingFormHelper.editState(wrapper, 'state-1');
+  } else {
+    OnboardingFormHelper.enterSchool(wrapper, 'school');
+  }
   OnboardingFormHelper.forwardCarouselPage(wrapper);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);
   OnboardingFormHelper.setTermsAndConditions(wrapper, true);

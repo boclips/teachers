@@ -11,6 +11,7 @@ export interface UserProfile {
   subjects?: string;
   ages?: number[];
   country?: string;
+  state?: string;
   hasOptedIntoMarketing?: boolean;
   referralCode?: string;
   utm?: Utm;
