@@ -352,6 +352,7 @@ export class CountryFactory {
     return Object.freeze({
       id: arg.id || 'id',
       name: arg.name || 'name',
+      states: arg.states || undefined,
       links: arg.links || { schools: new Link({ href: '' }) },
     });
   }

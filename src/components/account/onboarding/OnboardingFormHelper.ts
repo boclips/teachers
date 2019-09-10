@@ -1,11 +1,8 @@
-import { Select } from 'antd';
 import { ReactWrapper } from 'enzyme';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
-import { CountriesForm } from '../form/CountriesForm';
-import { SchoolForm } from '../form/SchoolForm';
 
 export class OnboardingFormHelper {
   public static editName(wrapper, firstName: string, lastName: string) {
@@ -43,28 +40,35 @@ export class OnboardingFormHelper {
   }
 
   public static editCountry(wrapper: ReactWrapper, countryId: string) {
-    wrapper
-      .find(CountriesForm)
-      .find(Select)
-      .simulate('click');
+    wrapper.find(By.dataQa('countries-filter-select', 'div')).simulate('click');
 
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 
     menuItems.find(`[value="${countryId}"]`).simulate('click');
 
     wrapper.find(SelectSubjects).simulate('click');
+    wrapper.update();
+  }
+
+  public static editState(wrapper: ReactWrapper, stateId: string) {
+    wrapper.find(By.dataQa('states-filter-select', 'div')).simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
+
+    menuItems.find(`[value="${stateId}"]`).simulate('click');
+
+    wrapper.find(SelectSubjects).simulate('click');
+    wrapper.update();
   }
 
   public static enterSchool(wrapper: ReactWrapper, schoolName: string) {
     const events = new EventSimulator(wrapper);
     events.setText(schoolName, wrapper.find(By.dataQa('school')).find('input'));
+    wrapper.update();
   }
 
   public static selectSchool(wrapper: ReactWrapper, schoolId: string) {
-    wrapper
-      .find(SchoolForm)
-      .find(Select)
-      .simulate('click');
+    wrapper.find(By.dataQa('school', 'div')).simulate('click');
 
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 

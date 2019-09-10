@@ -15,6 +15,7 @@ function convertCountriesResource(data: any): Country[] {
     return {
       id: rawCountry.id,
       name: rawCountry.name,
+      states: rawCountry.states,
       links: { schools: new Link(rawCountry._links.schools) },
     };
   });
