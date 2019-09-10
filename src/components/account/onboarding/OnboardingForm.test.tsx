@@ -44,7 +44,11 @@ describe('onboarding form', () => {
           countries: [
             CountryFactory.sample({ id: 'ES', name: 'Spain' }),
             CountryFactory.sample({ id: 'EU', name: 'England' }),
-            CountryFactory.sample({ id: 'USA', name: 'Trumpity Trump' }),
+            CountryFactory.sample({
+              id: 'USA',
+              name: 'Trumpity Trump',
+              states: [{ id: 'state-1', name: 'State 1' }],
+            }),
           ],
           links,
         })}
@@ -54,27 +58,11 @@ describe('onboarding form', () => {
     );
   });
 
-  it('sends all information with full form', () => {
-    fillValidForm(wrapper);
-
-    OnboardingFormHelper.save(wrapper);
-
-    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-      ...UserProfileFactory.sample(),
-      firstName: 'Rebecca',
-      lastName: 'Sanchez',
-      subjects: ['1'],
-      ages: [3, 4, 5],
-      country: 'ES',
-      hasOptedIntoMarketing: true,
-      school: { name: 'school', id: null },
-    });
-  });
-
   describe('when USA', () => {
-    it('renders school input but not state', () => {
+    it('renders school and state', () => {
       OnboardingFormHelper.editCountry(wrapper, 'USA');
 
+      expect(wrapper.find(By.dataQa('states-filter-select'))).toExist();
       expect(wrapper.find(By.dataQa('school-name'))).not.toExist();
     });
   });
@@ -84,6 +72,24 @@ describe('onboarding form', () => {
       OnboardingFormHelper.editCountry(wrapper, 'ES');
 
       expect(wrapper.find(By.dataQa('school'))).toExist();
+      expect(wrapper.find(By.dataQa('states-filter-select'))).not.toExist();
+    });
+
+    it('sends all information with full form', () => {
+      fillValidForm(wrapper);
+
+      OnboardingFormHelper.save(wrapper);
+
+      expect(mockUpdateUser).toHaveBeenCalledWith(links, {
+        ...UserProfileFactory.sample(),
+        firstName: 'Rebecca',
+        lastName: 'Sanchez',
+        subjects: ['1'],
+        ages: [3, 4, 5],
+        country: 'ES',
+        hasOptedIntoMarketing: true,
+        school: { name: 'school', id: undefined },
+      });
     });
   });
 
@@ -110,7 +116,7 @@ describe('onboarding form', () => {
       subjects: ['1'],
       ages: [3, 4, 5],
       country: 'ES',
-      school: { name: 'school', id: null },
+      school: { name: 'school', id: undefined },
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
       utm: {
@@ -140,7 +146,7 @@ describe('onboarding form', () => {
       subjects: ['1'],
       ages: [3, 4, 5],
       country: 'ES',
-      school: { name: 'school', id: null },
+      school: { name: 'school', id: undefined },
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
     });

@@ -57,7 +57,6 @@ describe('When user is not activated', () => {
         ages: [3, 4, 5],
         hasOptedIntoMarketing: true,
         schoolName: 'school',
-        schoolId: null,
       });
     });
 

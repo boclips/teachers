@@ -14,19 +14,21 @@ import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
+import { UsaState } from '../../../types/UsaState';
 import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
-import { fetchCountriesAction } from '../createAccount/redux/actions/fetchCountriesAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';
 import { CountriesForm } from '../form/CountriesForm';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
 import { NameForm } from '../form/NameForm';
 import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
-import { SchoolForm } from '../form/SchoolForm';
+import { SchoolForm, UNKNOWN_SCHOOL } from '../form/SchoolForm';
+import { StatesForm } from '../form/StatesForm';
 import { SubjectsForm } from '../form/SubjectsForm';
 import SvgStep2 from './dwarf-with-pencil.svg';
 import './OnboardingForm.less';
 import { OnboardingProgressDots } from './OnboardingProgressDots';
+import { fetchCountriesAction } from './redux/actions/fetchCountriesAction';
 import SvgStep3 from './teacher-micromanaging.svg';
 import SvgStep4 from './teacher-presenting.svg';
 import SvgStep1 from './teachers-waving.svg';
@@ -34,7 +36,7 @@ import SvgStep1 from './teachers-waving.svg';
 const validationFields = [
   ['firstName', 'lastName'],
   ['ageRange', 'subjects'],
-  ['country', 'school'],
+  ['country', 'state', 'school'],
   ['hasOptedIntoMarketing', 'privacyPolicy'],
 ];
 
@@ -55,6 +57,7 @@ interface InternalState {
   visitedIndices: Set<number>;
   invisibleSlides: boolean[];
   country?: Country;
+  state?: UsaState;
 }
 
 interface DispatchProps {
@@ -79,6 +82,7 @@ class OnboardingForm extends React.Component<
     visitedIndices: new Set(),
     invisibleSlides: [false, true, true, true],
     country: null,
+    state: null,
   };
 
   public componentDidMount() {
@@ -222,18 +226,36 @@ class OnboardingForm extends React.Component<
                       placeholder="Choose country"
                       onCountryChange={this.onCountryChange}
                     />
-                    {this.state.country && this.state.country.id !== 'USA' ? (
-                      <section data-qa="non-usa-school-details">
-                        <SchoolForm
-                          form={this.props.form}
-                          country={this.state.country}
-                          placeholder="Enter the name of your school"
-                          label="School"
-                        />
-                      </section>
-                    ) : (
-                      <section data-qa="usa-school-details" />
-                    )}
+                    {this.state.country &&
+                      (this.state.country.id === 'USA' ? (
+                        <section data-qa="usa-school-details">
+                          <StatesForm
+                            label="Your state"
+                            form={this.props.form}
+                            states={this.state.country.states}
+                            placeholder="Choose state"
+                            onStateChange={this.onStateChange}
+                          />
+                          <SchoolForm
+                            form={this.props.form}
+                            country={this.state.country}
+                            placeholder="Enter the name of your school"
+                            label="School"
+                            state={this.state.state}
+                            allowUnknownSchools={false}
+                          />
+                        </section>
+                      ) : (
+                        <section data-qa="non-usa-school-details">
+                          <SchoolForm
+                            form={this.props.form}
+                            country={this.state.country}
+                            placeholder="Enter the name of your school"
+                            label="School"
+                            allowUnknownSchools={true}
+                          />
+                        </section>
+                      ))}
                   </section>
                   <section
                     className={
@@ -341,8 +363,13 @@ class OnboardingForm extends React.Component<
     );
   };
 
-  private onCountryChange = country =>
-    this.setState({ ...this.state, country });
+  private onCountryChange = country => {
+    return this.setState({ ...this.state, country });
+  };
+
+  private onStateChange = state => {
+    return this.setState({ ...this.state, state });
+  };
 
   private handleSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -357,9 +384,10 @@ class OnboardingForm extends React.Component<
           ages: values.ageRange,
           subjects: values.subjects,
           country: values.country,
+          state: values.state,
           school: {
-            name: values.school,
-            id: null,
+            name: values.schoolName,
+            id: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
           },
           hasOptedIntoMarketing: values.hasOptedIntoMarketing,
           referralCode: registrationContext && registrationContext.referralCode,
