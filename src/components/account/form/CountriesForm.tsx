@@ -45,8 +45,13 @@ export class CountriesForm extends React.Component<
   }
 
   private filterResults() {
-    return (input, option) =>
-      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    return (input, option) => {
+      const matchByName =
+        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      const matchByCode =
+        option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      return matchByCode || matchByName;
+    };
   }
 
   private generateOptions() {
