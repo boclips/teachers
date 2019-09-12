@@ -12,6 +12,12 @@ export class CollectionSubtitle extends React.Component<Props> {
   public render(): React.ReactNode {
     return (
       <span className={this.props.classname}>
+        {this.props.collection.attachments &&
+          this.props.collection.attachments.length && (
+            <span>
+              <strong>Lesson Plan</strong> •{' '}
+            </span>
+          )}
         <span>
           <span data-qa="collection-number-of-videos">
             {this.props.collection.videoIds.length}
@@ -19,7 +25,7 @@ export class CollectionSubtitle extends React.Component<Props> {
           videos
         </span>
         <span>
-          &nbsp;· Created by{' '}
+          &nbsp;• Created by{' '}
           <span
             data-qa="collection-created-by"
             className="collection-subtitle__created-by"
