@@ -185,7 +185,7 @@ describe('onboarding form', () => {
   it('sends a page changed event if page has not already been visited', () => {
     OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
 
-    OnboardingFormHelper.forwardCarouselPage(wrapper);
+    OnboardingFormHelper.moveCarousel(wrapper, 1);
 
     expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(0);
   });
@@ -193,9 +193,9 @@ describe('onboarding form', () => {
   it('does not send page changed event if page has already been visited', () => {
     OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
 
-    OnboardingFormHelper.forwardCarouselPage(wrapper);
-    OnboardingFormHelper.backCarouselPage(wrapper);
-    OnboardingFormHelper.forwardCarouselPage(wrapper);
+    OnboardingFormHelper.moveCarousel(wrapper, 1);
+    OnboardingFormHelper.moveCarousel(wrapper, 0);
+    OnboardingFormHelper.moveCarousel(wrapper, 1);
 
     expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
   });
@@ -203,13 +203,13 @@ describe('onboarding form', () => {
 
 function fillValidForm(wrapper: ReactWrapper) {
   OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
-  OnboardingFormHelper.forwardCarouselPage(wrapper);
+  OnboardingFormHelper.moveCarousel(wrapper, 1);
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
-  OnboardingFormHelper.forwardCarouselPage(wrapper);
+  OnboardingFormHelper.moveCarousel(wrapper, 2);
   OnboardingFormHelper.editCountry(wrapper, 'ES');
   OnboardingFormHelper.enterSchool(wrapper, 'school');
-  OnboardingFormHelper.forwardCarouselPage(wrapper);
+  OnboardingFormHelper.moveCarousel(wrapper, 3);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);
   OnboardingFormHelper.setTermsAndConditions(wrapper, true);
 }

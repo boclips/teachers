@@ -111,11 +111,27 @@ class OnboardingForm extends React.Component<
     this.setState({ ...this.state, invisibleSlides });
   };
 
-  private afterSlideChange = curr => {
+  private afterSlideChange = currentIndex => {
     const invisibleSlides = [true, true, true, true];
-    invisibleSlides[curr] = false;
+    invisibleSlides[currentIndex] = false;
 
-    this.setState({ ...this.state, invisibleSlides });
+    const visitedIndices = new Set(this.state.visitedIndices);
+    const previousIndex = currentIndex - 1;
+
+    if (currentIndex > 0) {
+      visitedIndices.add(previousIndex);
+
+      if (!this.state.visitedIndices.has(previousIndex)) {
+        AnalyticsFactory.mixpanel().trackOnboardingPageChanged(previousIndex);
+      }
+    }
+
+    this.setState({
+      ...this.state,
+      currentIndex,
+      visitedIndices,
+      invisibleSlides,
+    });
   };
 
   public renderForm() {
@@ -328,35 +344,16 @@ class OnboardingForm extends React.Component<
   private isFirstSlide = () => this.state.currentIndex === 0;
 
   private back = () => {
-    this.setState({
-      ...this.state,
-      currentIndex: --this.state.currentIndex,
-    });
     this.state.formCarousel.prev();
   };
 
   private next = () => {
     const currentIndex = this.state.currentIndex;
-    const nextIndex = currentIndex + 1;
+
     this.props.form.validateFieldsAndScroll(
       validationFields[currentIndex],
       validationErrors => {
         if (!validationErrors) {
-          const visitedIndices = new Set(this.state.visitedIndices);
-          if (!this.state.visitedIndices.has(currentIndex)) {
-            AnalyticsFactory.mixpanel().trackOnboardingPageChanged(
-              currentIndex,
-            );
-
-            visitedIndices.add(currentIndex);
-          }
-
-          this.setState({
-            ...this.state,
-            currentIndex: nextIndex,
-            visitedIndices,
-          });
-
           this.state.formCarousel.next();
         }
       },

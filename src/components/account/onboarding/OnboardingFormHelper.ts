@@ -1,3 +1,4 @@
+import { Carousel } from 'antd';
 import { ReactWrapper } from 'enzyme';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
@@ -92,19 +93,21 @@ export class OnboardingFormHelper {
         .simulate('click');
     });
   }
+
   public static forwardCarouselPage(wrapper: ReactWrapper) {
     wrapper
       .find(By.dataQa('onboard-next-button'))
       .first()
       .simulate('click');
+
     wrapper.update();
   }
 
-  public static backCarouselPage(wrapper: ReactWrapper) {
-    wrapper
-      .find(By.dataQa('onboard-back-button'))
-      .first()
-      .simulate('click');
+  public static moveCarousel(wrapper: ReactWrapper, currentSlide: number) {
+    const carousel = wrapper.find(Carousel).last();
+
+    carousel.props().afterChange(currentSlide);
+
     wrapper.update();
   }
 
