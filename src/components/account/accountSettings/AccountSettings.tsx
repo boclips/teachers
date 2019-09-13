@@ -38,8 +38,7 @@ class AccountSettings extends React.Component<Props, StateProps> {
       <section>
         <h1 className="extra-big">Edit profile</h1>
         <ProfileForm
-          firstName={this.props.userProfile.firstName}
-          lastName={this.props.userProfile.lastName}
+          userProfile={this.props.userProfile}
           subjects={this.props.subjects}
           ages={this.props.ageRanges}
           cancelForm={this.toggleForm}
