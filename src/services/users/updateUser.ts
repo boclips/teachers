@@ -7,7 +7,7 @@ import { UserProfile } from './UserProfile';
 export interface UpdateUserRequest {
   firstName: string;
   lastName: string;
-  subjects: string;
+  subjects: string[];
   country: string;
   state?: string;
   ages: number[];

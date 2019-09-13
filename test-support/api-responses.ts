@@ -464,6 +464,10 @@ export function userResponse(id: string = 'my-user-id') {
     lastName: 'Someone',
     email: 'bob@someone.com',
     analyticsId: '123',
-    _links: { self: { href: `http://localhost/v1/users/my-user-id` } },
+    subjects: ['1'],
+    ages: [1, 2, 3, 4],
+    _links: {
+      self: { href: `http://localhost/v1/users/my-user-id` },
+    },
   };
 }

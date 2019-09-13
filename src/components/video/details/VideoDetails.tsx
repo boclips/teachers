@@ -4,11 +4,11 @@ import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import StopClickPropagation from '../../common/StopClickPropagation';
+import { SubjectTag } from '../../common/tags/SubjectTag';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import VideoPreviewBadge from '../card/VideoBadge';
 import VideoPlayer from '../player/VideoPlayer';
 import Rating from '../rating/Rating';
-import { SubjectTag } from '../tags/SubjectTag';
 import './VideoDetails.less';
 
 interface Props {
@@ -62,6 +62,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
               {this.props.video.subjects.map(subject => (
                 <StopClickPropagation key={subject.name}>
                   <SubjectTag
+                    clickable={true}
                     subjectName={subject.name}
                     subjectId={subject.id}
                     key={subject.name}

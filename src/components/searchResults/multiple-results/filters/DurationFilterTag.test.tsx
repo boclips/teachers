@@ -4,7 +4,7 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../../../test-support/factories';
-import { ClosableTag } from '../../../video/tags/Tag';
+import { ClosableTag } from '../../../common/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 

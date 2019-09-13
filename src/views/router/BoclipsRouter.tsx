@@ -9,6 +9,7 @@ import PrivateRoute, {
   PrivateRouteComponentParams,
 } from '../../components/login/PrivateRoute';
 import { RouterState } from '../../types/State';
+import { AccountSettingsView } from '../account/AccountSettingsView';
 import { CreateAccountView } from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
@@ -110,6 +111,11 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
             <PrivateRoute
               path="/our-subjects"
               component={SubjectsView}
+              exact={true}
+            />
+            <PrivateRoute
+              path="/account-settings"
+              component={AccountSettingsView}
               exact={true}
             />
             <PrivateRoute path="/">

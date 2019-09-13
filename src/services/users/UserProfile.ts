@@ -8,7 +8,7 @@ export interface UserProfile {
   email: string;
   firstName: string;
   lastName: string;
-  subjects?: string;
+  subjects?: string[];
   ages?: number[];
   country?: string;
   state?: string;

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { AgeRange } from '../../../../types/AgeRange';
-import { ClosableTag } from '../../../video/tags/Tag';
+import { ClosableTag } from '../../../common/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 
 interface Props {

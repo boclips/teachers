@@ -13,6 +13,8 @@ import fetchCountriesMiddleware from '../components/account/onboarding/redux/mid
 import { countriesReducer } from '../components/account/onboarding/redux/reducers/countriesReducer';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
+import fetchTagsMiddleware from '../components/common/tags/redux/middleware/fetchTagsMiddleware';
+import { tagsReducer } from '../components/common/tags/redux/reducers/tagsReducer';
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
 import { disciplinesReducer } from '../components/disciplines/redux/reducers/disciplinesReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onLoginMiddleware';
@@ -28,8 +30,6 @@ import updateSearchParametersMiddleware from '../components/searchResults/redux/
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import { videoReducer } from '../components/video/redux/reducers/videoReducer';
-import fetchTagsMiddleware from '../components/video/tags/redux/middleware/fetchTagsMiddleware';
-import { tagsReducer } from '../components/video/tags/redux/reducers/tagsReducer';
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import LinkLoader from './config/LinkLoader';

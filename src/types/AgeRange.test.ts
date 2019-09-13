@@ -23,7 +23,7 @@ describe('generating an array', () => {
   test('returns an empty array from an age range with no max', () => {
     const ageRange = new AgeRange(11);
 
-    expect(ageRange.generateRangeArray()).toEqual([]);
+    expect(ageRange.generateRangeArray()).toEqual([11]);
   });
 });
 

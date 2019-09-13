@@ -7,10 +7,12 @@ import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 interface Props {
   ageRanges: AgeRange[];
   label?: string;
+  initialValue?: AgeRange[];
 }
 
 export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
   public onUpdateAgeRange = (value: number[]) => {
+    console.log(value);
     this.props.form.setFieldsValue({ ageRange: value });
   };
 

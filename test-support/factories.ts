@@ -205,6 +205,8 @@ export class UserProfileFactory {
       analyticsId: arg.analyticsId || 'mixpanel-123',
       id: arg.id || '1',
       links: arg.links || UserProfileLinksFactory.sample(),
+      subjects: arg.subjects || ['subject-one-id'],
+      ages: arg.ages || [1, 2, 3],
     });
   }
 }
@@ -458,7 +460,7 @@ export class MockStoreFactory {
       countries: CountriesFactory.sample(),
       disciplines: DisciplinesFactory.sample(),
       tags: TagsFactory.sample(),
-      ageRanges: [],
+      ageRanges: [new AgeRange(3, 5), new AgeRange(5, 7), new AgeRange(7, 9)],
       ...store,
     });
   }

@@ -20,7 +20,7 @@ export class AgeRange {
 
   public generateRangeArray() {
     if (!this.max) {
-      return [];
+      return [this.min];
     }
     const arr = [];
 

@@ -5,8 +5,8 @@ import ApiStub from '../../../../../test-support/ApiStub';
 import eventually from '../../../../../test-support/eventually';
 import { Link, RawLink } from '../../../../types/Link';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
+import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
-import { fetchTagsAction } from '../../../video/tags/redux/actions/fetchTagsAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
@@ -84,6 +84,8 @@ describe('on store login', () => {
             analyticsId: '123',
             email: 'bob@someone.com',
             firstName: 'Bob',
+            subjects: ['1'],
+            ages: [1, 2, 3, 4],
             id: 'my-user-id',
             lastName: 'Someone',
             links: {

@@ -2,7 +2,12 @@ import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 
-export class NameForm extends React.Component<FormComponentProps> {
+interface Props {
+  initialFirstName?: string;
+  initialLastName?: string;
+}
+
+export class NameForm extends React.Component<FormComponentProps & Props> {
   public render() {
     return (
       <section>
@@ -14,6 +19,7 @@ export class NameForm extends React.Component<FormComponentProps> {
                 message: 'Please enter your first name',
               },
             ],
+            initialValue: this.props.initialFirstName,
           })(
             <Input
               data-qa="first-name"
@@ -32,6 +38,7 @@ export class NameForm extends React.Component<FormComponentProps> {
                 message: 'Please enter your last name',
               },
             ],
+            initialValue: this.props.initialLastName,
           })(
             <Input
               data-qa="last-name"

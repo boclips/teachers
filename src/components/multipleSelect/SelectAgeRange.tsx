@@ -26,11 +26,11 @@ export class SelectAgeRange extends React.PureComponent<Props> {
 
   private onChange = (value: SelectValue) => {
     const combined = this.combineOptions(value);
-    const unique = this.removeDulpicates(combined);
+    const unique = this.removeDuplicates(combined);
     this.props.onUpdateAgeRange(unique);
   };
 
-  private removeDulpicates = (array: any[]) => {
+  private removeDuplicates = (array: any[]) => {
     return Array.from(new Set(array));
   };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Video } from '../../../types/Video';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import { SubjectTag } from '../tags/SubjectTag';
-import { Tag } from '../tags/Tag';
+import { SubjectTag } from '../../common/tags/SubjectTag';
+import { Tag } from '../../common/tags/Tag';
 import './VideoCardTagList.less';
 
 interface Props {
@@ -15,7 +15,11 @@ const VideoCardTagList = React.memo((props: Props) => (
       <div className="tag-list__subjects-container">
         {props.video.subjects.map(subject => (
           <StopClickPropagation key={subject.name}>
-            <SubjectTag subjectName={subject.name} subjectId={subject.id} />
+            <SubjectTag
+              subjectName={subject.name}
+              subjectId={subject.id}
+              clickable={true}
+            />
           </StopClickPropagation>
         ))}
       </div>

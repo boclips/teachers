@@ -6,23 +6,28 @@ import { Subject } from '../../../types/Subject';
 import { ClickableTag, Tag } from './Tag';
 
 interface SubjectTagProps {
-  subjectName: string;
+  subjectName?: string;
   subjectId?: string;
+  clickable: boolean;
 }
 
 export class SubjectTag extends React.Component<SubjectTagProps> {
   public render(): React.ReactNode {
-    return this.props.subjectId != null ? (
-      <ClickableTag
-        dataQa={'subject-tag'}
-        value={this.props.subjectName}
-        label="Subject"
-        link={`/discover-collections?subject=${this.props.subjectId}`}
-        onClick={this.trackClick}
-      />
-    ) : (
-      <Tag value={this.props.subjectName} label={'Subject'} />
-    );
+    if (this.props.subjectName) {
+      return this.props.clickable ? (
+        <ClickableTag
+          dataQa={'subject-tag'}
+          value={this.props.subjectName}
+          label="Subject"
+          link={`/discover-collections?subject=${this.props.subjectId}`}
+          onClick={this.trackClick}
+        />
+      ) : (
+        <Tag value={this.props.subjectName} label={'Subject'} />
+      );
+    } else {
+      return null;
+    }
   }
 
   private trackClick = () => {
@@ -34,10 +39,17 @@ const getSubject = (state: State, id: any): Subject | undefined => {
   return state.subjects.filter(subject => subject.id === id)[0];
 };
 
-const mapStateToProps = (state: State, ownProps: { id: string }) => {
+const mapStateToProps = (
+  state: State,
+  ownProps: { id: string; clickable: boolean },
+) => {
   const subject = getSubject(state, ownProps.id);
   if (subject) {
-    return { subjectName: subject.name, subjectId: subject.id };
+    return {
+      subjectName: subject.name,
+      subjectId: subject.id,
+      clickable: ownProps.clickable,
+    };
   }
   return {};
 };

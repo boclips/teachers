@@ -10,6 +10,7 @@ import {
   MockStoreFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
+import AccountSettings from '../../components/account/accountSettings/AccountSettings';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import { CreateAccountView } from '../account/CreateAccountView';
@@ -248,6 +249,19 @@ describe('when authorised', () => {
     const subjectView = wrapper.find(DisciplineCardList);
     expect(subjectView).toExist();
   });
+
+  test('shows the account settings page', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/account-settings')}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const accountEditForm = wrapper.find(AccountSettings);
+    expect(accountEditForm).toExist();
+  });
 });
 
 describe('when not authorised', () => {
@@ -327,6 +341,19 @@ describe('when not authorised', () => {
 
     const ourSubjectsView = wrapper.find(DisciplineCardList);
     expect(ourSubjectsView).not.toExist();
+  });
+
+  test('does not show the account settings page', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/account-settings', '', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const accountEditForm = wrapper.find(AccountSettings);
+    expect(accountEditForm).not.toExist();
   });
 });
 

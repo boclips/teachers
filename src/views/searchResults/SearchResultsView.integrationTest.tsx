@@ -10,10 +10,10 @@ import eventually from '../../../test-support/eventually';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import { findElement } from '../../../testSetup';
 import { Constants } from '../../app/AppConstants';
+import { ClosableTag } from '../../components/common/tags/Tag';
 import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
 import DurationSlider from '../../components/searchResults/multiple-results/filters/DurationSlider';
 import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/multiple-results/filters/FilterButton';
-import { ClosableTag } from '../../components/video/tags/Tag';
 
 beforeEach(() => {
   try {

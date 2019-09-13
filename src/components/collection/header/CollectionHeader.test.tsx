@@ -5,8 +5,8 @@ import {
   VideoCollectionFactory,
 } from '../../../../test-support/factories';
 import { AgeRange } from '../../../types/AgeRange';
-import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
-import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
+import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
+import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import BookmarkingButton from '../buttons/bookmark/BookmarkCollectionButton';
 import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import { CollectionSubtitle } from '../CollectionSubtitle';

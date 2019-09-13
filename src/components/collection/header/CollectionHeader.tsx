@@ -3,8 +3,8 @@ import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import { AgeRangeTag } from '../../video/tags/AgeRangeTag';
-import { ConnectedSubjectTag } from '../../video/tags/SubjectTag';
+import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
+import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import '../buttons/CollectionButtonsContainer.less';
@@ -62,7 +62,11 @@ class CollectionHeader extends React.PureComponent<Props> {
       <div className="tags-container">
         <StopClickPropagation wrapper="span">
           {this.subjectTagsToRender().map(subjectId => (
-            <ConnectedSubjectTag key={subjectId} id={subjectId} />
+            <ConnectedSubjectTag
+              key={subjectId}
+              id={subjectId}
+              clickable={true}
+            />
           ))}
         </StopClickPropagation>
         {this.hasAgeRange() && (
