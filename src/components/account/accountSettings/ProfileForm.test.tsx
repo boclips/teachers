@@ -5,6 +5,7 @@ import { ProfileForm } from './ProfileForm';
 
 describe(`Profile form`, () => {
   let wrapper;
+  const cancelCallback = jest.fn();
   beforeEach(() => {
     wrapper = mount(
       <ProfileForm
@@ -12,6 +13,7 @@ describe(`Profile form`, () => {
         lastName={'test'}
         firstName={'steve'}
         subjects={[]}
+        cancelForm={cancelCallback}
       />,
     );
   });
@@ -29,5 +31,14 @@ describe(`Profile form`, () => {
         .first()
         .props().value,
     ).toBe('test');
+  });
+
+  it(`returns to current account settings when cancel button is clicked`, () => {
+    wrapper
+      .find(By.dataQa('cancel-edit-button'))
+      .first()
+      .simulate('click');
+    wrapper.update();
+    expect(cancelCallback).toHaveBeenCalled();
   });
 });

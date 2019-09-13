@@ -9,6 +9,7 @@ import { fetchUser } from '../../../services/users/fetchUser';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import AccountSettings from './AccountSettings';
 import { Profile } from './Profile';
+import { ProfileForm } from './ProfileForm';
 import Mock = jest.Mock;
 
 jest.mock('../../../services/users/fetchUser');
@@ -30,17 +31,27 @@ describe('account settings form', () => {
 
   it(`renders the page with existing first and last name populated`, () => {
     const currentProfile = wrapper.find(By.dataQa('current-profile'));
+    const subjectTags = currentProfile.find(By.dataQa('profile-subjects'));
+
     expect(currentProfile.find(By.dataQa('profile-name')).text()).toEqual(
       'joe boclips',
     );
-
-    const subjectTags = currentProfile.find(By.dataQa('profile-subjects'));
     expect(subjectTags).toExist();
     expect(subjectTags.children().length).toEqual(1);
     expect(subjectTags.find(SubjectTag).text()).toEqual('Subject:subject one');
   });
 
-  it(`renders the Profile component`, () => {
+  it(`renders profile view by default and profile form when editing`, () => {
+    expect(wrapper.find(ProfileForm)).not.toExist();
     expect(wrapper.find(Profile)).toExist();
+
+    wrapper
+      .find(By.dataQa('profile-edit-button'))
+      .first()
+      .simulate('click');
+    wrapper.update();
+
+    expect(wrapper.find(Profile)).not.toExist();
+    expect(wrapper.find(ProfileForm)).toExist();
   });
 });

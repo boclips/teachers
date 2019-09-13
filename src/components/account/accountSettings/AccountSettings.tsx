@@ -19,10 +19,11 @@ interface StateProps {
 }
 
 class AccountSettings extends React.Component<Props, StateProps> {
-  private openProfileEditor = () => {
+  private toggleForm = () => {
     console.log('setting form state');
-    this.setState({ editForm: true });
+    this.setState({ editForm: !this.state.editForm });
   };
+
   constructor(props: Props) {
     super(props);
 
@@ -38,11 +39,12 @@ class AccountSettings extends React.Component<Props, StateProps> {
         lastName={this.props.userProfile.lastName}
         subjects={this.props.subjects}
         ages={this.props.ageRanges}
+        cancelForm={this.toggleForm}
       />
     ) : (
       <Profile
         firstName={this.props.userProfile.firstName}
-        onEdit={this.openProfileEditor}
+        onEdit={this.toggleForm}
         ages={this.props.userProfile.ages}
         lastName={this.props.userProfile.lastName}
         subjects={this.props.userProfile.subjects}

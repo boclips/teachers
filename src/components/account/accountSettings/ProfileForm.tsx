@@ -10,6 +10,7 @@ interface Props {
   lastName: string;
   subjects: Subject[];
   ages: AgeRange[];
+  cancelForm: () => void;
 }
 
 export class ProfileFormFields extends React.Component<
@@ -28,7 +29,11 @@ export class ProfileFormFields extends React.Component<
           />
         </Row>
         <Row>
-          <Button htmlType={'submit'} type={'ghost'}>
+          <Button
+            data-qa={'cancel-edit-button'}
+            type={'ghost'}
+            onClick={this.props.cancelForm}
+          >
             Cancel
           </Button>
           <Button htmlType={'submit'} type={'primary'}>
