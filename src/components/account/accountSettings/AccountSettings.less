@@ -6,4 +6,24 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &item-container {
+    margin-top: 24px;
+    display: flex;
+    width: 100%;
+    font-size: 16px;
+
+    @media (max-width: @screen-md) {
+      margin-top: 12px;
+      flex-direction: column;
+    }
+  }
+
+  &item-label {
+    font-weight: bold;
+    flex: 0 0 170px;
+    @media (max-width: @screen-md) {
+      flex: 0 0 32px;
+    }
+  }
 }

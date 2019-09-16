@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
 import AccountSettingsSVG from '../../components/account/onboarding/dwarf-with-pencil.svg';
 import PageLayout from '../../components/layout/PageLayout';
-import './AccountSettingsView.less';
 
 export class AccountSettingsView extends PureComponent {
   public render() {
@@ -14,14 +13,18 @@ export class AccountSettingsView extends PureComponent {
         showSearchBar={true}
         subheader={true}
       >
-        <section data-qa="account-settings-page" className={'account-settings'}>
+        <section data-qa="account-settings-page" className={'illustrated-page'}>
           <Row>
             <Col xs={{ span: 0 }} lg={{ span: 12 }}>
-              <AccountSettingsSVG />
+              <section className="illustration">
+                <AccountSettingsSVG />
+              </section>
             </Col>
             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-              <h1 className="extra-big">Settings</h1>
-              <AccountSettings />
+              <section className="content">
+                <h1 className="extra-big">Settings</h1>
+                <AccountSettings />
+              </section>
             </Col>
           </Row>
         </section>
