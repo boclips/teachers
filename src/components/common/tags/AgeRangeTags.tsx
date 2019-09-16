@@ -6,12 +6,17 @@ import { AgeRangeTag } from './AgeRangeTag';
 
 interface Props {
   ageRanges: AgeRange[];
+  hideLabel?: boolean;
 }
 
 class AgeRangeTags extends React.Component<Props> {
   public render(): React.ReactNode {
     return this.props.ageRanges.map((range, index) => (
-      <AgeRangeTag key={index} ageRange={range.getLabel()} />
+      <AgeRangeTag
+        key={index}
+        ageRange={range.getLabel()}
+        hideLabel={this.props.hideLabel}
+      />
     ));
   }
 }

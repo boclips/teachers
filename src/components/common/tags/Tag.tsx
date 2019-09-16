@@ -6,14 +6,16 @@ import './Tag.less';
 
 interface TagProps {
   value: string;
-  label: string;
+  label?: string;
 }
 
 export class Tag extends React.Component<TagProps> {
   public render() {
     return (
       <div className="tag">
-        <span className="tag__type">{this.props.label}:</span>
+        {this.props.label && (
+          <span className="tag__type">{this.props.label}:</span>
+        )}
         <span data-qa="filter-tag">{this.props.value}</span>
       </div>
     );
@@ -35,7 +37,9 @@ export class ClickableTag extends React.Component<ClickableTagProps> {
         onClick={this.props.onClick}
         data-qa={this.props.dataQa}
       >
-        <span className="tag__type">{this.props.label}:</span>
+        {this.props.label && (
+          <span className="tag__type">{this.props.label}:</span>
+        )}
         <span data-qa="filter-tag">{this.props.value}</span>
       </Link>
     );
@@ -50,7 +54,9 @@ export class ClosableTag extends React.Component<ClosableTagProps> {
   public render() {
     return (
       <div className="tag">
-        <span className="tag__type">{this.props.label}:</span>
+        {this.props.label && (
+          <span className="tag__type">{this.props.label}:</span>
+        )}
         <span data-qa="filter-tag">{this.props.value}</span>
         <span
           className="tag__close"

@@ -36,8 +36,8 @@ describe('account settings form', () => {
     );
     expect(subjectTags).toExist();
     expect(subjectTags.children().length).toEqual(1);
-    expect(subjectTags.find(SubjectTag).text()).toEqual('Subject:subject one');
-    expect(ageTags.find(AgeRangeTag).text()).toEqual('Ages:3-5');
+    expect(subjectTags.find(SubjectTag).text()).toEqual('subject one');
+    expect(ageTags.find(AgeRangeTag).text()).toEqual('3-5');
   });
 
   it(`renders the edit button`, () => {

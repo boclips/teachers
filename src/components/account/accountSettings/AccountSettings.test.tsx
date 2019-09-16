@@ -38,7 +38,7 @@ describe('account settings form', () => {
     );
     expect(subjectTags).toExist();
     expect(subjectTags.children().length).toEqual(1);
-    expect(subjectTags.find(SubjectTag).text()).toEqual('Subject:subject one');
+    expect(subjectTags.find(SubjectTag).text()).toEqual('subject one');
   });
 
   it(`renders profile view by default and profile form when editing`, () => {

@@ -33,6 +33,6 @@ describe('when view is mounted', () => {
     const subjectTags = accountForm.find(By.dataQa('profile-subjects'));
     expect(subjectTags).toExist();
     expect(subjectTags.children().length).toEqual(1);
-    expect(subjectTags.find(SubjectTag).text()).toEqual('Subject:Maths');
+    expect(subjectTags.find(SubjectTag).text()).toEqual('Maths');
   });
 });

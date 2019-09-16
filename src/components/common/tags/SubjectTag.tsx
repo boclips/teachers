@@ -9,6 +9,7 @@ interface SubjectTagProps {
   subjectName?: string;
   subjectId?: string;
   clickable: boolean;
+  hideLabel?: boolean;
 }
 
 export class SubjectTag extends React.Component<SubjectTagProps> {
@@ -18,12 +19,15 @@ export class SubjectTag extends React.Component<SubjectTagProps> {
         <ClickableTag
           dataQa={'subject-tag'}
           value={this.props.subjectName}
-          label="Subject"
+          label={this.props.hideLabel ? null : 'Subject'}
           link={`/discover-collections?subject=${this.props.subjectId}`}
           onClick={this.trackClick}
         />
       ) : (
-        <Tag value={this.props.subjectName} label={'Subject'} />
+        <Tag
+          value={this.props.subjectName}
+          label={this.props.hideLabel ? null : 'Subject'}
+        />
       );
     } else {
       return null;

@@ -3,6 +3,7 @@ import React from 'react';
 import EditButton from '../../common/buttons/EditButton';
 import AgeRangeTags from '../../common/tags/AgeRangeTags';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
+import AccountSettingsItem from './AccountSettingsItem';
 
 interface Props {
   firstName: string;
@@ -27,42 +28,30 @@ export class Profile extends React.Component<Props> {
             </section>
           </Col>
         </Row>
-        <Row>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <span className={'profile-label'}>Name</span>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <span data-qa="profile-name">
-              {this.props.firstName} {this.props.lastName}
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <span className={'profile-label'}>Subjects</span>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <span data-qa="profile-subjects">
-              {this.props.subjects.map((subject, index) => (
-                <ConnectedSubjectTag
-                  id={subject}
-                  key={index}
-                  clickable={false}
-                />
-              ))}
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <span className={'profile-label'}>Age groups</span>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <span data-qa="profile-age-ranges">
-              <AgeRangeTags ages={this.props.ages} />
-            </span>
-          </Col>
-        </Row>
+        <AccountSettingsItem label="Name">
+          <span data-qa="profile-name">
+            {this.props.firstName} {this.props.lastName}
+          </span>
+        </AccountSettingsItem>
+
+        <AccountSettingsItem label="Subjects">
+          <span data-qa="profile-subjects">
+            {this.props.subjects.map((subject, index) => (
+              <ConnectedSubjectTag
+                id={subject}
+                key={index}
+                clickable={false}
+                hideLabel={true}
+              />
+            ))}
+          </span>
+        </AccountSettingsItem>
+
+        <AccountSettingsItem label="Age groups">
+          <span data-qa="profile-age-ranges">
+            <AgeRangeTags ages={this.props.ages} hideLabel={true} />
+          </span>
+        </AccountSettingsItem>
       </section>
     );
   }
