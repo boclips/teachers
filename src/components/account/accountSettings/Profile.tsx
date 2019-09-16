@@ -1,5 +1,6 @@
-import { Button, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
+import EditButton from '../../common/buttons/EditButton';
 import AgeRangeTags from '../../common/tags/AgeRangeTags';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 
@@ -16,13 +17,14 @@ export class Profile extends React.Component<Props> {
     return (
       <section data-qa="current-profile">
         <Row>
-          <Col xs={{ span: 12 }} md={{ span: 12 }}>
-            <h1 className={'account-settings__title'}>Profile</h1>
-          </Col>
-          <Col xs={{ span: 12 }} md={{ span: 12 }}>
-            <Button data-qa="profile-edit-button" onClick={this.props.onEdit}>
-              Edit
-            </Button>
+          <Col xs={{ span: 24 }}>
+            <section className="account-settings__section-header">
+              <h1 className={'alt account-settings__title'}>Profile</h1>
+              <EditButton
+                data-qa="profile-edit-button"
+                onClick={this.props.onEdit}
+              />
+            </section>
           </Col>
         </Row>
         <Row>

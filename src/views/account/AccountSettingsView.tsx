@@ -20,6 +20,7 @@ export class AccountSettingsView extends PureComponent {
               <AccountSettingsSVG />
             </Col>
             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+              <h1 className="extra-big">Settings</h1>
               <AccountSettings />
             </Col>
           </Row>

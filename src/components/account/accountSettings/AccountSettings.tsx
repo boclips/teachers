@@ -5,6 +5,7 @@ import { AgeRange } from '../../../types/AgeRange';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 
+import './AccountSettings.less';
 import { Profile } from './Profile';
 import { ProfileForm } from './ProfileForm';
 

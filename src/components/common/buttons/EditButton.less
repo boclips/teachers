@@ -1,0 +1,19 @@
+@import '../../../../resources/styles/_colours';
+
+.boclips__edit-button {
+  border: none;
+  span {
+    padding-bottom: 4px;
+  }
+  svg,
+  svg path {
+    transition: fill 100ms ease;
+    font-size: 18px;
+  }
+  &:hover {
+    svg,
+    svg path {
+      fill: @mid-blue;
+    }
+  }
+}
