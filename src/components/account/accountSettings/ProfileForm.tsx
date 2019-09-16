@@ -19,8 +19,7 @@ export class ProfileFormFields extends React.Component<
   public render() {
     console.log(this.props.firstName);
     return (
-      <Form data-qa="profile-form">
-        <h1 className={'account-settings__title'}>Edit Profile</h1>
+      <Form data-qa="profile-form" className="account-settings__form">
         <Row>
           <NameForm
             form={this.props.form}
@@ -28,18 +27,19 @@ export class ProfileFormFields extends React.Component<
             initialLastName={this.props.lastName}
           />
         </Row>
-        <Row>
+        <section className="buttons">
           <Button
             data-qa={'cancel-edit-button'}
             type={'ghost'}
             onClick={this.props.cancelForm}
+            size="large"
           >
             Cancel
           </Button>
-          <Button htmlType={'submit'} type={'primary'}>
+          <Button htmlType={'submit'} type={'primary'} size="large">
             Save changes
           </Button>
-        </Row>
+        </section>
       </Form>
     );
   }

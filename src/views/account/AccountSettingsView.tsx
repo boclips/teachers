@@ -22,7 +22,6 @@ export class AccountSettingsView extends PureComponent {
             </Col>
             <Col xs={{ span: 24 }} lg={{ span: 12 }}>
               <section className="content">
-                <h1 className="extra-big">Settings</h1>
                 <AccountSettings />
               </section>
             </Col>

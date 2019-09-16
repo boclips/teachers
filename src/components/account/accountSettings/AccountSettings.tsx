@@ -35,21 +35,27 @@ class AccountSettings extends React.Component<Props, StateProps> {
 
   public render() {
     return this.state.editForm ? (
-      <ProfileForm
-        firstName={this.props.userProfile.firstName}
-        lastName={this.props.userProfile.lastName}
-        subjects={this.props.subjects}
-        ages={this.props.ageRanges}
-        cancelForm={this.toggleForm}
-      />
+      <section>
+        <h1 className="extra-big">Edit profile</h1>
+        <ProfileForm
+          firstName={this.props.userProfile.firstName}
+          lastName={this.props.userProfile.lastName}
+          subjects={this.props.subjects}
+          ages={this.props.ageRanges}
+          cancelForm={this.toggleForm}
+        />
+      </section>
     ) : (
-      <Profile
-        firstName={this.props.userProfile.firstName}
-        onEdit={this.toggleForm}
-        ages={this.props.userProfile.ages}
-        lastName={this.props.userProfile.lastName}
-        subjects={this.props.userProfile.subjects}
-      />
+      <section>
+        <h1 className="extra-big">Settings</h1>
+        <Profile
+          firstName={this.props.userProfile.firstName}
+          onEdit={this.toggleForm}
+          ages={this.props.userProfile.ages}
+          lastName={this.props.userProfile.lastName}
+          subjects={this.props.userProfile.subjects}
+        />
+      </section>
     );
   }
 }
