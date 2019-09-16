@@ -13,7 +13,7 @@ beforeEach(async () => {
   axiosMock.onGet().reply(200, JSON.stringify(collectionsResponse), {});
 
   const links = LinksFactory.sample({
-    searchCollections: new Link({
+    searchPublicCollections: new Link({
       href: '/v1/collections?query={query}',
       templated: true,
     }),

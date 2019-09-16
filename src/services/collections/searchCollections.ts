@@ -4,11 +4,11 @@ import { Links } from '../../types/Links';
 import { CollectionSearchResults } from '../../types/State';
 import { parseCollectionsListResponse } from './collectionParser';
 
-export default function searchCollections(
+export default function searchPublicCollections(
   searchRequest: CollectionSearchRequest,
   links: Links,
 ): Promise<CollectionSearchResults> {
-  const url = links.searchCollections.getTemplatedLink({
+  const url = links.searchPublicCollections.getTemplatedLink({
     query: searchRequest.query,
     subject: searchRequest.subject,
   });

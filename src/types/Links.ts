@@ -8,7 +8,7 @@ export interface Links {
   collection?: Link;
   createCollection?: Link;
   discoverCollections?: Link;
-  searchCollections?: Link;
+  searchPublicCollections?: Link;
   myCollections?: Link;
   publicCollections?: Link;
   bookmarkedCollections?: Link;
