@@ -1,36 +1,31 @@
 import { Button } from 'antd';
-import queryString from 'query-string';
 import React from 'react';
 import GoogleClassroomIcon from '../../../../../resources/images/google-classroom-logo.png';
-import { Constants } from '../../../../app/AppConstants';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import getVideoDetailsLink from '../../../../services/links/getVideoDetailsLink';
 import { Segment, Video } from '../../../../types/Video';
 import './GoogleClassroomShareButton.less';
 import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
 
 interface Props {
   video: Video;
-  segment?: Segment;
+  segment: Segment | null;
+  userId: string | null;
 }
+
 export class GoogleClassroomShareButton extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
 
   private handleClick = () => {
-    const baseUrlToVideo = `${Constants.HOST}/videos/${this.props.video.id}`;
-
-    const params = queryString.stringify({
-      segmentStart: this.props.segment && this.props.segment.start,
-      segmentEnd: this.props.segment && this.props.segment.end,
+    const link = getVideoDetailsLink({
+      absolute: true,
+      videoId: this.props.video.id,
+      userId: this.props.userId,
+      segment: this.props.segment,
     });
 
-    let urlToVideo = null;
-    if (params) {
-      urlToVideo = `${baseUrlToVideo}?${params}`;
-    } else {
-      urlToVideo = baseUrlToVideo;
-    }
     AnalyticsFactory.mixpanel().trackVideoSharedInGoogle(
       this.props.video,
       this.props.segment,
@@ -40,7 +35,7 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
       .catch(console.error);
     const url: string = new GoogleClassroomUrlBuilder()
       .setTitle(this.props.video.title)
-      .setVideoUrl(urlToVideo)
+      .setVideoUrl(link)
       .build();
 
     window.open(url, '_blank', 'height=570,width=520');

@@ -2,6 +2,7 @@ import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import getVideoDetailsLink from '../../../services/links/getVideoDetailsLink';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
@@ -23,10 +24,17 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
       return <VideoCardForRouter.Skeleton />;
     }
 
+    const link = getVideoDetailsLink({
+      absolute: false,
+      videoId: this.props.video.id,
+      userId: null,
+      segment: null,
+    });
+
     return (
       <Link
         className="no-underline"
-        to={`/videos/${this.props.video.id}`}
+        to={link}
         onMouseDown={this.onVideoLinkClick}
       >
         <Card className="video-card" bordered={false}>

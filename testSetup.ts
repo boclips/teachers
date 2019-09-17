@@ -4,6 +4,7 @@ import AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
+import 'jest-extended';
 import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
 import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
