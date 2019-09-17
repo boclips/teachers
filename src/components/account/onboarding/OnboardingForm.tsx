@@ -36,7 +36,7 @@ import SvgStep1 from './teachers-waving.svg';
 const validationFields = [
   ['firstName', 'lastName'],
   ['ageRange', 'subjects'],
-  ['country', 'state', 'school'],
+  ['country', 'state', 'schoolName', 'schoolId'],
   ['hasOptedIntoMarketing', 'privacyPolicy'],
 ];
 
