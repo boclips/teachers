@@ -25,6 +25,7 @@ interface OwnProps {
 
 interface StateProps {
   collection?: VideoCollection;
+  userId: string | null;
   links: Links;
 }
 
@@ -53,6 +54,7 @@ class CollectionDetails extends PureComponent<
           : this.props.collection.videos && (
               <CollectionVideoCardList
                 videos={videos}
+                userId={this.props.userId}
                 currentCollection={this.props.collection}
               />
             )}
@@ -142,25 +144,23 @@ class CollectionDetails extends PureComponent<
   }
 }
 
-function mapStateToProps(state: State, props: OwnProps): StateProps {
-  if (
-    isMyCollection(state.collections.myCollections.items, props.collectionId)
-  ) {
+function getCollection(collectionId: string, state: State) {
+  if (isMyCollection(state.collections.myCollections.items, collectionId)) {
     const indexOfCollection = getIndexOfCollection(
       state.collections.myCollections.items,
-      props.collectionId,
+      collectionId,
     );
-
-    return {
-      collection: state.collections.myCollections.items[indexOfCollection],
-      links: state.links,
-    };
+    return state.collections.myCollections.items[indexOfCollection];
   } else {
-    return {
-      collection: state.collections.collectionBeingViewed,
-      links: state.links,
-    };
+    return state.collections.collectionBeingViewed;
   }
+}
+
+function mapStateToProps(state: State, props: OwnProps): StateProps {
+  const userId = state.user ? state.user.id : null;
+  const links = state.links;
+  const collection = getCollection(props.collectionId, state);
+  return { userId, links, collection };
 }
 
 function mapDispatchToProps(

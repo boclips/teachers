@@ -9,7 +9,7 @@ import {
 } from '../../../../test-support/factories';
 import '../../../index.less';
 import State from '../../../types/State';
-import { ShareModal } from './ShareModal';
+import ShareModal from './ShareModal';
 
 const noop = () => {};
 

@@ -1,57 +1,29 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { Provider } from 'react-redux';
-import {
-  MockStoreFactory,
-  UserProfileFactory,
-  VideoFactory,
-} from '../../../../../test-support/factories';
+import { VideoFactory } from '../../../../../test-support/factories';
 import FakeBoclipsAnalytics from '../../../../services/analytics/boclips/FakeBoclipsAnalytics';
 import CopyLinkButton from './CopyLinkButton';
 
-it('adds id of logged in user as a query param', () => {
-  const store = MockStoreFactory.sample({
-    user: UserProfileFactory.sample({
-      id: 'userId',
-    }),
-  });
-
+it('sets video link', () => {
   const wrapper = mount(
-    <Provider store={store}>
-      <CopyLinkButton video={VideoFactory.sample()} />
-    </Provider>,
+    <CopyLinkButton
+      video={VideoFactory.sample()}
+      segment={{ start: 1, end: 5 }}
+      userId={'userId'}
+    />,
   );
 
   const copyToClipboard = wrapper.find(CopyToClipboard);
   expect(copyToClipboard.prop('text')).toContain('referer=userId');
-});
-
-test('does not add referer query param if no user', () => {
-  const store = MockStoreFactory.sample({
-    user: null,
-  });
-
-  const wrapper = mount(
-    <Provider store={store}>
-      <CopyLinkButton video={VideoFactory.sample()} />
-    </Provider>,
-  );
-
-  const copyToClipboard = wrapper.find(CopyToClipboard);
-
-  expect(copyToClipboard.prop('text')).not.toContain('referer');
+  expect(copyToClipboard.prop('text')).toContain('segmentStart=1');
+  expect(copyToClipboard.prop('text')).toContain('segmentEnd=5');
 });
 
 test('logs a boclips event when copied', () => {
-  const store = MockStoreFactory.sample({
-    user: null,
-  });
   const video = VideoFactory.sample();
   const wrapper = mount(
-    <Provider store={store}>
-      <CopyLinkButton video={video} />
-    </Provider>,
+    <CopyLinkButton video={video} segment={null} userId={null} />,
   );
 
   (wrapper.find(CopyToClipboard).prop('onCopy') as any)();

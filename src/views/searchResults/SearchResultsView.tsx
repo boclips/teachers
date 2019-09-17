@@ -27,6 +27,7 @@ interface StateProps {
   collectionResults: CollectionSearchResults;
   links: Links;
   currentPage: number;
+  userId: string | null;
 }
 
 interface DispatchProps {
@@ -64,20 +65,22 @@ class SearchResultsView extends React.PureComponent<
 
   public renderResults() {
     const isNewsMode = this.props.isNewsMode;
-
+    const props = {
+      videoResults: this.props.videoResults,
+      collectionResults: this.props.collectionResults,
+      userId: this.props.userId,
+    };
     return (
       <section className={'search-results-container'} data-qa="search-page">
         {isNewsMode ? (
           <SearchResultsWithHeader
-            videoResults={this.props.videoResults}
-            collectionResults={this.props.collectionResults}
             onNavigate={this.props.goToSearchResults}
+            {...props}
           />
         ) : (
           <SearchResultsWithSidebar
-            videoResults={this.props.videoResults}
-            collectionResults={this.props.collectionResults}
             onNavigate={this.props.goToNewsResults}
+            {...props}
           />
         )}
 
@@ -136,13 +139,14 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({ search, links, router }: State): StateProps {
+function mapStateToProps({ search, links, router, user }: State): StateProps {
   return {
     loading: search.videoSearch.loading,
     videoResults: search.videoSearch,
     collectionResults: search.collectionSearch,
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
+    userId: user ? user.id : null,
   };
 }
 

@@ -25,6 +25,7 @@ export default class SearchResultsWithSidebar extends React.PureComponent<
             <SearchVideoCardList
               totalElements={paging && paging.totalElements}
               videos={videos}
+              userId={this.props.userId}
             />
           </Col>
           <Col xs={{ span: 0 }} xl={{ span: 6 }}>

@@ -23,6 +23,7 @@ export default class SearchResultsWithHeader extends React.PureComponent<
           <SearchVideoCardList
             totalElements={paging && paging.totalElements}
             videos={videos}
+            userId={this.props.userId}
           />
         </Row>
       </React.Fragment>

@@ -6,26 +6,37 @@ import FakeBoclipsAnalytics from '../../../../services/analytics/boclips/FakeBoc
 import { GoogleClassroomShareButton } from './GoogleClassroomShareButton';
 
 it('opens a new window with the correct url', () => {
-  (window as any).open = jest.fn();
+  const open = jest.fn();
+  (window as any).open = open;
 
   const wrapper = shallow(
     <GoogleClassroomShareButton
-      video={VideoFactory.sample({ title: 'a video title', id: '123' })}
+      video={VideoFactory.sample({ title: 'The title', id: '123' })}
+      segment={{ start: 1999, end: 2999 }}
+      userId={'bob'}
     />,
   );
 
   wrapper.find(Button).simulate('click');
 
-  expect((global as any).open).toHaveBeenCalledWith(
-    'https://classroom.google.com/u/0/share?url=http%3A%2F%2Flocalhost%2Fvideos%2F123&title=a%20video%20title',
-    '_blank',
-    'height=570,width=520',
+  expect(open).toHaveBeenCalledTimes(1);
+
+  const [url, target, windowParams] = open.mock.calls[0];
+  expect(url).toMatch(
+    /https:\/\/classroom\.google\.com\/u\/0\/share\?url=.+&title=.+/,
   );
+  expect(url).toContain('1999');
+  expect(url).toContain('2999');
+  expect(url).toContain('bob');
+  expect(target).toEqual('_blank');
+  expect(windowParams).toEqual('height=570,width=520');
 });
 
 it('triggers a Boclips event', () => {
   const video = VideoFactory.sample({ title: 'a video title', id: '123' });
-  const wrapper = shallow(<GoogleClassroomShareButton video={video} />);
+  const wrapper = shallow(
+    <GoogleClassroomShareButton video={video} segment={null} userId={null} />,
+  );
 
   wrapper.find(Button).simulate('click');
 

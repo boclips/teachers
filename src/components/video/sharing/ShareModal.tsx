@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { UserState } from '../../../types/State';
 import { Segment, Video } from '../../../types/Video';
 import Bodal from '../../common/Bodal';
 import CopyLinkButton from '../buttons/copyLink/CopyLinkButton';
@@ -6,18 +8,22 @@ import { GoogleClassroomShareButton } from '../buttons/gclassroom/GoogleClassroo
 import { ShareForm } from './ShareForm';
 import './ShareModal.less';
 
-interface Props {
+interface OwnProps {
   mobileView: boolean;
   video: Video;
   handleClose: () => void;
   visible: boolean;
 }
 
-interface State {
-  segment: Segment;
+interface Props {
+  userId: string | null;
 }
 
-export class ShareModal extends React.Component<Props, State> {
+interface State {
+  segment: Segment | null;
+}
+
+class ShareModal extends React.Component<Props & OwnProps, State> {
   public state = {
     segment: null,
   };
@@ -38,10 +44,12 @@ export class ShareModal extends React.Component<Props, State> {
           <div>
             <CopyLinkButton
               video={this.props.video}
+              userId={this.props.userId}
               segment={this.state.segment}
             />
             <GoogleClassroomShareButton
               video={this.props.video}
+              userId={this.props.userId}
               segment={this.state.segment}
             />
           </div>
@@ -56,3 +64,10 @@ export class ShareModal extends React.Component<Props, State> {
     );
   }
 }
+
+const mapStateToProps = (state: UserState): Props => {
+  const userId = state.user ? state.user.id : null;
+  return { userId };
+};
+
+export default connect(mapStateToProps)(ShareModal);

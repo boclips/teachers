@@ -12,6 +12,7 @@ const getWrapper = (givenProps: Partial<Props> = {}) => {
   const props: Props = {
     video,
     ...givenProps,
+    userId: givenProps.userId || null,
   };
   return shallow(<VideoCardForRouter {...props} />);
 };

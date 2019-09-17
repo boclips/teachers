@@ -7,6 +7,7 @@ import './VideoCardList.less';
 
 interface Props {
   videos: Video[];
+  userId: string | null;
   totalElements?: number;
 }
 
@@ -31,6 +32,7 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
               >
                 <VideoCard
                   video={video}
+                  userId={this.props.userId}
                   currentCollection={this.props.currentCollection}
                   videoIndex={index}
                 />

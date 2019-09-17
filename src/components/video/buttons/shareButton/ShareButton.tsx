@@ -2,7 +2,7 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import ShareSVG from '../../../../../resources/images/share.svg';
 import { Video } from '../../../../types/Video';
-import { ShareModal } from '../../sharing/ShareModal';
+import ShareModal from '../../sharing/ShareModal';
 import './ShareButton.less';
 
 interface Props {
