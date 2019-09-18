@@ -9,17 +9,14 @@ interface Props {
 
 export default class AgeRangeTags extends React.Component<Props> {
   public render(): React.ReactNode {
-    return AgeRange.allRanges()
-      .filter(
-        (range: AgeRange) =>
-          this.props.ageRanges.indexOf(range.resolveMin()) >= 0,
-      )
-      .map((range, index) => (
+    return AgeRange.generateAgeRanges(this.props.ageRanges).map(
+      (range, index) => (
         <AgeRangeTag
           key={index}
           ageRange={range.getLabel()}
           hideLabel={this.props.hideLabel}
         />
-      ));
+      ),
+    );
   }
 }
