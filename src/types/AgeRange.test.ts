@@ -44,6 +44,27 @@ describe('generating a list of ageranges from an array', () => {
 
     expect(ageRange.generateRangeArray()).toEqual([11]);
   });
+
+  test('returns an array of all included ages from a list of sequential AgeRanges', () => {
+    const ages = [3, 4, 5, 6, 7, 8, 9];
+    const ageRanges = AgeRange.generateAgeRanges(ages);
+    const contained = AgeRange.extractContainedAges(ageRanges);
+    expect(contained).toEqual(ages);
+  });
+
+  test('returns an array of all included ages from a list of nonsequential AgeRanges', () => {
+    const ages = [5, 6, 7, 11, 12, 13, 14];
+    const ageRanges = AgeRange.generateAgeRanges(ages);
+    const contained = AgeRange.extractContainedAges(ageRanges);
+    expect(contained).toEqual(ages);
+  });
+
+  test('returns a single age from a lower-bound-only AgeRange', () => {
+    const ages = [19];
+    const ageRanges = AgeRange.generateAgeRanges(ages);
+    const contained = AgeRange.extractContainedAges(ageRanges);
+    expect(contained).toEqual(ages);
+  });
 });
 
 describe('resolving the minimum age', () => {
@@ -94,7 +115,7 @@ describe('encoding and decoding ageranges as JSON', () => {
   });
 });
 
-describe(`sorting and removing duplicates`, () => {
+describe(`removing duplicates`, () => {
   it(`sorts and removes duplicates correctly`, () => {
     const ageRangeList: AgeRange[] = [
       new AgeRange(4, 7),
@@ -102,11 +123,13 @@ describe(`sorting and removing duplicates`, () => {
       new AgeRange(3, 4),
       new AgeRange(7, 10),
     ];
-    const sortedList: AgeRange[] = AgeRange.sortWithNoDuplicates(ageRangeList);
+    const deduplicatedList: AgeRange[] = AgeRange.removeDuplicates(
+      ageRangeList,
+    );
 
-    expect(sortedList.length).toEqual(3);
-    expect(sortedList[0]).toEqual(new AgeRange(3, 4));
-    expect(sortedList[1]).toEqual(new AgeRange(4, 7));
-    expect(sortedList[2]).toEqual(new AgeRange(7, 10));
+    expect(deduplicatedList.length).toEqual(3);
+    expect(deduplicatedList[0]).toEqual(new AgeRange(4, 7));
+    expect(deduplicatedList[1]).toEqual(new AgeRange(3, 4));
+    expect(deduplicatedList[2]).toEqual(new AgeRange(7, 10));
   });
 });

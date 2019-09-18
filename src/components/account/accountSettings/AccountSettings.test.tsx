@@ -37,8 +37,13 @@ describe('account settings form', () => {
       'joe boclips',
     );
     expect(subjectTags).toExist();
-    expect(subjectTags.children().length).toEqual(1);
-    expect(subjectTags.find(SubjectTag).text()).toEqual('subject one');
+    expect(subjectTags.children().length).toEqual(2);
+    expect(
+      subjectTags
+        .find(SubjectTag)
+        .first()
+        .text(),
+    ).toEqual('subject one');
   });
 
   it(`renders profile view by default and profile form when editing`, () => {

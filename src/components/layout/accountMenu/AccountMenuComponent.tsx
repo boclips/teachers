@@ -3,6 +3,7 @@ import React, { SyntheticEvent } from 'react';
 import MyAccountSVG from '../../../../resources/images/my-account.svg';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import {
+  AccountSettingsLink,
   BookmarkedCollectionsLink,
   LogoutLink,
   ReferAFriendLink,
@@ -40,6 +41,9 @@ class AccountMenuComponent extends React.Component<Props, State> {
         <ReferAFriendLink />
       </Menu.Item>
       <Menu.Item key="4">
+        <AccountSettingsLink />
+      </Menu.Item>
+      <Menu.Item key="5">
         <LogoutLink onClick={this.props.onLogout} />
       </Menu.Item>
     </Menu>

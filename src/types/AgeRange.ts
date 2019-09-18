@@ -94,27 +94,20 @@ export class AgeRange {
     return new AgeRange(decoded.min, decoded.max);
   }
 
-  public static sortWithNoDuplicates(ageRanges: AgeRange[]): AgeRange[] {
-    const sorted = ageRanges.sort(AgeRange.compareAgeRanges);
-    let currentHighestMin = 0;
+  public static removeDuplicates(ageRanges: AgeRange[]): AgeRange[] {
     const deduplicated = [];
-    sorted.forEach(it => {
-      if (it.resolveMin() > currentHighestMin) {
+    ageRanges.forEach(it => {
+      if (!deduplicated.find(range => isEqualTo(it, range))) {
         deduplicated.push(it);
-        currentHighestMin = it.resolveMin();
       }
     });
     return deduplicated;
   }
 
-  private static compareAgeRanges(a: AgeRange, b: AgeRange): number {
-    if (a.resolveMin() > b.resolveMin()) {
-      return 1;
-    }
-    if (a.resolveMin() < b.resolveMin()) {
-      return -1;
-    }
-    return 0;
+  public static extractContainedAges(ages: AgeRange[]): number[] {
+    const rangeArrays = ages.map(it => it.generateRangeArray());
+    const flattenedAgeRanges: number[] = [].concat.apply([], rangeArrays);
+    return Array.from(new Set(flattenedAgeRanges));
   }
 }
 

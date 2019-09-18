@@ -38,7 +38,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
   private onChange = (value: SelectValue) => {
     const split = value as string[];
     const parsed = split.map(it => AgeRange.decodeJSON(it));
-    const sorted = AgeRange.sortWithNoDuplicates(parsed);
+    const sorted = AgeRange.removeDuplicates(parsed);
     const stringified = sorted.map(it => it.encodeJSON());
 
     this.props.onUpdateAgeRange(stringified);

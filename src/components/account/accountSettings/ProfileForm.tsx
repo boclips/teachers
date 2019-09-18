@@ -78,14 +78,10 @@ class ProfileFormFields extends React.Component<
   private submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const ageRangeArrays = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it).generateRangeArray(),
+        const ageRanges = (values.ageRange as string[]).map(it =>
+          AgeRange.decodeJSON(it),
         );
-        const flattenedAgeRanges: number[] = [].concat.apply(
-          [],
-          ageRangeArrays,
-        );
-        const ages = Array.from(new Set(flattenedAgeRanges));
+        const ages = AgeRange.extractContainedAges(ageRanges);
         updateUser(this.props.links, {
           ...this.props.userProfile,
           firstName: values.firstName,

@@ -370,15 +370,10 @@ class OnboardingForm extends React.Component<
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
-
-        const ageRangeArrays = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it).generateRangeArray(),
+        const ageRanges = (values.ageRange as string[]).map(it =>
+          AgeRange.decodeJSON(it),
         );
-        const flattenedAgeRanges: number[] = [].concat.apply(
-          [],
-          ageRangeArrays,
-        );
-        const ages = Array.from(new Set(flattenedAgeRanges));
+        const ages = AgeRange.extractContainedAges(ageRanges);
 
         this.setState({ ...this.state, updating: true });
         updateUser(this.props.links, {

@@ -4,6 +4,7 @@ import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
 import BookmarkedIconSVG from '../../../../resources/images/my-bookmarks.svg';
 import ReferAFriendIconSVG from '../../../../resources/images/refer-a-friend-icon.svg';
+import SettingsSVG from '../../../../resources/images/settings.svg';
 import ReferAFriend from '../../referAFriend/ReferAFriend';
 
 type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
@@ -38,6 +39,21 @@ class UserCollectionsLink extends React.PureComponent<Props> {
   );
 }
 
+class AccountSettingsLink extends React.PureComponent<Props> {
+  public render = () => (
+    <Link
+      to={'/account-settings'}
+      data-qa="account-settings-button"
+      onClick={this.props.onClick}
+    >
+      <span className="icon-container">
+        <SettingsSVG aria-hidden="true" />
+      </span>
+      <span>Settings</span>
+    </Link>
+  );
+}
+
 class LogoutLink extends React.PureComponent<Props> {
   public render = () => (
     <a data-qa="logout-button" href="#" onClick={this.props.onClick}>
@@ -65,6 +81,7 @@ class ReferAFriendLink extends React.PureComponent<{}> {
 }
 
 export {
+  AccountSettingsLink,
   BookmarkedCollectionsLink,
   UserCollectionsLink,
   LogoutLink,

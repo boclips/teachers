@@ -94,7 +94,7 @@ describe(`Profile form`, () => {
 
     const ageRangeOptions = wrapper.find('Trigger').find('MenuItem');
     ageRangeOptions
-      .find(`[data-qa="3-5"]`)
+      .find(`[data-qa="11-14"]`)
       .first()
       .simulate('click');
 
@@ -114,8 +114,8 @@ describe(`Profile form`, () => {
       ...UserProfileFactory.sample(),
       firstName: 'new first name',
       lastName: 'new last name',
-      subjects: ['1'],
-      ages: [3, 4, 5],
+      subjects: ['subject-one-id'],
+      ages: [3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14],
     });
   });
 });
