@@ -19,7 +19,7 @@ describe('account settings form', () => {
           firstName="joe"
           lastName="boclips"
           subjects={['subject-one-id']}
-          ages={[3, 4]}
+          ages={[3, 4, 5]}
           onEdit={onClickSpy}
         />
       </Provider>,

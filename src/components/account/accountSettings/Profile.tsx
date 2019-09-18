@@ -49,7 +49,7 @@ export class Profile extends React.Component<Props> {
 
         <AccountSettingsItem label="Age groups">
           <span data-qa="profile-age-ranges">
-            <AgeRangeTags ages={this.props.ages} hideLabel={true} />
+            <AgeRangeTags ageRanges={this.props.ages} hideLabel={true} />
           </span>
         </AccountSettingsItem>
       </section>

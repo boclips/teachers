@@ -15,7 +15,6 @@ import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import updateUser from '../../../services/users/updateUser';
-import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
@@ -36,7 +35,6 @@ describe('onboarding form', () => {
     wrapper = mount(
       <Provider
         store={MockStoreFactory.sample({
-          ageRanges: [new AgeRange(3, 5), new AgeRange(6, 7)],
           subjects: [
             SubjectFactory.sample({ id: '1', name: 's1' }),
             SubjectFactory.sample({ id: '2', name: 's2' }),

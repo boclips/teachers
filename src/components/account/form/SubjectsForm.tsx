@@ -31,7 +31,7 @@ export class SubjectsForm extends React.Component<
             label={this.props.label}
             onUpdateSubjects={this.onUpdateSubjects}
             initialValue={this.props.initialValue}
-            data-qa="subjects-filter-select"
+            data-qa="subject-select"
           />,
         )}
       </Form.Item>

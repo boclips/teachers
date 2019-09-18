@@ -18,9 +18,9 @@ test('can set correct initial age range for slider when age range is an interval
           title="irrelevant"
           isPublic={true}
           subjects={[]}
-          ageRange={new AgeRange(3, 9)}
           onAgeRangeChange={ageRangeChange}
           description=""
+          ageRange={new AgeRange(3, 9)}
         />
       </>
     </Provider>,

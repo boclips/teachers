@@ -4,8 +4,8 @@ import { AgeRange } from '../../types/AgeRange';
 import MultiSelect from '../common/MultiSelect';
 
 interface Props {
-  ageRanges: AgeRange[];
-  onUpdateAgeRange: (value: number[]) => void;
+  onUpdateAgeRange: (value: string[]) => void;
+  initialValue?: number[];
 }
 
 export class SelectAgeRange extends React.PureComponent<Props> {
@@ -15,40 +15,45 @@ export class SelectAgeRange extends React.PureComponent<Props> {
         filterOption={this.filter}
         mode="multiple"
         placeholder="Choose ages"
-        data-qa="ageRange"
         onChange={this.onChange}
         aria-label="Ages I teach"
+        defaultValue={this.generateInitialValues()}
       >
         {this.generateOptions()}
       </MultiSelect>
     );
   }
 
+  private generateInitialValues() {
+    const { initialValue } = this.props;
+    if (initialValue) {
+      return AgeRange.generateAgeRanges(initialValue).map(age =>
+        age.encodeJSON(),
+      );
+    } else {
+      return [];
+    }
+  }
+
   private onChange = (value: SelectValue) => {
-    const combined = this.combineOptions(value);
-    const unique = this.removeDuplicates(combined);
-    this.props.onUpdateAgeRange(unique);
-  };
+    const split = value as string[];
+    const parsed = split.map(it => AgeRange.decodeJSON(it));
+    const sorted = AgeRange.sortWithNoDuplicates(parsed);
+    const stringified = sorted.map(it => it.encodeJSON());
 
-  private removeDuplicates = (array: any[]) => {
-    return Array.from(new Set(array));
-  };
-
-  private combineOptions = (value: SelectValue) => {
-    const parsed = (value as string[]).map(json => JSON.parse(json));
-    return [].concat.apply([], parsed);
+    this.props.onUpdateAgeRange(stringified);
   };
 
   private generateOptions() {
     const Option = MultiSelect.Option;
 
-    return this.props.ageRanges.map(ageRange => {
+    return AgeRange.allRanges().map(ageRange => {
       return (
         <Option
           key={ageRange.getLabel()}
           title={ageRange.getLabel()}
           data-qa={ageRange.getLabel()}
-          value={JSON.stringify(ageRange.generateRangeArray())}
+          value={ageRange.encodeJSON()}
         >
           {ageRange.getLabel()}
         </Option>

@@ -9,6 +9,7 @@ import {
   createStore,
   Reducer,
 } from 'redux';
+import updateUserMiddleware from '../components/account/accountSettings/redux/middleware/updateUserMiddleware';
 import fetchCountriesMiddleware from '../components/account/onboarding/redux/middleware/fetchCountriesMiddleware';
 import { countriesReducer } from '../components/account/onboarding/redux/reducers/countriesReducer';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
@@ -21,7 +22,6 @@ import onStoreLoginMiddleware from '../components/login/redux/middleware/onLogin
 import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/onRegisterAnalyticsMiddleware';
 import { userDetailsFetchedReducer } from '../components/login/redux/reducers/userDetailsFetchedReducer';
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
-import { ageRangeReducer } from '../components/multipleSelect/redux/reducers/ageReducer';
 import { subjectsReducer } from '../components/multipleSelect/redux/reducers/subjectsReducer';
 import searchMiddleware from '../components/searchBar/redux/middleware/searchMiddleware';
 import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
@@ -54,7 +54,6 @@ const rootReducer: Reducer<any> = combineReducers({
   countries: countriesReducer,
   tags: tagsReducer,
   disciplines: disciplinesReducer,
-  ageRanges: ageRangeReducer,
   apiPrefix: (state = {}) => state,
 });
 
@@ -88,6 +87,7 @@ export default class App extends PureComponent<Props> {
         ...updateSearchParametersMiddleware,
         updatePageActionMiddleware,
         fetchDisciplinesMiddleware,
+        updateUserMiddleware,
       ),
     ),
   );

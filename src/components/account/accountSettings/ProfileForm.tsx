@@ -1,25 +1,34 @@
 import { Button, Form, Row } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import updateUser from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
+import { Links } from '../../../types/Links';
 import { Subject } from '../../../types/Subject';
+import NotificationFactory from '../../common/NotificationFactory';
 import { AgeRangeForm } from '../form/AgeRangeForm';
 import { NameForm } from '../form/NameForm';
 import { SubjectsForm } from '../form/SubjectsForm';
+import { updateUserAction } from './redux/actions/updateUserAction';
 
 interface Props {
   userProfile: UserProfile;
   subjects: Subject[];
-  ages: AgeRange[];
-  cancelForm: () => void;
+  toggleForm: () => void;
+  links: Links;
 }
 
-export class ProfileFormFields extends React.Component<
-  Props & FormComponentProps
+interface DispatchProps {
+  updateUser: () => {};
+}
+
+class ProfileFormFields extends React.Component<
+  Props & FormComponentProps & DispatchProps
 > {
   public render() {
-    console.log(this.props.userProfile.firstName);
     return (
       <Form data-qa="profile-form" className="account-settings__form">
         <Row>
@@ -40,7 +49,6 @@ export class ProfileFormFields extends React.Component<
         <Row>
           <AgeRangeForm
             form={this.props.form}
-            ageRanges={this.props.ages}
             initialValue={this.props.userProfile.ages}
           />
         </Row>
@@ -48,20 +56,71 @@ export class ProfileFormFields extends React.Component<
           <Button
             data-qa={'cancel-edit-button'}
             type={'ghost'}
-            onClick={this.props.cancelForm}
+            onClick={this.props.toggleForm}
             size="large"
           >
             Cancel
           </Button>
-          <Button htmlType={'submit'} type={'primary'} size="large">
+          <Button
+            htmlType={'submit'}
+            type={'primary'}
+            data-qa={'submit-update-user'}
+            onClick={this.submit}
+            size="large"
+          >
             Save changes
           </Button>
         </section>
       </Form>
     );
   }
+
+  private submit = () => {
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const ageRangeArrays = (values.ageRange as string[]).map(it =>
+          AgeRange.decodeJSON(it).generateRangeArray(),
+        );
+        const flattenedAgeRanges: number[] = [].concat.apply(
+          [],
+          ageRangeArrays,
+        );
+        const ages = Array.from(new Set(flattenedAgeRanges));
+        updateUser(this.props.links, {
+          ...this.props.userProfile,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          ages,
+          subjects: values.subjects,
+        })
+          .then(() => {
+            this.props.updateUser();
+            this.props.toggleForm();
+          })
+          .catch(ex => {
+            console.error(ex);
+            NotificationFactory.error({
+              message: 'Ooops! Something went wrong...',
+              description: 'Please try again or contact our support team.',
+            });
+
+            this.setState({
+              ...this.state,
+              updating: false,
+            });
+          });
+      }
+    });
+  };
 }
 
-export const ProfileForm = Form.create<Props & FormComponentProps>()(
-  ProfileFormFields,
-);
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    updateUser: () => dispatch(updateUserAction()),
+  };
+}
+
+export const ProfileForm = connect<Props, DispatchProps>(
+  null,
+  mapDispatchToProps,
+)(Form.create<DispatchProps & Props & FormComponentProps>()(ProfileFormFields));

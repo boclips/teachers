@@ -27,6 +27,25 @@ describe('generating an array', () => {
   });
 });
 
+describe('generating a list of ageranges from an array', () => {
+  test('returns a list of age ranges with the correct min and max values', () => {
+    const ageRangeValues = [7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+    const ageRanges = AgeRange.generateAgeRanges(ageRangeValues);
+
+    expect(ageRanges).toContainEqual(new AgeRange(9, 11));
+    expect(ageRanges).toContainEqual(new AgeRange(7, 9));
+    expect(ageRanges).toContainEqual(new AgeRange(11, 14));
+    expect(ageRanges.length).toBe(3);
+  });
+
+  test('returns an empty array from an age range with no max', () => {
+    const ageRange = new AgeRange(11);
+
+    expect(ageRange.generateRangeArray()).toEqual([11]);
+  });
+});
+
 describe('resolving the minimum age', () => {
   test('returns the default min age if given out of bounds min age', () => {
     const ageRange = new AgeRange(-1, 11);
@@ -48,5 +67,46 @@ describe('resolving the maximum age', () => {
   test('returns the max age if set', () => {
     const ageRange = new AgeRange(3, 16);
     expect(ageRange.resolveMax()).toEqual(16);
+  });
+});
+
+describe('encoding and decoding ageranges as JSON', () => {
+  it(`encodes an agerange into json`, () => {
+    const ageRange = new AgeRange(10, 15);
+
+    expect(ageRange.encodeJSON()).toEqual(`{"min":10,"max":15}`);
+  });
+
+  it(`encodes an agerange with unbounded upper into json`, () => {
+    const ageRange = new AgeRange(19);
+
+    expect(ageRange.encodeJSON()).toEqual(`{"min":19}`);
+  });
+
+  it(`decodes an agerange with unbounded upper from json`, () => {
+    expect(AgeRange.decodeJSON(`{"min":19}`)).toEqual(new AgeRange(19));
+  });
+
+  it(`decodes json into an agerange`, () => {
+    const jsonAgeRange = `{"min":10, "max":15}`;
+
+    expect(AgeRange.decodeJSON(jsonAgeRange)).toEqual(new AgeRange(10, 15));
+  });
+});
+
+describe(`sorting and removing duplicates`, () => {
+  it(`sorts and removes duplicates correctly`, () => {
+    const ageRangeList: AgeRange[] = [
+      new AgeRange(4, 7),
+      new AgeRange(3, 4),
+      new AgeRange(3, 4),
+      new AgeRange(7, 10),
+    ];
+    const sortedList: AgeRange[] = AgeRange.sortWithNoDuplicates(ageRangeList);
+
+    expect(sortedList.length).toEqual(3);
+    expect(sortedList[0]).toEqual(new AgeRange(3, 4));
+    expect(sortedList[1]).toEqual(new AgeRange(4, 7));
+    expect(sortedList[2]).toEqual(new AgeRange(7, 10));
   });
 });

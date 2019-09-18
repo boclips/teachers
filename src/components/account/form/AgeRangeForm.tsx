@@ -5,27 +5,30 @@ import { AgeRange } from '../../../types/AgeRange';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 
 interface Props {
-  ageRanges: AgeRange[];
   label?: string;
-  initialValue?: AgeRange[];
+  initialValue?: number[];
 }
 
 export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
-  public onUpdateAgeRange = (value: number[]) => {
-    console.log(value);
+  public onUpdateAgeRange = (value: string[]) => {
     this.props.form.setFieldsValue({ ageRange: value });
   };
 
   public render() {
     return (
-      <Form.Item label={this.props.label}>
+      <Form.Item label={this.props.label} data-qa={'age-range-form'}>
         {this.props.form.getFieldDecorator('ageRange', {
           rules: [{ type: 'array' }],
-          initialValue: [],
+          initialValue: this.props.initialValue
+            ? AgeRange.generateAgeRanges(this.props.initialValue).map(age =>
+                age.encodeJSON(),
+              )
+            : [],
         })(
           <SelectAgeRange
-            ageRanges={this.props.ageRanges}
             onUpdateAgeRange={this.onUpdateAgeRange}
+            data-qa="age-select"
+            initialValue={this.props.initialValue}
           />,
         )}
       </Form.Item>

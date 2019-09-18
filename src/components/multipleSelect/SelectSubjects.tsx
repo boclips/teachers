@@ -60,7 +60,12 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
 
     return this.state.sortedSubjects.map(subject => {
       return (
-        <Option key={subject.name} value={subject.id} title={subject.name}>
+        <Option
+          key={subject.name}
+          value={subject.id}
+          title={subject.name}
+          data-qa={subject.id}
+        >
           {subject.name}
         </Option>
       );

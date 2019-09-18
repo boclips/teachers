@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { UserProfile } from '../../../services/users/UserProfile';
-import { AgeRange } from '../../../types/AgeRange';
+import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 
@@ -12,7 +12,7 @@ import { ProfileForm } from './ProfileForm';
 interface Props {
   userProfile: UserProfile;
   subjects: Subject[];
-  ageRanges: AgeRange[];
+  links: Links;
 }
 
 interface StateProps {
@@ -21,7 +21,6 @@ interface StateProps {
 
 class AccountSettings extends React.Component<Props, StateProps> {
   private toggleForm = () => {
-    console.log('setting form state');
     this.setState({ editForm: !this.state.editForm });
   };
 
@@ -40,8 +39,8 @@ class AccountSettings extends React.Component<Props, StateProps> {
         <ProfileForm
           userProfile={this.props.userProfile}
           subjects={this.props.subjects}
-          ages={this.props.ageRanges}
-          cancelForm={this.toggleForm}
+          toggleForm={this.toggleForm}
+          links={this.props.links}
         />
       </section>
     ) : (
@@ -63,7 +62,7 @@ function mapStateToProps(state: State): Props {
   return {
     userProfile: state.user,
     subjects: state.subjects,
-    ageRanges: state.ageRanges,
+    links: state.links,
   };
 }
 

@@ -44,7 +44,6 @@ interface OnboardingProps {
   links: Links;
   subjects: Subject[];
   countries: Country[];
-  ageRanges: AgeRange[];
   userProfile: UserProfile;
 }
 
@@ -218,7 +217,6 @@ class OnboardingForm extends React.Component<
                     <AgeRangeForm
                       label="Your age groups"
                       form={this.props.form}
-                      ageRanges={this.props.ageRanges}
                     />
                   </section>
                   <section
@@ -373,12 +371,21 @@ class OnboardingForm extends React.Component<
       if (!err) {
         const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
 
+        const ageRangeArrays = (values.ageRange as string[]).map(it =>
+          AgeRange.decodeJSON(it).generateRangeArray(),
+        );
+        const flattenedAgeRanges: number[] = [].concat.apply(
+          [],
+          ageRangeArrays,
+        );
+        const ages = Array.from(new Set(flattenedAgeRanges));
+
         this.setState({ ...this.state, updating: true });
         updateUser(this.props.links, {
           ...this.props.userProfile,
           firstName: values.firstName,
           lastName: values.lastName,
-          ages: values.ageRange,
+          ages,
           subjects: values.subjects,
           country: values.country,
           state: values.state,
@@ -419,7 +426,6 @@ function mapStateToProps(state: State): OnboardingProps {
     links: state.links,
     subjects: state.subjects,
     countries: state.countries,
-    ageRanges: state.ageRanges,
     userProfile: state.user,
   };
 }

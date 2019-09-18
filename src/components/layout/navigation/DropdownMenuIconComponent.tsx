@@ -14,7 +14,6 @@ interface Props {
 }
 class DropdownMenuIconComponent extends React.Component<Props> {
   public render() {
-    console.log(`render new icon component active ${this.props.active}`);
     return (
       <A11yButton callback={this.props.onClick}>
         <div
