@@ -61,7 +61,7 @@ describe(`Profile form`, () => {
     ).toContainEqual('subject-one-id');
     expect(
       wrapper
-        .find(By.dataQa('age-select'))
+        .find(By.dataQa('age-select-input'))
         .first()
         .props().value,
     ).toContainEqual(new AgeRange(3, 5).encodeJSON());

@@ -27,7 +27,7 @@ export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
         })(
           <SelectAgeRange
             onUpdateAgeRange={this.onUpdateAgeRange}
-            data-qa="age-select"
+            data-qa={'age-select-input'}
             initialValue={this.props.initialValue}
           />,
         )}

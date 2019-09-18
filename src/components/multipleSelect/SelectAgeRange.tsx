@@ -17,6 +17,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
         placeholder="Choose ages"
         onChange={this.onChange}
         aria-label="Ages I teach"
+        data-qa="age-select"
         defaultValue={this.generateInitialValues()}
       >
         {this.generateOptions()}
