@@ -17,6 +17,7 @@ import { Subject } from '../../../types/Subject';
 import { UsaState } from '../../../types/UsaState';
 import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
+import { updateUserAction } from '../accountSettings/redux/actions/updateUserAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';
 import { CountriesForm } from '../form/CountriesForm';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
@@ -62,6 +63,7 @@ interface InternalState {
 interface DispatchProps {
   fetchSubjects: () => void;
   fetchCountries: () => void;
+  updateUser: () => void;
   goToHomepage: () => void;
 }
 
@@ -394,6 +396,7 @@ class OnboardingForm extends React.Component<
         })
           .then(() => {
             this.props.goToHomepage();
+            this.props.updateUser();
           })
           .catch(ex => {
             console.error(ex);
@@ -429,6 +432,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchSubjects: () => dispatch(fetchSubjectsAction()),
     fetchCountries: () => dispatch(fetchCountriesAction()),
+    updateUser: () => dispatch(updateUserAction()),
     goToHomepage: () => dispatch(push('/')),
   };
 }
