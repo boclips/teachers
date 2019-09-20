@@ -7,7 +7,6 @@ import DurationFormatter from '../../../common/formatters/DurationFormatter';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../../common/higerOrderComponents/withMediaBreakPoint';
-import StopClickPropagation from '../../../common/StopClickPropagation';
 import VideoPlayer from '../../../video/player/VideoPlayer';
 import './CollectionCardVideoPreview.less';
 
@@ -53,27 +52,26 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
     const video = this.props.video;
 
     return video ? (
-      <StopClickPropagation key={`video-${video.id}`}>
-        <section
-          className="collection-video-preview"
-          data-qa="collection-video-preview"
+      <section
+        key={`video-${video.id}`}
+        className="collection-video-preview"
+        data-qa="collection-video-preview"
+      >
+        {this.props.isGrid ||
+        this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width
+          ? this.renderThumbnailContainer()
+          : this.renderVideoContainer()}
+        <Link
+          to={`/videos/${video.id}`}
+          className="title clamp-2-lines link--secondary"
         >
-          {this.props.isGrid ||
-          this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width
-            ? this.renderThumbnailContainer()
-            : this.renderVideoContainer()}
-          <Link
-            to={`/videos/${video.id}`}
-            className="title clamp-2-lines link--secondary"
-          >
-            {video.title}
-          </Link>
-          <section data-qa="video-duration" className={'subtitle duration'}>
-            <Icon type="clock-circle" />{' '}
-            <DurationFormatter duration={video.duration} />
-          </section>
+          {video.title}
+        </Link>
+        <section data-qa="video-duration" className={'subtitle duration'}>
+          <Icon type="clock-circle" />{' '}
+          <DurationFormatter duration={video.duration} />
         </section>
-      </StopClickPropagation>
+      </section>
     ) : (
       <CollectionCardVideoPreview.VideoPreviewSkeleton />
     );
