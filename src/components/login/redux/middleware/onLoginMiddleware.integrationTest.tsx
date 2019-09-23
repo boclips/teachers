@@ -7,12 +7,12 @@ import { Link, RawLink } from '../../../../types/Link';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
-import { registerAnalytics } from '../actions/registerAnalytics';
-import { registerAppcues } from '../actions/registerAppcues';
+import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
-import onRegisterAnalyticsMiddleware from './onRegisterAnalyticsMiddleware';
+import onRegisterUserMiddleware from './onRegisterUserForAnalytics';
+import onRegisterUserForAnalytics from './onRegisterUserForAnalytics';
 
 jest.mock('../../../searchBar/redux/dispatchSearchActions');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
@@ -20,7 +20,8 @@ jest.mock('../../../../services/users/updateUser');
 
 const mockStore = configureStore<{}>([
   onStoreLoginMiddleware,
-  onRegisterAnalyticsMiddleware,
+  onRegisterUserForAnalytics,
+  onRegisterUserMiddleware,
 ]);
 const store = mockStore({
   apiPrefix: 'https://api.example.com',
@@ -72,16 +73,10 @@ describe('on store login', () => {
       });
     });
 
-    it('sets up web analytics', async () => {
-      await eventually(() => {
-        expect(store.getActions()).toContainEqual(registerAnalytics('123'));
-      });
-    });
-
     it('sets up appcues', async () => {
       await eventually(() => {
         expect(store.getActions()).toContainEqual(
-          registerAppcues({
+          registerUserForAnalytics({
             analyticsId: '123',
             email: 'bob@someone.com',
             firstName: 'Bob',
@@ -143,7 +138,22 @@ describe('on store login', () => {
 
     it('does not redirect to the onboarding page', async () => {
       await eventually(() => {
-        expect(store.getActions()).toContainEqual(registerAnalytics('123')); // Necessary to avoid false positives
+        expect(store.getActions()).toContainEqual(
+          registerUserForAnalytics({
+            analyticsId: '123',
+            email: 'bob@someone.com',
+            firstName: 'Bob',
+            subjects: ['1'],
+            ages: [1, 2, 3, 4],
+            id: 'my-user-id',
+            lastName: 'Someone',
+            links: {
+              self: new Link({
+                href: 'http://localhost/v1/users/my-user-id',
+              } as RawLink),
+            },
+          }),
+        ); // Necessary to avoid false positives
         expect(store.getActions()).not.toContainEqual(push('/onboarding'));
       });
     });

@@ -25,7 +25,7 @@ export default class MixpanelAnalytics {
     this.mixpanelInstance = mixpanel;
   }
 
-  public setUserId(userId: string) {
+  public identify(userId: string) {
     this.mixpanelInstance.identify(userId);
   }
 

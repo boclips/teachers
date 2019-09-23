@@ -11,8 +11,7 @@ import { storeCollectionsAction } from '../../../collection/redux/actions/storeC
 import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
-import { registerAnalytics } from '../actions/registerAnalytics';
-import { registerAppcues } from '../actions/registerAppcues';
+import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 
@@ -37,8 +36,7 @@ const onLoggedIn = (store: Store) => {
     })
     .then((user: UserProfile) => {
       store.dispatch(userDetailsFetched(user));
-      store.dispatch(registerAppcues(user));
-      store.dispatch(registerAnalytics(user.analyticsId));
+      store.dispatch(registerUserForAnalytics(user));
     })
     .catch(error => {
       console.error(error);

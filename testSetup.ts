@@ -30,6 +30,7 @@ window.scrollTo = jest.fn();
 window.Appcues = {
   page: jest.fn(),
   identify: jest.fn(),
+  track: jest.fn(),
 };
 
 export async function waitForElement(selector: string) {

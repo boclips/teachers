@@ -89,7 +89,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('sets a user id', () => {
-    mixpanelAnalytics.setUserId('my-user-id');
+    mixpanelAnalytics.identify('my-user-id');
 
     expect(mockMixpanel.identify).toHaveBeenCalledWith('my-user-id');
   });

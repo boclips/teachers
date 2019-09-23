@@ -19,8 +19,7 @@ import { tagsReducer } from '../components/common/tags/redux/reducers/tagsReduce
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
 import { disciplinesReducer } from '../components/disciplines/redux/reducers/disciplinesReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onLoginMiddleware';
-import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/onRegisterAnalyticsMiddleware';
-import onRegisterAppcuesMiddleware from '../components/login/redux/middleware/onRegisterAppcuesMiddleware';
+import onRegisterUserForAnalytics from '../components/login/redux/middleware/onRegisterUserForAnalytics';
 import { userDetailsFetchedReducer } from '../components/login/redux/reducers/userDetailsFetchedReducer';
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
 import { subjectsReducer } from '../components/multipleSelect/redux/reducers/subjectsReducer';
@@ -46,6 +45,7 @@ declare global {
     Appcues: {
       identify: (userId: string, user: any) => {};
       page: () => {};
+      track: (event: string) => {};
     };
   }
 }
@@ -89,8 +89,7 @@ export default class App extends PureComponent<Props> {
         onStoreLoginMiddleware,
         onAuthenticationResolvedMiddleware,
         ...requestAuthenticationMiddleware,
-        onRegisterAnalyticsMiddleware,
-        onRegisterAppcuesMiddleware,
+        onRegisterUserForAnalytics,
         ...collectionMiddleware,
         fetchSubjectsMiddleware,
         fetchCountriesMiddleware,
