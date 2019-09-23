@@ -13,6 +13,7 @@ import MixpanelAnalytics from './MixpanelAnalytics';
 
 let mixpanelAnalytics: MixpanelAnalytics;
 let mockMixpanel: Mixpanel;
+let mockAppcues: Appcues;
 
 beforeEach(() => {
   mockMixpanel = {
@@ -25,10 +26,50 @@ beforeEach(() => {
     identify: jest.fn(),
   } as Mixpanel;
 
-  mixpanelAnalytics = new MixpanelAnalytics(mockMixpanel as Mixpanel);
+  mockAppcues = {
+    track: jest.fn(),
+    page: jest.fn(),
+    identify: jest.fn(),
+  };
+
+  mixpanelAnalytics = new MixpanelAnalytics(mockMixpanel, mockAppcues);
+});
+
+describe('cannot instantiate analytics without mixpanel and appcues instances', () => {
+  it('will fail without a mixpanel instance', () => {
+    expect(() => {
+      // tslint:disable-next-line:no-unused-expression
+      new MixpanelAnalytics(undefined, mockAppcues);
+    }).toThrow();
+  });
+
+  it('will fail without a appcues instance', () => {
+    expect(() => {
+      // tslint:disable-next-line:no-unused-expression
+      new MixpanelAnalytics(mockMixpanel, undefined);
+    }).toThrow();
+  });
 });
 
 describe('MixpanelAnalytics', () => {
+  it('creates a user profile', () => {
+    mixpanelAnalytics.createUserProfile({} as UserProfile);
+
+    expect(mockMixpanel.people.set).toHaveBeenCalled();
+  });
+
+  it('resets mixpanel', () => {
+    mixpanelAnalytics.reset();
+
+    expect(mockMixpanel.reset).toHaveBeenCalled();
+  });
+
+  it('sets a user id', () => {
+    mixpanelAnalytics.identify('my-user-id');
+
+    expect(mockMixpanel.identify).toHaveBeenCalledWith('my-user-id');
+  });
+
   it('tracks account activation', () => {
     mixpanelAnalytics.trackOnboardingCompleted();
 
@@ -38,7 +79,7 @@ describe('MixpanelAnalytics', () => {
   it('tracks default collection visited', () => {
     const collection = VideoCollectionFactory.sample({
       title: 'style',
-      id: 'doggy',
+      id: 'cat',
       isPublic: true,
       isMine: true,
     });
@@ -46,7 +87,14 @@ describe('MixpanelAnalytics', () => {
     mixpanelAnalytics.trackCollectionVisited(collection);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
-      video_collection_id: 'doggy',
+      video_collection_id: 'cat',
+      video_collection_title: 'style',
+      video_collection_is_owner: true,
+      video_collection_is_public: true,
+    });
+
+    expect(mockAppcues.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
+      video_collection_id: 'cat',
       video_collection_title: 'style',
       video_collection_is_owner: true,
       video_collection_is_public: true,
@@ -74,36 +122,25 @@ describe('MixpanelAnalytics', () => {
       video_search_query: undefined,
       video_search_type: 'INSTRUCTIONAL',
     });
-  });
 
-  it('creates a user profile', () => {
-    mixpanelAnalytics.createUserProfile({} as UserProfile);
-
-    expect(mockMixpanel.people.set).toHaveBeenCalled();
-  });
-
-  it('resets mixpanel', () => {
-    mixpanelAnalytics.reset();
-
-    expect(mockMixpanel.reset).toHaveBeenCalled();
-  });
-
-  it('sets a user id', () => {
-    mixpanelAnalytics.identify('my-user-id');
-
-    expect(mockMixpanel.identify).toHaveBeenCalledWith('my-user-id');
+    expect(mockAppcues.track).toHaveBeenCalledWith('VIDEO_SEARCH', {
+      video_search_number_of_results: 1,
+      video_search_page_number: 1,
+      video_search_query: undefined,
+      video_search_type: 'INSTRUCTIONAL',
+    });
   });
 
   it('tracks video added to collection', () => {
     const video = VideoFactory.sample({ title: 'gangnam style' });
     const collection = VideoCollectionFactory.sample({
       title: 'style',
-      id: 'doggy',
+      id: 'cat',
     });
     mixpanelAnalytics.trackVideoAddedToCollection(video, collection);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
-      video_collection_id: 'doggy',
+      video_collection_id: 'cat',
       video_collection_title: 'style',
       video_title: 'gangnam style',
     });
@@ -113,14 +150,14 @@ describe('MixpanelAnalytics', () => {
     const video = VideoFactory.sample({ title: 'gangnam style' });
     const collection = VideoCollectionFactory.sample({
       title: 'style',
-      id: 'doggy',
+      id: 'cat',
     });
     mixpanelAnalytics.trackVideoRemovedFromCollection(video, collection);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTION_VIDEO_REMOVED',
       {
-        video_collection_id: 'doggy',
+        video_collection_id: 'cat',
         video_collection_title: 'style',
         video_title: 'gangnam style',
       },
@@ -178,6 +215,21 @@ describe('MixpanelAnalytics', () => {
     mixpanelAnalytics.trackVideoPlayback(video, 50, 60);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
+      playback_segment_end_seconds: 60,
+      playback_segment_start_seconds: 50,
+      playback_video_duration_seconds: 120,
+      video_badges: 'ad-free',
+      video_contentPartner: 'Bodevs Productions',
+      video_description: 'my video description',
+      video_duration: 'PT2M',
+      video_id: '123',
+      video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
+      video_releasedOn: '2018-06-20T10:12:33.000Z',
+      video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
+      video_title: 'my video title',
+    });
+
+    expect(mockAppcues.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
       playback_segment_end_seconds: 60,
       playback_segment_start_seconds: 50,
       playback_video_duration_seconds: 120,

@@ -16,13 +16,19 @@ import { toMixpanelVideo } from './toMixpanelVideo';
 
 export default class MixpanelAnalytics {
   private mixpanelInstance: Mixpanel;
+  private appcuesInstance: Appcues;
 
-  public constructor(mixpanel: Mixpanel) {
+  public constructor(mixpanel: Mixpanel, appcues: Appcues) {
     if (mixpanel === undefined) {
       throw Error('Mixpanel is undefined');
     }
 
+    if (appcues === undefined) {
+      throw Error('Appcues is undefined');
+    }
+
     this.mixpanelInstance = mixpanel;
+    this.appcuesInstance = appcues;
   }
 
   public identify(userId: string) {
@@ -65,14 +71,17 @@ export default class MixpanelAnalytics {
       type = 'NEWS';
     }
 
-    this.mixpanelInstance.track(EventTypes.VIDEO_SEARCH, {
+    const eventPayload = {
       [`${EventTypes.VIDEO_SEARCH}_query`.toLowerCase()]: searchResults.query,
       [`${EventTypes.VIDEO_SEARCH}_number_of_results`.toLowerCase()]:
         searchResults.videos && searchResults.videos.length,
       [`${EventTypes.VIDEO_SEARCH}_page_number`.toLowerCase()]: searchResults
         .paging.number,
       [`${EventTypes.VIDEO_SEARCH}_type`.toLowerCase()]: type,
-    });
+    };
+
+    this.appcuesInstance.track(EventTypes.VIDEO_SEARCH, eventPayload);
+    this.mixpanelInstance.track(EventTypes.VIDEO_SEARCH, eventPayload);
   }
 
   public trackCollectionSearch(searchResults: CollectionSearchResults) {
@@ -93,12 +102,14 @@ export default class MixpanelAnalytics {
   }
 
   public trackCollectionVisited(collection: VideoCollection): void {
-    this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, {
+    const payload = {
       video_collection_title: collection.title,
       video_collection_id: collection.id,
       video_collection_is_owner: collection.isMine,
       video_collection_is_public: collection.isPublic,
-    });
+    };
+    this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
+    this.appcuesInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
   }
 
   public trackMyCollectionsVisited(): void {
@@ -206,10 +217,12 @@ export default class MixpanelAnalytics {
     startSeconds: number,
     endSeconds: number,
   ): void {
-    this.mixpanelInstance.track(EventTypes.VIDEO_PLAYBACK, {
+    const payload = {
       ...toMixpanelVideo(video),
       ...toMixpanelSegment(video, startSeconds, endSeconds),
-    });
+    };
+    this.mixpanelInstance.track(EventTypes.VIDEO_PLAYBACK, payload);
+    this.appcuesInstance.track(EventTypes.VIDEO_PLAYBACK, payload);
   }
 
   public trackFailedAccountCreation(formData: any) {

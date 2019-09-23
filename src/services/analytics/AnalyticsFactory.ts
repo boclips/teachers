@@ -5,6 +5,7 @@ import MixpanelAnalytics from './mixpanel/MixpanelAnalytics';
 
 const mixpanelAnalytics = new MixpanelAnalytics(
   initializeMixpanel(Constants.ENVIRONMENT),
+  window.Appcues,
 );
 
 export default class AnalyticsFactory {
