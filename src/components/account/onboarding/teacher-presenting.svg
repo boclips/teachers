@@ -108,7 +108,7 @@
                             <use xlink:href="#teacher-presenting-path-5"></use>
                         </mask>
                         <g id="teacher-presenting-clip-17"></g>
-                        <polygon id="teacher-presentingfill-16" fill="#848FBB" mask="url(#teacher-presenting-mask-6)" points="-4.40862429 153.553655 260.952222 153.553655 260.952222 -4.05972486 -4.40862429 -4.05972486"></polygon>
+                        <polygon id="teacher-presentingfill-16" fill="#6471A9" mask="url(#teacher-presenting-mask-6)" points="-4.40862429 153.553655 260.952222 153.553655 260.952222 -4.05972486 -4.40862429 -4.05972486"></polygon>
                     </g>
                     <g id="teacher-presenting-group-21" transform="translate(93.901328, 201.814630)">
                         <mask id="teacher-presenting-mask-8" fill="white">
@@ -150,7 +150,7 @@
                             <use xlink:href="#teacher-presenting-path-17"></use>
                         </mask>
                         <g id="teacher-presenting-clip-35"></g>
-                        <polygon id="teacher-presentingfill-34" fill="#FF654C" mask="url(#teacher-presenting-mask-18)" points="-4.32764516 9.09464516 9.02917268 9.09464516 9.02917268 -4.26260342 -4.32764516 -4.26260342"></polygon>
+                        <polygon id="teacher-presentingfill-34" fill="#FB5C41" mask="url(#teacher-presenting-mask-18)" points="-4.32764516 9.09464516 9.02917268 9.09464516 9.02917268 -4.26260342 -4.32764516 -4.26260342"></polygon>
                     </g>
                     <g id="teacher-presenting-group-39" transform="translate(210.201139, 94.991101)">
                         <mask id="teacher-presenting-mask-20" fill="white">
@@ -402,7 +402,7 @@
                             <use xlink:href="#teacher-presenting-path-89"></use>
                         </mask>
                         <g id="teacher-presenting-clip-143"></g>
-                        <polygon id="teacher-presentingfill-142" fill="#FF654C" mask="url(#teacher-presenting-mask-90)" points="-6.88796395 14.4315142 14.3100455 14.4315142 14.3100455 -6.76649526 -6.88796395 -6.76649526"></polygon>
+                        <polygon id="teacher-presentingfill-142" fill="#FB5C41" mask="url(#teacher-presenting-mask-90)" points="-6.88796395 14.4315142 14.3100455 14.4315142 14.3100455 -6.76649526 -6.88796395 -6.76649526"></polygon>
                     </g>
                     <g id="teacher-presenting-group-147" transform="translate(225.707780, 166.063207)">
                         <mask id="teacher-presenting-mask-92" fill="white">
