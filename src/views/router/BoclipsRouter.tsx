@@ -65,7 +65,11 @@ interface StateProps {
   search: string;
 }
 
-class BoclipsRouter extends Component<{ history: History } & StateProps> {
+interface Props {
+  history: History;
+}
+
+class BoclipsRouter extends Component<Props & StateProps> {
   public render() {
     return (
       <ConnectedRouter history={this.props.history || defaultHistory}>
@@ -125,6 +129,15 @@ class BoclipsRouter extends Component<{ history: History } & StateProps> {
         </ScrollToTopOnForwardNavigation>
       </ConnectedRouter>
     );
+  }
+
+  public componentDidUpdate(prevProps: Props & StateProps) {
+    const previousPath = prevProps.pathname;
+    const currentPath = this.props.pathname;
+
+    if (previousPath !== currentPath) {
+      window.Appcues.page();
+    }
   }
 }
 

@@ -8,6 +8,7 @@ import { storeCollectionsAction } from '../../../collection/redux/actions/storeC
 import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
+import { registerAppcues } from '../actions/registerAppcues';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
@@ -74,6 +75,27 @@ describe('on store login', () => {
     it('sets up web analytics', async () => {
       await eventually(() => {
         expect(store.getActions()).toContainEqual(registerAnalytics('123'));
+      });
+    });
+
+    it('sets up appcues', async () => {
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(
+          registerAppcues({
+            analyticsId: '123',
+            email: 'bob@someone.com',
+            firstName: 'Bob',
+            subjects: ['1'],
+            ages: [1, 2, 3, 4],
+            id: 'my-user-id',
+            lastName: 'Someone',
+            links: {
+              self: new Link({
+                href: 'http://localhost/v1/users/my-user-id',
+              } as RawLink),
+            },
+          }),
+        );
       });
     });
 

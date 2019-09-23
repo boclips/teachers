@@ -12,6 +12,7 @@ import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAct
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
 import { registerAnalytics } from '../actions/registerAnalytics';
+import { registerAppcues } from '../actions/registerAppcues';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 
@@ -36,6 +37,7 @@ const onLoggedIn = (store: Store) => {
     })
     .then((user: UserProfile) => {
       store.dispatch(userDetailsFetched(user));
+      store.dispatch(registerAppcues(user));
       store.dispatch(registerAnalytics(user.analyticsId));
     })
     .catch(error => {

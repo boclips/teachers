@@ -26,6 +26,12 @@ jest.mock('react', () => {
 // JSDom doesn't implement scrollTo
 window.scrollTo = jest.fn();
 
+// This is mocking the Appcues import from index.html
+window.Appcues = {
+  page: jest.fn(),
+  identify: jest.fn(),
+};
+
 export async function waitForElement(selector: string) {
   await eventually(() => {
     expect(findElement(selector)).toBeTruthy();

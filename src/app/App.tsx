@@ -20,6 +20,7 @@ import fetchDisciplinesMiddleware from '../components/disciplines/redux/middlewa
 import { disciplinesReducer } from '../components/disciplines/redux/reducers/disciplinesReducer';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onLoginMiddleware';
 import onRegisterAnalyticsMiddleware from '../components/login/redux/middleware/onRegisterAnalyticsMiddleware';
+import onRegisterAppcuesMiddleware from '../components/login/redux/middleware/onRegisterAppcuesMiddleware';
 import { userDetailsFetchedReducer } from '../components/login/redux/reducers/userDetailsFetchedReducer';
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
 import { subjectsReducer } from '../components/multipleSelect/redux/reducers/subjectsReducer';
@@ -39,6 +40,15 @@ import { authenticationReducer } from './redux/authentication/reducers/authentic
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
 import { linksReducer } from './redux/links/reducers/linksReducer';
 import { sentryBreadcrumbMiddleware } from './redux/sentryBreadcrumbMiddleware';
+
+declare global {
+  interface Window {
+    Appcues: {
+      identify: (userId: string, user: any) => {};
+      page: () => {};
+    };
+  }
+}
 
 const composeEnhancers =
   window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
@@ -80,6 +90,7 @@ export default class App extends PureComponent<Props> {
         onAuthenticationResolvedMiddleware,
         ...requestAuthenticationMiddleware,
         onRegisterAnalyticsMiddleware,
+        onRegisterAppcuesMiddleware,
         ...collectionMiddleware,
         fetchSubjectsMiddleware,
         fetchCountriesMiddleware,
