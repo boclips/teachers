@@ -4,14 +4,14 @@ import {
   AttachmentFactory,
   VideoCollectionFactory,
   VideoFactory,
-} from '../../../../test-support/factories';
-import { VideoSearchResults } from '../../../types/State';
-import { StreamPlayback } from '../../../types/Video';
-import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
-import { UserProfile } from '../../users/UserProfile';
-import MixpanelAnalytics from './MixpanelAnalytics';
+} from '../../../test-support/factories';
+import { VideoSearchResults } from '../../types/State';
+import { StreamPlayback } from '../../types/Video';
+import { VideoSearchRequest } from '../../types/VideoSearchRequest';
+import { UserProfile } from '../users/UserProfile';
+import AnalyticsService from './AnalyticsService';
 
-let mixpanelAnalytics: MixpanelAnalytics;
+let analyticsService: AnalyticsService;
 let mockMixpanel: Mixpanel;
 let mockAppcues: Appcues;
 
@@ -32,46 +32,46 @@ beforeEach(() => {
     identify: jest.fn(),
   };
 
-  mixpanelAnalytics = new MixpanelAnalytics(mockMixpanel, mockAppcues);
+  analyticsService = new AnalyticsService(mockMixpanel, mockAppcues);
 });
 
 describe('cannot instantiate analytics without mixpanel and appcues instances', () => {
   it('will fail without a mixpanel instance', () => {
     expect(() => {
       // tslint:disable-next-line:no-unused-expression
-      new MixpanelAnalytics(undefined, mockAppcues);
+      new AnalyticsService(undefined, mockAppcues);
     }).toThrow();
   });
 
   it('will fail without a appcues instance', () => {
     expect(() => {
       // tslint:disable-next-line:no-unused-expression
-      new MixpanelAnalytics(mockMixpanel, undefined);
+      new AnalyticsService(mockMixpanel, undefined);
     }).toThrow();
   });
 });
 
 describe('MixpanelAnalytics', () => {
   it('creates a user profile', () => {
-    mixpanelAnalytics.createUserProfile({} as UserProfile);
+    analyticsService.createUserProfile({} as UserProfile);
 
     expect(mockMixpanel.people.set).toHaveBeenCalled();
   });
 
   it('resets mixpanel', () => {
-    mixpanelAnalytics.reset();
+    analyticsService.reset();
 
     expect(mockMixpanel.reset).toHaveBeenCalled();
   });
 
   it('sets a user id', () => {
-    mixpanelAnalytics.identify('my-user-id');
+    analyticsService.identify('my-user-id');
 
     expect(mockMixpanel.identify).toHaveBeenCalledWith('my-user-id');
   });
 
   it('tracks account activation', () => {
-    mixpanelAnalytics.trackOnboardingCompleted();
+    analyticsService.trackOnboardingCompleted();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
   });
@@ -84,7 +84,7 @@ describe('MixpanelAnalytics', () => {
       isMine: true,
     });
 
-    mixpanelAnalytics.trackCollectionVisited(collection);
+    analyticsService.trackCollectionVisited(collection);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
       video_collection_id: 'cat',
@@ -102,7 +102,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks search', () => {
-    mixpanelAnalytics.trackVideoSearch(
+    analyticsService.trackVideoSearch(
       {
         query: 'test',
         page: 1,
@@ -137,7 +137,7 @@ describe('MixpanelAnalytics', () => {
       title: 'style',
       id: 'cat',
     });
-    mixpanelAnalytics.trackVideoAddedToCollection(video, collection);
+    analyticsService.trackVideoAddedToCollection(video, collection);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
       video_collection_id: 'cat',
@@ -152,7 +152,7 @@ describe('MixpanelAnalytics', () => {
       title: 'style',
       id: 'cat',
     });
-    mixpanelAnalytics.trackVideoRemovedFromCollection(video, collection);
+    analyticsService.trackVideoRemovedFromCollection(video, collection);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTION_VIDEO_REMOVED',
@@ -182,7 +182,7 @@ describe('MixpanelAnalytics', () => {
       end: 33,
     };
 
-    mixpanelAnalytics.trackVideoLinkCopied(video, segment);
+    analyticsService.trackVideoLinkCopied(video, segment);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_LINK_COPIED', {
       video_badges: 'ad-free',
@@ -212,7 +212,7 @@ describe('MixpanelAnalytics', () => {
       title: 'my video title',
     });
 
-    mixpanelAnalytics.trackVideoPlayback(video, 50, 60);
+    analyticsService.trackVideoPlayback(video, 50, 60);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
       playback_segment_end_seconds: 60,
@@ -247,7 +247,7 @@ describe('MixpanelAnalytics', () => {
 
   it('track failed account creation', () => {
     const data = { some: 'data' };
-    mixpanelAnalytics.trackFailedAccountCreation(data);
+    analyticsService.trackFailedAccountCreation(data);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'REGISTRATION_ATTEMPT_FAILED',
@@ -257,7 +257,7 @@ describe('MixpanelAnalytics', () => {
 
   it('track when account already exists', () => {
     const data = { some: 'data' };
-    mixpanelAnalytics.trackAccountAlreadyExists(data);
+    analyticsService.trackAccountAlreadyExists(data);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'REGISTRATION_ACCOUNT_EXISTS',
@@ -266,7 +266,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('track when refer a friend modal opened', () => {
-    mixpanelAnalytics.trackReferAFriendModalOpened();
+    analyticsService.trackReferAFriendModalOpened();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'REFER_A_FRIEND_MODAL_OPENED',
@@ -274,7 +274,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('track when refer a friend modal closed', () => {
-    mixpanelAnalytics.trackReferAFriendModalClosed();
+    analyticsService.trackReferAFriendModalClosed();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'REFER_A_FRIEND_MODAL_CLOSED',
@@ -282,7 +282,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('track user explores more collections on homepage', () => {
-    mixpanelAnalytics.trackHomepageExploreCollections();
+    analyticsService.trackHomepageExploreCollections();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'HOMEPAGE_EXPLORE_COLLECTIONS',
@@ -291,7 +291,7 @@ describe('MixpanelAnalytics', () => {
 
   it('track when user applies search filters', () => {
     const data = { some: 'data' };
-    mixpanelAnalytics.trackSearchFiltersApplied(data);
+    analyticsService.trackSearchFiltersApplied(data);
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'SEARCH_FILTERS_APPLIED',
@@ -300,7 +300,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks subject tags clicked', () => {
-    mixpanelAnalytics.trackSubjectTagClicked('1234');
+    analyticsService.trackSubjectTagClicked('1234');
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('SUBJECT_TAG_CLICKED', {
       subject_id: '1234',
@@ -308,7 +308,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks my collections icon clicked', () => {
-    mixpanelAnalytics.trackMyCollectionsNavbarButtonClicked();
+    analyticsService.trackMyCollectionsNavbarButtonClicked();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED',
@@ -316,7 +316,7 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks collections icon clicked', () => {
-    mixpanelAnalytics.trackCollectionsNavbarButtonClicked();
+    analyticsService.trackCollectionsNavbarButtonClicked();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTIONS_NAVBAR_BUTTON_CLICKED',
@@ -330,7 +330,7 @@ describe('MixpanelAnalytics', () => {
       type: 'ATTACHMENT_TYPE' as any,
     });
 
-    mixpanelAnalytics.trackCollectionAttachmentLinkVisited(
+    analyticsService.trackCollectionAttachmentLinkVisited(
       collectionId,
       attachment,
     );
@@ -346,19 +346,19 @@ describe('MixpanelAnalytics', () => {
   });
 
   it('tracks onboarding being started', () => {
-    mixpanelAnalytics.trackOnboardingStarted();
+    analyticsService.trackOnboardingStarted();
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_STARTED');
   });
 
   it('tracks onboarding being finished', () => {
-    mixpanelAnalytics.trackOnboardingCompleted();
+    analyticsService.trackOnboardingCompleted();
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_COMPLETED');
     expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
   });
 
   it('tracks onboarding page changing', () => {
     const pageIndex = 3;
-    mixpanelAnalytics.trackOnboardingPageChanged(pageIndex);
+    analyticsService.trackOnboardingPageChanged(pageIndex);
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_PAGE_CHANGED', {
       page_index: pageIndex,
     });

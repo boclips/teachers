@@ -105,6 +105,6 @@ export default class HomeView extends PureComponent {
   }
 
   private track(_: SyntheticEvent) {
-    AnalyticsFactory.mixpanel().trackHomepageExploreCollections();
+    AnalyticsFactory.externalAnalytics().trackHomepageExploreCollections();
   }
 }

@@ -41,8 +41,8 @@ export default function updateUser(
   };
 
   return axios.put(links.profile.getOriginalLink(), request).then(() => {
-    AnalyticsFactory.mixpanel().trackOnboardingCompleted();
-    AnalyticsFactory.mixpanel().createUserProfile(userProfile);
+    AnalyticsFactory.externalAnalytics().trackOnboardingCompleted();
+    AnalyticsFactory.externalAnalytics().createUserProfile(userProfile);
   });
 }
 

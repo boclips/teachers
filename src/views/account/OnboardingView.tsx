@@ -18,6 +18,6 @@ export class OnboardingView extends PureComponent {
   }
 
   public componentDidMount(): void {
-    AnalyticsFactory.mixpanel().trackOnboardingStarted();
+    AnalyticsFactory.externalAnalytics().trackOnboardingStarted();
   }
 }

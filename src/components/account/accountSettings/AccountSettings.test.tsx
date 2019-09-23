@@ -14,7 +14,7 @@ import Mock = jest.Mock;
 
 jest.mock('../../../services/users/fetchUser');
 
-AnalyticsFactory.mixpanel = jest.fn(() => analyticsMock);
+AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
 const mockFetchUser = fetchUser as Mock;
 

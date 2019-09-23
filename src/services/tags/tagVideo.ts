@@ -14,7 +14,7 @@ export default function tagVideo(video: Video, tag: Tag): Promise<Video> {
     .then(response => response.data)
     .then(convertVideoResource)
     .then(resource => {
-      AnalyticsFactory.mixpanel().trackVideoTagging(video, tag);
+      AnalyticsFactory.externalAnalytics().trackVideoTagging(video, tag);
       return resource;
     });
 }

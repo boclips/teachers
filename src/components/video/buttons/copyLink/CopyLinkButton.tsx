@@ -15,11 +15,11 @@ interface Props {
 
 export default class CopyLinkButton extends React.PureComponent<Props> {
   private onClick = () => {
-    AnalyticsFactory.mixpanel().trackVideoLinkCopied(
+    AnalyticsFactory.externalAnalytics().trackVideoLinkCopied(
       this.props.video,
       this.props.segment,
     );
-    AnalyticsFactory.boclips()
+    AnalyticsFactory.internalAnalytics()
       .trackVideoLinkCopied(this.props.video)
       .catch(console.error);
     NotificationFactory.success({

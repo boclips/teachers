@@ -26,11 +26,11 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
       segment: this.props.segment,
     });
 
-    AnalyticsFactory.mixpanel().trackVideoSharedInGoogle(
+    AnalyticsFactory.externalAnalytics().trackVideoSharedInGoogle(
       this.props.video,
       this.props.segment,
     );
-    AnalyticsFactory.boclips()
+    AnalyticsFactory.internalAnalytics()
       .trackVideoSharedInGoogle(this.props.video)
       .catch(console.error);
     const url: string = new GoogleClassroomUrlBuilder()

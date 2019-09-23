@@ -11,7 +11,7 @@ const identifyUsers = (_: Store, user: UserProfile) => {
     email: user.email,
     planType: Constants.ENVIRONMENT,
   });
-  AnalyticsFactory.mixpanel().identify(user.analyticsId);
+  AnalyticsFactory.externalAnalytics().identify(user.analyticsId);
 };
 
 export default sideEffect(registerUserForAnalytics, identifyUsers);

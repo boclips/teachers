@@ -13,7 +13,7 @@ export function onFetchVideo(
 ) {
   return fetchVideo(videoId, store.getState().links)
     .then((video: Video) => {
-      AnalyticsFactory.mixpanel().trackVideoVisited(video);
+      AnalyticsFactory.externalAnalytics().trackVideoVisited(video);
       return video;
     })
     .then(storeVideoAction)

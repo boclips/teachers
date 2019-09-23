@@ -21,7 +21,7 @@ import { OnboardingFormHelper } from './OnboardingFormHelper';
 
 jest.mock('../../../services/users/updateUser');
 
-AnalyticsFactory.mixpanel = jest.fn(() => analyticsMock);
+AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
 const mockUpdateUser = updateUser as Mock;
 const links = LinksFactory.sample({

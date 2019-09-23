@@ -19,7 +19,10 @@ export function onSearchVideos(
   fetchVideos(searchRequest, links).then(results => {
     store.dispatch(storeVideoSearchResultsAction(results));
 
-    AnalyticsFactory.mixpanel().trackVideoSearch(searchRequest, results);
+    AnalyticsFactory.externalAnalytics().trackVideoSearch(
+      searchRequest,
+      results,
+    );
   });
 }
 
@@ -31,7 +34,7 @@ export function onSearchCollections(
   searchCollections(searchRequest, links).then(results => {
     store.dispatch(storeCollectionSearchResultsAction(results));
 
-    AnalyticsFactory.mixpanel().trackCollectionSearch(results);
+    AnalyticsFactory.externalAnalytics().trackCollectionSearch(results);
   });
 }
 

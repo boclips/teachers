@@ -70,7 +70,9 @@ export class RemoveCollectionButtonInner extends PureComponent<
     });
   };
   public confirmRemoveCollection = () => {
-    AnalyticsFactory.mixpanel().trackCollectionRemoved(this.props.collection);
+    AnalyticsFactory.externalAnalytics().trackCollectionRemoved(
+      this.props.collection,
+    );
     this.props.onDeleteCollectionAction(this.props.collection);
   };
 }

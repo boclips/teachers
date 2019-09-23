@@ -40,7 +40,7 @@ export function onFetchNextCollections(
   const collectionsToFetch = store.getState().collections[request];
   fetchNextCollectionsPage(collectionsToFetch)
     .then(collections => {
-      AnalyticsFactory.mixpanel().trackMoreCollectionsLoaded(request);
+      AnalyticsFactory.externalAnalytics().trackMoreCollectionsLoaded(request);
       store.dispatch(
         appendPageableCollectionsAction({
           collections,

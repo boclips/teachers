@@ -12,7 +12,7 @@ export default function rateVideo(
     .then(response => response.data)
     .then(convertVideoResource)
     .then(resource => {
-      AnalyticsFactory.mixpanel().trackVideoRating(video, rating);
+      AnalyticsFactory.externalAnalytics().trackVideoRating(video, rating);
       return resource;
     });
 }

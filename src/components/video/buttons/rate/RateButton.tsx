@@ -48,7 +48,7 @@ export default class RateButton extends React.Component<RatingProps, State> {
 
   private openModal = () => {
     this.setState({ visible: true });
-    AnalyticsFactory.mixpanel().trackVideoRatingModalOpened();
+    AnalyticsFactory.externalAnalytics().trackVideoRatingModalOpened();
   };
 
   private closeModal = () => {

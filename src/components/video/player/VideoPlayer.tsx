@@ -64,7 +64,7 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
   };
 
   private handleOnPlayback = (_, startSeconds: number, endSeconds: number) => {
-    AnalyticsFactory.mixpanel().trackVideoPlayback(
+    AnalyticsFactory.externalAnalytics().trackVideoPlayback(
       this.props.video,
       startSeconds,
       endSeconds,

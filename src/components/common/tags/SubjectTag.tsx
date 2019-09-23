@@ -35,7 +35,9 @@ export class SubjectTag extends React.Component<SubjectTagProps> {
   }
 
   private trackClick = () => {
-    AnalyticsFactory.mixpanel().trackSubjectTagClicked(this.props.subjectId);
+    AnalyticsFactory.externalAnalytics().trackSubjectTagClicked(
+      this.props.subjectId,
+    );
   };
 }
 

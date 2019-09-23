@@ -13,7 +13,7 @@ export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
       store.dispatch(
         storeCollectionsAction({ collections, key: 'myCollections' }),
       );
-      AnalyticsFactory.mixpanel().trackMyCollectionsVisited();
+      AnalyticsFactory.externalAnalytics().trackMyCollectionsVisited();
     })
     .catch(console.error);
 }

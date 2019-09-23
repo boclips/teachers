@@ -14,7 +14,7 @@ export function onFetchCollection(
   fetchCollection(links, collectionId)
     .then(collection => {
       store.dispatch(storeCollectionAction(collection));
-      AnalyticsFactory.mixpanel().trackCollectionVisited(collection);
+      AnalyticsFactory.externalAnalytics().trackCollectionVisited(collection);
     })
     .catch(e => {
       if (e && e.response && e.response.status === 404) {

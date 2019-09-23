@@ -46,7 +46,9 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
   }
 
   private onVideoLinkClick = () =>
-    AnalyticsFactory.boclips().trackVideoLinkClicked(this.props.video);
+    AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(
+      this.props.video,
+    );
 
   public renderContent() {
     return (

@@ -87,7 +87,7 @@ class OnboardingForm extends React.Component<
   };
 
   public componentDidMount() {
-    AnalyticsFactory.mixpanel().trackAccountRegistration();
+    AnalyticsFactory.externalAnalytics().trackAccountRegistration();
 
     this.props.fetchSubjects();
     this.props.fetchCountries();
@@ -123,7 +123,9 @@ class OnboardingForm extends React.Component<
       visitedIndices.add(previousIndex);
 
       if (!this.state.visitedIndices.has(previousIndex)) {
-        AnalyticsFactory.mixpanel().trackOnboardingPageChanged(previousIndex);
+        AnalyticsFactory.externalAnalytics().trackOnboardingPageChanged(
+          previousIndex,
+        );
       }
     }
 

@@ -46,7 +46,7 @@ export function onBulkUpdateSearchParameter(
     page: 1,
   };
 
-  AnalyticsFactory.mixpanel().trackSearchFiltersApplied(request);
+  AnalyticsFactory.externalAnalytics().trackSearchFiltersApplied(request);
 
   store.dispatch(
     push(

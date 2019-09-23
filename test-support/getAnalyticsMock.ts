@@ -1,4 +1,4 @@
-import MixpanelAnalytics from '../src/services/analytics/mixpanel/MixpanelAnalytics';
+import AnalyticsService from '../src/services/analytics/AnalyticsService';
 
 export const analyticsMock = ({
   trackOnboardingCompleted: jest.fn(),
@@ -13,4 +13,4 @@ export const analyticsMock = ({
   trackVideoVisited: jest.fn(),
   trackCollectionAttachmentLinkVisited: jest.fn(),
   trackAccountRegistration: jest.fn(),
-} as any) as MixpanelAnalytics;
+} as any) as AnalyticsService;
