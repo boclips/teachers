@@ -82,20 +82,26 @@ export default class AnalyticsService {
   }
 
   public trackCollectionSearch(searchResults: CollectionSearchResults) {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_SEARCH, {
+    const payload = {
       [`${
         EventTypes.COLLECTION_SEARCH
       }_query`.toLowerCase()]: searchResults.query,
       [`${EventTypes.COLLECTION_SEARCH}_number_of_results`.toLowerCase()]:
         searchResults.collections && searchResults.collections.length,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.COLLECTION_SEARCH, payload);
+    this.appcuesInstance.track(EventTypes.COLLECTION_SEARCH, payload);
   }
 
   public trackDiscoveryPage(subjectId?: string[], disciplineId?: string) {
-    this.mixpanelInstance.track(EventTypes.DISCOVER_COLLECTIONS, {
+    const payload = {
       subject_id: subjectId ? subjectId : null,
       discipline_id: disciplineId ? disciplineId : null,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.DISCOVER_COLLECTIONS, payload);
+    this.appcuesInstance.track(EventTypes.DISCOVER_COLLECTIONS, payload);
   }
 
   public trackCollectionVisited(collection: VideoCollection): void {
@@ -105,6 +111,7 @@ export default class AnalyticsService {
       video_collection_is_owner: collection.isMine,
       video_collection_is_public: collection.isPublic,
     };
+
     this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
     this.appcuesInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
   }
@@ -117,96 +124,151 @@ export default class AnalyticsService {
     collectionId: VideoCollection['id'],
     attachment: Attachment,
   ): void {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_ATTACHMENT_VISITED, {
+    const payload = {
       video_collection_id: collectionId,
       attachment_id: attachment.id,
       attachment_type: attachment.type,
-    });
+    };
+
+    this.mixpanelInstance.track(
+      EventTypes.COLLECTION_ATTACHMENT_VISITED,
+      payload,
+    );
+
+    this.appcuesInstance.track(
+      EventTypes.COLLECTION_ATTACHMENT_VISITED,
+      payload,
+    );
   }
 
   public trackVideoAddedToCollection(
     video: Video,
     collection: VideoCollection,
   ): void {
-    this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, {
+    const payload = {
       video_collection_title: collection.title,
       video_collection_id: collection.id,
       video_title: video.title,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, payload);
+    this.appcuesInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, payload);
   }
 
   public trackCollectionCreated(request: CreateCollectionRequest): void {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_CREATED, {
+    const payload = {
       collection_title: request.title,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.COLLECTION_CREATED, payload);
+    this.appcuesInstance.track(EventTypes.COLLECTION_CREATED, payload);
   }
 
   public trackCollectionRenamed(request: EditCollectionRequest): void {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_RENAMED, {
+    const payload = {
       collection_title: request.title,
       collection_id: request.originalCollection.id,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.COLLECTION_RENAMED, payload);
+    this.appcuesInstance.track(EventTypes.COLLECTION_RENAMED, payload);
   }
 
   public trackCollectionVisiblityChange(request: EditCollectionRequest): void {
-    this.mixpanelInstance.track(EventTypes.VISIBILITY_CHANGED, {
+    const payload = {
       collection_visibility: request.isPublic,
       collection_id: request.originalCollection.id,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.VISIBILITY_CHANGED, payload);
+    this.appcuesInstance.track(EventTypes.VISIBILITY_CHANGED, payload);
   }
 
   public trackCollectionRemoved(collection: VideoCollection): void {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_REMOVED, {
+    const payload = {
       collection_title: collection.title,
       collection_id: collection.id,
-    });
+    };
+
+    this.appcuesInstance.track(EventTypes.COLLECTION_REMOVED, payload);
+    this.mixpanelInstance.track(EventTypes.COLLECTION_REMOVED, payload);
   }
 
   public trackCollectionBookmarked(collection: VideoCollection): void {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_BOOKMARKED, {
+    const payload = {
       collection_title: collection.title,
       collection_id: collection.id,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.COLLECTION_BOOKMARKED, payload);
+    this.appcuesInstance.track(EventTypes.COLLECTION_BOOKMARKED, payload);
   }
 
   public trackCollectionUnbookmarked(collection: VideoCollection): void {
-    this.mixpanelInstance.track(EventTypes.COLLECTION_UNBOOKMARKED, {
+    const payload = {
       collection_title: collection.title,
       collection_id: collection.id,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.COLLECTION_UNBOOKMARKED, payload);
+    this.appcuesInstance.track(EventTypes.COLLECTION_UNBOOKMARKED, payload);
   }
 
   public trackVideoRemovedFromCollection(
     video: Video,
     collection: VideoCollection,
   ): void {
-    this.mixpanelInstance.track(EventTypes.VIDEO_REMOVED_FROM_COLLECTION, {
+    const payload = {
       video_collection_title: collection.title,
       video_collection_id: collection.id,
       video_title: video.title,
-    });
+    };
+
+    this.mixpanelInstance.track(
+      EventTypes.VIDEO_REMOVED_FROM_COLLECTION,
+      payload,
+    );
+    this.appcuesInstance.track(
+      EventTypes.VIDEO_REMOVED_FROM_COLLECTION,
+      payload,
+    );
   }
 
   public trackVideoVisited(video: Video): void {
-    this.mixpanelInstance.track(EventTypes.VIDEO_VISITED, {
+    const payload = {
       ...toMixpanelVideo(video),
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.VIDEO_VISITED, payload);
+    this.appcuesInstance.track(EventTypes.VIDEO_VISITED, payload);
   }
 
   public trackVideoLinkCopied(video: Video, segment: Segment): void {
-    this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, {
+    const payload = {
       ...toMixpanelVideo(video),
       share_segment_start: segment && segment.start,
       share_segment_end: segment && segment.end,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, payload);
+    this.appcuesInstance.track(EventTypes.VIDEO_LINK_COPIED, payload);
   }
 
   public trackVideoSharedInGoogle(video: Video, segment: Segment): void {
-    this.mixpanelInstance.track(EventTypes.VIDEO_SHARED_GOOGLE_CLASSROOM, {
+    const payload = {
       ...toMixpanelVideo(video),
       share_segment_start: segment && segment.start,
       share_segment_end: segment && segment.end,
-    });
+    };
+
+    this.mixpanelInstance.track(
+      EventTypes.VIDEO_SHARED_GOOGLE_CLASSROOM,
+      payload,
+    );
+    this.appcuesInstance.track(
+      EventTypes.VIDEO_SHARED_GOOGLE_CLASSROOM,
+      payload,
+    );
   }
 
   public trackVideoPlayback(
@@ -238,6 +300,7 @@ export default class AnalyticsService {
 
   public trackVideoRatingModalOpened() {
     this.mixpanelInstance.track(EventTypes.VIDEO_RATING_MODAL_OPENED);
+    this.appcuesInstance.track(EventTypes.VIDEO_RATING_MODAL_OPENED, undefined);
   }
 
   public trackVideoRating(video: Video, rating: number) {
@@ -266,46 +329,72 @@ export default class AnalyticsService {
 
   public trackHomepageExploreCollections() {
     this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS);
+    this.appcuesInstance.track(
+      EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS,
+      undefined,
+    );
   }
 
   public trackMoreCollectionsLoaded(typeOfCollections: any) {
-    this.mixpanelInstance.track(EventTypes.MORE_COLLECTIONS_LOADED, {
+    const payload = {
       type: typeOfCollections,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.MORE_COLLECTIONS_LOADED, payload);
+    this.appcuesInstance.track(EventTypes.MORE_COLLECTIONS_LOADED, payload);
   }
 
   public trackSearchFiltersApplied(formData: any) {
     this.mixpanelInstance.track(EventTypes.SEARCH_FILTERS_APPLIED, formData);
+    this.appcuesInstance.track(EventTypes.SEARCH_FILTERS_APPLIED, formData);
   }
 
   public trackSubjectTagClicked(subjectId: string) {
-    this.mixpanelInstance.track(EventTypes.SUBJECT_TAG_CLICKED, {
+    const payload = {
       subject_id: subjectId,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.SUBJECT_TAG_CLICKED, payload);
+    this.appcuesInstance.track(EventTypes.SUBJECT_TAG_CLICKED, payload);
   }
 
   public trackMyCollectionsNavbarButtonClicked() {
     this.mixpanelInstance.track(
       EventTypes.MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED,
     );
+    this.appcuesInstance.track(
+      EventTypes.MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED,
+      undefined,
+    );
   }
 
   public trackCollectionsNavbarButtonClicked() {
     this.mixpanelInstance.track(EventTypes.COLLECTIONS_NAVBAR_BUTTON_CLICKED);
+    this.appcuesInstance.track(
+      EventTypes.COLLECTIONS_NAVBAR_BUTTON_CLICKED,
+      undefined,
+    );
   }
 
   public trackOnboardingStarted() {
     this.mixpanelInstance.track(EventTypes.ONBOARDING_STARTED);
+    this.appcuesInstance.track(EventTypes.ONBOARDING_STARTED, undefined);
   }
 
   public trackOnboardingCompleted() {
     this.mixpanelInstance.track(EventTypes.ACTIVATION_COMPLETE);
     this.mixpanelInstance.track(EventTypes.ONBOARDING_COMPLETED);
+
+    this.appcuesInstance.track(EventTypes.ACTIVATION_COMPLETE, undefined);
+    this.appcuesInstance.track(EventTypes.ONBOARDING_COMPLETED, undefined);
   }
 
   public trackOnboardingPageChanged(pageIndex: number) {
-    this.mixpanelInstance.track(EventTypes.ONBOARDING_PAGE_CHANGED, {
+    const payload = {
       page_index: pageIndex,
-    });
+    };
+
+    this.mixpanelInstance.track(EventTypes.ONBOARDING_PAGE_CHANGED, payload);
+    this.appcuesInstance.track(EventTypes.ONBOARDING_PAGE_CHANGED, payload);
   }
 }

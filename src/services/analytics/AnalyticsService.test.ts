@@ -74,6 +74,10 @@ describe('MixpanelAnalytics', () => {
     analyticsService.trackOnboardingCompleted();
 
     expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'ACTIVATION_COMPLETE',
+      undefined,
+    );
   });
 
   it('tracks default collection visited', () => {
@@ -86,19 +90,21 @@ describe('MixpanelAnalytics', () => {
 
     analyticsService.trackCollectionVisited(collection);
 
-    expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
+    const expectedPayload = {
       video_collection_id: 'cat',
       video_collection_title: 'style',
       video_collection_is_owner: true,
       video_collection_is_public: true,
-    });
+    };
 
-    expect(mockAppcues.track).toHaveBeenCalledWith('COLLECTION_VISITED', {
-      video_collection_id: 'cat',
-      video_collection_title: 'style',
-      video_collection_is_owner: true,
-      video_collection_is_public: true,
-    });
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'COLLECTION_VISITED',
+      expectedPayload,
+    );
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'COLLECTION_VISITED',
+      expectedPayload,
+    );
   });
 
   it('tracks search', () => {
@@ -116,19 +122,21 @@ describe('MixpanelAnalytics', () => {
       } as VideoSearchResults,
     );
 
-    expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_SEARCH', {
+    const expectedPayload = {
       video_search_number_of_results: 1,
       video_search_page_number: 1,
       video_search_query: undefined,
       video_search_type: 'INSTRUCTIONAL',
-    });
+    };
 
-    expect(mockAppcues.track).toHaveBeenCalledWith('VIDEO_SEARCH', {
-      video_search_number_of_results: 1,
-      video_search_page_number: 1,
-      video_search_query: undefined,
-      video_search_type: 'INSTRUCTIONAL',
-    });
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'VIDEO_SEARCH',
+      expectedPayload,
+    );
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'VIDEO_SEARCH',
+      expectedPayload,
+    );
   });
 
   it('tracks video added to collection', () => {
@@ -139,11 +147,21 @@ describe('MixpanelAnalytics', () => {
     });
     analyticsService.trackVideoAddedToCollection(video, collection);
 
-    expect(mockMixpanel.track).toHaveBeenCalledWith('COLLECTION_VIDEO_ADDED', {
+    const expectedPayload = {
       video_collection_id: 'cat',
       video_collection_title: 'style',
       video_title: 'gangnam style',
-    });
+    };
+
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'COLLECTION_VIDEO_ADDED',
+      expectedPayload,
+    );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'COLLECTION_VIDEO_ADDED',
+      expectedPayload,
+    );
   });
 
   it('tracks video removed from collection', () => {
@@ -154,13 +172,20 @@ describe('MixpanelAnalytics', () => {
     });
     analyticsService.trackVideoRemovedFromCollection(video, collection);
 
+    const expectedPayload = {
+      video_collection_id: 'cat',
+      video_collection_title: 'style',
+      video_title: 'gangnam style',
+    };
+
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTION_VIDEO_REMOVED',
-      {
-        video_collection_id: 'cat',
-        video_collection_title: 'style',
-        video_title: 'gangnam style',
-      },
+      expectedPayload,
+    );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'COLLECTION_VIDEO_REMOVED',
+      expectedPayload,
     );
   });
 
@@ -184,7 +209,7 @@ describe('MixpanelAnalytics', () => {
 
     analyticsService.trackVideoLinkCopied(video, segment);
 
-    expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_LINK_COPIED', {
+    const expectedPayload = {
       video_badges: 'ad-free',
       video_contentPartner: 'Bodevs Productions',
       video_description: 'my video description',
@@ -196,7 +221,17 @@ describe('MixpanelAnalytics', () => {
       video_title: 'my video title',
       share_segment_start: 0,
       share_segment_end: 33,
-    });
+    };
+
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'VIDEO_LINK_COPIED',
+      expectedPayload,
+    );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'VIDEO_LINK_COPIED',
+      expectedPayload,
+    );
   });
 
   it('tracks playback of videos', () => {
@@ -214,7 +249,7 @@ describe('MixpanelAnalytics', () => {
 
     analyticsService.trackVideoPlayback(video, 50, 60);
 
-    expect(mockMixpanel.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
+    const expectedPayload = {
       playback_segment_end_seconds: 60,
       playback_segment_start_seconds: 50,
       playback_video_duration_seconds: 120,
@@ -227,22 +262,16 @@ describe('MixpanelAnalytics', () => {
       video_releasedOn: '2018-06-20T10:12:33.000Z',
       video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
       video_title: 'my video title',
-    });
+    };
 
-    expect(mockAppcues.track).toHaveBeenCalledWith('VIDEO_PLAYBACK', {
-      playback_segment_end_seconds: 60,
-      playback_segment_start_seconds: 50,
-      playback_video_duration_seconds: 120,
-      video_badges: 'ad-free',
-      video_contentPartner: 'Bodevs Productions',
-      video_description: 'my video description',
-      video_duration: 'PT2M',
-      video_id: '123',
-      video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
-      video_releasedOn: '2018-06-20T10:12:33.000Z',
-      video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
-      video_title: 'my video title',
-    });
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'VIDEO_PLAYBACK',
+      expectedPayload,
+    );
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'VIDEO_PLAYBACK',
+      expectedPayload,
+    );
   });
 
   it('track failed account creation', () => {
@@ -287,6 +316,11 @@ describe('MixpanelAnalytics', () => {
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'HOMEPAGE_EXPLORE_COLLECTIONS',
     );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'HOMEPAGE_EXPLORE_COLLECTIONS',
+      undefined,
+    );
   });
 
   it('track when user applies search filters', () => {
@@ -297,14 +331,29 @@ describe('MixpanelAnalytics', () => {
       'SEARCH_FILTERS_APPLIED',
       data,
     );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'SEARCH_FILTERS_APPLIED',
+      data,
+    );
   });
 
   it('tracks subject tags clicked', () => {
     analyticsService.trackSubjectTagClicked('1234');
 
-    expect(mockMixpanel.track).toHaveBeenCalledWith('SUBJECT_TAG_CLICKED', {
+    const expectedPayload = {
       subject_id: '1234',
-    });
+    };
+
+    expect(mockMixpanel.track).toHaveBeenCalledWith(
+      'SUBJECT_TAG_CLICKED',
+      expectedPayload,
+    );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'SUBJECT_TAG_CLICKED',
+      expectedPayload,
+    );
   });
 
   it('tracks my collections icon clicked', () => {
@@ -313,6 +362,11 @@ describe('MixpanelAnalytics', () => {
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED',
     );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED',
+      undefined,
+    );
   });
 
   it('tracks collections icon clicked', () => {
@@ -320,6 +374,11 @@ describe('MixpanelAnalytics', () => {
 
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTIONS_NAVBAR_BUTTON_CLICKED',
+    );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'COLLECTIONS_NAVBAR_BUTTON_CLICKED',
+      undefined,
     );
   });
 
@@ -335,31 +394,58 @@ describe('MixpanelAnalytics', () => {
       attachment,
     );
 
+    const expectedPayload = {
+      video_collection_id: 'collection-id',
+      attachment_id: 'attachment-id',
+      attachment_type: 'ATTACHMENT_TYPE',
+    };
+
     expect(mockMixpanel.track).toHaveBeenCalledWith(
       'COLLECTION_ATTACHMENT_VISITED',
-      {
-        video_collection_id: 'collection-id',
-        attachment_id: 'attachment-id',
-        attachment_type: 'ATTACHMENT_TYPE',
-      },
+      expectedPayload,
+    );
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'COLLECTION_ATTACHMENT_VISITED',
+      expectedPayload,
     );
   });
 
   it('tracks onboarding being started', () => {
     analyticsService.trackOnboardingStarted();
+
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_STARTED');
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'ONBOARDING_STARTED',
+      undefined,
+    );
   });
 
   it('tracks onboarding being finished', () => {
     analyticsService.trackOnboardingCompleted();
+
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_COMPLETED');
     expect(mockMixpanel.track).toHaveBeenCalledWith('ACTIVATION_COMPLETE');
+
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'ONBOARDING_COMPLETED',
+      undefined,
+    );
+    expect(mockAppcues.track).toHaveBeenCalledWith(
+      'ACTIVATION_COMPLETE',
+      undefined,
+    );
   });
 
   it('tracks onboarding page changing', () => {
     const pageIndex = 3;
     analyticsService.trackOnboardingPageChanged(pageIndex);
+
     expect(mockMixpanel.track).toHaveBeenCalledWith('ONBOARDING_PAGE_CHANGED', {
+      page_index: pageIndex,
+    });
+
+    expect(mockAppcues.track).toHaveBeenCalledWith('ONBOARDING_PAGE_CHANGED', {
       page_index: pageIndex,
     });
   });
