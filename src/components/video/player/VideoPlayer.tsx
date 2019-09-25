@@ -108,6 +108,9 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
           'mute',
           'captions',
         ],
+        addons: {
+          hoverPreview: true,
+        },
       };
     } else {
       options.interface = {
