@@ -1,27 +1,18 @@
 import { Rate } from 'antd';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
 import { By } from '../../../../test-support/By';
-import {
-  MockStoreFactory,
-  VideoFactory,
-} from '../../../../test-support/factories';
+import { VideoFactory } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { Video } from '../../../types/Video';
 import Rating from './Rating';
+import VideoFeedbackModal from './VideoFeedbackModal';
 
-function mountRating(video: Video) {
-  return mount(
-    <Provider store={MockStoreFactory.sample({})}>
-      <Rating video={video} />
-    </Provider>,
-  );
-}
+const getShallowRating = (video: Video) => shallow(<Rating video={video} />);
 
 describe('when video has rating', () => {
   describe('and cannot rate anymore', () => {
-    const rating = mountRating(
+    const rating = getShallowRating(
       VideoFactory.sample({
         rating: 3,
         links: { self: new Link({ href: '' }) },
@@ -36,43 +27,33 @@ describe('when video has rating', () => {
   });
 
   describe('and can rate', () => {
-    const rating = mountRating(VideoFactory.sample({ rating: 3 }));
+    const rating = getShallowRating(VideoFactory.sample({ rating: 3 }));
 
     test('it renders clickable rating component', () => {
-      expect(
-        rating
-          .find(Rate)
-          .first()
-          .prop('defaultValue'),
-      ).toEqual(3);
-      expect(
-        rating
-          .find(Rate)
-          .first()
-          .prop('disabled'),
-      ).toEqual(true);
+      const rate = rating.find(Rate).first();
+      expect(rate.prop('defaultValue')).toEqual(3);
+      expect(rate.prop('disabled')).toEqual(true);
       expect(rating.find(By.dataQa('rating-video-stars'))).toExist();
     });
   });
 });
 
 describe('when video has no rating', () => {
-  const rating = mountRating(VideoFactory.sample({ rating: null }));
+  const rating = getShallowRating(VideoFactory.sample({ rating: null }));
 
-  test('it renders a readonly rating component', () => {
+  test('it renders only a rating button', () => {
     expect(rating.find(Rate)).not.toExist();
+    expect(rating.find(By.dataQa('rating-video-button'))).toExist();
   });
 
-  describe('when rating video', () => {
-    beforeEach(() => {
+  describe(`when clicking on rating button`, () => {
+    test(`it opens the feedback modal`, () => {
       rating
         .find(By.dataQa('rating-video-button'))
-        .at(0)
-        .simulate('click');
-    });
+        .props()
+        .onClick(null);
 
-    test('it renders a readonly rating component', () => {
-      expect(rating.find(By.dataQa('rating-description'))).toExist();
+      expect(rating.find(VideoFeedbackModal)).toExist();
     });
   });
 });
