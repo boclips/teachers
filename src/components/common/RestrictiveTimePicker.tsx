@@ -117,7 +117,11 @@ export class RestrictiveTimePicker extends React.Component<Props, State> {
         : second > this.upperBound.seconds,
     );
 
-  private handleChange = (time: Moment) => {
+  private handleChange = (time?: Moment) => {
+    if (time == null) {
+      return;
+    }
+
     this.setState({ value: time }, () => {
       this.props.onChange(this.getSecondsFromValue());
     });
