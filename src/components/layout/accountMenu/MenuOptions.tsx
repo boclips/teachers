@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
 import BookmarkedIconSVG from '../../../../resources/images/my-bookmarks.svg';
-import ReferAFriendIconSVG from '../../../../resources/images/refer-a-friend-icon.svg';
 import SettingsSVG from '../../../../resources/images/settings.svg';
-import ReferAFriend from '../../referAFriend/ReferAFriend';
 
 type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
@@ -65,25 +63,9 @@ class LogoutLink extends React.PureComponent<Props> {
   );
 }
 
-class ReferAFriendLink extends React.PureComponent<{}> {
-  public render() {
-    return (
-      <ReferAFriend>
-        <a data-qa="refer-a-friend-button" href="#">
-          <span className="icon-container">
-            <ReferAFriendIconSVG aria-hidden="true" />
-          </span>
-          <span>Refer a friend</span>
-        </a>
-      </ReferAFriend>
-    );
-  }
-}
-
 export {
   AccountSettingsLink,
   BookmarkedCollectionsLink,
   UserCollectionsLink,
   LogoutLink,
-  ReferAFriendLink,
 };

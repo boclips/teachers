@@ -6,7 +6,6 @@ import {
   AccountSettingsLink,
   BookmarkedCollectionsLink,
   LogoutLink,
-  ReferAFriendLink,
   UserCollectionsLink,
 } from './MenuOptions';
 
@@ -38,12 +37,9 @@ class AccountMenuComponent extends React.Component<Props, State> {
         <BookmarkedCollectionsLink />
       </Menu.Item>
       <Menu.Item key="3">
-        <ReferAFriendLink />
-      </Menu.Item>
-      <Menu.Item key="4">
         <AccountSettingsLink />
       </Menu.Item>
-      <Menu.Item key="5">
+      <Menu.Item key="4">
         <LogoutLink onClick={this.props.onLogout} />
       </Menu.Item>
     </Menu>

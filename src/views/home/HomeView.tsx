@@ -4,11 +4,8 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
-import ReferAFriendBannerMobileSVG from '../../../resources/images/refer-a-friend-banner-mobile.svg';
-import ReferAFriendBannerSVG from '../../../resources/images/refer-a-friend-banner.svg';
 import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
-import ReferAFriend from '../../components/referAFriend/ReferAFriend';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
@@ -75,30 +72,6 @@ export default class HomeView extends PureComponent {
             </Row>
           </Content>
         </section>
-
-        <section className="refer-a-friend-banner">
-          <Content>
-            <Row>
-              <Col>
-                <ReferAFriend>
-                  <ReferAFriendBannerSVG
-                    className="refer-a-friend-banner__img display-tablet-and-desktop"
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Refer a friend"
-                  />
-                  <ReferAFriendBannerMobileSVG
-                    className="refer-a-friend-banner__img display-mobile"
-                    tabIndex={0}
-                    role="button"
-                    aria-label="Refer a friend"
-                  />
-                </ReferAFriend>
-              </Col>
-            </Row>
-          </Content>
-        </section>
-
         <BoclipsFooter />
       </section>
     );
