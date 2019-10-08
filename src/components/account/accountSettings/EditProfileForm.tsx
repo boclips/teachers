@@ -44,12 +44,14 @@ class ProfileFormFields extends React.Component<
             subjects={this.props.subjects}
             placeholder={'Subjects'}
             initialValue={this.props.userProfile.subjects}
+            label={'Subjects'}
           />
         </Row>
         <Row>
           <AgeRangeForm
             form={this.props.form}
             initialValue={this.props.userProfile.ages}
+            label={'Age groups'}
           />
         </Row>
         <section className="buttons">
