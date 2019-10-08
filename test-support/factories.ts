@@ -207,9 +207,22 @@ export class UserProfileFactory {
       links: arg.links || UserProfileLinksFactory.sample(),
       subjects: arg.subjects || ['subject-one-id', 'subject-two-id'],
       ages: arg.ages || [3, 4, 5, 6, 7, 8, 9],
+      country: arg.country || { name: 'United States', id: 'USA' },
+      state: arg.state || { name: 'New York', id: 'NY' },
+      school: arg.school || SchoolFactory.sample(),
     });
   }
 }
+
+export class SchoolFactory {
+  public static sample(arg: Partial<School> = {}): School {
+    return Object.freeze({
+      id: arg.id || '123',
+      name: arg.name || 'My school',
+    });
+  }
+}
+
 export class LoginFactory {
   public static sample(arg: Partial<UserProfile> = {}): UserProfile {
     return Object.freeze({

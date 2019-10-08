@@ -10,6 +10,12 @@ export default function convertUserResource(resource: any): UserProfile {
     subjects: resource.subjects,
     ages: resource.ages,
     analyticsId: resource.analyticsId,
+    country: resource.organisation ? resource.organisation.country : null,
+    state: resource.organisation ? resource.organisation.state : null,
+    school: {
+      id: resource.organisationAccountId,
+      name: resource.organisation ? resource.organisation.name : null,
+    },
     links: { self: new Link(resource._links.self) },
   };
 }

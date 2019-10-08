@@ -12,9 +12,9 @@ export const UNKNOWN_SCHOOL = '-1';
 interface SchoolFormProps {
   country: Country;
   state?: UsaState;
-  placeholder: string;
+  placeholder?: string;
   label?: string;
-  initialValue?: string;
+  initialValue?: School;
   allowUnknownSchools: boolean;
 }
 
@@ -57,6 +57,16 @@ export class SchoolForm extends React.Component<
     }
   };
 
+  public componentDidUpdate(prevProps: FormComponentProps) {
+    if (
+      this.props.form.getFieldValue('schoolId') !==
+        prevProps.form.getFieldValue('schoolId') &&
+      this.props.form.getFieldValue('schoolId') === undefined
+    ) {
+      this.setState({ ...this.state, schools: [] });
+    }
+  }
+
   public render() {
     return this.props.allowUnknownSchools ? (
       <Form.Item className="form__item" label={this.props.label}>
@@ -81,7 +91,7 @@ export class SchoolForm extends React.Component<
       <Form.Item className="form__item" label={this.props.label}>
         {this.props.form.getFieldDecorator('schoolId', {
           rules: [{ required: true, message: 'Please enter your school' }],
-          initialValue: this.props.initialValue,
+          initialValue: this.props.initialValue && this.props.initialValue.name,
         })(
           <Select
             filterOption={false}
@@ -89,7 +99,7 @@ export class SchoolForm extends React.Component<
             onSearch={this.onSearchSchool}
             disabled={!this.props.state}
             showSearch={true}
-            data-qa="school"
+            data-qa="school-filter-select"
             size={'large'}
             dropdownClassName={'dropdown'}
             notFoundContent={'Please type to search your school'}
@@ -116,7 +126,7 @@ export class SchoolForm extends React.Component<
 
     return schools.map(school => {
       return (
-        <Option key={school.name} value={school.id} title={school.name}>
+        <Option key={school.id} value={school.id} title={school.name}>
           {school.name}
         </Option>
       );

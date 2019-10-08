@@ -339,7 +339,7 @@ export function countriesResponse() {
         },
         {
           id: 'USA',
-          name: 'United States of America',
+          name: 'United States',
           states: [
             {
               id: 'state-1',
@@ -466,6 +466,11 @@ export function userResponse(id: string = 'my-user-id') {
     analyticsId: '123',
     subjects: ['1'],
     ages: [1, 2, 3, 4],
+    organisation: {
+      country: { name: 'United States', id: 'USA' },
+      state: { name: 'California', id: 'CA' },
+      name: 'My school',
+    },
     _links: {
       self: { href: `http://localhost/v1/users/my-user-id` },
     },

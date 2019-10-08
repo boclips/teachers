@@ -1,5 +1,7 @@
+import { Country } from '../../types/Country';
 import { Link } from '../../types/Link';
 import { School } from '../../types/School';
+import { UsaState } from '../../types/UsaState';
 import Utm from '../account/Utm';
 
 export interface UserProfile {
@@ -10,8 +12,8 @@ export interface UserProfile {
   lastName: string;
   subjects?: string[];
   ages?: number[];
-  country?: string;
-  state?: string;
+  country?: Country;
+  state?: UsaState;
   hasOptedIntoMarketing?: boolean;
   referralCode?: string;
   utm?: Utm;

@@ -5,7 +5,7 @@ import { UsaState } from '../../../types/UsaState';
 
 interface StatesFormProps {
   states: UsaState[];
-  placeholder: string;
+  placeholder?: string;
   label?: string;
   initialValue?: string;
   onStateChange?: (value: UsaState) => void;
@@ -59,7 +59,7 @@ export class StatesForm extends React.Component<
           return (
             <Option
               data-qa="state-option"
-              key={state.name}
+              key={state.id}
               value={state.id}
               title={state.name}
             >

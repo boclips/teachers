@@ -3,7 +3,7 @@ import configureStore from 'redux-mock-store';
 import { links, userResponse } from '../../../../../test-support/api-responses';
 import ApiStub from '../../../../../test-support/ApiStub';
 import eventually from '../../../../../test-support/eventually';
-import { Link, RawLink } from '../../../../types/Link';
+import convertUserResource from '../../../../services/users/convertUserResource';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
@@ -33,6 +33,8 @@ beforeEach(() => {
 
 describe('on store login', () => {
   describe('when account needs to be activated', () => {
+    const user = convertUserResource(userResponse());
+
     beforeEach(() => {
       new ApiStub({
         _links: {
@@ -76,42 +78,14 @@ describe('on store login', () => {
     it('sets up appcues', async () => {
       await eventually(() => {
         expect(store.getActions()).toContainEqual(
-          registerUserForAnalytics({
-            analyticsId: '123',
-            email: 'bob@someone.com',
-            firstName: 'Bob',
-            subjects: ['1'],
-            ages: [1, 2, 3, 4],
-            id: 'my-user-id',
-            lastName: 'Someone',
-            links: {
-              self: new Link({
-                href: 'http://localhost/v1/users/my-user-id',
-              } as RawLink),
-            },
-          }),
+          registerUserForAnalytics(user),
         );
       });
     });
 
     it('sets up user', async () => {
       await eventually(() => {
-        expect(store.getActions()).toContainEqual(
-          userDetailsFetched({
-            analyticsId: '123',
-            email: 'bob@someone.com',
-            firstName: 'Bob',
-            subjects: ['1'],
-            ages: [1, 2, 3, 4],
-            id: 'my-user-id',
-            lastName: 'Someone',
-            links: {
-              self: new Link({
-                href: 'http://localhost/v1/users/my-user-id',
-              } as RawLink),
-            },
-          }),
-        );
+        expect(store.getActions()).toContainEqual(userDetailsFetched(user));
       });
     });
 
@@ -123,6 +97,7 @@ describe('on store login', () => {
   });
 
   describe('when account already activated', () => {
+    const user = convertUserResource(userResponse());
     beforeEach(() => {
       new ApiStub({
         _links: {
@@ -139,20 +114,7 @@ describe('on store login', () => {
     it('does not redirect to the onboarding page', async () => {
       await eventually(() => {
         expect(store.getActions()).toContainEqual(
-          registerUserForAnalytics({
-            analyticsId: '123',
-            email: 'bob@someone.com',
-            firstName: 'Bob',
-            subjects: ['1'],
-            ages: [1, 2, 3, 4],
-            id: 'my-user-id',
-            lastName: 'Someone',
-            links: {
-              self: new Link({
-                href: 'http://localhost/v1/users/my-user-id',
-              } as RawLink),
-            },
-          }),
+          registerUserForAnalytics(user),
         ); // Necessary to avoid false positives
         expect(store.getActions()).not.toContainEqual(push('/onboarding'));
       });

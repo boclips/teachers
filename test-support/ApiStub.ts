@@ -104,6 +104,14 @@ export default class ApiStub {
     return this;
   }
 
+  public fetchAmericanSchools(query = 'school', state = 'CA') {
+    MockFetchVerify.get(
+      `${this.prefix}/v1/schools?countryCode=USA&query=${query}&state=${state}`,
+      JSON.stringify(schoolsResponse()),
+    );
+    return this;
+  }
+
   public fetchDisciplines() {
     MockFetchVerify.get(
       `${this.prefix}/v1/disciplines`,

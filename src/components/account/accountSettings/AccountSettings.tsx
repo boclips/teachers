@@ -1,69 +1,147 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { UserProfile } from '../../../services/users/UserProfile';
+import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
-
+import { fetchCountriesAction } from '../onboarding/redux/actions/fetchCountriesAction';
 import './AccountSettings.less';
+import { EditProfileForm } from './EditProfileForm';
+import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
 import { Profile } from './Profile';
-import { ProfileForm } from './ProfileForm';
+import SchoolSettings from './SchoolSettings';
 
-interface Props {
+interface AccountProps {
   userProfile: UserProfile;
   subjects: Subject[];
   links: Links;
+  countries: Country[];
 }
 
-interface StateProps {
-  editForm: boolean;
+interface DispatchProps {
+  fetchCountries: () => void;
 }
 
-class AccountSettings extends React.Component<Props, StateProps> {
-  private toggleForm = () => {
-    this.setState({ editForm: !this.state.editForm });
+interface InternalState {
+  editProfileForm: boolean;
+  editSchoolSettingsForm: boolean;
+}
+
+class AccountSettings extends React.Component<
+  AccountProps & DispatchProps,
+  InternalState
+> {
+  public state = {
+    editProfileForm: false,
+    editSchoolSettingsForm: false,
   };
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      editForm: false,
-    };
+  public componentDidMount() {
+    this.props.fetchCountries();
+    this.setState({ ...this.state });
   }
 
   public render() {
-    return this.state.editForm ? (
-      <section>
-        <h1 className="extra-big">Edit profile</h1>
-        <ProfileForm
-          userProfile={this.props.userProfile}
-          subjects={this.props.subjects}
-          toggleForm={this.toggleForm}
-          links={this.props.links}
-        />
-      </section>
-    ) : (
-      <section>
-        <h1 className="extra-big">Settings</h1>
-        <Profile
-          firstName={this.props.userProfile.firstName}
-          onEdit={this.toggleForm}
-          ages={this.props.userProfile.ages}
-          lastName={this.props.userProfile.lastName}
-          subjects={this.props.userProfile.subjects}
-        />
-      </section>
+    return (
+      <>
+        {this.showSettings() && (
+          <section>
+            <h1 className="extra-big">Settings</h1>
+            <Profile
+              firstName={this.props.userProfile.firstName}
+              onEdit={this.toggleEditProfileForm}
+              ages={this.props.userProfile.ages}
+              lastName={this.props.userProfile.lastName}
+              subjects={this.props.userProfile.subjects}
+            />
+            {this.isUserAmerican() && (
+              <>
+                <hr className="account-settings__divider" />
+                <SchoolSettings
+                  school={this.props.userProfile.school.name}
+                  state={this.props.userProfile.state.name}
+                  onEdit={this.toggleSchoolSettingsForm}
+                />
+              </>
+            )}
+          </section>
+        )}
+
+        {this.state.editProfileForm && (
+          <section>
+            <h1 className="extra-big">Edit profile</h1>
+            <EditProfileForm
+              userProfile={this.props.userProfile}
+              subjects={this.props.subjects}
+              toggleForm={this.toggleEditProfileForm}
+              links={this.props.links}
+            />
+          </section>
+        )}
+
+        {this.state.editSchoolSettingsForm && (
+          <section>
+            <h1 className="extra-big">Edit School</h1>
+            <EditSchoolSettingsForm
+              country={this.findUSA()}
+              toggleForm={this.toggleSchoolSettingsForm}
+              links={this.props.links}
+              userProfile={this.props.userProfile}
+            />
+          </section>
+        )}
+      </>
     );
   }
+
+  private isUserAmerican = () => {
+    return (
+      this.props.userProfile.country &&
+      this.props.userProfile.country.id === 'USA'
+    );
+  };
+
+  private findUSA = (): Country => {
+    return this.props.countries.find(country => country.id === 'USA');
+  };
+
+  private toggleEditProfileForm = () => {
+    this.setState({
+      ...this.state,
+      editProfileForm: !this.state.editProfileForm,
+    });
+  };
+
+  private toggleSchoolSettingsForm = () => {
+    this.setState({
+      ...this.state,
+      editSchoolSettingsForm: !this.state.editSchoolSettingsForm,
+    });
+  };
+
+  private showSettings = () => {
+    return !(this.state.editProfileForm || this.state.editSchoolSettingsForm);
+  };
 }
 
-function mapStateToProps(state: State): Props {
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    fetchCountries: () => dispatch(fetchCountriesAction()),
+  };
+}
+
+function mapStateToProps(state: State): AccountProps {
   return {
     userProfile: state.user,
     subjects: state.subjects,
     links: state.links,
+    countries: state.countries,
   };
 }
 
-export default connect<Props>(mapStateToProps)(AccountSettings);
+export default connect<AccountProps, DispatchProps, {}>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AccountSettings);

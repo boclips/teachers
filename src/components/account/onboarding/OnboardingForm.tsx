@@ -386,8 +386,8 @@ class OnboardingForm extends React.Component<
           lastName: values.lastName,
           ages,
           subjects: values.subjects,
-          country: values.country,
-          state: values.state,
+          country: { id: values.country, name: undefined },
+          state: { id: values.state, name: undefined },
           school: {
             name: values.schoolName,
             id: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,

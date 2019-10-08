@@ -2,15 +2,21 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../../test-support/By';
-import { MockStoreFactory } from '../../../../test-support/factories';
+import {
+  CountryFactory,
+  MockStoreFactory,
+  UserProfileFactory,
+} from '../../../../test-support/factories';
 import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { fetchUser } from '../../../services/users/fetchUser';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import AccountSettings from './AccountSettings';
+import { EditProfileForm } from './EditProfileForm';
+import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
 import { Profile } from './Profile';
-import { ProfileForm } from './ProfileForm';
 import Mock = jest.Mock;
+import SchoolSettings from './SchoolSettings';
 
 jest.mock('../../../services/users/fetchUser');
 
@@ -19,18 +25,36 @@ AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 const mockFetchUser = fetchUser as Mock;
 
 describe('account settings form', () => {
-  let wrapper;
+  let wrapperWithAmericanTeacher;
   beforeEach(() => {
     mockFetchUser.mockReturnValue(Promise.resolve());
-    wrapper = mount(
-      <Provider store={MockStoreFactory.sample()}>
+    wrapperWithAmericanTeacher = mount(
+      <Provider
+        store={MockStoreFactory.sample({
+          countries: [
+            CountryFactory.sample({ id: 'ES', name: 'Spain' }),
+            CountryFactory.sample({ id: 'UK', name: 'England' }),
+            CountryFactory.sample({
+              id: 'USA',
+              name: 'United States',
+              states: [{ id: 'state-1', name: 'State 1' }],
+            }),
+          ],
+          user: UserProfileFactory.sample({
+            country: { name: 'United States', id: 'USA' },
+            state: { name: 'State 1', id: 'state-1' },
+          }),
+        })}
+      >
         <AccountSettings />
       </Provider>,
     );
   });
 
   it(`renders the page with existing first and last name populated`, () => {
-    const currentProfile = wrapper.find(By.dataQa('current-profile'));
+    const currentProfile = wrapperWithAmericanTeacher.find(
+      By.dataQa('current-profile'),
+    );
     const subjectTags = currentProfile.find(By.dataQa('profile-subjects'));
 
     expect(currentProfile.find(By.dataQa('profile-name')).text()).toEqual(
@@ -47,16 +71,54 @@ describe('account settings form', () => {
   });
 
   it(`renders profile view by default and profile form when editing`, () => {
-    expect(wrapper.find(ProfileForm)).not.toExist();
-    expect(wrapper.find(Profile)).toExist();
+    expect(wrapperWithAmericanTeacher.find(EditProfileForm)).not.toExist();
+    expect(wrapperWithAmericanTeacher.find(Profile)).toExist();
 
-    wrapper
+    wrapperWithAmericanTeacher
       .find(By.dataQa('profile-edit-button'))
       .first()
       .simulate('click');
-    wrapper.update();
+    wrapperWithAmericanTeacher.update();
 
-    expect(wrapper.find(Profile)).not.toExist();
-    expect(wrapper.find(ProfileForm)).toExist();
+    expect(wrapperWithAmericanTeacher.find(Profile)).not.toExist();
+    expect(wrapperWithAmericanTeacher.find(EditProfileForm)).toExist();
+  });
+
+  describe('school settings', () => {
+    it('renders school settings section if user has school information and is from the USA', () => {
+      expect(wrapperWithAmericanTeacher.find(SchoolSettings)).toExist();
+    });
+
+    it('does not render school settings section for non-US teachers', () => {
+      const mockStore = MockStoreFactory.sample({
+        user: UserProfileFactory.sample({
+          country: { name: 'France', id: 'FRA' },
+        }),
+      });
+
+      const wrapperWithEuropeanTeacher = mount(
+        <Provider store={mockStore}>
+          <AccountSettings />
+        </Provider>,
+      );
+
+      expect(wrapperWithEuropeanTeacher.find(SchoolSettings)).not.toExist();
+    });
+
+    it('renders school settings form when edit button clicked', () => {
+      expect(
+        wrapperWithAmericanTeacher.find(EditSchoolSettingsForm),
+      ).not.toExist();
+      expect(wrapperWithAmericanTeacher.find(SchoolSettings)).toExist();
+
+      wrapperWithAmericanTeacher
+        .find(By.dataQa('school-settings-edit-button'))
+        .first()
+        .simulate('click');
+      wrapperWithAmericanTeacher.update();
+
+      expect(wrapperWithAmericanTeacher.find(SchoolSettings)).not.toExist();
+      expect(wrapperWithAmericanTeacher.find(EditSchoolSettingsForm)).toExist();
+    });
   });
 });

@@ -84,9 +84,10 @@ describe('onboarding form', () => {
         lastName: 'Sanchez',
         subjects: ['1'],
         ages: [3, 4, 5],
-        country: 'ES',
+        country: { id: 'ES', name: undefined },
         hasOptedIntoMarketing: true,
         school: { name: 'school', id: undefined },
+        state: { id: undefined, name: undefined },
       });
     });
   });
@@ -113,7 +114,7 @@ describe('onboarding form', () => {
       lastName: 'Sanchez',
       subjects: ['1'],
       ages: [3, 4, 5],
-      country: 'ES',
+      country: { id: 'ES', name: undefined },
       school: { name: 'school', id: undefined },
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
@@ -124,6 +125,7 @@ describe('onboarding form', () => {
         campaign: 'some-campaign-value',
         content: 'some-content-value',
       },
+      state: { id: undefined, name: undefined },
     });
   });
 
@@ -143,10 +145,12 @@ describe('onboarding form', () => {
       lastName: 'Sanchez',
       subjects: ['1'],
       ages: [3, 4, 5],
-      country: 'ES',
+      country: { id: 'ES', name: undefined },
       school: { name: 'school', id: undefined },
       hasOptedIntoMarketing: true,
       referralCode: 'REFERRALCODE',
+      state: { id: undefined, name: undefined },
+      utm: undefined,
     });
   });
 

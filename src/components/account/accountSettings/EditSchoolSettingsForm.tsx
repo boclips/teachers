@@ -5,51 +5,61 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import updateUser from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
-import { AgeRange } from '../../../types/AgeRange';
+import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
-import { Subject } from '../../../types/Subject';
+import { UsaState } from '../../../types/UsaState';
 import NotificationFactory from '../../common/NotificationFactory';
-import { AgeRangeForm } from '../form/AgeRangeForm';
-import { NameForm } from '../form/NameForm';
-import { SubjectsForm } from '../form/SubjectsForm';
+import { SchoolForm, UNKNOWN_SCHOOL } from '../form/SchoolForm';
+import { StatesForm } from '../form/StatesForm';
 import { updateUserAction } from './redux/actions/updateUserAction';
 
 interface Props {
-  userProfile: UserProfile;
-  subjects: Subject[];
+  country: Country;
   toggleForm: () => void;
   links: Links;
+  userProfile: UserProfile;
 }
 
 interface DispatchProps {
-  updateUser: () => {};
+  updateUser: () => void;
 }
 
-class ProfileFormFields extends React.Component<
-  Props & FormComponentProps & DispatchProps
+interface InternalState {
+  latestState: string;
+}
+
+export class EditSchoolSettingsFields extends React.Component<
+  Props & FormComponentProps & DispatchProps,
+  InternalState
 > {
+  constructor(props: Props & FormComponentProps & DispatchProps) {
+    super(props);
+    this.state = {
+      latestState: this.props.userProfile.state.id,
+    };
+  }
+
   public render() {
     return (
-      <Form data-qa="profile-form" className="account-settings__form">
+      <Form data-qa="school-settings-form" className="account-settings__form">
         <Row>
-          <NameForm
+          <StatesForm
             form={this.props.form}
-            initialFirstName={this.props.userProfile.firstName}
-            initialLastName={this.props.userProfile.lastName}
+            states={this.props.country.states}
+            initialValue={this.props.userProfile.state.id}
+            label={'State'}
+            onStateChange={this.stateChange}
           />
         </Row>
         <Row>
-          <SubjectsForm
+          <SchoolForm
             form={this.props.form}
-            subjects={this.props.subjects}
-            placeholder={'Subjects'}
-            initialValue={this.props.userProfile.subjects}
-          />
-        </Row>
-        <Row>
-          <AgeRangeForm
-            form={this.props.form}
-            initialValue={this.props.userProfile.ages}
+            country={this.props.country}
+            state={this.props.userProfile.state}
+            label={'School'}
+            allowUnknownSchools={false}
+            initialValue={this.props.userProfile.school}
+            placeholder={'Enter the name of your school'}
           />
         </Row>
         <section className="buttons">
@@ -64,7 +74,7 @@ class ProfileFormFields extends React.Component<
           <Button
             htmlType={'submit'}
             type={'primary'}
-            data-qa={'submit-update-user'}
+            data-qa={'save-button'}
             onClick={this.submit}
             size="large"
           >
@@ -75,19 +85,24 @@ class ProfileFormFields extends React.Component<
     );
   }
 
+  private stateChange = (value: UsaState) => {
+    if (this.state.latestState !== value.id) {
+      this.props.form.setFieldsValue({ schoolId: undefined });
+    }
+
+    this.setState({ latestState: value.id });
+  };
+
   private submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const ageRanges = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it),
-        );
-        const ages = AgeRange.extractContainedAges(ageRanges);
         updateUser(this.props.links, {
           ...this.props.userProfile,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          ages,
-          subjects: values.subjects,
+          state: { name: undefined, id: values.state },
+          school: {
+            name: values.schoolName,
+            id: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+          },
         })
           .then(() => {
             this.props.updateUser();
@@ -98,11 +113,6 @@ class ProfileFormFields extends React.Component<
             NotificationFactory.error({
               message: 'Ooops! Something went wrong...',
               description: 'Please try again or contact our support team.',
-            });
-
-            this.setState({
-              ...this.state,
-              updating: false,
             });
           });
       }
@@ -116,7 +126,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
   };
 }
 
-export const ProfileForm = connect<Props, DispatchProps>(
+export const EditSchoolSettingsForm = connect<Props, DispatchProps>(
   null,
   mapDispatchToProps,
-)(Form.create<DispatchProps & Props & FormComponentProps>()(ProfileFormFields));
+)(Form.create<Props & FormComponentProps>()(EditSchoolSettingsFields));

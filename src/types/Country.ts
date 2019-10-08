@@ -5,7 +5,7 @@ export interface Country {
   id: string;
   name: string;
   states?: UsaState[];
-  links: CountryLinks;
+  links?: CountryLinks;
 }
 
 export interface CountryLinks {

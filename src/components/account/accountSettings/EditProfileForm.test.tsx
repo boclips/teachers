@@ -14,7 +14,7 @@ import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
-import { ProfileForm } from './ProfileForm';
+import { EditProfileForm } from './EditProfileForm';
 import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
@@ -30,7 +30,7 @@ describe(`Profile form`, () => {
   beforeEach(() => {
     wrapper = mount(
       <Provider store={MockStoreFactory.sample()}>
-        <ProfileForm
+        <EditProfileForm
           userProfile={UserProfileFactory.sample()}
           subjects={SubjectsFactory.sample()}
           toggleForm={cancelCallback}

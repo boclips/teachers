@@ -24,5 +24,8 @@ describe('fetch user ', () => {
     expect(userProfile.subjects).toBeDefined();
     expect(userProfile.ages).toBeDefined();
     expect(userProfile.email).toBeDefined();
+    expect(userProfile.country).toBeDefined();
+    expect(userProfile.state).toBeDefined();
+    expect(userProfile.school).toBeDefined();
   });
 });
