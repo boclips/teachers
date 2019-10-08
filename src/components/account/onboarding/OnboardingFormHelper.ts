@@ -51,31 +51,10 @@ export class OnboardingFormHelper {
     wrapper.update();
   }
 
-  public static editState(wrapper: ReactWrapper, stateId: string) {
-    wrapper.find(By.dataQa('states-filter-select', 'div')).simulate('click');
-
-    const menuItems = wrapper.find('Trigger').find('MenuItem');
-
-    menuItems.find(`[value="${stateId}"]`).simulate('click');
-
-    wrapper.find(SelectSubjects).simulate('click');
-    wrapper.update();
-  }
-
   public static enterSchool(wrapper: ReactWrapper, schoolName: string) {
     const events = new EventSimulator(wrapper);
     events.setText(schoolName, wrapper.find(By.dataQa('school')).find('input'));
     wrapper.update();
-  }
-
-  public static selectSchool(wrapper: ReactWrapper, schoolId: string) {
-    wrapper.find(By.dataQa('school', 'div')).simulate('click');
-
-    const menuItems = wrapper.find('Trigger').find('MenuItem');
-
-    menuItems.find(`[value="${schoolId}"]`).simulate('click');
-
-    wrapper.find(SelectSubjects).simulate('click');
   }
 
   public static editAgeRange(wrapper: ReactWrapper, ageRanges: string[]) {
@@ -92,15 +71,6 @@ export class OnboardingFormHelper {
         .first()
         .simulate('click');
     });
-  }
-
-  public static forwardCarouselPage(wrapper: ReactWrapper) {
-    wrapper
-      .find(By.dataQa('onboard-next-button'))
-      .first()
-      .simulate('click');
-
-    wrapper.update();
   }
 
   public static moveCarousel(wrapper: ReactWrapper, currentSlide: number) {

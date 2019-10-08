@@ -7,7 +7,7 @@ import { analyticsMock } from '../../../test-support/getAnalyticsMock';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
-import updateUser from './updateUser';
+import { onboardUser, UpdateUserRequest } from './updateUser';
 
 jest.mock('../analytics/AnalyticsFactory');
 
@@ -21,6 +21,11 @@ const userProfile = UserProfileFactory.sample({
   lastName: 'boclips',
 });
 
+const request: UpdateUserRequest = {
+  firstName: 'joe',
+  lastName: 'boclips',
+};
+
 AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
 describe('when activate link present', () => {
@@ -30,17 +35,18 @@ describe('when activate link present', () => {
     });
 
     it('registers activation complete event', async () => {
-      updateUser(links, userProfile);
+      onboardUser(links, request, userProfile.email);
       await eventually(() => {
         expect(analyticsMock.trackOnboardingCompleted).toHaveBeenCalled();
       });
     });
 
     it('creates user profile in analytics', async () => {
-      updateUser(links, userProfile);
+      onboardUser(links, request, userProfile.email);
       await eventually(() => {
         expect(analyticsMock.createUserProfile).toHaveBeenCalledWith(
-          userProfile,
+          { firstName: 'joe', lastName: 'boclips' },
+          'joe@boclips.com',
         );
       });
     });
@@ -53,13 +59,15 @@ describe('when user cannot be activated', () => {
   });
 
   it('does not publish event to web analytics', () => {
-    updateUser(links, userProfile);
+    onboardUser(links, request, userProfile.email);
     expect(analyticsMock.trackOnboardingCompleted).not.toHaveBeenCalled();
   });
 });
 
 describe('when no activate link', () => {
   it('does not throw', () => {
-    expect(() => updateUser(LinksFactory.sample(), userProfile)).not.toThrow();
+    expect(() =>
+      onboardUser(LinksFactory.sample(), request, userProfile.email),
+    ).not.toThrow();
   });
 });

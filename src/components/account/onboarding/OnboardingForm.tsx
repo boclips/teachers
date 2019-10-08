@@ -7,7 +7,7 @@ import { Dispatch } from 'redux';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
-import updateUser from '../../../services/users/updateUser';
+import { onboardUser } from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
 import { Country } from '../../../types/Country';
@@ -380,22 +380,25 @@ class OnboardingForm extends React.Component<
         const ages = AgeRange.extractContainedAges(ageRanges);
 
         this.setState({ ...this.state, updating: true });
-        updateUser(this.props.links, {
-          ...this.props.userProfile,
-          firstName: values.firstName,
-          lastName: values.lastName,
-          ages,
-          subjects: values.subjects,
-          country: { id: values.country, name: undefined },
-          state: { id: values.state, name: undefined },
-          school: {
-            name: values.schoolName,
-            id: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+        onboardUser(
+          this.props.links,
+          {
+            firstName: values.firstName,
+            lastName: values.lastName,
+            ages,
+            subjects: values.subjects,
+            country: values.country,
+            state: values.state,
+            schoolName: values.schoolName,
+            schoolId:
+              values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+            hasOptedIntoMarketing: values.hasOptedIntoMarketing,
+            referralCode:
+              registrationContext && registrationContext.referralCode,
+            utm: registrationContext && registrationContext.utm,
           },
-          hasOptedIntoMarketing: values.hasOptedIntoMarketing,
-          referralCode: registrationContext && registrationContext.referralCode,
-          utm: registrationContext && registrationContext.utm,
-        })
+          this.props.userProfile.email,
+        )
           .then(() => {
             this.props.goToHomepage();
             this.props.updateUser();

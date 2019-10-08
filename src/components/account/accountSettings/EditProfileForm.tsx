@@ -3,7 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import updateUser from '../../../services/users/updateUser';
+import { editUser } from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
 import { Links } from '../../../types/Links';
@@ -84,8 +84,7 @@ class ProfileFormFields extends React.Component<
           AgeRange.decodeJSON(it),
         );
         const ages = AgeRange.extractContainedAges(ageRanges);
-        updateUser(this.props.links, {
-          ...this.props.userProfile,
+        editUser(this.props.links, {
           firstName: values.firstName,
           lastName: values.lastName,
           ages,

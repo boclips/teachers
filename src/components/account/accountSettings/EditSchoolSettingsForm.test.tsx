@@ -8,7 +8,7 @@ import {
   MockStoreFactory,
   UserProfileFactory,
 } from '../../../../test-support/factories';
-import updateUser from '../../../services/users/updateUser';
+import { editUser } from '../../../services/users/updateUser';
 import Mock = jest.Mock;
 import { Link } from '../../../types/Link';
 import { SchoolForm } from '../form/SchoolForm';
@@ -18,7 +18,7 @@ import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
 jest.mock('../../../services/users/updateUser');
 
 describe('School settings form', () => {
-  const mockUpdateUser = updateUser as Mock;
+  const mockUpdateUser = editUser as Mock;
   const links = LinksFactory.sample({
     activate: new Link({ href: '/users', templated: false }),
   });

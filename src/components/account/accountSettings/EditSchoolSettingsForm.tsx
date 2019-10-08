@@ -3,7 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import updateUser from '../../../services/users/updateUser';
+import { editUser } from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
@@ -96,13 +96,10 @@ export class EditSchoolSettingsFields extends React.Component<
   private submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        updateUser(this.props.links, {
-          ...this.props.userProfile,
-          state: { name: undefined, id: values.state },
-          school: {
-            name: values.schoolName,
-            id: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-          },
+        editUser(this.props.links, {
+          state: values.state,
+          schoolName: values.schoolName,
+          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
         })
           .then(() => {
             this.props.updateUser();

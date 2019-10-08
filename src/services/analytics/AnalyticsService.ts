@@ -7,6 +7,7 @@ import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { CreateCollectionRequest } from '../collections/createCollection';
+import { UpdateUserRequest } from '../users/updateUser';
 import { UserProfile } from '../users/UserProfile';
 import EventTypes from './external/EventTypes';
 import { toMixpanelSegment } from './external/toMixpanelSegment';
@@ -54,12 +55,12 @@ export default class AnalyticsService {
     this.mixpanelInstance.reset();
   }
 
-  public createUserProfile(userProfile: UserProfile) {
+  public createUserProfile(request: UpdateUserRequest, email: string) {
     this.mixpanelInstance.people.set({
-      $email: userProfile.email,
+      $email: email,
       $last_login: new Date(),
-      $first_name: userProfile.firstName,
-      $last_name: userProfile.lastName,
+      $first_name: request.firstName,
+      $last_name: request.lastName,
       $created: new Date(),
     });
   }

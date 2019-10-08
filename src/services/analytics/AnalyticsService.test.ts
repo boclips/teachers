@@ -9,7 +9,7 @@ import {
 import { VideoSearchResults } from '../../types/State';
 import { StreamPlayback } from '../../types/Video';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
-import { UserProfile } from '../users/UserProfile';
+import { UpdateUserRequest } from '../users/updateUser';
 import AnalyticsService from './AnalyticsService';
 
 let analyticsService: AnalyticsService;
@@ -58,7 +58,10 @@ describe('AnalyticsService', () => {
 
     describe('MixpanelAnalytics', () => {
       it('creates a user profile', () => {
-        analyticsService.createUserProfile({} as UserProfile);
+        analyticsService.createUserProfile(
+          {} as UpdateUserRequest,
+          'test@test.com',
+        );
 
         expect(mockMixpanel.people.set).toHaveBeenCalled();
       });

@@ -13,11 +13,9 @@ import { SchoolForm } from '../../components/account/form/SchoolForm';
 import Mock = jest.Mock;
 import EditButton from '../../components/common/buttons/EditButton';
 import { SubjectTag } from '../../components/common/tags/SubjectTag';
-import convertUserResource from '../../services/users/convertUserResource';
-import updateUser from '../../services/users/updateUser';
+import { editUser } from '../../services/users/updateUser';
 
 jest.mock('../../services/users/updateUser');
-const userProfile = convertUserResource(userResponse('user-id'));
 
 describe('when view is mounted', () => {
   let accountSettingsPage;
@@ -55,7 +53,7 @@ describe('when view is mounted', () => {
 
   describe('editing school settings', () => {
     it('sends the correct information when the state and school are both updated', async () => {
-      const mockUpdateUser = updateUser as Mock;
+      const mockUpdateUser = editUser as Mock;
 
       const accountForm = getAccountSettingsWithEditor();
 
@@ -69,9 +67,9 @@ describe('when view is mounted', () => {
         .onClick(null);
 
       expect(mockUpdateUser).toHaveBeenCalledWith(expect.any(Object), {
-        ...userProfile,
-        state: { name: undefined, id: 'state-1' },
-        school: { name: undefined, id: 'S2' },
+        state: 'state-1',
+        schoolId: 'S2',
+        schoolName: undefined,
       });
     });
   });

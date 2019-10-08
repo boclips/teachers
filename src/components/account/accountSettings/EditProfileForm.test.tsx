@@ -9,7 +9,7 @@ import {
   SubjectsFactory,
   UserProfileFactory,
 } from '../../../../test-support/factories';
-import updateUser from '../../../services/users/updateUser';
+import { editUser } from '../../../services/users/updateUser';
 import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
@@ -19,7 +19,7 @@ import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 
-const mockUpdateUser = updateUser as Mock;
+const mockUpdateUser = editUser as Mock;
 const links = LinksFactory.sample({
   activate: new Link({ href: '/users', templated: false }),
 });
@@ -111,7 +111,6 @@ describe(`Profile form`, () => {
     wrapper.find(By.dataQa('submit-update-user', 'button')).simulate('click');
 
     expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-      ...UserProfileFactory.sample(),
       firstName: 'new first name',
       lastName: 'new last name',
       subjects: ['subject-one-id'],

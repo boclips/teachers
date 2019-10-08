@@ -9,12 +9,11 @@ import {
   LinksFactory,
   MockStoreFactory,
   SubjectFactory,
-  UserProfileFactory,
 } from '../../../../test-support/factories';
 import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
-import updateUser from '../../../services/users/updateUser';
+import { onboardUser } from '../../../services/users/updateUser';
 import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
@@ -23,7 +22,7 @@ jest.mock('../../../services/users/updateUser');
 
 AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
-const mockUpdateUser = updateUser as Mock;
+const mockOnboardUser = onboardUser as Mock;
 const links = LinksFactory.sample({
   activate: new Link({ href: '/users', templated: false }),
 });
@@ -31,7 +30,7 @@ const links = LinksFactory.sample({
 describe('onboarding form', () => {
   let wrapper;
   beforeEach(() => {
-    mockUpdateUser.mockReturnValue(Promise.resolve());
+    mockOnboardUser.mockReturnValue(Promise.resolve());
     wrapper = mount(
       <Provider
         store={MockStoreFactory.sample({
@@ -78,17 +77,19 @@ describe('onboarding form', () => {
 
       OnboardingFormHelper.save(wrapper);
 
-      expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-        ...UserProfileFactory.sample(),
-        firstName: 'Rebecca',
-        lastName: 'Sanchez',
-        subjects: ['1'],
-        ages: [3, 4, 5],
-        country: { id: 'ES', name: undefined },
-        hasOptedIntoMarketing: true,
-        school: { name: 'school', id: undefined },
-        state: { id: undefined, name: undefined },
-      });
+      expect(mockOnboardUser).toHaveBeenCalledWith(
+        links,
+        {
+          firstName: 'Rebecca',
+          lastName: 'Sanchez',
+          subjects: ['1'],
+          ages: [3, 4, 5],
+          country: 'ES',
+          hasOptedIntoMarketing: true,
+          schoolName: 'school',
+        },
+        'joe@boclips.com',
+      );
     });
   });
 
@@ -108,25 +109,28 @@ describe('onboarding form', () => {
     fillValidForm(wrapper);
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-      ...UserProfileFactory.sample(),
-      firstName: 'Rebecca',
-      lastName: 'Sanchez',
-      subjects: ['1'],
-      ages: [3, 4, 5],
-      country: { id: 'ES', name: undefined },
-      school: { name: 'school', id: undefined },
-      hasOptedIntoMarketing: true,
-      referralCode: 'REFERRALCODE',
-      utm: {
-        source: 'some-source-value',
-        term: 'some-term-value',
-        medium: 'some-medium-value',
-        campaign: 'some-campaign-value',
-        content: 'some-content-value',
+    expect(mockOnboardUser).toHaveBeenCalledWith(
+      links,
+      {
+        firstName: 'Rebecca',
+        lastName: 'Sanchez',
+        subjects: ['1'],
+        ages: [3, 4, 5],
+        country: 'ES',
+        schoolName: 'school',
+        schoolId: undefined,
+        hasOptedIntoMarketing: true,
+        referralCode: 'REFERRALCODE',
+        utm: {
+          source: 'some-source-value',
+          term: 'some-term-value',
+          medium: 'some-medium-value',
+          campaign: 'some-campaign-value',
+          content: 'some-content-value',
+        },
       },
-      state: { id: undefined, name: undefined },
-    });
+      'joe@boclips.com',
+    );
   });
 
   it('sends partial marketing information from the cookie', () => {
@@ -139,19 +143,20 @@ describe('onboarding form', () => {
     fillValidForm(wrapper);
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-      ...UserProfileFactory.sample(),
-      firstName: 'Rebecca',
-      lastName: 'Sanchez',
-      subjects: ['1'],
-      ages: [3, 4, 5],
-      country: { id: 'ES', name: undefined },
-      school: { name: 'school', id: undefined },
-      hasOptedIntoMarketing: true,
-      referralCode: 'REFERRALCODE',
-      state: { id: undefined, name: undefined },
-      utm: undefined,
-    });
+    expect(mockOnboardUser).toHaveBeenCalledWith(
+      links,
+      {
+        firstName: 'Rebecca',
+        lastName: 'Sanchez',
+        subjects: ['1'],
+        ages: [3, 4, 5],
+        country: 'ES',
+        schoolName: 'school',
+        hasOptedIntoMarketing: true,
+        referralCode: 'REFERRALCODE',
+      },
+      'joe@boclips.com',
+    );
   });
 
   it('does not send information if no firstName', () => {
@@ -161,7 +166,7 @@ describe('onboarding form', () => {
 
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockUpdateUser).not.toHaveBeenCalled();
+    expect(mockOnboardUser).not.toHaveBeenCalled();
   });
 
   it('does not send information if no lastName', () => {
@@ -171,7 +176,7 @@ describe('onboarding form', () => {
 
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockUpdateUser).not.toHaveBeenCalled();
+    expect(mockOnboardUser).not.toHaveBeenCalled();
   });
 
   it('does not send information if no T&C', () => {
@@ -181,7 +186,7 @@ describe('onboarding form', () => {
 
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockUpdateUser).not.toHaveBeenCalled();
+    expect(mockOnboardUser).not.toHaveBeenCalled();
   });
 
   it('sends a page changed event if page has not already been visited', () => {
