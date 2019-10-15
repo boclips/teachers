@@ -22,8 +22,8 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
 
   private constraints: Constraint[] = [
     {
-      regex: /^(.){6,}$/,
-      label: '6 characters',
+      regex: /^(.){8,}$/,
+      label: '8 characters',
     },
     {
       regex: /(?=.*[A-Z])/,

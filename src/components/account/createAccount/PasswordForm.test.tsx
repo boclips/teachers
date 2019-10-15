@@ -5,7 +5,7 @@ import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import { PasswordForm } from './PasswordForm';
 
-const validPassword = 'Aa1234';
+const validPassword = 'Aa123456';
 
 describe('PasswordForm', () => {
   const Password = Form.create({ name: 'register' })(PasswordForm);
@@ -94,7 +94,7 @@ describe('PasswordForm', () => {
     });
 
     it('validates password without numbers', () => {
-      events.setText('AAAaaa', wrapper.find(By.dataQa('password', 'input')));
+      events.setText('AAAaaaaaa', wrapper.find(By.dataQa('password', 'input')));
 
       expect(wrapper.find(By.dataQa('password-error'))).toHaveLength(1);
       expect(wrapper.find(By.dataQa('password-success'))).toHaveLength(3);
