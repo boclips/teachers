@@ -6,6 +6,7 @@ import { Country } from '../../../types/Country';
 import { School } from '../../../types/School';
 import { UsaState } from '../../../types/UsaState';
 import MultiSelect from '../../common/MultiSelect';
+import '../../common/MultiSelect.less';
 
 export const UNKNOWN_SCHOOL = '-1';
 
@@ -101,6 +102,7 @@ export class SchoolForm extends React.Component<
             showSearch={true}
             data-qa="school-filter-select"
             size={'large'}
+            className={'boclips-multi-select-selection'}
             dropdownClassName={'dropdown'}
             notFoundContent={'Please type to search your school'}
             {...this.props}

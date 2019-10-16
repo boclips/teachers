@@ -3,6 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { Country } from '../../../types/Country';
 import MultiSelect from '../../common/MultiSelect';
+import '../../common/MultiSelect.less';
 
 interface CountriesFormProps {
   countries: Country[];
@@ -35,6 +36,7 @@ export class CountriesForm extends React.Component<
             onChange={this.onUpdateCountry}
             data-qa="countries-filter-select"
             dropdownClassName={'dropdown'}
+            className={'boclips-multi-select-selection'}
             {...this.props}
           >
             {this.generateOptions()}

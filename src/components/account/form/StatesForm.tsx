@@ -2,6 +2,7 @@ import { Form, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { UsaState } from '../../../types/UsaState';
+import '../../common/MultiSelect.less';
 
 interface StatesFormProps {
   states: UsaState[];
@@ -30,6 +31,7 @@ export class StatesForm extends React.Component<
             filterOption={this.filterResults()}
             placeholder={this.props.placeholder}
             showSearch={true}
+            className={'boclips-multi-select-selection'}
             size={'large'}
             onChange={this.onUpdateState}
             data-qa="states-filter-select"
