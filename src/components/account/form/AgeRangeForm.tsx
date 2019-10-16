@@ -16,7 +16,11 @@ export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
 
   public render() {
     return (
-      <Form.Item label={this.props.label} data-qa={'age-range-form'}>
+      <Form.Item
+        label={this.props.label}
+        data-qa={'age-range-form'}
+        colon={false}
+      >
         {this.props.form.getFieldDecorator('ageRange', {
           rules: [{ type: 'array' }],
           initialValue: this.props.initialValue

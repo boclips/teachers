@@ -21,7 +21,7 @@ export class StatesForm extends React.Component<
 
   public render() {
     return (
-      <Form.Item className="form__item" label={this.props.label}>
+      <Form.Item className="form__item" label={this.props.label} colon={false}>
         {this.props.form.getFieldDecorator('state', {
           rules: [{ required: true, message: 'Please enter your state' }],
           initialValue: this.props.initialValue,

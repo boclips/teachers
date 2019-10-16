@@ -69,7 +69,7 @@ export class SchoolForm extends React.Component<
 
   public render() {
     return this.props.allowUnknownSchools ? (
-      <Form.Item className="form__item" label={this.props.label}>
+      <Form.Item className="form__item" label={this.props.label} colon={false}>
         {this.props.form.getFieldDecorator('schoolName', {
           rules: [{ required: true, message: 'Please enter your school' }],
           initialValue: this.props.initialValue,

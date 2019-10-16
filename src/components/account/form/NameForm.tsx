@@ -11,7 +11,7 @@ export class NameForm extends React.Component<FormComponentProps & Props> {
   public render() {
     return (
       <section>
-        <Form.Item label="First name" required={true}>
+        <Form.Item label="First name" required={true} colon={false}>
           {this.props.form.getFieldDecorator('firstName', {
             rules: [
               {
@@ -30,7 +30,7 @@ export class NameForm extends React.Component<FormComponentProps & Props> {
             />,
           )}
         </Form.Item>
-        <Form.Item label="Last name" required={true}>
+        <Form.Item label="Last name" required={true} colon={false}>
           {this.props.form.getFieldDecorator('lastName', {
             rules: [
               {

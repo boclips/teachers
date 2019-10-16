@@ -238,7 +238,7 @@ class OnboardingForm extends React.Component<
                       your community with the most relevant resources.
                     </p>
                     <CountriesForm
-                      label="Your country"
+                      label="Country"
                       form={this.props.form}
                       countries={this.props.countries}
                       placeholder="Choose country"
@@ -248,7 +248,7 @@ class OnboardingForm extends React.Component<
                       (this.state.country.id === 'USA' ? (
                         <section data-qa="usa-school-details">
                           <StatesForm
-                            label="Your state"
+                            label="State"
                             form={this.props.form}
                             states={this.state.country.states}
                             placeholder="Choose state"
