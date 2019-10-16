@@ -1,5 +1,6 @@
 import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
+import classnames from 'classnames';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
@@ -77,7 +78,9 @@ class CollectionHeader extends React.PureComponent<Props> {
 
     const subtitle = this.props.mode !== 'tiny-card' && (
       <CollectionSubtitle
-        classname="highlight collection-subtitle header"
+        classname={classnames('highlight collection-subtitle header', {
+          'no-lesson-plan': this.props.mode === 'details',
+        })}
         collection={this.props.collection}
       />
     );
