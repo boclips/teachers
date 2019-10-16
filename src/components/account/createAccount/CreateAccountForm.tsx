@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import GoogleSVG from '../../../../resources/images/google.svg';
 import MicrosoftSVG from '../../../../resources/images/office-365.svg';
+import RegistrationLogoSVG from '../../../../resources/images/registration-logo.svg';
 import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
@@ -78,100 +79,105 @@ class CreateAccountForm extends React.Component<
 
     return (
       <section className="create-account-form__container">
-        <Form onSubmit={this.handleSubmit}>
-          <h1 className="alt create-account-form__title">Create account</h1>
+        <Col xs={{ span: 0 }} lg={{ span: 12 }}>
+          <RegistrationLogoSVG className="create-account__logo" />
+        </Col>
+        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+          <Form onSubmit={this.handleSubmit}>
+            <h1 className="alt create-account-form__title">Create account</h1>
 
-          <section className="create-account-form__form">
-            <EmailForm form={this.props.form} />
+            <section className="create-account-form__form">
+              <EmailForm form={this.props.form} />
 
-            <PasswordForm form={this.props.form} />
+              <PasswordForm form={this.props.form} />
+            </section>
+
+            <div style={{ display: 'none' }}>
+              <Form.Item>
+                {getFieldDecorator('analyticsId', {
+                  rules: [],
+                  initialValue: AnalyticsFactory.externalAnalytics().getId(),
+                })(<Input type="text" />)}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator('recaptchaToken', {
+                  rules: [],
+                  initialValue: '',
+                })(<Input type="text" />)}
+              </Form.Item>
+              {this.state.renderRecaptcha && (
+                <Recaptcha verifyCallback={this.updateRecaptchaToken} />
+              )}
+            </div>
+
+            <Button
+              data-qa="register-button"
+              className="create-account-form__button create-account-form__submit"
+              size="large"
+              type="primary"
+              htmlType="submit"
+              disabled={this.state.creating}
+              loading={this.state.creating}
+            >
+              Create account
+            </Button>
+          </Form>
+          <LoginLink />
+
+          <section className="create-account-form__divider-container">
+            <label className="create-account-form__divider-label">or</label>
+            <hr className="create-account-form__divider" />
           </section>
 
-          <div style={{ display: 'none' }}>
-            <Form.Item>
-              {getFieldDecorator('analyticsId', {
-                rules: [],
-                initialValue: AnalyticsFactory.externalAnalytics().getId(),
-              })(<Input type="text" />)}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('recaptchaToken', {
-                rules: [],
-                initialValue: '',
-              })(<Input type="text" />)}
-            </Form.Item>
-            {this.state.renderRecaptcha && (
-              <Recaptcha verifyCallback={this.updateRecaptchaToken} />
-            )}
-          </div>
+          <section className="create-account-form__social-buttons-container">
+            <Row gutter={16}>
+              <ul className="create-account-form__social-buttons-list">
+                <Col sm={24} md={12}>
+                  <li className="create-account-form__social-buttons-list-item">
+                    <Button
+                      data-qa="google-button"
+                      className="create-account-form__button create-account-form__social-button"
+                      size="large"
+                      type="primary"
+                      htmlType="submit"
+                      disabled={this.state.creating}
+                      loading={this.state.creating}
+                      onClick={this.handleGoogleSsoLogin}
+                    >
+                      <span className="create-account-form__social-button-icon">
+                        <GoogleSVG aria-hidden={true} />
+                      </span>
+                      <span>Continue with Google</span>
+                    </Button>
+                  </li>
+                </Col>
+                <Col sm={24} md={12}>
+                  <li className="create-account-form__social-buttons-list-item">
+                    <Button
+                      data-qa="microsoft-button"
+                      className="create-account-form__button create-account-form__social-button"
+                      size="large"
+                      type="primary"
+                      htmlType="submit"
+                      disabled={this.state.creating}
+                      loading={this.state.creating}
+                      onClick={this.handleMicrosoftSsoLogin}
+                    >
+                      <span className="create-account-form__social-button-icon">
+                        <MicrosoftSVG aria-hidden={true} />
+                      </span>
+                      <span>Continue with Office 365</span>
+                    </Button>
+                  </li>
+                </Col>
+              </ul>
+            </Row>
+          </section>
 
-          <Button
-            data-qa="register-button"
-            className="create-account-form__button create-account-form__submit"
-            size="large"
-            type="primary"
-            htmlType="submit"
-            disabled={this.state.creating}
-            loading={this.state.creating}
-          >
-            Create account
-          </Button>
-        </Form>
-        <LoginLink />
-
-        <section className="create-account-form__divider-container">
-          <label className="create-account-form__divider-label">or</label>
-          <hr className="create-account-form__divider" />
-        </section>
-
-        <section className="create-account-form__social-buttons-container">
-          <Row gutter={16}>
-            <ul className="create-account-form__social-buttons-list">
-              <Col sm={24} md={12}>
-                <li className="create-account-form__social-buttons-list-item">
-                  <Button
-                    data-qa="google-button"
-                    className="create-account-form__button create-account-form__social-button"
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    disabled={this.state.creating}
-                    loading={this.state.creating}
-                    onClick={this.handleGoogleSsoLogin}
-                  >
-                    <span className="create-account-form__social-button-icon">
-                      <GoogleSVG aria-hidden={true} />
-                    </span>
-                    <span>Continue with Google</span>
-                  </Button>
-                </li>
-              </Col>
-              <Col sm={24} md={12}>
-                <li className="create-account-form__social-buttons-list-item">
-                  <Button
-                    data-qa="microsoft-button"
-                    className="create-account-form__button create-account-form__social-button"
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    disabled={this.state.creating}
-                    loading={this.state.creating}
-                    onClick={this.handleMicrosoftSsoLogin}
-                  >
-                    <span className="create-account-form__social-button-icon">
-                      <MicrosoftSVG aria-hidden={true} />
-                    </span>
-                    <span>Continue with Office 365</span>
-                  </Button>
-                </li>
-              </Col>
-            </ul>
-          </Row>
-        </section>
-
-        <section className="create-account-form__recaptcha">
-          <CaptchaNotice />
-        </section>
+          <section className="create-account-form__recaptcha">
+            <CaptchaNotice />
+          </section>
+        </Col>
       </section>
     );
   }
