@@ -1,8 +1,9 @@
+import { Icon } from 'antd';
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React, { PureComponent } from 'react';
-import collections from '../../../resources/images/collections.png';
 import EmptyCollectionSVG from '../../../resources/images/empty-collection.svg';
+import collectionsSVG from '../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import PageLayout from '../../components/layout/PageLayout';
 import './MyCollectionListView.less';
@@ -23,7 +24,7 @@ export default class MyCollectionListView extends PureComponent {
       <PageableCollectionCardList
         title={
           <span>
-            <img src={collections} alt="" /> Your video collections
+            <Icon component={collectionsSVG} /> Your video collections
           </span>
         }
         collectionKey="myCollections"

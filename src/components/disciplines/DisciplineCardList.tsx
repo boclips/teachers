@@ -2,7 +2,7 @@ import { Col, Icon, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import SubjectsSVG from '../../../resources/images/subjects.svg';
+import SubjectsSVG from '../../../resources/images/our-subjects.svg';
 import { Discipline } from '../../types/Discipline';
 import State from '../../types/State';
 import { DisciplineCard } from './DisciplineCard';

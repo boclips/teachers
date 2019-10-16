@@ -1,5 +1,6 @@
+import { Icon } from 'antd';
 import React from 'react';
-import collectionsImg from '../../../../../resources/images/collections.png';
+import collectionsSvg from '../../../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../../card/list/PageableCollectionCardList';
 
 interface Props {
@@ -13,7 +14,7 @@ class PublicCollectionsGrid extends React.PureComponent<Props> {
       <PageableCollectionCardList
         title={
           <span>
-            <img src={collectionsImg} alt="" /> Most recent video collections
+            <Icon component={collectionsSvg} /> Most recent video collections
           </span>
         }
         description={this.props.description}
