@@ -42,7 +42,7 @@ class ProfileFormFields extends React.Component<
           <SubjectsForm
             form={this.props.form}
             subjects={this.props.subjects}
-            placeholder={'Subjects'}
+            placeholder={'Choose subjects'}
             initialValue={this.props.userProfile.subjects}
             label={'Subjects'}
           />
