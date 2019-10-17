@@ -464,7 +464,7 @@ export function userResponse(id: string = 'my-user-id') {
     lastName: 'Someone',
     email: 'bob@someone.com',
     analyticsId: '123',
-    subjects: ['1'],
+    subjects: [{ id: '1' }],
     ages: [1, 2, 3, 4],
     organisation: {
       country: { name: 'United States', id: 'USA' },
