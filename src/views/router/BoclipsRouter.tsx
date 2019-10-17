@@ -8,6 +8,7 @@ import { Route, RouteComponentProps, Switch } from 'react-router';
 import PrivateRoute, {
   PrivateRouteComponentParams,
 } from '../../components/login/PrivateRoute';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { RouterState } from '../../types/State';
 import { AccountSettingsView } from '../account/AccountSettingsView';
 import { CreateAccountView } from '../account/CreateAccountView';
@@ -136,7 +137,7 @@ class BoclipsRouter extends Component<Props & StateProps> {
     const currentPath = this.props.pathname;
 
     if (previousPath !== currentPath) {
-      window.Appcues.page();
+      AnalyticsFactory.externalAnalytics().pageChange();
     }
   }
 }

@@ -401,4 +401,10 @@ export default class AnalyticsService {
     this.mixpanelInstance.track(EventTypes.ONBOARDING_PAGE_CHANGED, payload);
     this.trackAppcues(EventTypes.ONBOARDING_PAGE_CHANGED, payload);
   }
+
+  public pageChange() {
+    if (this.appcuesInstance) {
+      this.appcuesInstance.page();
+    }
+  }
 }
