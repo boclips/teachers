@@ -1,48 +1,51 @@
-import {
-  CollectionsStateValue,
-  getIndexOfCollection,
-} from '../../../../types/State';
+import { CollectionsStateValue } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
+import { onUpdateCollection } from './storeCollectionsReducer';
 
 export const onAddVideoToMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(
-    state.myCollections.items,
-    request.collection.id,
-  );
-  const myCollections = { ...state.myCollections };
+  const collection = state.collections[request.collection.id];
 
-  if (indexOfCollection > -1) {
-    const videos = state.myCollections.items[indexOfCollection].videos;
-    const videoIds = state.myCollections.items[indexOfCollection].videoIds;
-
-    const alreadyHaveVideoId =
-      videoIds.find(v => v.id === request.video.id) != null;
-    const alreadyHaveVideo = videos[request.video.id];
-
-    if (alreadyHaveVideo && alreadyHaveVideoId) {
-      return state;
-    }
-
-    const videoId = {
-      id: request.video.id,
-      links: request.video.links,
-    };
-
-    myCollections.items[indexOfCollection] = {
-      ...myCollections.items[indexOfCollection],
-      videos: {
-        ...videos,
-        [request.video.id]: request.video,
-      },
-      videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
-    };
+  if (collection == null) {
+    return state;
   }
 
-  return { ...state, myCollections, updating: true };
+  const videos = collection.videos;
+  const videoIds = collection.videoIds;
+
+  const alreadyHaveVideoId =
+    videoIds.find(v => v.id === request.video.id) != null;
+  const alreadyHaveVideo = videos[request.video.id];
+
+  if (alreadyHaveVideo && alreadyHaveVideoId) {
+    return state;
+  }
+
+  const videoId = {
+    id: request.video.id,
+    links: request.video.links,
+  };
+
+  const updatedCollection = {
+    ...collection,
+    videos: {
+      ...videos,
+      [request.video.id]: request.video,
+    },
+    videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
+  };
+
+  return {
+    ...state,
+    collections: {
+      ...state.collections,
+      [updatedCollection.id]: updatedCollection,
+    },
+    updating: true,
+  };
 };
 
 const getUpdateVideoIds = (
@@ -57,23 +60,26 @@ export const onRemoveVideoFromMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const myCollections = { ...state.myCollections };
-  const indexOfCollection = getIndexOfCollection(
-    state.myCollections.items,
-    request.collection.id,
-  );
+  const collection = state.collections[request.collection.id];
 
-  if (indexOfCollection > -1) {
-    const collection = myCollections.items[indexOfCollection];
-
-    myCollections.items[indexOfCollection] = {
-      ...myCollections.items[indexOfCollection],
-      videos: removeVideo(request.video.id, collection.videos),
-      videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
-    };
+  if (collection == null) {
+    return state;
   }
 
-  return { ...state, myCollections, updating: true };
+  const updatedCollection = {
+    ...collection,
+    videos: removeVideo(request.video.id, collection.videos),
+    videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
+  };
+
+  return {
+    ...state,
+    collections: {
+      ...state.collections,
+      [updatedCollection.id]: updatedCollection,
+    },
+    updating: true,
+  };
 };
 
 export const onMyCollectionRemoved = (
@@ -86,7 +92,7 @@ export const onMyCollectionRemoved = (
     myCollections: {
       ...state.myCollections,
       items: state.myCollections.items.filter(
-        collection => collection.id !== removedCollection.id,
+        collectionId => collectionId !== removedCollection.id,
       ),
     },
   };
@@ -96,31 +102,11 @@ export const onMyCollectionEdited = (
   state: CollectionsStateValue,
   editedCollection: VideoCollection,
 ): CollectionsStateValue => {
-  const indexOfCollection = getIndexOfCollection(
-    state.myCollections.items,
-    editedCollection.id,
-  );
-
-  const myCollections = state.myCollections;
-
-  const items = myCollections.items.map((item, index) => {
-    if (index !== indexOfCollection) {
-      return item;
-    }
-
-    return {
-      ...item,
-      ...editedCollection,
-    };
-  });
+  state = onUpdateCollection(state, editedCollection);
 
   return {
     ...state,
-    updating: false,
-    myCollections: {
-      ...myCollections,
-      items,
-    },
+    updating: true,
   };
 };
 

@@ -121,7 +121,9 @@ describe('searching collections', () => {
   test('Clears collections and sets loading flag and query on the loading action', () => {
     const state: CollectionSearchStateValue = {
       loading: false,
-      collections: [VideoCollectionFactory.sample({ title: 'my collection' })],
+      collectionIds: [
+        VideoCollectionFactory.sample({ title: 'my collection' }).id,
+      ],
       query: '',
     };
 
@@ -134,7 +136,7 @@ describe('searching collections', () => {
 
     const expectedState: CollectionSearchStateValue = {
       loading: true,
-      collections: [],
+      collectionIds: [],
       query: 'donuts',
     };
 
@@ -144,12 +146,14 @@ describe('searching collections', () => {
   test('Sets collections and clears loading flag on the store action', () => {
     const state: CollectionSearchStateValue = {
       loading: true,
-      collections: [],
+      collectionIds: [],
       query: 'pancakes',
     };
 
     const searchResults: CollectionSearchResults = {
-      collections: [VideoCollectionFactory.sample({ title: 'dog collection' })],
+      collectionIds: [
+        VideoCollectionFactory.sample({ title: 'dog collection' }).id,
+      ],
       query: 'dogs',
     };
 
@@ -160,7 +164,9 @@ describe('searching collections', () => {
 
     const expectedState: CollectionSearchStateValue = {
       loading: false,
-      collections: [VideoCollectionFactory.sample({ title: 'dog collection' })],
+      collectionIds: [
+        VideoCollectionFactory.sample({ title: 'dog collection' }).id,
+      ],
       query: 'dogs',
     };
 
@@ -183,7 +189,7 @@ describe('searching collections', () => {
     });
 
     const stateBefore: CollectionSearchStateValue = {
-      collections: [collection],
+      collectionIds: [collection.id],
       query: 'dog',
       loading: false,
     };
@@ -195,12 +201,12 @@ describe('searching collections', () => {
 
     const stateAfter = collectionSearchReducer(stateBefore, action);
 
-    expect(Object.keys(stateAfter.collections[0].videos)).toHaveLength(1);
-    expect(stateAfter.collections[0].videos[video.id].title).toEqual(
+    expect(Object.keys(stateAfter.collectionIds[0].videos)).toHaveLength(1);
+    expect(stateAfter.collectionIds[0].videos[video.id].title).toEqual(
       video.title,
     );
-    expect(stateAfter.collections[0].videos[video.id].id).toEqual(video.id);
-    expect(stateAfter.collections[0].videoIds).toHaveLength(1);
+    expect(stateAfter.collectionIds[0].videos[video.id].id).toEqual(video.id);
+    expect(stateAfter.collectionIds[0].videoIds).toHaveLength(1);
   });
 
   // TODO: fix this bug
@@ -214,7 +220,7 @@ describe('searching collections', () => {
       const stateBefore: SearchStateValue = {
         videoSearch: undefined,
         collectionSearch: {
-          collections: [toBeUpdatedCollection],
+          collectionIds: [toBeUpdatedCollection],
           loading: false,
           query: '',
         },
@@ -228,7 +234,7 @@ describe('searching collections', () => {
       const action = onCollectionBookmarkedAction(updatedCollection);
 
       const publicCollections = searchReducer(stateBefore, action)
-        .collectionSearch.collections;
+        .collectionSearch.collectionIds;
 
       expect(publicCollections).toHaveLength(1);
       expect(publicCollections).toContainEqual(updatedCollection);

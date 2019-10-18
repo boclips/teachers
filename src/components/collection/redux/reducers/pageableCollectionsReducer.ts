@@ -8,15 +8,32 @@ export const onAppendPageableCollectionsAction = (
 ): CollectionsStateValue => {
   const collectionKey = request.key;
 
-  const collection = {
+  const collectionRequestItems = request.collections.items;
+
+  const collectionPage = {
     ...state[collectionKey],
-    items: [...state[collectionKey].items, ...request.collections.items],
+    items: [
+      ...state[collectionKey].items,
+      ...collectionRequestItems.map(collection => collection.id),
+    ],
     links: request.collections.links,
   };
 
+  const collections = request.collections.items.reduce(
+    (normalizedCollections, collection) => {
+      normalizedCollections[collection.id] = collection;
+      return normalizedCollections;
+    },
+    {},
+  );
+
   return {
     ...state,
-    [collectionKey]: collection,
+    [collectionKey]: collectionPage,
+    collections: {
+      ...state.collections,
+      ...collections,
+    },
     loading: false,
     updating: false,
   };

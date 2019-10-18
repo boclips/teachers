@@ -63,7 +63,7 @@ function onSearchCollectionsAction(
   searchRequest: CollectionSearchRequest,
 ): CollectionSearchStateValue {
   return {
-    collections: [],
+    collectionIds: [],
     query: searchRequest.query,
     loading: true,
   };
@@ -83,18 +83,18 @@ function onStoreVideosForSearchCollection(
     collection: VideoCollection;
   },
 ): CollectionSearchStateValue {
-  if (!state || !state.collections) {
+  if (!state || !state.collectionIds) {
     return state;
   }
 
   const collectionItems = updateMatchingCollectionWithVideos(
     request,
-    state.collections,
+    state.collectionIds,
   );
 
   return {
     ...state,
-    collections: collectionItems,
+    collectionIds: collectionItems,
   };
 }
 
@@ -125,12 +125,12 @@ function onCollectionBookmarkUpdate(
   state: CollectionSearchStateValue,
   updatedCollection: VideoCollection,
 ): CollectionSearchStateValue {
-  if (state.collections === undefined) {
+  if (state.collectionIds === undefined) {
     return state;
   }
 
   const indexOfCollectionToUpdate = getIndexOfCollection(
-    state.collections,
+    state.collectionIds,
     updatedCollection.id,
   );
 
@@ -138,7 +138,7 @@ function onCollectionBookmarkUpdate(
     return state;
   }
 
-  const newCollections = [...state.collections];
+  const newCollections = [...state.collectionIds];
   const originalCollection = newCollections[indexOfCollectionToUpdate];
 
   const collectionToUpdate = {
@@ -150,7 +150,7 @@ function onCollectionBookmarkUpdate(
 
   return {
     ...state,
-    collections: newCollections,
+    collectionIds: newCollections,
   };
 }
 
@@ -170,12 +170,10 @@ export const collectionSearchReducer: Reducer<
     storeCollectionSearchResultsAction,
     onStoreCollectionSearchResultsAction,
   ),
-  actionHandler(
-    storeVideosForCollectionAction,
-    onStoreVideosForSearchCollection,
-  ),
-  actionHandler(onCollectionUnbookmarkedAction, onCollectionBookmarkUpdate),
-  actionHandler(onCollectionBookmarkedAction, onCollectionBookmarkUpdate),
+  // actionHandler(
+  //   storeVideosForCollectionAction,
+  //   onStoreVideosForSearchCollection,
+  // ),
 );
 
 export const searchReducer: Reducer<SearchStateValue> = combineReducers({

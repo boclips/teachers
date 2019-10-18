@@ -32,7 +32,7 @@ it('renders child component', () => {
 
 it('gets correct state from store', () => {
   const myCollections = PageableCollectionsFactory.sample({
-    items: [VideoCollectionFactory.sample()],
+    items: [VideoCollectionFactory.sample().id],
     links: {
       next: new Link({ href: 'yes', templated: false }),
     },

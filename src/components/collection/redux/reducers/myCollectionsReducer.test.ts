@@ -32,7 +32,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [otherCollection, targetCollection],
+        items: [otherCollection.id, targetCollection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       discoverCollections: PageableCollectionsFactory.sample(),
@@ -48,16 +48,15 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.updating).toEqual(true);
-    expect(stateAfter.myCollections.items[0]).toEqual(otherCollection);
-    expect(stateAfter.myCollections.items[1]).not.toEqual(targetCollection);
-    expect(Object.keys(stateAfter.myCollections.items[1].videos)).toHaveLength(
-      2,
-    );
-    expect(stateAfter.myCollections.items[1].videos['124']).toEqual(newVideo);
-    expect(stateAfter.myCollections.items[1].videoIds).toHaveLength(2);
-    expect(
-      stateAfter.myCollections.items[1].videoIds.map(id => id.id),
-    ).toContain('124');
+    expect(stateAfter.myCollections.items[0]).toEqual(otherCollection.id);
+    expect(stateAfter.myCollections.items[1]).toEqual(targetCollection.id);
+
+    const updatedCollection = stateAfter.collections[targetCollection.id];
+
+    expect(Object.keys(updatedCollection.videos)).toHaveLength(2);
+    expect(updatedCollection.videos['124']).toEqual(newVideo);
+    expect(updatedCollection.videoIds).toHaveLength(2);
+    expect(updatedCollection.videoIds.map(id => id.id)).toContain('124');
   });
 
   test('remove a collection', () => {
@@ -68,7 +67,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       discoverCollections: PageableCollectionsFactory.sample(),
@@ -80,6 +79,7 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.myCollections.items).toHaveLength(0);
+    expect(stateAfter.collections[collection.id]).not.toBeUndefined();
   });
 
   test('editing a collection', () => {
@@ -90,7 +90,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       discoverCollections: PageableCollectionsFactory.sample(),
@@ -104,8 +104,9 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.myCollections.items.length).toEqual(1);
-    expect(stateAfter.myCollections.items[0].title).toEqual('changed');
+    expect(stateAfter.collections[collection.id].title).toEqual('changed');
   });
+
   test('adding a duplicate video to a collection does not re-add it', () => {
     const video = VideoFactory.sample({ id: '123' });
     const collection = VideoCollectionFactory.sample({
@@ -117,7 +118,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       discoverCollections: PageableCollectionsFactory.sample(),
@@ -131,11 +132,11 @@ describe('adding video to collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
+    const updatedCollection = stateAfter.collections[collection.id];
+
     expect(stateAfter.updating).toEqual(false);
-    expect(Object.keys(stateAfter.myCollections.items[0].videos)).toHaveLength(
-      1,
-    );
-    expect(stateAfter.myCollections.items[0].videoIds).toHaveLength(1);
+    expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
+    expect(updatedCollection.videoIds).toHaveLength(1);
   });
 
   test('adding a new video that we already know about in the video ids list only updates the video map', () => {
@@ -155,7 +156,7 @@ describe('adding video to collection', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       discoverCollections: PageableCollectionsFactory.sample(),
@@ -169,15 +170,15 @@ describe('adding video to collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
+    const updatedCollection = stateAfter.collections[collection.id];
+
     expect(stateAfter.updating).toEqual(true);
-    expect(Object.keys(stateAfter.myCollections.items[0].videos)).toHaveLength(
-      1,
-    );
-    expect(stateAfter.myCollections.items[0].videoIds).toHaveLength(1);
+    expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
+    expect(updatedCollection.videoIds).toHaveLength(1);
   });
 });
 
-describe('removing videos from a colleciton', () => {
+describe('removing videos from a collection', () => {
   test('removing a video from a collection', () => {
     const collection = VideoCollectionFactory.sample({
       id: 'target',
@@ -192,7 +193,7 @@ describe('removing videos from a colleciton', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       discoverCollections: PageableCollectionsFactory.sample(),
@@ -207,12 +208,12 @@ describe('removing videos from a colleciton', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
+    const updatedCollection = stateAfter.collections[collection.id];
+
     expect(stateAfter.updating).toEqual(true);
-    expect(Object.keys(stateAfter.myCollections.items[0].videos)).toHaveLength(
-      1,
-    );
-    expect(stateAfter.myCollections.items[0].videos['124'].id).toEqual('124');
-    expect(stateAfter.myCollections.items[0].videoIds).toHaveLength(1);
-    expect(stateAfter.myCollections.items[0].videoIds[0].id).toEqual('124');
+    expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
+    expect(updatedCollection.videos['124'].id).toEqual('124');
+    expect(updatedCollection.videoIds).toHaveLength(1);
+    expect(updatedCollection.videoIds[0].id).toEqual('124');
   });
 });

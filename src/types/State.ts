@@ -22,7 +22,7 @@ export interface VideoSearchResults {
 
 export interface CollectionSearchResults {
   query: string;
-  collections: VideoCollection[];
+  collectionIds: string[];
 }
 
 export interface VideoSearchStateValue extends VideoSearchResults {
@@ -102,25 +102,22 @@ export interface CollectionsStateValue {
   collections: { [key: string]: VideoCollection };
   loading: boolean;
   updating: boolean;
-  myCollections: Pageable<VideoCollection>;
-  publicCollections: Pageable<VideoCollection>;
-  discoverCollections: Pageable<VideoCollection>;
-  bookmarkedCollections: Pageable<VideoCollection>;
-  collectionBeingViewed?: string;
+  myCollections: Pageable<string>; // TODO rename to ids
+  publicCollections: Pageable<string>;
+  discoverCollections: Pageable<string>;
+  bookmarkedCollections: Pageable<string>;
+  collectionBeingViewedIds?: string;
 }
 
 export function getIndexOfCollection(
-  collections: VideoCollection[],
+  collections: string[],
   collectionId: string,
 ) {
-  return collections.findIndex(col => col.id === collectionId);
+  return collections.findIndex(id => id === collectionId);
 }
 
-export function isMyCollection(
-  collections: VideoCollection[],
-  collectionId: string,
-) {
-  const indexOfCollection = getIndexOfCollection(collections, collectionId);
+export function isMyCollection(myCollections: string[], collectionId: string) {
+  const indexOfCollection = getIndexOfCollection(myCollections, collectionId);
   return indexOfCollection >= 0;
 }
 

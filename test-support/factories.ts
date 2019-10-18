@@ -137,9 +137,7 @@ export class VideoCollectionLinksFactory {
 }
 
 export class PageableCollectionsFactory {
-  public static sample(
-    arg: Partial<Pageable<VideoCollection>> = {},
-  ): Pageable<VideoCollection> {
+  public static sample(arg: Partial<Pageable<string>> = {}): Pageable<string> {
     return Object.freeze({
       items: arg.items || [],
       links: { next: (arg.links && arg.links.next) || undefined },
@@ -271,7 +269,7 @@ export class CollectionSearchFactory {
   ): CollectionSearchStateValue {
     return Object.freeze({
       query: 'hello',
-      collections: [],
+      collectionIds: [],
       loading: false,
       ...arg,
     });
@@ -303,7 +301,7 @@ export class CollectionsFactory {
       loading: false,
       updating: false,
       collections: { [collection.id]: collection },
-      myCollections: { items: [collection], links: {} },
+      myCollections: { items: [collection.id], links: {} },
       publicCollections: {
         items: [],
         links: {},
@@ -317,7 +315,7 @@ export class CollectionsFactory {
         items: [],
         links: {},
       },
-      collectionBeingViewed: collection.id,
+      collectionBeingViewedIds: collection.id,
       ...arg,
     });
   }

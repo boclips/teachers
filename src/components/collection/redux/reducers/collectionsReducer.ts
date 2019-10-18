@@ -29,16 +29,16 @@ import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import {
+  onCollectionBookmarked,
+  onCollectionUnbookmarked,
+} from './bookmarkCollectionsReducer';
+import {
   onAddVideoToMyCollectionAction,
   onMyCollectionEdited,
   onMyCollectionRemoved,
   onRemoveVideoFromMyCollectionAction,
 } from './myCollectionsReducer';
 import { onAppendPageableCollectionsAction } from './pageableCollectionsReducer';
-import {
-  onCollectionBookmarked,
-  onCollectionUnbookmarked,
-} from './readOnlyCollectionsReducer';
 import {
   onStoreCollectionAction,
   onStoreCollectionsAction,
@@ -52,7 +52,7 @@ const initialState: CollectionsStateValue = {
   publicCollections: undefined,
   discoverCollections: undefined,
   bookmarkedCollections: undefined,
-  collectionBeingViewed: undefined,
+  collectionBeingViewedIds: undefined,
   loading: true,
   updating: false,
 };

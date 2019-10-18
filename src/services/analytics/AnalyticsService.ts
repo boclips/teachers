@@ -106,7 +106,7 @@ export default class AnalyticsService {
         EventTypes.COLLECTION_SEARCH
       }_query`.toLowerCase()]: searchResults.query,
       [`${EventTypes.COLLECTION_SEARCH}_number_of_results`.toLowerCase()]:
-        searchResults.collections && searchResults.collections.length,
+        searchResults.collectionIds && searchResults.collectionIds.length,
     };
 
     this.mixpanelInstance.track(EventTypes.COLLECTION_SEARCH, payload);

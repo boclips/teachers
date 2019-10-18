@@ -144,15 +144,11 @@ class CollectionDetails extends PureComponent<
   }
 }
 
-function getCollection(collectionId: string, state: State) {
+function getCollection(collectionId: string, state: State): VideoCollection {
   if (isMyCollection(state.collections.myCollections.items, collectionId)) {
-    const indexOfCollection = getIndexOfCollection(
-      state.collections.myCollections.items,
-      collectionId,
-    );
-    return state.collections.myCollections.items[indexOfCollection];
+    return state.collections.collections[collectionId];
   } else {
-    if (state.collections.collectionBeingViewed === null) {
+    if (state.collections.collectionBeingViewedIds === null) {
       return null;
     }
 

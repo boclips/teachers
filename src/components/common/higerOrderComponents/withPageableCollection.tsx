@@ -51,12 +51,17 @@ const mapDispatchToProps = (
 });
 
 function mapStateToProps(state: State, props: Props): StateProps {
-  const collectionsOfType: Pageable<VideoCollection> =
-    state.collections[props.collectionKey];
+  const collectionIdsOfType: Page<string> = new Page(
+    state.collections[props.collectionKey],
+  );
+
+  const collectionsOfType = collectionIdsOfType
+    .items()
+    .map(id => state.collections.collections[id]);
 
   return {
-    collections: new Page(collectionsOfType).items(),
-    hasMoreCollections: new Page(collectionsOfType).hasNextPage(),
+    collections: collectionsOfType,
+    hasMoreCollections: collectionIdsOfType.hasNextPage(),
     loading: state.collections.loading,
   };
 }

@@ -22,17 +22,19 @@ test('appending bookmarked collections', () => {
   });
 
   const action = appendPageableCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
-      items: [VideoCollectionFactory.sample()],
+    collections: {
+      items: [VideoCollectionFactory.sample({ id: '1' })],
       links: {
         next: nextCollectionLink,
       },
-    }),
+    },
     key: 'bookmarkedCollections',
   });
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
+  expect(stateAfter.collections['1']).not.toBeUndefined();
+  expect(stateAfter.bookmarkedCollections.items).toContainEqual('1');
   expect(stateAfter.bookmarkedCollections.links.next).toEqual(
     nextCollectionLink,
   );
@@ -55,12 +57,12 @@ test('appending public collections', () => {
   });
 
   const action = appendPageableCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
+    collections: {
       items: [VideoCollectionFactory.sample()],
       links: {
         next: nextCollectionLink,
       },
-    }),
+    },
     key: 'publicCollections',
   });
 
@@ -86,12 +88,12 @@ test('appending discover collections', () => {
   });
 
   const action = appendPageableCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
+    collections: {
       items: [VideoCollectionFactory.sample()],
       links: {
         next: nextCollectionLink,
       },
-    }),
+    },
     key: 'discoverCollections',
   });
 
@@ -117,12 +119,12 @@ test('appending mycollections', () => {
   });
 
   const action = appendPageableCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
+    collections: {
       items: [VideoCollectionFactory.sample()],
       links: {
         next: nextCollectionLink,
       },
-    }),
+    },
     key: 'myCollections',
   });
 

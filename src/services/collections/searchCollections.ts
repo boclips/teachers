@@ -1,13 +1,18 @@
 import axios from 'axios';
 import { CollectionSearchRequest } from '../../types/CollectionSearchRequest';
 import { Links } from '../../types/Links';
-import { CollectionSearchResults } from '../../types/State';
+import { VideoCollection } from './../../types/VideoCollection';
 import { parseCollectionsListResponse } from './collectionParser';
+
+export interface Result {
+  collections: VideoCollection[];
+  query: string;
+}
 
 export default function searchPublicCollections(
   searchRequest: CollectionSearchRequest,
   links: Links,
-): Promise<CollectionSearchResults> {
+): Promise<Result> {
   const url = links.searchPublicCollections.getTemplatedLink({
     query: searchRequest.query,
     subject: searchRequest.subject,

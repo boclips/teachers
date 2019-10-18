@@ -19,9 +19,10 @@ test('can store my collections', () => {
   };
 
   const action = storeCollectionsAction({
-    collections: PageableCollectionsFactory.sample({
+    collections: {
       items: [collectionToFetch],
-    }),
+      links: {},
+    },
     key: 'myCollections',
   });
 
@@ -44,7 +45,7 @@ test('can store a collection', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
-  expect(stateAfter.collectionBeingViewed).toEqual(collectionToFetch.id);
+  expect(stateAfter.collectionBeingViewedIds).toEqual(collectionToFetch.id);
   expect(stateAfter.collections).toEqual({
     [collectionToFetch.id]: collectionToFetch,
   });
@@ -71,7 +72,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
@@ -84,17 +85,6 @@ describe('fetch video for collection', () => {
     });
 
     const stateAfter = collectionsReducer(stateBefore, action);
-
-    expect(Object.keys(stateAfter.myCollections.items[0].videos)).toHaveLength(
-      1,
-    );
-    expect(stateAfter.myCollections.items[0].videos[video.id].title).toEqual(
-      video.title,
-    );
-    expect(stateAfter.myCollections.items[0].videos[video.id].id).toEqual(
-      video.id,
-    );
-    expect(stateAfter.myCollections.items[0].videoIds).toHaveLength(1);
 
     const normalizedCollection = stateAfter.collections[collection.id];
 
@@ -123,7 +113,7 @@ describe('fetch video for collection', () => {
       collections: { [collection.id]: collection },
       updating: false,
       loading: false,
-      collectionBeingViewed: collection.id,
+      collectionBeingViewedIds: collection.id,
       discoverCollections: undefined,
       myCollections: undefined,
       publicCollections: PageableCollectionsFactory.sample(),
@@ -138,7 +128,7 @@ describe('fetch video for collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     const storedCollection =
-      stateAfter.collections[stateAfter.collectionBeingViewed];
+      stateAfter.collections[stateAfter.collectionBeingViewedIds];
 
     expect(Object.keys(storedCollection.videos)).toHaveLength(1);
     expect(storedCollection.videos[video.id].title).toEqual(video.title);
@@ -166,7 +156,7 @@ describe('fetch video for collection', () => {
       updating: false,
       loading: false,
       publicCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       discoverCollections: undefined,
       myCollections: undefined,
@@ -180,16 +170,12 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(
-      Object.keys(stateAfter.publicCollections.items[0].videos),
-    ).toHaveLength(1);
-    expect(
-      stateAfter.publicCollections.items[0].videos[video.id].title,
-    ).toEqual(video.title);
-    expect(stateAfter.publicCollections.items[0].videos[video.id].id).toEqual(
-      video.id,
-    );
-    expect(stateAfter.publicCollections.items[0].videoIds).toHaveLength(1);
+    const normalizedCollection = stateAfter.collections[collection.id];
+
+    expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
+    expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
+    expect(normalizedCollection.videos[video.id].id).toEqual(video.id);
+    expect(normalizedCollection.videoIds).toHaveLength(1);
   });
 
   test('sets videos in bookmarked collections', () => {
@@ -215,7 +201,7 @@ describe('fetch video for collection', () => {
       discoverCollections: undefined,
       myCollections: undefined,
       bookmarkedCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
     };
 
@@ -226,16 +212,12 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(
-      Object.keys(stateAfter.bookmarkedCollections.items[0].videos),
-    ).toHaveLength(1);
-    expect(
-      stateAfter.bookmarkedCollections.items[0].videos[video.id].title,
-    ).toEqual(video.title);
-    expect(
-      stateAfter.bookmarkedCollections.items[0].videos[video.id].id,
-    ).toEqual(video.id);
-    expect(stateAfter.bookmarkedCollections.items[0].videoIds).toHaveLength(1);
+    const normalizedCollection = stateAfter.collections[collection.id];
+
+    expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
+    expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
+    expect(normalizedCollection.videos[video.id].id).toEqual(video.id);
+    expect(normalizedCollection.videoIds).toHaveLength(1);
   });
 
   test('sets videos in discover collections', () => {
@@ -259,7 +241,7 @@ describe('fetch video for collection', () => {
       loading: false,
       publicCollections: undefined,
       discoverCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       myCollections: undefined,
       bookmarkedCollections: undefined,
@@ -272,15 +254,11 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(
-      Object.keys(stateAfter.discoverCollections.items[0].videos),
-    ).toHaveLength(1);
-    expect(
-      stateAfter.discoverCollections.items[0].videos[video.id].title,
-    ).toEqual(video.title);
-    expect(stateAfter.discoverCollections.items[0].videos[video.id].id).toEqual(
-      video.id,
-    );
-    expect(stateAfter.discoverCollections.items[0].videoIds).toHaveLength(1);
+    const normalizedCollection = stateAfter.collections[collection.id];
+
+    expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
+    expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
+    expect(normalizedCollection.videos[video.id].id).toEqual(video.id);
+    expect(normalizedCollection.videoIds).toHaveLength(1);
   });
 });
