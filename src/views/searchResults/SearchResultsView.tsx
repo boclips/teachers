@@ -126,12 +126,7 @@ class SearchResultsView extends React.PureComponent<
   }
 
   public renderZeroResultsMessage() {
-    return (
-      <NoResultsView
-        links={this.props.links}
-        query={this.props.videoResults.query}
-      />
-    );
+    return <NoResultsView query={this.props.videoResults.query} />;
   }
 
   private changePage = (currentPage: number) => {
