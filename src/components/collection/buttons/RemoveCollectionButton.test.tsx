@@ -5,9 +5,8 @@ import {
   VideoCollectionLinksFactory,
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
+import { noOp } from '../../../utils';
 import { RemoveCollectionButtonInner } from './RemoveCollectionButton';
-
-const noOp = () => {};
 
 describe('RemoveCollectionButton', () => {
   test('When collection cannot be removed renders nothing', () => {

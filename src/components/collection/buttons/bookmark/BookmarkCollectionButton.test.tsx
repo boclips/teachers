@@ -6,9 +6,8 @@ import {
   VideoCollectionLinksFactory,
 } from '../../../../../test-support/factories';
 import { Link } from '../../../../types/Link';
+import { noOp } from '../../../../utils';
 import { BookmarkCollectionButtonInner } from './BookmarkCollectionButton';
-
-const noOp = () => {};
 
 describe('BookmarkCollectionButton', () => {
   describe('when neither bookmark nor unbookmark link', () => {

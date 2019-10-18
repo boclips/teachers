@@ -8,14 +8,13 @@ import {
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { Video } from '../../../types/Video';
+import { noOp } from '../../../utils';
 import TagVideo from './TagVideo';
-
-const noop = () => {};
 
 function mountTagVideo(video: Video) {
   return mount(
     <Provider store={MockStoreFactory.sample({})}>
-      <TagVideo video={video} onChange={noop} selectedTag={null} />
+      <TagVideo video={video} onChange={noOp} selectedTag={null} />
     </Provider>,
   );
 }

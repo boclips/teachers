@@ -1,13 +1,12 @@
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
+import { noOp } from '../../utils';
 import { A11yButton, Props } from './A11yButton';
-
-const noop = () => {};
 
 const getComponent = (props?: Partial<Props>): ReactWrapper => {
   props = {
     children: <hr />,
-    callback: noop,
+    callback: noOp,
     ...props,
   };
   return mount(<A11yButton {...props as Props} />);

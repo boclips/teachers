@@ -9,9 +9,8 @@ import {
 } from '../../../../test-support/factories';
 import '../../../index.less';
 import State from '../../../types/State';
+import { noOp } from '../../../utils';
 import ShareModal from './ShareModal';
-
-const noop = () => {};
 
 const withProvider = (store: Store<State>) => story => (
   <Provider store={store}>{story()}</Provider>
@@ -25,7 +24,7 @@ storiesOf('ShareModal', module)
       <ShareModal
         visible={true}
         mobileView={true}
-        handleClose={noop}
+        handleClose={noOp}
         video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
       />
     ),
@@ -37,7 +36,7 @@ storiesOf('ShareModal', module)
     <ShareModal
       visible={true}
       mobileView={false}
-      handleClose={noop}
+      handleClose={noOp}
       video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
     />
   ));

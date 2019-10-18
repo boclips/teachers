@@ -4,9 +4,8 @@ import difference from 'lodash/difference';
 import range from 'lodash/range';
 import * as moment from 'moment';
 import * as React from 'react';
+import { noOp } from '../../utils';
 import { RestrictiveTimePicker } from './RestrictiveTimePicker';
-
-const noop = () => {};
 
 it('matches the snapshot when rendering a restricted timepicker', () => {
   const component = shallow(
@@ -14,7 +13,7 @@ it('matches the snapshot when rendering a restricted timepicker', () => {
       checkboxLabel="Checkbox label"
       label="Label"
       upperBound={60}
-      onChange={noop}
+      onChange={noOp}
       initialValue={0}
     />,
   );
@@ -108,7 +107,7 @@ describe('upper bound restriction', () => {
           checkboxLabel="Checkbox label"
           label="Label"
           upperBound={data.upperBound}
-          onChange={noop}
+          onChange={noOp}
           initialValue={0}
         />,
       );

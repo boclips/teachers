@@ -14,6 +14,7 @@ import {
 import tagVideo from '../../../services/tags/tagVideo';
 import { Link } from '../../../types/Link';
 import { Video } from '../../../types/Video';
+import { noOp } from '../../../utils';
 import TagVideo from './TagVideo';
 import VideoFeedbackModal from './VideoFeedbackModal';
 
@@ -21,7 +22,6 @@ jest.mock('../../../services/tags/tagVideo');
 const tagVideoMock = tagVideo as Mock;
 tagVideoMock.mockReturnValue(Promise.resolve(VideoFactory.sample()));
 
-const noop = () => {};
 const onSaved = jest.fn();
 const taggableRateableVideo = VideoFactory.sample({
   links: {
@@ -42,7 +42,7 @@ function mountTagVideo(video: Video) {
         visible={true}
         video={video}
         onSaved={onSaved}
-        onModalCancelled={noop}
+        onModalCancelled={noOp}
       />
     </Provider>,
   );
