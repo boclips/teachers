@@ -152,7 +152,11 @@ function getCollection(collectionId: string, state: State) {
     );
     return state.collections.myCollections.items[indexOfCollection];
   } else {
-    return state.collections.collectionBeingViewed;
+    if (state.collections.collectionBeingViewed === null) {
+      return null;
+    }
+
+    return state.collections.collections[collectionId];
   }
 }
 

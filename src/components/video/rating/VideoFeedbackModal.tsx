@@ -7,7 +7,7 @@ import rateVideo from '../../../services/videos/rateVideo';
 import { Tag } from '../../../types/Tag';
 import { Video } from '../../../types/Video';
 import Bodal from '../../common/Bodal';
-import { storeVideoAction } from '../redux/actions/storeVideoAction';
+import { storeVideoForCollectionAction } from '../redux/actions/storeVideoForCollectionAction';
 import { RatingProps } from './Rating';
 import TagVideo from './TagVideo';
 import './VideoFeedbackModal.less';
@@ -114,7 +114,8 @@ class VideoFeedbackModal extends React.Component<
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    videoUpdated: (video: Video) => dispatch(storeVideoAction(video)),
+    videoUpdated: (video: Video) =>
+      dispatch(storeVideoForCollectionAction(video)),
   };
 }
 

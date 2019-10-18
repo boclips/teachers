@@ -3,10 +3,10 @@ import eventually from '../../../../../test-support/eventually';
 import { VideoFactory } from '../../../../../test-support/factories';
 import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
 import { fetchVideosForCollectionAction } from '../actions/fetchVideosForCollectionAction';
-import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
+import Mock = jest.Mock;
+import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { VideoCollectionFactory } from './../../../../../test-support/factories';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
-import Mock = jest.Mock;
 
 jest.mock('../../../../services/videos/fetchVideo');
 const fetchVideoMock = fetchVideoFromSelfLink as Mock;
@@ -32,7 +32,7 @@ test('dispatches a store action per successfully fetched video', async () => {
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      storeVideoForCollectionAction({ videos: [video], collection }),
+      storeVideosForCollectionAction({ videos: [video], collection }),
     );
   });
 });

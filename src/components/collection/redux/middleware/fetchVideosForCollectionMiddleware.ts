@@ -3,7 +3,7 @@ import { sideEffect } from '../../../../app/redux/actions';
 import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
 import { LinksState } from '../../../../types/State';
 import { VideosForCollectionRequest } from '../actions/fetchVideosForCollectionAction';
-import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
+import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { fetchVideosForCollectionAction } from './../actions/fetchVideosForCollectionAction';
 
 export function onFetchVideosForCollection(
@@ -15,7 +15,7 @@ export function onFetchVideosForCollection(
   )
     .then(videos =>
       store.dispatch(
-        storeVideoForCollectionAction({
+        storeVideosForCollectionAction({
           videos,
           collection: request.collection,
         }),

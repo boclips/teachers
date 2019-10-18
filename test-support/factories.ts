@@ -297,10 +297,13 @@ export class CollectionsFactory {
   public static sample(
     arg: Partial<CollectionsStateValue> = {},
   ): CollectionsStateValue {
+    const collection = VideoCollectionFactory.sample();
+
     return Object.freeze({
       loading: false,
       updating: false,
-      myCollections: { items: [VideoCollectionFactory.sample()], links: {} },
+      collections: { [collection.id]: collection },
+      myCollections: { items: [collection], links: {} },
       publicCollections: {
         items: [],
         links: {},
@@ -309,11 +312,12 @@ export class CollectionsFactory {
         items: [],
         links: {},
       },
+
       bookmarkedCollections: {
         items: [],
         links: {},
       },
-      collectionBeingViewed: VideoCollectionFactory.sample(),
+      collectionBeingViewed: collection.id,
       ...arg,
     });
   }

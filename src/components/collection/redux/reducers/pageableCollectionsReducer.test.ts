@@ -7,6 +7,7 @@ import { collectionsReducer } from './collectionsReducer';
 
 test('appending bookmarked collections', () => {
   const stateBefore: CollectionsStateValue = {
+    collections: {},
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -39,6 +40,7 @@ test('appending bookmarked collections', () => {
 
 test('appending public collections', () => {
   const stateBefore: CollectionsStateValue = {
+    collections: {},
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -69,6 +71,7 @@ test('appending public collections', () => {
 
 test('appending discover collections', () => {
   const stateBefore: CollectionsStateValue = {
+    collections: {},
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -99,6 +102,7 @@ test('appending discover collections', () => {
 
 test('appending mycollections', () => {
   const stateBefore: CollectionsStateValue = {
+    collections: {},
     updating: false,
     loading: false,
     myCollections: PageableCollectionsFactory.sample(),

@@ -5,7 +5,7 @@ import fetchVideo from '../../../../services/videos/fetchVideo';
 import { LinksState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
-import { storeVideoAction } from '../actions/storeVideoAction';
+import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 
 export function onFetchVideo(
   store: MiddlewareAPI<Dispatch, LinksState>,
@@ -16,7 +16,7 @@ export function onFetchVideo(
       AnalyticsFactory.externalAnalytics().trackVideoVisited(video);
       return video;
     })
-    .then(storeVideoAction)
+    .then(storeVideoForCollectionAction)
     .then(store.dispatch)
     .catch(console.error);
 }

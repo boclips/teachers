@@ -14,6 +14,7 @@ test('updates public collection', () => {
   });
 
   const stateBefore: CollectionsStateValue = {
+    collections: { [toBeUpdatedCollection.id]: toBeUpdatedCollection },
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -46,6 +47,7 @@ describe('bookmarking a collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [untouchedCollection.id]: untouchedCollection },
       updating: false,
       loading: false,
       myCollections: undefined,
@@ -73,6 +75,7 @@ describe('bookmarking a collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [toBeUpdatedCollection.id]: toBeUpdatedCollection },
       updating: false,
       loading: false,
       myCollections: undefined,
@@ -104,6 +107,7 @@ describe('bookmarking a collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [toBeUpdatedCollection.id]: toBeUpdatedCollection },
       updating: false,
       loading: false,
       myCollections: undefined,
@@ -137,6 +141,10 @@ describe('unbookmarking a collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: {
+        [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection,
+        [untouchedCollection.id]: untouchedCollection,
+      },
       updating: false,
       loading: false,
       myCollections: undefined,

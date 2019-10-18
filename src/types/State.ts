@@ -99,13 +99,14 @@ export interface Pageable<T> {
 }
 
 export interface CollectionsStateValue {
+  collections: { [key: string]: VideoCollection };
   loading: boolean;
   updating: boolean;
   myCollections: Pageable<VideoCollection>;
   publicCollections: Pageable<VideoCollection>;
   discoverCollections: Pageable<VideoCollection>;
   bookmarkedCollections: Pageable<VideoCollection>;
-  collectionBeingViewed?: VideoCollection;
+  collectionBeingViewed?: string;
 }
 
 export function getIndexOfCollection(

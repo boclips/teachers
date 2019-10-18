@@ -17,9 +17,9 @@ import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../../../collection/redux/actions/onCollectionUnbookmarkedAction';
-import { storeVideoForCollectionAction } from '../../../collection/redux/actions/storeVideoForCollectionAction';
+import { storeVideosForCollectionAction } from '../../../collection/redux/actions/storeVideosForCollectionAction';
 import { updateMatchingCollectionWithVideos } from '../../../collection/redux/reducers/storeCollectionsReducer';
-import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
+import { storeVideoForCollectionAction } from '../../../video/redux/actions/storeVideoForCollectionAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
@@ -158,7 +158,7 @@ export const videoSearchReducer: Reducer<VideoSearchStateValue> = createReducer(
   initialState,
   actionHandler(searchVideosAction, onSearchVideosAction),
   actionHandler(storeVideoSearchResultsAction, onStoreVideoSearchResultsAction),
-  actionHandler(storeVideoAction, onStoreVideoAction),
+  actionHandler(storeVideoForCollectionAction, onStoreVideoAction),
 );
 
 export const collectionSearchReducer: Reducer<
@@ -171,7 +171,7 @@ export const collectionSearchReducer: Reducer<
     onStoreCollectionSearchResultsAction,
   ),
   actionHandler(
-    storeVideoForCollectionAction,
+    storeVideosForCollectionAction,
     onStoreVideosForSearchCollection,
   ),
   actionHandler(onCollectionUnbookmarkedAction, onCollectionBookmarkUpdate),

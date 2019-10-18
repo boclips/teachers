@@ -60,10 +60,7 @@ const updateCachedCollections = (
   updatedCollection: VideoCollection,
 ): CollectionsStateValue => {
   let collectionBeingViewed = state.collectionBeingViewed;
-  if (
-    collectionBeingViewed &&
-    collectionBeingViewed.id === updatedCollection.id
-  ) {
+  if (collectionBeingViewed === updatedCollection.id) {
     collectionBeingViewed = buildUpdatedCollection(
       updatedCollection,
       collectionBeingViewed,

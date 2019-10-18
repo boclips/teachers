@@ -5,7 +5,7 @@ import createReducer, {
 import { VideoStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
-import { storeVideoAction } from '../actions/storeVideoAction';
+import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
 
 const initialState: VideoStateValue = { loading: false, item: null };
 
@@ -20,5 +20,5 @@ function onStoreVideoAction(_: VideoStateValue, video: Video): VideoStateValue {
 export const videoReducer: Reducer<VideoStateValue> = createReducer(
   initialState,
   actionHandler(fetchVideoAction, onFetchVideoAction),
-  actionHandler(storeVideoAction, onStoreVideoAction),
+  actionHandler(storeVideoForCollectionAction, onStoreVideoAction),
 );

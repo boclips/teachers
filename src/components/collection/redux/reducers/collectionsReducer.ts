@@ -3,7 +3,7 @@ import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { CollectionsStateValue } from '../../../../types/State';
-import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
+import { storeVideoForCollectionAction } from '../../../video/redux/actions/storeVideoForCollectionAction';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
@@ -26,7 +26,7 @@ import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionA
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
+import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import {
   onAddVideoToMyCollectionAction,
@@ -47,6 +47,7 @@ import {
 } from './storeCollectionsReducer';
 
 const initialState: CollectionsStateValue = {
+  collections: undefined,
   myCollections: undefined,
   publicCollections: undefined,
   discoverCollections: undefined,
@@ -112,9 +113,9 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
   actionHandler(storeCollectionAction, onStoreCollectionAction),
-  actionHandler(storeVideoAction, onStoreVideoForCollectionAction),
+  actionHandler(storeVideoForCollectionAction, onStoreVideoForCollectionAction),
   actionHandler(
-    storeVideoForCollectionAction,
+    storeVideosForCollectionAction,
     onStoreVideosForCollectionAction,
   ),
 );

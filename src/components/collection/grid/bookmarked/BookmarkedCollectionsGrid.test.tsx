@@ -30,6 +30,7 @@ describe('bookmarked collections', () => {
   test('displays empty message when no collections have been bookmared', () => {
     const store = MockStoreFactory.sample({
       collections: {
+        collections: {},
         loading: false,
         updating: false,
         myCollections: undefined,

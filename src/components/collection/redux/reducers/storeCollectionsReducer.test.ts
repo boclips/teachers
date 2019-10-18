@@ -6,15 +6,16 @@ import {
   VideoFactory,
 } from '../../../../../test-support/factories';
 import { CollectionsStateValue } from '../../../../types/State';
+import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
+import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { collectionsReducer } from './collectionsReducer';
 
-test('can fetch my collections', () => {
+test('can store my collections', () => {
   const collectionToFetch = VideoCollectionFactory.sample();
 
   const stateBefore: CollectionsStateValue = {
-    ...CollectionsFactory.sample(),
+    ...CollectionsFactory.sample({ myCollections: undefined }),
   };
 
   const action = storeCollectionsAction({
@@ -27,6 +28,26 @@ test('can fetch my collections', () => {
   const stateAfter = collectionsReducer(stateBefore, action);
 
   expect(stateAfter.myCollections.items).toEqual([collectionToFetch]);
+  expect(stateAfter.collections).toEqual({
+    [collectionToFetch.id]: collectionToFetch,
+  });
+});
+
+test('can store a collection', () => {
+  const collectionToFetch = VideoCollectionFactory.sample();
+
+  const stateBefore: CollectionsStateValue = {
+    ...CollectionsFactory.sample({ myCollections: undefined }),
+  };
+
+  const action = storeCollectionAction(collectionToFetch);
+
+  const stateAfter = collectionsReducer(stateBefore, action);
+
+  expect(stateAfter.collectionBeingViewed).toEqual(collectionToFetch.id);
+  expect(stateAfter.collections).toEqual({
+    [collectionToFetch.id]: collectionToFetch,
+  });
 });
 
 describe('fetch video for collection', () => {
@@ -46,6 +67,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -56,7 +78,7 @@ describe('fetch video for collection', () => {
       discoverCollections: undefined,
     };
 
-    const action = storeVideoForCollectionAction({
+    const action = storeVideosForCollectionAction({
       videos: [video],
       collection,
     });
@@ -73,6 +95,13 @@ describe('fetch video for collection', () => {
       video.id,
     );
     expect(stateAfter.myCollections.items[0].videoIds).toHaveLength(1);
+
+    const normalizedCollection = stateAfter.collections[collection.id];
+
+    expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
+    expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
+    expect(normalizedCollection.videos[video.id].id).toEqual(video.id);
+    expect(normalizedCollection.videoIds).toHaveLength(1);
   });
 
   test('sets videos in collection details', () => {
@@ -91,32 +120,30 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
-      collectionBeingViewed: collection,
+      collectionBeingViewed: collection.id,
       discoverCollections: undefined,
       myCollections: undefined,
       publicCollections: PageableCollectionsFactory.sample(),
       bookmarkedCollections: undefined,
     };
 
-    const action = storeVideoForCollectionAction({
+    const action = storeVideosForCollectionAction({
       videos: [video],
       collection,
     });
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    expect(Object.keys(stateAfter.collectionBeingViewed.videos)).toHaveLength(
-      1,
-    );
-    expect(stateAfter.collectionBeingViewed.videos[video.id].title).toEqual(
-      video.title,
-    );
-    expect(stateAfter.collectionBeingViewed.videos[video.id].id).toEqual(
-      video.id,
-    );
-    expect(stateAfter.collectionBeingViewed.videoIds).toHaveLength(1);
+    const storedCollection =
+      stateAfter.collections[stateAfter.collectionBeingViewed];
+
+    expect(Object.keys(storedCollection.videos)).toHaveLength(1);
+    expect(storedCollection.videos[video.id].title).toEqual(video.title);
+    expect(storedCollection.videos[video.id].id).toEqual(video.id);
+    expect(storedCollection.videoIds).toHaveLength(1);
   });
 
   test('sets videos in public collections', () => {
@@ -135,6 +162,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: {},
       updating: false,
       loading: false,
       publicCollections: PageableCollectionsFactory.sample({
@@ -145,7 +173,7 @@ describe('fetch video for collection', () => {
       bookmarkedCollections: undefined,
     };
 
-    const action = storeVideoForCollectionAction({
+    const action = storeVideosForCollectionAction({
       videos: [video],
       collection,
     });
@@ -180,6 +208,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: {},
       updating: false,
       loading: false,
       publicCollections: undefined,
@@ -190,7 +219,7 @@ describe('fetch video for collection', () => {
       }),
     };
 
-    const action = storeVideoForCollectionAction({
+    const action = storeVideosForCollectionAction({
       videos: [video],
       collection,
     });
@@ -225,6 +254,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: {},
       updating: false,
       loading: false,
       publicCollections: undefined,
@@ -235,7 +265,7 @@ describe('fetch video for collection', () => {
       bookmarkedCollections: undefined,
     };
 
-    const action = storeVideoForCollectionAction({
+    const action = storeVideosForCollectionAction({
       videos: [video],
       collection,
     });

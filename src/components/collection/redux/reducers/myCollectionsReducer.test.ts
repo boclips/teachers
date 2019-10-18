@@ -25,6 +25,10 @@ describe('adding video to collection', () => {
       ]),
     });
     const stateBefore: CollectionsStateValue = {
+      collections: {
+        [otherCollection.id]: otherCollection,
+        [targetCollection.id]: targetCollection,
+      },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -60,6 +64,7 @@ describe('adding video to collection', () => {
     const collection = VideoCollectionFactory.sample();
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -81,6 +86,7 @@ describe('adding video to collection', () => {
     const collection = VideoCollectionFactory.sample();
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -107,6 +113,7 @@ describe('adding video to collection', () => {
       videos: VideoCollectionFactory.sampleVideos([video]),
     });
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -144,6 +151,7 @@ describe('adding video to collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -180,6 +188,7 @@ describe('removing videos from a colleciton', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
+      collections: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({

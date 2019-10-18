@@ -169,8 +169,17 @@ const mountWith = (
   loading: boolean = false,
   updating: boolean = false,
 ) => {
+  const normalizedCollections =
+    collections == null
+      ? {}
+      : collections.reduce((collectionsObject, value) => {
+          collectionsObject[value.id] = collectionsObject;
+          return collectionsObject;
+        }, {});
+
   store = MockStoreFactory.sample({
     collections: {
+      collections: normalizedCollections,
       myCollections: PageableCollectionsFactory.sample({
         items: collections,
       }),
