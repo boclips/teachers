@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import CollectionsLoaded from '../../CollectionsLoaded';
-import { CollectionCard } from '../CollectionCard';
+import { CollectionCardForRouter } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
 import { PageableCollectionCardListProps } from './PageableCollectionCardList';
 
@@ -113,7 +113,7 @@ export class CollectionCardList extends React.PureComponent<
         md={{ span: this.singleColumn() ? 24 : 12 }}
         lg={{ span: this.singleColumn() ? 24 : 8 }}
       >
-        <CollectionCard.Skeleton tiny={this.props.grid} />
+        <CollectionCardForRouter.Skeleton tiny={this.props.grid} />
       </Col>
     ));
   }

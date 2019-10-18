@@ -31,7 +31,9 @@ class CollectionCardContainer extends React.PureComponent<
         key={`card-container-${this.props.collection.id}`}
         collection={this.props.collection}
         numberOfPreviews={NUMBER_OF_PREVIEWS}
-        onClick={this.props.goToCollectionDetails(this.props.collection)}
+        navigateToCollectionDetails={this.props.goToCollectionDetails(
+          this.props.collection,
+        )}
       />
     );
   }

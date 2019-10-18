@@ -1,8 +1,7 @@
 import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import getVideoDetailsLink from '../../../services/links/getVideoDetailsLink';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import StopClickPropagation from '../../common/StopClickPropagation';
@@ -12,7 +11,7 @@ import VideoPlayer from '../player/VideoPlayer';
 import './VideoCard.less';
 import VideoCardTagList from './VideoCardTagList';
 
-export interface Props {
+export interface Props extends RouteComponentProps {
   video: Video | null;
   videoIndex?: number;
   currentCollection?: VideoCollection;
@@ -20,35 +19,34 @@ export interface Props {
 }
 
 export class VideoCardForRouter extends React.PureComponent<Props> {
+  public static Skeleton = () => (
+    <Card className="video-card skeleton" bordered={false}>
+      <AntSkeleton
+        loading={true}
+        active={true}
+        title={{ width: '150px' }}
+        paragraph={{ rows: 5 }}
+        avatar={{ shape: 'square', size: 'large' }}
+      />
+    </Card>
+  );
+
   public render() {
     if (!this.props.video) {
       return <VideoCardForRouter.Skeleton />;
     }
 
-    const link = getVideoDetailsLink({
-      absolute: false,
-      videoId: this.props.video.id,
-      userId: this.props.userId,
-      segment: null,
-    });
-
     return (
-      <Link
-        className="no-underline"
-        to={link}
-        onMouseDown={this.onVideoLinkClick}
+      <Card
+        className="video-card"
+        bordered={false}
+        onClick={this.handleOnCardClick}
+        onMouseDown={this.handleOnCardMouseDown}
       >
-        <Card className="video-card" bordered={false}>
-          <section data-qa="video-card">{this.renderContent()}</section>
-        </Card>
-      </Link>
+        <section data-qa="video-card">{this.renderContent()}</section>
+      </Card>
     );
   }
-
-  private onVideoLinkClick = () =>
-    AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(
-      this.props.video,
-    );
 
   public renderContent() {
     return (
@@ -86,19 +84,24 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
     );
   }
 
-  public static Skeleton = () => (
-    <Card className="video-card skeleton" bordered={false}>
-      <AntSkeleton
-        loading={true}
-        active={true}
-        title={{ width: '150px' }}
-        paragraph={{ rows: 5 }}
-        avatar={{ shape: 'square', size: 'large' }}
-      />
-    </Card>
-  );
+  private handleOnCardMouseDown = () => {
+    // noinspection JSIgnoredPromiseFromCall
+    AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(
+      this.props.video,
+    );
+  };
+
+  private handleOnCardClick = (event: React.MouseEvent) => {
+    const url = `/videos/${this.props.video.id}`;
+
+    if (event.ctrlKey || event.metaKey) {
+      window.open(url);
+    } else {
+      this.props.history.push(url);
+    }
+  };
 }
 
-const VideoCard = VideoCardForRouter;
+const VideoCard = withRouter(VideoCardForRouter);
 
 export default VideoCard;

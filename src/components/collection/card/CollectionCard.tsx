@@ -1,63 +1,21 @@
 import classnames from 'classnames';
 import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { A11yButton } from '../../common/A11yButton';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionHeader from '../header/CollectionHeader';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 
 import './CollectionCard.less';
 
-interface Props {
+export interface Props extends RouteComponentProps {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
-  onClick: () => void;
+  navigateToCollectionDetails: () => void;
 }
 
-export class CollectionCard extends React.PureComponent<Props> {
-  public render() {
-    return (
-      <A11yButton callback={this.props.onClick} disableClick={false}>
-        <section
-          key={`card-${this.props.collection.id}`}
-          className={classnames('collection-card', {
-            tiny: this.props.tiny,
-          })}
-          data-qa="collection-card"
-          data-state={this.props.collection.title}
-        >
-          <CollectionHeader
-            collection={this.props.collection}
-            mode={this.props.tiny ? 'tiny-card' : 'card'}
-          />
-          <CollectionCardVideoPreviews
-            numberOfPreviews={this.props.numberOfPreviews}
-            videos={this.props.collection.videoIds.map(
-              videoId => this.props.collection.videos[videoId.id],
-            )}
-            isGrid={this.props.tiny}
-            id={this.props.collection.id}
-          />
-          {this.props.tiny && (
-            <span>
-              <CollectionSubtitle
-                classname="highlight collection-subtitle tiny"
-                collection={this.props.collection}
-              />
-              <div
-                data-qa="collection-description"
-                className="collection-card__description-preview tiny"
-              >
-                {this.props.collection.description}
-              </div>
-            </span>
-          )}
-        </section>
-      </A11yButton>
-    );
-  }
-
+export class CollectionCardForRouter extends React.PureComponent<Props> {
   public static Skeleton = (props: { tiny: boolean }) => (
     <section
       className={
@@ -87,4 +45,55 @@ export class CollectionCard extends React.PureComponent<Props> {
       </section>
     </section>
   );
+
+  public render() {
+    return (
+      <section
+        key={`card-${this.props.collection.id}`}
+        className={classnames('collection-card', {
+          tiny: this.props.tiny,
+        })}
+        data-qa="collection-card"
+        data-state={this.props.collection.title}
+        onClick={this.handleOnCardClick}
+      >
+        <CollectionHeader
+          collection={this.props.collection}
+          mode={this.props.tiny ? 'tiny-card' : 'card'}
+        />
+        <CollectionCardVideoPreviews
+          numberOfPreviews={this.props.numberOfPreviews}
+          videos={this.props.collection.videoIds.map(
+            videoId => this.props.collection.videos[videoId.id],
+          )}
+          isGrid={this.props.tiny}
+          id={this.props.collection.id}
+        />
+        {this.props.tiny && (
+          <span>
+            <CollectionSubtitle
+              classname="highlight collection-subtitle tiny"
+              collection={this.props.collection}
+            />
+            <div
+              data-qa="collection-description"
+              className="collection-card__description-preview tiny"
+            >
+              {this.props.collection.description}
+            </div>
+          </span>
+        )}
+      </section>
+    );
+  }
+
+  private handleOnCardClick = (event: React.MouseEvent) => {
+    if (event.ctrlKey || event.metaKey) {
+      window.open(`/collections/${this.props.collection.id}`);
+    } else {
+      this.props.history.push(`/collections/${this.props.collection.id}`);
+    }
+  };
 }
+
+export const CollectionCard = withRouter(CollectionCardForRouter);

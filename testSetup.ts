@@ -33,6 +33,8 @@ window.Appcues = {
   track: jest.fn(),
 };
 
+window.open = jest.fn();
+
 export async function waitForElement(selector: string) {
   await eventually(() => {
     expect(findElement(selector)).toBeTruthy();
