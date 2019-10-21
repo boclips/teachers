@@ -202,28 +202,33 @@ it('will not reload the same video on props change', () => {
 describe('it passes a permissive token factory to the player', () => {
   let providedTokenFactory;
 
-  beforeEach(() => {
-    getComponent();
-
-    expect(PlayerFactory.get).toHaveBeenCalled();
-
-    const options = mocked(PlayerFactory.get).mock.calls[0][1];
-    providedTokenFactory = options.api.tokenFactory;
-  });
-
-  it('returns null when an error is thrown getting a token', () => {
-    mocked(BoclipsSecurity.getInstance).mockReturnValue({
+  it('returns null when an error is thrown getting a token', async () => {
+    mocked(BoclipsSecurity.getInstance).mockReturnValueOnce({
       getTokenFactory: () =>
         jest.fn().mockImplementation(() => {
           throw new Error('Some error');
         }),
     } as any);
 
-    expect(providedTokenFactory()).resolves.toEqual(null);
+    getComponent();
+
+    expect(PlayerFactory.get).toHaveBeenCalled();
+
+    const options = mocked(PlayerFactory.get).mock.calls[0][1];
+    providedTokenFactory = options.api.tokenFactory;
+
+    await expect(providedTokenFactory()).resolves.toEqual(null);
   });
 
-  it('returns a token when the token is resolved', () => {
-    expect(providedTokenFactory()).resolves.toEqual('test-token');
+  it('returns a token when the token is resolved', async () => {
+    getComponent();
+
+    expect(PlayerFactory.get).toHaveBeenCalled();
+
+    const options = mocked(PlayerFactory.get).mock.calls[0][1];
+    providedTokenFactory = options.api.tokenFactory;
+
+    await expect(providedTokenFactory()).resolves.toEqual('test-token');
   });
 });
 
