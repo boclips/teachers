@@ -99,7 +99,7 @@ export interface Pageable<T> {
 }
 
 export interface CollectionsStateValue {
-  collections: { [key: string]: VideoCollection };
+  byId: { [key: string]: VideoCollection };
   loading: boolean;
   updating: boolean;
   myCollections: Pageable<string>; // TODO rename to ids

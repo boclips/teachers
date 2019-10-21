@@ -6,7 +6,7 @@ export const onAddVideoToMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const collection = state.collections[request.collection.id];
+  const collection = state.byId[request.collection.id];
 
   if (collection == null) {
     return state;
@@ -39,8 +39,8 @@ export const onAddVideoToMyCollectionAction = (
 
   return {
     ...state,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       [updatedCollection.id]: updatedCollection,
     },
     updating: true,
@@ -59,7 +59,7 @@ export const onRemoveVideoFromMyCollectionAction = (
   state: CollectionsStateValue,
   request: { video: Video; collection: VideoCollection },
 ): CollectionsStateValue => {
-  const collection = state.collections[request.collection.id];
+  const collection = state.byId[request.collection.id];
 
   if (collection == null) {
     return state;
@@ -73,8 +73,8 @@ export const onRemoveVideoFromMyCollectionAction = (
 
   return {
     ...state,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       [updatedCollection.id]: updatedCollection,
     },
     updating: true,
@@ -112,11 +112,11 @@ export const onMyCollectionEdited = (
 const onUpdateCollection = (
   state: CollectionsStateValue,
   updatedCollection: VideoCollection,
-) => {
+): CollectionsStateValue => {
   return {
     ...state,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       [updatedCollection.id]: updatedCollection,
     },
   };

@@ -143,13 +143,13 @@ class CollectionDetails extends PureComponent<
 
 function getCollection(collectionId: string, state: State): VideoCollection {
   if (isMyCollection(state.collections.myCollections.items, collectionId)) {
-    return state.collections.collections[collectionId];
+    return state.collections.byId[collectionId];
   } else {
     if (state.collections.collectionIdBeingViewed === null) {
       return null;
     }
 
-    return state.collections.collections[collectionId];
+    return state.collections.byId[collectionId];
   }
 }
 

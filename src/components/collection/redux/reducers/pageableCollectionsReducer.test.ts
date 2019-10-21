@@ -7,7 +7,7 @@ import { collectionsReducer } from './collectionsReducer';
 
 test('appending bookmarked collections', () => {
   const stateBefore: CollectionsStateValue = {
-    collections: {},
+    byId: {},
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -33,7 +33,7 @@ test('appending bookmarked collections', () => {
 
   const stateAfter = collectionsReducer(stateBefore, action);
 
-  expect(stateAfter.collections['1']).not.toBeUndefined();
+  expect(stateAfter.byId['1']).not.toBeUndefined();
   expect(stateAfter.bookmarkedCollections.items).toContainEqual('1');
   expect(stateAfter.bookmarkedCollections.links.next).toEqual(
     nextCollectionLink,
@@ -42,7 +42,7 @@ test('appending bookmarked collections', () => {
 
 test('appending public collections', () => {
   const stateBefore: CollectionsStateValue = {
-    collections: {},
+    byId: {},
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -73,7 +73,7 @@ test('appending public collections', () => {
 
 test('appending discover collections', () => {
   const stateBefore: CollectionsStateValue = {
-    collections: {},
+    byId: {},
     updating: false,
     loading: false,
     myCollections: undefined,
@@ -104,7 +104,7 @@ test('appending discover collections', () => {
 
 test('appending mycollections', () => {
   const stateBefore: CollectionsStateValue = {
-    collections: {},
+    byId: {},
     updating: false,
     loading: false,
     myCollections: PageableCollectionsFactory.sample(),

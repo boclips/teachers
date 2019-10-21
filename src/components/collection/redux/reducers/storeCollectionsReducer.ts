@@ -20,8 +20,8 @@ export const onStoreCollectionsAction = (
 
   return {
     ...state,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       ...normalizedCollections,
     },
     [request.key]: {
@@ -49,8 +49,8 @@ export const onStoreCollectionAction = (
   return {
     ...state,
     collectionIdBeingViewed: collection.id,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       [collection.id]: collection,
     },
     loading: false,
@@ -72,8 +72,7 @@ export const onStoreVideoForCollectionAction = (
   state: CollectionsStateValue,
   video: Video,
 ): CollectionsStateValue => {
-  const collectionBeingViewed =
-    state.collections[state.collectionIdBeingViewed];
+  const collectionBeingViewed = state.byId[state.collectionIdBeingViewed];
 
   if (!collectionBeingViewed || !collectionBeingViewed.videos) {
     return state;
@@ -86,8 +85,8 @@ export const onStoreVideoForCollectionAction = (
 
   return {
     ...state,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       [collectionBeingViewed.id]: updateCollection,
     },
   };
@@ -101,8 +100,8 @@ export const onStoreVideosForCollectionAction = (
 
   return {
     ...state,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       [collectionDetails.id]: collectionDetails,
     },
   };

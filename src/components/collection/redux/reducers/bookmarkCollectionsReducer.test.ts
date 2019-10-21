@@ -15,7 +15,7 @@ describe('bookmarking a collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: { [untouchedCollection.id]: untouchedCollection },
+      byId: { [untouchedCollection.id]: untouchedCollection },
       updating: false,
       loading: false,
       myCollections: undefined,
@@ -45,7 +45,7 @@ describe('unbookmarking a collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: {
+      byId: {
         [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection,
         [untouchedCollection.id]: untouchedCollection,
       },

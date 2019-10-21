@@ -29,7 +29,7 @@ test('can store my collections', () => {
   const stateAfter = collectionsReducer(stateBefore, action);
 
   expect(stateAfter.myCollections.items).toEqual([collectionToFetch.id]);
-  expect(stateAfter.collections).toEqual({
+  expect(stateAfter.byId).toEqual({
     [collectionToFetch.id]: collectionToFetch,
   });
 });
@@ -46,7 +46,7 @@ test('can store a collection', () => {
   const stateAfter = collectionsReducer(stateBefore, action);
 
   expect(stateAfter.collectionIdBeingViewed).toEqual(collectionToFetch.id);
-  expect(stateAfter.collections).toEqual({
+  expect(stateAfter.byId).toEqual({
     [collectionToFetch.id]: collectionToFetch,
   });
 });
@@ -68,7 +68,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: { [collection.id]: collection },
+      byId: { [collection.id]: collection },
       updating: false,
       loading: false,
       myCollections: PageableCollectionsFactory.sample({
@@ -86,7 +86,7 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    const normalizedCollection = stateAfter.collections[collection.id];
+    const normalizedCollection = stateAfter.byId[collection.id];
 
     expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
     expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
@@ -110,7 +110,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: { [collection.id]: collection },
+      byId: { [collection.id]: collection },
       updating: false,
       loading: false,
       collectionIdBeingViewed: collection.id,
@@ -128,7 +128,7 @@ describe('fetch video for collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     const storedCollection =
-      stateAfter.collections[stateAfter.collectionIdBeingViewed];
+      stateAfter.byId[stateAfter.collectionIdBeingViewed];
 
     expect(Object.keys(storedCollection.videos)).toHaveLength(1);
     expect(storedCollection.videos[video.id].title).toEqual(video.title);
@@ -152,7 +152,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: {},
+      byId: {},
       updating: false,
       loading: false,
       publicCollections: PageableCollectionsFactory.sample({
@@ -170,7 +170,7 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    const normalizedCollection = stateAfter.collections[collection.id];
+    const normalizedCollection = stateAfter.byId[collection.id];
 
     expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
     expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
@@ -194,7 +194,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: {},
+      byId: {},
       updating: false,
       loading: false,
       publicCollections: undefined,
@@ -212,7 +212,7 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    const normalizedCollection = stateAfter.collections[collection.id];
+    const normalizedCollection = stateAfter.byId[collection.id];
 
     expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
     expect(normalizedCollection.videos[video.id].title).toEqual(video.title);
@@ -236,7 +236,7 @@ describe('fetch video for collection', () => {
     });
 
     const stateBefore: CollectionsStateValue = {
-      collections: {},
+      byId: {},
       updating: false,
       loading: false,
       publicCollections: undefined,
@@ -254,7 +254,7 @@ describe('fetch video for collection', () => {
 
     const stateAfter = collectionsReducer(stateBefore, action);
 
-    const normalizedCollection = stateAfter.collections[collection.id];
+    const normalizedCollection = stateAfter.byId[collection.id];
 
     expect(Object.keys(normalizedCollection.videos)).toHaveLength(1);
     expect(normalizedCollection.videos[video.id].title).toEqual(video.title);

@@ -23,7 +23,7 @@ const removeUnbookmarkedCollection = (
 ): CollectionsStateValue => {
   return {
     ...state,
-    collections: updateCollections(state, unbookmarkedCollection),
+    byId: updateCollections(state, unbookmarkedCollection),
     bookmarkedCollections: {
       ...state.bookmarkedCollections,
       items:
@@ -41,7 +41,7 @@ const addBookmarkedCollection = (
 ): CollectionsStateValue => {
   return {
     ...state,
-    collections: updateCollections(state, bookmarkedCollection),
+    byId: updateCollections(state, bookmarkedCollection),
     bookmarkedCollections: state.bookmarkedCollections && {
       ...state.bookmarkedCollections,
       items: [
@@ -56,9 +56,9 @@ const updateCollections = (
   state: CollectionsStateValue,
   collection: VideoCollection,
 ) => ({
-  ...state.collections,
+  ...state.byId,
   [collection.id]: {
-    ...state.collections[collection.id],
+    ...state.byId[collection.id],
     ...{
       updatedAt: collection.updatedAt,
       links: collection.links,

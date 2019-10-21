@@ -300,7 +300,7 @@ export class CollectionsFactory {
     return Object.freeze({
       loading: false,
       updating: false,
-      collections: { [collection.id]: collection },
+      byId: { [collection.id]: collection },
       myCollections: { items: [collection.id], links: {} },
       publicCollections: {
         items: [],

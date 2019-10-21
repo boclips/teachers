@@ -30,8 +30,8 @@ export const onAppendPageableCollectionsAction = (
   return {
     ...state,
     [collectionKey]: collectionPage,
-    collections: {
-      ...state.collections,
+    byId: {
+      ...state.byId,
       ...collections,
     },
     loading: false,
