@@ -80,7 +80,9 @@ export default class Rating extends React.Component<RatingProps, State> {
     return <span className="rating--stars--non-editable">{stars}</span>;
   }
 
-  private openModal = () => {
+  private openModal = (event: React.MouseEvent) => {
+    event.preventDefault();
+
     this.setState({ visible: true });
     AnalyticsFactory.externalAnalytics().trackVideoRatingModalOpened();
   };

@@ -47,13 +47,14 @@ describe('when video has no rating', () => {
   });
 
   describe(`when clicking on rating button`, () => {
-    test(`it opens the feedback modal`, () => {
-      rating
-        .find(By.dataQa('rating-video-button'))
-        .props()
-        .onClick(null);
+    test(`it opens the feedback modal and does not follow dummy rating link`, () => {
+      const preventDefaultSpy = jest.fn();
+      rating.find(By.dataQa('rating-video-button')).simulate('click', {
+        preventDefault: preventDefaultSpy,
+      });
 
       expect(rating.find(VideoFeedbackModal)).toExist();
+      expect(preventDefaultSpy).toHaveBeenCalled();
     });
   });
 });
