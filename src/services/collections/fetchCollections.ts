@@ -19,7 +19,7 @@ export const fetchPageableCollections = (
 };
 
 export const fetchNextCollectionsPage = (
-  collections: Pageable<VideoCollection>,
+  collections: Pageable<string>,
 ): Promise<Pageable<VideoCollection>> => {
   if (!collections.links.next) {
     return Promise.reject();

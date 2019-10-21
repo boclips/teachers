@@ -5,10 +5,7 @@ import { Dispatch } from 'redux';
 import EmptyCollectionSVG from '../../../../resources/images/empty-collection.svg';
 import SadTeacherSVG from '../../../../resources/images/sad-teacher.svg';
 import { Links } from '../../../types/Links';
-import State, {
-  getIndexOfCollection,
-  isMyCollection,
-} from '../../../types/State';
+import State, { isMyCollection } from '../../../types/State';
 import { VideoId } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
@@ -144,15 +141,11 @@ class CollectionDetails extends PureComponent<
   }
 }
 
-function getCollection(collectionId: string, state: State) {
+function getCollection(collectionId: string, state: State): VideoCollection {
   if (isMyCollection(state.collections.myCollections.items, collectionId)) {
-    const indexOfCollection = getIndexOfCollection(
-      state.collections.myCollections.items,
-      collectionId,
-    );
-    return state.collections.myCollections.items[indexOfCollection];
+    return state.collections.collections[collectionId];
   } else {
-    if (state.collections.collectionBeingViewed === null) {
+    if (state.collections.collectionIdBeingViewed === null) {
       return null;
     }
 

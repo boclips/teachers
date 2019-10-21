@@ -39,7 +39,7 @@ describe('some collection', () => {
     const store = MockStoreFactory.sample({
       collections: CollectionsFactory.sample({
         bookmarkedCollections: PageableCollectionsFactory.sample({
-          items: [VideoCollectionFactory.sample()],
+          items: [VideoCollectionFactory.sample().id],
         }),
       }),
     });

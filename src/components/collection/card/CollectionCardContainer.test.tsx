@@ -146,7 +146,7 @@ const createMockStore = (collection: VideoCollection) => {
     collections: {
       collections: { [collection.id]: collection },
       myCollections: PageableCollectionsFactory.sample({
-        items: [collection],
+        items: [collection.id],
       }),
       discoverCollections: undefined,
       publicCollections: undefined,

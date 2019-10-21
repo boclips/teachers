@@ -1,4 +1,3 @@
-import { CollectionKey } from '../../../../types/CollectionKey';
 import {
   CollectionsStateValue,
   getIndexOfCollection,
@@ -6,13 +5,6 @@ import {
 import { Video } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
-
-const collectionKeys: CollectionKey[] = [
-  'myCollections',
-  'bookmarkedCollections',
-  'publicCollections',
-  'discoverCollections',
-];
 
 export const onStoreCollectionsAction = (
   state: CollectionsStateValue,
@@ -32,7 +24,10 @@ export const onStoreCollectionsAction = (
       ...state.collections,
       ...normalizedCollections,
     },
-    [request.key]: request.collections,
+    [request.key]: {
+      items: request.collections.items.map(c => c.id),
+      links: request.collections.links,
+    },
     loading: false,
     updating: false,
   };
@@ -47,13 +42,13 @@ export const onStoreCollectionAction = (
       ...state,
       loading: false,
       updating: false,
-      collectionBeingViewed: null,
+      collectionIdBeingViewed: null,
     };
   }
 
   return {
     ...state,
-    collectionBeingViewed: collection.id,
+    collectionIdBeingViewed: collection.id,
     collections: {
       ...state.collections,
       [collection.id]: collection,
@@ -77,96 +72,8 @@ export const onStoreVideoForCollectionAction = (
   state: CollectionsStateValue,
   video: Video,
 ): CollectionsStateValue => {
-  state = collectionKeys.reduce<CollectionsStateValue>(
-    (currentState, key) =>
-      reduceStoreVideoForPageableCollections(currentState, key, video),
-    state,
-  );
-  return reduceStoreVideoForCollectionDetails(state, video);
-};
-
-export const onStoreVideosForCollectionAction = (
-  state: CollectionsStateValue,
-  request: { videos: Video[]; collection: VideoCollection },
-): CollectionsStateValue => {
-  state = collectionKeys.reduce<CollectionsStateValue>(
-    (currentState, key) =>
-      reduceStoreVideosForPageableCollections(currentState, key, request),
-    state,
-  );
-
-  return reduceStoreVideosForCollectionDetails(state, request);
-};
-
-const reduceStoreVideosForPageableCollections = (
-  state: CollectionsStateValue,
-  key: CollectionKey,
-  request: {
-    videos: Video[];
-    collection: VideoCollection;
-  },
-): CollectionsStateValue => {
-  if (!state[key] || !state[key].items) {
-    return state;
-  }
-
-  const collectionItems = updateMatchingCollectionWithVideos(
-    request,
-    state[key].items,
-  );
-
-  return {
-    ...state,
-    [key]: {
-      ...state[key],
-      items: collectionItems,
-    },
-  };
-};
-
-const reduceStoreVideoForPageableCollections = (
-  state: CollectionsStateValue,
-  key: CollectionKey,
-  video: Video,
-): CollectionsStateValue => {
-  if (!state[key] || !state[key].items) {
-    return state;
-  }
-
-  const collectionItems = updateMatchingCollectionWithVideo(
-    video,
-    state[key].items,
-  );
-
-  return {
-    ...state,
-    [key]: {
-      ...state[key],
-      items: collectionItems,
-    },
-  };
-};
-
-const reduceStoreVideosForCollectionDetails = (
-  state: CollectionsStateValue,
-  request: { videos: Video[]; collection: VideoCollection },
-): CollectionsStateValue => {
-  const collectionDetails = addVideosToCollection(request);
-
-  return {
-    ...state,
-    collections: {
-      ...state.collections,
-      [collectionDetails.id]: collectionDetails,
-    },
-  };
-};
-
-const reduceStoreVideoForCollectionDetails = (
-  state: CollectionsStateValue,
-  video: Video,
-): CollectionsStateValue => {
-  const collectionBeingViewed = state.collections[state.collectionBeingViewed];
+  const collectionBeingViewed =
+    state.collections[state.collectionIdBeingViewed];
 
   if (!collectionBeingViewed || !collectionBeingViewed.videos) {
     return state;
@@ -186,6 +93,21 @@ const reduceStoreVideoForCollectionDetails = (
   };
 };
 
+export const onStoreVideosForCollectionAction = (
+  state: CollectionsStateValue,
+  request: { videos: Video[]; collection: VideoCollection },
+): CollectionsStateValue => {
+  const collectionDetails = addVideosToCollection(request);
+
+  return {
+    ...state,
+    collections: {
+      ...state.collections,
+      [collectionDetails.id]: collectionDetails,
+    },
+  };
+};
+
 export const updateMatchingCollectionWithVideos = (
   request: {
     videos: Video[];
@@ -196,7 +118,7 @@ export const updateMatchingCollectionWithVideos = (
   const collectionItems = [...collections];
 
   const indexOfCollectionToUpdate = getIndexOfCollection(
-    collectionItems,
+    collectionItems.map(collection => collection.id),
     request.collection.id,
   );
 

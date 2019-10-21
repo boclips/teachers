@@ -4,7 +4,7 @@ import { compose, Dispatch } from 'redux';
 import { CollectionKey } from '../../../types/CollectionKey';
 import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
 import Page from '../../../types/Page';
-import State, { Pageable } from '../../../types/State';
+import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { fetchNextPageableCollectionsAction } from '../../collection/redux/actions/fetchNextPageableCollectionsAction';
 import { fetchPageableCollectionsAction } from '../../collection/redux/actions/fetchPageableCollectionsAction';
@@ -51,12 +51,17 @@ const mapDispatchToProps = (
 });
 
 function mapStateToProps(state: State, props: Props): StateProps {
-  const collectionsOfType: Pageable<VideoCollection> =
-    state.collections[props.collectionKey];
+  const pageOfCollectionIds: Page<string> = new Page(
+    state.collections[props.collectionKey],
+  );
+
+  const foundCollections =
+    pageOfCollectionIds.items() &&
+    pageOfCollectionIds.items().map(id => state.collections.collections[id]);
 
   return {
-    collections: new Page(collectionsOfType).items(),
-    hasMoreCollections: new Page(collectionsOfType).hasNextPage(),
+    collections: foundCollections,
+    hasMoreCollections: pageOfCollectionIds.hasNextPage(),
     loading: state.collections.loading,
   };
 }

@@ -130,7 +130,7 @@ function onCollectionBookmarkUpdate(
   }
 
   const indexOfCollectionToUpdate = getIndexOfCollection(
-    state.collections,
+    state.collections.map(c => c.id),
     updatedCollection.id,
   );
 

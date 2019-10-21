@@ -173,7 +173,7 @@ const mountWith = (
     collections == null
       ? {}
       : collections.reduce((collectionsObject, value) => {
-          collectionsObject[value.id] = collectionsObject;
+          collectionsObject[value.id] = value;
           return collectionsObject;
         }, {});
 
@@ -181,7 +181,10 @@ const mountWith = (
     collections: {
       collections: normalizedCollections,
       myCollections: PageableCollectionsFactory.sample({
-        items: collections,
+        items:
+          collections == null
+            ? []
+            : collections.map(collection => collection.id),
       }),
       discoverCollections: undefined,
       publicCollections: undefined,
