@@ -6,12 +6,7 @@ import BookmarkFilledSVG from '../../../../..//resources/images/unbookmarked.svg
 import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
 import PageableCollectionCardList from '../../card/list/PageableCollectionCardList';
 
-interface Props {
-  maxNumberOfCollections?: number;
-  description?: string;
-}
-
-class BookmarkedCollectionsGrid extends React.PureComponent<Props> {
+class BookmarkedCollectionsGrid extends React.PureComponent {
   public render() {
     return (
       <PageableCollectionCardList
@@ -22,7 +17,6 @@ class BookmarkedCollectionsGrid extends React.PureComponent<Props> {
           </span>
         }
         grid={true}
-        description={this.props.description}
         collectionKey="bookmarkedCollections"
         renderIfEmptyCollection={this.renderEmptyCollection()}
       />

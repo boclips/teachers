@@ -17,7 +17,7 @@ describe('bookmarked collections', () => {
 
     mount(
       <Provider store={store}>
-        <BookmarkedCollectionsGrid maxNumberOfCollections={1} />
+        <BookmarkedCollectionsGrid />
       </Provider>,
     );
 
@@ -27,7 +27,7 @@ describe('bookmarked collections', () => {
     );
   });
 
-  test('displays empty message when no collections have been bookmared', () => {
+  test('displays empty message when no collections have been bookmarked', () => {
     const store = MockStoreFactory.sample({
       collections: {
         byId: {},
@@ -44,7 +44,7 @@ describe('bookmarked collections', () => {
 
     const wrapper = mount(
       <Provider store={store}>
-        <BookmarkedCollectionsGrid maxNumberOfCollections={1} />
+        <BookmarkedCollectionsGrid />
       </Provider>,
     );
 
