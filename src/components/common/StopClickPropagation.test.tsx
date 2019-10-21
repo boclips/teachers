@@ -70,4 +70,34 @@ describe('StopClickPropagation component', () => {
 
     expect(childOnClick.mock.calls).toHaveLength(1);
   });
+
+  it('does not prevent default - interferes with checkbox behaviour', () => {
+    const wrapper = wrapWithStopClickPropagation(
+      <span>Some Text</span>,
+      () => {},
+    );
+
+    const childSpan = wrapper.find('span');
+
+    const preventDefault = jest.fn();
+
+    childSpan.simulate('click', { preventDefault });
+
+    expect(preventDefault).not.toHaveBeenCalled();
+  });
+
+  it('stops propagation', () => {
+    const wrapper = wrapWithStopClickPropagation(
+      <span>Some Text</span>,
+      () => {},
+    );
+
+    const childSpan = wrapper.find('span');
+
+    const stopPropagation = jest.fn();
+
+    childSpan.simulate('click', { stopPropagation });
+
+    expect(stopPropagation).toHaveBeenCalled();
+  });
 });

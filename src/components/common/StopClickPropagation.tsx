@@ -14,7 +14,6 @@ class StopClickPropagation extends React.PureComponent<Props> {
 
   private handleOnClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    event.preventDefault();
   };
 
   private handleOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
