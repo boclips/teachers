@@ -2,7 +2,7 @@ import { ReactWrapper } from 'enzyme';
 import { By } from './By';
 
 export function findOne(wrapper: ReactWrapper, dataQa: string, tag?: string) {
-  const result: ReactWrapper = wrapper.find(By.dataQa(dataQa, tag));
+  const result: ReactWrapper = wrapper.find(By.dataQa(dataQa, tag)).hostNodes();
 
   if (result.length !== 1) {
     throw new Error(`Found ${result.length} elements with data-qa=${dataQa}`);

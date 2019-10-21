@@ -8,6 +8,7 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { noOp } from '../../../utils';
+import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import CollectionHeader from '../header/CollectionHeader';
 import { CollectionCardForRouter, Props } from './CollectionCard';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
@@ -45,7 +46,7 @@ describe('CollectionCard', () => {
     });
   });
 
-  test('renders collection header', () => {
+  it('renders collection header', () => {
     expect(
       getWrapper()
         .find(CollectionHeader)
@@ -53,52 +54,15 @@ describe('CollectionCard', () => {
     ).toEqual(collection);
   });
 
-  test('does not have class clickable without an navigateToCollectionDetails', () => {
-    expect(getWrapper().find('.clickable')).toHaveLength(0);
-  });
-
-  test('renders collection video previews', () => {
+  it('renders collection video previews', () => {
     expect(getWrapper().find(CollectionCardVideoPreviews)).toExist();
   });
 
-  describe('clicking on the card', () => {
-    it('opens in the current page', () => {
-      const pushSpy = jest.fn();
-      const wrapper = getWrapper({
-        history: {
-          push: pushSpy,
-        } as any,
-      });
+  it('navigates to the collection when the card is clicked', () => {
+    const collectionCard = getWrapper();
 
-      wrapper.simulate('click', {});
-
-      expect(pushSpy).toHaveBeenCalledWith('/collections/1-2-3');
-    });
-
-    it('opens in a new window when control held', () => {
-      const pushSpy = jest.fn();
-      const wrapper = getWrapper({
-        history: {
-          push: pushSpy,
-        } as any,
-      });
-
-      wrapper.simulate('click', { ctrlKey: true });
-
-      expect(window.open).toHaveBeenCalledWith('/collections/1-2-3');
-    });
-
-    it('opens in a new window when meta key held', () => {
-      const pushSpy = jest.fn();
-      const wrapper = getWrapper({
-        history: {
-          push: pushSpy,
-        } as any,
-      });
-
-      wrapper.simulate('click', { metaKey: true });
-
-      expect(window.open).toHaveBeenCalledWith('/collections/1-2-3');
-    });
+    const clickableCard = collectionCard.find(ClickableCard);
+    expect(clickableCard).toExist();
+    expect(clickableCard.props().href).toEqual('/collections/1-2-3');
   });
 });

@@ -74,14 +74,12 @@ export class SearchPage {
   }
 
   public getCollectionResults() {
-    return findAll(this.wrapper, 'collection-card').map(el => ({
-      title: findOne(el, 'collection-title').text(),
-      numberOfVideos: +findOne(el, 'collection-number-of-videos').text(),
-    }));
-  }
-
-  public getVideoCard(index: number) {
-    return findAll(this.wrapper, 'video-card').at(index);
+    return findAll(this.wrapper, 'collection-card')
+      .hostNodes()
+      .map(el => ({
+        title: findOne(el, 'collection-title').text(),
+        numberOfVideos: +findOne(el, 'collection-number-of-videos').text(),
+      }));
   }
 
   public getCount(): number {

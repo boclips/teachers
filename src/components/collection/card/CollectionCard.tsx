@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionHeader from '../header/CollectionHeader';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
@@ -12,7 +13,6 @@ export interface Props extends RouteComponentProps {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
-  navigateToCollectionDetails: () => void;
 }
 
 export class CollectionCardForRouter extends React.PureComponent<Props> {
@@ -48,14 +48,15 @@ export class CollectionCardForRouter extends React.PureComponent<Props> {
 
   public render() {
     return (
-      <section
+      <ClickableCard
+        href={`/collections/${this.props.collection.id}`}
+        bordered={false}
         key={`card-${this.props.collection.id}`}
         className={classnames('collection-card', {
           tiny: this.props.tiny,
         })}
         data-qa="collection-card"
         data-state={this.props.collection.title}
-        onClick={this.handleOnCardClick}
       >
         <CollectionHeader
           collection={this.props.collection}
@@ -83,17 +84,9 @@ export class CollectionCardForRouter extends React.PureComponent<Props> {
             </div>
           </span>
         )}
-      </section>
+      </ClickableCard>
     );
   }
-
-  private handleOnCardClick = (event: React.MouseEvent) => {
-    if (event.ctrlKey || event.metaKey) {
-      window.open(`/collections/${this.props.collection.id}`);
-    } else {
-      this.props.history.push(`/collections/${this.props.collection.id}`);
-    }
-  };
 }
 
 export const CollectionCard = withRouter(CollectionCardForRouter);

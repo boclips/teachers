@@ -1,7 +1,10 @@
 import { Card } from 'antd';
 import { CardProps } from 'antd/es/card';
+import classnames from 'classnames';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
+
+import './ClickableCard.less';
 
 export interface Props extends CardProps, RouteComponentProps {
   href: string;
@@ -11,7 +14,13 @@ export class ClickableCardForRouter extends React.PureComponent<Props> {
   public render() {
     const { href, history, location, staticContext, ...cardProps } = this.props;
 
-    return <Card onClick={this.handleOnClick} {...cardProps} />;
+    return (
+      <Card
+        onClick={this.handleOnClick}
+        {...cardProps}
+        className={classnames('clickable-card', this.props.className)}
+      />
+    );
   }
 
   private handleOnClick = (event: React.MouseEvent) => {

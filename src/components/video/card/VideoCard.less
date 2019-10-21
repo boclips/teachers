@@ -6,55 +6,8 @@
 @video-border-radius: 8px;
 
 .ant-card.video-card {
-  position: relative;
-  cursor: pointer;
-
-  &.skeleton {
-    animation: slide-in 0.5s 0s both;
-    .animation-delay(10);
-
-    .ant-skeleton {
-      @media (max-width: @screen-md) {
-        display: flex;
-        width: 100%;
-        flex-direction: column;
-      }
-
-      .ant-skeleton-header {
-        @media (max-width: @screen-md) {
-          padding: 0px;
-        }
-
-        .ant-skeleton-avatar-lg {
-          border-radius: @video-border-radius;
-          @media (min-width: @screen-md) {
-            width: @video-width;
-            height: @video-height;
-          }
-
-          @media (max-width: @screen-md) {
-            width: 100%;
-            height: 200px;
-          }
-        }
-      }
-
-      .ant-skeleton-paragraph,
-      .ant-skeleton-title {
-        @media (max-width: @screen-md) {
-          margin: 12px;
-        }
-      }
-    }
-  }
-
-  &:nth-of-type(1) {
-    margin-top: 32px;
-  }
-
-  margin-top: 28px;
+  margin-top: 32px;
   box-shadow: @card-shadow;
-  border-radius: @video-border-radius;
 
   .ant-rate {
     font-size: 16px !important;
@@ -155,6 +108,45 @@
 
       .buttons-row {
         margin-top: auto;
+      }
+    }
+  }
+
+  &.skeleton {
+    animation: slide-in 0.5s 0s both;
+    .animation-delay(10);
+
+    .ant-skeleton {
+      @media (max-width: @screen-md) {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .ant-skeleton-header {
+        @media (max-width: @screen-md) {
+          padding: 0px;
+        }
+
+        .ant-skeleton-avatar-lg {
+          border-radius: @video-border-radius;
+          @media (min-width: @screen-md) {
+            width: @video-width;
+            height: @video-height;
+          }
+
+          @media (max-width: @screen-md) {
+            width: 100%;
+            height: 200px;
+          }
+        }
+      }
+
+      .ant-skeleton-paragraph,
+      .ant-skeleton-title {
+        @media (max-width: @screen-md) {
+          margin: 12px;
+        }
       }
     }
   }

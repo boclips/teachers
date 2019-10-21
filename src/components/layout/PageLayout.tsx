@@ -16,13 +16,14 @@ interface Props {
   showFooter?: boolean;
   showNavigation?: boolean;
   subheader?: React.ReactFragment;
+  ['data-qa']?: string;
 }
 
 class PageLayout extends PureComponent<Props> {
   public render() {
     return (
       <Layout className="page-layout">
-        <section>
+        <section data-qa={this.props['data-qa']}>
           <Header className="top-search-bar fixed">
             <TopNavbarContainer
               showNavigation={this.props.showNavigation}
