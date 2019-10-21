@@ -72,6 +72,10 @@ export const onStoreVideoForCollectionAction = (
   state: CollectionsStateValue,
   video: Video,
 ): CollectionsStateValue => {
+  if (!state.collectionIdBeingViewed) {
+    return state;
+  }
+
   const collectionBeingViewed = state.byId[state.collectionIdBeingViewed];
 
   if (!collectionBeingViewed || !collectionBeingViewed.videos) {
