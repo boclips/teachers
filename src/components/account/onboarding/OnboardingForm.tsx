@@ -80,7 +80,7 @@ class OnboardingForm extends React.Component<
     formCarousel: null,
     imageCarousel: null,
     numberOfSlides: 0,
-    visitedIndices: new Set(),
+    visitedIndices: new Set<number>(),
     invisibleSlides: [false, true, true, true],
     country: null,
     state: null,

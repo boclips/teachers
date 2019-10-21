@@ -104,7 +104,6 @@ describe('adding video to collection', () => {
     const stateAfter = collectionsReducer(stateBefore, action);
 
     expect(stateAfter.myCollections.items.length).toEqual(1);
-    console.log(stateAfter.byId);
     expect(stateAfter.byId[collection.id].title).toEqual('changed');
     expect(stateAfter.updating).toBeFalse();
   });
