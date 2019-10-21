@@ -3,7 +3,7 @@ import createReducer, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { CollectionsStateValue } from '../../../../types/State';
-import { storeVideoForCollectionAction } from '../../../video/redux/actions/storeVideoForCollectionAction';
+import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
@@ -113,7 +113,7 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
   actionHandler(storeCollectionAction, onStoreCollectionAction),
-  actionHandler(storeVideoForCollectionAction, onStoreVideoForCollectionAction),
+  actionHandler(storeVideoAction, onStoreVideoForCollectionAction),
   actionHandler(
     storeVideosForCollectionAction,
     onStoreVideosForCollectionAction,

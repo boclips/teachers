@@ -12,7 +12,7 @@ import {
 } from '../../../../types/State';
 import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/onCollectionBookmarkedAction';
 import { storeVideosForCollectionAction } from '../../../collection/redux/actions/storeVideosForCollectionAction';
-import { storeVideoForCollectionAction } from '../../../video/redux/actions/storeVideoForCollectionAction';
+import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
@@ -101,9 +101,7 @@ describe('searching videos', () => {
 
     const newState = videoSearchReducer(
       state,
-      storeVideoForCollectionAction(
-        VideoFactory.sample({ title: 'cat video' }),
-      ),
+      storeVideoAction(VideoFactory.sample({ title: 'cat video' })),
     );
 
     const expectedState: VideoSearchStateValue = {

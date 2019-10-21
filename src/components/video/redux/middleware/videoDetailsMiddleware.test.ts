@@ -5,7 +5,7 @@ import eventually from '../../../../../test-support/eventually';
 import { VideoFactory } from '../../../../../test-support/factories';
 import fetchVideo from '../../../../services/videos/fetchVideo';
 import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
-import { storeVideoForCollectionAction } from '../actions/storeVideoForCollectionAction';
+import { storeVideoAction } from '../actions/storeVideoAction';
 import videoDetailsMiddleware from './videoDetailsMiddleware';
 jest.mock('../../../../services/videos/fetchVideo');
 
@@ -23,8 +23,6 @@ test('fetches and stores a video on FETCH_VIDEO', async () => {
   store.dispatch(fetchVideoAction('123'));
 
   await eventually(() => {
-    expect(store.getActions()).toContainEqual(
-      storeVideoForCollectionAction(video),
-    );
+    expect(store.getActions()).toContainEqual(storeVideoAction(video));
   });
 });

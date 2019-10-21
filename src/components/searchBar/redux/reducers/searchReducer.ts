@@ -19,7 +19,7 @@ import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/
 import { onCollectionUnbookmarkedAction } from '../../../collection/redux/actions/onCollectionUnbookmarkedAction';
 import { storeVideosForCollectionAction } from '../../../collection/redux/actions/storeVideosForCollectionAction';
 import { updateMatchingCollectionWithVideos } from '../../../collection/redux/reducers/storeCollectionsReducer';
-import { storeVideoForCollectionAction } from '../../../video/redux/actions/storeVideoForCollectionAction';
+import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
@@ -158,7 +158,7 @@ export const videoSearchReducer: Reducer<VideoSearchStateValue> = createReducer(
   initialState,
   actionHandler(searchVideosAction, onSearchVideosAction),
   actionHandler(storeVideoSearchResultsAction, onStoreVideoSearchResultsAction),
-  actionHandler(storeVideoForCollectionAction, onStoreVideoAction),
+  actionHandler(storeVideoAction, onStoreVideoAction),
 );
 
 export const collectionSearchReducer: Reducer<
