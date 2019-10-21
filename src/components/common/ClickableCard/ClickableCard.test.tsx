@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
 import { Router } from 'react-router';
@@ -11,9 +11,11 @@ describe('ClickableCard', () => {
       ...extraProps,
     } as any;
 
-    return shallow(
+    return mount(
       <ClickableCardForRouter {...props}>
-        <span>Hello world</span>
+        <span>
+          Hello world. <a href="/testing">Click me!</a>
+        </span>
       </ClickableCardForRouter>,
     );
   };
@@ -65,11 +67,7 @@ describe('ClickableCard', () => {
   });
 
   it('should open the href in a new window when command clicked', () => {
-    const pushSpy = jest.fn();
-    const wrapper = getWrapper({
-      href: 'my-href',
-      history: { push: pushSpy } as any,
-    });
+    const wrapper = getWrapper({ href: 'my-href' });
 
     wrapper.simulate('click', { metaKey: true });
 

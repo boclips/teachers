@@ -3,6 +3,7 @@ import React from 'react';
 import PublicLogoSVG from '../../../../resources/images/global.svg';
 import PrivateLogoSVG from '../../../../resources/images/private.svg';
 import { VideoCollection } from '../../../types/VideoCollection';
+import StopClickPropagation from '../../common/StopClickPropagation';
 import './CollectionTitle.less';
 
 interface Props {
@@ -22,7 +23,12 @@ export class CollectionTitle extends React.PureComponent<Props> {
           tabIndex={0}
           className="collection-title"
         >
-          {this.props.collection.title}
+          <StopClickPropagation
+            wrapper="a"
+            wrapperProps={{ href: `/collections/${this.props.collection.id}` }}
+          >
+            {this.props.collection.title}
+          </StopClickPropagation>
           {this.props.collection.isMine && (
             <Logo
               className={classnames('collection-title__logo', {

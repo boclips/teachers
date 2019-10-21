@@ -15,7 +15,12 @@ interface Props {
 export const VideoHeader = React.memo((props: Props) => (
   <section className={'card-video-header'}>
     <h1 className="title clamp-2-lines" data-qa="video-title">
-      {props.video.title}
+      <StopClickPropagation
+        wrapper="a"
+        wrapperProps={{ href: `/videos/${props.video.id}` }}
+      >
+        {props.video.title}
+      </StopClickPropagation>
     </h1>
     <section className="badge-container">
       <VideoPreviewBadge video={props.video} />
