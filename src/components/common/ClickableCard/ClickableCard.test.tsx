@@ -18,14 +18,10 @@ describe('ClickableCard', () => {
     );
   };
 
-  it('should render a card, passing props down, but not destination', () => {
+  it('should render a card, passing props down, but not href', () => {
     const card = mount(
       <Router history={createMemoryHistory()}>
-        <ClickableCard
-          destination={'hi'}
-          data-qa={'my-card-qa'}
-          className="my-card-class"
-        >
+        <ClickableCard href="hi" data-qa="my-card-qa" className="my-card-class">
           <span>Hello world</span>
         </ClickableCard>
       </Router>,
@@ -36,7 +32,7 @@ describe('ClickableCard', () => {
     expect(cardElement.getAttribute('data-qa')).toEqual('my-card-qa');
     expect(cardElement.getAttribute('class')).toContain('my-card-class');
 
-    expect(cardElement.getAttribute('destination')).toBeNull();
+    expect(cardElement.getAttribute('href')).toBeNull();
 
     const spanElement = card.find('span');
 
@@ -44,39 +40,39 @@ describe('ClickableCard', () => {
     expect(spanElement.text()).toEqual('Hello world');
   });
 
-  it('should navigate to the destination on click', () => {
+  it('should navigate to the href on click', () => {
     const pushSpy = jest.fn();
     const wrapper = getWrapper({
-      destination: 'my-destination',
+      href: 'my-href',
       history: { push: pushSpy } as any,
     });
 
     wrapper.simulate('click', {});
 
-    expect(pushSpy).toHaveBeenCalledWith('my-destination');
+    expect(pushSpy).toHaveBeenCalledWith('my-href');
   });
 
-  it('should open the destination in a new window when control clicked', () => {
+  it('should open the href in a new window when control clicked', () => {
     const pushSpy = jest.fn();
     const wrapper = getWrapper({
-      destination: 'my-destination',
+      href: 'my-href',
       history: { push: pushSpy } as any,
     });
 
     wrapper.simulate('click', { ctrlKey: true });
 
-    expect(window.open).toHaveBeenCalledWith('my-destination');
+    expect(window.open).toHaveBeenCalledWith('my-href');
   });
 
-  it('should open the destination in a new window when command clicked', () => {
+  it('should open the href in a new window when command clicked', () => {
     const pushSpy = jest.fn();
     const wrapper = getWrapper({
-      destination: 'my-destination',
+      href: 'my-href',
       history: { push: pushSpy } as any,
     });
 
     wrapper.simulate('click', { metaKey: true });
 
-    expect(window.open).toHaveBeenCalledWith('my-destination');
+    expect(window.open).toHaveBeenCalledWith('my-href');
   });
 });

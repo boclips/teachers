@@ -40,7 +40,7 @@ export class VideoCard extends React.PureComponent<Props> {
       <ClickableCard
         className="video-card"
         bordered={false}
-        destination={`/videos/${this.props.video.id}`}
+        href={`/videos/${this.props.video.id}`}
         onMouseDown={this.emitVideoLinkClickEvent}
         data-qa="video-card"
       >

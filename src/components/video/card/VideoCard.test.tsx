@@ -28,13 +28,13 @@ describe('when outside video collection', () => {
   });
 });
 
-it('Renders a ClickableCard, with the video details destination', () => {
+it('Renders a ClickableCard, with the video details href', () => {
   const wrapper = getWrapper();
 
   const card = wrapper.find(ClickableCard);
 
   expect(card).toExist();
-  expect(card.props().destination).toEqual('/videos/123');
+  expect(card.props().href).toEqual('/videos/123');
 });
 
 it('logs a navigation event in BoclipsAnalytics on mousedown', () => {
