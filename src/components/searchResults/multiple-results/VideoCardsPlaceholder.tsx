@@ -1,9 +1,7 @@
 import React from 'react';
-import { VideoCardForRouter } from '../../video/card/VideoCard';
+import { VideoCard } from '../../video/card/VideoCard';
 
-const SearchResultsPlaceholder = React.memo(() => (
-  <VideoCardForRouter.Skeleton />
-));
+const SearchResultsPlaceholder = React.memo(() => <VideoCard.Skeleton />);
 
 export const VideoCardsPlaceholder = React.memo(() => (
   <React.Fragment>

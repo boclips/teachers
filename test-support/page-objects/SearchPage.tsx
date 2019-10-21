@@ -55,20 +55,22 @@ export class SearchPage {
   }
 
   public getVideoResults() {
-    return findAll(this.wrapper, 'video-card').map(el => ({
-      title: findOne(el, 'video-title').text(),
-      description: findOne(el, 'video-description').text(),
-      createdBy: findOne(el, 'video-created-by').text(),
-      duration: findOne(el, 'video-duration').text(),
-      releasedOn: findOne(el, 'video-released-on').text(),
-      badgeAlt: el.find('.video-badge').prop('alt'),
-      isSaved: el
-        .find('ManageVideoCollectionsButton')
-        .first()
-        .prop('isInDefaultCollection'),
-      subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
-      playerVideoId: el.find(VideoPlayer).prop('video').id,
-    }));
+    return findAll(this.wrapper, 'video-card')
+      .hostNodes()
+      .map(el => ({
+        title: findOne(el, 'video-title').text(),
+        description: findOne(el, 'video-description').text(),
+        createdBy: findOne(el, 'video-created-by').text(),
+        duration: findOne(el, 'video-duration').text(),
+        releasedOn: findOne(el, 'video-released-on').text(),
+        badgeAlt: el.find('.video-badge').prop('alt'),
+        isSaved: el
+          .find('ManageVideoCollectionsButton')
+          .first()
+          .prop('isInDefaultCollection'),
+        subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
+        playerVideoId: el.find(VideoPlayer).prop('video').id,
+      }));
   }
 
   public getCollectionResults() {

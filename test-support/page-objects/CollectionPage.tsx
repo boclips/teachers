@@ -29,20 +29,23 @@ export class CollectionPage {
   }
 
   public getVideos() {
-    return this.wrapper.find(By.dataQa('video-card')).map(el => ({
-      title: findOne(el, 'video-title').text(),
-      description: findOne(el, 'video-description').text(),
-      createdBy: findOne(el, 'video-created-by').text(),
-      duration: findOne(el, 'video-duration').text(),
-      releasedOn: findOne(el, 'video-released-on').text(),
-      badgeAlt: el.find('.video-badge').prop('alt'),
-      isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
-      subjects: el
-        .find(By.dataQa('subject-tag'))
-        .find(By.dataQa('filter-tag'))
-        .map(tag => tag.text()),
-      playerVideoId: el.find(VideoPlayer).prop('video').id,
-    }));
+    return this.wrapper
+      .find(By.dataQa('video-card'))
+      .hostNodes()
+      .map(el => ({
+        title: findOne(el, 'video-title').text(),
+        description: findOne(el, 'video-description').text(),
+        createdBy: findOne(el, 'video-created-by').text(),
+        duration: findOne(el, 'video-duration').text(),
+        releasedOn: findOne(el, 'video-released-on').text(),
+        badgeAlt: el.find('.video-badge').prop('alt'),
+        isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
+        subjects: el
+          .find(By.dataQa('subject-tag'))
+          .find(By.dataQa('filter-tag'))
+          .map(tag => tag.text()),
+        playerVideoId: el.find(VideoPlayer).prop('video').id,
+      }));
   }
 
   public getCollectionDetails() {

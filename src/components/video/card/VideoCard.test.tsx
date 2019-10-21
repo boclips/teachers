@@ -1,15 +1,14 @@
-import { Card } from 'antd';
 import { shallow } from 'enzyme';
 import React from 'react';
 import { VideoFactory } from '../../../../test-support/factories';
 import FakeBoclipsAnalytics from '../../../services/analytics/boclips/FakeBoclipsAnalytics';
 import { noOp } from '../../../utils';
+import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
-import { Props, VideoCardForRouter } from './VideoCard';
+import { Props, VideoCard } from './VideoCard';
 
 const video = VideoFactory.sample();
 
-const pushSpy = jest.fn();
 const getWrapper = (givenProps: Partial<Props> = {}) => {
   const props: Props = {
     video,
@@ -19,7 +18,7 @@ const getWrapper = (givenProps: Partial<Props> = {}) => {
     ...givenProps,
     userId: givenProps.userId || null,
   } as any;
-  return shallow(<VideoCardForRouter {...props} />);
+  return shallow(<VideoCard {...props} />);
 };
 
 describe('when outside video collection', () => {
@@ -29,42 +28,22 @@ describe('when outside video collection', () => {
   });
 });
 
-describe('clicking the card', () => {
-  it('navigates to the video details page', () => {
-    const wrapper = getWrapper({
-      history: {
-        push: pushSpy,
-      } as any,
-    });
+it('Renders a ClickableCard, with the video details destination', () => {
+  const wrapper = getWrapper();
 
-    wrapper.find(Card).simulate('click', {});
+  const card = wrapper.find(ClickableCard);
 
-    expect(pushSpy).toHaveBeenCalledWith('/videos/123');
-  });
+  expect(card).toExist();
+  expect(card.props().destination).toEqual('/videos/123');
+});
 
-  it('opens in a new tab when control is held', () => {
-    const wrapper = getWrapper();
+it('logs a navigation event in BoclipsAnalytics on mousedown', () => {
+  const wrapper = getWrapper();
 
-    wrapper.find(Card).simulate('click', { ctrlKey: true });
+  wrapper.simulate('mouseDown', {});
 
-    expect(window.open).toHaveBeenCalledWith('/videos/123');
-  });
-  it('opens in a new tab when command (mac) is held', () => {
-    const wrapper = getWrapper();
-
-    wrapper.find(Card).simulate('click', { metaKey: true });
-
-    expect(window.open).toHaveBeenCalledWith('/videos/123');
-  });
-
-  it('logs a navigation event in BoclipsAnalytics on mousedown', () => {
-    const wrapper = getWrapper();
-
-    wrapper.find(Card).simulate('mouseDown', {});
-
-    expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
-      video,
-      interactionType: 'NAVIGATE_TO_VIDEO_DETAILS',
-    });
+  expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
+    video,
+    interactionType: 'NAVIGATE_TO_VIDEO_DETAILS',
   });
 });

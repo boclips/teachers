@@ -35,13 +35,16 @@ describe('when video collection', () => {
   });
 
   test('displays video collection with videos', async () => {
+    // Given: the api returns what we say
     new ApiStub()
       .defaultUser()
       .fetchCollections()
       .fetchVideo();
 
+    // When: the page is loaded
     const collectionPage = await CollectionPage.load();
 
+    // Then: we get the right elements. We get one element.
     expect(collectionPage.isEmptyCollection()).toBeFalsy();
     expect(collectionPage.getVideos()).toHaveLength(1);
     expect(collectionPage.getVideos()[0]).toMatchObject({

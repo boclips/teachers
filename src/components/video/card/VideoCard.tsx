@@ -1,9 +1,9 @@
 import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { VideoHeader } from '../header/VideoHeader';
@@ -11,14 +11,14 @@ import VideoPlayer from '../player/VideoPlayer';
 import './VideoCard.less';
 import VideoCardTagList from './VideoCardTagList';
 
-export interface Props extends RouteComponentProps {
+export interface Props {
   video: Video | null;
   videoIndex?: number;
   currentCollection?: VideoCollection;
   userId: string | null;
 }
 
-export class VideoCardForRouter extends React.PureComponent<Props> {
+export class VideoCard extends React.PureComponent<Props> {
   public static Skeleton = () => (
     <Card className="video-card skeleton" bordered={false}>
       <AntSkeleton
@@ -33,24 +33,17 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
 
   public render() {
     if (!this.props.video) {
-      return <VideoCardForRouter.Skeleton />;
+      return <VideoCard.Skeleton />;
     }
 
     return (
-      <Card
+      <ClickableCard
         className="video-card"
         bordered={false}
-        onClick={this.handleOnCardClick}
-        onMouseDown={this.handleOnCardMouseDown}
+        destination={`/videos/${this.props.video.id}`}
+        onMouseDown={this.emitVideoLinkClickEvent}
+        data-qa="video-card"
       >
-        <section data-qa="video-card">{this.renderContent()}</section>
-      </Card>
-    );
-  }
-
-  public renderContent() {
-    return (
-      <section className="video-content">
         <VideoHeader video={this.props.video} />
 
         <StopClickPropagation
@@ -80,28 +73,14 @@ export class VideoCardForRouter extends React.PureComponent<Props> {
             </StopClickPropagation>
           </Row>
         </section>
-      </section>
+      </ClickableCard>
     );
   }
 
-  private handleOnCardMouseDown = () => {
+  private emitVideoLinkClickEvent = () => {
     // noinspection JSIgnoredPromiseFromCall
     AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(
       this.props.video,
     );
   };
-
-  private handleOnCardClick = (event: React.MouseEvent) => {
-    const url = `/videos/${this.props.video.id}`;
-
-    if (event.ctrlKey || event.metaKey) {
-      window.open(url);
-    } else {
-      this.props.history.push(url);
-    }
-  };
 }
-
-const VideoCard = withRouter(VideoCardForRouter);
-
-export default VideoCard;
