@@ -25,6 +25,7 @@ import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAct
 import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
+import { storeCollectionBeingViewedAction } from '../actions/storeCollectionBeingViewedAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
@@ -41,6 +42,7 @@ import {
 import { onAppendPageableCollectionsAction } from './pageableCollectionsReducer';
 import {
   onStoreCollectionAction,
+  onStoreCollectionBeingViewedAction,
   onStoreCollectionsAction,
   onStoreVideoForCollectionAction,
   onStoreVideosForCollectionAction,
@@ -113,6 +115,10 @@ export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
   actionHandler(onCollectionBookmarkedAction, onCollectionBookmarked),
   actionHandler(storeCollectionsAction, onStoreCollectionsAction),
   actionHandler(storeCollectionAction, onStoreCollectionAction),
+  actionHandler(
+    storeCollectionBeingViewedAction,
+    onStoreCollectionBeingViewedAction,
+  ),
   actionHandler(storeVideoAction, onStoreVideoForCollectionAction),
   actionHandler(
     storeVideosForCollectionAction,

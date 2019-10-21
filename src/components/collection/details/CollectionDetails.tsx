@@ -15,6 +15,7 @@ import {
   fetchVideosForCollectionAction,
   VideosForCollectionRequest,
 } from '../redux/actions/fetchVideosForCollectionAction';
+import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 
 interface OwnProps {
   collectionId: string;
@@ -29,6 +30,7 @@ interface StateProps {
 interface DispatchProps {
   fetchCollection: () => void;
   fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
+  storeCollectionBeingViewed: () => void;
 }
 
 class CollectionDetails extends PureComponent<
@@ -123,6 +125,7 @@ class CollectionDetails extends PureComponent<
 
   public componentDidMount() {
     this.fetchCollectionIfNeeded();
+    this.props.storeCollectionBeingViewed();
     this.fetchVideosIfNeeded();
   }
 
@@ -165,12 +168,12 @@ function mapDispatchToProps(
   ownProps: OwnProps,
 ): DispatchProps {
   return {
-    fetchCollection: () => {
-      dispatch(fetchCollectionAction(ownProps.collectionId));
-    },
-    fetchVideosForCollection: (request: VideosForCollectionRequest) => {
-      return dispatch(fetchVideosForCollectionAction(request));
-    },
+    fetchCollection: () =>
+      dispatch(fetchCollectionAction(ownProps.collectionId)),
+    fetchVideosForCollection: (request: VideosForCollectionRequest) =>
+      dispatch(fetchVideosForCollectionAction(request)),
+    storeCollectionBeingViewed: () =>
+      dispatch(storeCollectionBeingViewedAction({ id: ownProps.collectionId })),
   };
 }
 

@@ -111,6 +111,14 @@ export const onStoreVideosForCollectionAction = (
   };
 };
 
+export const onStoreCollectionBeingViewedAction = (
+  state: CollectionsStateValue,
+  request: { id: string },
+): CollectionsStateValue => ({
+  ...state,
+  collectionIdBeingViewed: request.id,
+});
+
 export const updateMatchingCollectionWithVideos = (
   request: {
     videos: Video[];
