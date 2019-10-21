@@ -1,4 +1,6 @@
 import React from 'react';
+import { PrivacyPolicyLink } from '../account/form/PrivacyPolicyLink';
+import { TermsAndConditionsLink } from '../account/form/TermsAndConditionsLink';
 import './BoclipsFooter.less';
 
 export default class BoclipsFooter extends React.PureComponent {
@@ -6,7 +8,12 @@ export default class BoclipsFooter extends React.PureComponent {
     return (
       <footer className="boclips-footer ant-layout-content">
         <p>
-          Copyright © {new Date().getFullYear()} Boclips. All rights reserved.
+          Copyright © {new Date().getFullYear()} Boclips. All rights reserved.{' '}
+          <span className={'boclips-footer__links'}>
+            <TermsAndConditionsLink />
+            &nbsp;•&nbsp;
+            <PrivacyPolicyLink />
+          </span>
         </p>
         <p>
           All trademarks, service marks, trade names, product names and logos
