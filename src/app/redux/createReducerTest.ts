@@ -1,9 +1,9 @@
 import { actionCreatorFactory, actionCreatorFactoryVoid } from './actions';
-import createReducer, { ActionHandler } from './createReducer';
+import createReducerWithInitialState, { ActionHandler } from './createReducer';
 
 it('throws when initial state is undefined', () => {
   expect(() => {
-    createReducer(undefined);
+    createReducerWithInitialState(undefined);
   }).toThrowError();
 });
 
@@ -17,7 +17,7 @@ it('throws when there are multiple handlers for the same action type', () => {
     (s: string) => s,
   ];
   expect(() => {
-    createReducer('', handler1, handler2);
+    createReducerWithInitialState('', handler1, handler2);
   }).toThrowError();
 });
 
@@ -31,7 +31,7 @@ describe('reducer', () => {
     reduce,
   ];
 
-  const reducer = createReducer<string>('', h);
+  const reducer = createReducerWithInitialState<string>('', h);
 
   it('returns initial state when current state undefined', () => {
     expect(reducer(undefined, { type: '@@INIT' })).toEqual('');

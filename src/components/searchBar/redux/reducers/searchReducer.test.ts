@@ -1,12 +1,13 @@
 import ApiStub from '../../../../../test-support/ApiStub';
 import {
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
-import {
+import { createReducer } from '../../../../app/redux/createReducer';
+import State, {
   CollectionSearchResults,
   CollectionSearchStateValue,
-  SearchStateValue,
   VideoSearchResults,
   VideoSearchStateValue,
 } from '../../../../types/State';
@@ -17,11 +18,13 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-import {
-  collectionSearchReducer,
-  searchReducer,
-  videoSearchReducer,
-} from './searchReducer';
+import { SearchFactory } from './../../../../../test-support/factories';
+import { collectionSearchHandlers, videoSearchHandlers } from './searchReducer';
+
+const searchReducer = createReducer(
+  ...videoSearchHandlers,
+  ...collectionSearchHandlers,
+);
 
 describe('searching videos', () => {
   const defaultPaging = {
@@ -32,14 +35,18 @@ describe('searching videos', () => {
   };
 
   test('Clears videos and sets loading flag and query on the loading action', () => {
-    const state: VideoSearchStateValue = {
-      loading: false,
-      videos: [VideoFactory.sample({ title: 'my video' })],
-      query: '',
-      paging: defaultPaging,
-    };
+    const state: State = MockStoreFactory.sampleState({
+      search: SearchFactory.sample({
+        videoSearch: {
+          loading: false,
+          videos: [VideoFactory.sample({ title: 'my video' })],
+          query: '',
+          paging: defaultPaging,
+        },
+      }),
+    });
 
-    const newState = videoSearchReducer(
+    const newState = searchReducer(
       state,
       searchVideosAction({
         query: 'donuts',
@@ -59,16 +66,20 @@ describe('searching videos', () => {
       paging: defaultPaging,
     };
 
-    expect(newState).toEqual(expectedState);
+    expect(newState.search.videoSearch).toEqual(expectedState);
   });
 
   test('Sets videos and clears loading flag on the store action', () => {
-    const state: VideoSearchStateValue = {
-      loading: true,
-      videos: [],
-      query: 'pancakes',
-      paging: defaultPaging,
-    };
+    const state: State = MockStoreFactory.sampleState({
+      search: SearchFactory.sample({
+        videoSearch: {
+          loading: true,
+          videos: [],
+          query: 'pancakes',
+          paging: defaultPaging,
+        },
+      }),
+    });
 
     const searchResults: VideoSearchResults = {
       videos: [VideoFactory.sample({ title: 'dog video' })],
@@ -76,7 +87,7 @@ describe('searching videos', () => {
       paging: defaultPaging,
     };
 
-    const newState = videoSearchReducer(
+    const newState = searchReducer(
       state,
       storeVideoSearchResultsAction(searchResults),
     );
@@ -88,18 +99,22 @@ describe('searching videos', () => {
       paging: defaultPaging,
     };
 
-    expect(newState).toEqual(expectedState);
+    expect(newState.search.videoSearch).toEqual(expectedState);
   });
 
   test('Updates video on video store action', () => {
-    const state: VideoSearchStateValue = {
-      loading: false,
-      videos: [VideoFactory.sample({ title: 'dog video' })],
-      query: 'pancakes',
-      paging: defaultPaging,
-    };
+    const state: State = MockStoreFactory.sampleState({
+      search: SearchFactory.sample({
+        videoSearch: {
+          loading: false,
+          videos: [VideoFactory.sample({ title: 'dog video' })],
+          query: 'pancakes',
+          paging: defaultPaging,
+        },
+      }),
+    });
 
-    const newState = videoSearchReducer(
+    const newState = searchReducer(
       state,
       storeVideoAction(VideoFactory.sample({ title: 'cat video' })),
     );
@@ -111,19 +126,25 @@ describe('searching videos', () => {
       paging: defaultPaging,
     };
 
-    expect(newState).toEqual(expectedState);
+    expect(newState.search.videoSearch).toEqual(expectedState);
   });
 });
 
 describe('searching collections', () => {
   test('Clears collections and sets loading flag and query on the loading action', () => {
-    const state: CollectionSearchStateValue = {
-      loading: false,
-      collections: [VideoCollectionFactory.sample({ title: 'my collection' })],
-      query: '',
-    };
+    const state: State = MockStoreFactory.sampleState({
+      search: SearchFactory.sample({
+        collectionSearch: {
+          loading: false,
+          collections: [
+            VideoCollectionFactory.sample({ title: 'my collection' }),
+          ],
+          query: '',
+        },
+      }),
+    });
 
-    const newState = collectionSearchReducer(
+    const newState = searchReducer(
       state,
       searchCollectionsAction({
         query: 'donuts',
@@ -136,22 +157,26 @@ describe('searching collections', () => {
       query: 'donuts',
     };
 
-    expect(newState).toEqual(expectedState);
+    expect(newState.search.collectionSearch).toEqual(expectedState);
   });
 
   test('Sets collections and clears loading flag on the store action', () => {
-    const state: CollectionSearchStateValue = {
-      loading: true,
-      collections: [],
-      query: 'pancakes',
-    };
+    const state: State = MockStoreFactory.sampleState({
+      search: SearchFactory.sample({
+        collectionSearch: {
+          loading: true,
+          collections: [],
+          query: 'pancakes',
+        },
+      }),
+    });
 
     const searchResults: CollectionSearchResults = {
       collections: [VideoCollectionFactory.sample({ title: 'dog collection' })],
       query: 'dogs',
     };
 
-    const newState = collectionSearchReducer(
+    const newState = searchReducer(
       state,
       storeCollectionSearchResultsAction(searchResults),
     );
@@ -162,7 +187,7 @@ describe('searching collections', () => {
       query: 'dogs',
     };
 
-    expect(newState).toEqual(expectedState);
+    expect(newState.search.collectionSearch).toEqual(expectedState);
   });
 
   test('sets videos in searched collections', () => {
@@ -180,18 +205,23 @@ describe('searching collections', () => {
       ],
     });
 
-    const stateBefore: CollectionSearchStateValue = {
-      collections: [collection],
-      query: 'dog',
-      loading: false,
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      search: SearchFactory.sample({
+        collectionSearch: {
+          collections: [collection],
+          query: 'dog',
+          loading: false,
+        },
+      }),
+    });
 
     const action = storeVideosForCollectionAction({
       videos: [video],
       collection,
     });
 
-    const stateAfter = collectionSearchReducer(stateBefore, action);
+    const stateAfter = searchReducer(stateBefore, action).search
+      .collectionSearch;
 
     expect(Object.keys(stateAfter.collections[0].videos)).toHaveLength(1);
     expect(stateAfter.collections[0].videos[video.id].title).toEqual(
@@ -209,14 +239,16 @@ describe('searching collections', () => {
         title: 'jose carlos',
       });
 
-      const stateBefore: SearchStateValue = {
-        videoSearch: undefined,
-        collectionSearch: {
-          collections: [toBeUpdatedCollection],
-          loading: false,
-          query: '',
-        },
-      };
+      const stateBefore: State = MockStoreFactory.sampleState({
+        search: SearchFactory.sample({
+          videoSearch: undefined,
+          collectionSearch: {
+            collections: [toBeUpdatedCollection],
+            loading: false,
+            query: '',
+          },
+        }),
+      });
 
       const updatedCollection = {
         ...toBeUpdatedCollection,
@@ -225,11 +257,11 @@ describe('searching collections', () => {
 
       const action = onCollectionBookmarkedAction(updatedCollection);
 
-      const publicCollections = searchReducer(stateBefore, action)
+      const collections = searchReducer(stateBefore, action).search
         .collectionSearch.collections;
 
-      expect(publicCollections).toHaveLength(1);
-      expect(publicCollections).toContainEqual(updatedCollection);
+      expect(collections).toHaveLength(1);
+      expect(collections).toContainEqual(updatedCollection);
     });
   });
 });

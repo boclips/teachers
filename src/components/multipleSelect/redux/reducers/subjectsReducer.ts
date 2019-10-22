@@ -1,11 +1,13 @@
 import { Reducer } from 'redux';
-import createReducer, {
+import createReducerWithInitialState, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { Subject } from '../../../../types/Subject';
 import { fetchedSubjectsAction } from '../actions/fetchedSubjectsAction';
 
-export const subjectsReducer: Reducer<Subject[]> = createReducer(
+export const subjectsReducer: Reducer<
+  Subject[]
+> = createReducerWithInitialState(
   [],
   actionHandler(fetchedSubjectsAction, (_: Subject[], subjects: Subject[]) => {
     return subjects;

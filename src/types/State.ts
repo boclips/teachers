@@ -133,4 +133,6 @@ export default interface State
     CountryState,
     TagState,
     DisciplineState,
-    Environment {}
+    Environment {
+  apiPrefix: string;
+}

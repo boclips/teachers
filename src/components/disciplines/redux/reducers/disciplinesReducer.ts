@@ -1,11 +1,13 @@
 import { Reducer } from 'redux';
-import createReducer, {
+import createReducerWithInitialState, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { Discipline } from '../../../../types/Discipline';
 import { fetchedDisciplinesAction } from '../actions/fetchedDisciplinesAction';
 
-export const disciplinesReducer: Reducer<Discipline[]> = createReducer(
+export const disciplinesReducer: Reducer<
+  Discipline[]
+> = createReducerWithInitialState(
   [],
   actionHandler(
     fetchedDisciplinesAction,

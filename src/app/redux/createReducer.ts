@@ -18,7 +18,11 @@ export function actionHandler<TState, TPayload>(
   return [action, handler];
 }
 
-export default function createReducer<TState>(
+export function noReducer<TState>(initialState: TState) {
+  return genericReducer(initialState);
+}
+
+export default function createReducerWithInitialState<TState>(
   initialState: TState,
   ...handlers: Array<ActionHandler<TState, any>>
 ): Reducer<TState> {
@@ -26,6 +30,19 @@ export default function createReducer<TState>(
     throw new Error('Initial state must not be undefined');
   }
 
+  return genericReducer(initialState, ...handlers);
+}
+
+export function createReducer<TState>(
+  ...handlers: Array<ActionHandler<TState, any>>
+): Reducer<TState> {
+  return genericReducer(undefined, ...handlers);
+}
+
+function genericReducer<TState>(
+  initialState?: TState,
+  ...handlers: Array<ActionHandler<TState, any>>
+): Reducer<TState> {
   const handlersMap: { [type: string]: Reducer<TState> } = {};
   handlers.forEach(([action, handler]) => {
     const type = action.type;

@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import createReducer, {
+import createReducerWithInitialState, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { VideoStateValue } from '../../../../types/State';
@@ -17,7 +17,9 @@ function onStoreVideoAction(_: VideoStateValue, video: Video): VideoStateValue {
   return { loading: false, item: video };
 }
 
-export const videoReducer: Reducer<VideoStateValue> = createReducer(
+export const videoReducer: Reducer<
+  VideoStateValue
+> = createReducerWithInitialState(
   initialState,
   actionHandler(fetchVideoAction, onFetchVideoAction),
   actionHandler(storeVideoAction, onStoreVideoAction),

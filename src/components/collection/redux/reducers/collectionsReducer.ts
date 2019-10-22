@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import createReducer, {
+import createReducerWithInitialState, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
 import { CollectionsStateValue } from '../../../../types/State';
@@ -81,7 +81,9 @@ const collectionUpdating = (
   return { ...state, updating: true };
 };
 
-export const collectionsReducer: Reducer<CollectionsStateValue> = createReducer(
+export const collectionsReducer: Reducer<
+  CollectionsStateValue
+> = createReducerWithInitialState(
   initialState,
   actionHandler(addVideoToMyCollectionAction, onAddVideoToMyCollectionAction),
   actionHandler(

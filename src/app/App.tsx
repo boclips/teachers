@@ -1,7 +1,12 @@
-import { connectRouter, routerMiddleware } from 'connected-react-router';
+import {
+  connectRouter,
+  routerMiddleware,
+  RouterState,
+} from 'connected-react-router';
 import { History } from 'history';
 import React, { PureComponent } from 'react';
 import { Provider } from 'react-redux';
+import reduceReducers from 'reduce-reducers';
 import {
   applyMiddleware,
   combineReducers,
@@ -24,7 +29,11 @@ import { userDetailsFetchedReducer } from '../components/login/redux/reducers/us
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
 import { subjectsReducer } from '../components/multipleSelect/redux/reducers/subjectsReducer';
 import searchMiddleware from '../components/searchBar/redux/middleware/searchMiddleware';
-import { searchReducer } from '../components/searchBar/redux/reducers/searchReducer';
+import {
+  collectionSearchHandlers,
+  initialSearchState,
+  videoSearchHandlers,
+} from '../components/searchBar/redux/reducers/searchReducer';
 import updatePageActionMiddleware from '../components/searchResults/redux/middleware/updatePageActionMiddleware';
 import updateSearchParametersMiddleware from '../components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
@@ -36,6 +45,7 @@ import LinkLoader from './config/LinkLoader';
 import onAuthenticationResolvedMiddleware from './redux/authentication/middleware/onAuthenticationResolvedMiddleware';
 import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';
 import { authenticationReducer } from './redux/authentication/reducers/authenticationReducer';
+import { createReducer, noReducer } from './redux/createReducer';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
 import { linksReducer } from './redux/links/reducers/linksReducer';
 import { sentryBreadcrumbMiddleware } from './redux/sentryBreadcrumbMiddleware';
@@ -55,8 +65,16 @@ declare global {
 const composeEnhancers =
   window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
 
-const rootReducer: Reducer<any> = combineReducers({
-  search: searchReducer,
+export const stateReducer: Reducer<State> = createReducer(
+  ...videoSearchHandlers,
+  ...collectionSearchHandlers,
+);
+
+const dummyApiReducer: Reducer<string> = (state = '') => state;
+const dummyRouter: Reducer<RouterState> = (state = null) => state;
+
+const subStateReducers = combineReducers({
+  search: noReducer(initialSearchState),
   links: linksReducer,
   video: videoReducer,
   user: userDetailsFetchedReducer,
@@ -66,8 +84,14 @@ const rootReducer: Reducer<any> = combineReducers({
   countries: countriesReducer,
   tags: tagsReducer,
   disciplines: disciplinesReducer,
-  apiPrefix: (state = {}) => state,
+  apiPrefix: dummyApiReducer,
+  router: dummyRouter,
 });
+
+const appReducer: Reducer<State> = reduceReducers(
+  subStateReducers,
+  stateReducer,
+);
 
 interface Props {
   apiPrefix: string;
@@ -76,7 +100,7 @@ interface Props {
 
 export default class App extends PureComponent<Props> {
   private store = createStore<State, any, any, any>(
-    connectRouter(defaultHistory)(rootReducer),
+    connectRouter(defaultHistory)(appReducer),
     {
       apiPrefix: this.props.apiPrefix,
     },

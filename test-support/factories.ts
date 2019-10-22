@@ -464,28 +464,30 @@ export class TagFactory {
 }
 
 export class MockStoreFactory {
-  public static sample(store: Partial<State> = {}): MockStoreEnhanced<State> {
+  public static sample(state: Partial<State> = {}): MockStoreEnhanced<State> {
     const mockStoreCreator = configureStore<State>();
 
-    return mockStoreCreator({
-      apiPrefix: 'https://api.example.com',
-      links: LinksFactory.sample(),
-      search: SearchFactory.sample(),
-      user: UserProfileFactory.sample(),
-      video: {
-        loading: false,
-        item: VideoFactory.sample(),
-      },
-      authentication: {
-        status: 'authenticated',
-      },
-      collections: CollectionsFactory.sample(),
-      router: RouterFactory.sample(),
-      subjects: SubjectsFactory.sample(),
-      countries: CountriesFactory.sample(),
-      disciplines: DisciplinesFactory.sample(),
-      tags: TagsFactory.sample(),
-      ...store,
-    });
+    return mockStoreCreator(MockStoreFactory.sampleState(state));
   }
+
+  public static sampleState = (state: Partial<State> = {}): State => ({
+    apiPrefix: 'https://api.example.com',
+    links: LinksFactory.sample(),
+    search: SearchFactory.sample(),
+    user: UserProfileFactory.sample(),
+    video: {
+      loading: false,
+      item: VideoFactory.sample(),
+    },
+    authentication: {
+      status: 'authenticated',
+    },
+    collections: CollectionsFactory.sample(),
+    router: RouterFactory.sample(),
+    subjects: SubjectsFactory.sample(),
+    countries: CountriesFactory.sample(),
+    disciplines: DisciplinesFactory.sample(),
+    tags: TagsFactory.sample(),
+    ...state,
+  });
 }
