@@ -300,7 +300,6 @@ export class CollectionsFactory {
     return Object.freeze({
       loading: false,
       updating: false,
-      byId: { [collection.id]: collection },
       myCollections: { items: [collection.id], links: {} },
       publicCollections: {
         items: [],
@@ -470,24 +469,55 @@ export class MockStoreFactory {
     return mockStoreCreator(MockStoreFactory.sampleState(state));
   }
 
-  public static sampleState = (state: Partial<State> = {}): State => ({
-    apiPrefix: 'https://api.example.com',
-    links: LinksFactory.sample(),
-    search: SearchFactory.sample(),
-    user: UserProfileFactory.sample(),
-    video: {
-      loading: false,
-      item: VideoFactory.sample(),
-    },
-    authentication: {
-      status: 'authenticated',
-    },
-    collections: CollectionsFactory.sample(),
-    router: RouterFactory.sample(),
-    subjects: SubjectsFactory.sample(),
-    countries: CountriesFactory.sample(),
-    disciplines: DisciplinesFactory.sample(),
-    tags: TagsFactory.sample(),
-    ...state,
-  });
+  public static sampleState = (state: Partial<State> = {}): State => {
+    const collections = state.collections || CollectionsFactory.sample();
+
+    const allCollections = [
+      ...(collections.bookmarkedCollections
+        ? collections.bookmarkedCollections.items
+        : []),
+      ...(collections.discoverCollections
+        ? collections.discoverCollections.items
+        : []),
+      ...(collections.myCollections ? collections.myCollections.items : []),
+      ...(collections.publicCollections
+        ? collections.publicCollections.items
+        : []),
+    ];
+
+    if (collections.collectionIdBeingViewed) {
+      allCollections.push(collections.collectionIdBeingViewed);
+    }
+
+    const collectionsById = allCollections.reduce((result, id) => {
+      result[id] = VideoCollectionFactory.sample({ id });
+      return result;
+    }, {});
+
+    return {
+      entities: {
+        collections: {
+          byId: collectionsById,
+        },
+      },
+      apiPrefix: 'https://api.example.com',
+      links: LinksFactory.sample(),
+      search: SearchFactory.sample(),
+      user: UserProfileFactory.sample(),
+      video: {
+        loading: false,
+        item: VideoFactory.sample(),
+      },
+      authentication: {
+        status: 'authenticated',
+      },
+      collections,
+      router: RouterFactory.sample(),
+      subjects: SubjectsFactory.sample(),
+      countries: CountriesFactory.sample(),
+      disciplines: DisciplinesFactory.sample(),
+      tags: TagsFactory.sample(),
+      ...state,
+    };
+  };
 }

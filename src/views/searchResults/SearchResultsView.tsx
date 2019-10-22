@@ -133,7 +133,7 @@ class SearchResultsView extends React.PureComponent<
 }
 
 function mapStateToProps({
-  collections,
+  entities,
   search,
   links,
   router,
@@ -143,7 +143,7 @@ function mapStateToProps({
     loading: search.videoSearch.loading,
     videoResults: search.videoSearch,
     collectionResults: search.collectionSearch.collectionIds.map(
-      id => collections.byId[id],
+      id => entities.collections.byId[id],
     ),
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,

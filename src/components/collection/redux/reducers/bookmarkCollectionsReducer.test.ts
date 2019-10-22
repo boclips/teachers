@@ -2,10 +2,14 @@ import {
   PageableCollectionsFactory,
   VideoCollectionFactory,
 } from '../../../../../test-support/factories';
-import { CollectionsStateValue } from '../../../../types/State';
+import { createReducer } from '../../../../app/redux/createReducer';
+import State from '../../../../types/State';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
-import { collectionsReducer } from './collectionsReducer';
+import { MockStoreFactory } from './../../../../../test-support/factories';
+import { collectionHandlers } from './collectionsReducer';
+
+const testReducer = createReducer(...collectionHandlers);
 
 describe('bookmarking a collection', () => {
   test('adds collection to bookmarks', () => {
@@ -14,21 +18,27 @@ describe('bookmarking a collection', () => {
       id: 'another-collection',
     });
 
-    const stateBefore: CollectionsStateValue = {
-      byId: { [untouchedCollection.id]: untouchedCollection },
-      updating: false,
-      loading: false,
-      myCollections: undefined,
-      publicCollections: undefined,
-      discoverCollections: undefined,
-      bookmarkedCollections: PageableCollectionsFactory.sample({
-        items: [untouchedCollection.id],
-      }),
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: {
+        collections: {
+          byId: { [untouchedCollection.id]: untouchedCollection },
+        },
+      },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: undefined,
+        publicCollections: undefined,
+        discoverCollections: undefined,
+        bookmarkedCollections: PageableCollectionsFactory.sample({
+          items: [untouchedCollection.id],
+        }),
+      },
+    });
 
     const action = onCollectionBookmarkedAction(toBeBookmarkedCollection);
 
-    const updatedBookmarks = collectionsReducer(stateBefore, action)
+    const updatedBookmarks = testReducer(stateBefore, action).collections
       .bookmarkedCollections.items;
 
     expect(updatedBookmarks).toHaveLength(2);
@@ -44,24 +54,30 @@ describe('unbookmarking a collection', () => {
       id: 'another-collection',
     });
 
-    const stateBefore: CollectionsStateValue = {
-      byId: {
-        [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection,
-        [untouchedCollection.id]: untouchedCollection,
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: {
+        collections: {
+          byId: {
+            [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection,
+            [untouchedCollection.id]: untouchedCollection,
+          },
+        },
       },
-      updating: false,
-      loading: false,
-      myCollections: undefined,
-      publicCollections: undefined,
-      discoverCollections: undefined,
-      bookmarkedCollections: PageableCollectionsFactory.sample({
-        items: [toBeUnbookmarkedCollection.id, untouchedCollection.id],
-      }),
-    };
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: undefined,
+        publicCollections: undefined,
+        discoverCollections: undefined,
+        bookmarkedCollections: PageableCollectionsFactory.sample({
+          items: [toBeUnbookmarkedCollection.id, untouchedCollection.id],
+        }),
+      },
+    });
 
     const action = onCollectionUnbookmarkedAction(toBeUnbookmarkedCollection);
 
-    const updatedBookmarks = collectionsReducer(stateBefore, action)
+    const updatedBookmarks = testReducer(stateBefore, action).collections
       .bookmarkedCollections.items;
 
     expect(updatedBookmarks).toHaveLength(1);

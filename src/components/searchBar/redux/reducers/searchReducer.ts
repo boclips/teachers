@@ -11,7 +11,10 @@ import State, {
 } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
-import { collectionsById } from '../../../collection/redux/reducers/storeCollectionsReducer';
+import {
+  collectionsById,
+  onStoreVideoForCollectionAction,
+} from '../../../collection/redux/reducers/storeCollectionsReducer';
 import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
@@ -99,11 +102,14 @@ function onStoreCollectionSearchResultsAction(
         loading: false,
       },
     },
-    collections: {
-      ...state.collections,
-      byId: {
-        ...state.collections.byId,
-        ...collectionsById(results.collections),
+    entities: {
+      ...state.entities,
+      collections: {
+        ...state.entities.collections,
+        byId: {
+          ...state.entities.collections.byId,
+          ...collectionsById(results.collections),
+        },
       },
     },
   };
@@ -124,6 +130,8 @@ function onStoreVideoAction(state: State, video: Video): State {
   if (!videoState || !videoState.videos) {
     return state;
   }
+
+  state = onStoreVideoForCollectionAction(state, video); // This is a smell as our videos aren't normalized
 
   return {
     ...state,

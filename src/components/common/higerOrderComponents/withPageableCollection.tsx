@@ -57,7 +57,7 @@ function mapStateToProps(state: State, props: Props): StateProps {
 
   const foundCollections =
     pageOfCollectionIds.items() &&
-    pageOfCollectionIds.items().map(id => state.collections.byId[id]);
+    pageOfCollectionIds.items().map(id => state.entities.collections.byId[id]);
 
   return {
     collections: foundCollections,
