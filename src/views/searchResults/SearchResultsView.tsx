@@ -14,17 +14,15 @@ import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-r
 import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
 import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
 import { Links } from '../../types/Links';
-import State, {
-  CollectionSearchResults,
-  VideoSearchResults,
-} from '../../types/State';
+import State, { VideoSearchResults } from '../../types/State';
+import { VideoCollection } from '../../types/VideoCollection';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';
 
 interface StateProps {
   loading: boolean;
   videoResults: VideoSearchResults;
-  collectionResults: CollectionSearchResults;
+  collectionResults: VideoCollection[];
   links: Links;
   currentPage: number;
   userId: string | null;
@@ -134,11 +132,19 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({ search, links, router, user }: State): StateProps {
+function mapStateToProps({
+  collections,
+  search,
+  links,
+  router,
+  user,
+}: State): StateProps {
   return {
     loading: search.videoSearch.loading,
     videoResults: search.videoSearch,
-    collectionResults: search.collectionSearch,
+    collectionResults: search.collectionSearch.collectionIds.map(
+      id => collections.byId[id],
+    ),
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
     userId: user ? user.id : null,

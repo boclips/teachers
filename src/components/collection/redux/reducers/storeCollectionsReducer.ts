@@ -1,22 +1,19 @@
-import {
-  CollectionsStateValue,
-  getIndexOfCollection,
-} from '../../../../types/State';
+import { CollectionsStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
+
+export const collectionsById = (collections: VideoCollection[]) =>
+  collections.reduce((result, collection) => {
+    result[collection.id] = collection;
+    return result;
+  }, {});
 
 export const onStoreCollectionsAction = (
   state: CollectionsStateValue,
   request: StoreCollectionsRequest,
 ): CollectionsStateValue => {
-  const normalizedCollections = request.collections.items.reduce(
-    (collections, collection) => {
-      collections[collection.id] = collection;
-      return collections;
-    },
-    {},
-  );
+  const normalizedCollections = collectionsById(request.collections.items);
 
   return {
     ...state,
@@ -118,31 +115,6 @@ export const onStoreCollectionBeingViewedAction = (
   ...state,
   collectionIdBeingViewed: request.id,
 });
-
-export const updateMatchingCollectionWithVideos = (
-  request: {
-    videos: Video[];
-    collection: VideoCollection;
-  },
-  collections: Readonly<VideoCollection[]>,
-): VideoCollection[] => {
-  const collectionItems = [...collections];
-
-  const indexOfCollectionToUpdate = getIndexOfCollection(
-    collectionItems.map(collection => collection.id),
-    request.collection.id,
-  );
-
-  if (indexOfCollectionToUpdate < 0) {
-    return collectionItems;
-  }
-
-  const updatedCollection = addVideosToCollection(request);
-
-  collectionItems[indexOfCollectionToUpdate] = updatedCollection;
-
-  return collectionItems;
-};
 
 export const updateMatchingCollectionWithVideo = (
   video: Video,

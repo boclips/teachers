@@ -20,7 +20,7 @@ export interface VideoSearchResults {
   paging: PageSpec;
 }
 
-export interface CollectionSearchResults {
+export interface CollectionsSearchResult {
   query: string;
   collections: VideoCollection[];
 }
@@ -29,8 +29,10 @@ export interface VideoSearchStateValue extends VideoSearchResults {
   loading: boolean;
 }
 
-export interface CollectionSearchStateValue extends CollectionSearchResults {
+export interface CollectionSearchStateValue {
   loading: boolean;
+  query: string;
+  collectionIds: string[];
 }
 
 export interface AuthenticationStateValue {

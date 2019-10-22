@@ -5,18 +5,13 @@ import {
 import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
 import PageSpec from '../../../../types/PageSpec';
 import State, {
-  CollectionSearchResults,
-  getIndexOfCollection,
+  CollectionsSearchResult,
   SearchStateValue,
   VideoSearchResults,
 } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
-import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
-import { onCollectionBookmarkedAction } from '../../../collection/redux/actions/onCollectionBookmarkedAction';
-import { onCollectionUnbookmarkedAction } from '../../../collection/redux/actions/onCollectionUnbookmarkedAction';
-import { storeVideosForCollectionAction } from '../../../collection/redux/actions/storeVideosForCollectionAction';
-import { updateMatchingCollectionWithVideos } from '../../../collection/redux/reducers/storeCollectionsReducer';
+import { collectionsById } from '../../../collection/redux/reducers/storeCollectionsReducer';
 import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
@@ -33,7 +28,7 @@ const defaultPaging: PageSpec = {
 export const initialSearchState: SearchStateValue = {
   videoSearch: { videos: [], loading: false, query: '', paging: defaultPaging },
   collectionSearch: {
-    collections: [],
+    collectionIds: [],
     loading: false,
     query: '',
   },
@@ -82,7 +77,7 @@ function onSearchCollectionsAction(
     search: {
       ...state.search,
       collectionSearch: {
-        collections: [],
+        collectionIds: [],
         query: searchRequest.query,
         loading: true,
       },
@@ -92,41 +87,23 @@ function onSearchCollectionsAction(
 
 function onStoreCollectionSearchResultsAction(
   state: State,
-  results: CollectionSearchResults,
+  results: CollectionsSearchResult,
 ): State {
-  return {
-    ...state,
-    search: {
-      ...state.search,
-      collectionSearch: { ...results, loading: false },
-    },
-  };
-}
-
-function onStoreVideosForSearchCollection(
-  state: State,
-  request: {
-    videos: Video[];
-    collection: VideoCollection;
-  },
-): State {
-  const collectionsState = state.search.collectionSearch;
-  if (!collectionsState || !collectionsState.collections) {
-    return state;
-  }
-
-  const collectionItems = updateMatchingCollectionWithVideos(
-    request,
-    collectionsState.collections,
-  );
-
   return {
     ...state,
     search: {
       ...state.search,
       collectionSearch: {
-        ...collectionsState,
-        collections: collectionItems,
+        collectionIds: results.collections.map(it => it.id),
+        query: results.query,
+        loading: false,
+      },
+    },
+    collections: {
+      ...state.collections,
+      byId: {
+        ...state.collections.byId,
+        ...collectionsById(results.collections),
       },
     },
   };
@@ -160,46 +137,6 @@ function onStoreVideoAction(state: State, video: Video): State {
   };
 }
 
-function onCollectionBookmarkUpdate(
-  state: State,
-  updatedCollection: VideoCollection,
-): State {
-  const collectionState = state.search.collectionSearch;
-  if (collectionState.collections === undefined) {
-    return state;
-  }
-
-  const indexOfCollectionToUpdate = getIndexOfCollection(
-    collectionState.collections.map(c => c.id),
-    updatedCollection.id,
-  );
-
-  if (indexOfCollectionToUpdate < 0) {
-    return state;
-  }
-
-  const newCollections = [...collectionState.collections];
-  const originalCollection = newCollections[indexOfCollectionToUpdate];
-
-  const collectionToUpdate = {
-    ...updatedCollection,
-    videos: originalCollection.videos,
-  };
-
-  newCollections[indexOfCollectionToUpdate] = collectionToUpdate;
-
-  return {
-    ...state,
-    search: {
-      ...state.search,
-      collectionSearch: {
-        ...collectionState,
-        collections: newCollections,
-      },
-    },
-  };
-}
-
 export const videoSearchHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(searchVideosAction, onSearchVideosAction),
   actionHandler(storeVideoSearchResultsAction, onStoreVideoSearchResultsAction),
@@ -212,10 +149,4 @@ export const collectionSearchHandlers: Array<ActionHandler<State, any>> = [
     storeCollectionSearchResultsAction,
     onStoreCollectionSearchResultsAction,
   ),
-  actionHandler(
-    storeVideosForCollectionAction,
-    onStoreVideosForSearchCollection,
-  ),
-  actionHandler(onCollectionUnbookmarkedAction, onCollectionBookmarkUpdate),
-  actionHandler(onCollectionBookmarkedAction, onCollectionBookmarkUpdate),
 ];

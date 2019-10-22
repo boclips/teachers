@@ -1,7 +1,7 @@
 import { Constants } from '../../app/AppConstants';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { Attachment } from '../../types/Attachment';
-import { CollectionSearchResults, VideoSearchResults } from '../../types/State';
+import { CollectionsSearchResult, VideoSearchResults } from '../../types/State';
 import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
@@ -100,7 +100,7 @@ export default class AnalyticsService {
     this.mixpanelInstance.track(EventTypes.VIDEO_SEARCH, eventPayload);
   }
 
-  public trackCollectionSearch(searchResults: CollectionSearchResults) {
+  public trackCollectionSearch(searchResults: CollectionsSearchResult) {
     const payload = {
       [`${
         EventTypes.COLLECTION_SEARCH

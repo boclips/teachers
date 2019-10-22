@@ -269,7 +269,7 @@ export class CollectionSearchFactory {
   ): CollectionSearchStateValue {
     return Object.freeze({
       query: 'hello',
-      collections: [],
+      collectionIds: [],
       loading: false,
       ...arg,
     });

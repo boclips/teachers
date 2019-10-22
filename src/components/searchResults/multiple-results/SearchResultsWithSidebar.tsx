@@ -32,7 +32,7 @@ export default class SearchResultsWithSidebar extends React.PureComponent<
             <SearchResultsSidebar
               onButtonClick={this.props.onNavigate}
               resultsQuery={query}
-              collections={this.props.collectionResults.collections}
+              collections={this.props.collectionResults}
             />
           </Col>
         </Row>

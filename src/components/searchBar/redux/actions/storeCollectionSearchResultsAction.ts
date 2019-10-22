@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { CollectionSearchResults } from '../../../../types/State';
+import { CollectionsSearchResult } from '../../../../types/State';
 
 export const storeCollectionSearchResultsAction = actionCreatorFactory<
-  CollectionSearchResults
+  CollectionsSearchResult
 >('STORE_SEARCH_COLLECTIONS');
