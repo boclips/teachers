@@ -1,21 +1,22 @@
 import classnames from 'classnames';
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionHeader from '../header/CollectionHeader';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 
+import { Video } from '../../../types/Video';
 import './CollectionCard.less';
 
-export interface Props extends RouteComponentProps {
+export interface Props {
   collection: VideoCollection;
   numberOfPreviews: number;
   tiny?: boolean;
+  videos: Video[];
 }
 
-export class CollectionCardForRouter extends React.PureComponent<Props> {
+export class CollectionCard extends React.PureComponent<Props> {
   public static Skeleton = (props: { tiny: boolean }) => (
     <section
       className={
@@ -64,9 +65,7 @@ export class CollectionCardForRouter extends React.PureComponent<Props> {
         />
         <CollectionCardVideoPreviews
           numberOfPreviews={this.props.numberOfPreviews}
-          videos={this.props.collection.videoIds.map(
-            videoId => this.props.collection.videos[videoId.id],
-          )}
+          videos={this.props.videos}
           isGrid={this.props.tiny}
           id={this.props.collection.id}
         />
@@ -88,5 +87,3 @@ export class CollectionCardForRouter extends React.PureComponent<Props> {
     );
   }
 }
-
-export const CollectionCard = withRouter(CollectionCardForRouter);

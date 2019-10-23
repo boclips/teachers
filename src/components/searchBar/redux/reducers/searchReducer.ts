@@ -1,25 +1,23 @@
+import produce from 'immer';
 import {
   actionHandler,
   ActionHandler,
 } from '../../../../app/redux/createReducer';
 import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
 import PageSpec from '../../../../types/PageSpec';
-import State, {
+import {
   CollectionsSearchResult,
-  SearchStateValue,
   VideoSearchResults,
-} from '../../../../types/State';
+} from '../../../../types/SearchResults';
+import State, { SearchStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
-import {
-  collectionsById,
-  onStoreVideoForCollectionAction,
-} from '../../../collection/redux/reducers/storeCollectionsReducer';
-import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
+import { organizeById } from '../../../../utils/entityMap';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
+import { VideoMap } from './../../../../types/State';
 
 const defaultPaging: PageSpec = {
   totalElements: 0,
@@ -59,16 +57,21 @@ function onStoreVideoSearchResultsAction(
   state: State,
   results: VideoSearchResults,
 ): State {
-  return {
-    ...state,
-    search: {
-      ...state.search,
-      videoSearch: {
-        ...results,
-        loading: false,
-      },
-    },
-  };
+  return produce(state, draftState => {
+    const newVideos: VideoMap = organizeById(results.videos);
+
+    draftState.entities.videos.byId = {
+      ...draftState.entities.videos.byId,
+      ...newVideos,
+    };
+
+    draftState.search.videoSearch = {
+      videos: results.videos.map(it => it.id),
+      loading: false,
+      query: results.query,
+      paging: results.paging,
+    };
+  });
 }
 
 function onSearchCollectionsAction(
@@ -108,7 +111,7 @@ function onStoreCollectionSearchResultsAction(
         ...state.entities.collections,
         byId: {
           ...state.entities.collections.byId,
-          ...collectionsById(results.collections),
+          ...organizeById(results.collections),
         },
       },
     },
@@ -124,31 +127,9 @@ export function replaceVideo(originalVideos: Video[], video: Video): Video[] {
   return videos;
 }
 
-function onStoreVideoAction(state: State, video: Video): State {
-  const videoState = state.search.videoSearch;
-
-  if (!videoState || !videoState.videos) {
-    return state;
-  }
-
-  state = onStoreVideoForCollectionAction(state, video); // This is a smell as our videos aren't normalized
-
-  return {
-    ...state,
-    search: {
-      ...state.search,
-      videoSearch: {
-        ...videoState,
-        videos: replaceVideo(videoState.videos, video),
-      },
-    },
-  };
-}
-
 export const videoSearchHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(searchVideosAction, onSearchVideosAction),
   actionHandler(storeVideoSearchResultsAction, onStoreVideoSearchResultsAction),
-  actionHandler(storeVideoAction, onStoreVideoAction),
 ];
 
 export const collectionSearchHandlers: Array<ActionHandler<State, any>> = [

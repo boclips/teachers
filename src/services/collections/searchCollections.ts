@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { CollectionSearchRequest } from '../../types/CollectionSearchRequest';
 import { Links } from '../../types/Links';
-import { CollectionsSearchResult } from '../../types/State';
+import { CollectionsSearchResult } from '../../types/SearchResults';
 import { parseCollectionsListResponse } from './collectionParser';
 
 export default function searchPublicCollections(

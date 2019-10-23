@@ -1,7 +1,10 @@
 import { Constants } from '../../app/AppConstants';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { Attachment } from '../../types/Attachment';
-import { CollectionsSearchResult, VideoSearchResults } from '../../types/State';
+import {
+  CollectionsSearchResult,
+  VideoSearchResults,
+} from '../../types/SearchResults';
 import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';

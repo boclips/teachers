@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 import State from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
-import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
+import { VideoCollection } from '../../../../types/VideoCollection';
 
 export const onAddVideoToMyCollectionAction = (
   state: State,
@@ -13,26 +13,26 @@ export const onAddVideoToMyCollectionAction = (
     return state;
   }
 
-  const videos = collection.videos;
+  const videosById = state.entities.videos.byId;
   const videoIds = collection.videoIds;
 
   const alreadyHaveVideoId =
-    videoIds.find(v => v.id === request.video.id) != null;
-  const alreadyHaveVideo = videos[request.video.id];
+    videoIds.find(v => v.value === request.video.id) != null;
+  const alreadyHaveVideo = videosById[request.video.id];
 
   if (alreadyHaveVideo && alreadyHaveVideoId) {
     return state;
   }
 
-  const videoId = {
-    id: request.video.id,
+  const videoId: VideoId = {
+    value: request.video.id,
     links: request.video.links,
   };
 
   const updatedCollection = {
     ...collection,
     videos: {
-      ...videos,
+      ...videosById,
       [request.video.id]: request.video,
     },
     videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
@@ -67,8 +67,11 @@ export const onRemoveVideoFromMyCollectionAction = (
 
   const updatedCollection = {
     ...collection,
-    videos: removeVideo(request.video.id, collection.videos),
-    videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
+    videos: removeVideo(
+      request.video.id,
+      collection.videoIds.map(it => it.value),
+    ),
+    videoIds: collection.videoIds.filter(v => v.value !== request.video.id),
   };
 
   return produce(state, draftState => {
@@ -118,7 +121,6 @@ const onUpdateCollection = (
     ] = updatedCollection;
   });
 
-const removeVideo = (videoIdToRemove: string, videos: VideoMap): VideoMap => {
-  const { [videoIdToRemove]: _, ...updatedVideos } = videos;
-  return updatedVideos;
+const removeVideo = (videoIdToRemove: string, videoIds: string[]): string[] => {
+  return videoIds.filter(it => videoIdToRemove !== it);
 };

@@ -1,14 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import State from '../../../types/State';
+import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import {
-  fetchVideosForCollectionAction,
+  fetchVideosAction,
   VideosForCollectionRequest,
-} from '../redux/actions/fetchVideosForCollectionAction';
+} from '../../video/redux/actions/fetchVideos';
 import { CollectionCard } from './CollectionCard';
 
-interface Props {
+type Props = OwnProps & DispatchProps & StateProps;
+
+interface OwnProps {
   collection: VideoCollection;
   tiny?: boolean;
 }
@@ -16,12 +20,14 @@ interface Props {
 const NUMBER_OF_PREVIEWS = 4;
 
 interface DispatchProps {
-  fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
+  fetchVideos: (request: VideosForCollectionRequest) => void;
 }
 
-class CollectionCardContainer extends React.PureComponent<
-  Props & DispatchProps
-> {
+interface StateProps {
+  videos: Array<Video | undefined>;
+}
+
+class CollectionCardContainer extends React.PureComponent<Props> {
   public render() {
     return (
       <CollectionCard
@@ -29,6 +35,7 @@ class CollectionCardContainer extends React.PureComponent<
         key={`card-container-${this.props.collection.id}`}
         collection={this.props.collection}
         numberOfPreviews={NUMBER_OF_PREVIEWS}
+        videos={this.props.videos.filter(video => video !== undefined)}
       />
     );
   }
@@ -37,22 +44,20 @@ class CollectionCardContainer extends React.PureComponent<
     this.fetchVideosIfNeeded();
   }
 
-  public componentDidUpdate() {
-    this.fetchVideosIfNeeded();
-  }
-
   private fetchVideosIfNeeded() {
     if (this.shouldFetchVideosForCollection()) {
-      this.props.fetchVideosForCollection({
-        collection: this.props.collection,
+      this.props.fetchVideos({
         videos: this.props.collection.videoIds.slice(0, NUMBER_OF_PREVIEWS),
       });
     }
   }
 
   private shouldFetchVideosForCollection(): boolean {
-    const { videos, videoIds } = this.props.collection;
-    const numberOfVideosLoaded = Object.keys(videos).length;
+    const { videoIds } = this.props.collection;
+
+    const { videos } = this.props;
+
+    const numberOfVideosLoaded = videos.filter(it => it !== undefined).length;
 
     return (
       numberOfVideosLoaded !== videoIds.length &&
@@ -61,14 +66,22 @@ class CollectionCardContainer extends React.PureComponent<
   }
 }
 
+function mapStateToProps({ entities }: State, props: OwnProps): StateProps {
+  return {
+    videos: props.collection.videoIds.map(
+      videoId => entities.videos.byId[videoId.value],
+    ),
+  };
+}
+
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    fetchVideosForCollection: (request: VideosForCollectionRequest) =>
-      dispatch(fetchVideosForCollectionAction(request)),
+    fetchVideos: (request: VideosForCollectionRequest) =>
+      dispatch(fetchVideosAction(request)),
   };
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(CollectionCardContainer);

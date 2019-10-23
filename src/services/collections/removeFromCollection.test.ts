@@ -4,12 +4,13 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
+  VideoIdFactory,
 } from './../../../test-support/factories';
 import removeFromCollection from './removeFromCollection';
 
 const video = VideoFactory.sample({ id: '123' });
 const collection = VideoCollectionFactory.sample({
-  videos: VideoCollectionFactory.sampleVideos([video]),
+  videoIds: [VideoIdFactory.sample({ value: video.id })],
   links: VideoCollectionLinksFactory.sample({
     removeVideo: new Link({
       href: '/v1/collections/default/videos/{video_id}',

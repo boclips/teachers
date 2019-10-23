@@ -60,7 +60,7 @@ describe('parsing a single collections API response', () => {
 
     expect(parsed.videoIds).toEqual([
       {
-        id: '177',
+        value: '177',
         links: {
           self: new Link({ href: 'https://api.example.com/v1/videos/177' }),
         },

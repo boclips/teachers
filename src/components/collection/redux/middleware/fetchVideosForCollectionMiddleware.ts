@@ -2,9 +2,9 @@ import { Dispatch, MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
 import { LinksState } from '../../../../types/State';
-import { VideosForCollectionRequest } from '../actions/fetchVideosForCollectionAction';
-import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
-import { fetchVideosForCollectionAction } from './../actions/fetchVideosForCollectionAction';
+import { VideosForCollectionRequest } from '../../../video/redux/actions/fetchVideos';
+import { fetchVideosAction } from '../../../video/redux/actions/fetchVideos';
+import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
 
 export function onFetchVideosForCollection(
   store: MiddlewareAPI<Dispatch, LinksState>,
@@ -15,16 +15,12 @@ export function onFetchVideosForCollection(
   )
     .then(videos =>
       store.dispatch(
-        storeVideosForCollectionAction({
+        storeVideosAction({
           videos,
-          collection: request.collection,
         }),
       ),
     )
     .catch(console.error);
 }
 
-export default sideEffect(
-  fetchVideosForCollectionAction,
-  onFetchVideosForCollection,
-);
+export default sideEffect(fetchVideosAction, onFetchVideosForCollection);

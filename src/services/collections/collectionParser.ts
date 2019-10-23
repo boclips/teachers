@@ -36,7 +36,7 @@ export const parseCollectionsListResponse = (
 const parseCollectionListResponse = (data: any): VideoCollection => {
   const videoIds: VideoId[] = data.videos.map(
     (videoData: any): VideoId => ({
-      id: videoData.id,
+      value: videoData.id,
       links: { self: parseLink(videoData._links.self) },
     }),
   );
@@ -51,7 +51,6 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     id: data.id,
     title: data.title,
     updatedAt: data.updatedAt,
-    videos: {},
     videoIds,
     links: getLinks(data),
     isPublic: data.public,

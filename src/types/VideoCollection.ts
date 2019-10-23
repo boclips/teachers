@@ -1,7 +1,7 @@
 import { AgeRange } from './AgeRange';
 import { Attachment } from './Attachment';
 import { Link } from './Link';
-import { Video, VideoId } from './Video';
+import { VideoId } from './Video';
 
 export interface VideoCollectionLinks {
   addVideo?: Link;
@@ -17,7 +17,6 @@ export interface VideoCollection {
   id: string;
   title: string;
   updatedAt: string;
-  videos: VideoMap;
   videoIds: VideoId[];
   links: VideoCollectionLinks;
   isPublic: boolean;
@@ -28,6 +27,3 @@ export interface VideoCollection {
   description?: string;
   attachments: Attachment[];
 }
-
-// tslint:disable-next-line:interface-over-type-literal
-export type VideoMap = { [videoId: string]: Video };

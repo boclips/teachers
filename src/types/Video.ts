@@ -11,7 +11,7 @@ export interface VideoLinks {
 }
 
 export interface VideoId {
-  id: string;
+  value: string;
   links: VideoLinks;
 }
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import DurationConverter from '../../components/searchResults/multiple-results/filters/DurationConverter';
 import { Links } from '../../types/Links';
-import { VideoSearchResults } from '../../types/State';
+import { VideoSearchResults } from '../../types/SearchResults';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { parseVideosResponse } from './parseVideosResponse';
 

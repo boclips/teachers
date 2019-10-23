@@ -4,16 +4,18 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { By } from '../../../test-support/By';
 import {
+  EntitiesFactory,
   LinksFactory,
   MockStoreFactory,
   VideoFactory,
+  VideoIdFactory,
 } from '../../../test-support/factories';
 import VideoPlayer from '../../components/video/player/VideoPlayer';
 import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
 
 test('dispatches FETCH_VIDEO when mounted', () => {
   const store = MockStoreFactory.sample({
-    video: { loading: false, item: null },
+    video: { loading: false, id: null },
     links: LinksFactory.sample(),
   });
 
@@ -31,7 +33,10 @@ test('dispatches FETCH_VIDEO when mounted', () => {
 test('renders video details when the video has loaded', () => {
   const video = VideoFactory.sample();
   const store = MockStoreFactory.sample({
-    video: { loading: false, item: video },
+    entities: EntitiesFactory.sample({
+      videos: { byId: { [video.id]: video } },
+    }),
+    video: { loading: false, id: VideoIdFactory.sample({ value: video.id }) },
     links: LinksFactory.sample(),
   });
 

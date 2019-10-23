@@ -2,6 +2,7 @@ import {
   PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
+  VideoIdFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
 import State from '../../../../types/State';
@@ -9,7 +10,10 @@ import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
-import { MockStoreFactory } from './../../../../../test-support/factories';
+import {
+  EntitiesFactory,
+  MockStoreFactory,
+} from './../../../../../test-support/factories';
 import { collectionHandlers } from './collectionsReducer';
 
 const testReducer = createReducer(...collectionHandlers);
@@ -18,25 +22,21 @@ describe('adding video to collection', () => {
   test('adding a video to a collection reduces user collections', () => {
     const targetCollection = VideoCollectionFactory.sample({
       id: 'target',
-      videos: VideoCollectionFactory.sampleVideos([
-        VideoFactory.sample({ id: '123' }),
-      ]),
+      videoIds: [VideoIdFactory.sample({ value: '123' })],
     });
     const otherCollection = VideoCollectionFactory.sample({
       id: 'irrelevant',
-      videos: VideoCollectionFactory.sampleVideos([
-        VideoFactory.sample({ id: '333' }),
-      ]),
+      videoIds: [VideoIdFactory.sample({ value: '333' })],
     });
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: {
+      entities: EntitiesFactory.sample({
         collections: {
           byId: {
             [otherCollection.id]: otherCollection,
             [targetCollection.id]: targetCollection,
           },
         },
-      },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -68,17 +68,17 @@ describe('adding video to collection', () => {
     const updatedCollection =
       stateAfter.entities.collections.byId[targetCollection.id];
 
-    expect(Object.keys(updatedCollection.videos)).toHaveLength(2);
-    expect(updatedCollection.videos['124']).toEqual(newVideo);
     expect(updatedCollection.videoIds).toHaveLength(2);
-    expect(updatedCollection.videoIds.map(id => id.id)).toContain('124');
+    expect(updatedCollection.videoIds.map(id => id.value)).toContain('124');
   });
 
   test('remove a collection', () => {
     const collection = VideoCollectionFactory.sample();
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: { collections: { byId: { [collection.id]: collection } } },
+      entities: EntitiesFactory.sample({
+        collections: { byId: { [collection.id]: collection } },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -105,7 +105,9 @@ describe('adding video to collection', () => {
     const collection = VideoCollectionFactory.sample();
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: { collections: { byId: { [collection.id]: collection } } },
+      entities: EntitiesFactory.sample({
+        collections: { byId: { [collection.id]: collection } },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -135,10 +137,13 @@ describe('adding video to collection', () => {
     const video = VideoFactory.sample({ id: '123' });
     const collection = VideoCollectionFactory.sample({
       id: 'target',
-      videos: VideoCollectionFactory.sampleVideos([video]),
+      videoIds: [VideoIdFactory.sample({ value: video.id })],
     });
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: { collections: { byId: { [collection.id]: collection } } },
+      entities: EntitiesFactory.sample({
+        collections: { byId: { [collection.id]: collection } },
+        videos: { byId: { [video.id]: video } },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -162,7 +167,6 @@ describe('adding video to collection', () => {
       stateAfter.entities.collections.byId[collection.id];
 
     expect(stateAfter.collections.updating).toEqual(false);
-    expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
     expect(updatedCollection.videoIds).toHaveLength(1);
   });
 
@@ -172,14 +176,16 @@ describe('adding video to collection', () => {
       id: 'target',
       videoIds: [
         {
-          id: video.id,
+          value: video.id,
           links: video.links,
         },
       ],
     });
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: { collections: { byId: { [collection.id]: collection } } },
+      entities: EntitiesFactory.sample({
+        collections: { byId: { [collection.id]: collection } },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -203,23 +209,25 @@ describe('adding video to collection', () => {
       stateAfter.entities.collections.byId[collection.id];
 
     expect(stateAfter.collections.updating).toEqual(true);
-    expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
     expect(updatedCollection.videoIds).toHaveLength(1);
   });
 });
 
 describe('removing videos from a collection', () => {
   test('removing a video from a collection', () => {
+    const firstVideo = VideoFactory.sample({ id: '123' });
+    const secondVideo = VideoFactory.sample({ id: '124' });
     const collection = VideoCollectionFactory.sample({
       id: 'target',
-      videos: VideoCollectionFactory.sampleVideos([
-        VideoFactory.sample({ id: '123' }),
-        VideoFactory.sample({ id: '124' }),
-      ]),
+      videoIds: [firstVideo, secondVideo].map(it =>
+        VideoIdFactory.sample({ value: it.id }),
+      ),
     });
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: { collections: { byId: { [collection.id]: collection } } },
+      entities: EntitiesFactory.sample({
+        collections: { byId: { [collection.id]: collection } },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -232,7 +240,7 @@ describe('removing videos from a collection', () => {
       },
     });
 
-    const videoToRemove = VideoFactory.sample({ id: '123' });
+    const videoToRemove = firstVideo;
     const action = removeVideoFromMyCollectionAction({
       video: videoToRemove,
       collection,
@@ -244,9 +252,8 @@ describe('removing videos from a collection', () => {
       stateAfter.entities.collections.byId[collection.id];
 
     expect(stateAfter.collections.updating).toEqual(true);
-    expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
-    expect(updatedCollection.videos['124'].id).toEqual('124');
+    expect(Object.keys(updatedCollection.videoIds)).toHaveLength(1);
     expect(updatedCollection.videoIds).toHaveLength(1);
-    expect(updatedCollection.videoIds[0].id).toEqual('124');
+    expect(updatedCollection.videoIds[0].value).toEqual('124');
   });
 });

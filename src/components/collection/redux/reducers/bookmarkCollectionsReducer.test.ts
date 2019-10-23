@@ -8,7 +8,10 @@ import { Link } from '../../../../types/Link';
 import State from '../../../../types/State';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
-import { MockStoreFactory } from './../../../../../test-support/factories';
+import {
+  EntitiesFactory,
+  MockStoreFactory,
+} from './../../../../../test-support/factories';
 import { collectionHandlers } from './collectionsReducer';
 
 const testReducer = createReducer(...collectionHandlers);
@@ -21,11 +24,11 @@ describe('bookmarking a collection', () => {
     });
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: {
+      entities: EntitiesFactory.sample({
         collections: {
           byId: { [untouchedCollection.id]: untouchedCollection },
         },
-      },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -54,11 +57,11 @@ describe('bookmarking a collection', () => {
     const toBeBookmarkedCollection = VideoCollectionFactory.sample();
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: {
+      entities: EntitiesFactory.sample({
         collections: {
           byId: { [toBeBookmarkedCollection.id]: toBeBookmarkedCollection },
         },
-      },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -95,14 +98,14 @@ describe('unbookmarking a collection', () => {
     });
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: {
+      entities: EntitiesFactory.sample({
         collections: {
           byId: {
             [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection,
             [untouchedCollection.id]: untouchedCollection,
           },
         },
-      },
+      }),
       collections: {
         updating: false,
         loading: false,
@@ -130,11 +133,11 @@ describe('unbookmarking a collection', () => {
     const toBeUnbookmarkedCollection = VideoCollectionFactory.sample();
 
     const stateBefore: State = MockStoreFactory.sampleState({
-      entities: {
+      entities: EntitiesFactory.sample({
         collections: {
           byId: { [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection },
         },
-      },
+      }),
       collections: {
         updating: false,
         loading: false,

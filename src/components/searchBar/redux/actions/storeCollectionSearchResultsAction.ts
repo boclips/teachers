@@ -1,5 +1,5 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { CollectionsSearchResult } from '../../../../types/State';
+import { CollectionsSearchResult } from '../../../../types/SearchResults';
 
 export const storeCollectionSearchResultsAction = actionCreatorFactory<
   CollectionsSearchResult

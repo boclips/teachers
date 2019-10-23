@@ -26,7 +26,6 @@ import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollec
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionBeingViewedAction } from '../actions/storeCollectionBeingViewedAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import {
   onCollectionBookmarked,
@@ -43,7 +42,6 @@ import {
   onStoreCollectionAction,
   onStoreCollectionBeingViewedAction,
   onStoreCollectionsAction,
-  onStoreVideosForCollectionAction,
 } from './storeCollectionsReducer';
 
 export const initialCollectionsState: CollectionsStateValue = {
@@ -116,9 +114,5 @@ export const collectionHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(
     storeCollectionBeingViewedAction,
     onStoreCollectionBeingViewedAction,
-  ),
-  actionHandler(
-    storeVideosForCollectionAction,
-    onStoreVideosForCollectionAction,
   ),
 ];

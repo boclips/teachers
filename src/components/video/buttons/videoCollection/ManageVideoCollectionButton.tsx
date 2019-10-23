@@ -117,7 +117,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
 
   private collectionItem(videoCollection: VideoCollection, video: Video) {
     const alreadyInCollection =
-      videoCollection.videoIds.find(v => v.id === video.id) !== undefined;
+      videoCollection.videoIds.find(v => v.value === video.id) !== undefined;
     return (
       <Checkbox
         defaultChecked={alreadyInCollection}
@@ -149,6 +149,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         </section>
       );
     }
+
     const menuEntries = (this.props.collections || []).map(collection => (
       <Menu.Item
         key={collection.id}

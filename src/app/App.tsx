@@ -41,7 +41,10 @@ import updatePageActionMiddleware from '../components/searchResults/redux/middle
 import updateSearchParametersMiddleware from '../components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
-import { videoReducer } from '../components/video/redux/reducers/videoReducer';
+import {
+  initialVideoState,
+  videoHandlers,
+} from '../components/video/redux/reducers/videoReducer';
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import LinkLoader from './config/LinkLoader';
@@ -72,16 +75,17 @@ export const stateReducer: Reducer<State> = createReducer(
   ...videoSearchHandlers,
   ...collectionSearchHandlers,
   ...collectionHandlers,
+  ...videoHandlers,
 );
 
 const dummyApiReducer: Reducer<string> = (state = '') => state;
 const dummyRouter: Reducer<RouterState> = (state = null) => state;
 
 const subStateReducers = combineReducers({
-  entities: noReducer({ collections: { byId: {} } }),
+  entities: noReducer({ collections: { byId: {} }, videos: { byId: {} } }),
   search: noReducer(initialSearchState),
   links: linksReducer,
-  video: videoReducer,
+  video: noReducer(initialVideoState),
   user: userDetailsFetchedReducer,
   authentication: authenticationReducer,
   collections: noReducer(initialCollectionsState),

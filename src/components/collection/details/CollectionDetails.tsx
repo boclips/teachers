@@ -5,16 +5,16 @@ import { Dispatch } from 'redux';
 import EmptyCollectionSVG from '../../../../resources/images/empty-collection.svg';
 import SadTeacherSVG from '../../../../resources/images/sad-teacher.svg';
 import { Links } from '../../../types/Links';
-import State, { isMyCollection } from '../../../types/State';
+import State, { isMyCollection, VideoMap } from '../../../types/State';
 import { VideoId } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
+import {
+  fetchVideosAction,
+  VideosForCollectionRequest,
+} from '../../video/redux/actions/fetchVideos';
 import CollectionHeader from '../header/CollectionHeader';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
-import {
-  fetchVideosForCollectionAction,
-  VideosForCollectionRequest,
-} from '../redux/actions/fetchVideosForCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 
 interface OwnProps {
@@ -25,11 +25,12 @@ interface StateProps {
   collection?: VideoCollection;
   userId: string | null;
   links: Links;
+  videos: VideoMap;
 }
 
 interface DispatchProps {
   fetchCollection: () => void;
-  fetchVideosForCollection: (request: VideosForCollectionRequest) => void;
+  fetchVideos: (request: VideosForCollectionRequest) => void;
   storeCollectionBeingViewed: () => void;
 }
 
@@ -42,7 +43,7 @@ class CollectionDetails extends PureComponent<
     }
 
     const videos = this.props.collection.videoIds.map(
-      videoId => this.props.collection.videos[videoId.id],
+      videoId => this.props.videos[videoId.value],
     );
 
     return (
@@ -50,7 +51,7 @@ class CollectionDetails extends PureComponent<
         <CollectionHeader collection={this.props.collection} mode="details" />
         {this.props.collection.videoIds.length === 0
           ? this.renderEmptyCollection()
-          : this.props.collection.videos && (
+          : videos && (
               <CollectionVideoCardList
                 videos={videos}
                 userId={this.props.userId}
@@ -105,9 +106,8 @@ class CollectionDetails extends PureComponent<
       return;
     }
 
-    this.props.fetchVideosForCollection({
+    this.props.fetchVideos({
       videos: videoIdsToFetch,
-      collection: this.props.collection,
     });
   }
 
@@ -138,9 +138,11 @@ class CollectionDetails extends PureComponent<
       return [];
     }
 
-    const { videos, videoIds } = this.props.collection;
+    const { videoIds } = this.props.collection;
 
-    return videoIds.filter(videoId => videos[videoId.id] == null);
+    return videoIds.filter(
+      videoId => this.props.videos[videoId.value] === undefined,
+    );
   }
 }
 
@@ -160,7 +162,7 @@ function mapStateToProps(state: State, props: OwnProps): StateProps {
   const userId = state.user ? state.user.id : null;
   const links = state.links;
   const collection = getCollection(props.collectionId, state);
-  return { userId, links, collection };
+  return { userId, links, collection, videos: state.entities.videos.byId };
 }
 
 function mapDispatchToProps(
@@ -170,8 +172,8 @@ function mapDispatchToProps(
   return {
     fetchCollection: () =>
       dispatch(fetchCollectionAction(ownProps.collectionId)),
-    fetchVideosForCollection: (request: VideosForCollectionRequest) =>
-      dispatch(fetchVideosForCollectionAction(request)),
+    fetchVideos: (request: VideosForCollectionRequest) =>
+      dispatch(fetchVideosAction(request)),
     storeCollectionBeingViewed: () =>
       dispatch(storeCollectionBeingViewedAction({ id: ownProps.collectionId })),
   };

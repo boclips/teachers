@@ -4,13 +4,14 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
+  VideoIdFactory,
 } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { noOp } from '../../../utils';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import CollectionHeader from '../header/CollectionHeader';
-import { CollectionCardForRouter, Props } from './CollectionCard';
+import { CollectionCard, Props } from './CollectionCard';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -28,18 +29,20 @@ describe('CollectionCard', () => {
       navigateToCollectionDetails: jest.fn,
       ...extraProps,
     } as any;
-    return shallow(<CollectionCardForRouter {...props} />);
+    return shallow(<CollectionCard {...props} />);
   };
 
   beforeEach(() => {
+    const firstVideo = VideoFactory.sample({ id: '1' });
+    const secondVideo = VideoFactory.sample({ id: '2' });
+
     collection = VideoCollectionFactory.sample({
       id: '1-2-3',
       title: 'a collection',
       updatedAt: '2018-12-25T12:00:00.870Z',
-      videos: VideoCollectionFactory.sampleVideos([
-        VideoFactory.sample({ id: '1' }),
-        VideoFactory.sample({ id: '2' }),
-      ]),
+      videoIds: [firstVideo, secondVideo].map(it =>
+        VideoIdFactory.sample({ value: it.id }),
+      ),
       links: VideoCollectionLinksFactory.sample({
         remove: new Link({ href: 'it-exists', templated: false }),
       }),

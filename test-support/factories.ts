@@ -16,6 +16,7 @@ import { School } from '../src/types/School';
 import State, {
   CollectionSearchStateValue,
   CollectionsStateValue,
+  EntityStateValue,
   Pageable,
   SearchStateValue,
   VideoSearchStateValue,
@@ -26,7 +27,6 @@ import { StreamPlayback, Video, VideoId } from '../src/types/Video';
 import {
   VideoCollection,
   VideoCollectionLinks,
-  VideoMap,
 } from '../src/types/VideoCollection';
 
 export class VideoFactory {
@@ -61,7 +61,7 @@ export class VideoFactory {
 export class VideoIdFactory {
   public static sample(arg: Partial<VideoId> = {}): VideoId {
     return Object.freeze({
-      id: arg.id || '123',
+      value: arg.value || '123',
       links: arg.links || {
         self: new Link({ href: '/v1/videos/123' }),
       },
@@ -71,20 +71,11 @@ export class VideoIdFactory {
 
 export class VideoCollectionFactory {
   public static sample(arg: Partial<VideoCollection> = {}): VideoCollection {
-    const videos = arg.videos || {};
     return Object.freeze({
       id: arg.id || '',
       title: arg.title || '',
       updatedAt: arg.updatedAt || '',
-      videos,
-      videoIds:
-        arg.videoIds ||
-        Object.keys(videos)
-          .map(videoId => videos[videoId])
-          .map(video => ({
-            id: video.id,
-            links: video.links,
-          })),
+      videoIds: arg.videoIds || [],
       links: arg.links || VideoCollectionLinksFactory.sample(),
       isPublic: arg.isPublic || false,
       isMine: typeof arg.isMine === 'undefined' ? true : arg.isMine,
@@ -93,13 +84,6 @@ export class VideoCollectionFactory {
       ageRange: arg.ageRange || new AgeRange(),
       attachments: arg.attachments || [],
     });
-  }
-
-  public static sampleVideos(videos: Video[]): VideoMap {
-    return videos.reduce((map, video) => {
-      map[video.id] = video;
-      return map;
-    }, {});
   }
 }
 
@@ -462,6 +446,20 @@ export class TagFactory {
   }
 }
 
+export class EntitiesFactory {
+  public static sample(arg: Partial<EntityStateValue> = {}): EntityStateValue {
+    return Object.freeze({
+      collections: {
+        byId: {},
+      },
+      videos: {
+        byId: {},
+      },
+      ...arg,
+    });
+  }
+}
+
 export class MockStoreFactory {
   public static sample(state: Partial<State> = {}): MockStoreEnhanced<State> {
     const mockStoreCreator = configureStore<State>();
@@ -495,18 +493,19 @@ export class MockStoreFactory {
     }, {});
 
     return {
-      entities: {
+      entities: EntitiesFactory.sample({
+        ...state.entities,
         collections: {
           byId: collectionsById,
         },
-      },
+      }),
       apiPrefix: 'https://api.example.com',
       links: LinksFactory.sample(),
       search: SearchFactory.sample(),
       user: UserProfileFactory.sample(),
       video: {
         loading: false,
-        item: VideoFactory.sample(),
+        id: VideoIdFactory.sample(),
       },
       authentication: {
         status: 'authenticated',

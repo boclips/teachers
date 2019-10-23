@@ -1,4 +1,4 @@
-import { VideoSearchResults } from '../../../types/State';
+import { VideoSearchResults } from '../../../types/SearchResults';
 import { VideoCollection } from '../../../types/VideoCollection';
 
 export default interface SearchResultsProps {

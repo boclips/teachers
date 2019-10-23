@@ -1,16 +1,18 @@
 import {
+  EntitiesFactory,
   MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
-import State, {
-  CollectionSearchStateValue,
+import {
   CollectionsSearchResult,
   VideoSearchResults,
+} from '../../../../types/SearchResults';
+import State, {
+  CollectionSearchStateValue,
   VideoSearchStateValue,
 } from '../../../../types/State';
-import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
@@ -36,7 +38,7 @@ describe('searching videos', () => {
       search: SearchFactory.sample({
         videoSearch: {
           loading: false,
-          videos: [VideoFactory.sample({ title: 'my video' })],
+          videos: [VideoFactory.sample().id],
           query: '',
           paging: defaultPaging,
         },
@@ -78,8 +80,10 @@ describe('searching videos', () => {
       }),
     });
 
+    const video = VideoFactory.sample({ title: 'dog video' });
+
     const searchResults: VideoSearchResults = {
-      videos: [VideoFactory.sample({ title: 'dog video' })],
+      videos: [video],
       query: 'dogs',
       paging: defaultPaging,
     };
@@ -91,39 +95,13 @@ describe('searching videos', () => {
 
     const expectedState: VideoSearchStateValue = {
       loading: false,
-      videos: [VideoFactory.sample({ title: 'dog video' })],
+      videos: [video.id],
       query: 'dogs',
       paging: defaultPaging,
     };
 
     expect(newState.search.videoSearch).toEqual(expectedState);
-  });
-
-  test('Updates video on video store action', () => {
-    const state: State = MockStoreFactory.sampleState({
-      search: SearchFactory.sample({
-        videoSearch: {
-          loading: false,
-          videos: [VideoFactory.sample({ title: 'dog video' })],
-          query: 'pancakes',
-          paging: defaultPaging,
-        },
-      }),
-    });
-
-    const newState = searchReducer(
-      state,
-      storeVideoAction(VideoFactory.sample({ title: 'cat video' })),
-    );
-
-    const expectedState: VideoSearchStateValue = {
-      loading: false,
-      videos: [VideoFactory.sample({ title: 'cat video' })],
-      query: 'pancakes',
-      paging: defaultPaging,
-    };
-
-    expect(newState.search.videoSearch).toEqual(expectedState);
+    expect(newState.entities.videos.byId[video.id]).toEqual(video);
   });
 });
 
@@ -134,13 +112,13 @@ describe('searching collections', () => {
     });
 
     const state: State = MockStoreFactory.sampleState({
-      entities: {
+      entities: EntitiesFactory.sample({
         collections: {
           byId: {
             [collection.id]: collection,
           },
         },
-      },
+      }),
       search: SearchFactory.sample({
         collectionSearch: {
           loading: false,

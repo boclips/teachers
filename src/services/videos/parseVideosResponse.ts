@@ -1,4 +1,4 @@
-import { VideoSearchResults } from '../../types/State';
+import { VideoSearchResults } from '../../types/SearchResults';
 import convertVideoResource from './convertVideoResource';
 
 export function parseVideosResponse(

@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { actionCreatorFactory } from '../../app/redux/actions';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
-import { VideoDetailsState } from '../../types/State';
+import State from '../../types/State';
 import { Video } from '../../types/Video';
 
 export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
@@ -14,7 +14,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-  video: Video;
+  video: Video | null;
 }
 
 interface DispatchProps {
@@ -41,9 +41,9 @@ export class VideoDetailsView extends PureComponent<
   }
 }
 
-function mapStateToProps(state: VideoDetailsState): StateProps {
+function mapStateToProps(state: State, props: OwnProps): StateProps {
   return {
-    video: state.video.item,
+    video: state.entities.videos.byId[props.videoId],
   };
 }
 

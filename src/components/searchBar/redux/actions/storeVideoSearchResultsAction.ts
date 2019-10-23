@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { VideoSearchResults } from '../../../../types/State';
+import { VideoSearchResults } from '../../../../types/SearchResults';
 
 export const storeVideoSearchResultsAction = actionCreatorFactory<
   VideoSearchResults
->('STORE_VIDEOS');
+>('STORE_VIDEO_SEARCH_RESULTS');

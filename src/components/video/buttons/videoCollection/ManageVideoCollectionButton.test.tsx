@@ -4,10 +4,12 @@ import { Provider } from 'react-redux';
 import { MockStore } from 'redux-mock-store';
 import { By } from '../../../../../test-support/By';
 import {
+  EntitiesFactory,
   MockStoreFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
+  VideoIdFactory,
 } from '../../../../../test-support/factories';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
@@ -47,11 +49,11 @@ describe('when existing collections', () => {
   test('renders checkboxes for empty collections', () => {
     const wrapper = mountWith([
       VideoCollectionFactory.sample({
-        videos: VideoCollectionFactory.sampleVideos([]),
+        videoIds: [],
         id: 'asdfa',
       }),
       VideoCollectionFactory.sample({
-        videos: VideoCollectionFactory.sampleVideos([]),
+        videoIds: [],
       }),
     ]);
 
@@ -70,11 +72,11 @@ describe('when existing collections', () => {
     const wrapper = mountWith(
       [
         VideoCollectionFactory.sample({
-          videos: VideoCollectionFactory.sampleVideos([video]),
+          videoIds: [VideoIdFactory.sample({ value: video.id })],
           id: 'asdfa',
         }),
         VideoCollectionFactory.sample({
-          videos: VideoCollectionFactory.sampleVideos([]),
+          videoIds: [],
         }),
       ],
       video,
@@ -178,7 +180,9 @@ const mountWith = (
         }, {});
 
   store = MockStoreFactory.sample({
-    entities: { collections: { byId: normalizedCollections } },
+    entities: EntitiesFactory.sample({
+      collections: { byId: normalizedCollections },
+    }),
     collections: {
       myCollections: PageableCollectionsFactory.sample({
         items:

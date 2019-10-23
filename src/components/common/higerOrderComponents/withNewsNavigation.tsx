@@ -2,7 +2,8 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import State, { VideoSearchResults } from '../../../types/State';
+import { VideoSearchResults } from '../../../types/SearchResults';
+import State from '../../../types/State';
 import { bulkOverrideSearchParamsAction } from '../../searchResults/redux/actions/updateSearchParametersActions';
 
 interface StateProps {
@@ -38,12 +39,15 @@ const withNewsNavigation = Component => (props: StateProps & DispatchProps) => {
   return <Component {...componentProps} />;
 };
 
-const mapStateToProps = ({ router, search }: State): StateProps => {
+const mapStateToProps = ({ router, search, entities }: State): StateProps => {
   return {
     isNewsMode:
       // tslint:disable-next-line:no-string-literal
       queryString.parse(router.location.search).mode === 'news' || false,
-    results: search.videoSearch,
+    results: {
+      ...search.videoSearch,
+      videos: search.videoSearch.videos.map(it => entities.videos.byId[it]),
+    },
   };
 };
 

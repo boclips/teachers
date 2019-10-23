@@ -13,7 +13,6 @@ const testReducer = createReducer(...collectionHandlers);
 
 test('appending bookmarked collections', () => {
   const stateBefore: State = MockStoreFactory.sampleState({
-    entities: { collections: { byId: {} } },
     collections: {
       updating: false,
       loading: false,
@@ -52,7 +51,6 @@ test('appending bookmarked collections', () => {
 
 test('appending public collections', () => {
   const stateBefore: State = MockStoreFactory.sampleState({
-    entities: { collections: { byId: {} } },
     collections: {
       updating: false,
       loading: false,
@@ -87,7 +85,6 @@ test('appending public collections', () => {
 
 test('appending discover collections', () => {
   const stateBefore: State = MockStoreFactory.sampleState({
-    entities: { collections: { byId: {} } },
     collections: {
       updating: false,
       loading: false,
@@ -122,7 +119,6 @@ test('appending discover collections', () => {
 
 test('appending mycollections', () => {
   const stateBefore: State = MockStoreFactory.sampleState({
-    entities: { collections: { byId: {} } },
     collections: {
       updating: false,
       loading: false,

@@ -43,8 +43,7 @@ describe('user collections', () => {
     expect(collections.items[0].title).toEqual('funky collection');
     expect(collections.items[0].updatedAt).toEqual('2019-01-16T12:00:00.870Z');
     expect(collections.items[0].videoIds).toHaveLength(1);
-    expect(collections.items[0].videoIds[0].id).toEqual('177');
-    expect(collections.items[0].videos).toEqual({});
+    expect(collections.items[0].videoIds[0].value).toEqual('177');
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
     expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
@@ -65,8 +64,7 @@ describe('public collections', () => {
     expect(collections.items[0].title).toEqual('funky collection');
     expect(collections.items[0].updatedAt).toEqual('2019-01-16T12:00:00.870Z');
     expect(collections.items[0].videoIds).toHaveLength(1);
-    expect(collections.items[0].videoIds[0].id).toEqual('177');
-    expect(collections.items[0].videos).toEqual({});
+    expect(collections.items[0].videoIds[0].value).toEqual('177');
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
     expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
@@ -91,8 +89,7 @@ describe('public collections', () => {
     expect(collections.items[0].title).toEqual('funky collection');
     expect(collections.items[0].updatedAt).toEqual('2019-01-16T12:00:00.870Z');
     expect(collections.items[0].videoIds).toHaveLength(1);
-    expect(collections.items[0].videoIds[0].id).toEqual('177');
-    expect(collections.items[0].videos).toEqual({});
+    expect(collections.items[0].videoIds[0].value).toEqual('177');
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
   });

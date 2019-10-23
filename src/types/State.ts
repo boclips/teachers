@@ -8,26 +8,18 @@ import PageSpec from './PageSpec';
 import { UserState } from './State';
 import { Subject } from './Subject';
 import { Tag } from './Tag';
-import { Video } from './Video';
+import { Video, VideoId } from './Video';
 import { VideoCollection } from './VideoCollection';
 
 export interface LinksState {
   links: Links;
 }
 
-export interface VideoSearchResults {
-  query: string;
-  videos: Video[];
-  paging: PageSpec;
-}
-
-export interface CollectionsSearchResult {
-  query: string;
-  collections: VideoCollection[];
-}
-
-export interface VideoSearchStateValue extends VideoSearchResults {
+export interface VideoSearchStateValue {
   loading: boolean;
+  query: string;
+  videos: string[];
+  paging: PageSpec;
 }
 
 export interface CollectionSearchStateValue {
@@ -42,7 +34,7 @@ export interface AuthenticationStateValue {
 
 export interface VideoStateValue {
   loading: boolean;
-  item: Video;
+  id?: VideoId;
 }
 
 export interface SearchState {
@@ -104,7 +96,7 @@ export interface Pageable<T> {
 export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
-  myCollections: Pageable<string>; // TODO rename to ids
+  myCollections: Pageable<string>;
   publicCollections: Pageable<string>;
   discoverCollections: Pageable<string>;
   bookmarkedCollections: Pageable<string>;
@@ -117,10 +109,15 @@ export interface EntitiesState {
 
 export interface EntityStateValue {
   collections: { byId: CollectionMap };
+  videos: { byId: VideoMap };
 }
 
 export interface CollectionMap {
   [key: string]: VideoCollection;
+}
+
+export interface VideoMap {
+  [videoId: string]: Video;
 }
 
 export function getIndexOfCollection(

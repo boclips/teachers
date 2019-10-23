@@ -4,13 +4,17 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ApiStub from '../../../../test-support/ApiStub';
 import {
+  EntitiesFactory,
   MockStoreFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoFactory,
+  VideoIdFactory,
 } from '../../../../test-support/factories';
+import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { fetchVideosForCollectionAction } from '../redux/actions/fetchVideosForCollectionAction';
+import { organizeById } from '../../../utils/entityMap';
+import { fetchVideosAction } from '../../video/redux/actions/fetchVideos';
 import CollectionCardContainer from './CollectionCardContainer';
 
 describe('need to fetch videos scenarios', () => {
@@ -21,13 +25,13 @@ describe('need to fetch videos scenarios', () => {
       id: 'target',
       videoIds: [
         {
-          id: video.id,
+          value: video.id,
           links: video.links,
         },
       ],
     });
 
-    const store = createMockStore(collection);
+    const store = createMockStore(collection, []);
 
     new ApiStub().fetchVideo({ video });
 
@@ -40,14 +44,13 @@ describe('need to fetch videos scenarios', () => {
     );
 
     expect(store.getActions()).toContainEqual(
-      fetchVideosForCollectionAction({
+      fetchVideosAction({
         videos: [
           {
-            id: video.id,
+            value: video.id,
             links: video.links,
           },
         ],
-        collection,
       }),
     );
   });
@@ -64,10 +67,10 @@ describe('need to fetch videos scenarios', () => {
 
     const collection = VideoCollectionFactory.sample({
       id: 'target',
-      videoIds: videos.map(v => ({ id: v.id, links: v.links })),
+      videoIds: videos.map(v => ({ value: v.id, links: v.links })),
     });
 
-    const store = createMockStore(collection);
+    const store = createMockStore(collection, []);
 
     new ApiStub()
       .fetchVideo({ video: videos[0] })
@@ -94,10 +97,10 @@ describe('does not fetch videos scenarios', () => {
     const video = VideoFactory.sample({ id: '123' });
 
     const collection = VideoCollectionFactory.sample({
-      videos: VideoCollectionFactory.sampleVideos([video]),
+      videoIds: [VideoIdFactory.sample({ value: video.id })],
     });
 
-    const store = createMockStore(collection);
+    const store = createMockStore(collection, [video]);
 
     mount(
       <Provider store={store}>
@@ -119,15 +122,15 @@ describe('does not fetch videos scenarios', () => {
     ];
 
     const collection = VideoCollectionFactory.sample({
-      videos: VideoCollectionFactory.sampleVideos(videos),
+      videoIds: videos.map(it => VideoIdFactory.sample({ value: it.id })),
     });
 
     collection.videoIds.push({
-      id: '5',
+      value: '5',
       links: videos[1].links,
     });
 
-    const store = createMockStore(collection);
+    const store = createMockStore(collection, videos);
 
     mount(
       <Provider store={store}>
@@ -141,9 +144,12 @@ describe('does not fetch videos scenarios', () => {
   });
 });
 
-const createMockStore = (collection: VideoCollection) => {
+const createMockStore = (collection: VideoCollection, videos: Video[]) => {
   return MockStoreFactory.sample({
-    entities: { collections: { byId: { [collection.id]: collection } } },
+    entities: EntitiesFactory.sample({
+      collections: { byId: { [collection.id]: collection } },
+      videos: { byId: organizeById(videos) },
+    }),
     collections: {
       myCollections: PageableCollectionsFactory.sample({
         items: [collection.id],

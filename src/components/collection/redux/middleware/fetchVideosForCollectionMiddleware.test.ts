@@ -2,10 +2,9 @@ import configureStore from 'redux-mock-store';
 import eventually from '../../../../../test-support/eventually';
 import { VideoFactory } from '../../../../../test-support/factories';
 import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
-import { fetchVideosForCollectionAction } from '../actions/fetchVideosForCollectionAction';
+import { fetchVideosAction } from '../../../video/redux/actions/fetchVideos';
 import Mock = jest.Mock;
-import { storeVideosForCollectionAction } from '../actions/storeVideosForCollectionAction';
-import { VideoCollectionFactory } from './../../../../../test-support/factories';
+import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
 
 jest.mock('../../../../services/videos/fetchVideo');
@@ -14,25 +13,23 @@ const mockStore = configureStore<{}>([fetchVideosForCollectionMiddleware]);
 
 test('dispatches a store action per successfully fetched video', async () => {
   const video = VideoFactory.sample();
-  const collection = VideoCollectionFactory.sample();
   const store = mockStore({});
   fetchVideoMock.mockReturnValue(Promise.resolve(video));
 
   store.dispatch(
-    fetchVideosForCollectionAction({
+    fetchVideosAction({
       videos: [
         {
-          id: video.id,
+          value: video.id,
           links: video.links,
         },
       ],
-      collection,
     }),
   );
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      storeVideosForCollectionAction({ videos: [video], collection }),
+      storeVideosAction({ videos: [video] }),
     );
   });
 });
