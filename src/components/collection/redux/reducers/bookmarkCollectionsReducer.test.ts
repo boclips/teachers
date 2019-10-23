@@ -123,4 +123,39 @@ describe('unbookmarking a collection', () => {
     expect(updatedBookmarks).toHaveLength(1);
     expect(updatedBookmarks).toContain(untouchedCollection.id);
   });
+
+  // Removing from a page response from the server seems odd. This test maintains
+  // current behaviour, but the current behaviour might need to change.
+  test('updates collection but does not remove from bookmarks with no bookmarks present', () => {
+    const toBeUnbookmarkedCollection = VideoCollectionFactory.sample();
+
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: {
+        collections: {
+          byId: { [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection },
+        },
+      },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: undefined,
+        publicCollections: undefined,
+        discoverCollections: undefined,
+        bookmarkedCollections: undefined,
+      },
+    });
+
+    const unbookedmarkedCollection = VideoCollectionFactory.sample({
+      id: toBeUnbookmarkedCollection.id,
+      links: VideoCollectionLinksFactory.sample({
+        bookmark: new Link({ href: 'blah' }),
+      }),
+    });
+    const action = onCollectionUnbookmarkedAction(unbookedmarkedCollection);
+    const stateAfter = testReducer(stateBefore, action);
+
+    expect(
+      stateAfter.entities.collections.byId[toBeUnbookmarkedCollection.id],
+    ).toEqual(unbookedmarkedCollection);
+  });
 });

@@ -23,15 +23,19 @@ const removeUnbookmarkedCollection = (
   unbookmarkedCollection: VideoCollection,
 ): State =>
   produce(state, draftState => {
-    const collections = draftState.collections.bookmarkedCollections.items;
     draftState.entities.collections.byId = updateCollections(
       state.entities.collections,
       unbookmarkedCollection,
     );
-    collections.splice(
-      collections.findIndex(id => id === unbookmarkedCollection.id),
-      1,
-    );
+
+    const bookmarkedCollections = draftState.collections.bookmarkedCollections;
+    if (bookmarkedCollections) {
+      const collections = bookmarkedCollections.items || [];
+      collections.splice(
+        collections.findIndex(id => id === unbookmarkedCollection.id),
+        1,
+      );
+    }
   });
 
 const addBookmarkedCollection = (

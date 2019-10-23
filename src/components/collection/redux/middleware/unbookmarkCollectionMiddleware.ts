@@ -14,7 +14,8 @@ export function onUnbookmarkCollection(
     .then(response => {
       store.dispatch(onCollectionUnbookmarkedAction(response));
     })
-    .catch(() => {
+    .catch(e => {
+      console.log(e);
       NotificationFactory.error({
         message: 'Error unbookmarking collection.',
       });
