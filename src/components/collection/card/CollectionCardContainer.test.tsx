@@ -143,8 +143,8 @@ describe('does not fetch videos scenarios', () => {
 
 const createMockStore = (collection: VideoCollection) => {
   return MockStoreFactory.sample({
+    entities: { collections: { byId: { [collection.id]: collection } } },
     collections: {
-      byId: { [collection.id]: collection },
       myCollections: PageableCollectionsFactory.sample({
         items: [collection.id],
       }),

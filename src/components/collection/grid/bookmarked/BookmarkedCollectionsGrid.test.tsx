@@ -30,7 +30,6 @@ describe('bookmarked collections', () => {
   test('displays empty message when no collections have been bookmarked', () => {
     const store = MockStoreFactory.sample({
       collections: {
-        byId: {},
         loading: false,
         updating: false,
         myCollections: undefined,

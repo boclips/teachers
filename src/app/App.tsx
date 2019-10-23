@@ -18,7 +18,10 @@ import updateUserMiddleware from '../components/account/accountSettings/redux/mi
 import fetchCountriesMiddleware from '../components/account/onboarding/redux/middleware/fetchCountriesMiddleware';
 import { countriesReducer } from '../components/account/onboarding/redux/reducers/countriesReducer';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
-import { collectionsReducer } from '../components/collection/redux/reducers/collectionsReducer';
+import {
+  collectionHandlers,
+  initialCollectionsState,
+} from '../components/collection/redux/reducers/collectionsReducer';
 import fetchTagsMiddleware from '../components/common/tags/redux/middleware/fetchTagsMiddleware';
 import { tagsReducer } from '../components/common/tags/redux/reducers/tagsReducer';
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
@@ -68,18 +71,20 @@ const composeEnhancers =
 export const stateReducer: Reducer<State> = createReducer(
   ...videoSearchHandlers,
   ...collectionSearchHandlers,
+  ...collectionHandlers,
 );
 
 const dummyApiReducer: Reducer<string> = (state = '') => state;
 const dummyRouter: Reducer<RouterState> = (state = null) => state;
 
 const subStateReducers = combineReducers({
+  entities: noReducer({ collections: { byId: {} } }),
   search: noReducer(initialSearchState),
   links: linksReducer,
   video: videoReducer,
   user: userDetailsFetchedReducer,
   authentication: authenticationReducer,
-  collections: collectionsReducer,
+  collections: noReducer(initialCollectionsState),
   subjects: subjectsReducer,
   countries: countriesReducer,
   tags: tagsReducer,

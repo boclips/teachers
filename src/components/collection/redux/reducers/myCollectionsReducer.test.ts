@@ -3,12 +3,16 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../../test-support/factories';
-import { CollectionsStateValue } from '../../../../types/State';
+import { createReducer } from '../../../../app/redux/createReducer';
+import State from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
-import { collectionsReducer } from './collectionsReducer';
+import { MockStoreFactory } from './../../../../../test-support/factories';
+import { collectionHandlers } from './collectionsReducer';
+
+const testReducer = createReducer(...collectionHandlers);
 
 describe('adding video to collection', () => {
   test('adding a video to a collection reduces user collections', () => {
@@ -24,20 +28,26 @@ describe('adding video to collection', () => {
         VideoFactory.sample({ id: '333' }),
       ]),
     });
-    const stateBefore: CollectionsStateValue = {
-      byId: {
-        [otherCollection.id]: otherCollection,
-        [targetCollection.id]: targetCollection,
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: {
+        collections: {
+          byId: {
+            [otherCollection.id]: otherCollection,
+            [targetCollection.id]: targetCollection,
+          },
+        },
       },
-      updating: false,
-      loading: false,
-      myCollections: PageableCollectionsFactory.sample({
-        items: [otherCollection.id, targetCollection.id],
-      }),
-      publicCollections: PageableCollectionsFactory.sample(),
-      discoverCollections: PageableCollectionsFactory.sample(),
-      bookmarkedCollections: undefined,
-    };
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: PageableCollectionsFactory.sample({
+          items: [otherCollection.id, targetCollection.id],
+        }),
+        publicCollections: PageableCollectionsFactory.sample(),
+        discoverCollections: PageableCollectionsFactory.sample(),
+        bookmarkedCollections: undefined,
+      },
+    });
 
     const newVideo = VideoFactory.sample({ id: '124' });
     const action = addVideoToMyCollectionAction({
@@ -45,13 +55,18 @@ describe('adding video to collection', () => {
       collection: targetCollection,
     });
 
-    const stateAfter = collectionsReducer(stateBefore, action);
+    const stateAfter = testReducer(stateBefore, action);
 
-    expect(stateAfter.updating).toEqual(true);
-    expect(stateAfter.myCollections.items[0]).toEqual(otherCollection.id);
-    expect(stateAfter.myCollections.items[1]).toEqual(targetCollection.id);
+    expect(stateAfter.collections.updating).toEqual(true);
+    expect(stateAfter.collections.myCollections.items[0]).toEqual(
+      otherCollection.id,
+    );
+    expect(stateAfter.collections.myCollections.items[1]).toEqual(
+      targetCollection.id,
+    );
 
-    const updatedCollection = stateAfter.byId[targetCollection.id];
+    const updatedCollection =
+      stateAfter.entities.collections.byId[targetCollection.id];
 
     expect(Object.keys(updatedCollection.videos)).toHaveLength(2);
     expect(updatedCollection.videos['124']).toEqual(newVideo);
@@ -62,50 +77,58 @@ describe('adding video to collection', () => {
   test('remove a collection', () => {
     const collection = VideoCollectionFactory.sample();
 
-    const stateBefore: CollectionsStateValue = {
-      byId: { [collection.id]: collection },
-      updating: false,
-      loading: false,
-      myCollections: PageableCollectionsFactory.sample({
-        items: [collection.id],
-      }),
-      publicCollections: PageableCollectionsFactory.sample(),
-      discoverCollections: PageableCollectionsFactory.sample(),
-      bookmarkedCollections: undefined,
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: { collections: { byId: { [collection.id]: collection } } },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: PageableCollectionsFactory.sample({
+          items: [collection.id],
+        }),
+        publicCollections: PageableCollectionsFactory.sample(),
+        discoverCollections: PageableCollectionsFactory.sample(),
+        bookmarkedCollections: undefined,
+      },
+    });
 
     const action = onMyCollectionRemovedAction(collection);
 
-    const stateAfter = collectionsReducer(stateBefore, action);
+    const stateAfter = testReducer(stateBefore, action);
 
-    expect(stateAfter.myCollections.items).toHaveLength(0);
-    expect(stateAfter.byId[collection.id]).not.toBeUndefined();
+    expect(stateAfter.collections.myCollections.items).toHaveLength(0);
+    expect(
+      stateAfter.entities.collections.byId[collection.id],
+    ).not.toBeUndefined();
   });
 
   test('editing a collection', () => {
     const collection = VideoCollectionFactory.sample();
 
-    const stateBefore: CollectionsStateValue = {
-      byId: { [collection.id]: collection },
-      updating: false,
-      loading: false,
-      myCollections: PageableCollectionsFactory.sample({
-        items: [collection.id],
-      }),
-      publicCollections: PageableCollectionsFactory.sample(),
-      discoverCollections: PageableCollectionsFactory.sample(),
-      bookmarkedCollections: undefined,
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: { collections: { byId: { [collection.id]: collection } } },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: PageableCollectionsFactory.sample({
+          items: [collection.id],
+        }),
+        publicCollections: PageableCollectionsFactory.sample(),
+        discoverCollections: PageableCollectionsFactory.sample(),
+        bookmarkedCollections: undefined,
+      },
+    });
 
     const editedCollection = { ...collection, title: 'changed' };
 
     const action = onMyCollectionEditedAction(editedCollection);
 
-    const stateAfter = collectionsReducer(stateBefore, action);
+    const stateAfter = testReducer(stateBefore, action);
 
-    expect(stateAfter.myCollections.items.length).toEqual(1);
-    expect(stateAfter.byId[collection.id].title).toEqual('changed');
-    expect(stateAfter.updating).toBeFalse();
+    expect(stateAfter.collections.myCollections.items.length).toEqual(1);
+    expect(stateAfter.entities.collections.byId[collection.id].title).toEqual(
+      'changed',
+    );
+    expect(stateAfter.collections.updating).toBeFalse();
   });
 
   test('adding a duplicate video to a collection does not re-add it', () => {
@@ -114,28 +137,31 @@ describe('adding video to collection', () => {
       id: 'target',
       videos: VideoCollectionFactory.sampleVideos([video]),
     });
-    const stateBefore: CollectionsStateValue = {
-      byId: { [collection.id]: collection },
-      updating: false,
-      loading: false,
-      myCollections: PageableCollectionsFactory.sample({
-        items: [collection.id],
-      }),
-      publicCollections: PageableCollectionsFactory.sample(),
-      discoverCollections: PageableCollectionsFactory.sample(),
-      bookmarkedCollections: undefined,
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: { collections: { byId: { [collection.id]: collection } } },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: PageableCollectionsFactory.sample({
+          items: [collection.id],
+        }),
+        publicCollections: PageableCollectionsFactory.sample(),
+        discoverCollections: PageableCollectionsFactory.sample(),
+        bookmarkedCollections: undefined,
+      },
+    });
 
     const action = addVideoToMyCollectionAction({
       video,
       collection,
     });
 
-    const stateAfter = collectionsReducer(stateBefore, action);
+    const stateAfter = testReducer(stateBefore, action);
 
-    const updatedCollection = stateAfter.byId[collection.id];
+    const updatedCollection =
+      stateAfter.entities.collections.byId[collection.id];
 
-    expect(stateAfter.updating).toEqual(false);
+    expect(stateAfter.collections.updating).toEqual(false);
     expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
     expect(updatedCollection.videoIds).toHaveLength(1);
   });
@@ -152,28 +178,31 @@ describe('adding video to collection', () => {
       ],
     });
 
-    const stateBefore: CollectionsStateValue = {
-      byId: { [collection.id]: collection },
-      updating: false,
-      loading: false,
-      myCollections: PageableCollectionsFactory.sample({
-        items: [collection.id],
-      }),
-      publicCollections: PageableCollectionsFactory.sample(),
-      discoverCollections: PageableCollectionsFactory.sample(),
-      bookmarkedCollections: undefined,
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: { collections: { byId: { [collection.id]: collection } } },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: PageableCollectionsFactory.sample({
+          items: [collection.id],
+        }),
+        publicCollections: PageableCollectionsFactory.sample(),
+        discoverCollections: PageableCollectionsFactory.sample(),
+        bookmarkedCollections: undefined,
+      },
+    });
 
     const action = addVideoToMyCollectionAction({
       video,
       collection,
     });
 
-    const stateAfter = collectionsReducer(stateBefore, action);
+    const stateAfter = testReducer(stateBefore, action);
 
-    const updatedCollection = stateAfter.byId[collection.id];
+    const updatedCollection =
+      stateAfter.entities.collections.byId[collection.id];
 
-    expect(stateAfter.updating).toEqual(true);
+    expect(stateAfter.collections.updating).toEqual(true);
     expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
     expect(updatedCollection.videoIds).toHaveLength(1);
   });
@@ -189,17 +218,19 @@ describe('removing videos from a collection', () => {
       ]),
     });
 
-    const stateBefore: CollectionsStateValue = {
-      byId: { [collection.id]: collection },
-      updating: false,
-      loading: false,
-      myCollections: PageableCollectionsFactory.sample({
-        items: [collection.id],
-      }),
-      publicCollections: PageableCollectionsFactory.sample(),
-      discoverCollections: PageableCollectionsFactory.sample(),
-      bookmarkedCollections: undefined,
-    };
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: { collections: { byId: { [collection.id]: collection } } },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: PageableCollectionsFactory.sample({
+          items: [collection.id],
+        }),
+        publicCollections: PageableCollectionsFactory.sample(),
+        discoverCollections: PageableCollectionsFactory.sample(),
+        bookmarkedCollections: undefined,
+      },
+    });
 
     const videoToRemove = VideoFactory.sample({ id: '123' });
     const action = removeVideoFromMyCollectionAction({
@@ -207,11 +238,12 @@ describe('removing videos from a collection', () => {
       collection,
     });
 
-    const stateAfter = collectionsReducer(stateBefore, action);
+    const stateAfter = testReducer(stateBefore, action);
 
-    const updatedCollection = stateAfter.byId[collection.id];
+    const updatedCollection =
+      stateAfter.entities.collections.byId[collection.id];
 
-    expect(stateAfter.updating).toEqual(true);
+    expect(stateAfter.collections.updating).toEqual(true);
     expect(Object.keys(updatedCollection.videos)).toHaveLength(1);
     expect(updatedCollection.videos['124'].id).toEqual('124');
     expect(updatedCollection.videoIds).toHaveLength(1);

@@ -178,8 +178,8 @@ const mountWith = (
         }, {});
 
   store = MockStoreFactory.sample({
+    entities: { collections: { byId: normalizedCollections } },
     collections: {
-      byId: normalizedCollections,
       myCollections: PageableCollectionsFactory.sample({
         items:
           collections == null

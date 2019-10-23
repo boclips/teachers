@@ -1,12 +1,13 @@
-import { CollectionsStateValue } from '../../../../types/State';
+import { produce } from 'immer';
+import State from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 
 export const onAddVideoToMyCollectionAction = (
-  state: CollectionsStateValue,
+  state: State,
   request: { video: Video; collection: VideoCollection },
-): CollectionsStateValue => {
-  const collection = state.byId[request.collection.id];
+): State => {
+  const collection = state.entities.collections.byId[request.collection.id];
 
   if (collection == null) {
     return state;
@@ -37,14 +38,13 @@ export const onAddVideoToMyCollectionAction = (
     videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
   };
 
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      [updatedCollection.id]: updatedCollection,
-    },
-    updating: true,
-  };
+  return produce(state, draftState => {
+    draftState.entities.collections.byId[
+      updatedCollection.id
+    ] = updatedCollection;
+
+    draftState.collections.updating = true;
+  });
 };
 
 const getUpdateVideoIds = (
@@ -56,10 +56,10 @@ const getUpdateVideoIds = (
 };
 
 export const onRemoveVideoFromMyCollectionAction = (
-  state: CollectionsStateValue,
+  state: State,
   request: { video: Video; collection: VideoCollection },
-): CollectionsStateValue => {
-  const collection = state.byId[request.collection.id];
+): State => {
+  const collection = state.entities.collections.byId[request.collection.id];
 
   if (collection == null) {
     return state;
@@ -71,56 +71,52 @@ export const onRemoveVideoFromMyCollectionAction = (
     videoIds: collection.videoIds.filter(v => v.id !== request.video.id),
   };
 
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      [updatedCollection.id]: updatedCollection,
-    },
-    updating: true,
-  };
+  return produce(state, draftState => {
+    draftState.entities.collections.byId[
+      updatedCollection.id
+    ] = updatedCollection;
+
+    draftState.collections.updating = true;
+  });
 };
 
 export const onMyCollectionRemoved = (
-  state: CollectionsStateValue,
+  state: State,
   removedCollection: VideoCollection,
-): CollectionsStateValue => {
-  return {
-    ...state,
-    updating: false,
-    myCollections: {
-      ...state.myCollections,
-      items: state.myCollections.items.filter(
-        collectionId => collectionId !== removedCollection.id,
-      ),
-    },
-  };
-};
+): State =>
+  produce(state, draftState => {
+    const myCollections = draftState.collections.myCollections.items;
+    myCollections.splice(
+      myCollections.findIndex(id => id === removedCollection.id),
+    );
+
+    draftState.collections.updating = false;
+  });
 
 export const onMyCollectionEdited = (
-  state: CollectionsStateValue,
+  state: State,
   editedCollection: VideoCollection,
-): CollectionsStateValue => {
+): State => {
   state = onUpdateCollection(state, editedCollection);
 
   return {
     ...state,
-    updating: false,
+    collections: {
+      ...state.collections,
+      updating: false,
+    },
   };
 };
 
 const onUpdateCollection = (
-  state: CollectionsStateValue,
+  state: State,
   updatedCollection: VideoCollection,
-): CollectionsStateValue => {
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      [updatedCollection.id]: updatedCollection,
-    },
-  };
-};
+): State =>
+  produce(state, draftState => {
+    draftState.entities.collections.byId[
+      updatedCollection.id
+    ] = updatedCollection;
+  });
 
 const removeVideo = (videoIdToRemove: string, videos: VideoMap): VideoMap => {
   const { [videoIdToRemove]: _, ...updatedVideos } = videos;

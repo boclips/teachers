@@ -1,4 +1,5 @@
-import { CollectionsStateValue } from '../../../../types/State';
+import produce from 'immer';
+import State from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection, VideoMap } from '../../../../types/VideoCollection';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
@@ -10,49 +11,45 @@ export const collectionsById = (collections: VideoCollection[]) =>
   }, {});
 
 export const onStoreCollectionsAction = (
-  state: CollectionsStateValue,
+  state: State,
   request: StoreCollectionsRequest,
-): CollectionsStateValue => {
-  const normalizedCollections = collectionsById(request.collections.items);
-
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      ...normalizedCollections,
-    },
-    [request.key]: {
+): State =>
+  produce(state, draftState => {
+    draftState.collections[request.key] = {
       items: request.collections.items.map(c => c.id),
       links: request.collections.links,
-    },
-    loading: false,
-    updating: false,
-  };
-};
+    };
+
+    request.collections.items.map(
+      c => (draftState.entities.collections.byId[c.id] = c),
+    );
+
+    draftState.collections.updating = false;
+    draftState.collections.loading = false;
+  });
 
 export const onStoreCollectionAction = (
-  state: CollectionsStateValue,
+  state: State,
   collection?: VideoCollection,
-): CollectionsStateValue => {
+): State => {
   if (collection == null) {
     return {
       ...state,
-      loading: false,
-      updating: false,
-      collectionIdBeingViewed: null,
+      collections: {
+        ...state.collections,
+        loading: false,
+        updating: false,
+        collectionIdBeingViewed: null,
+      },
     };
   }
 
-  return {
-    ...state,
-    collectionIdBeingViewed: collection.id,
-    byId: {
-      ...state.byId,
-      [collection.id]: collection,
-    },
-    loading: false,
-    updating: false,
-  };
+  return produce(state, draftState => {
+    draftState.collections.collectionIdBeingViewed = collection.id;
+    draftState.entities.collections.byId[collection.id] = collection;
+    draftState.collections.loading = false;
+    draftState.collections.updating = false;
+  });
 };
 
 function replaceVideoMap(videoMap, video: Video) {
@@ -66,14 +63,15 @@ function replaceVideoMap(videoMap, video: Video) {
 }
 
 export const onStoreVideoForCollectionAction = (
-  state: CollectionsStateValue,
+  state: State,
   video: Video,
-): CollectionsStateValue => {
-  if (!state.collectionIdBeingViewed) {
+): State => {
+  if (!state.collections.collectionIdBeingViewed) {
     return state;
   }
 
-  const collectionBeingViewed = state.byId[state.collectionIdBeingViewed];
+  const collectionBeingViewed =
+    state.entities.collections.byId[state.collections.collectionIdBeingViewed];
 
   if (!collectionBeingViewed || !collectionBeingViewed.videos) {
     return state;
@@ -84,36 +82,35 @@ export const onStoreVideoForCollectionAction = (
     videos: replaceVideoMap(collectionBeingViewed.videos, video),
   };
 
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      [collectionBeingViewed.id]: updateCollection,
-    },
-  };
+  return produce(state, draftState => {
+    draftState.entities.collections.byId[
+      collectionBeingViewed.id
+    ] = updateCollection;
+  });
 };
 
 export const onStoreVideosForCollectionAction = (
-  state: CollectionsStateValue,
+  state: State,
   request: { videos: Video[]; collection: VideoCollection },
-): CollectionsStateValue => {
+): State => {
   const collectionDetails = addVideosToCollection(request);
 
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      [collectionDetails.id]: collectionDetails,
-    },
-  };
+  return produce(state, draftState => {
+    draftState.entities.collections.byId[
+      collectionDetails.id
+    ] = collectionDetails;
+  });
 };
 
 export const onStoreCollectionBeingViewedAction = (
-  state: CollectionsStateValue,
+  state: State,
   request: { id: string },
-): CollectionsStateValue => ({
+): State => ({
   ...state,
-  collectionIdBeingViewed: request.id,
+  collections: {
+    ...state.collections,
+    collectionIdBeingViewed: request.id,
+  },
 });
 
 export const updateMatchingCollectionWithVideo = (

@@ -1,40 +1,32 @@
-import { CollectionsStateValue } from '../../../../types/State';
+import State from '../../../../types/State';
 
+import produce from 'immer';
 import { AppendCollectionRequest } from '../actions/appendReadOnlyCollectionsAction';
 
 export const onAppendPageableCollectionsAction = (
-  state: CollectionsStateValue,
+  state: State,
   request: AppendCollectionRequest,
-): CollectionsStateValue => {
+): State => {
   const collectionKey = request.key;
 
   const collectionRequestItems = request.collections.items;
 
   const collectionPage = {
-    ...state[collectionKey],
+    ...state.collections[collectionKey],
     items: [
-      ...state[collectionKey].items,
+      ...state.collections[collectionKey].items,
       ...collectionRequestItems.map(collection => collection.id),
     ],
     links: request.collections.links,
   };
 
-  const collections = request.collections.items.reduce(
-    (normalizedCollections, collection) => {
-      normalizedCollections[collection.id] = collection;
-      return normalizedCollections;
-    },
-    {},
-  );
+  return produce(state, draftState => {
+    draftState.collections[collectionKey] = collectionPage;
+    request.collections.items.map(
+      c => (draftState.entities.collections.byId[c.id] = c),
+    );
 
-  return {
-    ...state,
-    [collectionKey]: collectionPage,
-    byId: {
-      ...state.byId,
-      ...collections,
-    },
-    loading: false,
-    updating: false,
-  };
+    draftState.collections.updating = false;
+    draftState.collections.loading = false;
+  });
 };

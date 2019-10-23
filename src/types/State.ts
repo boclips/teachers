@@ -5,6 +5,7 @@ import { Discipline } from './Discipline';
 import { Link } from './Link';
 import { Links } from './Links';
 import PageSpec from './PageSpec';
+import { UserState } from './State';
 import { Subject } from './Subject';
 import { Tag } from './Tag';
 import { Video } from './Video';
@@ -101,7 +102,6 @@ export interface Pageable<T> {
 }
 
 export interface CollectionsStateValue {
-  byId: { [key: string]: VideoCollection };
   loading: boolean;
   updating: boolean;
   myCollections: Pageable<string>; // TODO rename to ids
@@ -109,6 +109,18 @@ export interface CollectionsStateValue {
   discoverCollections: Pageable<string>;
   bookmarkedCollections: Pageable<string>;
   collectionIdBeingViewed?: string;
+}
+
+export interface EntitiesState {
+  entities: EntityStateValue;
+}
+
+export interface EntityStateValue {
+  collections: { byId: CollectionMap };
+}
+
+export interface CollectionMap {
+  [key: string]: VideoCollection;
 }
 
 export function getIndexOfCollection(
@@ -135,6 +147,7 @@ export default interface State
     CountryState,
     TagState,
     DisciplineState,
+    EntitiesState,
     Environment {
   apiPrefix: string;
 }

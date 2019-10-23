@@ -15,10 +15,7 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-import {
-  CollectionsFactory,
-  SearchFactory,
-} from './../../../../../test-support/factories';
+import { SearchFactory } from './../../../../../test-support/factories';
 import { collectionSearchHandlers, videoSearchHandlers } from './searchReducer';
 
 const searchReducer = createReducer(
@@ -137,11 +134,13 @@ describe('searching collections', () => {
     });
 
     const state: State = MockStoreFactory.sampleState({
-      collections: CollectionsFactory.sample({
-        byId: {
-          [collection.id]: collection,
+      entities: {
+        collections: {
+          byId: {
+            [collection.id]: collection,
+          },
         },
-      }),
+      },
       search: SearchFactory.sample({
         collectionSearch: {
           loading: false,
@@ -198,7 +197,7 @@ describe('searching collections', () => {
     };
 
     expect(newState.search.collectionSearch).toEqual(expectedState);
-    expect(newState.collections.byId[collectionToStore.id]).toEqual(
+    expect(newState.entities.collections.byId[collectionToStore.id]).toEqual(
       collectionToStore,
     );
   });

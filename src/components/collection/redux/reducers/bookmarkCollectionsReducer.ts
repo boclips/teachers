@@ -1,59 +1,55 @@
-import { CollectionsStateValue } from '../../../../types/State';
+import { produce } from 'immer';
+import State, { CollectionMap } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
 
 export const onCollectionUnbookmarked = (
-  state: CollectionsStateValue,
+  state: State,
   updatedCollection: VideoCollection,
-): CollectionsStateValue => {
+): State => {
   state = removeUnbookmarkedCollection(state, updatedCollection);
   return state;
 };
 
 export const onCollectionBookmarked = (
-  state: CollectionsStateValue,
+  state: State,
   updatedCollection: VideoCollection,
-): CollectionsStateValue => {
+): State => {
   state = addBookmarkedCollection(state, updatedCollection);
   return state;
 };
 
 const removeUnbookmarkedCollection = (
-  state: CollectionsStateValue,
+  state: State,
   unbookmarkedCollection: VideoCollection,
-): CollectionsStateValue => {
-  return {
-    ...state,
-    byId: updateCollections(state, unbookmarkedCollection),
-    bookmarkedCollections: {
-      ...state.bookmarkedCollections,
-      items:
-        state.bookmarkedCollections &&
-        state.bookmarkedCollections.items.filter(
-          collectionId => collectionId !== unbookmarkedCollection.id,
-        ),
-    },
-  };
-};
+): State =>
+  produce(state, draftState => {
+    const collections = draftState.collections.bookmarkedCollections.items;
+    draftState.entities.collections.byId = updateCollections(
+      state.entities.collections,
+      unbookmarkedCollection,
+    );
+    collections.splice(
+      collections.findIndex(id => id === unbookmarkedCollection.id),
+      1,
+    );
+  });
 
 const addBookmarkedCollection = (
-  state: CollectionsStateValue,
+  state: State,
   bookmarkedCollection: VideoCollection,
-): CollectionsStateValue => {
-  return {
-    ...state,
-    byId: updateCollections(state, bookmarkedCollection),
-    bookmarkedCollections: state.bookmarkedCollections && {
-      ...state.bookmarkedCollections,
-      items: [
-        ...(state.bookmarkedCollections.items || []), // TODO: use default?
-        bookmarkedCollection.id,
-      ],
-    },
-  };
-};
+): State =>
+  produce(state, draftState => {
+    draftState.entities.collections.byId = updateCollections(
+      state.entities.collections,
+      bookmarkedCollection,
+    );
+    draftState.collections.bookmarkedCollections.items.push(
+      bookmarkedCollection.id,
+    );
+  });
 
 const updateCollections = (
-  state: CollectionsStateValue,
+  state: { byId: CollectionMap },
   collection: VideoCollection,
 ) => ({
   ...state.byId,

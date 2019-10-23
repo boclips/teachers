@@ -1,9 +1,8 @@
-import { Reducer } from 'redux';
-import createReducerWithInitialState, {
+import {
   actionHandler,
+  ActionHandler,
 } from '../../../../app/redux/createReducer';
-import { CollectionsStateValue } from '../../../../types/State';
-import { storeVideoAction } from '../../../video/redux/actions/storeVideoAction';
+import State, { CollectionsStateValue } from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
@@ -44,12 +43,10 @@ import {
   onStoreCollectionAction,
   onStoreCollectionBeingViewedAction,
   onStoreCollectionsAction,
-  onStoreVideoForCollectionAction,
   onStoreVideosForCollectionAction,
 } from './storeCollectionsReducer';
 
-const initialState: CollectionsStateValue = {
-  byId: undefined,
+export const initialCollectionsState: CollectionsStateValue = {
   myCollections: undefined,
   publicCollections: undefined,
   discoverCollections: undefined,
@@ -59,32 +56,31 @@ const initialState: CollectionsStateValue = {
   updating: false,
 };
 
-const loadingCollections = (
-  state: CollectionsStateValue,
-): CollectionsStateValue => {
-  return {
-    ...state,
+const loadingCollections = (state: State): State => ({
+  ...state,
+  collections: {
+    ...state.collections,
     loading: true,
-  };
-};
+  },
+});
 
-const collectionUpdated = (
-  state: CollectionsStateValue,
-  _: UpdateCollectionResult,
-): CollectionsStateValue => {
-  return { ...state, updating: false };
-};
+const collectionUpdated = (state: State, _: UpdateCollectionResult): State => ({
+  ...state,
+  collections: {
+    ...state.collections,
+    updating: false,
+  },
+});
 
-const collectionUpdating = (
-  state: CollectionsStateValue,
-): CollectionsStateValue => {
-  return { ...state, updating: true };
-};
+const collectionUpdating = (state: State): State => ({
+  ...state,
+  collections: {
+    ...state.collections,
+    updating: true,
+  },
+});
 
-export const collectionsReducer: Reducer<
-  CollectionsStateValue
-> = createReducerWithInitialState(
-  initialState,
+export const collectionHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(addVideoToMyCollectionAction, onAddVideoToMyCollectionAction),
   actionHandler(
     removeVideoFromMyCollectionAction,
@@ -121,9 +117,8 @@ export const collectionsReducer: Reducer<
     storeCollectionBeingViewedAction,
     onStoreCollectionBeingViewedAction,
   ),
-  actionHandler(storeVideoAction, onStoreVideoForCollectionAction),
   actionHandler(
     storeVideosForCollectionAction,
     onStoreVideosForCollectionAction,
   ),
-);
+];
