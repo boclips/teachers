@@ -1,8 +1,10 @@
 import {
   PageableCollectionsFactory,
   VideoCollectionFactory,
+  VideoCollectionLinksFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
+import { Link } from '../../../../types/Link';
 import State from '../../../../types/State';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
@@ -44,6 +46,44 @@ describe('bookmarking a collection', () => {
     expect(updatedBookmarks).toHaveLength(2);
     expect(updatedBookmarks).toContain(toBeBookmarkedCollection.id);
     expect(updatedBookmarks).toContain(untouchedCollection.id);
+  });
+
+  // Adding to a page response from the server seems odd. This test maintains
+  // current behaviour, but the current behaviour might need to change.
+  test('updates collection but does not add to bookmarks with no bookmarks present', () => {
+    const toBeBookmarkedCollection = VideoCollectionFactory.sample();
+
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: {
+        collections: {
+          byId: { [toBeBookmarkedCollection.id]: toBeBookmarkedCollection },
+        },
+      },
+      collections: {
+        updating: false,
+        loading: false,
+        myCollections: undefined,
+        publicCollections: undefined,
+        discoverCollections: undefined,
+        bookmarkedCollections: undefined,
+      },
+    });
+
+    const bookedmarkedCollection = VideoCollectionFactory.sample({
+      id: toBeBookmarkedCollection.id,
+      links: VideoCollectionLinksFactory.sample({
+        unbookmark: new Link({ href: 'blah' }),
+      }),
+    });
+
+    const action = onCollectionBookmarkedAction(bookedmarkedCollection);
+    const stateAfter = testReducer(stateBefore, action);
+    const bookmarkedCollections = stateAfter.collections.bookmarkedCollections;
+
+    expect(bookmarkedCollections).toBeUndefined();
+    expect(
+      stateAfter.entities.collections.byId[toBeBookmarkedCollection.id],
+    ).toEqual(bookedmarkedCollection);
   });
 });
 

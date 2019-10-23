@@ -43,9 +43,12 @@ const addBookmarkedCollection = (
       state.entities.collections,
       bookmarkedCollection,
     );
-    draftState.collections.bookmarkedCollections.items.push(
-      bookmarkedCollection.id,
-    );
+
+    const bookmarkedCollections = draftState.collections.bookmarkedCollections;
+    if (bookmarkedCollections) {
+      bookmarkedCollections.items = bookmarkedCollections.items || [];
+      bookmarkedCollections.items.push(bookmarkedCollection.id);
+    }
   });
 
 const updateCollections = (
