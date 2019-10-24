@@ -13,14 +13,10 @@ export const onAddVideoToMyCollectionAction = (
     return state;
   }
 
-  const videosById = state.entities.videos.byId;
-  const videoIds = collection.videoIds;
-
   const alreadyHaveVideoId =
-    videoIds.find(v => v.value === request.video.id) != null;
-  const alreadyHaveVideo = videosById[request.video.id];
+    collection.videoIds.find(id => id.value === request.video.id) != null;
 
-  if (alreadyHaveVideo && alreadyHaveVideoId) {
+  if (alreadyHaveVideoId) {
     return state;
   }
 
@@ -29,30 +25,10 @@ export const onAddVideoToMyCollectionAction = (
     links: request.video.links,
   };
 
-  const updatedCollection = {
-    ...collection,
-    videos: {
-      ...videosById,
-      [request.video.id]: request.video,
-    },
-    videoIds: getUpdateVideoIds(videoIds, videoId, alreadyHaveVideoId),
-  };
-
   return produce(state, draftState => {
-    draftState.entities.collections.byId[
-      updatedCollection.id
-    ] = updatedCollection;
-
+    draftState.entities.collections.byId[collection.id].videoIds.push(videoId);
     draftState.collections.updating = true;
   });
-};
-
-const getUpdateVideoIds = (
-  videoIds: VideoId[],
-  videoId: VideoId,
-  alreadyHaveVideoId: boolean,
-): VideoId[] => {
-  return alreadyHaveVideoId ? [...videoIds] : [...videoIds, videoId];
 };
 
 export const onRemoveVideoFromMyCollectionAction = (
@@ -65,19 +41,11 @@ export const onRemoveVideoFromMyCollectionAction = (
     return state;
   }
 
-  const updatedCollection = {
-    ...collection,
-    videos: removeVideo(
-      request.video.id,
-      collection.videoIds.map(it => it.value),
-    ),
-    videoIds: collection.videoIds.filter(v => v.value !== request.video.id),
-  };
-
   return produce(state, draftState => {
-    draftState.entities.collections.byId[
-      updatedCollection.id
-    ] = updatedCollection;
+    const draftCollection = draftState.entities.collections.byId[collection.id];
+    draftCollection.videoIds = draftCollection.videoIds.filter(
+      id => id.value !== request.video.id,
+    );
 
     draftState.collections.updating = true;
   });
@@ -120,7 +88,3 @@ const onUpdateCollection = (
       updatedCollection.id
     ] = updatedCollection;
   });
-
-const removeVideo = (videoIdToRemove: string, videoIds: string[]): string[] => {
-  return videoIds.filter(it => videoIdToRemove !== it);
-};
