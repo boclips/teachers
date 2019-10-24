@@ -37,8 +37,8 @@ import {
   onMyCollectionRemoved,
   onRemoveVideoFromMyCollectionAction,
 } from './myCollectionsReducer';
-import { onAppendPageableCollectionsAction } from './pageableCollectionsReducer';
 import {
+  onAppendPageableCollectionsAction,
   onStoreCollectionAction,
   onStoreCollectionBeingViewedAction,
   onStoreCollectionsAction,
