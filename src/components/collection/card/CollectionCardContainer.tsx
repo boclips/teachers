@@ -8,6 +8,7 @@ import {
   fetchVideosAction,
   VideosForCollectionRequest,
 } from '../../video/redux/actions/fetchVideos';
+import { getVideosByIds } from '../../video/redux/reducers/videoReducer';
 import { CollectionCard } from './CollectionCard';
 
 type Props = OwnProps & DispatchProps & StateProps;
@@ -66,10 +67,11 @@ class CollectionCardContainer extends React.PureComponent<Props> {
   }
 }
 
-function mapStateToProps({ entities }: State, props: OwnProps): StateProps {
+function mapStateToProps(state: State, props: OwnProps): StateProps {
   return {
-    videos: props.collection.videoIds.map(
-      videoId => entities.videos.byId[videoId.value],
+    videos: getVideosByIds(
+      state,
+      props.collection.videoIds.map(id => id.value),
     ),
   };
 }

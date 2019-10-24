@@ -13,6 +13,7 @@ import SearchResultsWithSidebar from '../../components/searchResults/multiple-re
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
 import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
+import { getVideosByIds } from '../../components/video/redux/reducers/videoReducer';
 import { Links } from '../../types/Links';
 import { VideoSearchResults } from '../../types/SearchResults';
 import State from '../../types/State';
@@ -133,18 +134,13 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({
-  entities,
-  search,
-  links,
-  router,
-  user,
-}: State): StateProps {
+function mapStateToProps(state: State): StateProps {
+  const { entities, search, links, router, user } = state;
   return {
     loading: search.videoSearch.loading,
     videoResults: {
       ...search.videoSearch,
-      videos: search.videoSearch.videoIds.map(it => entities.videos.byId[it]),
+      videos: getVideosByIds(state, search.videoSearch.videoIds),
     },
     collectionResults: search.collectionSearch.collectionIds.map(
       id => entities.collections.byId[id],

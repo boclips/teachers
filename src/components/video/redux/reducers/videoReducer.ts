@@ -10,11 +10,11 @@ import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsVie
 import { storeVideoAction } from '../actions/storeVideoAction';
 import { storeVideosAction } from '../actions/storeVideosAction';
 
-export const initialVideoState: VideoStateValue = { loading: false, id: null };
+const initialVideoState: VideoStateValue = { loading: false, id: null };
 
-function onFetchVideoAction(state: State): State {
+const onFetchVideoAction = (state: State): State => {
   return { ...state, video: { loading: true, id: null } };
-}
+};
 
 const onStoreVideoAction = (state: State, video: Video): State =>
   produce(state, draftState => {
@@ -38,8 +38,16 @@ const onStoreVideosAction = (
     };
   });
 
-export const videoHandlers: Array<ActionHandler<State, any>> = [
+const videoHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(fetchVideoAction, onFetchVideoAction),
   actionHandler(storeVideoAction, onStoreVideoAction),
   actionHandler(storeVideosAction, onStoreVideosAction),
 ];
+
+const getVideosByIds = (state: State, videoIds: string[]): Video[] =>
+  videoIds.map(id => getVideoById(state, id));
+
+const getVideoById = (state: State, videoId: string): Video =>
+  state.entities.videos.byId[videoId];
+
+export { videoHandlers, getVideoById, getVideosByIds, initialVideoState };
