@@ -46,7 +46,7 @@ const mapStateToProps = ({ router, search, entities }: State): StateProps => {
       queryString.parse(router.location.search).mode === 'news' || false,
     results: {
       ...search.videoSearch,
-      videos: search.videoSearch.videos.map(it => entities.videos.byId[it]),
+      videos: search.videoSearch.videoIds.map(it => entities.videos.byId[it]),
     },
   };
 };

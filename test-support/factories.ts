@@ -234,7 +234,7 @@ export class VideoSearchFactory {
   ): VideoSearchStateValue {
     return Object.freeze({
       query: 'hello',
-      videos: [],
+      videoIds: [],
       paging: {
         number: 1,
         size: 10,

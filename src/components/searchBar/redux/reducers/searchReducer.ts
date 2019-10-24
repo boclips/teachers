@@ -27,7 +27,12 @@ const defaultPaging: PageSpec = {
 };
 
 export const initialSearchState: SearchStateValue = {
-  videoSearch: { videos: [], loading: false, query: '', paging: defaultPaging },
+  videoSearch: {
+    videoIds: [],
+    loading: false,
+    query: '',
+    paging: defaultPaging,
+  },
   collectionSearch: {
     collectionIds: [],
     loading: false,
@@ -44,7 +49,7 @@ function onSearchVideosAction(
     search: {
       ...state.search,
       videoSearch: {
-        videos: [],
+        videoIds: [],
         query: searchRequest.query,
         loading: true,
         paging: defaultPaging,
@@ -66,7 +71,7 @@ function onStoreVideoSearchResultsAction(
     };
 
     draftState.search.videoSearch = {
-      videos: results.videos.map(it => it.id),
+      videoIds: results.videos.map(it => it.id),
       loading: false,
       query: results.query,
       paging: results.paging,

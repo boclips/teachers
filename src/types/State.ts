@@ -18,7 +18,7 @@ export interface LinksState {
 export interface VideoSearchStateValue {
   loading: boolean;
   query: string;
-  videos: string[];
+  videoIds: string[];
   paging: PageSpec;
 }
 

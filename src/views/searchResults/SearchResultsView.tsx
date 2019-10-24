@@ -144,7 +144,7 @@ function mapStateToProps({
     loading: search.videoSearch.loading,
     videoResults: {
       ...search.videoSearch,
-      videos: search.videoSearch.videos.map(it => entities.videos.byId[it]),
+      videos: search.videoSearch.videoIds.map(it => entities.videos.byId[it]),
     },
     collectionResults: search.collectionSearch.collectionIds.map(
       id => entities.collections.byId[id],

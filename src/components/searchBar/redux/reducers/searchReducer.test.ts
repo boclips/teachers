@@ -38,7 +38,7 @@ describe('searching videos', () => {
       search: SearchFactory.sample({
         videoSearch: {
           loading: false,
-          videos: [VideoFactory.sample().id],
+          videoIds: [VideoFactory.sample().id],
           query: '',
           paging: defaultPaging,
         },
@@ -60,7 +60,7 @@ describe('searching videos', () => {
 
     const expectedState: VideoSearchStateValue = {
       loading: true,
-      videos: [],
+      videoIds: [],
       query: 'donuts',
       paging: defaultPaging,
     };
@@ -73,7 +73,7 @@ describe('searching videos', () => {
       search: SearchFactory.sample({
         videoSearch: {
           loading: true,
-          videos: [],
+          videoIds: [],
           query: 'pancakes',
           paging: defaultPaging,
         },
@@ -95,7 +95,7 @@ describe('searching videos', () => {
 
     const expectedState: VideoSearchStateValue = {
       loading: false,
-      videos: [video.id],
+      videoIds: [video.id],
       query: 'dogs',
       paging: defaultPaging,
     };

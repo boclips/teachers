@@ -5,7 +5,6 @@ import { Router } from 'react-router';
 import { ClickableCard, ClickableCardForRouter, Props } from './ClickableCard';
 
 describe('ClickableCard', () => {
-  // @ts-ignore
   const getWrapper = (extraProps: Partial<Props> = {}) => {
     const props = {
       ...extraProps,
