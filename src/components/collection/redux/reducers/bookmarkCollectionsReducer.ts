@@ -4,22 +4,6 @@ import { VideoCollection } from '../../../../types/VideoCollection';
 
 export const onCollectionUnbookmarked = (
   state: State,
-  updatedCollection: VideoCollection,
-): State => {
-  state = removeUnbookmarkedCollection(state, updatedCollection);
-  return state;
-};
-
-export const onCollectionBookmarked = (
-  state: State,
-  updatedCollection: VideoCollection,
-): State => {
-  state = addBookmarkedCollection(state, updatedCollection);
-  return state;
-};
-
-const removeUnbookmarkedCollection = (
-  state: State,
   unbookmarkedCollection: VideoCollection,
 ): State =>
   produce(state, draftState => {
@@ -38,7 +22,7 @@ const removeUnbookmarkedCollection = (
     }
   });
 
-const addBookmarkedCollection = (
+export const onCollectionBookmarked = (
   state: State,
   bookmarkedCollection: VideoCollection,
 ): State =>

@@ -1,4 +1,5 @@
 import {
+  CollectionsFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
@@ -29,16 +30,11 @@ describe('bookmarking a collection', () => {
           byId: { [untouchedCollection.id]: untouchedCollection },
         },
       }),
-      collections: {
-        updating: false,
-        loading: false,
-        myCollections: undefined,
-        publicCollections: undefined,
-        discoverCollections: undefined,
+      collections: CollectionsFactory.sample({
         bookmarkedCollections: PageableCollectionsFactory.sample({
           items: [untouchedCollection.id],
         }),
-      },
+      }),
     });
 
     const action = onCollectionBookmarkedAction(toBeBookmarkedCollection);
@@ -62,14 +58,9 @@ describe('bookmarking a collection', () => {
           byId: { [toBeBookmarkedCollection.id]: toBeBookmarkedCollection },
         },
       }),
-      collections: {
-        updating: false,
-        loading: false,
-        myCollections: undefined,
-        publicCollections: undefined,
-        discoverCollections: undefined,
+      collections: CollectionsFactory.sample({
         bookmarkedCollections: undefined,
-      },
+      }),
     });
 
     const bookedmarkedCollection = VideoCollectionFactory.sample({
@@ -106,16 +97,11 @@ describe('unbookmarking a collection', () => {
           },
         },
       }),
-      collections: {
-        updating: false,
-        loading: false,
-        myCollections: undefined,
-        publicCollections: undefined,
-        discoverCollections: undefined,
+      collections: CollectionsFactory.sample({
         bookmarkedCollections: PageableCollectionsFactory.sample({
           items: [toBeUnbookmarkedCollection.id, untouchedCollection.id],
         }),
-      },
+      }),
     });
 
     const action = onCollectionUnbookmarkedAction(toBeUnbookmarkedCollection);
@@ -138,14 +124,9 @@ describe('unbookmarking a collection', () => {
           byId: { [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection },
         },
       }),
-      collections: {
-        updating: false,
-        loading: false,
-        myCollections: undefined,
-        publicCollections: undefined,
-        discoverCollections: undefined,
+      collections: CollectionsFactory.sample({
         bookmarkedCollections: undefined,
-      },
+      }),
     });
 
     const unbookedmarkedCollection = VideoCollectionFactory.sample({
