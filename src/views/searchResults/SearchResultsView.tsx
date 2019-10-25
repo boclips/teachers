@@ -8,7 +8,10 @@ import withNewsNavigation, {
   NewsNavigationProps,
 } from '../../components/common/higerOrderComponents/withNewsNavigation';
 import PageLayout from '../../components/layout/PageLayout';
-import { getVideosFromSearchResult } from '../../components/searchBar/redux/reducers/searchReducer';
+import {
+  getCollectionsFromSearchResult,
+  getVideosFromSearchResult,
+} from '../../components/searchBar/redux/reducers/searchReducer';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
@@ -135,7 +138,7 @@ class SearchResultsView extends React.PureComponent<
 }
 
 function mapStateToProps(state: State): StateProps {
-  const { entities, search, links, router, user } = state;
+  const { search, links, router, user } = state;
 
   return {
     loading: search.videoSearch.loading,
@@ -143,9 +146,7 @@ function mapStateToProps(state: State): StateProps {
       ...search.videoSearch,
       videos: getVideosFromSearchResult(state),
     },
-    collectionResults: search.collectionSearch.collectionIds.map(
-      id => entities.collections.byId[id],
-    ),
+    collectionResults: getCollectionsFromSearchResult(state),
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
     userId: user ? user.id : null,

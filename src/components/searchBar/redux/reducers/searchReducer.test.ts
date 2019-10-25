@@ -19,8 +19,10 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
+import { CollectionSearchFactory } from './../../../../../test-support/factories';
 import {
   collectionSearchHandlers,
+  getCollectionsFromSearchResult,
   getVideosFromSearchResult,
   videoSearchHandlers,
 } from './searchReducer';
@@ -187,7 +189,7 @@ describe('searching collections', () => {
 });
 
 describe('selectors', () => {
-  it('can get video from video search results', () => {
+  it('can get videos from video search results', () => {
     const firstVideo = VideoFactory.sample({ id: '123' });
     const secondVideo = VideoFactory.sample({ id: '456' });
     const state = MockStoreFactory.sampleState({
@@ -204,5 +206,29 @@ describe('selectors', () => {
 
     expect(foundVideos).toHaveLength(1);
     expect(foundVideos).toContain(firstVideo);
+  });
+
+  it('can get collections from collection search results', () => {
+    const firstCollection = VideoCollectionFactory.sample({ id: '123' });
+    const secondCollection = VideoCollectionFactory.sample({ id: '456' });
+    const state = MockStoreFactory.sampleState({
+      entities: EntitiesFactory.sample({
+        collections: {
+          byId: {
+            [firstCollection.id]: firstCollection,
+            [secondCollection.id]: secondCollection,
+          },
+        },
+      }),
+      search: SearchFactory.sample({
+        collectionSearch: CollectionSearchFactory.sample({
+          collectionIds: [firstCollection.id],
+        }),
+      }),
+    });
+    const foundCollections = getCollectionsFromSearchResult(state);
+
+    expect(foundCollections).toHaveLength(1);
+    expect(foundCollections).toContain(firstCollection);
   });
 });

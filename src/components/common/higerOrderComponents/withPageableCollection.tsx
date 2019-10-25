@@ -8,6 +8,7 @@ import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { fetchNextPageableCollectionsAction } from '../../collection/redux/actions/fetchNextPageableCollectionsAction';
 import { fetchPageableCollectionsAction } from '../../collection/redux/actions/fetchPageableCollectionsAction';
+import { getCollectionsByIds } from '../../collection/redux/reducers/collectionsReducer';
 
 interface Props {
   collectionKey: CollectionKey;
@@ -57,10 +58,9 @@ function mapStateToProps(state: State, props: Props): StateProps {
 
   const foundCollections =
     pageOfCollectionIds.items() &&
-    pageOfCollectionIds
-      .items()
-      .map(id => state.entities.collections.byId[id])
-      .filter(collection => collection !== undefined);
+    getCollectionsByIds(state, pageOfCollectionIds.items()).filter(
+      collection => collection !== undefined,
+    );
 
   return {
     collections: foundCollections,

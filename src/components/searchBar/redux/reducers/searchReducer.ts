@@ -11,8 +11,10 @@ import {
 } from '../../../../types/SearchResults';
 import State, { SearchStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { organizeById } from '../../../../utils/entityMap';
+import { getCollectionsByIds } from '../../../collection/redux/reducers/collectionsReducer';
 import { getVideosByIds } from '../../../video/redux/reducers/videoReducer';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
@@ -148,3 +150,8 @@ export const collectionSearchHandlers: Array<ActionHandler<State, any>> = [
 
 export const getVideosFromSearchResult = (state: State): Video[] =>
   getVideosByIds(state, state.search.videoSearch.videoIds);
+
+export const getCollectionsFromSearchResult = (
+  state: State,
+): VideoCollection[] =>
+  getCollectionsByIds(state, state.search.collectionSearch.collectionIds);

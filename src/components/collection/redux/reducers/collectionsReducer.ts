@@ -3,6 +3,7 @@ import {
   ActionHandler,
 } from '../../../../app/redux/createReducer';
 import State, { CollectionsStateValue } from '../../../../types/State';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,
@@ -116,3 +117,9 @@ export const collectionHandlers: Array<ActionHandler<State, any>> = [
     onStoreCollectionBeingViewedAction,
   ),
 ];
+
+export const getCollectionsByIds = (
+  state: State,
+  collectionIds: string[],
+): VideoCollection[] =>
+  collectionIds.map(id => state.entities.collections.byId[id]);
