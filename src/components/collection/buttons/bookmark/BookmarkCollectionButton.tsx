@@ -40,6 +40,7 @@ export class BookmarkCollectionButtonInner extends PureComponent<
             <BookmarkFilledSVG
               data-qa="bookmark-collection"
               aria-label="Bookmark a collection"
+              title="Button to bookmark a collection"
             />
           )}
 
@@ -47,6 +48,7 @@ export class BookmarkCollectionButtonInner extends PureComponent<
             <BookmarkEmptySVG
               data-qa="unbookmark-collection"
               aria-label="Unbookmark a collection"
+              title="Button to unbookmark a collection"
             />
           )}
         </section>

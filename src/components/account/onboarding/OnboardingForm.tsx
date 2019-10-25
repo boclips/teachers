@@ -147,10 +147,22 @@ class OnboardingForm extends React.Component<
               effect={'fade'}
               dots={false}
             >
-              <SvgStep1 className="onboarding__logo" />
-              <SvgStep2 className="onboarding__logo" />
-              <SvgStep3 className="onboarding__logo" />
-              <SvgStep4 className="onboarding__logo" />
+              <SvgStep1
+                className="onboarding__logo"
+                title="Two teachers waving hello"
+              />
+              <SvgStep2
+                className="onboarding__logo"
+                title="Teacher holding a pencil about to fill in a form"
+              />
+              <SvgStep3
+                className="onboarding__logo"
+                title="Two teachers working together on a computer"
+              />
+              <SvgStep4
+                className="onboarding__logo"
+                title="Teacher presenting infront of a digital smartboard"
+              />
             </Carousel>
           </Col>
           <Col xs={{ span: 24 }} lg={{ span: 12 }}>
