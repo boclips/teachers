@@ -8,6 +8,7 @@ import withNewsNavigation, {
   NewsNavigationProps,
 } from '../../components/common/higerOrderComponents/withNewsNavigation';
 import PageLayout from '../../components/layout/PageLayout';
+import { getVideosFromSearchResult } from '../../components/searchBar/redux/reducers/searchReducer';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
@@ -133,18 +134,14 @@ class SearchResultsView extends React.PureComponent<
   };
 }
 
-function mapStateToProps({
-  entities,
-  search,
-  links,
-  router,
-  user,
-}: State): StateProps {
+function mapStateToProps(state: State): StateProps {
+  const { entities, search, links, router, user } = state;
+
   return {
     loading: search.videoSearch.loading,
     videoResults: {
       ...search.videoSearch,
-      videos: search.videoSearch.videoIds.map(it => entities.videos.byId[it]),
+      videos: getVideosFromSearchResult(state),
     },
     collectionResults: search.collectionSearch.collectionIds.map(
       id => entities.collections.byId[id],

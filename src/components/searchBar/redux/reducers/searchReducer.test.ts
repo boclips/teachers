@@ -1,8 +1,10 @@
 import {
   EntitiesFactory,
   MockStoreFactory,
+  SearchFactory,
   VideoCollectionFactory,
   VideoFactory,
+  VideoSearchFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
 import {
@@ -17,8 +19,11 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-import { SearchFactory } from './../../../../../test-support/factories';
-import { collectionSearchHandlers, videoSearchHandlers } from './searchReducer';
+import {
+  collectionSearchHandlers,
+  getVideosFromSearchResult,
+  videoSearchHandlers,
+} from './searchReducer';
 
 const searchReducer = createReducer(
   ...videoSearchHandlers,
@@ -178,5 +183,26 @@ describe('searching collections', () => {
     expect(newState.entities.collections.byId[collectionToStore.id]).toEqual(
       collectionToStore,
     );
+  });
+});
+
+describe('selectors', () => {
+  it('can get video from video search results', () => {
+    const firstVideo = VideoFactory.sample({ id: '123' });
+    const secondVideo = VideoFactory.sample({ id: '456' });
+    const state = MockStoreFactory.sampleState({
+      entities: EntitiesFactory.sample({
+        videos: {
+          byId: { [firstVideo.id]: firstVideo, [secondVideo.id]: secondVideo },
+        },
+      }),
+      search: SearchFactory.sample({
+        videoSearch: VideoSearchFactory.sample({ videoIds: [firstVideo.id] }),
+      }),
+    });
+    const foundVideos = getVideosFromSearchResult(state);
+
+    expect(foundVideos).toHaveLength(1);
+    expect(foundVideos).toContain(firstVideo);
   });
 });

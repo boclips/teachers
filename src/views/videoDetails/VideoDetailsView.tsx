@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 import { actionCreatorFactory } from '../../app/redux/actions';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
+import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
 import { Video } from '../../types/Video';
 
@@ -43,7 +44,7 @@ export class VideoDetailsView extends PureComponent<
 
 function mapStateToProps(state: State, props: OwnProps): StateProps {
   return {
-    video: state.entities.videos.byId[props.videoId],
+    video: getVideoById(state, props.videoId),
   };
 }
 

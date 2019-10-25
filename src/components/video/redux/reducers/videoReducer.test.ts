@@ -1,11 +1,12 @@
 import { createReducer } from '../../../../app/redux/createReducer';
 import { storeVideosAction } from '../actions/storeVideosAction';
 import {
+  EntitiesFactory,
   MockStoreFactory,
   VideoFactory,
 } from './../../../../../test-support/factories';
 import { storeVideoAction } from './../actions/storeVideoAction';
-import { videoHandlers } from './videoReducer';
+import { getVideosByIds, videoHandlers } from './videoReducer';
 
 const testReducer = createReducer(...videoHandlers);
 
@@ -41,5 +42,29 @@ describe('storing videos', () => {
     expect(stateAfter.entities.videos.byId[secondVideo.id]).toEqual(
       secondVideo,
     );
+  });
+});
+
+describe('video selectors', () => {
+  it('can get a list of videos from the store given a list of ids', () => {
+    const firstVideo = VideoFactory.sample({ id: 'v1' });
+    const secondVideo = VideoFactory.sample({ id: 'v2' });
+    const state = MockStoreFactory.sampleState({
+      entities: EntitiesFactory.sample({
+        videos: {
+          byId: {
+            [firstVideo.id]: firstVideo,
+            [secondVideo.id]: secondVideo,
+          },
+        },
+      }),
+    });
+
+    const fetchedVideos = getVideosByIds(state, [
+      firstVideo.id,
+      secondVideo.id,
+    ]);
+
+    expect(fetchedVideos).toEqual([firstVideo, secondVideo]);
   });
 });
