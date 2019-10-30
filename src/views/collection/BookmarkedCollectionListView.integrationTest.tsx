@@ -14,6 +14,5 @@ test('displays bookmarked collections list', async () => {
     title: 'funky collection',
     numberOfVideos: 1,
     updatedAt: 'Jan 16, 2019',
-    createdBy: 'AI',
   });
 });

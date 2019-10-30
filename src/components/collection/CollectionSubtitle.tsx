@@ -24,15 +24,6 @@ export class CollectionSubtitle extends React.Component<Props> {
           </span>{' '}
           videos
         </span>
-        <span>
-          &nbsp;• Created by{' '}
-          <span
-            data-qa="collection-created-by"
-            className="collection-subtitle__created-by"
-          >
-            {this.props.collection.createdBy}
-          </span>
-        </span>
         {this.renderUpdatedAt(this.props.collection.updatedAt)}
       </span>
     );
