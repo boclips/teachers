@@ -4,6 +4,7 @@
 .discipline-card__ {
   &title {
     font-size: 28px;
+    line-height: 28px;
     font-weight: normal;
     color: @dark-blue;
     margin: 4px;
@@ -26,15 +27,12 @@
 
   &container {
     margin-top: 24px;
-    border-radius: 8px;
-    box-shadow: @card-shadow;
     min-height: 310px;
+    background-color: @shade-2;
 
     .ant-card-head {
       position: relative;
       border-bottom: 0px;
-      border-radius: 8px 8px 0px 0px;
-      background-color: @shade-4;
     }
 
     &.skeleton {
@@ -78,8 +76,8 @@
 @media (max-width: @screen-sm-max) {
   .discipline-card__ {
     &title {
-      font-size: 22px;
-      line-height: 26px;
+      font-size: 28px;
+      line-height: 28px;
     }
 
     &container {

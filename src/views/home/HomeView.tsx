@@ -41,7 +41,7 @@ export default class HomeView extends PureComponent {
           <Content>
             <Row>
               <Col>
-                <DisciplineCardList />
+                <DisciplineCardList limit={4} />
               </Col>
             </Row>
           </Content>

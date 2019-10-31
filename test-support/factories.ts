@@ -406,6 +406,18 @@ export class DisciplinesFactory {
         id: 'discipline-two-id',
         name: 'discipline two',
       },
+      {
+        id: 'discipline-three-id',
+        name: 'discipline three',
+      },
+      {
+        id: 'discipline-four-id',
+        name: 'discipline four',
+      },
+      {
+        id: 'discipline-five-id',
+        name: 'discipline five',
+      },
       ...arg,
     ]) as Discipline[];
   }

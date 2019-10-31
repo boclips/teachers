@@ -12,7 +12,13 @@ export interface DisciplineCardListProps {
   disciplines: Discipline[];
 }
 
-class DisciplineCardList extends React.PureComponent<DisciplineCardListProps> {
+export interface Props {
+  limit?: number;
+}
+
+class DisciplineCardList extends React.PureComponent<
+  DisciplineCardListProps & Props
+> {
   public render() {
     return (
       <section className="discipline-card-list__container">
@@ -46,19 +52,21 @@ class DisciplineCardList extends React.PureComponent<DisciplineCardListProps> {
     return [
       <TransitionGroup exit={true} key={'disciplines-container'}>
         {this.props.disciplines &&
-          this.props.disciplines.map(discipline => {
-            return (
-              <CSSTransition
-                classNames="card-list"
-                timeout={500}
-                key={discipline.id}
-              >
-                <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
-                  <DisciplineCard discipline={discipline} />
-                </Col>
-              </CSSTransition>
-            );
-          })}
+          this.props.disciplines
+            .slice(0, this.props.limit || this.props.disciplines.length)
+            .map(discipline => {
+              return (
+                <CSSTransition
+                  classNames="card-list"
+                  timeout={500}
+                  key={discipline.id}
+                >
+                  <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
+                    <DisciplineCard discipline={discipline} />
+                  </Col>
+                </CSSTransition>
+              );
+            })}
       </TransitionGroup>,
     ];
   }
