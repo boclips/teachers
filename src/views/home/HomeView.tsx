@@ -1,10 +1,8 @@
 import { Button } from 'antd';
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
-import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
-import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
@@ -13,13 +11,12 @@ import PublicCollectionsGrid from '../../components/collection/grid/public/Publi
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import './HomeView.less';
 
-const { Content } = Layout;
 export default class HomeView extends PureComponent {
   public render() {
     return (
-      <section className="home-page">
-        <section className="search-section">
-          <PageLayout data-qa="home-page" showNavigation={true}>
+      <PageLayout data-qa="home-page" showNavigation={true} showFooter={true}>
+        <section className="home-page">
+          <section className="search-section">
             <Row>
               <Col
                 xs={{ span: 22, offset: 1 }}
@@ -34,21 +31,17 @@ export default class HomeView extends PureComponent {
                 </section>
               </Col>
             </Row>
-          </PageLayout>
-        </section>
+          </section>
 
-        <section className="disciplines-section">
-          <Content>
+          <section className="disciplines-section">
             <Row>
               <Col>
                 <DisciplineCardList />
               </Col>
             </Row>
-          </Content>
-        </section>
+          </section>
 
-        <section className="discovery-section">
-          <Content>
+          <section className="discovery-section">
             <Row>
               <Col>
                 <section className="home-collections">
@@ -70,10 +63,9 @@ export default class HomeView extends PureComponent {
                 </section>
               </Col>
             </Row>
-          </Content>
+          </section>
         </section>
-        <BoclipsFooter />
-      </section>
+      </PageLayout>
     );
   }
 
