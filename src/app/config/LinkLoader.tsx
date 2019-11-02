@@ -12,7 +12,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  requestAuthentication: () => void;
   fetchLinks: () => void;
 }
 
@@ -22,8 +21,6 @@ export class UnconnectedLinkLoader extends React.PureComponent<Props> {
   public componentDidMount(): void {
     if (this.props.authenticationResolved) {
       this.props.fetchLinks();
-    } else {
-      this.props.requestAuthentication();
     }
   }
 
@@ -55,8 +52,6 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  requestAuthentication: () =>
-    dispatch(requestAuthentication({ authenticationRequired: false })),
   fetchLinks: () => dispatch(fetchLinksAction()),
 });
 

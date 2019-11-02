@@ -48,6 +48,7 @@ import {
 import State from '../types/State';
 import BoclipsRouter, { defaultHistory } from '../views/router/BoclipsRouter';
 import LinkLoader from './config/LinkLoader';
+import { authenticationResolved } from './redux/authentication/actions/authenticationResolved';
 import onAuthenticationResolvedMiddleware from './redux/authentication/middleware/onAuthenticationResolvedMiddleware';
 import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';
 import { authenticationReducer } from './redux/authentication/reducers/authenticationReducer';
@@ -105,6 +106,7 @@ const appReducer: Reducer<State> = reduceReducers(
 interface Props {
   apiPrefix: string;
   history?: History;
+  authenticated?: boolean;
 }
 
 export default class App extends PureComponent<Props> {
@@ -136,6 +138,14 @@ export default class App extends PureComponent<Props> {
       ),
     ),
   );
+
+  public componentDidMount() {
+    this.store.dispatch(
+      authenticationResolved({
+        success: this.props.authenticated || false,
+      }),
+    );
+  }
 
   public render() {
     return (
