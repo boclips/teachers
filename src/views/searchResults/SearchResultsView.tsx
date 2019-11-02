@@ -1,4 +1,3 @@
-import { Col } from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
 import queryString from 'query-string';
 import React from 'react';
@@ -7,21 +6,19 @@ import { Dispatch } from 'redux';
 import withNewsNavigation, {
   NewsNavigationProps,
 } from '../../components/common/higerOrderComponents/withNewsNavigation';
-import PageLayout from '../../components/layout/PageLayout';
 import {
   getCollectionsFromSearchResult,
   getVideosFromSearchResult,
 } from '../../components/searchBar/redux/reducers/searchReducer';
 import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
 import SearchResultsWithSidebar from '../../components/searchResults/multiple-results/SearchResultsWithSidebar';
-import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
-import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
 import { Links } from '../../types/Links';
 import { VideoSearchResults } from '../../types/SearchResults';
 import State from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
 import NoResultsView from './noResults/NoResultsView';
+import { SearchResultsViewSkeleton } from './SearchResultsLazyView';
 import './SearchResultsView.less';
 
 interface StateProps {
@@ -41,19 +38,6 @@ class SearchResultsView extends React.PureComponent<
   StateProps & DispatchProps & NewsNavigationProps
 > {
   public render() {
-    return (
-      <PageLayout
-        showTabs={true}
-        showNavigation={true}
-        showFooter={true}
-        showSearchBar={true}
-      >
-        {this.renderContent()}
-      </PageLayout>
-    );
-  }
-
-  private renderContent() {
     if (this.props.loading) {
       return this.renderResultPlaceholders();
     }
@@ -111,21 +95,7 @@ class SearchResultsView extends React.PureComponent<
   public renderResultPlaceholders() {
     const isNewsMode = this.props.isNewsMode;
 
-    return (
-      <section
-        className="search-results-placeholders"
-        data-qa="search-results-placeholders"
-      >
-        <Col xs={{ span: 24 }} xl={{ span: isNewsMode ? 24 : 18 }}>
-          <VideoCardsPlaceholder />
-        </Col>
-        {!isNewsMode && (
-          <Col xs={{ span: 0 }} xl={{ span: 5 }}>
-            <SearchResultsSidebar.Skeleton />
-          </Col>
-        )}
-      </section>
-    );
+    return <SearchResultsViewSkeleton isNewsMode={isNewsMode} />;
   }
 
   public renderZeroResultsMessage() {

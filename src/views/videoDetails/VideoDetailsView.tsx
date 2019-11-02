@@ -2,17 +2,13 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { actionCreatorFactory } from '../../app/redux/actions';
-import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
 import { Video } from '../../types/Video';
+import { VideoDetailsProps } from './VideoDetailsLazyView';
 
 export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
-
-interface OwnProps {
-  videoId: string;
-}
 
 interface StateProps {
   video: Video | null;
@@ -27,13 +23,11 @@ export class VideoDetailsView extends PureComponent<
 > {
   public render() {
     return (
-      <PageLayout showNavigation={true} showFooter={true} showSearchBar={true}>
-        <section data-qa="video-details-page">
-          <section className="video-details-page" data-qa="video-details">
-            <VideoDetails video={this.props.video} />
-          </section>
+      <section data-qa="video-details-page">
+        <section className="video-details-page" data-qa="video-details">
+          <VideoDetails video={this.props.video} />
         </section>
-      </PageLayout>
+      </section>
     );
   }
 
@@ -42,7 +36,7 @@ export class VideoDetailsView extends PureComponent<
   }
 }
 
-function mapStateToProps(state: State, props: OwnProps): StateProps {
+function mapStateToProps(state: State, props: VideoDetailsProps): StateProps {
   return {
     video: getVideoById(state, props.videoId),
   };
@@ -50,14 +44,14 @@ function mapStateToProps(state: State, props: OwnProps): StateProps {
 
 function mapDispatchToProps(
   dispatch: Dispatch,
-  ownProps: OwnProps,
+  ownProps: VideoDetailsProps,
 ): DispatchProps {
   return {
     fetchVideo: () => dispatch(fetchVideoAction(ownProps.videoId)),
   };
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
+export default connect<StateProps, DispatchProps, VideoDetailsProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(VideoDetailsView);

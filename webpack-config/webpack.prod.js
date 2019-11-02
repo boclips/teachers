@@ -20,6 +20,7 @@ const oneMegaByte = 1024 * 1024;
 module.exports = merge(common, {
   output: {
     filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].chunk.js',
   },
   mode: 'production',
   optimization: {

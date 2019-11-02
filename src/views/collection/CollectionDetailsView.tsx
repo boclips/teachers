@@ -3,26 +3,22 @@ import React, { PureComponent } from 'react';
 import CollectionsLoaded from '../../components/collection/CollectionsLoaded';
 import CollectionDetails from '../../components/collection/details/CollectionDetails';
 import CollectionHeader from '../../components/collection/header/CollectionHeader';
-import PageLayout from '../../components/layout/PageLayout';
 import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
+import { CollectionDetailsViewProps } from './CollectionDetailsLazyView';
 import './CollectionDetailsView.less';
 
-interface Props {
-  collectionId: string;
-}
-
-export class CollectionDetailsView extends PureComponent<Props> {
+export class CollectionDetailsView extends PureComponent<
+  CollectionDetailsViewProps
+> {
   public render() {
     return (
-      <PageLayout showSearchBar={true} showFooter={true} showNavigation={true}>
-        <section data-qa="collection-page">
-          <CollectionsLoaded
-            showWhenLoading={this.renderCollectionPlaceholders()}
-          >
-            <CollectionDetails collectionId={this.props.collectionId} />
-          </CollectionsLoaded>
-        </section>
-      </PageLayout>
+      <section data-qa="collection-page">
+        <CollectionsLoaded
+          showWhenLoading={this.renderCollectionPlaceholders()}
+        >
+          <CollectionDetails collectionId={this.props.collectionId} />
+        </CollectionsLoaded>
+      </section>
     );
   }
 

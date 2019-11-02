@@ -4,7 +4,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import './OnboardingView.less';
 
-export class OnboardingView extends PureComponent {
+export default class OnboardingView extends PureComponent {
   public render() {
     return (
       <PageLayout showFooter={true}>

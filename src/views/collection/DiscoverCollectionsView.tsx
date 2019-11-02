@@ -1,5 +1,4 @@
 import { Col, Icon, Row } from 'antd';
-import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,29 +9,23 @@ import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
-import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { Discipline } from '../../types/Discipline';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
 import { DisciplineState } from '../../types/State';
 import { Subject } from '../../types/Subject';
+import { DiscoverCollectionsViewProps } from './DiscoverCollectionsLazyView';
 import './DiscoverCollectionsView.less';
-
-interface OwnProps {
-  subjectIds?: string[];
-  disciplineId?: string;
-}
 
 interface StateProps {
   subjects: Subject[];
   discipline: Discipline;
 }
 
-const { Content } = Layout;
 const refresh = () => true;
 
 export class DiscoverCollectionsView extends PureComponent<
-  OwnProps & StateProps & WithMediaBreakPointProps
+  DiscoverCollectionsViewProps & StateProps & WithMediaBreakPointProps
 > {
   public render() {
     if (!this.props.discipline) {
@@ -41,93 +34,80 @@ export class DiscoverCollectionsView extends PureComponent<
 
     return (
       <section>
-        <PageLayout
-          showNavigation={true}
-          showSearchBar={true}
-          showFooter={true}
-          subheader={
-            <section className="discover-collections__header-container">
-              <Content>
-                <section className="discover-collections__header">
-                  <h1>
-                    <strong className="discipline-name">
-                      <Link
-                        to={`/discover-collections?discipline=${
-                          this.props.discipline.id
-                        }`}
-                      >
-                        {this.props.discipline.name}
-                      </Link>
-                    </strong>
-                    {this.props.subjects && this.props.subjects.length === 1 && (
-                      <span className="discipline-subject">
-                        <strong> > </strong>
-                        {this.props.subjects[0].name}
-                      </span>
-                    )}
-                  </h1>
-                  <section className="discover-collections__header-logo display-tablet-and-desktop">
-                    <DisciplineLogo
-                      discipline={this.props.discipline}
-                      large={true}
-                    />
-                  </section>
-                </section>
-              </Content>
-            </section>
-          }
-        >
-          {!this.props.subjectIds || this.props.subjectIds.length === 0 ? (
-            <section
-              className="discover-collections__subjects"
-              data-qa="discover-collections-discipline-subjects"
-            >
-              <h1 className="big-title alt display-tablet-and-desktop">
-                <Icon component={SubjectsSVG} /> Subjects
-              </h1>
-              <Row gutter={12}>
-                <ul className="discover-collections__subjects-list">
-                  {this.props.discipline.subjects.map(subject => (
-                    <li
-                      className="discover-collections__subject-list-item"
-                      key={subject.id}
-                    >
-                      <Col md={6}>
-                        <Link
-                          className={this.subjectClassName()}
-                          to={`/discover-collections?subject=${subject.id}`}
-                        >
-                          <span data-qa="discipline-subject-link">
-                            {subject.name}
-                          </span>
-                        </Link>
-                      </Col>
-                    </li>
-                  ))}
-                </ul>
-              </Row>
-            </section>
-          ) : null}
-
-          <section
-            className="discover-collections__container collection-list"
-            data-qa="discover-collections-list-page"
-            key={`container-${this.props.subjects.map(s => s.id).join()}`}
-          >
-            <PageableCollectionCardList
-              key={this.props.subjects.map(s => s.id).join()}
-              title={
-                <span>
-                  <img src={collectionsImg} alt="" /> Video collections
+        <section className="discover-collections__header-container">
+          <section className="discover-collections__header">
+            <h1>
+              <strong className="discipline-name">
+                <Link
+                  to={`/discover-collections?discipline=${
+                    this.props.discipline.id
+                  }`}
+                >
+                  {this.props.discipline.name}
+                </Link>
+              </strong>
+              {this.props.subjects && this.props.subjects.length === 1 && (
+                <span className="discipline-subject">
+                  <strong> > </strong>
+                  {this.props.subjects[0].name}
                 </span>
-              }
-              grid={true}
-              collectionKey="discoverCollections"
-              collectionFiler={{ subject: this.props.subjects.map(s => s.id) }}
-              shouldRefresh={refresh}
-            />
+              )}
+            </h1>
+            <section className="discover-collections__header-logo display-tablet-and-desktop">
+              <DisciplineLogo discipline={this.props.discipline} large={true} />
+            </section>
           </section>
-        </PageLayout>
+        </section>
+        {!this.props.subjectIds || this.props.subjectIds.length === 0 ? (
+          <section
+            className="discover-collections__subjects"
+            data-qa="discover-collections-discipline-subjects"
+          >
+            <h1 className="big-title alt display-tablet-and-desktop">
+              <Icon component={SubjectsSVG} /> Subjects
+            </h1>
+            <Row gutter={12}>
+              <ul className="discover-collections__subjects-list">
+                {this.props.discipline.subjects.map(subject => (
+                  <li
+                    className="discover-collections__subject-list-item"
+                    key={subject.id}
+                  >
+                    <Col md={6}>
+                      <Link
+                        className={this.subjectClassName()}
+                        to={`/discover-collections?subject=${subject.id}`}
+                      >
+                        <span data-qa="discipline-subject-link">
+                          {subject.name}
+                        </span>
+                      </Link>
+                    </Col>
+                  </li>
+                ))}
+              </ul>
+            </Row>
+          </section>
+        ) : null}
+
+        <section
+          className="discover-collections__container collection-list"
+          data-qa="discover-collections-list-page"
+          key={`container-${this.props.subjects.map(s => s.id).join()}`}
+        >
+          <PageableCollectionCardList
+            key={this.props.subjects.map(s => s.id).join()}
+            title={
+              <span>
+                <img src={collectionsImg} alt="" /> Video collections
+              </span>
+            }
+            grid={true}
+            collectionKey="discoverCollections"
+            collectionFiler={{ subject: this.props.subjects.map(s => s.id) }}
+            shouldRefresh={refresh}
+          />
+        </section>
       </section>
     );
   }
@@ -187,7 +167,7 @@ function getDisciplineSubjects(discipline) {
 
 function mapStateToProps(
   state: DisciplineState,
-  ownProps: OwnProps,
+  ownProps: DiscoverCollectionsViewProps,
 ): StateProps {
   const discipline =
     getDisciplineById(state.disciplines, ownProps.disciplineId) ||

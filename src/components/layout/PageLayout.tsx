@@ -15,7 +15,6 @@ interface Props {
   showSearchBar?: boolean;
   showFooter?: boolean;
   showNavigation?: boolean;
-  subheader?: React.ReactFragment;
   ['data-qa']?: string;
 }
 
@@ -31,9 +30,6 @@ class PageLayout extends PureComponent<Props> {
               showTabs={this.props.showTabs}
             />
           </Header>
-          {this.props.subheader && (
-            <section className="subheader">{this.props.subheader}</section>
-          )}
           <Content>
             <Row>
               <Col sm={{ span: 24 }} md={{ span: 24 }}>

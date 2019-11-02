@@ -5,17 +5,14 @@ import React, { PureComponent } from 'react';
 import EmptyCollectionSVG from '../../../resources/images/empty-collection.svg';
 import collectionsSVG from '../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
-import PageLayout from '../../components/layout/PageLayout';
 import './MyCollectionListView.less';
 
 export default class MyCollectionListView extends PureComponent {
   public render() {
     return (
-      <PageLayout showSearchBar={true} showNavigation={true} showFooter={true}>
-        <section className="collection-list" data-qa="collection-list-page">
-          {this.renderContent()}
-        </section>
-      </PageLayout>
+      <section className="collection-list" data-qa="collection-list-page">
+        {this.renderContent()}
+      </section>
     );
   }
 

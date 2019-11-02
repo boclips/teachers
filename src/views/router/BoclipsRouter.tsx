@@ -10,31 +10,31 @@ import PrivateRoute, {
 } from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { RouterState } from '../../types/State';
-import { AccountSettingsView } from '../account/AccountSettingsView';
-import { CreateAccountView } from '../account/CreateAccountView';
-import { OnboardingView } from '../account/OnboardingView';
-import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
-import CollectionDetailsView from '../collection/CollectionDetailsView';
-import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
-import MyCollectionListView from '../collection/MyCollectionListView';
+import { AccountSettingsLazyView } from '../account/AccountSettingsLazyView';
+import { CreateAccountLazyView } from '../account/CreateAccountLazyView';
+import { OnboardingLazyView } from '../account/OnboardingLazyView';
+import { BookmarkedCollectionListLazyView } from '../collection/BookmarkedCollectionListLazyView';
+import { CollectionDetailsLazyView } from '../collection/CollectionDetailsLazyView';
+import { DiscoverCollectionsLazyView } from '../collection/DiscoverCollectionsLazyView';
+import { MyCollectionListLazyView } from '../collection/MyCollectionListLazyView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
-import { SubjectsView } from '../collection/SubjectsView';
-import HomeView from '../home/HomeView';
-import LoggedOutView from '../loggedout/LoggedOutView';
-import SearchResultsView from '../searchResults/SearchResultsView';
-import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import { SubjectsLazyView } from '../collection/SubjectsLazyView';
+import { HomeLazyView } from '../home/HomeLazyView';
+import { LoggedOutLazyView } from '../loggedout/LoggedOutLazyView';
+import { SearchResultsLazyView } from '../searchResults/SearchResultsLazyView';
+import { VideoDetailsLazyView } from '../videoDetails/VideoDetailsLazyView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 export const defaultHistory = createBrowserHistory();
 
 const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
-  <VideoDetailsView videoId={props.match.params.videoId} />
+  <VideoDetailsLazyView videoId={props.match.params.videoId} />
 );
 
 const collectionView = (
   props: PrivateRouteComponentParams<{ collectionId: string }>,
 ) => (
-  <CollectionDetailsView
+  <CollectionDetailsLazyView
     collectionId={props.computedMatch.params.collectionId}
   />
 );
@@ -54,7 +54,7 @@ const discoverCollectionsView = (props: RouteComponentProps) => {
   }
 
   return (
-    <DiscoverCollectionsView
+    <DiscoverCollectionsLazyView
       subjectIds={subjectIds}
       disciplineId={disciplineId}
     />
@@ -76,22 +76,25 @@ class BoclipsRouter extends Component<Props & StateProps> {
       <ConnectedRouter history={this.props.history || defaultHistory}>
         <ScrollToTopOnForwardNavigation>
           <Switch>
-            <Route path="/bye" component={LoggedOutView} />
-            <Route path="/create-account" component={CreateAccountView} />
+            <Route path="/bye" component={LoggedOutLazyView} />
+            <Route path="/create-account" component={CreateAccountLazyView} />
             <Route path="/videos">
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
-                <PrivateRoute path="/videos" component={SearchResultsView} />
+                <PrivateRoute
+                  path="/videos"
+                  component={SearchResultsLazyView}
+                />
               </Switch>
             </Route>
             <PrivateRoute
               path="/onboarding"
-              component={OnboardingView}
+              component={OnboardingLazyView}
               exact={true}
             />
             <PrivateRoute
               path="/collections"
-              component={MyCollectionListView}
+              component={MyCollectionListLazyView}
               exact={true}
             />
             <PrivateRoute
@@ -106,7 +109,7 @@ class BoclipsRouter extends Component<Props & StateProps> {
             />
             <PrivateRoute
               path="/bookmarked-collections"
-              component={BookmarkedCollectionListView}
+              component={BookmarkedCollectionListLazyView}
               exact={true}
             />
             <PrivateRoute
@@ -115,16 +118,16 @@ class BoclipsRouter extends Component<Props & StateProps> {
             />
             <PrivateRoute
               path="/our-subjects"
-              component={SubjectsView}
+              component={SubjectsLazyView}
               exact={true}
             />
             <PrivateRoute
               path="/account-settings"
-              component={AccountSettingsView}
+              component={AccountSettingsLazyView}
               exact={true}
             />
             <PrivateRoute path="/">
-              <HomeView />
+              <HomeLazyView />
             </PrivateRoute>
           </Switch>
         </ScrollToTopOnForwardNavigation>

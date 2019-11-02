@@ -10,20 +10,20 @@ import {
   MockStoreFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
-import AccountSettings from '../../components/account/accountSettings/AccountSettings';
-import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
-import { CreateAccountView } from '../account/CreateAccountView';
-import { OnboardingView } from '../account/OnboardingView';
-import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
-import CollectionDetailsView from '../collection/CollectionDetailsView';
-import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
-import MyCollectionListView from '../collection/MyCollectionListView';
+import { AccountSettingsLazyView } from '../account/AccountSettingsLazyView';
+import { CreateAccountLazyView } from '../account/CreateAccountLazyView';
+import { OnboardingLazyView } from '../account/OnboardingLazyView';
+import { BookmarkedCollectionListLazyView } from '../collection/BookmarkedCollectionListLazyView';
+import { CollectionDetailsLazyView } from '../collection/CollectionDetailsLazyView';
+import { DiscoverCollectionsLazyView } from '../collection/DiscoverCollectionsLazyView';
+import { MyCollectionListLazyView } from '../collection/MyCollectionListLazyView';
 import { PublicCollectionListView } from '../collection/PublicCollectionListView';
-import HomeView from '../home/HomeView';
-import LoggedOutView from '../loggedout/LoggedOutView';
-import SearchResultsView from '../searchResults/SearchResultsView';
-import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import { SubjectsLazyView } from '../collection/SubjectsLazyView';
+import { HomeLazyView } from '../home/HomeLazyView';
+import { LoggedOutLazyView } from '../loggedout/LoggedOutLazyView';
+import { SearchResultsLazyView } from '../searchResults/SearchResultsLazyView';
+import { VideoDetailsLazyView } from '../videoDetails/VideoDetailsLazyView';
 import BoclipsRouter from './BoclipsRouter';
 
 test('shows video details view on /videos/{id}', () => {
@@ -35,7 +35,7 @@ test('shows video details view on /videos/{id}', () => {
     </Provider>,
   );
 
-  const videoDetailsView = wrapper.find(VideoDetailsView);
+  const videoDetailsView = wrapper.find(VideoDetailsLazyView);
   expect(videoDetailsView).toExist();
   expect(videoDetailsView).toHaveProp('videoId', '123');
 });
@@ -65,7 +65,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(SearchResultsView);
+    const videoDetailsView = wrapper.find(SearchResultsLazyView);
     expect(videoDetailsView).toExist();
   });
 
@@ -104,7 +104,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(HomeView);
+    const videoDetailsView = wrapper.find(HomeLazyView);
     expect(videoDetailsView).toExist();
   });
 
@@ -117,7 +117,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(MyCollectionListView);
+    const collectionsView = wrapper.find(MyCollectionListLazyView);
     expect(collectionsView).toExist();
   });
 
@@ -145,7 +145,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(DiscoverCollectionsView);
+    const collectionsView = wrapper.find(DiscoverCollectionsLazyView);
     expect(collectionsView).toExist();
     expect(collectionsView).toHaveProp('subjectIds', ['maths']);
     expect(collectionsView).toHaveProp('disciplineId', undefined);
@@ -166,7 +166,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(DiscoverCollectionsView);
+    const collectionsView = wrapper.find(DiscoverCollectionsLazyView);
     expect(collectionsView).toExist();
     expect(collectionsView).toHaveProp('subjectIds', ['maths', 'myths']);
     expect(collectionsView).toHaveProp('disciplineId', 'stuff');
@@ -181,7 +181,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(BookmarkedCollectionListView);
+    const collectionsView = wrapper.find(BookmarkedCollectionListLazyView);
     expect(collectionsView).toExist();
   });
 
@@ -194,7 +194,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(CreateAccountView);
+    const collectionsView = wrapper.find(CreateAccountLazyView);
     expect(collectionsView).toExist();
   });
 
@@ -207,7 +207,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const view = wrapper.find(OnboardingView);
+    const view = wrapper.find(OnboardingLazyView);
     expect(view).toExist();
   });
 
@@ -220,7 +220,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(CollectionDetailsView);
+    const videoDetailsView = wrapper.find(CollectionDetailsLazyView);
     expect(videoDetailsView).toExist();
   });
 
@@ -246,7 +246,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const subjectView = wrapper.find(DisciplineCardList);
+    const subjectView = wrapper.find(SubjectsLazyView);
     expect(subjectView).toExist();
   });
 
@@ -259,7 +259,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const accountEditForm = wrapper.find(AccountSettings);
+    const accountEditForm = wrapper.find(AccountSettingsLazyView);
     expect(accountEditForm).toExist();
   });
 });
@@ -274,7 +274,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(SearchResultsView);
+    const videoDetailsView = wrapper.find(SearchResultsLazyView);
     expect(videoDetailsView).not.toExist();
   });
 
@@ -287,7 +287,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(HomeView);
+    const videoDetailsView = wrapper.find(HomeLazyView);
     expect(videoDetailsView).not.toExist();
   });
 
@@ -300,7 +300,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(MyCollectionListView);
+    const collectionsView = wrapper.find(MyCollectionListLazyView);
     expect(collectionsView).not.toExist();
   });
 
@@ -313,7 +313,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const videoDetailsView = wrapper.find(CollectionDetailsView);
+    const videoDetailsView = wrapper.find(CollectionDetailsLazyView);
     expect(videoDetailsView).not.toExist();
   });
 
@@ -326,7 +326,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const loggedOutView = wrapper.find(LoggedOutView);
+    const loggedOutView = wrapper.find(LoggedOutLazyView);
     expect(loggedOutView).toExist();
   });
 
@@ -339,7 +339,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const ourSubjectsView = wrapper.find(DisciplineCardList);
+    const ourSubjectsView = wrapper.find(SubjectsLazyView);
     expect(ourSubjectsView).not.toExist();
   });
 
@@ -352,7 +352,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const accountEditForm = wrapper.find(AccountSettings);
+    const accountEditForm = wrapper.find(AccountSettingsLazyView);
     expect(accountEditForm).not.toExist();
   });
 });
