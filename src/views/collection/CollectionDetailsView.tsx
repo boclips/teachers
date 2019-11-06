@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 
 import CollectionsLoaded from '../../components/collection/CollectionsLoaded';
-import CollectionDetails from '../../components/collection/details/CollectionDetails';
-import CollectionHeader from '../../components/collection/header/CollectionHeader';
+import CollectionDetails, {
+  CollectionDetailsSkeleton,
+} from '../../components/collection/details/CollectionDetails';
 import PageLayout from '../../components/layout/PageLayout';
-import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import './CollectionDetailsView.less';
 
 interface Props {
@@ -16,22 +16,11 @@ export class CollectionDetailsView extends PureComponent<Props> {
     return (
       <PageLayout showSearchBar={true} showFooter={true} showNavigation={true}>
         <section data-qa="collection-page">
-          <CollectionsLoaded
-            showWhenLoading={this.renderCollectionPlaceholders()}
-          >
+          <CollectionsLoaded showWhileLoading={CollectionDetailsSkeleton}>
             <CollectionDetails collectionId={this.props.collectionId} />
           </CollectionsLoaded>
         </section>
       </PageLayout>
-    );
-  }
-
-  public renderCollectionPlaceholders() {
-    return (
-      <section className="collection-view-placeholders">
-        <CollectionHeader.Skeleton />
-        <VideoCardsPlaceholder />
-      </section>
     );
   }
 }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import State from '../../types/State';
 
 interface Props {
-  showWhenLoading: React.ReactNode;
+  showWhileLoading: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -14,7 +14,7 @@ interface StateProps {
 class CollectionsLoaded extends PureComponent<Props & StateProps> {
   public render() {
     return this.props.loading
-      ? this.props.showWhenLoading
+      ? this.props.showWhileLoading
       : this.props.children || null;
   }
 }

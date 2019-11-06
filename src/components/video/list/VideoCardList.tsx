@@ -21,26 +21,24 @@ interface CollectionProps extends Props {
 class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
-      <React.Fragment>
-        <TransitionGroup exit={true}>
-          {this.props.videos.map((video, index) => {
-            return (
-              <CSSTransition
-                key={video ? video.id : index}
-                classNames="card-list"
-                timeout={500}
-              >
-                <VideoCard
-                  video={video}
-                  userId={this.props.userId}
-                  currentCollection={this.props.currentCollection}
-                  videoIndex={index}
-                />
-              </CSSTransition>
-            );
-          })}
-        </TransitionGroup>
-      </React.Fragment>
+      <TransitionGroup exit={true}>
+        {this.props.videos.map((video, index) => {
+          return (
+            <CSSTransition
+              key={video ? video.id : index}
+              classNames="card-list"
+              timeout={500}
+            >
+              <VideoCard
+                video={video}
+                userId={this.props.userId}
+                currentCollection={this.props.currentCollection}
+                videoIndex={index}
+              />
+            </CSSTransition>
+          );
+        })}
+      </TransitionGroup>
     );
   }
 }

@@ -14,7 +14,7 @@ it('renders loading component when loading is true', () => {
 
   const wrapper = mount(
     <Provider store={store}>
-      <CollectionsLoaded showWhenLoading={<div>HELLO</div>}>
+      <CollectionsLoaded showWhileLoading={<div>HELLO</div>}>
         not rendered
       </CollectionsLoaded>
     </Provider>,
@@ -30,7 +30,7 @@ it('renders loading component when loading is true', () => {
 
   const wrapper = mount(
     <Provider store={store}>
-      <CollectionsLoaded showWhenLoading={'not rendered'}>
+      <CollectionsLoaded showWhileLoading={'not rendered'}>
         <div>HELLO</div>
       </CollectionsLoaded>
     </Provider>,

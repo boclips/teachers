@@ -33,7 +33,7 @@ export class CollectionCardList extends React.PureComponent<
         )}
 
         <Row gutter={20}>
-          <CollectionsLoaded showWhenLoading={this.renderLoading()}>
+          <CollectionsLoaded showWhileLoading={this.renderLoading()}>
             {this.props.collections &&
               (this.props.infiniteScroll ? (
                 <InfiniteScroll

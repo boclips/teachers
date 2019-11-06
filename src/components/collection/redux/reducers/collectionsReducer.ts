@@ -2,7 +2,10 @@ import {
   actionHandler,
   ActionHandler,
 } from '../../../../app/redux/createReducer';
-import State, { CollectionsStateValue } from '../../../../types/State';
+import State, {
+  CollectionsStateValue,
+  isMyCollection,
+} from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
@@ -123,3 +126,18 @@ export const getCollectionsByIds = (
   collectionIds: string[],
 ): VideoCollection[] =>
   collectionIds.map(id => state.entities.collections.byId[id]);
+
+export const getCollectionById = (
+  state: State,
+  collectionId: string,
+): VideoCollection => {
+  if (isMyCollection(state.collections.myCollections.items, collectionId)) {
+    return state.entities.collections.byId[collectionId];
+  }
+
+  if (state.collections.collectionIdBeingViewed === null) {
+    return null;
+  }
+
+  return state.entities.collections.byId[collectionId];
+};
