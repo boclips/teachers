@@ -17,63 +17,65 @@ const { Content } = Layout;
 export default class HomeView extends PureComponent {
   public render() {
     return (
-      <section className="home-page">
-        <section className="search-section">
-          <PageLayout data-qa="home-page" showNavigation={true}>
-            <Row>
-              <Col
-                xs={{ span: 22, offset: 1 }}
-                md={{ span: 18, offset: 3 }}
-                xl={{ span: 14, offset: 5 }}
-              >
-                <section className="home-search">
-                  <section className="home-searchbar">
-                    <label>I'm looking for:</label>
-                    <SearchBar />
+      <React.Fragment>
+        <section className="home-page">
+          <section className="search-section">
+            <PageLayout title="Home" data-qa="home-page" showNavigation={true}>
+              <Row>
+                <Col
+                  xs={{ span: 22, offset: 1 }}
+                  md={{ span: 18, offset: 3 }}
+                  xl={{ span: 14, offset: 5 }}
+                >
+                  <section className="home-search">
+                    <section className="home-searchbar">
+                      <label>I'm looking for:</label>
+                      <SearchBar />
+                    </section>
                   </section>
-                </section>
-              </Col>
-            </Row>
-          </PageLayout>
-        </section>
+                </Col>
+              </Row>
+            </PageLayout>
+          </section>
 
-        <section className="disciplines-section">
-          <Content>
-            <Row>
-              <Col>
-                <DisciplineCardList limit={4} />
-              </Col>
-            </Row>
-          </Content>
-        </section>
+          <section className="disciplines-section">
+            <Content>
+              <Row>
+                <Col>
+                  <DisciplineCardList limit={4} />
+                </Col>
+              </Row>
+            </Content>
+          </section>
 
-        <section className="discovery-section">
-          <Content>
-            <Row>
-              <Col>
-                <section className="home-collections">
-                  <PublicCollectionsGrid
-                    maxNumberOfCollections={6}
-                    description="Explore our curated collections made to engage students of all ages and enrich learning opportunities in the classroom."
-                  />
-                </section>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <section className="more-collections">
-                  <Link to="/public-collections" onClick={this.track}>
-                    <Button htmlType="button" size="large">
-                      Explore more collections
-                    </Button>
-                  </Link>
-                </section>
-              </Col>
-            </Row>
-          </Content>
+          <section className="discovery-section">
+            <Content>
+              <Row>
+                <Col>
+                  <section className="home-collections">
+                    <PublicCollectionsGrid
+                      maxNumberOfCollections={6}
+                      description="Explore our curated collections made to engage students of all ages and enrich learning opportunities in the classroom."
+                    />
+                  </section>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <section className="more-collections">
+                    <Link to="/public-collections" onClick={this.track}>
+                      <Button htmlType="button" size="large">
+                        Explore more collections
+                      </Button>
+                    </Link>
+                  </section>
+                </Col>
+              </Row>
+            </Content>
+          </section>
+          <BoclipsFooter />
         </section>
-        <BoclipsFooter />
-      </section>
+      </React.Fragment>
     );
   }
 

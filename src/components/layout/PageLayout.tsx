@@ -2,6 +2,7 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import { Helmet } from 'react-helmet';
 import BoclipsFooter from '../common/BoclipsFooter';
 import MobileBottomNavbar from './navigation/MobileBottomNavbar';
 import TopNavbarContainer from './navigation/TopNavbarContainer';
@@ -16,6 +17,7 @@ interface Props {
   showFooter?: boolean;
   showNavigation?: boolean;
   subheader?: React.ReactFragment;
+  title?: string;
   ['data-qa']?: string;
 }
 
@@ -23,6 +25,9 @@ class PageLayout extends PureComponent<Props> {
   public render() {
     return (
       <Layout className="page-layout">
+        <Helmet>
+          <title>{this.props.title}</title>
+        </Helmet>
         <section data-qa={this.props['data-qa']}>
           <Header className="top-search-bar fixed">
             <TopNavbarContainer

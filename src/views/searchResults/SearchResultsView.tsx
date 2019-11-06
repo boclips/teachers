@@ -43,6 +43,7 @@ class SearchResultsView extends React.PureComponent<
   public render() {
     return (
       <PageLayout
+        title={`"${this.props.videoResults.query}"`}
         showTabs={true}
         showNavigation={true}
         showFooter={true}

@@ -8,6 +8,7 @@ export class AccountSettingsView extends PureComponent {
   public render() {
     return (
       <PageLayout
+        title="Settings"
         showFooter={true}
         showNavigation={true}
         showSearchBar={true}

@@ -39,9 +39,16 @@ export class DiscoverCollectionsView extends PureComponent<
       return null; // TODO loading vs not found kind of business
     }
 
+    let pageTitle = this.props.discipline.name;
+
+    if (this.props.subjects && this.props.subjects.length === 1) {
+      pageTitle += ` > ${this.props.subjects[0].name}`;
+    }
+
     return (
       <section>
         <PageLayout
+          title={pageTitle}
           showNavigation={true}
           showSearchBar={true}
           showFooter={true}

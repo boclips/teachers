@@ -6,7 +6,7 @@ import './CreateAccountView.less';
 export class CreateAccountView extends PureComponent {
   public render() {
     return (
-      <PageLayout showFooter={true}>
+      <PageLayout title="Create Account" showFooter={true}>
         <section className="create-account" data-qa="create-account-page">
           <CreateAccountForm />
         </section>

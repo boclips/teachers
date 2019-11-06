@@ -5,6 +5,7 @@ import {
 } from 'connected-react-router';
 import { History } from 'history';
 import React, { PureComponent } from 'react';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import reduceReducers from 'reduce-reducers';
 import {
@@ -140,11 +141,17 @@ export default class App extends PureComponent<Props> {
 
   public render() {
     return (
-      <Provider store={this.store}>
-        <LinkLoader>
-          <BoclipsRouter history={this.props.history} />
-        </LinkLoader>
-      </Provider>
+      <React.Fragment>
+        <Helmet
+          defaultTitle="Boclips for teachers"
+          titleTemplate="%s - Boclips for teachers"
+        />
+        <Provider store={this.store}>
+          <LinkLoader>
+            <BoclipsRouter history={this.props.history} />
+          </LinkLoader>
+        </Provider>
+      </React.Fragment>
     );
   }
 }

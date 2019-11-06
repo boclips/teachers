@@ -11,7 +11,12 @@ import './MyCollectionListView.less';
 export default class MyCollectionListView extends PureComponent {
   public render() {
     return (
-      <PageLayout showSearchBar={true} showNavigation={true} showFooter={true}>
+      <PageLayout
+        title="Your Collections"
+        showSearchBar={true}
+        showNavigation={true}
+        showFooter={true}
+      >
         <section className="collection-list" data-qa="collection-list-page">
           {this.renderContent()}
         </section>

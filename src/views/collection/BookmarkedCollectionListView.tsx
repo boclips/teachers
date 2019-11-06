@@ -5,7 +5,12 @@ import PageLayout from '../../components/layout/PageLayout';
 export class BookmarkedCollectionListView extends PureComponent {
   public render() {
     return (
-      <PageLayout showFooter={true} showNavigation={true} showSearchBar={true}>
+      <PageLayout
+        title="Your Bookmarks"
+        showFooter={true}
+        showNavigation={true}
+        showSearchBar={true}
+      >
         <section
           className="bookmarked-collection-list collection-list"
           data-qa="bookmarked-collection-list-page"
