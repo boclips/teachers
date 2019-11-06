@@ -4,6 +4,7 @@ import {
   countriesResponse,
   disciplinesResponse,
   links,
+  promotedResponse,
   schoolsResponse,
   subjectsResponse,
   tagsResponse,
@@ -80,6 +81,14 @@ export default class ApiStub {
     MockFetchVerify.get(
       `${this.prefix}/v1/videos/${options.video.id}`,
       JSON.stringify(options.video),
+    );
+    return this;
+  }
+
+  public fetchPromoted(result = promotedResponse()) {
+    MockFetchVerify.get(
+      new RegExp(`/v1/videos?.*&promoted=true`),
+      JSON.stringify(result),
     );
     return this;
   }

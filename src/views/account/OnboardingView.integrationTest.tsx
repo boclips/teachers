@@ -1,11 +1,6 @@
-import {
-  links,
-  userResponse,
-  videosResponse,
-} from '../../../test-support/api-responses';
+import { links, userResponse } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import eventually from '../../../test-support/eventually';
-import { VideoResourceFactory } from '../../../test-support/factories';
 import MockFetchVerify, {
   axiosMock,
 } from '../../../test-support/MockFetchVerify';
@@ -37,12 +32,7 @@ describe('When user is not activated', () => {
       .fetchSchools('ES', 'school')
       .fetchPublicCollections()
       .fetchVideo()
-      .queryVideos({
-        results: videosResponse([
-          VideoResourceFactory.sample({ title: 'hello', promoted: true }),
-        ]),
-        promoted: true,
-      })
+      .fetchPromoted()
       .fetchSubjects();
 
     const onboardingPage = await OnboardingPage.navigateToOnboarding();

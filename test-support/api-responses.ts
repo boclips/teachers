@@ -86,11 +86,11 @@ export const video177 = Object.freeze({
   },
   badges: ['ad-free'],
   bestFor: { label: 'Hook' },
+  promoted: true,
   type: {
     name: 'educational',
     id: 1,
   },
-  promoted: true,
 });
 
 const video147 = Object.freeze({
@@ -159,6 +159,10 @@ export function videosResponse(data: any[]) {
       number: 0,
     },
   };
+}
+
+export function promotedResponse() {
+  return this.videosResponse([video177, video147]);
 }
 
 export function collectionResponse(

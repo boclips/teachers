@@ -14,12 +14,7 @@ describe('Home page', () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
-      .queryVideos({
-        results: videosResponse([
-          VideoResourceFactory.sample({ title: 'hello', promoted: true }),
-        ]),
-        promoted: true,
-      })
+      .fetchPromoted()
       .fetchPublicCollections()
       .fetchCollections();
 
@@ -38,12 +33,7 @@ describe('Home page', () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
-      .queryVideos({
-        results: videosResponse([
-          VideoResourceFactory.sample({ title: 'hello', promoted: true }),
-        ]),
-        promoted: true,
-      })
+      .fetchPromoted()
       .fetchPublicCollections()
       .fetchDisciplines()
       .fetchCollections();
@@ -62,12 +52,7 @@ describe('Home page', () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
-      .queryVideos({
-        results: videosResponse([
-          VideoResourceFactory.sample({ title: 'hello', promoted: true }),
-        ]),
-        promoted: true,
-      })
+      .fetchPromoted()
       .fetchPublicCollections(
         collectionsResponse(
           [video177],
@@ -90,20 +75,14 @@ describe('Home page', () => {
 
     new ApiStub()
       .defaultUser()
-      .queryVideos({
-        results: videosResponse([
+      .fetchVideo()
+      .fetchPublicCollections()
+      .fetchCollections()
+      .fetchPromoted(
+        videosResponse([
           VideoResourceFactory.sample({ title: 'hello', promoted: true }),
         ]),
-        promoted: true,
-      })
-      .fetchVideo()
-      .fetchPublicCollections(
-        collectionsResponse(
-          [video177],
-          [{ id: '1', name: null }, { id: '2', name: null }],
-        ),
-      )
-      .fetchCollections();
+      );
 
     homePage = await HomePage.load();
 
