@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  errors: FormError[];
+  errors: ScreenReaderError[];
 }
 
 export class ScreenReaderErrors extends React.Component<Props> {
@@ -32,7 +32,7 @@ export class ScreenReaderErrors extends React.Component<Props> {
   }
 }
 
-interface FormError {
+export interface ScreenReaderError {
   field: string;
   message: string;
 }

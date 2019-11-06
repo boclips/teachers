@@ -13,7 +13,7 @@ import CreateAccountForm from './CreateAccountForm';
 
 jest.mock('boclips-js-security');
 
-describe('Google SSO button', () => {
+describe('create account form', () => {
   let wrapper;
   const store = MockStoreFactory.sample({
     router: RouterFactory.sample(),
@@ -29,44 +29,31 @@ describe('Google SSO button', () => {
     );
   });
 
-  it('when the button is clicked, the identity provider is called', () => {
-    const googleSsoButton = wrapper
-      .find(By.dataQa('google-button'))
-      .hostNodes();
+  describe('Google SSO button', () => {
+    it('when the button is clicked, the identity provider is called', () => {
+      const googleSsoButton = wrapper
+        .find(By.dataQa('google-button'))
+        .hostNodes();
 
-    googleSsoButton.simulate('click');
+      googleSsoButton.simulate('click');
 
-    expect(store.getActions()).toContainEqual(
-      requestSsoAuthentication('google'),
-    );
-  });
-});
-
-describe('Microsoft SSO button', () => {
-  let wrapper;
-  const store = MockStoreFactory.sample({
-    router: RouterFactory.sample(),
-    links: LinksFactory.sample(),
-  });
-  beforeEach(() => {
-    wrapper = mount(
-      <Provider store={store}>
-        <Router>
-          <CreateAccountForm />
-        </Router>
-      </Provider>,
-    );
+      expect(store.getActions()).toContainEqual(
+        requestSsoAuthentication('google'),
+      );
+    });
   });
 
-  it('when the button is clicked, the identity provider is called', () => {
-    const microsoftSsoButton = wrapper
-      .find(By.dataQa('microsoft-button'))
-      .hostNodes();
+  describe('Microsoft SSO button', () => {
+    it('when the button is clicked, the identity provider is called', () => {
+      const microsoftSsoButton = wrapper
+        .find(By.dataQa('microsoft-button'))
+        .hostNodes();
 
-    microsoftSsoButton.simulate('click');
+      microsoftSsoButton.simulate('click');
 
-    expect(store.getActions()).toContainEqual(
-      requestSsoAuthentication('microsoft'),
-    );
+      expect(store.getActions()).toContainEqual(
+        requestSsoAuthentication('microsoft'),
+      );
+    });
   });
 });

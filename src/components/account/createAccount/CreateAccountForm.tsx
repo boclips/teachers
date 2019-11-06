@@ -17,6 +17,10 @@ import { RegistrationContext } from '../../../services/session/RegistrationConte
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
 import { Links } from '../../../types/Links';
 import State from '../../../types/State';
+import {
+  ScreenReaderError,
+  ScreenReaderErrors,
+} from '../../common/a11y/ScreenReaderErrors';
 import { extractQueryParam } from '../referral/extractQueryParam';
 import { CaptchaNotice } from './CaptchaNotice';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
@@ -38,6 +42,7 @@ interface InternalState {
   confirmDirty: boolean;
   creating: boolean;
   renderRecaptcha: boolean;
+  screenReaderErrors: ScreenReaderError[];
 }
 
 interface DispatchProps {
@@ -53,6 +58,7 @@ class CreateAccountForm extends React.Component<
     confirmDirty: false,
     creating: false,
     renderRecaptcha: true,
+    screenReaderErrors: null,
   };
 
   public componentDidMount() {
@@ -78,11 +84,20 @@ class CreateAccountForm extends React.Component<
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <section className="create-account-form__container">
+      <section
+        className="create-account-form__container"
+        data-qa="create-account-form"
+      >
         <Col xs={{ span: 0 }} lg={{ span: 12 }}>
           <RegistrationLogoSVG className="create-account__logo" />
         </Col>
         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+          {this.state.screenReaderErrors && (
+            <section className="visually-hidden">
+              <ScreenReaderErrors errors={this.state.screenReaderErrors} />
+            </section>
+          )}
+
           <Form onSubmit={this.handleSubmit}>
             <h1 className="alt create-account-form__title">Create account</h1>
 
@@ -195,9 +210,15 @@ class CreateAccountForm extends React.Component<
     this.props.onSsoLogin('microsoft');
   };
 
-  private handleSubmit = e => {
-    e.preventDefault();
-    e.stopPropagation();
+  private transformErrors = (errors: object): ScreenReaderError[] => {
+    return Object.keys(errors).map(field => {
+      return { field, message: errors[field].errors[0].message };
+    });
+  };
+
+  private handleSubmit = event => {
+    event.preventDefault();
+    event.stopPropagation();
 
     this.props.form.validateFieldsAndScroll(
       (err, values: CreateAccountRequest) => {
@@ -225,6 +246,11 @@ class CreateAccountForm extends React.Component<
                 renderRecaptcha: true,
               });
             });
+        } else {
+          this.setState({
+            ...this.state,
+            screenReaderErrors: this.transformErrors(err),
+          });
         }
       },
     );
@@ -234,7 +260,7 @@ class CreateAccountForm extends React.Component<
 function mapStateToProps(state: State): CreateAccountProps {
   const queryParam = state.router.location.search;
 
-  const utm = extraxtUtmParams(queryParam);
+  const utm = extractUtmParams(queryParam);
 
   return {
     links: state.links,
@@ -250,7 +276,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-const extraxtUtmParams = queryParam => {
+const extractUtmParams = queryParam => {
   const source = extractQueryParam(queryParam, 'utm_source');
   const term = extractQueryParam(queryParam, 'utm_term');
   const medium = extractQueryParam(queryParam, 'utm_medium');

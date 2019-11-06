@@ -27,7 +27,7 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
     },
     {
       regex: /(?=.*[A-Z])/,
-      label: '1 upercase',
+      label: '1 uppercase',
     },
     {
       regex: /(?=.*[\d])/,
@@ -126,7 +126,11 @@ function Criteria(props: CriteriaProps) {
       }
     >
       <section data-qa={valid ? 'password-success' : 'password-error'}>
-        {valid ? <SuccessSvg /> : <ErrorSvg />}
+        {valid ? (
+          <SuccessSvg aria-hidden={true} />
+        ) : (
+          <ErrorSvg aria-hidden={true} />
+        )}
         {props.children}
       </section>
     </section>
