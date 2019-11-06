@@ -1,10 +1,11 @@
-import { Col, Icon, Row } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import SubjectsSVG from '../../../resources/images/our-subjects.svg';
 import { Discipline } from '../../types/Discipline';
 import State from '../../types/State';
+import { SectionHeader } from '../common/SectionHeader';
 import { DisciplineCard } from './DisciplineCard';
 import './DisciplineCardList.less';
 
@@ -22,24 +23,14 @@ class DisciplineCardList extends React.PureComponent<
   public render() {
     return (
       <section className="discipline-card-list__container">
-        <h1 className="big-title alt discipline-card-list__title">
-          <Icon
-            component={SubjectsSVG}
-            className="discipline-card-list__icon"
-          />{' '}
-          Our subjects
-        </h1>
-
-        <p
-          className={
-            'discipline-card-list__description display-tablet-and-desktop'
+        <SectionHeader
+          title={'Our subjects'}
+          description={
+            "Browse our range of videos for the subjects that you teach and find collections tailored to your students' needs."
           }
-        >
-          Browse our range of videos for the subjects that you teach and find
-          collections tailored to your students' needs.
-        </p>
-
-        <Row gutter={20}>
+          image={SubjectsSVG}
+        />
+        <Row className="discipline-card-list__grid" gutter={20}>
           {this.props.disciplines && this.props.disciplines.length
             ? this.renderDisciplines()
             : this.renderLoading()}
@@ -61,7 +52,7 @@ class DisciplineCardList extends React.PureComponent<
                   timeout={500}
                   key={discipline.id}
                 >
-                  <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
+                  <Col xs={{ span: 24 }} md={{ span: 12 }}>
                     <DisciplineCard discipline={discipline} />
                   </Col>
                 </CSSTransition>

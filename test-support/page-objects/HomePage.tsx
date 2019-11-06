@@ -47,6 +47,16 @@ export class HomePage {
       });
   }
 
+  public getVideos(): Video[] {
+    return this.wrapper
+      .find(By.dataQa('recommended-video'))
+      .map(videoPreview => {
+        return {
+          title: videoPreview.find(By.dataQa('recommended-video-title')).text(),
+        };
+      });
+  }
+
   public getDisciplines(): Discipline[] {
     return this.wrapper.find(By.dataQa('discipline-card')).map(card => {
       const subjectWrapper = card.find(By.dataQa('discipline-subject'));
@@ -57,6 +67,10 @@ export class HomePage {
       };
     });
   }
+}
+
+interface Video {
+  title: string;
 }
 
 interface Collection {

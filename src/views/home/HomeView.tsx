@@ -12,6 +12,7 @@ import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import PublicCollectionsGrid from '../../components/collection/grid/public/PublicCollectionsGrid';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import './HomeView.less';
+import HomeViewVideoList from './HomeViewVideoList';
 
 const { Content } = Layout;
 export default class HomeView extends PureComponent {
@@ -20,7 +21,7 @@ export default class HomeView extends PureComponent {
       <React.Fragment>
         <section className="home-page">
           <section className="search-section">
-            <PageLayout title="Home" data-qa="home-page" showNavigation={true}>
+            <PageLayout data-qa="home-page" showNavigation={true}>
               <Row>
                 <Col
                   xs={{ span: 22, offset: 1 }}
@@ -29,7 +30,7 @@ export default class HomeView extends PureComponent {
                 >
                   <section className="home-search">
                     <section className="home-searchbar">
-                      <label>I'm looking for:</label>
+                      <label>I'm looking for a video about:</label>
                       <SearchBar />
                     </section>
                   </section>
@@ -37,11 +38,13 @@ export default class HomeView extends PureComponent {
               </Row>
             </PageLayout>
           </section>
-
           <section className="disciplines-section">
             <Content>
-              <Row>
-                <Col>
+              <Row gutter={60}>
+                <Col lg={{ span: 7 }}>
+                  <HomeViewVideoList />
+                </Col>
+                <Col lg={{ span: 17 }}>
                   <DisciplineCardList limit={4} />
                 </Col>
               </Row>

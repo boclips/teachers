@@ -571,6 +571,7 @@ interface VideoResource {
   };
   id: string;
   yourRating: number;
+  promoted: boolean;
 }
 
 export class VideoResourceFactory {
