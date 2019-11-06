@@ -5,7 +5,7 @@ import BookmarkEmptySVG from '../../../../../resources/images/bookmarked.svg';
 import BookmarkFilledSVG from '../../../../../resources/images/unbookmarked.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { A11yButton } from '../../../common/A11yButton';
+import { A11yButton } from '../../../common/a11y/A11yButton';
 import { bookmarkCollectionAction } from '../../redux/actions/bookmarkCollectionAction';
 import { unbookmarkCollectionAction } from '../../redux/actions/unbookmarkCollectionAction';
 import './BookmarkCollectionButton.less';

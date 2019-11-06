@@ -1,5 +1,5 @@
 import React from 'react';
-import { A11yButton } from '../../common/A11yButton';
+import { A11yButton } from '../../common/a11y/A11yButton';
 import DropdownArrow from './DropdownArrow';
 
 interface Props {
