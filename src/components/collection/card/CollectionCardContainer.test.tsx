@@ -14,7 +14,7 @@ import {
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { organizeById } from '../../../utils/entityMap';
-import { fetchVideosAction } from '../../video/redux/actions/fetchVideos';
+import { fetchVideosByIdsAction } from '../../video/redux/actions/fetchVideosByIdsAction';
 import CollectionCardContainer from './CollectionCardContainer';
 
 describe('need to fetch videos scenarios', () => {
@@ -44,7 +44,7 @@ describe('need to fetch videos scenarios', () => {
     );
 
     expect(store.getActions()).toContainEqual(
-      fetchVideosAction({
+      fetchVideosByIdsAction({
         videos: [
           {
             value: video.id,

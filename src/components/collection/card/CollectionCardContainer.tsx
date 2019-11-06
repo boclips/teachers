@@ -5,9 +5,9 @@ import State from '../../../types/State';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import {
-  fetchVideosAction,
+  fetchVideosByIdsAction,
   VideosForCollectionRequest,
-} from '../../video/redux/actions/fetchVideos';
+} from '../../video/redux/actions/fetchVideosByIdsAction';
 import { getVideosByIds } from '../../video/redux/reducers/videoReducer';
 import { CollectionCard } from './CollectionCard';
 
@@ -79,7 +79,7 @@ function mapStateToProps(state: State, props: OwnProps): StateProps {
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     fetchVideos: (request: VideosForCollectionRequest) =>
-      dispatch(fetchVideosAction(request)),
+      dispatch(fetchVideosByIdsAction(request)),
   };
 }
 

@@ -9,7 +9,7 @@ import {
 import { createReducer } from '../../../../app/redux/createReducer';
 import {
   CollectionsSearchResult,
-  VideoSearchResults,
+  VideoResults,
 } from '../../../../types/SearchResults';
 import State, {
   CollectionSearchStateValue,
@@ -89,7 +89,7 @@ describe('searching videos', () => {
 
     const video = VideoFactory.sample({ title: 'dog video' });
 
-    const searchResults: VideoSearchResults = {
+    const searchResults: VideoResults = {
       videos: [video],
       query: 'dogs',
       paging: defaultPaging,

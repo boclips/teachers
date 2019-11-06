@@ -20,6 +20,7 @@ import State, {
   Pageable,
   SearchStateValue,
   VideoSearchStateValue,
+  VideosStateValue,
 } from '../src/types/State';
 import { Subject } from '../src/types/Subject';
 import { Tag } from '../src/types/Tag';
@@ -28,6 +29,7 @@ import {
   VideoCollection,
   VideoCollectionLinks,
 } from '../src/types/VideoCollection';
+import { video177 } from './api-responses';
 
 export class VideoFactory {
   public static sample(arg: Partial<Video> = {}): Video {
@@ -54,6 +56,7 @@ export class VideoFactory {
           templated: true,
         }),
       },
+      promoted: arg.promoted || false,
     });
   }
 }
@@ -445,6 +448,15 @@ export class TagsFactory {
   }
 }
 
+export class VideosStateFactory {
+  public static sample(arg: Partial<VideosStateValue> = {}): VideosStateValue {
+    return Object.freeze({
+      promotedVideoIds: [],
+      ...arg,
+    }) as VideosStateValue;
+  }
+}
+
 export class TagFactory {
   public static sample(arg: Partial<Tag> = {}): Tag {
     return Object.freeze({
@@ -466,6 +478,7 @@ export class EntitiesFactory {
       },
       videos: {
         byId: {},
+        promotedVideos: [],
       },
       ...arg,
     });
@@ -528,7 +541,40 @@ export class MockStoreFactory {
       countries: CountriesFactory.sample(),
       disciplines: DisciplinesFactory.sample(),
       tags: TagsFactory.sample(),
+      videos: VideosStateFactory.sample(),
       ...state,
     };
   };
+}
+
+interface VideoResource {
+  bestFor: { label: string };
+  _links: {
+    logInteraction: { href: string };
+    rate: { templated: boolean; href: string };
+    self: { href: string };
+    tag: { href: string };
+  };
+  subjects: Array<{ name: string; id: string }>;
+  rating: number;
+  description: string;
+  title: string;
+  type: { name: string; id: number };
+  releasedOn: string;
+  badges: string[];
+  createdBy: string;
+  playback: {
+    streamUrl: string;
+    duration: string;
+    type: string;
+    thumbnailUrl: string;
+  };
+  id: string;
+  yourRating: number;
+}
+
+export class VideoResourceFactory {
+  public static sample(resource: Partial<VideoResource>): VideoResource {
+    return { ...video177, ...resource };
+  }
 }

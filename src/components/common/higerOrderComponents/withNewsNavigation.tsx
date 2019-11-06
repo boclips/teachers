@@ -2,13 +2,13 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { VideoSearchResults } from '../../../types/SearchResults';
+import { VideoResults } from '../../../types/SearchResults';
 import State from '../../../types/State';
 import { bulkOverrideSearchParamsAction } from '../../searchResults/redux/actions/updateSearchParametersActions';
 
 interface StateProps {
   isNewsMode: boolean;
-  results: VideoSearchResults;
+  results: VideoResults;
 }
 
 interface DispatchProps {

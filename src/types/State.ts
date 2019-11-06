@@ -66,6 +66,10 @@ export interface CollectionState {
   collections: CollectionsStateValue;
 }
 
+export interface VideosState {
+  videos: VideosStateValue;
+}
+
 export interface SubjectState {
   subjects: Subject[];
 }
@@ -101,6 +105,10 @@ export interface CollectionsStateValue {
   discoverCollections: Pageable<string>;
   bookmarkedCollections: Pageable<string>;
   collectionIdBeingViewed?: string;
+}
+
+export interface VideosStateValue {
+  promotedVideoIds: string[];
 }
 
 export interface EntitiesState {
@@ -145,6 +153,7 @@ export default interface State
     TagState,
     DisciplineState,
     EntitiesState,
-    Environment {
+    Environment,
+    VideosState {
   apiPrefix: string;
 }

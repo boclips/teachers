@@ -1,19 +1,19 @@
 import axios from 'axios';
 import DurationConverter from '../../components/searchResults/multiple-results/filters/DurationConverter';
 import { Links } from '../../types/Links';
-import { VideoSearchResults } from '../../types/SearchResults';
+import { VideoResults } from '../../types/SearchResults';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { parseVideosResponse } from './parseVideosResponse';
 
 export default function fetchVideos(
   searchRequest: VideoSearchRequest,
   links: Links,
-): Promise<VideoSearchResults> {
+): Promise<VideoResults> {
   const durationConverter = new DurationConverter();
 
   const url = links.videos.getTemplatedLink({
     query: searchRequest.query,
-    size: 10,
+    size: searchRequest.size || 10,
     page: searchRequest.page - 1,
     include_tag: searchRequest.filters.includeTags,
     exclude_tag: searchRequest.filters.excludeTags,
@@ -27,7 +27,9 @@ export default function fetchVideos(
     age_range_min: searchRequest.filters.age_range_min,
     age_range_max: searchRequest.filters.age_range_max,
     subject: searchRequest.filters.subject,
+    promoted: searchRequest.filters.promoted,
   });
+
   return axios
     .get(url)
     .then(response => parseVideosResponse(response, searchRequest.query));

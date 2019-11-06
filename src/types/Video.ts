@@ -30,6 +30,7 @@ export interface Video {
   yourRating?: number;
   links: VideoLinks;
   bestFor?: string;
+  promoted?: boolean;
 }
 
 export class StreamPlayback {

@@ -3,7 +3,7 @@ import { EditCollectionRequest } from '../../components/collection/redux/actions
 import { Attachment } from '../../types/Attachment';
 import {
   CollectionsSearchResult,
-  VideoSearchResults,
+  VideoResults,
 } from '../../types/SearchResults';
 import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
@@ -78,7 +78,7 @@ export default class AnalyticsService {
 
   public trackVideoSearch(
     searchRequest: VideoSearchRequest,
-    searchResults: VideoSearchResults,
+    searchResults: VideoResults,
   ) {
     let type;
     const isNewsExcluded = searchRequest.filters.excludeTags.find(item => {

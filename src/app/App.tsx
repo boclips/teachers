@@ -81,11 +81,12 @@ export const stateReducer: Reducer<State> = createReducer(
 const dummyApiReducer: Reducer<string> = (state = '') => state;
 const dummyRouter: Reducer<RouterState> = (state = null) => state;
 
-const subStateReducers = combineReducers({
+const subStateReducers: Reducer<State> = combineReducers({
   entities: noReducer({ collections: { byId: {} }, videos: { byId: {} } }),
   search: noReducer(initialSearchState),
   links: linksReducer,
   video: noReducer(initialVideoState),
+  videos: noReducer({ promotedVideoIds: [] }),
   user: userDetailsFetchedReducer,
   authentication: authenticationReducer,
   collections: noReducer(initialCollectionsState),

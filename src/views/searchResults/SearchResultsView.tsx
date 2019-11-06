@@ -18,7 +18,7 @@ import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-r
 import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
 import { SearchResultsSidebar } from '../../components/searchResults/SearchResultsSidebar';
 import { Links } from '../../types/Links';
-import { VideoSearchResults } from '../../types/SearchResults';
+import { VideoResults } from '../../types/SearchResults';
 import State from '../../types/State';
 import { VideoCollection } from '../../types/VideoCollection';
 import NoResultsView from './noResults/NoResultsView';
@@ -26,7 +26,7 @@ import './SearchResultsView.less';
 
 interface StateProps {
   loading: boolean;
-  videoResults: VideoSearchResults;
+  videoResults: VideoResults;
   collectionResults: VideoCollection[];
   links: Links;
   currentPage: number;

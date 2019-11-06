@@ -1,8 +1,9 @@
 export interface VideoSearchRequest {
-  query: string;
+  query?: string;
   page: number;
   filters: RequestFilters;
   sortBy: SortBy;
+  size?: number;
 }
 
 export interface RequestFilters {
@@ -13,6 +14,7 @@ export interface RequestFilters {
   age_range_min?: number;
   age_range_max?: number;
   subject?: string[];
+  promoted?: boolean;
 }
 
-export type SortBy = null | 'RELEASE_DATE';
+export type SortBy = null | 'RELEASE_DATE' | 'RANDOM';

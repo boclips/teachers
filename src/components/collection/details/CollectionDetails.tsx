@@ -10,9 +10,9 @@ import { VideoId } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
 import {
-  fetchVideosAction,
+  fetchVideosByIdsAction,
   VideosForCollectionRequest,
-} from '../../video/redux/actions/fetchVideos';
+} from '../../video/redux/actions/fetchVideosByIdsAction';
 import CollectionHeader from '../header/CollectionHeader';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
@@ -173,7 +173,7 @@ function mapDispatchToProps(
     fetchCollection: () =>
       dispatch(fetchCollectionAction(ownProps.collectionId)),
     fetchVideos: (request: VideosForCollectionRequest) =>
-      dispatch(fetchVideosAction(request)),
+      dispatch(fetchVideosByIdsAction(request)),
     storeCollectionBeingViewed: () =>
       dispatch(storeCollectionBeingViewedAction({ id: ownProps.collectionId })),
   };

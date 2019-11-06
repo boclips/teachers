@@ -5,6 +5,6 @@ export interface VideosForCollectionRequest {
   videos: VideoId[];
 }
 
-export const fetchVideosAction = actionCreatorFactory<
+export const fetchVideosByIdsAction = actionCreatorFactory<
   VideosForCollectionRequest
->('FETCH_VIDEOS');
+>('FETCH_VIDEOS_BY_IDS');

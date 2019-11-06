@@ -1,4 +1,5 @@
 import { createReducer } from '../../../../app/redux/createReducer';
+import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
 import { storeVideosAction } from '../actions/storeVideosAction';
 import {
   EntitiesFactory,
@@ -6,7 +7,11 @@ import {
   VideoFactory,
 } from './../../../../../test-support/factories';
 import { storeVideoAction } from './../actions/storeVideoAction';
-import { getVideosByIds, videoHandlers } from './videoReducer';
+import {
+  getPromotedVideos,
+  getVideosByIds,
+  videoHandlers,
+} from './videoReducer';
 
 const testReducer = createReducer(...videoHandlers);
 
@@ -43,6 +48,18 @@ describe('storing videos', () => {
       secondVideo,
     );
   });
+
+  it('can store a list of promoted videos', () => {
+    const stateBefore = MockStoreFactory.sampleState({});
+
+    const firstVideo = VideoFactory.sample({ id: 'v1' });
+    const action = storePromotedVideosAction({ promotedVideos: [firstVideo] });
+
+    const stateAfter = testReducer(stateBefore, action);
+
+    expect(stateAfter.videos.promotedVideoIds).toEqual([firstVideo.id]);
+    expect(stateAfter.entities.videos.byId[firstVideo.id]).toEqual(firstVideo);
+  });
 });
 
 describe('video selectors', () => {
@@ -66,5 +83,27 @@ describe('video selectors', () => {
     ]);
 
     expect(fetchedVideos).toEqual([firstVideo, secondVideo]);
+  });
+
+  it('can get a list of promoted videos from the store', () => {
+    const promotedVideo = VideoFactory.sample({ id: 'v1', promoted: true });
+    const notPromotedVideo = VideoFactory.sample({ id: 'v2' });
+    const state = MockStoreFactory.sampleState({
+      videos: {
+        promotedVideoIds: [promotedVideo.id],
+      },
+      entities: EntitiesFactory.sample({
+        videos: {
+          byId: {
+            [promotedVideo.id]: promotedVideo,
+            [notPromotedVideo.id]: notPromotedVideo,
+          },
+        },
+      }),
+    });
+
+    const fetchedVideos = getPromotedVideos(state);
+
+    expect(fetchedVideos).toEqual([promotedVideo]);
   });
 });

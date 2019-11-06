@@ -2,8 +2,10 @@ import { Dispatch, MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
 import { LinksState } from '../../../../types/State';
-import { VideosForCollectionRequest } from '../../../video/redux/actions/fetchVideos';
-import { fetchVideosAction } from '../../../video/redux/actions/fetchVideos';
+import {
+  fetchVideosByIdsAction,
+  VideosForCollectionRequest,
+} from '../../../video/redux/actions/fetchVideosByIdsAction';
 import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
 
 export function onFetchVideosForCollection(
@@ -23,4 +25,4 @@ export function onFetchVideosForCollection(
     .catch(console.error);
 }
 
-export default sideEffect(fetchVideosAction, onFetchVideosForCollection);
+export default sideEffect(fetchVideosByIdsAction, onFetchVideosForCollection);
