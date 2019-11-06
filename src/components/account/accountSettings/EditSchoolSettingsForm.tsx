@@ -8,7 +8,12 @@ import { UserProfile } from '../../../services/users/UserProfile';
 import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
 import { UsaState } from '../../../types/UsaState';
+import {
+  ScreenReaderError,
+  ScreenReaderErrors,
+} from '../../common/a11y/ScreenReaderErrors';
 import NotificationFactory from '../../common/NotificationFactory';
+import { transformErrors } from '../form/FormHelper';
 import { SchoolForm, UNKNOWN_SCHOOL } from '../form/SchoolForm';
 import { StatesForm } from '../form/StatesForm';
 import { updateUserAction } from './redux/actions/updateUserAction';
@@ -26,6 +31,7 @@ interface DispatchProps {
 
 interface InternalState {
   latestState: string;
+  screenReaderErrors: ScreenReaderError[];
 }
 
 export class EditSchoolSettingsFields extends React.Component<
@@ -36,12 +42,16 @@ export class EditSchoolSettingsFields extends React.Component<
     super(props);
     this.state = {
       latestState: this.props.userProfile.state.id,
+      screenReaderErrors: null,
     };
   }
 
   public render() {
     return (
       <Form data-qa="school-settings-form" className="account-settings__form">
+        {this.state.screenReaderErrors && (
+          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
+        )}
         <Row>
           <StatesForm
             form={this.props.form}
@@ -112,6 +122,11 @@ export class EditSchoolSettingsFields extends React.Component<
               description: 'Please try again or contact our support team.',
             });
           });
+      } else {
+        this.setState({
+          ...this.state,
+          screenReaderErrors: transformErrors(err),
+        });
       }
     });
   };

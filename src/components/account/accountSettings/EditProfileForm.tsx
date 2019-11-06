@@ -8,8 +8,13 @@ import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
 import { Links } from '../../../types/Links';
 import { Subject } from '../../../types/Subject';
+import {
+  ScreenReaderError,
+  ScreenReaderErrors,
+} from '../../common/a11y/ScreenReaderErrors';
 import NotificationFactory from '../../common/NotificationFactory';
 import { AgeRangeForm } from '../form/AgeRangeForm';
+import { transformErrors } from '../form/FormHelper';
 import { NameForm } from '../form/NameForm';
 import { SubjectsForm } from '../form/SubjectsForm';
 import { updateUserAction } from './redux/actions/updateUserAction';
@@ -25,12 +30,28 @@ interface DispatchProps {
   updateUser: () => {};
 }
 
+interface InternalState {
+  screenReaderErrors: ScreenReaderError[];
+}
+
 class ProfileFormFields extends React.Component<
-  Props & FormComponentProps & DispatchProps
+  Props & FormComponentProps & DispatchProps,
+  InternalState
 > {
+  constructor(props: Props & FormComponentProps & DispatchProps) {
+    super(props);
+
+    this.state = {
+      screenReaderErrors: null,
+    };
+  }
+
   public render() {
     return (
       <Form data-qa="profile-form" className="account-settings__form">
+        {this.state.screenReaderErrors && (
+          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
+        )}
         <Row>
           <NameForm
             form={this.props.form}
@@ -103,9 +124,13 @@ class ProfileFormFields extends React.Component<
 
             this.setState({
               ...this.state,
-              updating: false,
             });
           });
+      } else {
+        this.setState({
+          ...this.state,
+          screenReaderErrors: transformErrors(err),
+        });
       }
     });
   };
