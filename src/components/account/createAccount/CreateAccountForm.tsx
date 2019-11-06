@@ -21,6 +21,7 @@ import {
   ScreenReaderError,
   ScreenReaderErrors,
 } from '../../common/a11y/ScreenReaderErrors';
+import { transformErrors } from '../form/FormHelper';
 import { extractQueryParam } from '../referral/extractQueryParam';
 import { CaptchaNotice } from './CaptchaNotice';
 import { CreateAccountConfirmation } from './CreateAccountConfirmation';
@@ -93,9 +94,7 @@ class CreateAccountForm extends React.Component<
         </Col>
         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
           {this.state.screenReaderErrors && (
-            <section className="visually-hidden">
-              <ScreenReaderErrors errors={this.state.screenReaderErrors} />
-            </section>
+            <ScreenReaderErrors errors={this.state.screenReaderErrors} />
           )}
 
           <Form onSubmit={this.handleSubmit}>
@@ -210,12 +209,6 @@ class CreateAccountForm extends React.Component<
     this.props.onSsoLogin('microsoft');
   };
 
-  private transformErrors = (errors: object): ScreenReaderError[] => {
-    return Object.keys(errors).map(field => {
-      return { field, message: errors[field].errors[0].message };
-    });
-  };
-
   private handleSubmit = event => {
     event.preventDefault();
     event.stopPropagation();
@@ -249,7 +242,7 @@ class CreateAccountForm extends React.Component<
         } else {
           this.setState({
             ...this.state,
-            screenReaderErrors: this.transformErrors(err),
+            screenReaderErrors: transformErrors(err),
           });
         }
       },

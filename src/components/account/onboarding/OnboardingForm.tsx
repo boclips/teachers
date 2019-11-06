@@ -15,11 +15,16 @@ import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 import { UsaState } from '../../../types/UsaState';
+import {
+  ScreenReaderError,
+  ScreenReaderErrors,
+} from '../../common/a11y/ScreenReaderErrors';
 import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
 import { updateUserAction } from '../accountSettings/redux/actions/updateUserAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';
 import { CountriesForm } from '../form/CountriesForm';
+import { transformErrors } from '../form/FormHelper';
 import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
 import { NameForm } from '../form/NameForm';
 import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
@@ -58,6 +63,7 @@ interface InternalState {
   invisibleSlides: boolean[];
   country?: Country;
   state?: UsaState;
+  screenReaderErrors: ScreenReaderError[];
 }
 
 interface DispatchProps {
@@ -84,6 +90,7 @@ class OnboardingForm extends React.Component<
     invisibleSlides: [false, true, true, true],
     country: null,
     state: null,
+    screenReaderErrors: null,
   };
 
   public componentDidMount() {
@@ -203,6 +210,11 @@ class OnboardingForm extends React.Component<
                       better to help you get the most out of Boclips for
                       Teachers.
                     </p>
+                    {this.state.screenReaderErrors && (
+                      <ScreenReaderErrors
+                        errors={this.state.screenReaderErrors}
+                      />
+                    )}
                     <NameForm form={this.props.form} />
                     <p className="onboarding-form__notes">
                       <span className={'onboarding-form__asterisk'}>*</span>{' '}
@@ -249,6 +261,11 @@ class OnboardingForm extends React.Component<
                       We'd like to know where you teach so that we can provide
                       your community with the most relevant resources.
                     </p>
+                    {this.state.screenReaderErrors && (
+                      <ScreenReaderErrors
+                        errors={this.state.screenReaderErrors}
+                      />
+                    )}
                     <CountriesForm
                       label="Country"
                       form={this.props.form}
@@ -304,6 +321,11 @@ class OnboardingForm extends React.Component<
                       and similar products or services which may be of interest
                       to you.
                     </p>
+                    {this.state.screenReaderErrors && (
+                      <ScreenReaderErrors
+                        errors={this.state.screenReaderErrors}
+                      />
+                    )}
                     <MarketingAgreementForm form={this.props.form} />
                     <PrivacyPolicyAgreementForm form={this.props.form} />
                   </section>
@@ -369,6 +391,15 @@ class OnboardingForm extends React.Component<
       validationErrors => {
         if (!validationErrors) {
           this.state.formCarousel.next();
+          this.setState({
+            ...this.state,
+            screenReaderErrors: null,
+          });
+        } else {
+          this.setState({
+            ...this.state,
+            screenReaderErrors: transformErrors(validationErrors),
+          });
         }
       },
     );
@@ -430,6 +461,7 @@ class OnboardingForm extends React.Component<
       } else {
         this.setState({
           ...this.state,
+          screenReaderErrors: transformErrors(err),
         });
       }
     });

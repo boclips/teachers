@@ -7,14 +7,11 @@ interface Props {
 export class ScreenReaderErrors extends React.Component<Props> {
   public render() {
     return (
-      <section role="alert" aria-live="assertive">
-        {this.props.errors && (
-          <p>
-            There are {Object.keys(this.props.errors).length} errors in the
-            form.
-          </p>
-        )}
-        {this.props.errors && this.renderErrors()}
+      <section role="alert" aria-live="assertive" className="visually-hidden">
+        <p>
+          There are {Object.keys(this.props.errors).length} errors in the form.
+        </p>
+        {this.renderErrors()}
       </section>
     );
   }
