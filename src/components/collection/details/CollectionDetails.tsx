@@ -1,5 +1,6 @@
 import { Col, Row } from 'antd';
 import React, { PureComponent } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import EmptyCollectionSVG from '../../../../resources/images/empty-collection.svg';
@@ -60,6 +61,9 @@ class CollectionDetails extends PureComponent<
 
     return (
       <section className="collection-view__collection-details">
+        <Helmet>
+          <title>{this.props.collection.title}</title>
+        </Helmet>
         <CollectionHeader collection={this.props.collection} mode="details" />
         {this.props.collection.videoIds.length === 0
           ? this.renderEmptyCollection()
