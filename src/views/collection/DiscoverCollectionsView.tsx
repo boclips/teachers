@@ -74,10 +74,7 @@ export class DiscoverCollectionsView extends PureComponent<
                     )}
                   </h1>
                   <section className="discover-collections__header-logo display-tablet-and-desktop">
-                    <DisciplineLogo
-                      discipline={this.props.discipline}
-                      large={true}
-                    />
+                    <DisciplineLogo discipline={this.props.discipline} />
                   </section>
                 </section>
               </Content>
