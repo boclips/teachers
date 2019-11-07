@@ -40,11 +40,11 @@ export default class HomeView extends PureComponent {
           </section>
           <section className="disciplines-section">
             <Content>
-              <Row gutter={60}>
-                <Col lg={{ span: 7 }}>
+              <Row gutter={90}>
+                <Col lg={{ span: 8 }}>
                   <HomeViewVideoList />
                 </Col>
-                <Col lg={{ span: 17 }}>
+                <Col lg={{ span: 15 }}>
                   <DisciplineCardList limit={4} />
                   <Link
                     to={'/our-subjects'}

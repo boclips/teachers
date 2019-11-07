@@ -12,7 +12,7 @@ export class SubjectsView extends PureComponent {
         showNavigation={true}
       >
         <section data-qa="subjects-view-page">
-          <DisciplineCardList />
+          <DisciplineCardList columns={3} />
         </section>
       </PageLayout>
     );

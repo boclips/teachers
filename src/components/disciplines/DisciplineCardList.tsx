@@ -15,6 +15,7 @@ export interface DisciplineCardListProps {
 
 export interface Props {
   limit?: number;
+  columns?: number;
 }
 
 class DisciplineCardList extends React.PureComponent<
@@ -52,7 +53,10 @@ class DisciplineCardList extends React.PureComponent<
                   timeout={500}
                   key={discipline.id}
                 >
-                  <Col xs={{ span: 24 }} md={{ span: 12 }}>
+                  <Col
+                    xs={{ span: 24 }}
+                    md={{ span: 24 / this.props.columns || 12 }}
+                  >
                     <DisciplineCard discipline={discipline} />
                   </Col>
                 </CSSTransition>
@@ -68,7 +72,7 @@ class DisciplineCardList extends React.PureComponent<
         key={`sk-${count}`}
         xs={{ span: 24 }}
         md={{ span: 12 }}
-        lg={{ span: 8 }}
+        lg={{ span: 24 / this.props.columns }}
       >
         <DisciplineCard.Skeleton />
       </Col>
