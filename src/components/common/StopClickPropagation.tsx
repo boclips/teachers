@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {
   children: React.ReactNode;
-  wrapper?: 'div' | 'section' | 'span' | 'a';
+  wrapper?: 'div' | 'section' | 'span';
   wrapperProps?: { [key: string]: any };
 }
 

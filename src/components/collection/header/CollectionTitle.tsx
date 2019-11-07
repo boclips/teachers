@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 import React from 'react';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import PublicLogoSVG from '../../../../resources/images/global.svg';
 import PrivateLogoSVG from '../../../../resources/images/private.svg';
 import { VideoCollection } from '../../../types/VideoCollection';
-import StopClickPropagation from '../../common/StopClickPropagation';
 import './CollectionTitle.less';
 
-interface Props {
+interface Props extends RouteComponentProps {
   collection: VideoCollection;
 }
 
@@ -23,12 +23,9 @@ export class CollectionTitle extends React.PureComponent<Props> {
           tabIndex={0}
           className="collection-title"
         >
-          <StopClickPropagation
-            wrapper="a"
-            wrapperProps={{ href: `/collections/${this.props.collection.id}` }}
-          >
+          <Link to={`/collections/${this.props.collection.id}`}>
             {this.props.collection.title}
-          </StopClickPropagation>
+          </Link>
           {this.props.collection.isMine && (
             <Logo
               className={classnames('collection-title__logo', {
@@ -45,4 +42,4 @@ export class CollectionTitle extends React.PureComponent<Props> {
   }
 }
 
-export default CollectionTitle;
+export default withRouter(CollectionTitle);
