@@ -107,6 +107,7 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
           'current-time',
           'mute',
           'captions',
+          'fullscreen',
         ],
         addons: {
           hoverPreview: true,

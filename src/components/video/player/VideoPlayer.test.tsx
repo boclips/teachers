@@ -249,6 +249,7 @@ describe('controls are specific to the context', () => {
         'current-time',
         'mute',
         'captions',
+        'fullscreen',
       ],
     },
     {
@@ -262,6 +263,7 @@ describe('controls are specific to the context', () => {
         'current-time',
         'mute',
         'captions',
+        'fullscreen',
       ],
     },
     {
