@@ -46,6 +46,12 @@ export default class HomeView extends PureComponent {
                 </Col>
                 <Col lg={{ span: 17 }}>
                   <DisciplineCardList limit={4} />
+                  <Link
+                    to={'/our-subjects'}
+                    className={'disciplines-section__all-subjects'}
+                  >
+                    Explore all subjects >
+                  </Link>
                 </Col>
               </Row>
             </Content>
