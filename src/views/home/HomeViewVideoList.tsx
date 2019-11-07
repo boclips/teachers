@@ -27,14 +27,17 @@ export class HomeViewVideoList extends React.PureComponent<
 
   public render() {
     return (
-      <section className="home-view-video-list">
-        <SectionHeader
-          title={'Videos for you'}
-          description={'Watch a selection of some of our best videos'}
-          image={HeaderLogoSVG}
-        />
-        <VerticalVideoList videoIds={this.props.videoIds} />
-      </section>
+      this.props.videoIds &&
+      this.props.videoIds.length > 0 && (
+        <section data-qa="home-view-videos" className="home-view-video-list">
+          <SectionHeader
+            title={'Videos for you'}
+            description={'Watch a selection of some of our best videos'}
+            image={HeaderLogoSVG}
+          />
+          <VerticalVideoList videoIds={this.props.videoIds} />
+        </section>
+      )
     );
   }
 }

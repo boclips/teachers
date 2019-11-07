@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import { By } from '../../../test-support/By';
 import {
   EntitiesFactory,
   LinksFactory,
@@ -53,4 +54,33 @@ it('renders a video list with ids', () => {
   expect(wrapper.find(VerticalVideoList).props().videoIds).toEqual([
     promotedVideo.id,
   ]);
+});
+
+it('does not render if there are no promoted videos', () => {
+  const callback = jest.fn();
+  const unpromotedVideo = VideoFactory.sample({
+    promoted: false,
+  });
+  const store = MockStoreFactory.sample({
+    entities: EntitiesFactory.sample({
+      videos: {
+        byId: {
+          [unpromotedVideo.id]: unpromotedVideo,
+        },
+      },
+    }),
+    videos: {
+      promotedVideoIds: [],
+    },
+    links: LinksFactory.sample(),
+  });
+  const wrapper = mount(
+    <Provider store={store}>
+      <MemoryRouter>
+        <HomeViewVideoList fetchPromotedVideos={callback} videoIds={[]} />
+      </MemoryRouter>
+    </Provider>,
+  );
+
+  expect(wrapper.find(By.dataQa('home-view-videos'))).not.toExist();
 });
