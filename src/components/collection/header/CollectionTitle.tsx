@@ -20,6 +20,7 @@ export class CollectionTitle extends React.PureComponent<Props> {
       <section>
         <h1
           data-qa="collection-title"
+          id={this.props.collection.id}
           tabIndex={0}
           className="collection-title"
         >

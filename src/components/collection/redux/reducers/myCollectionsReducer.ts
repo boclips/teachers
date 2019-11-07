@@ -59,7 +59,10 @@ export const onMyCollectionRemoved = (
     const myCollections = draftState.collections.myCollections.items;
     myCollections.splice(
       myCollections.findIndex(id => id === removedCollection.id),
+      1,
     );
+
+    console.log(myCollections);
 
     draftState.collections.updating = false;
   });

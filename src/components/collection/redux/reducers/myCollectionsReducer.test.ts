@@ -43,17 +43,26 @@ const createInitialState = (options: {
 describe('manipulating my collections', () => {
   test('can remove from my collection', () => {
     const collection = VideoCollectionFactory.sample();
+    const otherCollection = VideoCollectionFactory.sample({
+      id: 'untouched-id',
+    });
 
     const stateBefore: State = createInitialState({
-      collectionsById: { [collection.id]: collection },
-      items: [collection.id],
+      collectionsById: {
+        [collection.id]: collection,
+        [otherCollection.id]: otherCollection,
+      },
+      items: [collection.id, otherCollection.id],
     });
 
     const action = onMyCollectionRemovedAction(collection);
 
     const stateAfter = testReducer(stateBefore, action);
 
-    expect(stateAfter.collections.myCollections.items).toHaveLength(0);
+    expect(stateAfter.collections.myCollections.items).toHaveLength(1);
+    expect(stateAfter.collections.myCollections.items).toContainEqual(
+      otherCollection.id,
+    );
     expect(
       stateAfter.entities.collections.byId[collection.id],
     ).not.toBeUndefined();

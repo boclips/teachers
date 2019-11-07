@@ -10,6 +10,7 @@ import './MyCollectionListView.less';
 
 export default class MyCollectionListView extends PureComponent {
   public render() {
+    console.log('rerendering view');
     return (
       <PageLayout
         title="Your Collections"

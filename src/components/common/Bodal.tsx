@@ -9,6 +9,7 @@ export default class Bodal extends React.Component<ModalProps> {
       <Modal
         {...this.props}
         wrapClassName={classnames('generic-modal', this.props.wrapClassName)}
+        data-qa="bodal"
       >
         {this.props.children}
       </Modal>

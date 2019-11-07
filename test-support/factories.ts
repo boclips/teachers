@@ -77,6 +77,7 @@ export class VideoCollectionFactory {
     return Object.freeze({
       id: arg.id || '',
       title: arg.title || '',
+      description: arg.description || '',
       updatedAt: arg.updatedAt || '',
       videoIds: arg.videoIds || [],
       links: arg.links || VideoCollectionLinksFactory.sample(),
