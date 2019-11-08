@@ -49,6 +49,10 @@ describe('Border radius classnames can be generated for a grid', () => {
       data.elements.forEach((element, index) => {
         const expectedClassnames = [];
 
+        if (index === 0) {
+          expectedClassnames.push('border-radius--first');
+        }
+
         if (data.topLeft === element) {
           expectedClassnames.push('border-radius--top-left');
         }
@@ -60,6 +64,10 @@ describe('Border radius classnames can be generated for a grid', () => {
         }
         if (data.bottomRight === element) {
           expectedClassnames.push('border-radius--bottom-right');
+        }
+
+        if (index === data.elements.length - 1) {
+          expectedClassnames.push('border-radius--last');
         }
 
         const classnames = generateBorderRadiusClassNames(
