@@ -9,6 +9,8 @@ import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
+import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
+
 import PublicCollectionsGrid from '../../components/collection/grid/public/PublicCollectionsGrid';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import './HomeView.less';
@@ -44,13 +46,13 @@ export default class HomeView extends PureComponent {
                 <Col lg={{ span: 8 }}>
                   <HomeViewVideoList />
                 </Col>
-                <Col lg={{ span: 15 }}>
+                <Col lg={{ span: 16 }}>
                   <DisciplineCardList limit={4} />
                   <Link
                     to={'/our-subjects'}
                     className={'disciplines-section__all-subjects'}
                   >
-                    Explore all subjects >
+                    Explore all subjects <ForwardArrowIcon />
                   </Link>
                 </Col>
               </Row>

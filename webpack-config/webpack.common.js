@@ -61,12 +61,20 @@ module.exports = {
       {
         test: /.svg$/i,
         exclude: /node_modules/,
-        loader: 'svg-react-loader',
-        options: {
-          props: {
-            role: 'img',
+        oneOf: [
+          {
+            loader: ['file-loader', 'image-webpack-loader'],
+            resourceQuery: /inline/,
           },
-        },
+          {
+            loader: 'svg-react-loader',
+            options: {
+              props: {
+                role: 'img',
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(gif|png|jpe?g)$/i,

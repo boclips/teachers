@@ -21,4 +21,8 @@ test('fetch all subjects', async () => {
   expect(subjects).toHaveLength(3);
   expect(subjects[0].id).toEqual('1');
   expect(subjects[0].name).toEqual('Maths');
+  expect(subjects[0].lessonPlan).toBeTrue();
+  expect(subjects[2].id).toEqual('3');
+  expect(subjects[2].name).toEqual('German');
+  expect(subjects[2].lessonPlan).toBeFalse();
 });

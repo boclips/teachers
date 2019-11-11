@@ -9,10 +9,12 @@ test('converts a video with stream playback', () => {
   const mathsSubject = SubjectFactory.sample({
     id: 'maths-subject-id',
     name: 'Maths',
+    lessonPlan: false,
   });
   const physicsSubject = SubjectFactory.sample({
     id: 'physics-subject-id',
     name: 'Physics',
+    lessonPlan: false,
   });
 
   expect(video.id).toEqual('177');

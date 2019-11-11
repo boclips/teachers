@@ -5,6 +5,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import SubjectsSVG from '../../../resources/images/our-subjects.svg';
 import { Discipline } from '../../types/Discipline';
 import State from '../../types/State';
+import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { DisciplineCard } from './DisciplineCard';
 import './DisciplineCardList.less';
@@ -21,6 +22,9 @@ export interface Props {
 class DisciplineCardList extends React.PureComponent<
   DisciplineCardListProps & Props
 > {
+  public static defaultProps: Partial<Props> = {
+    columns: 2,
+  };
   public render() {
     return (
       <section className="discipline-card-list__container">
@@ -46,18 +50,22 @@ class DisciplineCardList extends React.PureComponent<
         {this.props.disciplines &&
           this.props.disciplines
             .slice(0, this.props.limit || this.props.disciplines.length)
-            .map(discipline => {
+            .map((discipline, index, slicedArray) => {
               return (
                 <CSSTransition
                   classNames="card-list"
                   timeout={500}
                   key={discipline.id}
                 >
-                  <Col
-                    xs={{ span: 24 }}
-                    md={{ span: 24 / this.props.columns || 12 }}
-                  >
-                    <DisciplineCard discipline={discipline} />
+                  <Col xs={{ span: 24 }} md={{ span: 24 / this.props.columns }}>
+                    <DisciplineCard
+                      className={generateBorderRadiusClassNames(
+                        index,
+                        this.props.columns,
+                        slicedArray.length,
+                      )}
+                      discipline={discipline}
+                    />
                   </Col>
                 </CSSTransition>
               );
@@ -67,14 +75,20 @@ class DisciplineCardList extends React.PureComponent<
   }
 
   public renderLoading() {
-    return [0, 1, 2, 3, 4, 5].map(count => (
+    return [0, 1, 2, 3].map((count, _, array) => (
       <Col
         key={`sk-${count}`}
         xs={{ span: 24 }}
         md={{ span: 12 }}
         lg={{ span: 24 / this.props.columns }}
       >
-        <DisciplineCard.Skeleton />
+        <DisciplineCard.Skeleton
+          className={generateBorderRadiusClassNames(
+            count,
+            this.props.columns,
+            array.length,
+          )}
+        />
       </Col>
     ));
   }

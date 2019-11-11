@@ -25,4 +25,8 @@ test('fetch all disciplines', async () => {
   expect(disciplines[0].subjects.length).toEqual(2);
   expect(disciplines[0].subjects[0].id).toEqual('arts-subject-1');
   expect(disciplines[0].subjects[0].name).toEqual('Performing Arts');
+  expect(disciplines[0].subjects[0].lessonPlan).toBeTrue();
+  expect(disciplines[0].subjects[1].id).toEqual('arts-subject-2');
+  expect(disciplines[0].subjects[1].name).toEqual('Art History');
+  expect(disciplines[0].subjects[1].lessonPlan).toBeFalse();
 });

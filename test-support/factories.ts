@@ -312,6 +312,7 @@ export class SubjectFactory {
     return Object.freeze({
       id: arg.id || 'id',
       name: arg.name || 'name',
+      lessonPlan: arg.lessonPlan || false,
     });
   }
 }

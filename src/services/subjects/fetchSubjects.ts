@@ -5,12 +5,14 @@ import { Subject } from '../../types/Subject';
 export function fetchSubjects(links: Links): Promise<Subject[]> {
   return axios
     .get(links.subjects.getOriginalLink())
-    .then(response => response.data)
-    .then(convertSubjectsResource);
+    .then(response => response.data._embedded.subjects)
+    .then(rawSubjects => rawSubjects.map(convertSubjectResource));
 }
 
-function convertSubjectsResource(data: any) {
-  return data._embedded.subjects.map(rawSubject => {
-    return { id: rawSubject.id, name: rawSubject.name };
-  });
+export function convertSubjectResource(rawSubject: any): Subject {
+  return {
+    id: rawSubject.id,
+    name: rawSubject.name,
+    lessonPlan: rawSubject.lessonPlan,
+  };
 }

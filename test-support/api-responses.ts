@@ -73,8 +73,8 @@ export const video177 = Object.freeze({
   releasedOn: '2018-02-11T10:12:33Z',
   createdBy: 'cp1',
   subjects: [
-    { id: 'maths-subject-id', name: 'Maths' },
-    { id: 'physics-subject-id', name: 'Physics' },
+    { id: 'maths-subject-id', name: 'Maths', lessonPlan: false },
+    { id: 'physics-subject-id', name: 'Physics', lessonPlan: false },
   ],
   rating: 3,
   yourRating: 5,
@@ -294,14 +294,17 @@ export function subjectsResponse() {
         {
           id: '1',
           name: 'Maths',
+          lessonPlan: true,
         },
         {
           id: '2',
           name: 'French',
+          lessonPlan: true,
         },
         {
           id: '3',
           name: 'German',
+          lessonPlan: false,
         },
       ],
     },
@@ -439,10 +442,12 @@ export function disciplinesResponse() {
             {
               id: 'arts-subject-1',
               name: 'Performing Arts',
+              lessonPlan: true,
             },
             {
               id: 'arts-subject-2',
               name: 'Art History',
+              lessonPlan: false,
             },
           ],
         },

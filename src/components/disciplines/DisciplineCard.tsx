@@ -1,62 +1,69 @@
 import { Card } from 'antd';
+import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Discipline } from '../../types/Discipline';
 import { Subject } from '../../types/Subject';
-import './DisciplineCard.less';
 import DisciplineLogo from './DisciplineLogo';
+
+import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
+
+import './DisciplineCard.less';
 
 interface Props {
   discipline: Discipline;
+  className?: string;
 }
 
 export class DisciplineCard extends React.PureComponent<Props> {
   public render() {
+    if (!this.props.discipline) {
+      return null;
+    }
+
     return (
-      this.props.discipline && (
-        <Card
-          data-qa="discipline-card"
-          className="discipline-card__container"
-          bordered={false}
-          title={
-            <Link
-              to={`/discover-collections?discipline=${
-                this.props.discipline.id
-              }`}
-              className="link--tabbable discipline-card__link"
-            >
-              <h1 data-qa="discipline-title" className="discipline-card__title">
-                {this.props.discipline.name}
-                <span className="discipline-card__icon">
-                  <DisciplineLogo discipline={this.props.discipline} />
-                </span>
-              </h1>
-            </Link>
-          }
-        >
+      <Card
+        data-qa="discipline-card"
+        className={`discipline-card__container ${this.props.className}`}
+        bordered={false}
+        title={
+          <Link
+            to={`/discover-collections?discipline=${this.props.discipline.id}`}
+            className="link--tabbable discipline-card__link"
+          >
+            <h1 data-qa="discipline-title" className="discipline-card__title">
+              {this.props.discipline.name}
+              <span className="discipline-card__icon">
+                <DisciplineLogo discipline={this.props.discipline} />
+              </span>
+            </h1>
+          </Link>
+        }
+      >
+        {this.props.discipline.subjects && (
           <div className="discipline-card__body display-tablet-and-desktop">
             <ul className="discipline-card__subjects">
-              {this.props.discipline.subjects &&
-                this.sortSubjects(
-                  this.props.discipline.subjects.slice(0, 4),
-                ).map(subject => (
-                  <li
-                    className="discipline-card__subject-item"
-                    data-qa="discipline-subject"
-                    key={`subject-${subject.id}`}
+              {this.sortSubjects(
+                this.props.discipline.subjects.slice(0, 4),
+              ).map(subject => (
+                <li
+                  className={classnames('discipline-card__subject-item', {
+                    'discipline-card__subject-item--lesson-plan':
+                      subject.lessonPlan,
+                  })}
+                  data-qa="discipline-subject"
+                  key={`subject-${subject.id}`}
+                >
+                  <Link
+                    to={`/discover-collections?subject=${subject.id}`}
+                    className="discipline-card__subject-link link--tabbable"
                   >
-                    <Link
-                      to={`/discover-collections?subject=${subject.id}`}
-                      className="discipline-card__subject-link link--tabbable"
-                    >
-                      {subject.name}
-                    </Link>
-                  </li>
-                ))}
+                    {subject.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
-            {this.props.discipline &&
-            this.props.discipline.subjects &&
-            this.props.discipline.subjects.length > 4 ? (
+            {this.props.discipline.subjects.length > 4 ? (
               <Link
                 data-qa="view-all-subjects"
                 className="discipline-card__view-all no-underline link--tabbable"
@@ -64,20 +71,19 @@ export class DisciplineCard extends React.PureComponent<Props> {
                   this.props.discipline.id
                 }`}
               >
-                view all ({this.props.discipline.subjects.length}) >
+                view all ({this.props.discipline.subjects.length}){' '}
+                <ForwardArrowIcon />
               </Link>
             ) : null}
           </div>
-        </Card>
-      )
+        )}
+      </Card>
     );
   }
 
-  public static Skeleton = () => (
+  public static Skeleton = ({ className }: { className?: string }) => (
     <section
-      className={
-        'discipline-card__container skeleton ant-skeleton ant-skeleton-active'
-      }
+      className={`discipline-card__container skeleton ant-skeleton ant-skeleton-active ${className}`}
     >
       <section className="ant-skeleton-content">
         <h3 className="discipline-title ant-skeleton-title" />

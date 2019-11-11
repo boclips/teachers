@@ -7,7 +7,6 @@
     line-height: 28px;
     font-weight: normal;
     color: @dark-blue;
-    margin: 4px;
     a {
       color: @dark-blue;
       text-decoration: none;
@@ -33,12 +32,20 @@
   &container {
     margin-top: 20px;
     min-height: 310px;
-    max-width: 320px;
     background-color: @shade-2;
 
     .ant-card-head {
+      &-title {
+        padding-top: 24px;
+        padding-bottom: 0;
+      }
       position: relative;
       border-bottom: 0;
+      padding: 0 24px;
+    }
+
+    .ant-card-body {
+      padding: 12px 24px 24px 24px;
     }
 
     &.skeleton {
@@ -53,21 +60,42 @@
     }
   }
 
-  &subjects {
-    padding-top: 16px;
-  }
-
   &subject-item {
-    // forgive me father for I have sinned list-style-image: url("../../../resources/images/bullet.svg");
     color: @shade-4;
-    margin-bottom: 16px;
+    position: relative;
+    list-style: none;
+    padding: 10px 0 8px 0;
+    line-height: 1;
+    font-size: 16px;
+
+    &:before {
+      content: ' ';
+      position: relative;
+      height: 20px;
+      width: 15px;
+      display: inline-block;
+      margin-right: 10px;
+
+      background-image: url('resources/bullet.svg?inline');
+      background-position: center;
+      background-repeat: no-repeat;
+
+      vertical-align: middle;
+    }
+
+    &--lesson-plan:before {
+      background-image: url('resources/lesson-plan-icon.svg?inline');
+    }
   }
 
+  &subjects {
+    margin: 0;
+    padding: 0;
+  }
   &subject-link {
-    font-size: 16px;
+    vertical-align: middle;
     text-decoration: none;
     font-weight: bold;
-    line-height: 22px;
   }
 
   &view-all {
@@ -76,6 +104,14 @@
     position: absolute;
     right: 24px;
     bottom: 16px;
+
+    svg {
+      margin-left: 2px;
+
+      path {
+        fill: @dark-blue;
+      }
+    }
   }
 }
 
@@ -94,7 +130,7 @@
       }
 
       .ant-card-head {
-        border-radius: 8px;
+        border-radius: 80px;
         height: 60px;
       }
     }

@@ -79,7 +79,7 @@ describe('appending pageable collections to different keys', () => {
     });
 
     const nextCollectionLink = new Link({
-      href: 'next',
+      href: 'next-arrow.svg',
       templated: false,
     });
 
@@ -117,7 +117,7 @@ describe('appending pageable collections to different keys', () => {
     });
 
     const nextCollectionLink = new Link({
-      href: 'next',
+      href: 'next-arrow.svg',
       templated: false,
     });
 
@@ -151,7 +151,7 @@ describe('appending pageable collections to different keys', () => {
     });
 
     const nextCollectionLink = new Link({
-      href: 'next',
+      href: 'next-arrow.svg',
       templated: false,
     });
 
@@ -185,7 +185,7 @@ describe('appending pageable collections to different keys', () => {
     });
 
     const nextCollectionLink = new Link({
-      href: 'next',
+      href: 'next-arrow.svg',
       templated: false,
     });
 
