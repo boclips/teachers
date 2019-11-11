@@ -13,7 +13,7 @@ import {
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
-import { CreateAccountView } from '../account/CreateAccountView';
+import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionDetailsView from '../collection/CollectionDetailsView';
@@ -185,19 +185,6 @@ describe('when authorised', () => {
     expect(collectionsView).toExist();
   });
 
-  test('shows new account form on /create-account', () => {
-    const history = createMemoryHistory();
-
-    const wrapper = mount(
-      <Provider store={buildStore('/create-account')}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const collectionsView = wrapper.find(CreateAccountView);
-    expect(collectionsView).toExist();
-  });
-
   test('shows new account form on /onboarding', () => {
     const history = createMemoryHistory();
 
@@ -265,6 +252,19 @@ describe('when authorised', () => {
 });
 
 describe('when not authorised', () => {
+  test('shows new account form on /create-account', () => {
+    const history = createMemoryHistory();
+
+    const wrapper = mount(
+      <Provider store={buildStore('/create-account', '', false)}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const createAccountView = wrapper.find(CreateAccountView);
+    expect(createAccountView).toExist();
+  });
+
   test('does not show search results view on /videos', () => {
     const history = createMemoryHistory();
 

@@ -1,13 +1,18 @@
 import Cookies from 'js-cookie';
+import { links } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { CreateAccountPage } from '../../../test-support/page-objects/CreateAccountPage';
 import { RegistrationContextService } from '../../services/session/RegistrationContextService';
 
 describe('when view is mounted', () => {
   beforeEach(async () => {
-    await new ApiStub().defaultUser();
+    await new ApiStub({
+      _links: {
+        ...links._links,
+        createAccount: { href: 'https://api.example.com/v1/users' },
+      },
+    });
   });
-
   it('stores no cookies when no params present after page has loaded', async () => {
     await CreateAccountPage.load();
 

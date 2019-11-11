@@ -1,9 +1,21 @@
+import { replace } from 'connected-react-router';
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import CreateAccountForm from '../../components/account/createAccount/CreateAccountForm';
 import PageLayout from '../../components/layout/PageLayout';
+import State from '../../types/State';
 import './CreateAccountView.less';
 
-export class CreateAccountView extends PureComponent {
+interface StateProps {
+  canCreateAccount: boolean;
+}
+
+interface DispatchProps {
+  redirectToHomepage: () => {};
+}
+
+class CreateAccountView extends PureComponent<StateProps & DispatchProps> {
   public render() {
     return (
       <PageLayout title="Create Account" showFooter={true}>
@@ -13,4 +25,27 @@ export class CreateAccountView extends PureComponent {
       </PageLayout>
     );
   }
+
+  public componentDidMount(): void {
+    if (!this.props.canCreateAccount) {
+      this.props.redirectToHomepage();
+    }
+  }
 }
+
+function mapStateToProps(state: State): StateProps {
+  return {
+    canCreateAccount: !!state.links.createAccount,
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+  return {
+    redirectToHomepage: () => dispatch(replace('/')),
+  };
+}
+
+export default connect<StateProps, DispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateAccountView);

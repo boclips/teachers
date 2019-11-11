@@ -11,7 +11,7 @@ import PrivateRoute, {
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { RouterState } from '../../types/State';
 import { AccountSettingsView } from '../account/AccountSettingsView';
-import { CreateAccountView } from '../account/CreateAccountView';
+import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import CollectionDetailsView from '../collection/CollectionDetailsView';
