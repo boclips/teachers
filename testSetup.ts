@@ -1,4 +1,5 @@
 /* tslint:disable:no-string-literal */
+import { configure } from '@testing-library/dom';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import AxiosLogger from 'axios-logger';
@@ -55,3 +56,6 @@ jest.mock('./src/services/analytics/boclips/BoclipsAnalytics', () => {
 beforeEach(() => {
   FakeBoclipsAnalytics.reset();
 });
+
+// Setup for using @testing-library/react and @testing-library/dom
+configure({ testIdAttribute: 'data-qa' });

@@ -1,6 +1,4 @@
 import {
-  cleanup,
-  configure,
   fireEvent,
   waitForElementToBeRemoved,
   within,
@@ -20,11 +18,6 @@ import collectionMiddleware from '../../components/collection/redux/middleware/c
 import { collectionHandlers } from '../../components/collection/redux/reducers/collectionsReducer';
 import { Link } from '../../types/Link';
 import { VideoCollection } from '../../types/VideoCollection';
-
-afterEach(cleanup);
-
-// TODO should be in testSupport.ts but currently it messes up the Onboarding tests if we move it there
-configure({ testIdAttribute: 'data-qa' });
 
 describe('MyCollectionListView', () => {
   it('when user has no collections, it renders a helper message', () => {
