@@ -7,6 +7,7 @@ import DurationFormatter from '../../../common/formatters/DurationFormatter';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../../common/higerOrderComponents/withMediaBreakPoint';
+import StopClickPropagation from '../../../common/StopClickPropagation';
 import VideoPlayer from '../../../video/player/VideoPlayer';
 import './CollectionCardVideoPreview.less';
 
@@ -34,7 +35,14 @@ class CollectionCardVideoPreview extends React.PureComponent<Props> {
     return (
       <section className="collection-card-video-container">
         <section className="collection-card-video-container__inner">
-          <VideoPlayer video={this.props.video} mode="card" />
+          <StopClickPropagation
+            wrapper="section"
+            wrapperProps={{ className: 'video-preview' }}
+          >
+            <div aria-label={'video player'} tabIndex={0}>
+              <VideoPlayer video={this.props.video} mode="card" />
+            </div>
+          </StopClickPropagation>
         </section>
       </section>
     );
