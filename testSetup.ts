@@ -1,6 +1,5 @@
 /* tslint:disable:no-string-literal */
 import '@testing-library/jest-dom/extend-expect';
-import { configure } from '@testing-library/react';
 import axios from 'axios';
 import AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
@@ -12,8 +11,6 @@ import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
 
 Enzyme.configure({ adapter: new Adapter() });
-
-configure({ testIdAttribute: 'data-qa' });
 
 beforeEach(() => {
   (axios.interceptors.request as any).handlers = [];

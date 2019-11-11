@@ -62,8 +62,6 @@ export const onMyCollectionRemoved = (
       1,
     );
 
-    console.log(myCollections);
-
     draftState.collections.updating = false;
   });
 
