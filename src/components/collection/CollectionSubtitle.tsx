@@ -1,4 +1,5 @@
 import React from 'react';
+import LessonPlanSVG from '../../../resources/images/lesson-plan-icon.svg';
 import { VideoCollection } from '../../types/VideoCollection';
 import DateFormatter from '../common/formatters/DateFormatter';
 import './CollectionSubtitle.less';
@@ -14,8 +15,14 @@ export class CollectionSubtitle extends React.Component<Props> {
       <span className={this.props.classname}>
         {this.props.collection.attachments &&
           this.props.collection.attachments.length > 0 && (
-            <span className={'collection-subtitle__lesson-plan-tag'}>
-              <strong>Lesson Plan</strong> •{' '}
+            <span>
+              <span className={'collection-subtitle__lesson-plan-tag'}>
+                <strong>
+                  <LessonPlanSVG />
+                  Lesson Plan
+                </strong>
+              </span>{' '}
+              •{' '}
             </span>
           )}
         <span>
