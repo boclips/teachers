@@ -14,6 +14,7 @@ interface Props {
   numberOfPreviews: number;
   id: string;
   isGrid: boolean;
+  numberOfVideos: number;
 }
 
 class CollectionCardVideoPreviews extends React.PureComponent<
@@ -21,7 +22,7 @@ class CollectionCardVideoPreviews extends React.PureComponent<
 > {
   public render() {
     const previews = [];
-    if (this.props.videos.length === this.props.numberOfPreviews) {
+    if (this.props.numberOfVideos === this.props.numberOfPreviews) {
       previews.push(
         ...this.props.videos
           .slice(0, this.props.numberOfPreviews)
@@ -34,11 +35,12 @@ class CollectionCardVideoPreviews extends React.PureComponent<
           .map((video, index) => this.renderVideoPreview(video, index)),
       );
     }
-    if (this.props.videos.length > this.props.numberOfPreviews) {
+
+    if (this.props.numberOfVideos > this.props.numberOfPreviews) {
       previews.push(
         <CollectionCardVideoPreviewCount
           key={this.props.id + previews.length}
-          totalNumberOfVideos={this.props.videos.length}
+          totalNumberOfVideos={this.props.numberOfVideos}
           numberOfPreviews={this.props.numberOfPreviews}
         />,
       );

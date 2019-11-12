@@ -68,6 +68,7 @@ export class CollectionCard extends React.PureComponent<Props> {
           videos={this.props.videos}
           isGrid={this.props.tiny}
           id={this.props.collection.id}
+          numberOfVideos={this.props.collection.videoIds.length}
         />
         {this.props.tiny && (
           <span>

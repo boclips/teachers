@@ -1,20 +1,28 @@
+import { within } from '@testing-library/dom';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { video177 } from '../../../../test-support/api-responses';
 import ApiStub from '../../../../test-support/ApiStub';
 import {
+  CollectionsFactory,
   EntitiesFactory,
   MockStoreFactory,
   PageableCollectionsFactory,
+  RouterFactory,
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
 } from '../../../../test-support/factories';
+import MockFetchVerify from '../../../../test-support/MockFetchVerify';
+import { renderWithStore } from '../../../../test-support/renderWithStore';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { organizeById } from '../../../utils/entityMap';
 import { fetchVideosByIdsAction } from '../../video/redux/actions/fetchVideosByIdsAction';
+import { videoHandlers } from '../../video/redux/reducers/videoReducer';
+import fetchVideosForCollectionMiddleware from '../redux/middleware/fetchVideosForCollectionMiddleware';
 import CollectionCardContainer from './CollectionCardContainer';
 
 describe('need to fetch videos scenarios', () => {
@@ -93,7 +101,7 @@ describe('need to fetch videos scenarios', () => {
 });
 
 describe('does not fetch videos scenarios', () => {
-  test('does not fetch vidoes when all videos in a collection are loaded', () => {
+  test('does not fetch videos when all videos in a collection are loaded', () => {
     const video = VideoFactory.sample({ id: '123' });
 
     const collection = VideoCollectionFactory.sample({
@@ -113,7 +121,7 @@ describe('does not fetch videos scenarios', () => {
     expect(store.getActions()).toHaveLength(0);
   });
 
-  test('does not fetch vidoes when 4 videos in a collection are already loaded', () => {
+  test('does not fetch videos when 4 videos in a collection are already loaded', () => {
     const videos = [
       VideoFactory.sample({ id: '1' }),
       VideoFactory.sample({ id: '2' }),
@@ -144,6 +152,42 @@ describe('does not fetch videos scenarios', () => {
   });
 });
 
+describe('showing correct video previews', () => {
+  it('displays the correct count when there are more videos than preview slots', async () => {
+    const collection = VideoCollectionFactory.sample({
+      videoIds: generateVideoIds(6),
+    });
+
+    const initialState = {
+      router: RouterFactory.sample(),
+      entities: {
+        collections: { byId: { [collection.id]: collection } },
+        videos: { byId: { '1234': VideoFactory.sample() } },
+      },
+      collections: CollectionsFactory.sample(),
+    };
+
+    MockFetchVerify.get(
+      `v1/videos/123`,
+      JSON.stringify({ ...video177, id: '123' }),
+    );
+
+    const { getByText, getByTestId } = await renderWithStore(
+      <CollectionCardContainer collection={collection} />,
+      {
+        initialState,
+        reducers: videoHandlers,
+        middlewares: [fetchVideosForCollectionMiddleware],
+      },
+    );
+
+    expect(getByText('+')).toBeInTheDocument();
+    expect(
+      within(getByTestId('collection-video-preview-counter')).getByText('3'),
+    ).toBeInTheDocument();
+  });
+});
+
 const createMockStore = (collection: VideoCollection, videos: Video[]) => {
   return MockStoreFactory.sample({
     entities: EntitiesFactory.sample({
@@ -161,4 +205,13 @@ const createMockStore = (collection: VideoCollection, videos: Video[]) => {
       updating: false,
     },
   });
+};
+
+const generateVideoIds = (numberOfIds: number) => {
+  const arr = [];
+  for (let i = 0; i < numberOfIds; i++) {
+    arr.push(VideoIdFactory.sample());
+  }
+
+  return arr;
 };

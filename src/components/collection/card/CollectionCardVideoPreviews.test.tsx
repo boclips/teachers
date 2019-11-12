@@ -14,6 +14,7 @@ describe('when number of videos is less than the number of previews', () => {
       id="1"
       numberOfPreviews={2}
       videos={[VideoFactory.sample({ id: '1' })]}
+      numberOfVideos={1}
     />,
   );
 
@@ -34,6 +35,7 @@ describe('when more videos than number of previews', () => {
       isGrid={true}
       id="1"
       numberOfPreviews={2}
+      numberOfVideos={3}
       videos={[
         VideoFactory.sample({ id: '1' }),
         VideoFactory.sample({ id: '2' }),
@@ -64,6 +66,7 @@ describe('when exactly same number of videos as number of previews', () => {
       isGrid={true}
       id="1"
       numberOfPreviews={2}
+      numberOfVideos={2}
       videos={[
         VideoFactory.sample({ id: '1' }),
         VideoFactory.sample({ id: '2' }),
@@ -88,6 +91,7 @@ describe('below the screen-md breakpoint', () => {
       isGrid={true}
       id="1"
       numberOfPreviews={4}
+      numberOfVideos={1}
       videos={[VideoFactory.sample({ id: '1' })]}
     />,
   );

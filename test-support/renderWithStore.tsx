@@ -6,7 +6,7 @@ import { Router } from 'react-router';
 import { applyMiddleware, createStore } from 'redux';
 import { createReducer } from '../src/app/redux/createReducer';
 
-export const render = (
+export const renderWithStore = (
   ui,
   { initialState = {}, reducers = [], middlewares = [] } = {},
 ) => {

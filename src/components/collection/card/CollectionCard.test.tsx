@@ -10,7 +10,7 @@ import {
   VideoFactory,
   VideoIdFactory,
 } from '../../../../test-support/factories';
-import { render } from '../../../../test-support/render';
+import { renderWithStore } from '../../../../test-support/renderWithStore';
 import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -19,7 +19,6 @@ import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import CollectionHeader from '../header/CollectionHeader';
 import { CollectionCard, Props } from './CollectionCard';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
-import { within } from '@testing-library/react';
 
 const NUMBER_OF_PREVIEWS = 4;
 
@@ -97,7 +96,7 @@ describe('CollectionCard using testing-library', () => {
       }),
     });
 
-    const { getByText, getByTestId } = render(
+    const { getByText } = renderWithStore(
       <CollectionCard
         collection={collection}
         numberOfPreviews={4}
@@ -119,31 +118,10 @@ describe('CollectionCard using testing-library', () => {
       },
     );
 
-    const collectionCard = getByTestId('collection-card');
-
     expect(getByText('My best collection')).toBeInTheDocument();
     expect(getByText('Subject:')).toBeInTheDocument();
     expect(getByText('Maths')).toBeInTheDocument();
     expect(getByText('Ages:')).toBeInTheDocument();
     expect(getByText('4-12')).toBeInTheDocument();
-    expect(within(collectionCard).getByRole('button')).toBeInTheDocument();
   });
-
-  // 1. basic look
-  // renders title, subtitle
-  // renders actions
-  // renders video previews
-  // shows visibility (public or private)
-  // clicking on it redirects to collection page
-  // ---
-  // 2. edit click
-  // opens editor dialog
-  // changing title, submit => change reflected in card
-  // --
-  // 3. delete click
-  // opens warning dialog
-  // delete confirmation -> card is removed from dom
-  // --
-  // 4. can click on the video and start it from the card view
-  // --
 });

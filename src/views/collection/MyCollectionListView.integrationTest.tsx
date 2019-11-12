@@ -13,7 +13,7 @@ import {
   VideoCollectionLinksFactory,
 } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { render } from '../../../test-support/render';
+import { renderWithStore } from '../../../test-support/renderWithStore';
 import collectionMiddleware from '../../components/collection/redux/middleware/collectionMiddleware';
 import { collectionHandlers } from '../../components/collection/redux/reducers/collectionsReducer';
 import { Link } from '../../types/Link';
@@ -21,7 +21,7 @@ import { VideoCollection } from '../../types/VideoCollection';
 
 describe('MyCollectionListView', () => {
   it('when user has no collections, it renders a helper message', () => {
-    const { getByText } = render(<MyCollectionListView />, {
+    const { getByText } = renderWithStore(<MyCollectionListView />, {
       initialState: {
         entities: EntitiesFactory.sample(),
         collections: CollectionsFactory.sample(),
@@ -34,7 +34,7 @@ describe('MyCollectionListView', () => {
   it('when a user has a collection display title, description and action buttons and link to the collection page ', () => {
     const collection = getCollectionWithData('123');
 
-    const { getByText } = render(<MyCollectionListView />, {
+    const { getByText } = renderWithStore(<MyCollectionListView />, {
       initialState: {
         entities: EntitiesFactory.sample({
           collections: {
@@ -64,7 +64,7 @@ describe('MyCollectionListView', () => {
   it('when there are multiple collections only show my collections', () => {
     const myCollection = getCollectionWithData('123');
 
-    const { queryByText } = render(<MyCollectionListView />, {
+    const { queryByText } = renderWithStore(<MyCollectionListView />, {
       initialState: {
         entities: EntitiesFactory.sample({
           collections: {
@@ -93,14 +93,17 @@ describe('MyCollectionListView', () => {
     // intentionally not using ApiStub so we only set up what is needed
     MockFetchVerify.delete(`/v1/collections/${myCollectionToDelete.id}/delete`);
 
-    const { getAllByTestId, findByRole } = render(<MyCollectionListView />, {
-      initialState: createStateWithMyCollections([
-        myCollectionToDelete,
-        myOtherCollection,
-      ]),
-      reducers: collectionHandlers,
-      middlewares: collectionMiddleware,
-    });
+    const { getAllByTestId, findByRole } = renderWithStore(
+      <MyCollectionListView />,
+      {
+        initialState: createStateWithMyCollections([
+          myCollectionToDelete,
+          myOtherCollection,
+        ]),
+        reducers: collectionHandlers,
+        middlewares: collectionMiddleware,
+      },
+    );
 
     // Before delete
     const myCollectionsBeforeDelete = getAllByTestId('collection-card');
