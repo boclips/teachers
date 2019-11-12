@@ -16,6 +16,10 @@ class StopClickPropagation extends React.PureComponent<Props> {
     event.stopPropagation();
   };
 
+  private handleOnMouseDown = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
   private handleOnKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (
       event.key === ' ' ||
@@ -32,6 +36,7 @@ class StopClickPropagation extends React.PureComponent<Props> {
       children: this.props.children,
       onClick: this.handleOnClick,
       onKeyDown: this.handleOnKeyDown,
+      onMouseDown: this.handleOnMouseDown,
     });
   }
 }

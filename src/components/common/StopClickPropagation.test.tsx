@@ -3,9 +3,13 @@ import React from 'react';
 import StopClickPropagation from './StopClickPropagation';
 
 describe('StopClickPropagation component', () => {
-  const wrapWithStopClickPropagation = (children, onClick) => {
+  const wrapWithStopClickPropagation = (
+    children,
+    onClick,
+    onMouseDown = () => {},
+  ) => {
     return mount(
-      <div onClick={onClick}>
+      <div onClick={onClick} onMouseDown={onMouseDown}>
         <StopClickPropagation>{children}</StopClickPropagation>
       </div>,
     );
@@ -35,6 +39,22 @@ describe('StopClickPropagation component', () => {
     childSpan.simulate('click');
 
     expect(parentOnClick.mock.calls).toHaveLength(0);
+  });
+
+  it("The div has an onMouseDown listener that stops events propagating upwards to the parent, from it's children", () => {
+    const parentOnMouseDown = jest.fn();
+
+    const wrapper = wrapWithStopClickPropagation(
+      <span>Some Text</span>,
+      jest.fn(),
+      parentOnMouseDown,
+    );
+
+    const childSpan = wrapper.find('span');
+
+    childSpan.simulate('mousedown');
+
+    expect(parentOnMouseDown.mock.calls).toHaveLength(0);
   });
 
   it('Can accept multiple children', () => {
