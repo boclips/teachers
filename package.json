@@ -65,7 +65,7 @@
     "babel-loader": "^8.0.6",
     "boclips-api-client": "^0.1.1",
     "boclips-js-security": "^3.2.0",
-    "boclips-player": "^2.6.2",
+    "boclips-player": "^2.6.3",
     "boclips-player-react": "^1.0.2",
     "classnames": "^2.2.6",
     "clean-webpack-plugin": "^0.1.19",
@@ -133,6 +133,6 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
-    "@sentry/browser": "^5.0.0"
+    "@sentry/browser": "^4.6.3"
   }
 }
