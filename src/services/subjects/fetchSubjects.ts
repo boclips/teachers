@@ -1,18 +1,8 @@
-import axios from 'axios';
-import { Links } from '../../types/Links';
 import { Subject } from '../../types/Subject';
+import { getBoclipsClient } from '../apiClient';
 
-export function fetchSubjects(links: Links): Promise<Subject[]> {
-  return axios
-    .get(links.subjects.getOriginalLink())
-    .then(response => response.data._embedded.subjects)
-    .then(rawSubjects => rawSubjects.map(convertSubjectResource));
-}
+export async function fetchSubjects(): Promise<Subject[]> {
+  const client = await getBoclipsClient();
 
-export function convertSubjectResource(rawSubject: any): Subject {
-  return {
-    id: rawSubject.id,
-    name: rawSubject.name,
-    lessonPlan: rawSubject.lessonPlan,
-  };
+  return await client.subjectsClient.getAll();
 }

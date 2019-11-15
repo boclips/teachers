@@ -1,28 +1,28 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import { subjectsResponse } from '../../../test-support/api-responses';
-import { LinksFactory } from '../../../test-support/factories';
-import { Link } from '../../types/Link';
+import { FakeSubjectsClient } from 'boclips-api-client/dist/sub-clients/subjects/client/FakeSubjectsClient';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { getBoclipsClient } from '../apiClient';
 import { fetchSubjects } from './fetchSubjects';
 
-const links = LinksFactory.sample({
-  subjects: new Link({
-    href: '/v1/subjects',
-  }),
-});
+const getFakeBoclipsClient: () => Promise<FakeBoclipsClient> = async () => {
+  const client = await getBoclipsClient();
+
+  return client as FakeBoclipsClient;
+};
 
 test('fetch all subjects', async () => {
-  new MockAdapter(axios)
-    .onGet('/v1/subjects')
-    .replyOnce(200, JSON.stringify(subjectsResponse()), {});
+  const subjectClient: FakeSubjectsClient = (await getFakeBoclipsClient())
+    .subjectsClient;
 
-  const subjects = await fetchSubjects(links);
+  subjectClient.insertSubject({ id: '1', name: 'Maths', lessonPlan: true });
+  subjectClient.insertSubject({ id: '2', name: 'German', lessonPlan: false });
 
-  expect(subjects).toHaveLength(3);
+  const subjects = await fetchSubjects();
+
+  expect(subjects).toHaveLength(2);
   expect(subjects[0].id).toEqual('1');
   expect(subjects[0].name).toEqual('Maths');
   expect(subjects[0].lessonPlan).toBeTrue();
-  expect(subjects[2].id).toEqual('3');
-  expect(subjects[2].name).toEqual('German');
-  expect(subjects[2].lessonPlan).toBeFalse();
+  expect(subjects[1].id).toEqual('2');
+  expect(subjects[1].name).toEqual('German');
+  expect(subjects[1].lessonPlan).toBeFalse();
 });

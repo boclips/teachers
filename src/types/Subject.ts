@@ -1,5 +1,3 @@
-export interface Subject {
-  id: string;
-  name: string;
-  lessonPlan?: boolean;
-}
+import { Types } from 'boclips-api-client';
+
+export type Subject = Types.Subject;

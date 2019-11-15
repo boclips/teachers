@@ -5,6 +5,17 @@ export class AppConstants {
     this.window = window;
   }
 
+  get API_PREFIX(): string {
+    switch (this.ENVIRONMENT) {
+      case 'TESTING':
+        return 'https://api.testing-boclips.com';
+      case 'STAGING':
+        return 'https://api.staging-boclips.com';
+      case 'PRODUCTION':
+        return 'https://api.boclips.com';
+    }
+  }
+
   get HOST(): string {
     return (
       this.window.location.protocol +

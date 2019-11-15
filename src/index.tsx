@@ -2,10 +2,10 @@ import './index.less';
 // CSS breaks when index.less joins the rest of the imports
 
 import * as Sentry from '@sentry/browser';
-import { extractEndpoint } from 'boclips-js-security';
 import React from 'react';
 import ReactDom from 'react-dom';
 import App from './app/App';
+import { Constants } from './app/AppConstants';
 
 const environment = process.env.NODE_ENV;
 
@@ -33,6 +33,6 @@ if (environment === 'production') {
 }
 
 ReactDom.render(
-  <App apiPrefix={extractEndpoint(window.location.hostname, 'api')} />,
+  <App apiPrefix={Constants.API_PREFIX} />,
   document.getElementById('root'),
 );

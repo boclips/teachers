@@ -42,7 +42,9 @@ export class VideoFactory {
       duration: arg.duration || moment.duration(2, 'minutes'),
       releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33Z'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',
-      subjects: arg.subjects || [{ id: 'maths-subject-id', name: 'Maths' }],
+      subjects: arg.subjects || [
+        SubjectFactory.sample({ id: 'maths-subject-id', name: 'Maths' }),
+      ],
       rating: arg.rating || null,
       playback:
         (arg.playback as StreamPlayback) ||
@@ -310,7 +312,7 @@ export class CollectionsFactory {
 
 export class SubjectFactory {
   public static sample(arg: Partial<Subject> = {}): Subject {
-    return Object.freeze({
+    return Object.freeze<Subject>({
       id: arg.id || 'id',
       name: arg.name || 'name',
       lessonPlan: arg.lessonPlan || false,
@@ -328,6 +330,7 @@ export class SubjectsFactory {
       {
         id: 'subject-two-id',
         name: 'subject two',
+        lessonPlan: false,
       },
       ...arg,
     ]) as Subject[];
