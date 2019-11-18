@@ -33,10 +33,10 @@ export class DisciplineCard extends React.PureComponent<Props> {
           >
             <h1 data-qa="discipline-title" className="discipline-card__title">
               {this.props.discipline.name}
-              <span className="discipline-card__icon">
-                <DisciplineLogo discipline={this.props.discipline} />
-              </span>
             </h1>
+            <span className="discipline-card__icon">
+              <DisciplineLogo discipline={this.props.discipline} />
+            </span>
           </Link>
         }
       >

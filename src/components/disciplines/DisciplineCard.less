@@ -1,6 +1,66 @@
 @import '../../../resources/styles/_antd-theme.less';
 @import '../../../resources/styles/_colours.less';
 
+//@media (max-width: 767px) {
+//
+//  .discipline-card__icon {
+//    position: relative;
+//    font-size: initial;
+//    top: 0;
+//    right: 0;
+//  }
+//
+//  .discipline-card__container .ant-card-head-title {
+//    padding: 0;
+//  }
+//
+//  .discipline-card__container .ant-card-head {
+//    padding: 12px 20px;
+//  }
+//
+//  .discipline-card__container .ant-card-head {
+//    height: auto;
+//  }
+//
+//  .discipline-card__link {
+//    display: flex;
+//    justify-content: space-between;
+//    align-items: center;
+//  }
+//  .discipline-card__title {
+//    margin: 0;
+//  }
+//  .discipline-card__icon svg {
+//    height: 60px;
+//    width: 60px;
+//  }
+//  .disciplines-section__all-subjects {
+//    float: none;
+//    width: 100%;
+//    display: block;
+//    text-align: right;
+//  }
+//
+//  .boclips-footer__links {
+//    padding: 0;
+//    display: block;
+//  }
+//}
+//
+//.discipline-card__view-all {
+//  position: relative;
+//  display: block;
+//  text-align: right;
+//  right:0;
+//  bottom:0;
+//  margin-top: 20px;
+//}
+//
+//.top-navbar .searchbar {
+//
+//  line-height: 84px;
+//}
+
 .discipline-card__ {
   &title {
     font-size: 28px;
@@ -14,11 +74,6 @@
   }
 
   &icon {
-    font-size: 100px;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-
     svg {
       height: 75px;
       width: 75px;
@@ -27,6 +82,10 @@
 
   &link {
     text-decoration: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   &container {
@@ -45,7 +104,8 @@
     }
 
     .ant-card-body {
-      padding: 12px 24px 24px 24px;
+      padding: 0px 24px 24px 24px;
+      margin-top: -8px;
     }
 
     &.skeleton {
@@ -61,7 +121,7 @@
   }
 
   &subject-item {
-    color: @shade-4;
+    color: @shade-5;
     position: relative;
     list-style: none;
     padding: 10px 0 8px 0;
@@ -114,6 +174,16 @@
     }
   }
 }
+
+
+@media (max-width: @screen-sm-max) {
+  .discipline-card__container {
+    background-color: @shade-4;
+
+    border-radius: 8px;
+  }
+}
+
 
 @media (max-width: @screen-sm-max) {
   .discipline-card__ {

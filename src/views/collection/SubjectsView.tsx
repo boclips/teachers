@@ -1,9 +1,16 @@
 import React, { PureComponent } from 'react';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import PageLayout from '../../components/layout/PageLayout';
+import MediaBreakpoints from '../../types/MediaBreakpoints';
 
-export class SubjectsView extends PureComponent {
+class DynamicSubjectsView extends PureComponent<WithMediaBreakPointProps> {
   public render() {
+    const columns =
+      this.props.mediaBreakpoint.width > MediaBreakpoints.lg.width ? 3 : 2;
+
     return (
       <PageLayout
         title="Our Subjects"
@@ -12,9 +19,11 @@ export class SubjectsView extends PureComponent {
         showNavigation={true}
       >
         <section data-qa="subjects-view-page">
-          <DisciplineCardList columns={3} />
+          <DisciplineCardList columns={columns} />
         </section>
       </PageLayout>
     );
   }
 }
+
+export const SubjectsView = withMediaBreakPoint(DynamicSubjectsView);
