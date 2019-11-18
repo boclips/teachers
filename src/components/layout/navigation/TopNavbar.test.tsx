@@ -2,7 +2,6 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link, MemoryRouter } from 'react-router-dom';
-import { By } from '../../../../test-support/By';
 import {
   MockStoreFactory,
   UserProfileFactory,
@@ -18,12 +17,6 @@ test('renders search bar', () => {
   const wrapper = mountTopNavBarWithSearchBar();
 
   expect(wrapper.find('Connect(SearchBar)')).toExist();
-});
-
-test('renders tabs', () => {
-  const wrapper = mountTopNavBarWithTabs();
-
-  expect(wrapper.find(By.dataQa('navbar-tabs'))).toExist();
 });
 
 test('renders account menu', () => {
@@ -107,16 +100,6 @@ function mountTopNavBarWithSearchBar() {
     <Provider store={MockStoreFactory.sample({ user })}>
       <MemoryRouter>
         <TopNavbarContainer showSearchBar={true} />
-      </MemoryRouter>
-    </Provider>,
-  );
-}
-
-function mountTopNavBarWithTabs() {
-  return mount(
-    <Provider store={MockStoreFactory.sample({ user })}>
-      <MemoryRouter>
-        <TopNavbarContainer showTabs={true} />
       </MemoryRouter>
     </Provider>,
   );

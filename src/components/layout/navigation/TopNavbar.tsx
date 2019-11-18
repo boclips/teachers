@@ -6,7 +6,6 @@ import boclipsLogo from '../../../../resources/images/boclips-logo.png';
 import BoclipsMobileLogo from '../../../../resources/images/boclips-mobile-logo.svg';
 import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
-import ConnectedTabsContainer from '../tabs/TabsContainer';
 import NavbarButtonsContainer from './NavbarButtonsContainer';
 import './TopNavbar.less';
 
@@ -84,7 +83,6 @@ const TopNavbar = React.memo((props: Props) => (
           )}
         </Col>
       </Row>
-      {props.showTabs && <ConnectedTabsContainer data-qa="navbar-tabs" />}
     </Content>
   </React.Fragment>
 ));

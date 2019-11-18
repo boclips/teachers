@@ -9,7 +9,6 @@ import { By } from '../../../test-support/By';
 import eventually from '../../../test-support/eventually';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import { findElement } from '../../../testSetup';
-import { Constants } from '../../app/AppConstants';
 import { ClosableTag } from '../../components/common/tags/Tag';
 import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
 import DurationSlider from '../../components/searchResults/multiple-results/filters/DurationSlider';
@@ -83,66 +82,6 @@ test('search with age range shows video results', async () => {
   });
 
   expect(searchPage.getVideoResults()).toHaveLength(2);
-});
-
-test('search shows collection results', async () => {
-  const query = 'some video';
-  new ApiStub()
-    .defaultUser()
-    .queryVideos({ query, results: videoResults })
-    .queryCollections({ query, results: collectionsResponse() })
-    .fetchVideo()
-    .fetchCollections();
-
-  const searchPage = await SearchPage.load({ q: query });
-  await searchPage.hasCollections();
-
-  expect(searchPage.getCollectionResults()).toHaveLength(1);
-  expect(searchPage.getCollectionResults()[0]).toMatchObject({
-    title: 'funky collection',
-    numberOfVideos: 1,
-  });
-});
-
-test('shows news-only view with news header', async () => {
-  const query = 'some news';
-  new ApiStub()
-    .defaultUser()
-    .queryVideos({ query, results: videoResults, tag: Constants.NEWS })
-    .queryCollections({ query, results: collectionsResponse() })
-    .fetchVideo()
-    .fetchCollections();
-
-  const searchPage = await SearchPage.loadNews(query);
-
-  expect(searchPage.getVideoResults().length).toBeGreaterThan(0);
-  const newsBox = searchPage.wrapper.find(By.dataQa('news-header'));
-
-  expect(newsBox.text()).toContain(query);
-
-  const button = newsBox.find(Button);
-
-  expect(button).toExist();
-  expect(button.text()).toContain('Back');
-});
-
-test('should render news box', async () => {
-  const query = 'some video';
-  new ApiStub()
-    .defaultUser()
-    .queryVideos({ query, results: videoResults })
-    .queryCollections({ query, results: collectionsResponse() })
-    .fetchVideo()
-    .fetchCollections();
-
-  const searchPage = await SearchPage.load({ q: query });
-  const newsBox = searchPage.wrapper.find(By.dataQa('news-side-panel'));
-
-  expect(newsBox.text()).toContain(query);
-
-  const button = newsBox.find(Button);
-  expect(button).toExist();
-  expect(button.text()).toContain('View News');
 });
 
 test('duration filter labels are updated when applying filters', async () => {

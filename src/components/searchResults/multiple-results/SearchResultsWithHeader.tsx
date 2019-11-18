@@ -1,23 +1,22 @@
-import { Col, Row } from 'antd';
+import { Row } from 'antd';
 import React from 'react';
 import { SearchVideoCardList } from '../../video/list/VideoCardList';
-import { NewsBoxHeader } from '../NewsBoxHeader';
+import FiltersBar from './filters/FiltersBar';
+import SearchResultsHeader from './SearchResultsHeader';
 import SearchResultsProps from './SearchResultsProps';
 
 export default class SearchResultsWithHeader extends React.PureComponent<
   SearchResultsProps
 > {
   public render() {
-    const { videos, paging, query } = this.props.videoResults;
+    const { videos, paging } = this.props.videoResults;
     return (
       <React.Fragment>
         <Row>
-          <Col xl={24} span={0}>
-            <NewsBoxHeader
-              onButtonClick={this.props.onNavigate}
-              resultsQuery={query}
-            />
-          </Col>
+          <SearchResultsHeader totalElements={paging && paging.totalElements} />
+        </Row>
+        <Row>
+          <FiltersBar />
         </Row>
         <Row>
           <SearchVideoCardList

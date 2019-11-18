@@ -12,7 +12,6 @@ import {
 } from '../../../test-support/factories';
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
-import ConnectedTabsContainer from '../../components/layout/tabs/TabsContainer';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
@@ -67,32 +66,6 @@ describe('when authorised', () => {
 
     const videoDetailsView = wrapper.find(SearchResultsView);
     expect(videoDetailsView).toExist();
-  });
-
-  test('shows navigation tabs on /videos', () => {
-    const history = createMemoryHistory();
-
-    const wrapper = mount(
-      <Provider store={buildStore('/videos', 'q=earthquakes')}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const tabs = wrapper.find(ConnectedTabsContainer);
-    expect(tabs).toExist();
-  });
-
-  test('does not show navigation tabs on /videos', () => {
-    const history = createMemoryHistory();
-
-    const wrapper = mount(
-      <Provider store={buildStore('/videos/123')}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const tabs = wrapper.find(ConnectedTabsContainer);
-    expect(tabs).not.toExist();
   });
 
   test('shows home page on /', () => {
@@ -209,19 +182,6 @@ describe('when authorised', () => {
 
     const videoDetailsView = wrapper.find(CollectionDetailsView);
     expect(videoDetailsView).toExist();
-  });
-
-  test('does not show navigation tabs on /collections', () => {
-    const history = createMemoryHistory();
-
-    const wrapper = mount(
-      <Provider store={buildStore('/collections/default')}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const tabs = wrapper.find(ConnectedTabsContainer);
-    expect(tabs).not.toExist();
   });
 
   test('shows our subjects page', () => {
