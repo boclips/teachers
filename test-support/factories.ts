@@ -1,11 +1,12 @@
+import { SubjectFactory as ApiClientSubjectFactory } from 'boclips-api-client/dist/test-support';
 import {
   RouterActionType,
   RouterState as ReactRouterState,
 } from 'connected-react-router';
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { UserProfileLinks } from '../src/services/users/UserProfile';
 import { UserProfile } from '../src/services/users/UserProfile';
+import { UserProfileLinks } from '../src/services/users/UserProfile';
 import { AgeRange } from '../src/types/AgeRange';
 import { Attachment } from '../src/types/Attachment';
 import { Country } from '../src/types/Country';
@@ -312,26 +313,22 @@ export class CollectionsFactory {
 
 export class SubjectFactory {
   public static sample(arg: Partial<Subject> = {}): Subject {
-    return Object.freeze<Subject>({
-      id: arg.id || 'id',
-      name: arg.name || 'name',
-      lessonPlan: arg.lessonPlan || false,
-    });
+    return Object.freeze<Subject>(ApiClientSubjectFactory.sample(arg));
   }
 }
 
 export class SubjectsFactory {
   public static sample(arg: Subject[] = []): Subject[] {
     return Object.freeze([
-      {
+      ApiClientSubjectFactory.sample({
         id: 'subject-one-id',
         name: 'subject one',
-      },
-      {
+      }),
+      ApiClientSubjectFactory.sample({
         id: 'subject-two-id',
         name: 'subject two',
         lessonPlan: false,
-      },
+      }),
       ...arg,
     ]) as Subject[];
   }

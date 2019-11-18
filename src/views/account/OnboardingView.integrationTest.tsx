@@ -1,6 +1,7 @@
 import { links, userResponse } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import eventually from '../../../test-support/eventually';
+import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
 import MockFetchVerify, {
   axiosMock,
 } from '../../../test-support/MockFetchVerify';
@@ -32,8 +33,9 @@ describe('When user is not activated', () => {
       .fetchSchools('ES', 'school')
       .fetchPublicCollections()
       .fetchVideo()
-      .fetchPromoted()
-      .fetchSubjects();
+      .fetchPromoted();
+
+    await fakeSubjectsSetup();
 
     const onboardingPage = await OnboardingPage.navigateToOnboarding();
 

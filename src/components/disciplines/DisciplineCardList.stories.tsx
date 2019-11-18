@@ -19,10 +19,12 @@ storiesOf('DisciplineCardList', module).add('on desktop view', () => (
             {
               name: 'subject with LP',
               id: 'subject-id',
+              lessonPlan: true,
             },
             {
               name: 'subject without LP',
               id: 'subject-id',
+              lessonPlan: false,
             },
           ],
         },
@@ -34,10 +36,12 @@ storiesOf('DisciplineCardList', module).add('on desktop view', () => (
             {
               name: 'subject with LP',
               id: 'subject-id',
+              lessonPlan: true,
             },
             {
               name: 'subject without LP',
               id: 'subject-id',
+              lessonPlan: false,
             },
           ],
         },
@@ -49,10 +53,12 @@ storiesOf('DisciplineCardList', module).add('on desktop view', () => (
             {
               name: 'subject with LP',
               id: 'subject-id',
+              lessonPlan: true,
             },
             {
               name: 'subject without LP',
               id: 'subject-id',
+              lessonPlan: false,
             },
           ],
         },
@@ -64,10 +70,12 @@ storiesOf('DisciplineCardList', module).add('on desktop view', () => (
             {
               name: 'subject with LP',
               id: 'subject-id',
+              lessonPlan: true,
             },
             {
               name: 'subject without LP',
               id: 'subject-id',
+              lessonPlan: false,
             },
           ],
         },
@@ -79,10 +87,12 @@ storiesOf('DisciplineCardList', module).add('on desktop view', () => (
             {
               name: 'subject with LP',
               id: 'subject-id',
+              lessonPlan: true,
             },
             {
               name: 'subject without LP',
               id: 'subject-id',
+              lessonPlan: false,
             },
           ],
         },

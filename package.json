@@ -63,7 +63,7 @@
     "axios-mock-adapter": "^1.15.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
-    "boclips-api-client": "^2.2.1",
+    "boclips-api-client": "^2.2.2",
     "boclips-js-security": "^3.2.0",
     "boclips-player": "^2.6.3",
     "boclips-player-react": "^1.0.2",

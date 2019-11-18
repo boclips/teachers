@@ -73,8 +73,8 @@ export const video177 = Object.freeze({
   releasedOn: '2018-02-11T10:12:33Z',
   createdBy: 'cp1',
   subjects: [
-    { id: 'maths-subject-id', name: 'Maths', lessonPlan: false },
-    { id: 'physics-subject-id', name: 'Physics', lessonPlan: false },
+    { id: 'maths-subject-id', name: 'Maths', lessonPlan: false, links: {} },
+    { id: 'physics-subject-id', name: 'Physics', lessonPlan: false, links: {} },
   ],
   rating: 3,
   yourRating: 5,
@@ -283,30 +283,6 @@ export function collectionsResponse(
     _links: {
       self: { href: 'http://localhost/v1/collections/' },
       next: { href: 'http://localhost/v1/collections/next' },
-    },
-  };
-}
-
-export function subjectsResponse() {
-  return {
-    _embedded: {
-      subjects: [
-        {
-          id: '1',
-          name: 'Maths',
-          lessonPlan: true,
-        },
-        {
-          id: '2',
-          name: 'French',
-          lessonPlan: true,
-        },
-        {
-          id: '3',
-          name: 'German',
-          lessonPlan: false,
-        },
-      ],
     },
   };
 }

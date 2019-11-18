@@ -6,7 +6,6 @@ import {
   links,
   promotedResponse,
   schoolsResponse,
-  subjectsResponse,
   tagsResponse,
   userResponse,
   video177,
@@ -43,8 +42,7 @@ export default class ApiStub {
   constructor(linksDefault: any = links) {
     MockFetchVerify.clear();
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
-    this.fetchSubjects()
-      .fetchCountries()
+    this.fetchCountries()
       .fetchCollections()
       .fetchDisciplines()
       .fetchTags();
@@ -89,14 +87,6 @@ export default class ApiStub {
     MockFetchVerify.get(
       new RegExp(`/v1/videos?.*&promoted=true`),
       JSON.stringify(result),
-    );
-    return this;
-  }
-
-  public fetchSubjects() {
-    MockFetchVerify.get(
-      `${this.prefix}/v1/subjects`,
-      JSON.stringify(subjectsResponse()),
     );
     return this;
   }

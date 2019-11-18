@@ -1,4 +1,5 @@
 import { Select } from 'antd';
+import { SubjectFactory } from 'boclips-api-client/dist/test-support';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { Props, SelectSubjects, State } from './SelectSubjects';
@@ -6,7 +7,10 @@ import { Props, SelectSubjects, State } from './SelectSubjects';
 test('renders a list of subjects alphabetically ordered', () => {
   const wrapper = shallow(
     <SelectSubjects
-      subjects={[{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }]}
+      subjects={[
+        SubjectFactory.sample({ id: '1', name: 'Maths' }),
+        SubjectFactory.sample({ id: '3', name: 'Art' }),
+      ]}
       onUpdateSubjects={jest.fn()}
       placeholder="Select a subject"
       initialValue={[]}
@@ -46,7 +50,10 @@ test('onSelection returns a list of selected ids', () => {
   const callback = jest.fn();
   const wrapper = mount(
     <SelectSubjects
-      subjects={[{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }]}
+      subjects={[
+        SubjectFactory.sample({ id: '1', name: 'Maths' }),
+        SubjectFactory.sample({ id: '3', name: 'Art' }),
+      ]}
       onUpdateSubjects={callback}
       placeholder="Select a subject"
       initialValue={[]}
@@ -67,7 +74,10 @@ test('initial state for subjects is set by initial value', () => {
   const callback = jest.fn();
   const wrapper = mount<Props, State>(
     <SelectSubjects
-      subjects={[{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }]}
+      subjects={[
+        SubjectFactory.sample({ id: '1', name: 'Maths' }),
+        SubjectFactory.sample({ id: '3', name: 'Art' }),
+      ]}
       onUpdateSubjects={callback}
       placeholder="Select a subject"
       initialValue={['1', '2']}

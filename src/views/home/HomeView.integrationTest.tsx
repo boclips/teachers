@@ -5,6 +5,7 @@ import {
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { VideoResourceFactory } from '../../../test-support/factories';
+import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
 import { HomePage } from '../../../test-support/page-objects/HomePage';
 
 describe('Home page', () => {
@@ -60,6 +61,8 @@ describe('Home page', () => {
         ),
       )
       .fetchCollections();
+
+    await fakeSubjectsSetup();
 
     homePage = await HomePage.load();
 

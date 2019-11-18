@@ -6,6 +6,7 @@ import {
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { By } from '../../../test-support/By';
+import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
 import { AccountSettingsPage } from '../../../test-support/page-objects/AccountSettingsPage';
 import { Profile } from '../../components/account/accountSettings/Profile';
 import SchoolSettings from '../../components/account/accountSettings/SchoolSettings';
@@ -28,10 +29,11 @@ describe('when view is mounted', () => {
       },
     })
       .fetchUser(userResponse('user-id'))
-      .fetchSubjects()
       .fetchCountries()
       .fetchAmericanSchools('sch', 'CA')
       .fetchTags();
+
+    await fakeSubjectsSetup();
 
     accountSettingsPage = await AccountSettingsPage.load();
   });

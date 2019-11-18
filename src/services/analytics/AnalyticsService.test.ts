@@ -1,3 +1,4 @@
+import { SubjectFactory } from 'boclips-api-client/dist/test-support';
 import { Mixpanel } from 'mixpanel-browser';
 import * as moment from 'moment';
 import {
@@ -244,7 +245,13 @@ describe('AnalyticsService', () => {
             id: '123',
             playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
             releasedOn: new Date('2018-06-20T10:12:33Z'),
-            subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
+            subjects: [
+              SubjectFactory.sample({
+                id: 'maths-subject-id',
+                name: 'Maths',
+                lessonPlan: true,
+              }),
+            ],
             title: 'my video title',
           });
 
@@ -263,7 +270,14 @@ describe('AnalyticsService', () => {
             video_id: '123',
             video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
             video_releasedOn: '2018-06-20T10:12:33.000Z',
-            video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
+            video_subjects: [
+              {
+                id: 'maths-subject-id',
+                name: 'Maths',
+                lessonPlan: true,
+                links: {},
+              },
+            ],
             video_title: 'my video title',
             share_segment_start: 0,
             share_segment_end: 33,
@@ -291,7 +305,9 @@ describe('AnalyticsService', () => {
             id: '123',
             playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
             releasedOn: new Date('2018-06-20T10:12:33Z'),
-            subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
+            subjects: [
+              SubjectFactory.sample({ id: 'maths-subject-id', name: 'Maths' }),
+            ],
             title: 'my video title',
           });
 
@@ -308,7 +324,14 @@ describe('AnalyticsService', () => {
             video_id: '123',
             video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
             video_releasedOn: '2018-06-20T10:12:33.000Z',
-            video_subjects: [{ id: 'maths-subject-id', name: 'Maths' }],
+            video_subjects: [
+              {
+                id: 'maths-subject-id',
+                name: 'Maths',
+                lessonPlan: false,
+                links: {},
+              },
+            ],
             video_title: 'my video title',
           };
 

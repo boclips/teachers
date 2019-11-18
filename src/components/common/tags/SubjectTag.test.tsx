@@ -1,3 +1,4 @@
+import { SubjectFactory } from 'boclips-api-client/dist/test-support';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -36,7 +37,9 @@ test('Subject tag does not render as clickable when there is no subject id', () 
 
 test('Connected subject tag resolves to correct name when only id is passed', () => {
   const store = MockStoreFactory.sample({
-    subjects: SubjectsFactory.sample([{ id: 'maths-id', name: 'Maths' }]),
+    subjects: SubjectsFactory.sample([
+      SubjectFactory.sample({ id: 'maths-id', name: 'Maths' }),
+    ]),
   });
   const wrapper = mount(
     <Provider store={store}>
@@ -52,7 +55,9 @@ test('Connected subject tag resolves to correct name when only id is passed', ()
 
 test('Subject tag is not clickable when readonly', () => {
   const store = MockStoreFactory.sample({
-    subjects: SubjectsFactory.sample([{ id: 'maths-id', name: 'Maths' }]),
+    subjects: SubjectsFactory.sample([
+      SubjectFactory.sample({ id: 'maths-id', name: 'Maths' }),
+    ]),
   });
   const wrapper = mount(
     <Provider store={store}>
@@ -70,7 +75,9 @@ test('Subject tag is not clickable when readonly', () => {
 
 test('Subject tag does not render if subject name is not found', () => {
   const store = MockStoreFactory.sample({
-    subjects: SubjectsFactory.sample([{ id: 'maths-id', name: 'Maths' }]),
+    subjects: SubjectsFactory.sample([
+      SubjectFactory.sample({ id: 'maths-id', name: 'Maths' }),
+    ]),
   });
   const wrapper = mount(
     <Provider store={store}>

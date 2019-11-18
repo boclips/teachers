@@ -1,8 +1,11 @@
+import { SubjectFactory } from 'boclips-api-client/dist/test-support';
 import { fetchedSubjectsAction } from '../actions/fetchedSubjectsAction';
 import { subjectsReducer } from './subjectsReducer';
 
 test('reduces subjects', () => {
-  const action = fetchedSubjectsAction([{ id: '1', name: 'French' }]);
+  const action = fetchedSubjectsAction([
+    SubjectFactory.sample({ id: '1', name: 'French' }),
+  ]);
 
   const stateAfter = subjectsReducer([], action);
 
