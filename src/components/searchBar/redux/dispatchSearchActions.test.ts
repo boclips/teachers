@@ -61,32 +61,7 @@ describe('when on the videos page', () => {
     expect(action.payload.page).toEqual(3);
   });
 
-  it('sorts the results by release date when mode is news', () => {
-    const store = getStore(`mode=${Constants.NEWS}`);
-
-    dispatchSearchActions(store);
-
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
-
-    expect(action).toBeTruthy();
-    expect(action.payload.sortBy).toEqual('RELEASE_DATE');
-  });
-
-  it('filters the results by NEWS and CLASSROOM tags if mode is news', () => {
-    const store = getStore(`mode=${Constants.NEWS}`);
-
-    dispatchSearchActions(store);
-
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
-
-    expect(action).toBeTruthy();
-    expect(action.payload.filters.includeTags).toEqual([
-      Constants.NEWS,
-      Constants.CLASSROOM,
-    ]);
-  });
-
-  it('filters the results by CLASSROOM, and excludes NEWS if mode is not news', () => {
+  it('filters the results by CLASSROOM and excludes NEWS by default', () => {
     const store = getStore();
 
     dispatchSearchActions(store);
@@ -118,7 +93,7 @@ describe('when on the videos page', () => {
     expect(action.payload.filters.duration_max).toEqual(190);
   });
 
-  it('defaults durations to undefined if non-existant', () => {
+  it('defaults durations to undefined if non-existent', () => {
     const store = getStore();
     dispatchSearchActions(store);
 

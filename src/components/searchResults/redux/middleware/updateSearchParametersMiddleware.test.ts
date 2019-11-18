@@ -86,41 +86,29 @@ it('does not include null values in url parameters', async () => {
   });
 });
 
-it('updates mode in url parameters', async () => {
-  const store = setupStore('q=hi&page=1');
-
-  store.dispatch(updateSearchParamsAction({ mode: 'news' }));
-
-  await eventually(() => {
-    expect(store.getActions()).toContainEqual(
-      push('/videos?mode=news&page=1&q=hi'),
-    );
-  });
-});
-
 it('updates multiple url parameters in one dispatch', async () => {
-  const store = setupStore('mode=hello&q=hi&page=10');
+  const store = setupStore('q=hi&page=1&subject=6');
 
   const durationUpdate = {
     duration_max: 1,
     duration_min: 2,
   };
 
-  const modeUpdate = { mode: 'test' };
+  const subjectUpdate = { subject: ['new'] };
 
-  store.dispatch(bulkUpdateSearchParamsAction([durationUpdate, modeUpdate]));
+  store.dispatch(bulkUpdateSearchParamsAction([durationUpdate, subjectUpdate]));
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(
-      push('/videos?duration_max=1&duration_min=2&mode=test&page=1&q=hi'),
+      push('/videos?duration_max=1&duration_min=2&page=1&q=hi&subject=new'),
     );
   });
 });
 
 it('removes parameters if they are undefined', async () => {
-  const store = setupStore('mode=hello&q=hi');
+  const store = setupStore('subject=5&q=hi');
 
-  store.dispatch(updateSearchParamsAction({ mode: undefined }));
+  store.dispatch(updateSearchParamsAction({ subject: undefined }));
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(push('/videos?page=1&q=hi'));

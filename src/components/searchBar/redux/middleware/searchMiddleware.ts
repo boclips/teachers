@@ -19,10 +19,7 @@ export function onSearchVideos(
   fetchVideos(searchRequest, links).then(results => {
     store.dispatch(storeVideoSearchResultsAction(results));
 
-    AnalyticsFactory.externalAnalytics().trackVideoSearch(
-      searchRequest,
-      results,
-    );
+    AnalyticsFactory.externalAnalytics().trackVideoSearch(results);
   });
 }
 

@@ -8,7 +8,6 @@ import {
 import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
-import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { CreateCollectionRequest } from '../collections/createCollection';
 import { UpdateUserRequest } from '../users/updateUser';
 import { UserProfile } from '../users/UserProfile';
@@ -76,19 +75,8 @@ export default class AnalyticsService {
     this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
   }
 
-  public trackVideoSearch(
-    searchRequest: VideoSearchRequest,
-    searchResults: VideoResults,
-  ) {
-    let type;
-    const isNewsExcluded = searchRequest.filters.excludeTags.find(item => {
-      return item.toLowerCase() === 'news';
-    });
-    if (isNewsExcluded) {
-      type = 'INSTRUCTIONAL';
-    } else {
-      type = 'NEWS';
-    }
+  public trackVideoSearch(searchResults: VideoResults) {
+    const type = 'INSTRUCTIONAL';
 
     const eventPayload = {
       [`${EventTypes.VIDEO_SEARCH}_query`.toLowerCase()]: searchResults.query,

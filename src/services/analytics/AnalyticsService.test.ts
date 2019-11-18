@@ -10,7 +10,6 @@ import {
 import { Constants } from '../../app/AppConstants';
 import { VideoResults } from '../../types/SearchResults';
 import { StreamPlayback } from '../../types/Video';
-import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { UpdateUserRequest } from '../users/updateUser';
 import AnalyticsService from './AnalyticsService';
 
@@ -147,19 +146,12 @@ describe('AnalyticsService', () => {
         });
 
         it('tracks search', () => {
-          analyticsService.trackVideoSearch(
-            {
-              query: 'test',
-              page: 1,
-              filters: { excludeTags: ['news'] },
-            } as VideoSearchRequest,
-            {
-              videos: [VideoFactory.sample()],
-              paging: {
-                number: 1,
-              },
-            } as VideoResults,
-          );
+          analyticsService.trackVideoSearch({
+            videos: [VideoFactory.sample()],
+            paging: {
+              number: 1,
+            },
+          } as VideoResults);
 
           const expectedPayload = {
             video_search_number_of_results: 1,

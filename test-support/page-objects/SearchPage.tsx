@@ -37,23 +37,6 @@ export class SearchPage {
     return page;
   }
 
-  public static async loadNews(query: string) {
-    const escapedQuery = encodeURIComponent(query);
-    const page = new SearchPage(
-      mount(
-        <App
-          history={createMemoryHistory({
-            initialEntries: [`/videos?page=1&q=${escapedQuery}&mode=news`],
-          })}
-          apiPrefix="https://api.example.com"
-        />,
-      ),
-    );
-
-    await page.hasLoaded();
-    return page;
-  }
-
   public getVideoResults() {
     return findAll(this.wrapper, 'video-card')
       .hostNodes()

@@ -18,10 +18,6 @@ interface UpdateSearchPage {
   page: number;
 }
 
-interface UpdateSearchMode {
-  mode: string;
-}
-
 interface UpdateSubjectFilter {
   subject?: string[];
 }
@@ -36,8 +32,7 @@ export type UpdateSearchParamsRequest =
   | UpdateAgeRangeFilter
   | UpdateSubjectFilter
   | UpdateSearchQuery
-  | UpdateSearchPage
-  | UpdateSearchMode;
+  | UpdateSearchPage;
 
 export const updateSearchParamsAction = actionCreatorFactory<
   UpdateSearchParamsRequest
