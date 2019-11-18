@@ -99,7 +99,7 @@ class SearchResultsView extends React.PureComponent<
         className="search-results-placeholders"
         data-qa="search-results-placeholders"
       >
-        <Col xs={{ span: 24 }} xl={{ span: 18 }}>
+        <Col>
           <VideoCardsPlaceholder />
         </Col>
       </section>
