@@ -26,7 +26,7 @@ const TopNavbar = React.memo((props: Props) => (
         <Col
           sm={{ span: 24 }}
           md={{ span: 6 }}
-          lg={{ span: props.showSearchBar ? 4 : 16 }}
+          lg={{ span: props.showSearchBar ? 6 : 18 }}
         >
           <section className="logo-wrapper">
             {props.showNavigation ? (
@@ -49,7 +49,7 @@ const TopNavbar = React.memo((props: Props) => (
           </Col>
         ) : (
           props.isMobile && (
-            <Col xs={{ span: 18 }} md={{ span: 20 }}>
+            <Col xs={{ span: 18 }} sm={{ span: 20 }}>
               <section className="mobile-logo-wrapper">
                 {!props.showNavigation ? (
                   <Link
@@ -66,12 +66,7 @@ const TopNavbar = React.memo((props: Props) => (
             </Col>
           )
         )}
-        <Col
-          xs={{ span: 6 }}
-          sm={{ span: 4 }}
-          md={{ span: 4 }}
-          lg={{ span: 8 }}
-        >
+        <Col xs={{ span: 6 }} sm={{ span: 4 }} lg={{ span: 6 }}>
           {props.authorized && props.showNavigation && (
             <div>
               {props.isMobile ? (
