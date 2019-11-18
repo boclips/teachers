@@ -1,3 +1,4 @@
+@import '../../../resources/styles/_antd-theme';
 @import '../../../resources/styles/_colours';
 
 .boclips-footer {
@@ -19,6 +20,17 @@
     a {
       text-decoration: none;
       color: @dark-blue;
+    }
+  }
+}
+
+@media (max-width: @screen-sm-max) {
+  .boclips-footer {
+    margin-bottom: 55px;
+
+    &__links {
+      padding: 0;
+      display: block;
     }
   }
 }
