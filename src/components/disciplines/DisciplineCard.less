@@ -1,8 +1,38 @@
 @import '../../../resources/styles/_antd-theme.less';
 @import '../../../resources/styles/_colours.less';
 
-.discipline-card__ {
-  &title {
+.discipline-card {
+  margin-top: 20px;
+  min-height: 310px;
+  background-color: @shade-2;
+
+  .ant-card-head {
+    &-title {
+      padding-top: 24px;
+      padding-bottom: 0;
+    }
+    position: relative;
+    border-bottom: 0;
+    padding: 0 24px;
+  }
+
+  .ant-card-body {
+    padding: 0 24px 24px 24px;
+    margin-top: -8px;
+  }
+
+  &.skeleton {
+    padding: 20px;
+
+    .discipline-subjects {
+      .ant-skeleton-title {
+        margin-top: 20px;
+        width: 60%;
+      }
+    }
+  }
+
+  &__title {
     font-size: 28px;
     line-height: 28px;
     font-weight: normal;
@@ -13,54 +43,22 @@
     }
   }
 
-  &icon {
-    font-size: 100px;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-
+  &__icon {
     svg {
       height: 75px;
       width: 75px;
     }
   }
 
-  &link {
+  &__link {
     text-decoration: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  &container {
-    margin-top: 20px;
-    min-height: 310px;
-    background-color: @shade-2;
-
-    .ant-card-head {
-      &-title {
-        padding-top: 24px;
-        padding-bottom: 0;
-      }
-      position: relative;
-      border-bottom: 0;
-      padding: 0 24px;
-    }
-
-    .ant-card-body {
-      padding: 12px 24px 24px 24px;
-    }
-
-    &.skeleton {
-      padding: 20px;
-
-      .discipline-subjects {
-        .ant-skeleton-title {
-          margin-top: 20px;
-          width: 60%;
-        }
-      }
-    }
-  }
-
-  &subject-item {
+  &__subject-item {
     color: @shade-5;
     position: relative;
     list-style: none;
@@ -88,22 +86,23 @@
     }
   }
 
-  &subjects {
+  &__subjects {
     margin: 0;
     padding: 0;
   }
-  &subject-link {
+  &__subject-link {
     vertical-align: middle;
     text-decoration: none;
     font-weight: bold;
   }
 
-  &view-all {
+  &__view-all {
     color: @dark-blue;
     font-weight: bold;
-    position: absolute;
-    right: 24px;
-    bottom: 16px;
+
+    display: block;
+    text-align: right;
+    margin-top: 20px;
 
     svg {
       margin-left: 2px;
@@ -116,27 +115,52 @@
 }
 
 @media (max-width: @screen-sm-max) {
-  .discipline-card__ {
-    &title {
-      font-size: 28px;
-      line-height: 28px;
+  .discipline-card {
+    background-color: @shade-4;
+    border-radius: 8px;
+    min-height: initial;
+
+    .ant-card-body {
+      display: none;
     }
 
-    &container {
-      min-height: 60px;
+    .ant-card-head {
+      padding: 12px 20px;
+      height: auto;
 
-      .ant-card-body {
+      .ant-card-head-title {
         padding: 0;
       }
-
-      .ant-card-head {
-        border-radius: 80px;
-        height: 60px;
-      }
     }
 
-    &icon__image {
-      height: 44px;
+    &__title {
+      font-size: 28px;
+      line-height: 28px;
+      margin: 0;
+    }
+
+    &__all-subjects {
+      float: none;
+      width: 100%;
+      display: block;
+      text-align: right;
+    }
+
+    &__link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__icon {
+      position: relative;
+      font-size: initial;
+      top: 0;
+      right: 0;
+
+      svg {
+        height: 60px;
+        width: 60px;
+      }
     }
   }
 }

@@ -24,7 +24,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
     return (
       <Card
         data-qa="discipline-card"
-        className={`discipline-card__container ${this.props.className}`}
+        className={`discipline-card ${this.props.className}`}
         bordered={false}
         title={
           <Link
@@ -33,10 +33,10 @@ export class DisciplineCard extends React.PureComponent<Props> {
           >
             <h1 data-qa="discipline-title" className="discipline-card__title">
               {this.props.discipline.name}
-              <span className="discipline-card__icon">
-                <DisciplineLogo discipline={this.props.discipline} />
-              </span>
             </h1>
+            <span className="discipline-card__icon">
+              <DisciplineLogo discipline={this.props.discipline} />
+            </span>
           </Link>
         }
       >
@@ -83,7 +83,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
 
   public static Skeleton = ({ className }: { className?: string }) => (
     <section
-      className={`discipline-card__container skeleton ant-skeleton ant-skeleton-active ${className}`}
+      className={`discipline-card skeleton ant-skeleton ant-skeleton-active ${className}`}
     >
       <section className="ant-skeleton-content">
         <h3 className="discipline-title ant-skeleton-title" />
