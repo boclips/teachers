@@ -2,8 +2,8 @@ import { Component } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 class ScrollToTopOnForwardNavigation extends Component<RouteComponentProps> {
-  public componentWillReceiveProps(nextProps) {
-    if (this.isForwardNavigation(nextProps)) {
+  public componentDidUpdate(prevProps) {
+    if (this.isForwardNavigation(prevProps)) {
       window.scrollTo(0, 0);
     }
   }
@@ -12,10 +12,10 @@ class ScrollToTopOnForwardNavigation extends Component<RouteComponentProps> {
     return this.props.children;
   }
 
-  private isForwardNavigation(nextProps): boolean {
+  private isForwardNavigation(prevProps): boolean {
     return (
-      nextProps.location !== this.props.location &&
-      nextProps.history.action === 'PUSH'
+      this.props.location !== prevProps.location &&
+      this.props.history.action === 'PUSH'
     );
   }
 }
