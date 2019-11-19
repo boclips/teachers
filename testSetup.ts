@@ -1,7 +1,7 @@
 import { configure } from '@testing-library/dom';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
-import AxiosLogger from 'axios-logger';
+import * as AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
