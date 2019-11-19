@@ -1,12 +1,12 @@
 const path = require('path');
 
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -24,11 +24,11 @@ module.exports = merge(common, {
   mode: 'production',
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-      }),
+      new TerserPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true,
+        }),
       new OptimizeCSSAssetsPlugin({}),
     ],
     splitChunks: {
@@ -54,7 +54,7 @@ module.exports = merge(common, {
       template: path.resolve(srcPath, 'index.html'),
       ga: googleAnalyticsId,
     }),
-    new CleanWebpackPlugin([distPath], { root: path.resolve(__dirname, '..') }),
+    new CleanWebpackPlugin(),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
