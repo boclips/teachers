@@ -58,6 +58,7 @@ class VideoFeedbackModal extends React.Component<
         visible={this.props.visible}
         onOk={this.save}
         onCancel={this.props.onModalCancelled}
+        // @ts-ignore
         okButtonProps={{ size: 'large', 'data-qa': 'rate-button' }}
         cancelButtonProps={{ size: 'large' }}
         okText="Done"
