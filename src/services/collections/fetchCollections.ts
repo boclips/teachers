@@ -8,15 +8,13 @@ import { parseScrollableCollectionsListResponse } from './collectionParser';
 export const fetchPageableCollections = (
   links: Links,
   request: FetchPageableCollectionRequest,
-): Promise<Pageable<VideoCollection>> => {
-  return axios
+): Promise<Pageable<VideoCollection>> => axios
     .get(
       request.request
         ? links[request.key].getTemplatedLink(request.request)
         : links[request.key].getOriginalLink(),
     )
     .then(response => parseScrollableCollectionsListResponse(response));
-};
 
 export const fetchNextCollectionsPage = (
   collections: Pageable<string>,

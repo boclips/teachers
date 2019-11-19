@@ -50,26 +50,24 @@ class DisciplineCardList extends React.PureComponent<
         {this.props.disciplines &&
           this.props.disciplines
             .slice(0, this.props.limit || this.props.disciplines.length)
-            .map((discipline, index, slicedArray) => {
-              return (
-                <CSSTransition
-                  classNames="card-list"
-                  timeout={500}
-                  key={discipline.id}
-                >
-                  <Col xs={{ span: 24 }} md={{ span: 24 / this.props.columns }}>
-                    <DisciplineCard
-                      className={generateBorderRadiusClassNames(
-                        index,
-                        this.props.columns,
-                        slicedArray.length,
-                      )}
-                      discipline={discipline}
-                    />
-                  </Col>
-                </CSSTransition>
-              );
-            })}
+            .map((discipline, index, slicedArray) => (
+              <CSSTransition
+                classNames="card-list"
+                timeout={500}
+                key={discipline.id}
+              >
+                <Col xs={{ span: 24 }} md={{ span: 24 / this.props.columns }}>
+                  <DisciplineCard
+                    className={generateBorderRadiusClassNames(
+                      index,
+                      this.props.columns,
+                      slicedArray.length,
+                    )}
+                    discipline={discipline}
+                  />
+                </Col>
+              </CSSTransition>
+            ))}
       </TransitionGroup>,
     ];
   }

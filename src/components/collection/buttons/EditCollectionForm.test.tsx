@@ -7,9 +7,7 @@ import { BoclipsSlider } from '../../common/BoclipsSlider';
 import CollectionEditForm from './EditCollectionForm';
 
 test('can set correct initial age range for slider when age range is an interval', () => {
-  const ageRangeChange = () => {
-    return false;
-  };
+  const ageRangeChange = () => false;
   const store = MockStoreFactory.sample();
   const wrapper = mount(
     <Provider store={store}>

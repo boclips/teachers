@@ -10,7 +10,7 @@ import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
 export class SearchPage {
-  constructor(public wrapper: ReactWrapper) {}
+  public constructor(public wrapper: ReactWrapper) {}
 
   public static async load(params: {
     q: string;

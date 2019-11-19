@@ -29,18 +29,13 @@ export default class VideoButtons extends React.PureComponent<OwnProps> {
   }
 }
 
-const DesktopButtons = (props: OwnProps) => {
-  return (
-    <Button.Group>
-      <VideoCollectionButton
-        video={props.video}
-        collection={props.collection}
-      />
-      <ShareButton video={props.video} mobileView={false} />
-      <DownloadTranscriptButton video={props.video} />
-    </Button.Group>
-  );
-};
+const DesktopButtons = (props: OwnProps) => (
+  <Button.Group>
+    <VideoCollectionButton video={props.video} collection={props.collection} />
+    <ShareButton video={props.video} mobileView={false} />
+    <DownloadTranscriptButton video={props.video} />
+  </Button.Group>
+);
 
 const MobileButtons = (props: OwnProps) => {
   const menu = () => (

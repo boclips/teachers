@@ -15,7 +15,7 @@ interface Constraint {
 }
 
 export class PasswordForm extends React.Component<FormComponentProps, State> {
-  constructor(props: FormComponentProps, context: any) {
+  public constructor(props: FormComponentProps, context: any) {
     super(props, context);
     this.state = { show: false };
   }

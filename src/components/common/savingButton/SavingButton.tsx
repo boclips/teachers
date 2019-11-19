@@ -16,7 +16,7 @@ declare interface State {
 }
 
 export default class SavingButton extends React.PureComponent<Props, State> {
-  constructor(props: Props, context: any) {
+  public constructor(props: Props, context: any) {
     super(props, context);
     this.state = { justSaved: false, saving: props.saving };
   }

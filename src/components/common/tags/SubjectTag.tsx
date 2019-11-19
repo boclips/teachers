@@ -41,9 +41,8 @@ export class SubjectTag extends React.Component<SubjectTagProps> {
   };
 }
 
-const getSubject = (state: State, id: any): Subject | undefined => {
-  return state.subjects.filter(subject => subject.id === id)[0];
-};
+const getSubject = (state: State, id: any): Subject | undefined =>
+  state.subjects.filter(subject => subject.id === id)[0];
 
 const mapStateToProps = (
   state: State,

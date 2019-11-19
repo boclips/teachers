@@ -34,7 +34,7 @@ export interface Video {
 }
 
 export class StreamPlayback {
-  constructor(private streamUrl: string) {}
+   public constructor(private streamUrl: string) {}
 
   public getUrl(): string {
     return this.streamUrl;
@@ -42,7 +42,7 @@ export class StreamPlayback {
 }
 
 export class YoutubePlayback {
-  constructor(private youtubeId: string) {}
+   public constructor(private youtubeId: string) {}
 
   public getId(): string {
     return this.youtubeId;

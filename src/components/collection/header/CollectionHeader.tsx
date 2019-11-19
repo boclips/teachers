@@ -10,9 +10,9 @@ import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButt
 import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import '../buttons/CollectionButtonsContainer.less';
 import { CollectionSubtitle } from '../CollectionSubtitle';
+import { LessonPlan } from '../lessonPlan/LessonPlan';
 import CollectionTitle from './CollectionTitle';
 
-import { LessonPlan } from '../lessonPlan/LessonPlan';
 import './CollectionHeader.less';
 
 export interface Props {
@@ -31,32 +31,30 @@ class CollectionHeader extends React.PureComponent<Props> {
     );
   }
 
-  private renderTitleRow = () => {
-    return (
-      <Row
-        type="flex"
-        justify="space-between"
-        className="collection-header__title-row"
-      >
-        <Col>
-          <CollectionTitle collection={this.props.collection} />
-        </Col>
-        <Col>
-          <StopClickPropagation>
-            <span className="collection-header__bookmark-button">
-              <BookmarkCollectionButton collection={this.props.collection} />
-            </span>
-            {this.props.mode !== 'tiny-card' && (
-              <CollectionButtonsContainer
-                collection={this.props.collection}
-                className="collection-edit__card"
-              />
-            )}
-          </StopClickPropagation>
-        </Col>
-      </Row>
-    );
-  };
+  private renderTitleRow = () => (
+    <Row
+      type="flex"
+      justify="space-between"
+      className="collection-header__title-row"
+    >
+      <Col>
+        <CollectionTitle collection={this.props.collection} />
+      </Col>
+      <Col>
+        <StopClickPropagation>
+          <span className="collection-header__bookmark-button">
+            <BookmarkCollectionButton collection={this.props.collection} />
+          </span>
+          {this.props.mode !== 'tiny-card' && (
+            <CollectionButtonsContainer
+              collection={this.props.collection}
+              className="collection-edit__card"
+            />
+          )}
+        </StopClickPropagation>
+      </Col>
+    </Row>
+  );
 
   private renderSubtitleRow = () => {
     const tags = this.shouldRenderTagContainer() && (

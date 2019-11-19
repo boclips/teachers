@@ -7,13 +7,12 @@ describe('StopClickPropagation component', () => {
     children,
     onClick,
     onMouseDown = () => {},
-  ) => {
-    return mount(
+  ) =>
+    mount(
       <div onClick={onClick} onMouseDown={onMouseDown}>
         <StopClickPropagation>{children}</StopClickPropagation>
       </div>,
     );
-  };
 
   it('Wraps the child props in a div', () => {
     const wrapper = wrapWithStopClickPropagation(

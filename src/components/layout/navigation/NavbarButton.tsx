@@ -37,9 +37,7 @@ class NavbarButton extends React.PureComponent<Props> {
     );
   }
 
-  private isActive = () => {
-    return this.props.location.pathname === this.props.link;
-  };
+  private isActive = () => this.props.location.pathname === this.props.link;
 }
 
 export default withRouter(NavbarButton);

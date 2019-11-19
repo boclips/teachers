@@ -40,9 +40,7 @@ export function onBulkUpdateSearchParameter(
   const parsedQuery = queryString.parse(query);
 
   const newQuery = {
-    ...request.reduce((acc, value: UpdateSearchParamsRequest) => {
-      return { ...acc, ...value };
-    }, parsedQuery),
+    ...request.reduce((acc, value: UpdateSearchParamsRequest) => ({ ...acc, ...value }), parsedQuery),
     page: 1,
   };
 
@@ -60,9 +58,7 @@ export function onBulkUpdateOverrideParams(
   request: UpdateSearchParamsRequest[],
 ) {
   const newQuery = {
-    ...request.reduce((acc, value: any) => {
-      return { ...acc, ...value };
-    }, {}),
+    ...request.reduce((acc, value: any) => ({ ...acc, ...value }), {}),
     page: 1,
   };
 

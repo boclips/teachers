@@ -48,18 +48,16 @@ export class SelectAgeRange extends React.PureComponent<Props> {
   private generateOptions() {
     const Option = MultiSelect.Option;
 
-    return AgeRange.allRanges().map(ageRange => {
-      return (
-        <Option
-          key={ageRange.getLabel()}
-          title={ageRange.getLabel()}
-          data-qa={ageRange.getLabel()}
-          value={ageRange.encodeJSON()}
-        >
-          {ageRange.getLabel()}
-        </Option>
-      );
-    });
+    return AgeRange.allRanges().map(ageRange => (
+      <Option
+        key={ageRange.getLabel()}
+        title={ageRange.getLabel()}
+        data-qa={ageRange.getLabel()}
+        value={ageRange.encodeJSON()}
+      >
+        {ageRange.getLabel()}
+      </Option>
+    ));
   }
 
   private filter(inputValue, option) {

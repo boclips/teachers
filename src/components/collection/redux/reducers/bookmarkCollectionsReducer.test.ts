@@ -48,7 +48,7 @@ describe('bookmarking a collection', () => {
   });
 
   // Adding to a page response from the server seems odd. This test maintains
-  // current behaviour, but the current behaviour might need to change.
+  // Current behaviour, but the current behaviour might need to change.
   test('updates collection but does not add to bookmarks with no bookmarks present', () => {
     const toBeBookmarkedCollection = VideoCollectionFactory.sample();
 
@@ -114,7 +114,7 @@ describe('unbookmarking a collection', () => {
   });
 
   // Removing from a page response from the server seems odd. This test maintains
-  // current behaviour, but the current behaviour might need to change.
+  // Current behaviour, but the current behaviour might need to change.
   test('updates collection but does not remove from bookmarks with no bookmarks present', () => {
     const toBeUnbookmarkedCollection = VideoCollectionFactory.sample();
 

@@ -11,12 +11,10 @@ export function fetchCountries(links: Links): Promise<Country[]> {
 }
 
 function convertCountriesResource(data: any): Country[] {
-  return data._embedded.countries.map(rawCountry => {
-    return {
+  return data._embedded.countries.map(rawCountry => ({
       id: rawCountry.id,
       name: rawCountry.name,
       states: rawCountry.states,
       links: { schools: new Link(rawCountry._links.schools) },
-    };
-  });
+    }));
 }

@@ -22,7 +22,7 @@ beforeEach(() => {
       notification.remove();
     }
   } catch (e) {
-    // swallow
+    // Swallow
   }
 });
 

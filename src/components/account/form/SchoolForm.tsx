@@ -28,7 +28,7 @@ export class SchoolForm extends React.Component<
   FormComponentProps & SchoolFormProps,
   SchoolFormState
 > {
-  constructor(props: Readonly<FormComponentProps & SchoolFormProps>) {
+  public constructor(props: Readonly<FormComponentProps & SchoolFormProps>) {
     super(props);
     this.state = {
       schools: [],
@@ -126,12 +126,10 @@ export class SchoolForm extends React.Component<
       schools.unshift({ id: UNKNOWN_SCHOOL, name: "My school isn't listed" });
     }
 
-    return schools.map(school => {
-      return (
-        <Option key={school.id} value={school.id} title={school.name}>
-          {school.name}
-        </Option>
-      );
-    });
+    return schools.map(school => (
+      <Option key={school.id} value={school.id} title={school.name}>
+        {school.name}
+      </Option>
+    ));
   };
 }

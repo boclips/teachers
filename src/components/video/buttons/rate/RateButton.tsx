@@ -14,7 +14,7 @@ interface State {
 }
 
 export default class RateButton extends React.Component<RatingProps, State> {
-  constructor(props: RatingProps) {
+  public constructor(props: RatingProps) {
     super(props);
 
     this.state = {

@@ -4,7 +4,6 @@ import {
   within,
 } from '@testing-library/react';
 import React from 'react';
-import MyCollectionListView from './MyCollectionListView';
 
 import {
   CollectionsFactory,
@@ -18,6 +17,7 @@ import collectionMiddleware from '../../components/collection/redux/middleware/c
 import { collectionHandlers } from '../../components/collection/redux/reducers/collectionsReducer';
 import { Link } from '../../types/Link';
 import { VideoCollection } from '../../types/VideoCollection';
+import MyCollectionListView from './MyCollectionListView';
 
 describe('MyCollectionListView', () => {
   it('when user has no collections, it renders a helper message', () => {
@@ -90,7 +90,7 @@ describe('MyCollectionListView', () => {
     const myCollectionToDelete = getCollectionWithData('123', 'delete this');
     const myOtherCollection = getCollectionWithData('456', 'sample');
 
-    // intentionally not using ApiStub so we only set up what is needed
+    // Intentionally not using ApiStub so we only set up what is needed
     MockFetchVerify.delete(`/v1/collections/${myCollectionToDelete.id}/delete`);
 
     const { getAllByTestId, findByRole } = renderWithStore(

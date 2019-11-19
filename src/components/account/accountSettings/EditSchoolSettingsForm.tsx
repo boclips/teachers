@@ -38,7 +38,7 @@ export class EditSchoolSettingsFields extends React.Component<
   Props & FormComponentProps & DispatchProps,
   InternalState
 > {
-  constructor(props: Props & FormComponentProps & DispatchProps) {
+  public constructor(props: Props & FormComponentProps & DispatchProps) {
     super(props);
     this.state = {
       latestState: this.props.userProfile.state.id,

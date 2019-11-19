@@ -38,7 +38,7 @@ class AutocompleteOption extends React.Component<{
 class FreshSearchOnValueChange extends React.Component<Props, State> {
   private submittedText = '';
 
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props);
     this.state = {
       completions: [],

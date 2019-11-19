@@ -37,14 +37,12 @@ describe('AnalyticsService', () => {
           page: jest.fn(),
           identify: jest.fn(),
         };
-        // tslint:disable-next-line:no-unused-expression
         new AnalyticsService(undefined, appcues);
       }).toThrow();
     });
 
     it('will not fail without a appcues instance', () => {
       expect(() => {
-        // tslint:disable-next-line:no-unused-expression
         new AnalyticsService(mockMixpanel, undefined);
       }).not.toThrow();
     });

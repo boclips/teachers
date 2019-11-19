@@ -21,7 +21,5 @@ export const editCollection = (
         : new AgeRange(),
       description: request.description,
     })
-    .then(() => {
-      return true;
-    });
+    .then(() => true);
 };

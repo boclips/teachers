@@ -10,8 +10,7 @@ export function fetchDisciplines(links: Links): Promise<Discipline[]> {
 }
 
 function convertDisciplinesResource(data: any): Discipline[] {
-  return data._embedded.disciplines.map(rawDiscipline => {
-    return {
+  return data._embedded.disciplines.map(rawDiscipline => ({
       id: rawDiscipline.id,
       code: rawDiscipline.code,
       name: rawDiscipline.name,
@@ -22,6 +21,5 @@ function convertDisciplinesResource(data: any): Discipline[] {
           name: rawSubject.name,
           lessonPlan: rawSubject.lessonPlan,
         })),
-    };
-  });
+    }));
 }

@@ -7,7 +7,7 @@ import eventually from '../eventually';
 import { AbstractCollectionListPage } from './AbstractCollectionListPage';
 
 export class PublicCollectionListPage extends AbstractCollectionListPage {
-  constructor(public wrapper: ReactWrapper) {
+  public constructor(public wrapper: ReactWrapper) {
     super(wrapper);
   }
 

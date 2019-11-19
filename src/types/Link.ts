@@ -4,7 +4,7 @@ import 'urijs/src/URITemplate';
 export class Link {
   private link: RawLink;
 
-  constructor(link: RawLink) {
+   public constructor(link: RawLink) {
     this.link = link;
   }
 

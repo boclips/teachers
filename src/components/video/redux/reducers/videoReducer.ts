@@ -11,9 +11,7 @@ import { storePromotedVideosAction } from '../actions/storePromotedVideosAction'
 import { storeVideoAction } from '../actions/storeVideoAction';
 import { storeVideosAction } from '../actions/storeVideosAction';
 
-const onFetchVideoAction = (state: State): State => {
-  return { ...state, video: { loading: true, id: null } };
-};
+const onFetchVideoAction = (state: State): State => ({ ...state, video: { loading: true, id: null } });
 
 const onStoreVideoAction = (state: State, video: Video): State =>
   produce(state, draftState => {

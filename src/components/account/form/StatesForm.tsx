@@ -57,18 +57,16 @@ export class StatesForm extends React.Component<
       this.props.states &&
       this.props.states
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map(state => {
-          return (
-            <Option
-              data-qa="state-option"
-              key={state.id}
-              value={state.id}
-              title={state.name}
-            >
-              {state.name}
-            </Option>
-          );
-        })
+        .map(state => (
+          <Option
+            data-qa="state-option"
+            key={state.id}
+            value={state.id}
+            title={state.name}
+          >
+            {state.name}
+          </Option>
+        ))
     );
   }
 }

@@ -7,7 +7,7 @@ import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
 export class OnboardingPage {
-  constructor(public wrapper: ReactWrapper) {}
+  public constructor(public wrapper: ReactWrapper) {}
 
   public static async navigateToOnboarding() {
     const page = new OnboardingPage(

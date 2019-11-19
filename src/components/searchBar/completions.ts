@@ -80,8 +80,7 @@ const getHighlights = (match: Match, text: string): CompletionChunk[] => {
   ].filter(chunk => chunk.text.length > 0);
 };
 
-const completions = (db: string[], txt: string): Completion[] => {
-  return db
+const completions = (db: string[], txt: string): Completion[] => db
     .map(entry => entry.trim())
     .map(entry => getMatch(entry, txt))
     .filter(matchResult => matchResult.matches)
@@ -90,7 +89,6 @@ const completions = (db: string[], txt: string): Completion[] => {
       text: matchResult.text,
       textWithHighlights: getHighlights(matchResult, txt),
     }));
-};
 
 export const completionsFor = (db: string[]) => (txt: string): Completion[] =>
   txt.length >= 3 ? completions(db, txt) : [];

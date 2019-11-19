@@ -45,20 +45,16 @@ export class VideoDetailsView extends PureComponent<
   }
 }
 
-function mapStateToProps(state: State, props: OwnProps): StateProps {
-  return {
-    video: getVideoById(state, props.videoId),
-  };
-}
+const mapStateToProps = (state: State, props: OwnProps): StateProps => ({
+  video: getVideoById(state, props.videoId),
+});
 
-function mapDispatchToProps(
+const mapDispatchToProps = (
   dispatch: Dispatch,
   ownProps: OwnProps,
-): DispatchProps {
-  return {
-    fetchVideo: () => dispatch(fetchVideoAction(ownProps.videoId)),
-  };
-}
+): DispatchProps => ({
+  fetchVideo: () => dispatch(fetchVideoAction(ownProps.videoId)),
+});
 
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,

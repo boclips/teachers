@@ -44,7 +44,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   StateProps & OwnProps & DispatchProps & WithPageableCollectionProps,
   InternalState
 > {
-  constructor(
+  public constructor(
     props: StateProps & OwnProps & DispatchProps & WithPageableCollectionProps,
   ) {
     super(props);

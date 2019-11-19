@@ -39,8 +39,8 @@ class VideoPreview extends React.PureComponent<OwnProps & StateProps> {
   }
 }
 
-const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => {
-  return { video: getVideoById(state, ownProps.videoId) };
-};
+const mapStateToProps = (state: State, ownProps: OwnProps): StateProps => ({
+  video: getVideoById(state, ownProps.videoId),
+});
 
 export default connect(mapStateToProps)(VideoPreview);

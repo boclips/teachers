@@ -13,8 +13,8 @@ export interface UpdateUserRequest {
   hasOptedIntoMarketing?: boolean;
   referralCode?: string;
   utm?: Utm;
-  schoolName?: String;
-  schoolId?: String;
+  schoolName?: string;
+  schoolId?: string;
 }
 
 export function onboardUser(

@@ -405,13 +405,10 @@ class OnboardingForm extends React.Component<
     );
   };
 
-  private onCountryChange = country => {
-    return this.setState({ ...this.state, country });
-  };
+  private onCountryChange = country =>
+    this.setState({ ...this.state, country });
 
-  private onStateChange = state => {
-    return this.setState({ ...this.state, state });
-  };
+  private onStateChange = state => this.setState({ ...this.state, state });
 
   private handleSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {

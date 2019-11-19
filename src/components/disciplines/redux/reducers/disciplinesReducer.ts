@@ -11,8 +11,6 @@ export const disciplinesReducer: Reducer<
   [],
   actionHandler(
     fetchedDisciplinesAction,
-    (_: Discipline[], disciplines: Discipline[]) => {
-      return disciplines;
-    },
+    (_: Discipline[], disciplines: Discipline[]) => disciplines,
   ),
 );

@@ -17,7 +17,7 @@ interface State {
   visible: boolean;
 }
 class AccountMenuComponent extends React.Component<Props, State> {
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props);
     this.state = {
       visible: false,

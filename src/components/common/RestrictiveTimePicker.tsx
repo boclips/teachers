@@ -130,7 +130,7 @@ export class RestrictiveTimePicker extends React.Component<Props, State> {
   private getSecondsFromValue() {
     const time = this.state.value;
 
-    // moment is not immutable.
+    // Moment is not immutable.
     const startOfTheDay = time.clone().startOf('d');
     const timeDifference = time.diff(startOfTheDay);
 

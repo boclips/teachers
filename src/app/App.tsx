@@ -40,7 +40,7 @@ declare global {
 }
 
 const composeEnhancers =
-  window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] || compose; // tslint:disable-line
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 interface Props {
   apiPrefix: string;

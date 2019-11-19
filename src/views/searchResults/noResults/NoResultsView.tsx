@@ -12,7 +12,7 @@ interface State {
 }
 
 export default class NoResultsView extends React.Component<Props, State> {
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props);
     this.state = {
       isFormSubmitted: false,

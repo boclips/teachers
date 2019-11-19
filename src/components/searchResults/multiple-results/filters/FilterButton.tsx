@@ -37,7 +37,7 @@ type Props = AppliedFiltersInjectedProps &
 class FilterButton extends React.Component<Props, State> {
   private formRef: any;
 
-  constructor(props: DispatchProps & WithMediaBreakPointProps) {
+  public constructor(props: DispatchProps & WithMediaBreakPointProps) {
     super(props);
 
     this.state = {
@@ -120,31 +120,27 @@ class FilterButton extends React.Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    onSubmit: (filterRequest: FilterRequest) => {
-      dispatch(
-        bulkUpdateSearchParamsAction([
-          {
-            duration_min: filterRequest.duration && filterRequest.duration.min,
-            duration_max:
-              (filterRequest.duration && filterRequest.duration.max) ||
-              undefined,
-          },
-          {
-            age_range_min: filterRequest.ageRange && filterRequest.ageRange.min,
-            age_range_max:
-              (filterRequest.ageRange && filterRequest.ageRange.max) ||
-              undefined,
-          },
-          {
-            subject: filterRequest.subjects,
-          },
-        ]),
-      );
-    },
-  };
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onSubmit: (filterRequest: FilterRequest) => {
+    dispatch(
+      bulkUpdateSearchParamsAction([
+        {
+          duration_min: filterRequest.duration && filterRequest.duration.min,
+          duration_max:
+            (filterRequest.duration && filterRequest.duration.max) || undefined,
+        },
+        {
+          age_range_min: filterRequest.ageRange && filterRequest.ageRange.min,
+          age_range_max:
+            (filterRequest.ageRange && filterRequest.ageRange.max) || undefined,
+        },
+        {
+          subject: filterRequest.subjects,
+        },
+      ]),
+    );
+  },
+});
 
 const FilterButtonWithMediaBreakPoint = withMediaBreakPoint<Props>(
   FilterButton,

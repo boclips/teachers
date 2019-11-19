@@ -14,7 +14,7 @@ interface Props {
 }
 
 export class GoogleClassroomShareButton extends React.Component<Props> {
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props);
   }
 

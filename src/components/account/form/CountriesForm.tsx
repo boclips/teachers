@@ -63,13 +63,11 @@ export class CountriesForm extends React.Component<
       this.props.countries &&
       this.props.countries
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map(country => {
-          return (
-            <Option key={country.name} value={country.id} title={country.name}>
-              {country.name}
-            </Option>
-          );
-        })
+        .map(country => (
+          <Option key={country.name} value={country.id} title={country.name}>
+            {country.name}
+          </Option>
+        ))
     );
   }
 }

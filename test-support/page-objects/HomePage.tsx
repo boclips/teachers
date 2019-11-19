@@ -7,7 +7,7 @@ import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
 export class HomePage {
-  constructor(private wrapper: ReactWrapper) {}
+  public constructor(private wrapper: ReactWrapper) {}
 
   public static async load() {
     const page = new HomePage(
@@ -50,11 +50,9 @@ export class HomePage {
   public getVideos(): Video[] {
     return this.wrapper
       .find(By.dataQa('recommended-video'))
-      .map(videoPreview => {
-        return {
-          title: videoPreview.find(By.dataQa('recommended-video-title')).text(),
-        };
-      });
+      .map(videoPreview => ({
+        title: videoPreview.find(By.dataQa('recommended-video-title')).text(),
+      }));
   }
 
   public getDisciplines(): Discipline[] {

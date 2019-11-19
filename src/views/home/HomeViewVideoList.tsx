@@ -42,27 +42,25 @@ export class HomeViewVideoList extends React.PureComponent<
   }
 }
 
-const mapStateToProps = (state: State): StateProps => {
-  return { videoIds: getPromotedVideoIds(state) };
-};
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
-  return {
-    fetchPromotedVideos: () => {
-      dispatch(
-        fetchPromotedVideosAction({
-          filters: {
-            promoted: true,
-            includeTags: [Constants.CLASSROOM],
-            excludeTags: [Constants.NEWS],
-          },
-          page: 1,
-          size: 3,
-          sortBy: 'RANDOM',
-        }),
-      );
-    },
-  };
-};
+const mapStateToProps = (state: State): StateProps => ({
+  videoIds: getPromotedVideoIds(state),
+});
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  fetchPromotedVideos: () => {
+    dispatch(
+      fetchPromotedVideosAction({
+        filters: {
+          promoted: true,
+          includeTags: [Constants.CLASSROOM],
+          excludeTags: [Constants.NEWS],
+        },
+        page: 1,
+        size: 3,
+        sortBy: 'RANDOM',
+      }),
+    );
+  },
+});
 
 export default connect(
   mapStateToProps,

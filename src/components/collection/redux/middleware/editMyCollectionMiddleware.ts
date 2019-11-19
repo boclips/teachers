@@ -38,8 +38,7 @@ export function onEditCollection(
   }
 }
 
-const createUpdatedCollection = (request: EditCollectionRequest) => {
-  return {
+const createUpdatedCollection = (request: EditCollectionRequest) => ({
     ...request.originalCollection,
     title:
       request.title != null ? request.title : request.originalCollection.title,
@@ -58,7 +57,6 @@ const createUpdatedCollection = (request: EditCollectionRequest) => {
       request.description != null
         ? request.description
         : request.originalCollection.description,
-  };
-};
+  });
 
 export default sideEffect(editCollectionAction, onEditCollection);

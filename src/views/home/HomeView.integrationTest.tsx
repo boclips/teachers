@@ -10,8 +10,6 @@ import { HomePage } from '../../../test-support/page-objects/HomePage';
 
 describe('Home page', () => {
   test('loads public collections', async () => {
-    let homePage: HomePage;
-
     new ApiStub()
       .defaultUser()
       .fetchVideo()
@@ -19,7 +17,7 @@ describe('Home page', () => {
       .fetchPublicCollections()
       .fetchCollections();
 
-    homePage = await HomePage.load();
+    const homePage = await HomePage.load();
 
     expect(homePage.getPublicCollections()).toContainEqual({
       title: 'funky collection',
@@ -29,8 +27,6 @@ describe('Home page', () => {
   });
 
   test('loads disciplines', async () => {
-    let homePage: HomePage;
-
     new ApiStub()
       .defaultUser()
       .fetchVideo()
@@ -39,7 +35,7 @@ describe('Home page', () => {
       .fetchDisciplines()
       .fetchCollections();
 
-    homePage = await HomePage.load();
+    const homePage = await HomePage.load();
 
     expect(homePage.getDisciplines()).toContainEqual({
       name: 'Arts',
@@ -48,8 +44,6 @@ describe('Home page', () => {
   });
 
   test('loads public collection and renders a single subject', async () => {
-    let homePage: HomePage;
-
     new ApiStub()
       .defaultUser()
       .fetchVideo()
@@ -64,7 +58,7 @@ describe('Home page', () => {
 
     await fakeSubjectsSetup();
 
-    homePage = await HomePage.load();
+    const homePage = await HomePage.load();
 
     expect(homePage.getPublicCollections()).toContainEqual({
       title: 'funky collection',
@@ -74,8 +68,6 @@ describe('Home page', () => {
   });
 
   test('loads promoted videos', async () => {
-    let homePage: HomePage;
-
     new ApiStub()
       .defaultUser()
       .fetchVideo()
@@ -87,7 +79,7 @@ describe('Home page', () => {
         ]),
       );
 
-    homePage = await HomePage.load();
+    const homePage = await HomePage.load();
 
     expect(homePage.getVideos()).toContainEqual({
       title: 'hello',

@@ -27,9 +27,9 @@ export const renderWithStore = (
     ...rtlRender(ui, {
       wrapper: Wrapper,
     }),
-    // adding `store` to the returned utilities to allow us
-    // to reference it in our tests (just try to avoid using
-    // this to test implementation details).
+    // Adding `store` to the returned utilities to allow us
+    // To reference it in our tests (just try to avoid using
+    // This to test implementation details).
     store,
   };
 };

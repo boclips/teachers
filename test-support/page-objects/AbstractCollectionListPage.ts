@@ -3,7 +3,7 @@ import { By } from '../By';
 import { findOne } from '../enzymeHelpers';
 
 export abstract class AbstractCollectionListPage {
-  constructor(public wrapper: ReactWrapper) {}
+   public constructor(public wrapper: ReactWrapper) {}
 
   public getCollections(): Collection[] {
     return this.wrapper

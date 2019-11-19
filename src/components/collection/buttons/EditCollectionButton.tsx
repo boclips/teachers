@@ -27,7 +27,7 @@ export default class EditCollectionButton extends React.PureComponent<
 > {
   private formRef: any;
 
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props);
 
     this.state = {

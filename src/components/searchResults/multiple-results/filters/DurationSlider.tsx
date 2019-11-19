@@ -22,9 +22,8 @@ class DurationSlider extends React.Component<Props> {
     10: '10m+',
   });
 
-  private formatToolTip = (value: number) => {
-    return value >= 10 ? `${value}m+` : `${value}m`;
-  };
+  private formatToolTip = (value: number) =>
+    value >= 10 ? `${value}m+` : `${value}m`;
 
   public render() {
     return (

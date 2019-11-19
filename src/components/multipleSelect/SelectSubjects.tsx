@@ -58,18 +58,16 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
   private generateOptions() {
     const Option = MultiSelect.Option;
 
-    return this.state.sortedSubjects.map(subject => {
-      return (
-        <Option
-          key={subject.name}
-          value={subject.id}
-          title={subject.name}
-          data-qa={subject.id}
-        >
-          {subject.name}
-        </Option>
-      );
-    });
+    return this.state.sortedSubjects.map(subject => (
+      <Option
+        key={subject.name}
+        value={subject.id}
+        title={subject.name}
+        data-qa={subject.id}
+      >
+        {subject.name}
+      </Option>
+    ));
   }
 
   private static sortSubjectsByName(subjects: Readonly<Subject[]>): Subject[] {

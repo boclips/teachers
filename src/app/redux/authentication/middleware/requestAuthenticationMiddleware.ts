@@ -34,8 +34,7 @@ const onSsoAuthenticationRequested = (
   });
 };
 
-const getDefaultSecurityOptions = (store: Store) => {
-  return {
+const getDefaultSecurityOptions = (store: Store) => ({
     onLogin: () => {
       store.dispatch(
         authenticationResolved({
@@ -53,8 +52,7 @@ const getDefaultSecurityOptions = (store: Store) => {
     realm: 'boclips',
     clientId: 'teachers',
     authEndpoint: defaultAuthEndpoint,
-  };
-};
+  });
 
 export default [
   sideEffect(requestAuthentication, onAuthenticationRequested),

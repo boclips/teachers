@@ -8,7 +8,7 @@ import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
 export class VideoDetailsPage {
-  constructor(private wrapper: ReactWrapper) {}
+  public constructor(private wrapper: ReactWrapper) {}
 
   public static async load() {
     const page = new VideoDetailsPage(

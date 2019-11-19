@@ -45,8 +45,7 @@ export type SideEffect = <P>(
 export const sideEffect: SideEffect = <P>(
   actionCreator: ActionCreator<P>,
   impl: InterceptImpl<P>,
-) => {
-  return (store: MiddlewareAPI) => (next: Dispatch) => (
+) => (store: MiddlewareAPI) => (next: Dispatch) => (
     action: ReduxAction,
   ): any => {
     const result = next(action);
@@ -56,6 +55,5 @@ export const sideEffect: SideEffect = <P>(
     }
     return result;
   };
-};
 
 export interface SE<T = never> extends InterceptImpl<T> {}

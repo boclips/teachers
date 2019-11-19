@@ -2,11 +2,10 @@ import { Card } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import { Discipline } from '../../types/Discipline';
 import { Subject } from '../../types/Subject';
 import DisciplineLogo from './DisciplineLogo';
-
-import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 
 import './DisciplineCard.less';
 
@@ -101,8 +100,8 @@ export class DisciplineCard extends React.PureComponent<Props> {
     </section>
   );
 
-  private sortSubjects = (subjects: Subject[]) => {
-    return [...subjects].sort((a, b) => {
+  private sortSubjects = (subjects: Subject[]) =>
+    [...subjects].sort((a, b) => {
       if (a.name > b.name) {
         return 1;
       }
@@ -111,5 +110,4 @@ export class DisciplineCard extends React.PureComponent<Props> {
       }
       return 0;
     });
-  };
 }

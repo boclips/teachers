@@ -75,28 +75,26 @@ export class CollectionCardList extends React.PureComponent<
         {this.props.collections &&
           this.props.collections
             .slice(0, this.props.maxNumberOfCollections)
-            .map(collection => {
-              return (
-                <CSSTransition
-                  classNames="card-list"
-                  timeout={500}
-                  key={collection.id}
+            .map(collection => (
+              <CSSTransition
+                classNames="card-list"
+                timeout={500}
+                key={collection.id}
+              >
+                <Col
+                  xs={{ span: 24 }}
+                  md={{
+                    span: this.singleColumn() ? 24 : 12,
+                  }}
+                  lg={{ span: this.singleColumn() ? 24 : 8 }}
                 >
-                  <Col
-                    xs={{ span: 24 }}
-                    md={{
-                      span: this.singleColumn() ? 24 : 12,
-                    }}
-                    lg={{ span: this.singleColumn() ? 24 : 8 }}
-                  >
-                    <CollectionCardContainer
-                      tiny={this.props.grid || this.props.sidebar}
-                      collection={collection}
-                    />
-                  </Col>
-                </CSSTransition>
-              );
-            })}
+                  <CollectionCardContainer
+                    tiny={this.props.grid || this.props.sidebar}
+                    collection={collection}
+                  />
+                </Col>
+              </CSSTransition>
+            ))}
       </TransitionGroup>,
     ];
   }

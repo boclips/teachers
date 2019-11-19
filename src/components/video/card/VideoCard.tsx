@@ -78,7 +78,7 @@ export class VideoCard extends React.PureComponent<Props> {
   }
 
   private emitVideoLinkClickEvent = () => {
-    // noinspection JSIgnoredPromiseFromCall
+    // Noinspection JSIgnoredPromiseFromCall
     AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(
       this.props.video,
     );

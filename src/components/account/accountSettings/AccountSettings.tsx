@@ -96,16 +96,12 @@ class AccountSettings extends React.Component<
     );
   }
 
-  private isUserAmerican = () => {
-    return (
-      this.props.userProfile.country &&
-      this.props.userProfile.country.id === 'USA'
-    );
-  };
+  private isUserAmerican = () =>
+    this.props.userProfile.country &&
+    this.props.userProfile.country.id === 'USA';
 
-  private findUSA = (): Country => {
-    return this.props.countries.find(country => country.id === 'USA');
-  };
+  private findUSA = (): Country =>
+    this.props.countries.find(country => country.id === 'USA');
 
   private toggleEditProfileForm = () => {
     this.setState({
@@ -121,9 +117,8 @@ class AccountSettings extends React.Component<
     });
   };
 
-  private showSettings = () => {
-    return !(this.state.editProfileForm || this.state.editSchoolSettingsForm);
-  };
+  private showSettings = () =>
+    !(this.state.editProfileForm || this.state.editSchoolSettingsForm);
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

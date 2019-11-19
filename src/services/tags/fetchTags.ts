@@ -11,11 +11,9 @@ export function fetchTags(links: Links): Promise<Tag[]> {
 }
 
 function convertTagsResource(data: any) {
-  return data._embedded.tags.map(rawTag => {
-    return {
+  return data._embedded.tags.map(rawTag => ({
       id: rawTag.id,
       label: rawTag.label,
       links: { self: new Link(rawTag._links.self) },
-    };
-  });
+    }));
 }

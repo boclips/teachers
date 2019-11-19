@@ -6,13 +6,12 @@ import { By } from '../../../../test-support/By';
 import { VideoCollectionFactory } from '../../../../test-support/factories';
 import CollectionTitle from './CollectionTitle';
 
-const getComponent = collection => {
-  return mount(
+const getComponent = collection =>
+  mount(
     <Router history={createMemoryHistory()}>
       <CollectionTitle collection={collection} />
     </Router>,
   );
-};
 
 test('renders title', () => {
   const collection = VideoCollectionFactory.sample({ title: 'hello' });

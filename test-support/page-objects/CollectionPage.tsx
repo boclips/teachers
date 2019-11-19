@@ -10,7 +10,7 @@ import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
 export class CollectionPage {
-  constructor(public wrapper: ReactWrapper) {}
+  public constructor(public wrapper: ReactWrapper) {}
 
   public static async load(collectionId: string = 'id') {
     const page = new CollectionPage(

@@ -9,7 +9,5 @@ export const subjectsReducer: Reducer<
   Subject[]
 > = createReducerWithInitialState(
   [],
-  actionHandler(fetchedSubjectsAction, (_: Subject[], subjects: Subject[]) => {
-    return subjects;
-  }),
+  actionHandler(fetchedSubjectsAction, (_: Subject[], subjects: Subject[]) => subjects),
 );

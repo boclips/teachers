@@ -33,7 +33,7 @@ class VideoFeedbackModal extends React.Component<
   ModalProps & DispatchProps,
   ModalState
 > {
-  constructor(props: ModalProps & DispatchProps) {
+  public constructor(props: ModalProps & DispatchProps) {
     super(props);
 
     this.state = {

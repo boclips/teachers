@@ -28,9 +28,8 @@ class AgeRangeSlider extends React.Component<Props> {
         : '19+',
   });
 
-  private formatToolTip = (value: number) => {
-    return value >= 19 ? `${value}+` : `${value}`;
-  };
+  private formatToolTip = (value: number) =>
+    value >= 19 ? `${value}+` : `${value}`;
 
   public render() {
     return (

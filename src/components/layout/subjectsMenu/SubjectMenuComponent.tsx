@@ -17,7 +17,7 @@ interface State {
 }
 
 class SubjectMenuComponent extends React.Component<Props, State> {
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props);
     this.state = {
       dropdownVisible: false,
@@ -59,39 +59,37 @@ class SubjectMenuComponent extends React.Component<Props, State> {
 
   private renderMenu = (): React.ReactFragment => (
     <Menu className="subject-menu__list subject-menu--desktop">
-      {this.props.disciplines.map(discipline => {
-        return (
-          <Menu.ItemGroup
-            className="subject-menu__list-item-group"
-            key={discipline.id}
-          >
-            {
-              <Menu.Item
-                className="subject-menu__list-item-heading"
-                key={discipline.id}
+      {this.props.disciplines.map(discipline => (
+        <Menu.ItemGroup
+          className="subject-menu__list-item-group"
+          key={discipline.id}
+        >
+          {
+            <Menu.Item
+              className="subject-menu__list-item-heading"
+              key={discipline.id}
+            >
+              <Link
+                to={`/discover-collections?discipline=${discipline.id}`}
+                className="link--tabbable"
               >
+                {discipline.name}
+              </Link>
+            </Menu.Item>
+          }
+          {discipline.subjects &&
+            discipline.subjects.map(subject => (
+              <Menu.Item className="subject-menu__list-item" key={subject.id}>
                 <Link
-                  to={`/discover-collections?discipline=${discipline.id}`}
+                  to={`/discover-collections?subject=${subject.id}`}
                   className="link--tabbable"
                 >
-                  {discipline.name}
+                  {subject.name}
                 </Link>
               </Menu.Item>
-            }
-            {discipline.subjects &&
-              discipline.subjects.map(subject => (
-                <Menu.Item className="subject-menu__list-item" key={subject.id}>
-                  <Link
-                    to={`/discover-collections?subject=${subject.id}`}
-                    className="link--tabbable"
-                  >
-                    {subject.name}
-                  </Link>
-                </Menu.Item>
-              ))}
-          </Menu.ItemGroup>
-        );
-      })}
+            ))}
+        </Menu.ItemGroup>
+      ))}
     </Menu>
   );
 }

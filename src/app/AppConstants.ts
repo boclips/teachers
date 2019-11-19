@@ -1,11 +1,12 @@
+
 export class AppConstants {
   private window: Window;
 
-  constructor(window: Window) {
+  public constructor(window: Window) {
     this.window = window;
   }
 
-  get API_PREFIX(): string {
+  public get API_PREFIX(): string {
     switch (this.ENVIRONMENT) {
       case 'TESTING':
         return 'https://api.testing-boclips.com';
@@ -16,7 +17,7 @@ export class AppConstants {
     }
   }
 
-  get HOST(): string {
+  public get HOST(): string {
     return (
       this.window.location.protocol +
       '//' +
@@ -25,7 +26,7 @@ export class AppConstants {
     );
   }
 
-  get ENVIRONMENT(): 'STAGING' | 'TESTING' | 'PRODUCTION' {
+  public get ENVIRONMENT(): 'STAGING' | 'TESTING' | 'PRODUCTION' {
     const localHost = 'localhost';
     const localBoclips = '.local-boclips.com';
     const testingHost = '.testing-boclips.com';
@@ -56,11 +57,11 @@ export class AppConstants {
     }
   }
 
-  get NEWS(): string {
+  public get NEWS(): string {
     return 'news';
   }
 
-  get CLASSROOM(): string {
+  public get CLASSROOM(): string {
     return 'classroom';
   }
 }

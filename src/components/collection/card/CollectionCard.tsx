@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 import React from 'react';
+import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import CollectionHeader from '../header/CollectionHeader';
 import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
 
-import { Video } from '../../../types/Video';
 import './CollectionCard.less';
 
 export interface Props {

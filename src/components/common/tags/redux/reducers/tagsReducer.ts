@@ -7,7 +7,5 @@ import { fetchedTagsAction } from '../actions/fetchedTagsAction';
 
 export const tagsReducer: Reducer<Tag[]> = createReducerWithInitialState(
   [],
-  actionHandler(fetchedTagsAction, (_: Tag[], tags: Tag[]) => {
-    return tags;
-  }),
+  actionHandler(fetchedTagsAction, (_: Tag[], tags: Tag[]) => tags),
 );

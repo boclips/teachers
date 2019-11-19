@@ -26,7 +26,7 @@ test('displays arts discipline', async () => {
   new ApiStub()
     .defaultUser()
     .fetchCollections()
-    // art discipline contains arts-subject-1 and art-subjects-2
+    // Art discipline contains arts-subject-1 and art-subjects-2
     .fetchDisciplines()
     .fetchCollectionsBySubjects('arts-subject-1', 'arts-subject-2')
     .fetchVideo();

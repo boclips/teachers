@@ -1,4 +1,3 @@
-/* tslint:disable:no-string-literal */
 import { configure } from '@testing-library/dom';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
@@ -46,12 +45,13 @@ export async function waitForElement(selector: string) {
 }
 
 export function findElement(selector: string) {
-  return global['document'].querySelector(selector);
+  return (global as any).document.querySelector(selector);
 }
 
-jest.mock('./src/services/analytics/boclips/BoclipsAnalytics', () => {
-  return FakeBoclipsAnalytics;
-});
+jest.mock(
+  './src/services/analytics/boclips/BoclipsAnalytics',
+  () => FakeBoclipsAnalytics,
+);
 
 beforeEach(() => {
   FakeBoclipsAnalytics.reset();

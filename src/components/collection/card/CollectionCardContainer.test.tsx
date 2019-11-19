@@ -188,8 +188,8 @@ describe('showing correct video previews', () => {
   });
 });
 
-const createMockStore = (collection: VideoCollection, videos: Video[]) => {
-  return MockStoreFactory.sample({
+const createMockStore = (collection: VideoCollection, videos: Video[]) =>
+  MockStoreFactory.sample({
     entities: EntitiesFactory.sample({
       collections: { byId: { [collection.id]: collection } },
       videos: { byId: organizeById(videos) },
@@ -205,7 +205,6 @@ const createMockStore = (collection: VideoCollection, videos: Video[]) => {
       updating: false,
     },
   });
-};
 
 const generateVideoIds = (numberOfIds: number) => {
   const arr = [];

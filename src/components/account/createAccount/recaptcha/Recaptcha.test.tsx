@@ -4,9 +4,7 @@ import { ReCaptcha } from 'react-recaptcha-v3';
 import { Props, Recaptcha } from './Recaptcha';
 
 describe('Recaptcha', () => {
-  const getComponent = (props: Props) => {
-    return mount(<Recaptcha {...props} />);
-  };
+  const getComponent = (props: Props) => mount(<Recaptcha {...props} />);
 
   it('Configures the Recaptcha component', () => {
     const verifyCallback = token => console.log(token);

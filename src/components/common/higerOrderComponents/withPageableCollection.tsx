@@ -32,9 +32,7 @@ export interface WithPageableCollectionProps
 
 const withPageableCollection = Component => (
   props: Props & DispatchProps & StateProps,
-) => {
-  return <Component {...props} />;
-};
+) => <Component {...props} />;
 
 const mapDispatchToProps = (
   dispatch: Dispatch,

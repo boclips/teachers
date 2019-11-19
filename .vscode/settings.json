@@ -4,5 +4,4 @@
   "[typescript]": {},
   "[typescriptreact]": {},
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "tslint.autoFixOnSave": true
 }

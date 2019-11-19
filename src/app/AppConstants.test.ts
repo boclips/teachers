@@ -96,7 +96,7 @@ describe('AppConstants', () => {
       } as Window);
 
       expect(() => {
-        /* tslint:disable */
+        // eslint-disable-next-line no-unused-expressions
         appConfig.ENVIRONMENT;
       }).toThrow();
     });
@@ -144,7 +144,7 @@ describe('AppConstants', () => {
           } as Window);
 
           expect(() => {
-            /* tslint:disable */
+            // eslint-disable-next-line no-unused-expressions
             appConfig.ENVIRONMENT;
           }).toThrow();
         });

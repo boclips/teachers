@@ -6,7 +6,7 @@ import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
 export class CreateAccountPage {
-  constructor(public wrapper: ReactWrapper) {}
+  public constructor(public wrapper: ReactWrapper) {}
 
   public static async load(params = '') {
     const reactWrapper = mount(

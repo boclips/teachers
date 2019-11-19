@@ -9,7 +9,5 @@ export const countriesReducer: Reducer<
   Country[]
 > = createReducerWithInitialState(
   [],
-  actionHandler(fetchedCountriesAction, (_: Country[], subjects: Country[]) => {
-    return subjects;
-  }),
+  actionHandler(fetchedCountriesAction, (_: Country[], subjects: Country[]) => subjects),
 );
