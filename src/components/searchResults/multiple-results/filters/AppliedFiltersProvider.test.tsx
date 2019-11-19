@@ -1,5 +1,6 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -13,14 +14,13 @@ const getWrapper = (query: string, component: React.ReactElement) => {
     }),
   });
 
-  return shallow(
-    <AppliedFiltersProvider>
-      {React.cloneElement(component)}
-    </AppliedFiltersProvider>,
-    {
-      context: { store },
-    },
-  ).dive();
+  return mount(
+    <Provider store={store}>
+      <AppliedFiltersProvider>
+        {React.cloneElement(component)}
+      </AppliedFiltersProvider>
+    </Provider>,
+  );
 };
 
 describe('duration filters', () => {
@@ -30,7 +30,9 @@ describe('duration filters', () => {
       <div />,
     );
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMax: null,
       ageRangeMin: null,
       durationMin: 60,
@@ -42,7 +44,10 @@ describe('duration filters', () => {
 
   it('provides valid duration with no max', () => {
     const wrapper = getWrapper(`?q=hi&duration_min=180`, <div />);
-    expect(wrapper.props()).toEqual({
+
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: null,
       ageRangeMax: null,
       durationMin: 180,
@@ -54,7 +59,10 @@ describe('duration filters', () => {
 
   it('provides valid duration with no min', () => {
     const wrapper = getWrapper(`?q=hi&duration_max=180`, <div />);
-    expect(wrapper.props()).toEqual({
+
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       durationMin: null,
       durationMax: 180,
       ageRangeMin: null,
@@ -72,7 +80,9 @@ describe('age range filters', () => {
       <div />,
     );
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: 5,
       ageRangeMax: 11,
       durationMin: null,
@@ -85,7 +95,9 @@ describe('age range filters', () => {
   it('provides valid age range with no min', () => {
     const wrapper = getWrapper(`?q=hi&age_range_max=11`, <div />);
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: null,
       ageRangeMax: 11,
       durationMin: null,
@@ -98,7 +110,9 @@ describe('age range filters', () => {
   it('provides valid age range with no max', () => {
     const wrapper = getWrapper(`?q=hi&age_range_min=5`, <div />);
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: 5,
       ageRangeMax: null,
       durationMin: null,
@@ -112,7 +126,9 @@ describe('subject filters', () => {
   it('provides single subject filter', () => {
     const wrapper = getWrapper(`?q=hi&subject=subject-one-id`, <div />);
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: null,
       ageRangeMax: null,
       durationMin: null,
@@ -128,7 +144,9 @@ describe('subject filters', () => {
       <div />,
     );
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: null,
       ageRangeMax: null,
       durationMin: null,
@@ -146,7 +164,9 @@ describe('number of filters applied', () => {
       <div />,
     );
 
-    expect(wrapper.props()).toEqual({
+    const div = wrapper.find('div');
+
+    expect(div.props()).toEqual({
       ageRangeMin: 5,
       ageRangeMax: 11,
       durationMin: 60,

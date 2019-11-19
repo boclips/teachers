@@ -1,6 +1,5 @@
 import { ConnectedRouter } from 'connected-react-router';
 import { History } from 'history';
-import createBrowserHistory from 'history/createBrowserHistory';
 import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -24,8 +23,6 @@ import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
 import VideoDetailsView from '../videoDetails/VideoDetailsView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
-
-export const defaultHistory = createBrowserHistory();
 
 const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
   <VideoDetailsView videoId={props.match.params.videoId} />
@@ -73,7 +70,7 @@ interface Props {
 class BoclipsRouter extends Component<Props & StateProps> {
   public render() {
     return (
-      <ConnectedRouter history={this.props.history || defaultHistory}>
+      <ConnectedRouter history={this.props.history}>
         <ScrollToTopOnForwardNavigation>
           <Switch>
             <Route path="/bye" component={LoggedOutView} />

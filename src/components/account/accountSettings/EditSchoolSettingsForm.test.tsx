@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../../test-support/By';
@@ -28,7 +28,7 @@ describe('School settings form', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(
+    wrapper = mount(
       <Provider store={MockStoreFactory.sample()}>
         <EditSchoolSettingsForm
           country={CountryFactory.sample({
@@ -44,11 +44,7 @@ describe('School settings form', () => {
           })}
         />
       </Provider>,
-    )
-      .dive({ context: { store: MockStoreFactory.sample() } })
-      .dive()
-      .find('EditSchoolSettingsFields')
-      .dive();
+    );
   });
 
   it('populates the form with the existing state and school', () => {
@@ -62,6 +58,7 @@ describe('School settings form', () => {
   it('returns to the account settings page when cancel is clicked', () => {
     wrapper
       .find(By.dataQa('cancel-edit-button'))
+      .hostNodes()
       .props()
       .onClick();
 

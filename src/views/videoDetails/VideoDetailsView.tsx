@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { actionCreatorFactory } from '../../app/redux/actions';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
+import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
 import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
 import { Video } from '../../types/Video';
-
-export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
 
 interface OwnProps {
   videoId: string;

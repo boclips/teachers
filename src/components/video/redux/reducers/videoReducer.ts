@@ -6,7 +6,7 @@ import {
 import State, { VideoStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { organizeById } from '../../../../utils/entityMap';
-import { fetchVideoAction } from '../../../../views/videoDetails/VideoDetailsView';
+import { fetchVideoAction } from '../actions/fetchVideoAction';
 import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
 import { storeVideoAction } from '../actions/storeVideoAction';
 import { storeVideosAction } from '../actions/storeVideosAction';

@@ -1,5 +1,7 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -8,14 +10,16 @@ import { ClosableTag } from '../../../common/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 
-const getWrapper = (durationMin?: number, durationMax?: number) => {
-  const store = MockStoreFactory.sample();
-
-  return shallow(
-    <DurationFilterTag durationMin={durationMin} durationMax={durationMax} />,
-    { context: { store } },
-  ).dive();
-};
+const getWrapper = (
+  durationMin?: number,
+  durationMax?: number,
+  store?: Store,
+) =>
+  mount(
+    <Provider store={store || MockStoreFactory.sample()}>
+      <DurationFilterTag durationMin={durationMin} durationMax={durationMax} />
+    </Provider>,
+  );
 
 it('does not render anything if no duration filter', () => {
   const wrapper = getWrapper();
@@ -49,9 +53,7 @@ it('removes duration from url on close', () => {
     }),
   });
 
-  const wrapper = shallow(<DurationFilterTag durationMin={123} />, {
-    context: { store },
-  }).dive();
+  const wrapper = getWrapper(123, null, store);
 
   wrapper
     .find(ClosableTag)

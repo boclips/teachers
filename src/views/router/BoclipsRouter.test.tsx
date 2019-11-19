@@ -1,7 +1,3 @@
-import {
-  RouterActionType,
-  RouterState as ReactRouterState,
-} from 'connected-react-router';
 import { mount } from 'enzyme';
 import createMemoryHistory from 'history/createMemoryHistory';
 import React from 'react';
@@ -26,10 +22,12 @@ import VideoDetailsView from '../videoDetails/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
 
 test('shows video details view on /videos/{id}', () => {
-  const history = createMemoryHistory();
+  const history = createMemoryHistory({
+    initialEntries: ['/videos/123'],
+  });
 
   const wrapper = mount(
-    <Provider store={buildStore('/videos/123')}>
+    <Provider store={buildStore()}>
       <BoclipsRouter history={history} />
     </Provider>,
   );
@@ -40,8 +38,10 @@ test('shows video details view on /videos/{id}', () => {
 });
 
 test('scrolls to top on navigation', () => {
-  const history = createMemoryHistory();
-  const store = buildStore('/collections');
+  const history = createMemoryHistory({
+    initialEntries: ['/collections'],
+  });
+  const store = buildStore();
 
   mount(
     <Provider store={store}>
@@ -56,10 +56,12 @@ test('scrolls to top on navigation', () => {
 
 describe('when authorised', () => {
   test('shows search results view on /videos', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/videos?q=earthquakes'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/videos', 'q=earthquakes')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -69,10 +71,12 @@ describe('when authorised', () => {
   });
 
   test('shows home page on /', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -82,10 +86,12 @@ describe('when authorised', () => {
   });
 
   test('shows collections view on /collections', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/collections'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/collections')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -95,10 +101,12 @@ describe('when authorised', () => {
   });
 
   test('shows public collections view on /public-collections', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/public-collections'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/public-collections')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -108,12 +116,12 @@ describe('when authorised', () => {
   });
 
   test('shows discover collections view on /discover-collections', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/discover-collections?subject=maths'],
+    });
 
     const wrapper = mount(
-      <Provider
-        store={buildStore('/discover-collections', 'subject=maths', true)}
-      >
+      <Provider store={buildStore(true)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -125,16 +133,14 @@ describe('when authorised', () => {
   });
 
   test('shows discover collections by subject view on /discover-collections', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: [
+        '/discover-collections?discipline=stuff&subject=maths&subject=myths',
+      ],
+    });
 
     const wrapper = mount(
-      <Provider
-        store={buildStore(
-          '/discover-collections',
-          'discipline=stuff&subject=maths&subject=myths',
-          true,
-        )}
-      >
+      <Provider store={buildStore(true)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -146,10 +152,12 @@ describe('when authorised', () => {
   });
 
   test('shows bookmarked collections view on /bookmarked-collections', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/bookmarked-collections'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/bookmarked-collections')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -159,10 +167,12 @@ describe('when authorised', () => {
   });
 
   test('shows new account form on /onboarding', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/onboarding'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/onboarding')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -172,10 +182,12 @@ describe('when authorised', () => {
   });
 
   test('shows default collection view on /collections/default', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/collections/default'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/collections/default')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -185,10 +197,12 @@ describe('when authorised', () => {
   });
 
   test('shows our subjects page', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/our-subjects'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/our-subjects')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -198,10 +212,12 @@ describe('when authorised', () => {
   });
 
   test('shows the account settings page', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/account-settings'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/account-settings')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -213,10 +229,12 @@ describe('when authorised', () => {
 
 describe('when not authorised', () => {
   test('shows new account form on /create-account', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/create-account'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/create-account', '', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -226,10 +244,12 @@ describe('when not authorised', () => {
   });
 
   test('does not show search results view on /videos', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/videos?q=earthquakes'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/videos', 'q=earthquakes', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -239,10 +259,12 @@ describe('when not authorised', () => {
   });
 
   test('does not show home page on /', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/', '', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -252,10 +274,12 @@ describe('when not authorised', () => {
   });
 
   test('does not show collections view', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/collections'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/collections', '', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -265,10 +289,12 @@ describe('when not authorised', () => {
   });
 
   test('does not show default collection view', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/collections/default'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/collections/default', '', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -278,10 +304,12 @@ describe('when not authorised', () => {
   });
 
   test('shows logged out page', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/bye'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/bye')}>
+      <Provider store={buildStore()}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -291,10 +319,12 @@ describe('when not authorised', () => {
   });
 
   test('does not show subjects page', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/our-subjects'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/our-subjects', '', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -304,10 +334,12 @@ describe('when not authorised', () => {
   });
 
   test('does not show the account settings page', () => {
-    const history = createMemoryHistory();
+    const history = createMemoryHistory({
+      initialEntries: ['/account-settings'],
+    });
 
     const wrapper = mount(
-      <Provider store={buildStore('/account-settings', '', false)}>
+      <Provider store={buildStore(false)}>
         <BoclipsRouter history={history} />
       </Provider>,
     );
@@ -317,23 +349,8 @@ describe('when not authorised', () => {
   });
 });
 
-function buildStore(
-  path: string,
-  query: string = '',
-  authorised: boolean = true,
-) {
-  const router: ReactRouterState = {
-    location: {
-      pathname: path,
-      search: query,
-      state: {},
-      hash: '',
-    },
-    action: 'PUSH' as RouterActionType,
-  };
-
+function buildStore(authorised: boolean = true) {
   return MockStoreFactory.sample({
-    router,
     user: authorised ? UserProfileFactory.sample() : null,
   });
 }

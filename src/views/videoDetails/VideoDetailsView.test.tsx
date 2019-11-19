@@ -11,7 +11,8 @@ import {
   VideoIdFactory,
 } from '../../../test-support/factories';
 import VideoPlayer from '../../components/video/player/VideoPlayer';
-import VideoDetailsView, { fetchVideoAction } from './VideoDetailsView';
+import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
+import VideoDetailsView from './VideoDetailsView';
 
 test('dispatches FETCH_VIDEO when mounted', () => {
   const store = MockStoreFactory.sample({

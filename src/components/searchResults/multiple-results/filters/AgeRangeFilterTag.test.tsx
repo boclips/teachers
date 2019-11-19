@@ -1,5 +1,7 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -8,14 +10,16 @@ import { ClosableTag } from '../../../common/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import AgeRangeFilterTag from './AgeRangeFilterTag';
 
-const getWrapper = (ageRangeMin?: number, ageRangeMax?: number) => {
-  const store = MockStoreFactory.sample();
-
-  return shallow(
-    <AgeRangeFilterTag ageRangeMin={ageRangeMin} ageRangeMax={ageRangeMax} />,
-    { context: { store } },
-  ).dive();
-};
+const getWrapper = (
+  ageRangeMin?: number,
+  ageRangeMax?: number,
+  store?: Store,
+) =>
+  mount(
+    <Provider store={store || MockStoreFactory.sample()}>
+      <AgeRangeFilterTag ageRangeMin={ageRangeMin} ageRangeMax={ageRangeMax} />
+    </Provider>,
+  );
 
 it('renders age range with normal range', () => {
   const wrapper = getWrapper(5, 11);
@@ -49,9 +53,7 @@ it('removes age range from url on close', () => {
     }),
   });
 
-  const wrapper = shallow(<AgeRangeFilterTag ageRangeMin={5} />, {
-    context: { store },
-  }).dive();
+  const wrapper = getWrapper(5, null, store);
 
   wrapper
     .find(ClosableTag)

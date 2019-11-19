@@ -1,5 +1,7 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -8,19 +10,15 @@ import { ClosableTag } from '../../../common/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import SubjectFilterTag from './SubjectFilterTag';
 
-const getWrapper = (subjectId?: string) => {
-  const store = MockStoreFactory.sample();
-
-  return shallow(
-    <SubjectFilterTag subjectIds={[subjectId]} subjectId={subjectId} />,
-    {
-      context: { store },
-    },
-  ).dive();
-};
+const getWrapper = (subjectIds: string[], subjectId?: string, store?: Store) =>
+  mount(
+    <Provider store={store || MockStoreFactory.sample()}>
+      <SubjectFilterTag subjectIds={subjectIds} subjectId={subjectId} />
+    </Provider>,
+  );
 
 it('renders subject with correct name', () => {
-  const wrapper = getWrapper('subject-one-id');
+  const wrapper = getWrapper(['subject-one-id'], 'subject-one-id');
   expect(wrapper.find(ClosableTag).props().value).toEqual('subject one');
 });
 
@@ -41,12 +39,7 @@ it('removes subject from url on close', () => {
     }),
   });
 
-  const wrapper = shallow(
-    <SubjectFilterTag subjectIds={['subject-one-id']} subjectId={subjectId} />,
-    {
-      context: { store },
-    },
-  ).dive();
+  const wrapper = getWrapper(['subject-one-id'], subjectId, store);
 
   wrapper
     .find(ClosableTag)
@@ -74,15 +67,11 @@ it('removes only one subject from url on close', () => {
     }),
   });
 
-  const wrapper = shallow(
-    <SubjectFilterTag
-      subjectIds={['subject-one-id', 'subject-two-id']}
-      subjectId={subjectId}
-    />,
-    {
-      context: { store },
-    },
-  ).dive();
+  const wrapper = getWrapper(
+    ['subject-one-id', 'subject-two-id'],
+    subjectId,
+    store,
+  );
 
   wrapper
     .find(ClosableTag)

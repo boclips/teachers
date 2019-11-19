@@ -92,6 +92,6 @@ function mapStateToProps(state: SubjectState): StateProps {
   };
 }
 
-export default Form.create<Props & FilterFormEditableFields>()(
-  connect(mapStateToProps)(FilterButtonForm),
+export default connect(mapStateToProps)(
+  Form.create<Props & FilterFormEditableFields>()(FilterButtonForm),
 );

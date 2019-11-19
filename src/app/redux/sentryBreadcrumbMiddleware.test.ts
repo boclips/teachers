@@ -24,14 +24,13 @@ it('should add a breadcrumb when a navigation event happens', () => {
   const action: LocationChangeAction = {
     type: '@@router/LOCATION_CHANGE',
     payload: {
-      // @ts-ignore
       action: 'PUSH',
       location: {
         pathname: '/pathname',
         hash: 'hash',
         search: 'search=search',
       } as any,
-    },
+    } as any,
   };
 
   sentryBreadcrumbMiddleware(store)(jest.fn())(action);
