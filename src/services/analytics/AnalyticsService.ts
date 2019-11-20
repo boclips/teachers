@@ -2,8 +2,8 @@ import { Constants } from '../../app/AppConstants';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
 import { Attachment } from '../../types/Attachment';
 import {
-  CollectionsSearchResult,
-  VideoResults,
+  CollectionSearchResult,
+  VideoSearchResult,
 } from '../../types/SearchResults';
 import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
@@ -75,7 +75,7 @@ export default class AnalyticsService {
     this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
   }
 
-  public trackVideoSearch(searchResults: VideoResults) {
+  public trackVideoSearch(searchResults: VideoSearchResult) {
     const type = 'INSTRUCTIONAL';
 
     const eventPayload = {
@@ -91,7 +91,7 @@ export default class AnalyticsService {
     this.mixpanelInstance.track(EventTypes.VIDEO_SEARCH, eventPayload);
   }
 
-  public trackCollectionSearch(searchResults: CollectionsSearchResult) {
+  public trackCollectionSearch(searchResults: CollectionSearchResult) {
     const payload = {
       [`${
         EventTypes.COLLECTION_SEARCH

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import DurationConverter from '../../components/searchResults/filters/DurationConverter';
 import { Links } from '../../types/Links';
-import { VideoResults } from '../../types/SearchResults';
+import { VideoSearchResult } from '../../types/SearchResults';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { parseVideosResponse } from './parseVideosResponse';
 
 export default function fetchVideos(
   searchRequest: VideoSearchRequest,
   links: Links,
-): Promise<VideoResults> {
+): Promise<VideoSearchResult> {
   const durationConverter = new DurationConverter();
 
   const url = links.videos.getTemplatedLink({
