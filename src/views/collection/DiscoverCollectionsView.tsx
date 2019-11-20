@@ -59,9 +59,7 @@ export class DiscoverCollectionsView extends PureComponent<
                   <h1>
                     <strong className="discipline-name">
                       <Link
-                        to={`/discover-collections?discipline=${
-                          this.props.discipline.id
-                        }`}
+                        to={`/discover-collections?discipline=${this.props.discipline.id}`}
                       >
                         {this.props.discipline.name}
                       </Link>
@@ -89,26 +87,23 @@ export class DiscoverCollectionsView extends PureComponent<
               <h1 className="big-title alt display-tablet-and-desktop">
                 <Icon component={SubjectsSVG} /> Subjects
               </h1>
-              <Row gutter={12}>
-                <ul className="discover-collections__subjects-list">
-                  {this.props.discipline.subjects.map(subject => (
-                    <li
-                      className="discover-collections__subject-list-item"
-                      key={subject.id}
+              <Row
+                className="discover-collections__subjects-list"
+                type="flex"
+                gutter={[12, 12]}
+              >
+                {this.props.discipline.subjects.map(subject => (
+                  <Col md={6} key={subject.id}>
+                    <Link
+                      className={this.subjectClassName()}
+                      to={`/discover-collections?subject=${subject.id}`}
                     >
-                      <Col md={6}>
-                        <Link
-                          className={this.subjectClassName()}
-                          to={`/discover-collections?subject=${subject.id}`}
-                        >
-                          <span data-qa="discipline-subject-link">
-                            {subject.name}
-                          </span>
-                        </Link>
-                      </Col>
-                    </li>
-                  ))}
-                </ul>
+                      <span data-qa="discipline-subject-link">
+                        {subject.name}
+                      </span>
+                    </Link>
+                  </Col>
+                ))}
               </Row>
             </section>
           ) : null}

@@ -71,18 +71,20 @@ export class CollectionCard extends React.PureComponent<Props> {
           numberOfVideos={this.props.collection.videoIds.length}
         />
         {this.props.tiny && (
-          <span>
+          <React.Fragment>
             <CollectionSubtitle
               classname="highlight collection-subtitle tiny"
               collection={this.props.collection}
             />
-            <div
-              data-qa="collection-description"
-              className="collection-card__description-preview tiny"
-            >
-              {this.props.collection.description}
-            </div>
-          </span>
+            {this.props.collection.description && (
+              <div
+                data-qa="collection-description"
+                className="collection-card__description-preview tiny"
+              >
+                {this.props.collection.description}
+              </div>
+            )}
+          </React.Fragment>
         )}
       </ClickableCard>
     );

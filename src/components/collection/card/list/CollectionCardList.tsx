@@ -1,11 +1,12 @@
-import { Col, Row } from 'antd';
+import { Col } from 'antd';
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import CollectionsLoaded from '../../CollectionsLoaded';
 import { CollectionCard } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
+import { FiniteGrid } from '../../../common/Grid/FiniteGrid';
+import { InfiniteGrid } from '../../../common/Grid/InfiniteGrid';
 import { PageableCollectionCardListProps } from './PageableCollectionCardList';
 
 interface InfiniteScrollProps {
@@ -32,31 +33,40 @@ export class CollectionCardList extends React.PureComponent<
           </p>
         )}
 
-        <Row gutter={20}>
-          <CollectionsLoaded showWhileLoading={this.renderLoading()}>
-            {this.props.collections &&
-              (this.props.infiniteScroll ? (
-                <InfiniteScroll
-                  style={{ overflow: 'hidden' }}
-                  dataLength={this.props.collections.length}
-                  next={this.props.infiniteScroll.next}
-                  hasMore={this.props.infiniteScroll.hasMore}
-                  loader={this.renderLoading()}
-                >
-                  {this.renderCollections()}
-                </InfiniteScroll>
-              ) : (
-                this.renderCollections()
-              ))}
-          </CollectionsLoaded>
-        </Row>
+        {this.renderCollectionGrid()}
       </React.Fragment>
+    );
+  }
+
+  private renderCollectionGrid() {
+    if (this.props.collections && this.props.infiniteScroll) {
+      return (
+        <InfiniteGrid
+          dataLength={this.props.collections.length}
+          next={this.props.infiniteScroll.next}
+          hasMore={this.props.infiniteScroll.hasMore}
+          loader={this.renderLoading()}
+        >
+          {this.renderCollections()}
+        </InfiniteGrid>
+      );
+    }
+    return (
+      <FiniteGrid>
+        <CollectionsLoaded showWhileLoading={this.renderLoading()}>
+          {this.renderCollections()}
+        </CollectionsLoaded>
+      </FiniteGrid>
     );
   }
 
   private renderCollections() {
     return [
-      <TransitionGroup exit={true} key={'collections-container'}>
+      <TransitionGroup
+        component={null}
+        exit={true}
+        key={'collections-container'}
+      >
         {this.props.emptyPlaceholder &&
           (!this.props.collections || !this.props.collections.length) && (
             <CSSTransition

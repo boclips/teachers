@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Col } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -7,6 +7,7 @@ import { Discipline } from '../../types/Discipline';
 import State from '../../types/State';
 import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
+import { FiniteGrid } from '../common/Grid/FiniteGrid';
 import { DisciplineCard } from './DisciplineCard';
 import './DisciplineCardList.less';
 
@@ -35,15 +36,11 @@ class DisciplineCardList extends React.PureComponent<
           }
           image={SubjectsSVG}
         />
-        <Row
-          type="flex"
-          className="discipline-card-list__grid"
-          gutter={[20, 20]}
-        >
+        <FiniteGrid className="discipline-card-list__grid">
           {this.props.disciplines && this.props.disciplines.length
             ? this.renderDisciplines()
             : this.renderLoading()}
-        </Row>
+        </FiniteGrid>
       </section>
     );
   }
