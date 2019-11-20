@@ -35,7 +35,11 @@ class DisciplineCardList extends React.PureComponent<
           }
           image={SubjectsSVG}
         />
-        <Row className="discipline-card-list__grid" gutter={20}>
+        <Row
+          type="flex"
+          className="discipline-card-list__grid"
+          gutter={[20, 20]}
+        >
           {this.props.disciplines && this.props.disciplines.length
             ? this.renderDisciplines()
             : this.renderLoading()}
@@ -46,7 +50,11 @@ class DisciplineCardList extends React.PureComponent<
 
   private renderDisciplines() {
     return [
-      <TransitionGroup exit={true} key={'disciplines-container'}>
+      <TransitionGroup
+        component={null}
+        exit={true}
+        key={'disciplines-container'}
+      >
         {this.props.disciplines &&
           this.props.disciplines
             .slice(0, this.props.limit || this.props.disciplines.length)
@@ -98,7 +106,4 @@ function mapStateToProps({ disciplines }: State): DisciplineCardListProps {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  null,
-)(DisciplineCardList);
+export default connect(mapStateToProps, null)(DisciplineCardList);
