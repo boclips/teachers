@@ -7,6 +7,8 @@ export interface BoclipsAnalytics {
   trackVideoLinkCopied(video: Video): Promise<void>;
 
   trackVideoLinkClicked(video: Video): Promise<void>;
+
+  trackPageRendered(url: string): Promise<void>;
 }
 
 export default new HttpBoclipsAnalytics();

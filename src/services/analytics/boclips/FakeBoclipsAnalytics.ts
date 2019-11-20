@@ -1,4 +1,6 @@
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Video } from '../../../types/Video';
+import { getBoclipsClient } from '../../apiClient';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 
 interface VideoInteractionEvent {
@@ -16,6 +18,12 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
   public logInteraction(video: Video, interactionType: string): Promise<void> {
     this.videoInteractedWithEvents.push({ video, interactionType });
     return Promise.resolve();
+  }
+
+  public async trackPageRendered(url: string): Promise<void> {
+    const client = (await getBoclipsClient()) as FakeBoclipsClient;
+
+    return client.eventsClient.trackPageRendered({ url });
   }
 }
 

@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
+import { Constants } from '../../app/AppConstants';
 import PrivateRoute, {
   PrivateRouteComponentParams,
 } from '../../components/login/PrivateRoute';
@@ -132,6 +133,11 @@ class BoclipsRouter extends Component<Props & StateProps> {
   public componentDidUpdate(prevProps: Props & StateProps) {
     const previousPath = prevProps.pathname;
     const currentPath = this.props.pathname;
+
+    const fullCurrentPath =
+      Constants.HOST + this.props.pathname + this.props.search;
+
+    AnalyticsFactory.internalAnalytics().trackPageRendered(fullCurrentPath);
 
     if (previousPath !== currentPath) {
       AnalyticsFactory.externalAnalytics().pageChange();
