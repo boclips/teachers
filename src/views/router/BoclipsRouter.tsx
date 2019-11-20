@@ -130,18 +130,27 @@ class BoclipsRouter extends Component<Props & StateProps> {
     );
   }
 
+  public componentDidMount() {
+    this.trackRenderedPage();
+  }
+
   public componentDidUpdate(prevProps: Props & StateProps) {
     const previousPath = prevProps.pathname;
     const currentPath = this.props.pathname;
 
-    const fullCurrentPath =
-      Constants.HOST + this.props.pathname + this.props.search;
-
-    AnalyticsFactory.internalAnalytics().trackPageRendered(fullCurrentPath);
+    this.trackRenderedPage();
 
     if (previousPath !== currentPath) {
       AnalyticsFactory.externalAnalytics().pageChange();
     }
+  }
+
+  private trackRenderedPage() {
+    AnalyticsFactory.internalAnalytics().trackPageRendered(this.getFullUrl());
+  }
+
+  private getFullUrl() {
+    return Constants.HOST + this.props.pathname + this.props.search;
   }
 }
 
