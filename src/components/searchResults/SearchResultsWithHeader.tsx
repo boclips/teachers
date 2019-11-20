@@ -10,12 +10,14 @@ export default class SearchResultsWithHeader extends React.PureComponent<
 > {
   public render() {
     const { videos, paging: videoPaging } = this.props.videoResults;
-    const { collections } = this.props.collectionResults;
+    let { collections } = this.props.collectionResults;
+    if(videoPaging.number > 0) {
+      collections = [];
+    }
     const totalElements =
       collections &&
       videoPaging &&
       collections.length + videoPaging.totalElements;
-
     return (
       <React.Fragment>
         <Row>
