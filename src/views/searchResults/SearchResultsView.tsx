@@ -126,7 +126,10 @@ function mapStateToProps(state: State): StateProps {
       ...search.videoSearch,
       videos: getVideosFromSearchResult(state),
     },
-    collectionResults: getCollectionsFromSearchResult(state),
+    collectionResults: {
+      ...search.collectionSearch,
+      collections: getCollectionsFromSearchResult(state),
+    },
     links,
     currentPage: +queryString.parse(router.location.search).page || 1,
     userId: user ? user.id : null,

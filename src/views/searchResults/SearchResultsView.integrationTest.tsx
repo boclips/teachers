@@ -40,6 +40,21 @@ test('search shows video results', async () => {
   expect(searchPage.getVideoResults()).toHaveLength(2);
 });
 
+test('search shows video and collection results', async () => {
+  const query = 'some video';
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({ query, results: collectionsResponse() })
+    .fetchVideo()
+    .fetchCollections();
+
+  const searchPage = await SearchPage.load({ q: query });
+
+  expect(searchPage.getVideoResults()).toHaveLength(2);
+  expect(searchPage.getCollectionResults()).toHaveLength(1);
+});
+
 test('search with subjects shows video results', async () => {
   const query = 'some video';
   new ApiStub()
@@ -127,7 +142,7 @@ test('duration filter labels are updated when applying filters', async () => {
   });
 });
 
-test('shows total count of videos', async () => {
+test('shows total count of videos and collections', async () => {
   const query = 'some video';
   new ApiStub()
     .defaultUser()
@@ -138,7 +153,7 @@ test('shows total count of videos', async () => {
 
   const searchPage = await SearchPage.load({ q: query });
 
-  expect(searchPage.getCount()).toBe(2);
+  expect(searchPage.getCount()).toBe(3);
 });
 
 test('redirects when clicking on first title', async () => {

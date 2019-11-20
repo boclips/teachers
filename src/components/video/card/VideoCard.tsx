@@ -15,7 +15,6 @@ export interface Props {
   video: Video | null;
   videoIndex?: number;
   currentCollection?: VideoCollection;
-  userId: string | null;
 }
 
 export class VideoCard extends React.PureComponent<Props> {

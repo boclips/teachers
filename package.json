@@ -95,6 +95,7 @@
     "jsdom": "^12.0.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lodash.zip": "^4.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "mixpanel-browser": "^2.31.0",
     "module-to-cdn": "^3.1.5",
