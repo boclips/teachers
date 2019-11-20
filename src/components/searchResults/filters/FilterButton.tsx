@@ -2,14 +2,14 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import FilterIconSVG from '../../../../../resources/images/filter-icon.svg';
-import MediaBreakpoints from '../../../../types/MediaBreakpoints';
-import { Range } from '../../../../types/Range';
-import Bodal from '../../../common/Bodal';
+import FilterIconSVG from '../../../../resources/images/filter-icon.svg';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
+import { Range } from '../../../types/Range';
+import Bodal from '../../common/Bodal';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
-} from '../../../common/higerOrderComponents/withMediaBreakPoint';
-import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+} from '../../common/higerOrderComponents/withMediaBreakPoint';
+import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import AppliedFiltersProvider, {
   AppliedFiltersInjectedProps,
 } from './AppliedFiltersProvider';

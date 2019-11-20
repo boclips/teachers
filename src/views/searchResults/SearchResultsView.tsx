@@ -9,9 +9,9 @@ import {
   getCollectionsFromSearchResult,
   getVideosFromSearchResult,
 } from '../../components/searchBar/redux/reducers/searchReducer';
-import SearchResultsWithHeader from '../../components/searchResults/multiple-results/SearchResultsWithHeader';
-import { VideoCardsPlaceholder } from '../../components/searchResults/multiple-results/VideoCardsPlaceholder';
 import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
+import SearchResultsWithHeader from '../../components/searchResults/SearchResultsWithHeader';
+import { VideoCardsPlaceholder } from '../../components/searchResults/VideoCardsPlaceholder';
 import { Links } from '../../types/Links';
 import { VideoResults } from '../../types/SearchResults';
 import State from '../../types/State';

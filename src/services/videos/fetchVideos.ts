@@ -1,5 +1,5 @@
 import axios from 'axios';
-import DurationConverter from '../../components/searchResults/multiple-results/filters/DurationConverter';
+import DurationConverter from '../../components/searchResults/filters/DurationConverter';
 import { Links } from '../../types/Links';
 import { VideoResults } from '../../types/SearchResults';
 import { VideoSearchRequest } from '../../types/VideoSearchRequest';

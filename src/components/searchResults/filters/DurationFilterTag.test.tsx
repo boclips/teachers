@@ -5,9 +5,9 @@ import { Store } from 'redux';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../../test-support/factories';
-import { ClosableTag } from '../../../common/tags/Tag';
-import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+} from '../../../../test-support/factories';
+import { ClosableTag } from '../../common/tags/Tag';
+import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 
 const getWrapper = (

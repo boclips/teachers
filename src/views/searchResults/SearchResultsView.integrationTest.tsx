@@ -10,9 +10,9 @@ import eventually from '../../../test-support/eventually';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
 import { findElement } from '../../../testSetup';
 import { ClosableTag } from '../../components/common/tags/Tag';
-import DurationFilterTag from '../../components/searchResults/multiple-results/filters/DurationFilterTag';
-import DurationSlider from '../../components/searchResults/multiple-results/filters/DurationSlider';
-import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/multiple-results/filters/FilterButton';
+import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
+import DurationSlider from '../../components/searchResults/filters/DurationSlider';
+import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/filters/FilterButton';
 
 beforeEach(() => {
   try {

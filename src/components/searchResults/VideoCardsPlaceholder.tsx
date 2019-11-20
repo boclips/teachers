@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoCard } from '../../video/card/VideoCard';
+import { VideoCard } from '../video/card/VideoCard';
 
 const SearchResultsPlaceholder = React.memo(() => <VideoCard.Skeleton />);
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import State from '../../../../types/State';
-import { Subject } from '../../../../types/Subject';
-import { ClosableTag } from '../../../common/tags/Tag';
-import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+import State from '../../../types/State';
+import { Subject } from '../../../types/Subject';
+import { ClosableTag } from '../../common/tags/Tag';
+import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 
 interface Props {
   subjectId?: string;

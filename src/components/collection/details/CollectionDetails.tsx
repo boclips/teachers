@@ -8,7 +8,7 @@ import SadTeacherSVG from '../../../../resources/images/sad-teacher.svg';
 import { Links } from '../../../types/Links';
 import State, { VideoMap } from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { VideoCardsPlaceholder } from '../../searchResults/multiple-results/VideoCardsPlaceholder';
+import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
 import {
   fetchVideosByIdsAction,

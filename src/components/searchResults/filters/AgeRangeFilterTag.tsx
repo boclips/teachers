@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { AgeRange } from '../../../../types/AgeRange';
-import { ClosableTag } from '../../../common/tags/Tag';
-import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+import { AgeRange } from '../../../types/AgeRange';
+import { ClosableTag } from '../../common/tags/Tag';
+import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 
 interface Props {
   ageRangeMin?: number;
