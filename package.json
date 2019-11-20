@@ -134,6 +134,6 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@sentry/browser": "^4.6.6"
+    "@sentry/browser": "^5.9.1"
   }
 }
