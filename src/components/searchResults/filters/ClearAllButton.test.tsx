@@ -5,8 +5,8 @@ import { Provider } from 'react-redux';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../../test-support/factories';
-import { clearSearchFilterParametersAction } from '../../redux/actions/clearSearchFilterParametersAction';
+} from '../../../../test-support/factories';
+import { clearSearchFilterParametersAction } from '../redux/actions/clearSearchFilterParametersAction';
 import ClearAllButton from './ClearAllButton';
 
 it('clears all filters when pressed', () => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { ClosableTag } from '../../../common/tags/Tag';
-import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+import { ClosableTag } from '../../common/tags/Tag';
+import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationBounds from './DurationBounds';
 
 interface Props {

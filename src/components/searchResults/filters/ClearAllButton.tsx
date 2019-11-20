@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { clearSearchFilterParametersAction } from '../../redux/actions/clearSearchFilterParametersAction';
+import { clearSearchFilterParametersAction } from '../redux/actions/clearSearchFilterParametersAction';
 import './ClearAllButton.less';
 
 interface DispatchProps {

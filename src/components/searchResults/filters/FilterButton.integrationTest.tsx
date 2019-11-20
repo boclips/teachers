@@ -4,18 +4,18 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import { By } from '../../../../../test-support/By';
-import EventSimulator from '../../../../../test-support/EventSimulator';
+import { By } from '../../../../test-support/By';
+import EventSimulator from '../../../../test-support/EventSimulator';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../../test-support/factories';
-import { setWidth } from '../../../../../test-support/setWidth';
-import { AgeRange } from '../../../../types/AgeRange';
-import { SubjectsForm } from '../../../account/form/SubjectsForm';
-import AgeRangeSlider from '../../../common/AgeRangeSlider';
-import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
-import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
+} from '../../../../test-support/factories';
+import { setWidth } from '../../../../test-support/setWidth';
+import { AgeRange } from '../../../types/AgeRange';
+import { SubjectsForm } from '../../account/form/SubjectsForm';
+import AgeRangeSlider from '../../common/AgeRangeSlider';
+import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
+import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationSlider from './DurationSlider';
 import FilterButtonConnected, {
   FilterButtonWithMediaBreakPoint as FilterButton,

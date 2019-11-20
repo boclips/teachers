@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import React from 'react';
-import { SearchVideoCardList } from '../../video/list/VideoCardList';
+import { SearchResultsCardList } from '../searchResults/SeachResultsCardList';
 import FiltersBar from './filters/FiltersBar';
 import SearchResultsHeader from './SearchResultsHeader';
 import SearchResultsProps from './SearchResultsProps';
@@ -9,20 +9,26 @@ export default class SearchResultsWithHeader extends React.PureComponent<
   SearchResultsProps
 > {
   public render() {
-    const { videos, paging } = this.props.videoResults;
+    const { videos, paging: videoPaging } = this.props.videoResults;
+    const { collections } = this.props.collectionResults;
+    const totalElements =
+      collections &&
+      videoPaging &&
+      collections.length + videoPaging.totalElements;
+
     return (
       <React.Fragment>
         <Row>
-          <SearchResultsHeader totalElements={paging && paging.totalElements} />
+          <SearchResultsHeader totalElements={totalElements} />
         </Row>
         <Row>
           <FiltersBar />
         </Row>
         <Row>
-          <SearchVideoCardList
-            totalElements={paging && paging.totalElements}
+          <SearchResultsCardList
+            totalElements={totalElements}
             videos={videos}
-            userId={this.props.userId}
+            collections={collections}
           />
         </Row>
       </React.Fragment>

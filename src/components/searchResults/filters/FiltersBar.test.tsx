@@ -1,12 +1,12 @@
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from '../../../../../test-support/By';
+import { By } from '../../../../test-support/By';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../../test-support/factories';
-import { setWidth } from '../../../../../test-support/setWidth';
+} from '../../../../test-support/factories';
+import { setWidth } from '../../../../test-support/setWidth';
 import FiltersBarWrapper, { FiltersBar } from './FiltersBar';
 import FilterBarWrapper from './FiltersBar';
 import SubjectFilterTag from './SubjectFilterTag';
