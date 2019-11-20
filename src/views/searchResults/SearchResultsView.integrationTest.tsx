@@ -62,6 +62,31 @@ test('search shows video and collection results', async () => {
   expect(searchPage.getCollectionResults()).toHaveLength(1);
 });
 
+test('search limits collection results to 5', async () => {
+  const query = 'some video';
+  new ApiStub()
+    .defaultUser()
+    .queryVideos({ query, results: videoResults })
+    .queryCollections({
+      query,
+      results: collectionsResponse([
+        collectionResponse(),
+        collectionResponse(),
+        collectionResponse(),
+        collectionResponse(),
+        collectionResponse(),
+        collectionResponse(),
+        collectionResponse(),
+      ]),
+    })
+    .fetchVideo()
+    .fetchCollections();
+
+  const searchPage = await SearchPage.load({ q: query });
+
+  expect(searchPage.getCollectionResults()).toHaveLength(5);
+});
+
 test('search with subjects shows video results', async () => {
   const query = 'some video';
   new ApiStub()

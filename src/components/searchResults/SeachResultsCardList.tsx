@@ -18,18 +18,16 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
     return (
       <TransitionGroup exit={true}>
         {zip(this.props.videos, this.props.collections).map(
-          ([video, collection], index) => {
-            return (
-              <CSSTransition key={index} classNames="card-list" timeout={500}>
-                <div>
-                  {video && <VideoCard video={video} videoIndex={index} />}
-                  {collection && (
-                    <CollectionCardContainer collection={collection} />
-                  )}
-                </div>
-              </CSSTransition>
-            );
-          },
+          ([video, collection], index) => (
+            <CSSTransition key={index} classNames="card-list" timeout={500}>
+              <div>
+                {video && <VideoCard video={video} videoIndex={index} />}
+                {collection && (
+                  <CollectionCardContainer collection={collection} />
+                )}
+              </div>
+            </CSSTransition>
+          ),
         )}
       </TransitionGroup>
     );

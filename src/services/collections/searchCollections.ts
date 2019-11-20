@@ -13,7 +13,7 @@ export default function searchPublicCollections(
     subject: searchRequest.subject,
   });
   return axios.get(url).then(response => ({
-    collections: parseCollectionsListResponse(response),
+    collections: parseCollectionsListResponse(response).slice(0, 5),
     query: searchRequest.query,
   }));
 }
