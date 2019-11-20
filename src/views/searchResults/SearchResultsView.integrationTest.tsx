@@ -1,5 +1,6 @@
 import Button from 'antd/lib/button/button';
 import {
+  collectionResponse,
   collectionsResponse,
   video177,
   videos as videoResults,
@@ -31,7 +32,10 @@ test('search shows video results', async () => {
   new ApiStub()
     .defaultUser()
     .queryVideos({ query, results: videoResults })
-    .queryCollections({ query, results: collectionsResponse() })
+    .queryCollections({
+      query,
+      results: collectionsResponse([collectionResponse()]),
+    })
     .fetchVideo()
     .fetchCollections();
 
@@ -45,7 +49,10 @@ test('search shows video and collection results', async () => {
   new ApiStub()
     .defaultUser()
     .queryVideos({ query, results: videoResults })
-    .queryCollections({ query, results: collectionsResponse() })
+    .queryCollections({
+      query,
+      results: collectionsResponse(),
+    })
     .fetchVideo()
     .fetchCollections();
 

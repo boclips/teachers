@@ -179,6 +179,10 @@ export function collectionResponse(
     public: true,
     subjects: [],
     createdBy: 'AI',
+    ageRange: {
+      max: 9,
+      min: 3,
+    },
     _links: {
       self: {
         href: `${prefix}/v1/collections/${id}`,
@@ -219,7 +223,10 @@ export function collectionResponseWithSubject(
 ) {
   return {
     ...collectionResponse(videosWithin, id, editble),
-    subjects: [{ id: '1', name: null }, { id: '2', name: null }],
+    subjects: [
+      { id: '1', name: null },
+      { id: '2', name: null },
+    ],
   };
 }
 
@@ -234,51 +241,10 @@ export function collectionResponseWithAttachment(
   };
 }
 
-export function collectionsResponse(
-  videosWithin: any[] = [video177],
-  subjects: Array<{ id: string; name: null }> = [],
-) {
+export function collectionsResponse(data: any[] = [collectionResponse()]) {
   return {
     _embedded: {
-      collections: [
-        {
-          id: 'id',
-          owner: 'teacher@gmail.com',
-          title: 'funky collection',
-          videos: videosWithin,
-          updatedAt: '2019-01-16T12:00:00.870Z',
-          public: true,
-          createdBy: 'AI',
-          ageRange: {
-            min: 3,
-            max: 9,
-          },
-          description: 'my description',
-          subjects,
-          _links: {
-            edit: {
-              href: `${prefix}/v1/collections/id`,
-              templated: false,
-            },
-            remove: {
-              href: `${prefix}/v1/collections/id`,
-              templated: false,
-            },
-            addVideo: {
-              href: `${prefix}/v1/collections/id/videos/{video_id}`,
-              templated: true,
-            },
-            removeVideo: {
-              href: `${prefix}/v1/collections/id/videos/{video_id}`,
-              templated: true,
-            },
-            self: {
-              href: `${prefix}/v1/collections/id`,
-              templated: false,
-            },
-          },
-        },
-      ],
+      collections: data,
     },
     _links: {
       self: { href: 'http://localhost/v1/collections/' },

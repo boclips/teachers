@@ -30,7 +30,6 @@ describe('when video collection', () => {
       subjects: [],
       lastUpdated: 'Jan 16, 2019',
       ageRange: '3-9',
-      description: 'my description',
     });
   });
 

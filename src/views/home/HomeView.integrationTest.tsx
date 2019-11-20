@@ -1,6 +1,6 @@
 import {
+  collectionResponseWithSubject,
   collectionsResponse,
-  video177,
   videosResponse,
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
@@ -49,9 +49,7 @@ describe('Home page', () => {
       .fetchVideo()
       .fetchPromoted()
       .fetchPublicCollections(
-        collectionsResponse(
-          [video177],
-          [{ id: '1', name: null }, { id: '2', name: null }],
+        collectionsResponse([collectionResponseWithSubject()]
         ),
       )
       .fetchCollections();

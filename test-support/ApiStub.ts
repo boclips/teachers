@@ -9,7 +9,6 @@ import {
   tagsResponse,
   userResponse,
   video177,
-  video177Slim,
 } from './api-responses';
 import MockFetchVerify from './MockFetchVerify';
 
@@ -132,7 +131,7 @@ export default class ApiStub {
   }
 
   public fetchCollections(
-    collectionsList = collectionsResponse([video177Slim]),
+    collectionsList = collectionsResponse(),
     once = false,
   ) {
     if (once) {
