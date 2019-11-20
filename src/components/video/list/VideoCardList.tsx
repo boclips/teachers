@@ -30,7 +30,6 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
           >
             <VideoCard
               video={video}
-              userId={this.props.userId}
               currentCollection={this.props.currentCollection}
               videoIndex={index}
             />

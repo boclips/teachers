@@ -16,7 +16,6 @@ const getWrapper = (givenProps: Partial<Props> = {}) => {
       push: noOp,
     } as any,
     ...givenProps,
-    userId: givenProps.userId || null,
   } as any;
   return shallow(<VideoCard {...props} />);
 };
