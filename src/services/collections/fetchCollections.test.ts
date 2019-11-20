@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {
+  collectionResponseWithSubject,
   collectionsResponse,
-  video177Slim,
 } from '../../../test-support/api-responses';
 import {
   LinksFactory,
@@ -26,12 +26,11 @@ const links = LinksFactory.sample({
 
 describe('user collections', () => {
   test('returns available collections in skinny format for user collections list', async () => {
-    const subject = { id: 'a', name: null };
     new MockAdapter(axios)
       .onGet('/v1/collections?projection=list')
       .replyOnce(
         200,
-        JSON.stringify(collectionsResponse([video177Slim], [subject])),
+        JSON.stringify(collectionsResponse([collectionResponseWithSubject()])),
         {},
       );
 
@@ -47,7 +46,7 @@ describe('user collections', () => {
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
     expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
-    expect(collections.items[0].subjects).toContain(subject.id);
+    expect(collections.items[0].subjects).toContain("1");
   });
 });
 
@@ -55,7 +54,7 @@ describe('public collections', () => {
   test('returns available collections in skinny format for user collections list', async () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?public')
-      .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
+      .replyOnce(200, JSON.stringify(collectionsResponse()), {});
     const collections = await fetchPageableCollections(links, {
       key: 'publicCollections',
     });
@@ -77,7 +76,7 @@ describe('public collections', () => {
   test('returns next collections page', async () => {
     new MockAdapter(axios)
       .onGet('/v1/collections?publicpage')
-      .replyOnce(200, JSON.stringify(collectionsResponse([video177Slim])), {});
+      .replyOnce(200, JSON.stringify(collectionsResponse()), {});
 
     const collections = await fetchNextCollectionsPage(
       PageableCollectionsFactory.sample({
