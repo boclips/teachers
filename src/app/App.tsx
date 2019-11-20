@@ -1,6 +1,5 @@
 import { routerMiddleware } from 'connected-react-router';
-import { History } from 'history';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { History, createBrowserHistory } from 'history';
 import React, { PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';

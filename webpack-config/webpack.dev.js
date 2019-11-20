@@ -28,6 +28,8 @@ module.exports = merge(common, {
       ga: googleAnalyticsId,
     }),
     new webpack.EnvironmentPlugin(['ENVIRONMENT_DOMAIN']),
-    new DynamicCdnWebpackPlugin(),
+    new DynamicCdnWebpackPlugin({
+      exclude: ['react-router', 'react-router-dom'],
+    }),
   ],
 });
