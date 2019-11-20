@@ -8,8 +8,8 @@ import {
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
 import {
-  CollectionsSearchResult,
-  VideoResults,
+  CollectionSearchResult,
+  VideoSearchResult,
 } from '../../../../types/SearchResults';
 import State, {
   CollectionSearchStateValue,
@@ -89,7 +89,7 @@ describe('searching videos', () => {
 
     const video = VideoFactory.sample({ title: 'dog video' });
 
-    const searchResults: VideoResults = {
+    const searchResults: VideoSearchResult = {
       videos: [video],
       query: 'dogs',
       paging: defaultPaging,
@@ -165,7 +165,7 @@ describe('searching collections', () => {
     const collectionToStore = VideoCollectionFactory.sample({
       title: 'dog collection',
     });
-    const searchResults: CollectionsSearchResult = {
+    const searchResults: CollectionSearchResult = {
       collections: [collectionToStore],
       query: 'dogs',
     };

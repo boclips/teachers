@@ -6,8 +6,8 @@ import {
 import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
 import PageSpec from '../../../../types/PageSpec';
 import {
-  CollectionsSearchResult,
-  VideoResults,
+  CollectionSearchResult,
+  VideoSearchResult,
 } from '../../../../types/SearchResults';
 import State, { SearchStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
@@ -63,7 +63,7 @@ function onSearchVideosAction(
 
 function onStoreVideoSearchResultsAction(
   state: State,
-  results: VideoResults,
+  results: VideoSearchResult,
 ): State {
   return produce(state, draftState => {
     const newVideos: VideoMap = organizeById(results.videos);
@@ -101,7 +101,7 @@ function onSearchCollectionsAction(
 
 function onStoreCollectionSearchResultsAction(
   state: State,
-  results: CollectionsSearchResult,
+  results: CollectionSearchResult,
 ): State {
   return {
     ...state,

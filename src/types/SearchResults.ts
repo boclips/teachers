@@ -2,13 +2,15 @@ import PageSpec from './PageSpec';
 import { Video } from './Video';
 import { VideoCollection } from './VideoCollection';
 
-export interface VideoResults {
-  query: string;
+export interface VideoSearchResult extends SearchResult {
   videos: Video[];
   paging: PageSpec;
 }
 
-export interface CollectionsSearchResult {
-  query: string;
+export interface CollectionSearchResult extends SearchResult {
   collections: VideoCollection[];
+}
+
+export interface SearchResult {
+  query: string;
 }

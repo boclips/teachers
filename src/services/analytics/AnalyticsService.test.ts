@@ -8,7 +8,7 @@ import {
   VideoFactory,
 } from '../../../test-support/factories';
 import { Constants } from '../../app/AppConstants';
-import { VideoResults } from '../../types/SearchResults';
+import { VideoSearchResult } from '../../types/SearchResults';
 import { StreamPlayback } from '../../types/Video';
 import { UpdateUserRequest } from '../users/updateUser';
 import AnalyticsService from './AnalyticsService';
@@ -149,7 +149,7 @@ describe('AnalyticsService', () => {
             paging: {
               number: 1,
             },
-          } as VideoResults);
+          } as VideoSearchResult);
 
           const expectedPayload = {
             video_search_number_of_results: 1,

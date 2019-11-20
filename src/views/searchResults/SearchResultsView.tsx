@@ -13,16 +13,18 @@ import { updatePageAction } from '../../components/searchResults/redux/actions/u
 import SearchResultsWithHeader from '../../components/searchResults/SearchResultsWithHeader';
 import { VideoCardsPlaceholder } from '../../components/searchResults/VideoCardsPlaceholder';
 import { Links } from '../../types/Links';
-import { VideoResults } from '../../types/SearchResults';
+import {
+  CollectionSearchResult,
+  VideoSearchResult,
+} from '../../types/SearchResults';
 import State from '../../types/State';
-import { VideoCollection } from '../../types/VideoCollection';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';
 
 interface StateProps {
   loading: boolean;
-  videoResults: VideoResults;
-  collectionResults: VideoCollection[];
+  videoResults: VideoSearchResult;
+  collectionResults: CollectionSearchResult;
   links: Links;
   currentPage: number;
   userId: string | null;
