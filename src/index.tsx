@@ -32,6 +32,12 @@ if (environment === 'production') {
   addHubspotScript();
 }
 
+if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React, { include: [] });
+}
+
 ReactDom.render(
   <App apiPrefix={Constants.API_PREFIX} />,
   document.getElementById('root'),

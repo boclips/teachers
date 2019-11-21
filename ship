@@ -7,4 +7,6 @@ git pull -r
 npm i
 npm run build:ci
 
+
+
 git push

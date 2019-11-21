@@ -19,6 +19,8 @@ export interface Props {
 }
 
 export class VideoCard extends React.PureComponent<Props> {
+  static whyDidYouRender = true;
+
   public static Skeleton = () => (
     <Card className="video-card skeleton" bordered={false}>
       <AntSkeleton
