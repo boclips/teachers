@@ -7,4 +7,30 @@ git pull -r
 npm i
 npm run build:ci
 
+EXIT_CODE=0
+ncu --error-level 2 || EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 1 ]
+then
+    echo ""
+    echo "Do you have time to upgrade the packages above?"
+    READ_EXIT_CODE=0
+    read -t 5 -p "I am a responsible dev? [Y/n]" responsible || READ_EXIT_CODE=$?
+    echo ""
+
+    answer=''
+    if [ $READ_EXIT_CODE -eq 0 ]
+    then
+      answer=${responsible:-y}
+    fi
+
+    if [ "${answer,,}" == "y" ]
+    then
+      echo "Thanks for pledging your time"
+      exit 1
+    else
+      echo "OK.. Maybe next time?"
+    fi
+fi
+
 git push
