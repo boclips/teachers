@@ -11,7 +11,7 @@ export default class SearchResultsWithHeader extends React.PureComponent<
   public render() {
     const { videos, paging: videoPaging } = this.props.videoResults;
     let { collections } = this.props.collectionResults;
-    if(videoPaging.number > 0) {
+    if (videoPaging.number > 0) {
       collections = [];
     }
     const totalElements =

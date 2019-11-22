@@ -70,7 +70,4 @@ const mapStateToProps = (state: State): StateProps => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  null,
-)(AppliedFiltersProvider);
+export default connect(mapStateToProps, null)(AppliedFiltersProvider);

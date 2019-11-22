@@ -101,11 +101,11 @@ class CollectionHeader extends React.PureComponent<Props> {
     return (
       <Row className="collection-header__description-row">
         <Col
-          {...lessonPlanToRender && {
+          {...(lessonPlanToRender && {
             sm: { span: 24 },
             md: { span: 12 },
             lg: { span: 16 },
-          }}
+          })}
         >
           <div
             className="collection-header__description"

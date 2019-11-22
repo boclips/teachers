@@ -50,7 +50,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   },
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(DurationFilterTag);
+export default connect(null, mapDispatchToProps)(DurationFilterTag);

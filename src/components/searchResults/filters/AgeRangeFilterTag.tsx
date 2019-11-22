@@ -44,7 +44,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   },
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(AgeRangeFilterTag);
+export default connect(null, mapDispatchToProps)(AgeRangeFilterTag);

@@ -49,8 +49,7 @@ describe('Home page', () => {
       .fetchVideo()
       .fetchPromoted()
       .fetchPublicCollections(
-        collectionsResponse([collectionResponseWithSubject()]
-        ),
+        collectionsResponse([collectionResponseWithSubject()]),
       )
       .fetchCollections();
 

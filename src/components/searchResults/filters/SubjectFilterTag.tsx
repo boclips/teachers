@@ -58,7 +58,4 @@ const mapDispatchToProps = (
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SubjectFilterTag);
+export default connect(mapStateToProps, mapDispatchToProps)(SubjectFilterTag);

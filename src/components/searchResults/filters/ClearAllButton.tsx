@@ -23,7 +23,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onClick: () => dispatch(clearSearchFilterParametersAction()),
 });
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(ClearAllButton);
+export default connect(null, mapDispatchToProps)(ClearAllButton);
