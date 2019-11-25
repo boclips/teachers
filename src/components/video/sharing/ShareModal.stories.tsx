@@ -1,23 +1,16 @@
 import { storiesOf } from '@storybook/react';
 import * as moment from 'moment';
 import React from 'react';
-import { Provider } from 'react-redux';
-import { Store } from 'redux';
 import {
   MockStoreFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import '../../../index.less';
-import State from '../../../types/State';
 import { noOp } from '../../../utils';
+import {storyWithProvider} from "../../../utils/index.stories";
 import ShareModal from './ShareModal';
 
-const withProvider = (store: Store<State>) => story => (
-  <Provider store={store}>{story()}</Provider>
-);
-
 storiesOf('ShareModal', module)
-  .addDecorator(withProvider(MockStoreFactory.sample()))
+  .addDecorator(storyWithProvider(MockStoreFactory.sample()))
   .add(
     'In mobile view',
     () => (

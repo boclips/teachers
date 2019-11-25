@@ -4,7 +4,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { MockStoreFactory } from '../../../test-support/factories';
-import '../../index.less';
 import DisciplineCardList from './DisciplineCardList';
 
 storiesOf('DisciplineCardList', module).add('on desktop view', () => (

@@ -15,7 +15,7 @@
     "watch": "npm run compile -- cd--watch",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "storybook": "start-storybook -s ./"
+    "storybook": "start-storybook -s ./ --port 9090"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,8 @@ import '@storybook/addon-console';
 import { addParameters } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport/dist/defaults';
 
+import '../src/index.less';
+
 const req = require.context('../src', true, /.stories\.tsx$/);
 
 function loadStories() {
