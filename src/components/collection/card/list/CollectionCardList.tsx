@@ -99,7 +99,9 @@ export class CollectionCardList extends React.PureComponent<
                   lg={{ span: this.singleColumn() ? 24 : 8 }}
                 >
                   <CollectionCardContainer
-                    tiny={this.props.grid || this.props.sidebar}
+                    mode={
+                      this.props.grid ? 'tiny' : 'regular'
+                    }
                     collection={collection}
                   />
                 </Col>
@@ -110,7 +112,7 @@ export class CollectionCardList extends React.PureComponent<
   }
 
   private singleColumn() {
-    return this.props.sidebar || !this.props.grid;
+    return !this.props.grid;
   }
 
   public renderLoading() {

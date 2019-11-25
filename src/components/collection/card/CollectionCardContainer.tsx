@@ -9,13 +9,16 @@ import {
   VideosForCollectionRequest,
 } from '../../video/redux/actions/fetchVideosByIdsAction';
 import { getVideosByIds } from '../../video/redux/reducers/videoReducer';
-import { CollectionCard } from './CollectionCard';
+import { CollectionCardTiny } from './CollectionCardTiny';
+import { CollectionCardRegular } from './CollectionCardRegular';
+import { CollectionCardSearch } from './CollectionCardSearch';
 
 type Props = OwnProps & DispatchProps & StateProps;
 
 interface OwnProps {
   collection: VideoCollection;
   tiny?: boolean;
+  mode: 'tiny' | 'search' | 'regular';
 }
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -30,15 +33,34 @@ interface StateProps {
 
 class CollectionCardContainer extends React.PureComponent<Props> {
   public render() {
-    return (
-      <CollectionCard
-        tiny={this.props.tiny}
-        key={`card-container-${this.props.collection.id}`}
-        collection={this.props.collection}
-        numberOfPreviews={NUMBER_OF_PREVIEWS}
-        videos={this.props.videos.filter(video => video !== undefined)}
-      />
-    );
+    const videos = this.props.videos.filter(video => video !== undefined);
+
+    if (this.props.mode === 'tiny') {
+      return (
+        <CollectionCardTiny
+          collection={this.props.collection}
+          videos={videos}
+        />
+      );
+    } else if (this.props.mode === 'regular') {
+      return (
+        <CollectionCardRegular
+          collection={this.props.collection}
+          videos={videos}
+        />
+      );
+    } else if (this.props.mode === 'search') {
+      return (
+        <CollectionCardSearch
+          collection={this.props.collection}
+          videos={videos}
+        />
+      );
+    } else {
+      throw new Error(
+        'CollectionCardContainer invalid mode:' + this.props.mode,
+      );
+    }
   }
 
   public componentDidMount() {

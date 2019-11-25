@@ -13,7 +13,6 @@ export interface PageableCollectionCardListProps {
   emptyPlaceholder?: string | React.ReactFragment;
   description?: string;
   grid?: boolean;
-  sidebar?: boolean;
   maxNumberOfCollections?: number;
   shouldRefresh?: () => boolean;
 }

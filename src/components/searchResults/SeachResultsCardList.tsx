@@ -23,7 +23,7 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
               <div>
                 {video && <VideoCard video={video} videoIndex={index} />}
                 {collection && (
-                  <CollectionCardContainer collection={collection} />
+                  <CollectionCardContainer mode={'search'} collection={collection} />
                 )}
               </div>
             </CSSTransition>
