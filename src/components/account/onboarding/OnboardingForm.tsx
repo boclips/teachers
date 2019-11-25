@@ -168,7 +168,7 @@ class OnboardingForm extends React.Component<
               />
               <SvgStep4
                 className="onboarding__logo"
-                title="Teacher presenting infront of a digital smartboard"
+                title="Teacher presenting in front of a digital smartboard"
               />
             </Carousel>
           </Col>
