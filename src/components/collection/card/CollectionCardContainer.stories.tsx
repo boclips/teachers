@@ -13,6 +13,7 @@ import {
   storyWithProvider,
   storyWithRouter,
 } from '../../../utils/index.stories';
+import { Link } from '../../../types/Link';
 import CollectionCardContainer from './CollectionCardContainer';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
@@ -21,6 +22,21 @@ const videos = [
   VideoFactory.sample({ id: 'video-one-id' }),
   VideoFactory.sample({ id: 'video-two-id' }),
 ];
+
+const myCollection = VideoCollectionFactory.sample({
+  title: 'My collection title',
+  description: 'A description',
+  ageRange: new AgeRange(3, 5),
+  subjects: [subject.id],
+  updatedAt: '2018-12-12T12:12:12',
+  isMine: false,
+  isPublic: true,
+  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  links: {
+    self: new Link({ href: '' }),
+    bookmark: new Link({ href: '' }),
+  },
+});
 
 storiesOf('CollectionCardContainer', module)
   .addDecorator(storyWithAuthentication())
@@ -44,15 +60,11 @@ storiesOf('CollectionCardContainer', module)
   )
   .addDecorator(storyWithRouter())
   .addDecorator(story => <div style={{ width: '80%' }}>{story()}</div>)
-  .add('Regular Card', () => {
-    const myCollection = VideoCollectionFactory.sample({
-      title: 'My collection title',
-      description: 'A description',
-      ageRange: new AgeRange(3, 5),
-      subjects: [subject.id],
-      updatedAt: '2018-12-12T12:12:12',
-      videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
-    });
-
-    return <CollectionCardContainer collection={myCollection} />;
-  });
+  .add('Regular Card', () => (
+    <CollectionCardContainer collection={myCollection} />
+  ))
+  .add('Tiny Card', () => (
+    <div style={{ width: '400px' }}>
+      <CollectionCardContainer tiny={true} collection={myCollection} />{' '}
+    </div>
+  ));
