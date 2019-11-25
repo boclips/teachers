@@ -1,15 +1,11 @@
 import React from 'react';
+import { Col, Row } from 'antd';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
-import CollectionHeader from '../header/CollectionHeader';
-import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
-
 import './CollectionCard.less';
 import CollectionTitle from '../header/CollectionTitle';
-import { Col, Row } from 'antd';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
-import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
@@ -76,10 +72,10 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
             )}
         </section>
         <Row gutter={[13, 13]}>
-          <Col lg={{span:8}} md={{span:12}}sm={{span:24}}>
+          <Col lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 24 }}>
             <CollectionCardSearchPreview videos={this.props.videos} />
           </Col>
-          <Col lg={{span:16}} md={{span:12}}sm={{span:24}}>
+          <Col lg={{ span: 16 }} md={{ span: 12 }} sm={{ span: 24 }}>
             <div className="tags-container">
               <StopClickPropagation wrapper="span">
                 {this.props.collection.subjects.slice(0, 1).map(subjectId => (

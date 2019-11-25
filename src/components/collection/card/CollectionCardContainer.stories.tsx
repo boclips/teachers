@@ -15,8 +15,8 @@ import {
   storyWithRouter,
 } from '../../../utils/index.stories';
 import { Link } from '../../../types/Link';
-import CollectionCardContainer from './CollectionCardContainer';
 import { VideoCollection } from '../../../types/VideoCollection';
+import CollectionCardContainer from './CollectionCardContainer';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
 

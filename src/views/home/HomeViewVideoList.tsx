@@ -62,7 +62,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   },
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(HomeViewVideoList);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeViewVideoList);

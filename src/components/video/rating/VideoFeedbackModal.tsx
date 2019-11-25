@@ -119,7 +119,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   };
 }
 
-export default connect(
-  undefined,
-  mapDispatchToProps,
-)(VideoFeedbackModal);
+export default connect(undefined, mapDispatchToProps)(VideoFeedbackModal);

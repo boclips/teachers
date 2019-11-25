@@ -93,9 +93,7 @@ export default class AnalyticsService {
 
   public trackCollectionSearch(searchResults: CollectionSearchResult) {
     const payload = {
-      [`${
-        EventTypes.COLLECTION_SEARCH
-      }_query`.toLowerCase()]: searchResults.query,
+      [`${EventTypes.COLLECTION_SEARCH}_query`.toLowerCase()]: searchResults.query,
       [`${EventTypes.COLLECTION_SEARCH}_number_of_results`.toLowerCase()]:
         searchResults.collections && searchResults.collections.length,
     };

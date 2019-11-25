@@ -1,7 +1,7 @@
 import { Pageable } from './State';
 
 class Page<T> {
-   public constructor(private pageable: Pageable<T>) {}
+  public constructor(private pageable: Pageable<T>) {}
 
   public hasNextPage(): boolean {
     return (

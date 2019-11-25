@@ -46,7 +46,7 @@ describe('user collections', () => {
     expect(collections.items[0].isPublic).toEqual(true);
     expect(collections.items[0].createdBy).toEqual('AI');
     expect(collections.items[0].ageRange).toEqual(new AgeRange(3, 9));
-    expect(collections.items[0].subjects).toContain("1");
+    expect(collections.items[0].subjects).toContain('1');
   });
 });
 

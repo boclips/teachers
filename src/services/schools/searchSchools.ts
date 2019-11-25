@@ -23,7 +23,10 @@ function convertSchoolsResource(data: any): School[] {
   return (
     (data._embedded &&
       data._embedded.schools &&
-      data._embedded.schools.map(rawSchool => ({ id: rawSchool.id, name: rawSchool.name }))) ||
+      data._embedded.schools.map(rawSchool => ({
+        id: rawSchool.id,
+        name: rawSchool.name,
+      }))) ||
     []
   );
 }

@@ -9,7 +9,7 @@ const getComponent = (props?: Partial<Props>): ReactWrapper => {
     callback: noOp,
     ...props,
   };
-  return mount(<A11yButton {...props as Props} />);
+  return mount(<A11yButton {...(props as Props)} />);
 };
 
 it('Should only render child component directly', () => {

@@ -35,24 +35,24 @@ const onSsoAuthenticationRequested = (
 };
 
 const getDefaultSecurityOptions = (store: Store) => ({
-    onLogin: () => {
-      store.dispatch(
-        authenticationResolved({
-          success: true,
-        }),
-      );
-    },
-    onFailure: () => {
-      store.dispatch(
-        authenticationResolved({
-          success: false,
-        }),
-      );
-    },
-    realm: 'boclips',
-    clientId: 'teachers',
-    authEndpoint: defaultAuthEndpoint,
-  });
+  onLogin: () => {
+    store.dispatch(
+      authenticationResolved({
+        success: true,
+      }),
+    );
+  },
+  onFailure: () => {
+    store.dispatch(
+      authenticationResolved({
+        success: false,
+      }),
+    );
+  },
+  realm: 'boclips',
+  clientId: 'teachers',
+  authEndpoint: defaultAuthEndpoint,
+});
 
 export default [
   sideEffect(requestAuthentication, onAuthenticationRequested),

@@ -1,4 +1,3 @@
-
 export class AppConstants {
   private window: Window;
 

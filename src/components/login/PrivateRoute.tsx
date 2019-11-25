@@ -95,8 +95,5 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(PrivateRoute),
+  connect(mapStateToProps, mapDispatchToProps)(PrivateRoute),
 );

@@ -5,9 +5,7 @@ import createReducerWithInitialState, {
 import { Discipline } from '../../../../types/Discipline';
 import { fetchedDisciplinesAction } from '../actions/fetchedDisciplinesAction';
 
-export const disciplinesReducer: Reducer<
-  Discipline[]
-> = createReducerWithInitialState(
+export const disciplinesReducer: Reducer<Discipline[]> = createReducerWithInitialState(
   [],
   actionHandler(
     fetchedDisciplinesAction,

@@ -15,9 +15,7 @@ export interface Props {
 export class CollectionCardRegular extends React.PureComponent<Props> {
   public static Skeleton = () => (
     <section
-      className={
-        'collection-card skeleton ant-skeleton ant-skeleton-active'
-      }
+      className={'collection-card skeleton ant-skeleton ant-skeleton-active'}
     >
       <section className="ant-skeleton-content">
         <h3 className="collection-title ant-skeleton-title" />
@@ -52,10 +50,7 @@ export class CollectionCardRegular extends React.PureComponent<Props> {
         data-qa="collection-card"
         data-state={this.props.collection.title}
       >
-        <CollectionHeader
-          collection={this.props.collection}
-          mode="card"
-        />
+        <CollectionHeader collection={this.props.collection} mode="card" />
         <CollectionCardVideoPreviews
           numberOfPreviews={4}
           videos={this.props.videos}

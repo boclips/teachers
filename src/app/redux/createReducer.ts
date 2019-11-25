@@ -8,7 +8,7 @@ export type ActionHandlerFunction<TState, TPayload> = (
 
 export type ActionHandler<TState, TPayload> = [
   ActionCreator<TPayload>,
-  ActionHandlerFunction<TState, TPayload>
+  ActionHandlerFunction<TState, TPayload>,
 ];
 
 export function actionHandler<TState, TPayload>(

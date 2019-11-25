@@ -39,24 +39,24 @@ export function onEditCollection(
 }
 
 const createUpdatedCollection = (request: EditCollectionRequest) => ({
-    ...request.originalCollection,
-    title:
-      request.title != null ? request.title : request.originalCollection.title,
-    isPublic:
-      request.isPublic != null
-        ? request.isPublic
-        : request.originalCollection.isPublic,
-    subjects:
-      request.subjects != null
-        ? request.subjects
-        : request.originalCollection.subjects,
-    ageRange: request.ageRange.isBounded()
-      ? request.ageRange
-      : request.originalCollection.ageRange,
-    description:
-      request.description != null
-        ? request.description
-        : request.originalCollection.description,
-  });
+  ...request.originalCollection,
+  title:
+    request.title != null ? request.title : request.originalCollection.title,
+  isPublic:
+    request.isPublic != null
+      ? request.isPublic
+      : request.originalCollection.isPublic,
+  subjects:
+    request.subjects != null
+      ? request.subjects
+      : request.originalCollection.subjects,
+  ageRange: request.ageRange.isBounded()
+    ? request.ageRange
+    : request.originalCollection.ageRange,
+  description:
+    request.description != null
+      ? request.description
+      : request.originalCollection.description,
+});
 
 export default sideEffect(editCollectionAction, onEditCollection);

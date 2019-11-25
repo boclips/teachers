@@ -5,9 +5,7 @@ import createReducerWithInitialState, {
 } from '../../createReducer';
 import { authenticationResolved } from '../actions/authenticationResolved';
 
-export const authenticationReducer: Reducer<
-  AuthenticationStateValue
-> = createReducerWithInitialState(
+export const authenticationReducer: Reducer<AuthenticationStateValue> = createReducerWithInitialState(
   null,
   actionHandler(authenticationResolved, (_, { success }) => ({
     status: success ? 'authenticated' : 'anonymous',

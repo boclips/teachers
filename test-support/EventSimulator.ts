@@ -10,7 +10,7 @@ export default class EventSimulator {
   public setText = (text: string, element: ReactWrapper) =>
     this.interact(this.doSetText(text))(element);
 
-   public constructor(protected wrapper: ReactWrapper) {}
+  public constructor(protected wrapper: ReactWrapper) {}
 
   private static doClick(element: ReactWrapper) {
     const clickHandler = element.prop('onClick') as () => null;

@@ -60,7 +60,7 @@ const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
 
     public render() {
       return (
-        <Component {...this.props as P} mediaBreakpoint={this.state.width} />
+        <Component {...(this.props as P)} mediaBreakpoint={this.state.width} />
       );
     }
   };

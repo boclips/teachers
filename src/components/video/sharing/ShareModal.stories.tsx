@@ -6,7 +6,7 @@ import {
   VideoFactory,
 } from '../../../../test-support/factories';
 import { noOp } from '../../../utils';
-import {storyWithProvider} from "../../../utils/index.stories";
+import { storyWithProvider } from '../../../utils/index.stories';
 import ShareModal from './ShareModal';
 
 storiesOf('ShareModal', module)

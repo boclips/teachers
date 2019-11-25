@@ -5,7 +5,7 @@ export class AgeRange {
   private static AGE_RANGE_MIN = 3;
   private static AGE_RANGE_MAX = 19;
 
-   public constructor(min: number = null, max: number = null) {
+  public constructor(min: number = null, max: number = null) {
     this.min = min;
     this.max = max;
   }

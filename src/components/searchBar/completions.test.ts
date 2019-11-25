@@ -56,7 +56,10 @@ test('highlight matching chunks in the beginning', () => {
   );
 
   expect(highlights).toEqual([
-    [{ text: 'bbb', matches: true }, { text: ' ccc', matches: false }],
+    [
+      { text: 'bbb', matches: true },
+      { text: ' ccc', matches: false },
+    ],
   ]);
 });
 
@@ -80,6 +83,9 @@ test('highlight matching chunks in the end', () => {
   );
 
   expect(highlights).toEqual([
-    [{ text: 'aaa ', matches: false }, { text: 'bbb', matches: true }],
+    [
+      { text: 'aaa ', matches: false },
+      { text: 'bbb', matches: true },
+    ],
   ]);
 });

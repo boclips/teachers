@@ -1,8 +1,7 @@
 import React from 'react';
-import { Video } from '../../../types/Video';
-
-import './CollectionCardSearchPreview.less';
 import { Col, Row } from 'antd';
+import { Video } from '../../../types/Video';
+import './CollectionCardSearchPreview.less';
 
 interface Props {
   videos: Video[];

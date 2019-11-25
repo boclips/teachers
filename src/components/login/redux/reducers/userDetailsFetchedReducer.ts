@@ -5,9 +5,7 @@ import createReducerWithInitialState, {
 import { UserProfile } from '../../../../services/users/UserProfile';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 
-export const userDetailsFetchedReducer: Reducer<
-  UserProfile
-> = createReducerWithInitialState(
+export const userDetailsFetchedReducer: Reducer<UserProfile> = createReducerWithInitialState(
   null,
   actionHandler(userDetailsFetched, (_, userProfile: UserProfile) => ({
     ...userProfile,

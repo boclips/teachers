@@ -40,7 +40,10 @@ export function onBulkUpdateSearchParameter(
   const parsedQuery = queryString.parse(query);
 
   const newQuery = {
-    ...request.reduce((acc, value: UpdateSearchParamsRequest) => ({ ...acc, ...value }), parsedQuery),
+    ...request.reduce(
+      (acc, value: UpdateSearchParamsRequest) => ({ ...acc, ...value }),
+      parsedQuery,
+    ),
     page: 1,
   };
 

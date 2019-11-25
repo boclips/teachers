@@ -11,15 +11,15 @@ export function fetchDisciplines(links: Links): Promise<Discipline[]> {
 
 function convertDisciplinesResource(data: any): Discipline[] {
   return data._embedded.disciplines.map(rawDiscipline => ({
-      id: rawDiscipline.id,
-      code: rawDiscipline.code,
-      name: rawDiscipline.name,
-      subjects:
-        rawDiscipline.subjects &&
-        rawDiscipline.subjects.map(rawSubject => ({
-          id: rawSubject.id,
-          name: rawSubject.name,
-          lessonPlan: rawSubject.lessonPlan,
-        })),
-    }));
+    id: rawDiscipline.id,
+    code: rawDiscipline.code,
+    name: rawDiscipline.name,
+    subjects:
+      rawDiscipline.subjects &&
+      rawDiscipline.subjects.map(rawSubject => ({
+        id: rawSubject.id,
+        name: rawSubject.name,
+        lessonPlan: rawSubject.lessonPlan,
+      })),
+  }));
 }

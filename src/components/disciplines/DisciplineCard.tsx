@@ -66,9 +66,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
               <Link
                 data-qa="view-all-subjects"
                 className="discipline-card__view-all no-underline link--tabbable"
-                to={`/discover-collections?discipline=${
-                  this.props.discipline.id
-                }`}
+                to={`/discover-collections?discipline=${this.props.discipline.id}`}
               >
                 view all ({this.props.discipline.subjects.length}){' '}
                 <ForwardArrowIcon />

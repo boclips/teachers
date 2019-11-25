@@ -23,7 +23,10 @@ test('renders a list of subjects alphabetically ordered', () => {
 });
 
 test('renders a list of subjects alphabetically ordered, after receiving an update', () => {
-  const subjects = [{ id: '1', name: 'Maths' }, { id: '3', name: 'Art' }];
+  const subjects = [
+    { id: '1', name: 'Maths' },
+    { id: '3', name: 'Art' },
+  ];
 
   const wrapper = shallow(
     <SelectSubjects
