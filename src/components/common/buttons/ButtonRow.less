@@ -1,0 +1,24 @@
+@import '../../../../resources/styles/_colours.less';
+@import '../../../../resources/styles/_antd-theme';
+
+.button-row {
+  .ant-btn-group {
+    border-top: 2px solid @shade-2;
+    padding: 16px 0;
+    line-height: 24px;
+    width: 100%;
+
+    button {
+      .ant-btn--borderless();
+      border-right: 2px solid @shade-2 !important;
+      line-height: 24px;
+      height: auto;
+      & > * {
+        vertical-align: middle;
+      }
+    }
+    button:last-child {
+      border-right: none !important;
+    }
+  }
+}

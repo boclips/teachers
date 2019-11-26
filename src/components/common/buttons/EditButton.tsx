@@ -19,7 +19,7 @@ export default class EditButton extends React.PureComponent<
         className={'boclips__edit-button'}
         data-qa={this.props['data-qa']}
       >
-        <Icon theme="filled" aria-label="Edit collection" component={EditSVG} />
+        <Icon theme="filled" aria-label="Edit" component={EditSVG} />
         Edit
       </Button>
     );

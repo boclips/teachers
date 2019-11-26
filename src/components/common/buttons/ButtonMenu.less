@@ -1,0 +1,43 @@
+@import '../../../../resources/styles/_antd-theme';
+
+.button-menu {
+  button {
+    .ant-btn--borderless();
+    min-width: initial;
+    padding: 0;
+    height: 24px;
+    line-height: 24px;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+.ant-dropdown {
+  margin-top: -28px !important;
+
+  &-menu-item {
+    padding: 0;
+  }
+
+  button.ant-btn {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 0;
+    height: auto;
+    text-align: left;
+
+    .ant-btn--borderless();
+  }
+}
+
+.anticon {
+  font-size: 24px;
+  height: 24px;
+  width: 24px;
+
+  & + span {
+    margin-left: 8px;
+  }
+}
