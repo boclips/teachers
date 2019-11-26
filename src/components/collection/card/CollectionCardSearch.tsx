@@ -99,7 +99,7 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
             >
               {this.props.collection.description}
             </div>
-            <StopClickPropagation wrapperProps={{className: 'collection-card__buttons display-desktop'}}>
+            <StopClickPropagation wrapperProps={{className: 'collection-card__buttons display-tablet-and-desktop'}}>
               <ButtonRow
                 buttons={[
                   <BookmarkCollectionButton
