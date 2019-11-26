@@ -109,16 +109,50 @@
     min-height: 38px;
     margin: 0;
   }
+
   .collection-card__description-preview {
     padding: 8px;
+    margin-bottom: 16px;
+    max-height: 69px;
   }
+
+  @media (max-width: @screen-md-max) {
+    .collection-card__detail-row {
+      flex-direction: column;
+    }
+  }
+
 
   .collection-card__subtitle {
     margin: 0 0 7px 0;
     font-weight: 700;
     color: @shade-6;
   }
+
+  .button-row {
+    .ant-btn-group {
+      border-top: 2px solid @shade-1;
+
+      button {
+        border-right: 2px solid @shade-1!important;
+      }
+    }
+  }
+
+  .collection-card__column-detail {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .collection-card__buttons {
+    margin-top: auto;
+
+    .ant-btn-group {
+      padding-bottom: 0;
+    }
+  }
 }
+
 .tags-container {
   min-height: 38px;
   margin: 5px 0 10px 0;

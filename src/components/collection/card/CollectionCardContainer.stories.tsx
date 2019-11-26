@@ -90,7 +90,6 @@ storiesOf('CollectionCardContainer', module)
     ),
   )
   .addDecorator(storyWithRouter())
-  .addDecorator(story => <div style={{ width: '80%' }}>{story()}</div>)
   .add('Regular Card', () => (
     <CollectionCardContainer mode={'regular'} collection={collection} />
   ))

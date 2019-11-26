@@ -49,7 +49,7 @@ export class CollectionCardSearchPreview extends React.PureComponent<Props> {
     }
 
     return (
-      <Row type="flex" gutter={[10, 10]}>
+      <Row type="flex" gutter={[4, 4]}>
         {previewImages.map((image, index) => (
           <Col key={index} span={12}>
             {image}

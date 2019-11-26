@@ -1,3 +1,4 @@
+import { Button, Icon } from 'antd';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -31,27 +32,33 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     }
     return (
       <A11yButton callback={this.onClick}>
-        <section
-          tabIndex={0}
-          role="button"
-          className="top-right-icon bookmark-icon bookmark-button"
+        <Button
+          className="bookmark-icon bookmark-button"
         >
           {this.props.collection.links.bookmark && (
-            <BookmarkFilledSVG
-              data-qa="bookmark-collection"
-              aria-label="Bookmark a collection"
-              title="Button to bookmark a collection"
-            />
+            <React.Fragment>
+              <Icon
+                component={BookmarkFilledSVG}
+                data-qa="bookmark-collection"
+                aria-label="Bookmark a collection"
+                title="Button to bookmark a collection"
+              />
+              <span>Bookmark</span>
+            </React.Fragment>
           )}
 
           {this.props.collection.links.unbookmark && (
-            <BookmarkEmptySVG
-              data-qa="unbookmark-collection"
-              aria-label="Unbookmark a collection"
-              title="Button to unbookmark a collection"
-            />
+            <React.Fragment>
+              <Icon
+                component={BookmarkEmptySVG}
+                data-qa="unbookmark-collection"
+                aria-label="Unbookmark a collection"
+                title="Button to unbookmark a collection"
+              />
+              <span>Unbookmark</span>
+            </React.Fragment>
           )}
-        </section>
+        </Button>
       </A11yButton>
     );
   }

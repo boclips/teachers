@@ -3,6 +3,7 @@ import { Skeleton as AntSkeleton } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { ButtonMenu } from '../../common/buttons/ButtonMenu';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
@@ -43,7 +44,11 @@ class CollectionHeader extends React.PureComponent<Props> {
       <Col>
         <StopClickPropagation>
           <span className="collection-header__bookmark-button">
-            <BookmarkCollectionButton collection={this.props.collection} />
+            <ButtonMenu
+              buttons={[
+                <BookmarkCollectionButton collection={this.props.collection} />,
+              ]}
+            />
           </span>
           {this.props.mode !== 'tiny-card' && (
             <CollectionButtonsContainer

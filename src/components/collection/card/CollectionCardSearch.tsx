@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { ButtonRow } from '../../common/buttons/ButtonRow';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import './CollectionCard.less';
 import CollectionTitle from '../header/CollectionTitle';
@@ -71,11 +72,11 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
               </span>
             )}
         </section>
-        <Row gutter={[13, 13]}>
-          <Col lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 24 }}>
+        <Row className="collection-card__detail-row" gutter={[13, 13]}>
+          <Col className="collection-card__column-preview" lg={{ span: 8 }} md={{ span: 12 }} sm={{ span: 24 }}>
             <CollectionCardSearchPreview videos={this.props.videos} />
           </Col>
-          <Col lg={{ span: 16 }} md={{ span: 12 }} sm={{ span: 24 }}>
+          <Col className="collection-card__column-detail" lg={{ span: 16 }} md={{ span: 12 }} sm={{ span: 24 }}>
             <div className="tags-container">
               <StopClickPropagation wrapper="span">
                 {this.props.collection.subjects.slice(0, 1).map(subjectId => (
@@ -98,13 +99,17 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
             >
               {this.props.collection.description}
             </div>
+            <StopClickPropagation wrapperProps={{className: 'collection-card__buttons display-desktop'}}>
+              <ButtonRow
+                buttons={[
+                  <BookmarkCollectionButton
+                    collection={this.props.collection}
+                  />,
+                ]}
+              />
+            </StopClickPropagation>
           </Col>
         </Row>
-        <StopClickPropagation>
-          <span className="collection-header__bookmark-button">
-            <BookmarkCollectionButton collection={this.props.collection} />
-          </span>
-        </StopClickPropagation>
       </ClickableCard>
     );
   }
