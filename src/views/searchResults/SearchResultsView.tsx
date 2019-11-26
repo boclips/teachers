@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { FiniteGrid } from '../../components/common/Grid/FiniteGrid';
 import PageLayout from '../../components/layout/PageLayout';
 import {
   getCollectionsFromSearchResult,
@@ -101,9 +102,9 @@ class SearchResultsView extends React.PureComponent<
         className="search-results-placeholders"
         data-qa="search-results-placeholders"
       >
-        <Col>
+        <FiniteGrid>
           <VideoCardsPlaceholder />
-        </Col>
+        </FiniteGrid>
       </section>
     );
   }

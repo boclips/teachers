@@ -2,8 +2,10 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { FiniteGrid } from '../../common/Grid/FiniteGrid';
 import { VideoCard } from '../card/VideoCard';
 import './VideoCardList.less';
+import { Col } from 'antd';
 
 interface Props {
   videos: Video[];
@@ -21,21 +23,25 @@ interface CollectionProps extends Props {
 class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
-      <TransitionGroup exit={true}>
-        {this.props.videos.map((video, index) => (
-          <CSSTransition
-            key={video ? video.id : index}
-            classNames="card-list"
-            timeout={500}
-          >
-            <VideoCard
-              video={video}
-              currentCollection={this.props.currentCollection}
-              videoIndex={index}
-            />
-          </CSSTransition>
-        ))}
-      </TransitionGroup>
+      <FiniteGrid>
+        <TransitionGroup component={null} exit={true}>
+          {this.props.videos.map((video, index) => (
+            <CSSTransition
+              key={video ? video.id : index}
+              classNames="card-list"
+              timeout={500}
+            >
+              <Col span={24}>
+                <VideoCard
+                  video={video}
+                  currentCollection={this.props.currentCollection}
+                  videoIndex={index}
+                />
+              </Col>
+            </CSSTransition>
+          ))}
+        </TransitionGroup>
+      </FiniteGrid>
     );
   }
 }

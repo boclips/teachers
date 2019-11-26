@@ -5,6 +5,8 @@ import FiltersBar from './filters/FiltersBar';
 import SearchResultsHeader from './SearchResultsHeader';
 import SearchResultsProps from './SearchResultsProps';
 
+import './SearchResultsWithHeader.less';
+
 export default class SearchResultsWithHeader extends React.PureComponent<
   SearchResultsProps
 > {
@@ -26,7 +28,7 @@ export default class SearchResultsWithHeader extends React.PureComponent<
         <Row>
           <FiltersBar />
         </Row>
-        <Row>
+        <Row className="search-results__list">
           <SearchResultsCardList
             totalElements={totalElements}
             videos={videos}
