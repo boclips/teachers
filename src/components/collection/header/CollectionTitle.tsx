@@ -5,6 +5,8 @@ import PublicLogoSVG from '../../../../resources/images/global.svg';
 import PrivateLogoSVG from '../../../../resources/images/private.svg';
 import { VideoCollection } from '../../../types/VideoCollection';
 import './CollectionTitle.less';
+import { ButtonMenu } from '../../common/buttons/ButtonMenu';
+import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 
 interface Props extends RouteComponentProps {
   collection: VideoCollection;
@@ -17,7 +19,7 @@ export class CollectionTitle extends React.PureComponent<Props> {
     const Logo = isPublic ? PublicLogoSVG : PrivateLogoSVG;
 
     return (
-      <section>
+      <section className={"collection-title-section"}>
         <h1
           data-qa="collection-title"
           id={this.props.collection.id}
@@ -38,6 +40,7 @@ export class CollectionTitle extends React.PureComponent<Props> {
             />
           )}
         </h1>
+        <ButtonMenu className="display-mobile" buttons={[<BookmarkCollectionButton collection={this.props.collection}/> ]}/>
       </section>
     );
   }

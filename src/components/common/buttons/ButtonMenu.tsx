@@ -1,17 +1,23 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
+import classnames from 'classnames';
 import React from 'react';
 import MoreSVG from '../../../../resources/images/more.svg';
 
 import './ButtonMenu.less';
 
 interface Props {
+  className?: string;
   buttons: React.ReactNode[];
 }
 
 export class ButtonMenu extends React.PureComponent<Props> {
   public render() {
     if (this.props.buttons.length === 1) {
-      return <section className="button-menu">{this.props.buttons[0]}</section>;
+      return (
+        <section className={classnames('button-menu', this.props.className)}>
+          {this.props.buttons[0]}
+        </section>
+      );
     }
 
     const menu = () => (
@@ -23,7 +29,7 @@ export class ButtonMenu extends React.PureComponent<Props> {
     );
 
     return (
-      <section className="button-menu">
+      <section className={classnames('button-menu', this.props.className)}>
         <Dropdown overlay={menu()} placement="bottomRight" trigger={['click']}>
           <Button className="button-menu__expand">
             <Icon component={MoreSVG} />
