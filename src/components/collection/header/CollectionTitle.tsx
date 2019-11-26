@@ -24,7 +24,7 @@ export class CollectionTitle extends React.PureComponent<Props> {
           tabIndex={0}
           className="collection-title"
         >
-          <Link to={`/collections/${this.props.collection.id}`}>
+          <Link to={`/collections/${this.props.collection.id}`} tabIndex={-1}>
             {this.props.collection.title}
           </Link>
           {this.props.collection.isMine && (

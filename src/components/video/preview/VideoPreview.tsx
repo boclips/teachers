@@ -22,6 +22,7 @@ class VideoPreview extends React.PureComponent<OwnProps & StateProps> {
       <div
         data-qa="recommended-video"
         className={'video-list__recommended-video'}
+        tabIndex={-1}
       >
         <section className={'recommended-video__player'}>
           <VideoPlayer video={this.props.video} mode={'card'} />

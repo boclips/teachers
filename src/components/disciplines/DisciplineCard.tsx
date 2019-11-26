@@ -28,7 +28,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
         title={
           <Link
             to={`/discover-collections?discipline=${this.props.discipline.id}`}
-            className="link--tabbable discipline-card__link"
+            className="discipline-card__link"
           >
             <h1 data-qa="discipline-title" className="discipline-card__title">
               {this.props.discipline.name}

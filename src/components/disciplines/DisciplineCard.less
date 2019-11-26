@@ -8,6 +8,7 @@
     &-title {
       padding-top: 24px;
       padding-bottom: 0;
+      overflow: unset;
     }
     position: relative;
     border-bottom: 0;
@@ -54,6 +55,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    &:focus {
+      .discipline-card__title {
+        border-color: @cta-blue;
+        box-shadow: 0 0 4px 1px @cta-blue;
+        color: @cta-blue;
+      }
+    }
   }
 
   &__subject-item {
