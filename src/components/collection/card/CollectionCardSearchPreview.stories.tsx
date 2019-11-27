@@ -1,7 +1,11 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 
-import { VideoFactory } from '../../../../test-support/factories';
+import {
+  VideoCollectionFactory,
+  VideoFactory,
+  VideoIdFactory,
+} from '../../../../test-support/factories';
 import { CollectionCardSearchPreview } from './CollectionCardSearchPreview';
 
 const videos = [
@@ -25,19 +29,42 @@ const videos = [
   }),
 ];
 
+const getCollection = (numberOfVideos: number) => {
+  return VideoCollectionFactory.sample({
+    videoIds: videos
+      .slice(0, numberOfVideos)
+      .map(video => VideoIdFactory.sample({ value: video.id })),
+  });
+};
+
 storiesOf('CollectionCardSearchPreview', module)
   .add('With one video', () => (
-    <CollectionCardSearchPreview videos={videos.slice(0, 1)} />
+    <CollectionCardSearchPreview
+      collection={getCollection(1)}
+      videos={videos.slice(0, 1)}
+    />
   ))
   .add('With two videos', () => (
-    <CollectionCardSearchPreview videos={videos.slice(0, 2)} />
+    <CollectionCardSearchPreview
+      collection={getCollection(2)}
+      videos={videos.slice(0, 2)}
+    />
   ))
   .add('With three videos', () => (
-    <CollectionCardSearchPreview videos={videos.slice(0, 3)} />
+    <CollectionCardSearchPreview
+      collection={getCollection(3)}
+      videos={videos.slice(0, 3)}
+    />
   ))
   .add('With four videos', () => (
-    <CollectionCardSearchPreview videos={videos.slice(0, 4)} />
+    <CollectionCardSearchPreview
+      collection={getCollection(4)}
+      videos={videos.slice(0, 4)}
+    />
   ))
   .add('With six videos', () => (
-    <CollectionCardSearchPreview videos={videos.slice(0, 6)} />
+    <CollectionCardSearchPreview
+      collection={getCollection(5)}
+      videos={videos.slice(0, 6)}
+    />
   ));

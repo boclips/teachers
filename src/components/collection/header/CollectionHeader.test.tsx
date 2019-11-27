@@ -5,9 +5,10 @@ import {
   VideoCollectionFactory,
 } from '../../../../test-support/factories';
 import { AgeRange } from '../../../types/AgeRange';
+import { ButtonMenu } from '../../common/buttons/ButtonMenu';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
-import BookmarkingButton from '../buttons/bookmark/BookmarkCollectionButton';
+import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import { LessonPlan } from '../lessonPlan/LessonPlan';
@@ -47,29 +48,27 @@ describe('the title', () => {
 
 describe('the bookmark button', () => {
   const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: true },
-    { mode: 'tiny-card', expectRendered: true },
+    { mode: 'details' },
+    { mode: 'card' },
+    { mode: 'tiny-card' },
   ];
 
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
+  testData.map(({ mode }) => {
+    it(`does render in ${mode}`, () => {
       const collection = VideoCollectionFactory.sample({ title: 'hello' });
       const wrapper = shallow(
         <CollectionHeader collection={collection} mode={mode} />,
       );
 
-      if (expectRendered) {
-        expect(wrapper.find(BookmarkingButton)).toExist();
-        expect(
-          wrapper
-            .find(BookmarkingButton)
-            .first()
-            .props().collection,
-        ).toEqual(collection);
-      } else {
-        expect(wrapper.find(BookmarkingButton)).not.toExist();
-      }
+      expect(wrapper.find(ButtonMenu)).toExist();
+      const buttonMenu = wrapper.find(ButtonMenu).dive();
+      expect(buttonMenu.find(BookmarkCollectionButton)).toExist();
+      expect(
+        buttonMenu
+          .find(BookmarkCollectionButton)
+          .first()
+          .props().collection,
+      ).toEqual(collection);
     });
   });
 });

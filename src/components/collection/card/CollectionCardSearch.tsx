@@ -1,5 +1,4 @@
 import React from 'react';
-import { Col, Row } from 'antd';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { ButtonRow } from '../../common/buttons/ButtonRow';
@@ -56,7 +55,10 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
         data-qa="collection-card"
         data-state={this.props.collection.title}
       >
-        <CollectionTitle collection={this.props.collection} showBookmarkButton={true}/>
+        <CollectionTitle
+          collection={this.props.collection}
+          showBookmarkButton={true}
+        />
         <section className="collection-card__subtitle">
           <span>
             <span data-qa="collection-number-of-videos">
@@ -72,17 +74,14 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
               </span>
             )}
         </section>
-        <div
-          className="collection-card__detail-row"
-        >
-          <section
-            className="collection-card__column-preview"
-          >
-            <CollectionCardSearchPreview videos={this.props.videos} />
+        <div className="collection-card__detail-row">
+          <section className="collection-card__column-preview">
+            <CollectionCardSearchPreview
+              collection={this.props.collection}
+              videos={this.props.videos}
+            />
           </section>
-          <section
-            className="collection-card__column-detail"
-          >
+          <section className="collection-card__column-detail">
             <div className="tags-container">
               <StopClickPropagation wrapper="span">
                 {this.props.collection.subjects.slice(0, 1).map(subjectId => (

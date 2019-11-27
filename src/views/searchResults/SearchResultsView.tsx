@@ -1,4 +1,3 @@
-import { Col } from 'antd';
 import Pagination from 'antd/lib/pagination/Pagination';
 import queryString from 'query-string';
 import React from 'react';

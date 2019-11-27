@@ -2,13 +2,17 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { Video } from '../../../types/Video';
 import './CollectionCardSearchPreview.less';
+import { VideoCollection } from '../../../types/VideoCollection';
 
 interface Props {
+  collection: VideoCollection;
   videos: Video[];
 }
 
 export class CollectionCardSearchPreview extends React.PureComponent<Props> {
   public render() {
+    const totalVideoCount = this.props.collection.videoIds.length;
+
     const gridSize = 4;
     const previewImages = this.props.videos
       .slice(0, gridSize)
@@ -21,9 +25,10 @@ export class CollectionCardSearchPreview extends React.PureComponent<Props> {
         />
       ));
 
-    if (this.props.videos.length > gridSize) {
+    if (totalVideoCount > gridSize) {
       previewImages.pop();
     }
+
     const placeholdersRequired = previewImages.length < gridSize;
 
     if (placeholdersRequired) {
@@ -35,27 +40,28 @@ export class CollectionCardSearchPreview extends React.PureComponent<Props> {
             className="thumbnail-container"
             data-qa="placeholder"
           >
-            {this.props.videos.length > gridSize && (
-              <span className="video-counter">
-                <span className="count">
-                  +<span>{this.props.videos.length - (gridSize - 1)}</span>
+            {count === numberOfThumbnailsRequired - 1 &&
+              totalVideoCount > gridSize && (
+                <span className="video-counter">
+                  <span className="count">
+                    +<span>{totalVideoCount - (gridSize - 1)}</span>
+                  </span>
+                  <span className="label">videos</span>
                 </span>
-                <span className="label">videos</span>
-              </span>
-            )}
+              )}
           </div>,
         );
       }
     }
 
     return (
-        <Row type="flex" gutter={[4, 4]}>
-          {previewImages.map((image, index) => (
-            <Col key={index} span={12}>
-              {image}
-            </Col>
-          ))}
-        </Row>
+      <Row type="flex" gutter={[4, 4]}>
+        {previewImages.map((image, index) => (
+          <Col key={index} span={12}>
+            {image}
+          </Col>
+        ))}
+      </Row>
     );
   }
 }
