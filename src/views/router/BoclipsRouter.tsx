@@ -23,6 +23,7 @@ import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
 import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import { TrialExpiredView } from '../trial/TrialExpiredView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
@@ -75,6 +76,7 @@ class BoclipsRouter extends Component<Props & StateProps> {
         <ScrollToTopOnForwardNavigation>
           <Switch>
             <Route path="/bye" component={LoggedOutView} />
+            <Route path="/trial-expired" component={TrialExpiredView} />
             <Route path="/create-account" component={CreateAccountView} />
             <Route path="/videos">
               <Switch>

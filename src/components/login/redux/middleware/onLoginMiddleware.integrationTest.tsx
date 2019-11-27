@@ -32,6 +32,25 @@ beforeEach(() => {
 });
 
 describe('on store login', () => {
+  describe('when account has to renew access', () => {
+    beforeEach(() => {
+      new ApiStub({
+        _links: {
+          ...links._links,
+          renewAccess: { href: 'https://boclips.com/renew-access' },
+        },
+      }).fetchUser(userResponse());
+
+      store.dispatch(userLoggedIn());
+    });
+
+    it('redirects to the trial-expired page', async () => {
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(push('/trial-expired'));
+      });
+    });
+  });
+
   describe('when account needs to be activated', () => {
     const user = convertUserResource(userResponse());
 

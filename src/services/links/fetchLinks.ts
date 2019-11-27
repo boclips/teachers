@@ -59,6 +59,10 @@ export default function fetchLinks(prefix: string) {
           links.activate = new Link(body._links.activate);
         }
 
+        if (body._links.renewAccess) {
+          links.renewAccess = new Link(body._links.renewAccess);
+        }
+
         if (body._links.profile) {
           links.profile = new Link(body._links.profile);
         }

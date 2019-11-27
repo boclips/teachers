@@ -109,6 +109,32 @@ describe('when activate link available', () => {
   });
 });
 
+describe('when renewAccess link available', () => {
+  test('creates mandatory links plus renewAccess link ', async () => {
+    MockFetchVerify.get(`${prefix}/v1/`, {
+      _links: {
+        video: { href: '/videos/{id}', templated: true },
+        createPlaybackEvent: { href: '/events' },
+        createNoSearchResultsEvent: { href: '/events/no-search-results' },
+        renewAccess: { href: '/renew-access', templated: false },
+      },
+    });
+
+    const links = await fetchLinks(prefix);
+
+    const expectedLinks: Links = {
+      video: new Link({ href: '/videos/{id}', templated: true }),
+      createPlaybackEvent: new Link({ href: '/events' }),
+      createNoSearchResultsEvent: new Link({
+        href: '/events/no-search-results',
+      }),
+      renewAccess: new Link({ href: '/renew-access', templated: false }),
+    };
+
+    expect(links).toEqual(expectedLinks);
+  });
+});
+
 describe('when profile link available', () => {
   test('creates mandatory links plus profile link ', async () => {
     MockFetchVerify.get(`${prefix}/v1/`, {

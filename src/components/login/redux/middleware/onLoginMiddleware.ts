@@ -22,6 +22,9 @@ const onLoggedIn = (store: Store) => {
       store.dispatch(fetchSubjectsAction());
       store.dispatch(fetchTagsAction());
       store.dispatch(fetchDisciplinesAction());
+      if (links.renewAccess) {
+        store.dispatch(push('/trial-expired'));
+      }
       if (links.activate) {
         store.dispatch(push('/onboarding'));
       }
