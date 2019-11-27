@@ -30,37 +30,44 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     ) {
       return null;
     }
-    return (
-      <A11yButton callback={this.onClick}>
-        <Button
-          className="bookmark-icon bookmark-button"
-        >
-          {this.props.collection.links.bookmark && (
+
+    if (this.props.collection.links.bookmark) {
+      return (
+        <A11yButton callback={this.onClick}>
+          <Button
+            className="bookmark-icon bookmark-button"
+            data-qa="bookmark-collection"
+          >
             <React.Fragment>
               <Icon
                 component={BookmarkFilledSVG}
-                data-qa="bookmark-collection"
                 aria-label="Bookmark a collection"
                 title="Button to bookmark a collection"
               />
               <span>Bookmark</span>
             </React.Fragment>
-          )}
-
-          {this.props.collection.links.unbookmark && (
+          </Button>
+        </A11yButton>
+      );
+    } else if (this.props.collection.links.unbookmark) {
+      return (
+        <A11yButton callback={this.onClick}>
+          <Button
+            className="bookmark-icon bookmark-button"
+            data-qa="unbookmark-collection"
+          >
             <React.Fragment>
               <Icon
                 component={BookmarkEmptySVG}
-                data-qa="unbookmark-collection"
                 aria-label="Unbookmark a collection"
                 title="Button to unbookmark a collection"
               />
               <span>Unbookmark</span>
             </React.Fragment>
-          )}
-        </Button>
-      </A11yButton>
-    );
+          </Button>
+        </A11yButton>
+      );
+    }
   }
 
   private onClick = (event: React.SyntheticEvent<HTMLElement>) => {
