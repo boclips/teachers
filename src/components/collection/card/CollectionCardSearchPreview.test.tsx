@@ -30,13 +30,11 @@ describe('Rendering a full grid of video previews', () => {
     }),
   ];
 
-  const getCollection = (numberOfVideos: number) => {
-    return VideoCollectionFactory.sample({
+  const getCollection = (numberOfVideos: number) => VideoCollectionFactory.sample({
       videoIds: videos
         .slice(0, numberOfVideos)
         .map(video => VideoIdFactory.sample({ value: video.id })),
     });
-  };
 
   it('renders a one video collection with one thumbnail with three placeholders', () => {
     const previews = mount(

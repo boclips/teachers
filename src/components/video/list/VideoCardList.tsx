@@ -1,3 +1,4 @@
+import { Col } from 'antd';
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
@@ -5,7 +6,6 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import { FiniteGrid } from '../../common/Grid/FiniteGrid';
 import { VideoCard } from '../card/VideoCard';
 import './VideoCardList.less';
-import { Col } from 'antd';
 
 interface Props {
   videos: Video[];

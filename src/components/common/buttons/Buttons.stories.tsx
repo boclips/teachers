@@ -1,12 +1,12 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import { ButtonMenu } from './ButtonMenu';
 
-import { ButtonRow } from './ButtonRow';
 import { Button, Icon } from 'antd';
 import BookmarkEmptySVG from '../../../../resources/images/bookmarked.svg';
 import BookmarkFilledSVG from '../../../../resources/images/unbookmarked.svg';
 import ShareSVG from '../../../../resources/images/share.svg';
+import { ButtonRow } from './ButtonRow';
+import { ButtonMenu } from './ButtonMenu';
 
 storiesOf('Buttons', module)
   .add('Button Row', () => {
