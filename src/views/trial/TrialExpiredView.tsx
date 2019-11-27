@@ -22,6 +22,7 @@ class TrialExpiredViewComponent extends React.PureComponent<
 > {
   public render() {
     if (!this.props.renewAccessLink) {
+
       return null;
     }
 
@@ -67,11 +68,11 @@ class TrialExpiredViewComponent extends React.PureComponent<
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  renewalLink: state.links.renewAccess,
+const mapStateToProps = (state: State): StateProps => ({
+  renewAccessLink: state.links.renewAccess,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch): DispatchProps => ({
   redirectToHomepage: () => dispatch(push('/')),
 });
 
