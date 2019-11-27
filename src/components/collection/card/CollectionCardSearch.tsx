@@ -56,7 +56,7 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
         data-qa="collection-card"
         data-state={this.props.collection.title}
       >
-        <CollectionTitle collection={this.props.collection} />
+        <CollectionTitle collection={this.props.collection} showBookmarkButton={true}/>
         <section className="collection-card__subtitle">
           <span>
             <span data-qa="collection-number-of-videos">
@@ -72,24 +72,16 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
               </span>
             )}
         </section>
-        <Row
+        <div
           className="collection-card__detail-row"
-          type="flex"
-          gutter={[13, 13]}
         >
-          <Col
+          <section
             className="collection-card__column-preview"
-            lg={{ span: 8 }}
-            md={{ span: 12 }}
-            sm={{ span: 24 }}
           >
             <CollectionCardSearchPreview videos={this.props.videos} />
-          </Col>
-          <Col
+          </section>
+          <section
             className="collection-card__column-detail"
-            lg={{ span: 16 }}
-            md={{ span: 12 }}
-            sm={{ span: 24 }}
           >
             <div className="tags-container">
               <StopClickPropagation wrapper="span">
@@ -127,8 +119,8 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
                 ]}
               />
             </StopClickPropagation>
-          </Col>
-        </Row>
+          </section>
+        </div>
       </ClickableCard>
     );
   }

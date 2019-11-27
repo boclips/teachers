@@ -6,20 +6,26 @@ import PrivateLogoSVG from '../../../../resources/images/private.svg';
 import { VideoCollection } from '../../../types/VideoCollection';
 import './CollectionTitle.less';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
+import StopClickPropagation from '../../common/StopClickPropagation';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 
 interface Props extends RouteComponentProps {
   collection: VideoCollection;
+  showBookmarkButton?: boolean;
 }
 
 export class CollectionTitle extends React.PureComponent<Props> {
+  public static defaultProps = {
+    showBookmarkButton: false,
+  };
+
   public render() {
     const isPublic = this.props.collection.isPublic;
 
     const Logo = isPublic ? PublicLogoSVG : PrivateLogoSVG;
 
     return (
-      <section className={"collection-title-section"}>
+      <section className={'collection-title-section'}>
         <h1
           data-qa="collection-title"
           id={this.props.collection.id}
@@ -40,7 +46,16 @@ export class CollectionTitle extends React.PureComponent<Props> {
             />
           )}
         </h1>
-        <ButtonMenu className="display-mobile" buttons={[<BookmarkCollectionButton collection={this.props.collection}/> ]}/>
+        {this.props.showBookmarkButton && (
+          <StopClickPropagation wrapper="div">
+            <ButtonMenu
+              className="display-mobile"
+              buttons={[
+                <BookmarkCollectionButton collection={this.props.collection} />,
+              ]}
+            />
+          </StopClickPropagation>
+        )}
       </section>
     );
   }
