@@ -7,8 +7,9 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
+import { push } from 'connected-react-router';
 import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
-import { AuthenticationState, UserState } from '../../types/State';
+import { AuthenticationState, LinksState, UserState } from '../../types/State';
 import { LoadingComponent } from '../common/LoadingComponent';
 
 export interface PrivateRouteComponentParams<TParams>
@@ -27,10 +28,12 @@ interface OwnProps {
 interface StateProps {
   canRenderComponent: boolean;
   isAuthenticated: boolean;
+  shouldRenewAccess: boolean;
 }
 
 interface DispatchProps {
   authenticate: () => void;
+  redirectToAccessRenewalPage: () => void;
 }
 
 class PrivateRoute extends React.Component<
@@ -72,17 +75,24 @@ class PrivateRoute extends React.Component<
     if (!this.props.isAuthenticated) {
       this.props.authenticate();
     }
+    if (this.props.shouldRenewAccess) {
+      this.props.redirectToAccessRenewalPage();
+    }
   }
 }
 
-function mapStateToProps(state: AuthenticationState & UserState): StateProps {
+function mapStateToProps(
+  state: LinksState & AuthenticationState & UserState,
+): StateProps {
   return {
     isAuthenticated:
       state.authentication && state.authentication.status === 'authenticated',
+    shouldRenewAccess: !!state.links.renewAccess,
     canRenderComponent:
       state.authentication &&
       state.authentication.status === 'authenticated' &&
-      !!state.user,
+      !!state.user &&
+      !state.links.renewAccess,
   };
 }
 
@@ -90,6 +100,9 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     authenticate: () => {
       dispatch(requestAuthentication({ authenticationRequired: true }));
+    },
+    redirectToAccessRenewalPage: () => {
+      dispatch(push('/trial-expired'));
     },
   };
 }

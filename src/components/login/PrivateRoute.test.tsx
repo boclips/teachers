@@ -3,8 +3,11 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
+import { push } from 'connected-react-router';
 import { MockStoreFactory } from '../../../test-support/factories';
 import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
+import { Link } from '../../types/Link';
+import { Links } from '../../types/Links';
 import PrivateRoute from './PrivateRoute';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
@@ -45,6 +48,25 @@ describe('conditional rendering of children', () => {
 
     const content = componentWrapper.find(ChildComponent);
     expect(content).not.toExist();
+  });
+
+  it('will redirect to renew access page when the user has to renew access', () => {
+    const store = MockStoreFactory.sample({
+      authentication: {
+        status: 'authenticated',
+      },
+      links: ({
+        renewAccess: new Link({ href: '/renew-access' }),
+      } as Partial<Links>) as any,
+    });
+
+    getComponentWrapper(store);
+
+    expect(store.getActions()).toHaveLength(1);
+
+    const action = store.getActions()[0];
+
+    expect(action).toEqual(push('/trial-expired'));
   });
 });
 
