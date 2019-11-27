@@ -1,9 +1,8 @@
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { FiniteGrid } from '../../common/Grid/FiniteGrid';
 import { VideoCard } from '../card/VideoCard';
 import './VideoCardList.less';
 
@@ -23,7 +22,7 @@ interface CollectionProps extends Props {
 class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
-      <FiniteGrid>
+      <Row gutter={[20,20]}>
         <TransitionGroup component={null} exit={true}>
           {this.props.videos.map((video, index) => (
             <CSSTransition
@@ -41,7 +40,7 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
             </CSSTransition>
           ))}
         </TransitionGroup>
-      </FiniteGrid>
+      </Row>
     );
   }
 }
