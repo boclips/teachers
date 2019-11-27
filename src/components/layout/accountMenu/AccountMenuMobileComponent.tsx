@@ -4,6 +4,7 @@ import MyAccountSVG from '../../../../resources/images/my-account.svg';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import './AccountMenuMobileComponent.less';
 import {
+  AccountSettingsLink,
   BookmarkedCollectionsLink,
   LogoutLink,
   UserCollectionsLink,
@@ -72,6 +73,9 @@ export default class AccountMenuMobile extends React.PureComponent<
               <BookmarkedCollectionsLink onClick={this.onClose} />
             </Menu.Item>
             <Menu.Divider key="lovely-divider-3" />
+            <Menu.Item key="3" className="account-menu-mobile__menu-item">
+              <AccountSettingsLink onClick={this.onClose} />
+            </Menu.Item>
             <Menu.Divider key="lovely-divider-4" />
             <Menu.Item key="4" className="account-menu-mobile__menu-item">
               <LogoutLink onClick={this.props.onLogout} />
