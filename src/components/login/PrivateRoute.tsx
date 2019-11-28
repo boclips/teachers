@@ -28,7 +28,7 @@ interface OwnProps {
 interface StateProps {
   canRenderComponent: boolean;
   isAuthenticated: boolean;
-  shouldRenewAccess: boolean;
+  accessExpired: boolean;
 }
 
 interface DispatchProps {
@@ -75,7 +75,7 @@ class PrivateRoute extends React.Component<
     if (!this.props.isAuthenticated) {
       this.props.authenticate();
     }
-    if (this.props.shouldRenewAccess) {
+    if (this.props.accessExpired) {
       this.props.redirectToAccessRenewalPage();
     }
   }
@@ -87,12 +87,12 @@ function mapStateToProps(
   return {
     isAuthenticated:
       state.authentication && state.authentication.status === 'authenticated',
-    shouldRenewAccess: !!state.links.renewAccess,
+    accessExpired: !!state.links.reportAccessExpired,
     canRenderComponent:
       state.authentication &&
       state.authentication.status === 'authenticated' &&
       !!state.user &&
-      !state.links.renewAccess,
+      !state.links.reportAccessExpired,
   };
 }
 

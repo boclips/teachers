@@ -9,6 +9,8 @@ export interface BoclipsAnalytics {
   trackVideoLinkClicked(video: Video): Promise<void>;
 
   trackPageRendered(url: string): Promise<void>;
+
+  trackUserExpired(): Promise<void>
 }
 
 export default new HttpBoclipsAnalytics();

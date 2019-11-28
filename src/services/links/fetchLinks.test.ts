@@ -109,14 +109,14 @@ describe('when activate link available', () => {
   });
 });
 
-describe('when renewAccess link available', () => {
-  test('creates mandatory links plus renewAccess link ', async () => {
+describe('when reportAccessExpired link available', () => {
+  test('creates mandatory links plus reportAccessExpired link ', async () => {
     MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
         createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
-        renewAccess: { href: '/renew-access', templated: false },
+        reportAccessExpired: { href: '/renew-access', templated: false },
       },
     });
 
@@ -128,7 +128,7 @@ describe('when renewAccess link available', () => {
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
-      renewAccess: new Link({ href: '/renew-access', templated: false }),
+      reportAccessExpired: new Link({ href: '/renew-access', templated: false }),
     };
 
     expect(links).toEqual(expectedLinks);

@@ -17,6 +17,8 @@ export default abstract class AbstractBoclipsAnalytics
 
   public abstract trackPageRendered(url: string): Promise<void>;
 
+  public abstract trackUserExpired(): Promise<void>;
+
   public abstract logInteraction(
     video: Video,
     interactionType: string,

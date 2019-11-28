@@ -50,13 +50,13 @@ describe('conditional rendering of children', () => {
     expect(content).not.toExist();
   });
 
-  it('will redirect to renew access page when the user has to renew access', () => {
+  it('will redirect to renew access page when the user has access expired', () => {
     const store = MockStoreFactory.sample({
       authentication: {
         status: 'authenticated',
       },
       links: ({
-        renewAccess: new Link({ href: '/renew-access' }),
+        reportAccessExpired: new Link({ href: '/events/access-expired' }),
       } as Partial<Links>) as any,
     });
 

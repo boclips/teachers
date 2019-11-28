@@ -22,7 +22,7 @@ const onLoggedIn = (store: Store) => {
       store.dispatch(fetchSubjectsAction());
       store.dispatch(fetchTagsAction());
       store.dispatch(fetchDisciplinesAction());
-      if (links.renewAccess) {
+      if (links.reportAccessExpired) {
         store.dispatch(push('/trial-expired'));
       }
       if (links.activate) {

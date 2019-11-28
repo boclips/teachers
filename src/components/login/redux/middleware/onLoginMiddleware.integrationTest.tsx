@@ -32,12 +32,12 @@ beforeEach(() => {
 });
 
 describe('on store login', () => {
-  describe('when account has to renew access', () => {
+  describe('when account has access expired', () => {
     beforeEach(() => {
       new ApiStub({
         _links: {
           ...links._links,
-          renewAccess: { href: 'https://boclips.com/renew-access' },
+          reportAccessExpired: { href: 'https://api.example.com/v1/events/expired-access' },
         },
       }).fetchUser(userResponse());
 

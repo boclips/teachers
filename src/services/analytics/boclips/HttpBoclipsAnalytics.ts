@@ -23,4 +23,10 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
 
     return client.eventsClient.trackPageRendered({ url });
   }
+
+  public async trackUserExpired(): Promise<void> {
+    const client = await getBoclipsClient();
+
+    return client.eventsClient.trackUserExpired();
+  }
 }

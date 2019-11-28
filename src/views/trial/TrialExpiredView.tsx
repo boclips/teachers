@@ -8,9 +8,10 @@ import SadTeacher from '../../../resources/images/sad-teacher.svg';
 import PageLayout from '../../components/layout/PageLayout';
 import { Link } from '../../types/Link';
 import State from '../../types/State';
+import AnalyticsFactory from "../../services/analytics/AnalyticsFactory";
 
 interface StateProps {
-  renewAccessLink: Link;
+  reportAccessExpiredLink: Link;
 }
 
 interface DispatchProps {
@@ -21,8 +22,7 @@ class TrialExpiredViewComponent extends React.PureComponent<
   StateProps & DispatchProps
 > {
   public render() {
-    if (!this.props.renewAccessLink) {
-
+    if (!this.props.reportAccessExpiredLink) {
       return null;
     }
 
@@ -46,7 +46,7 @@ class TrialExpiredViewComponent extends React.PureComponent<
                 </p>
                 <p className="action">
                   <Button
-                    href={this.props.renewAccessLink.getOriginalLink()}
+                    href="https://www.boclips.com/boclips-for-teachers-schedule-a-demo"
                     type="primary"
                     size="large"
                   >
@@ -62,14 +62,17 @@ class TrialExpiredViewComponent extends React.PureComponent<
   }
 
   public componentDidMount(): void {
-    if (!this.props.renewAccessLink) {
+    if (!this.props.reportAccessExpiredLink) {
       this.props.redirectToHomepage();
+    } else {
+      // noinspection JSIgnoredPromiseFromCall
+      AnalyticsFactory.internalAnalytics().trackUserExpired()
     }
   }
 }
 
 const mapStateToProps = (state: State): StateProps => ({
-  renewAccessLink: state.links.renewAccess,
+  reportAccessExpiredLink: state.links.reportAccessExpired,
 });
 
 const mapDispatchToProps = (dispatch): DispatchProps => ({

@@ -25,6 +25,12 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
 
     return client.eventsClient.trackPageRendered({ url });
   }
+
+  public async trackUserExpired(): Promise<void> {
+    const client = (await getBoclipsClient()) as FakeBoclipsClient;
+
+    return client.eventsClient.trackUserExpired();
+  }
 }
 
 export default new FakeBoclipsAnalytics();
