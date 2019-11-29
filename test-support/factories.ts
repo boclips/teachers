@@ -123,6 +123,7 @@ export class VideoCollectionLinksFactory {
       remove: arg.remove || undefined,
       bookmark: arg.bookmark || undefined,
       unbookmark: arg.unbookmark || undefined,
+      interactedWith: arg.interactedWith || undefined
     });
   }
 }

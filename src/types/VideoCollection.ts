@@ -11,6 +11,7 @@ export interface VideoCollectionLinks {
   bookmark?: Link;
   unbookmark?: Link;
   self: Link;
+  interactedWith?: Link;
 }
 
 export interface VideoCollection {

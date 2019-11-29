@@ -73,6 +73,7 @@ const getLinks = (data: any) => ({
   bookmark: parseLink(data._links.bookmark),
   unbookmark: parseLink(data._links.unbookmark),
   self: parseLink(data._links.self),
+  interactedWith: parseLink(data._links.interactedWith)
 });
 
 const parseAttachment = (attachment): Attachment => ({

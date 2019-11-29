@@ -1,4 +1,5 @@
 import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { BoclipsAnalytics } from './BoclipsAnalytics';
 
 export default abstract class AbstractBoclipsAnalytics
@@ -17,10 +18,13 @@ export default abstract class AbstractBoclipsAnalytics
 
   public abstract trackPageRendered(url: string): Promise<void>;
 
+  abstract trackCollectionInteractedWith(collection: VideoCollection, subtype: string): Promise<void>;
+
   public abstract trackUserExpired(): Promise<void>;
 
   public abstract logInteraction(
     video: Video,
     interactionType: string,
   ): Promise<void>;
+
 }

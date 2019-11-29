@@ -1,4 +1,5 @@
 import React from 'react';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { ButtonRow } from '../../common/buttons/ButtonRow';
@@ -54,6 +55,7 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
         className="collection-card collection-card--search"
         data-qa="collection-card"
         data-state={this.props.collection.title}
+        onMouseDown={this.emitCollectionInteractedWithEvent}
       >
         <CollectionTitle
           collection={this.props.collection}
@@ -114,6 +116,7 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
                 buttons={[
                   <BookmarkCollectionButton
                     collection={this.props.collection}
+                    key={this.props.collection.id}
                   />,
                 ]}
               />
@@ -121,6 +124,13 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
           </section>
         </div>
       </ClickableCard>
+    );
+  }
+
+  private emitCollectionInteractedWithEvent = () => {
+    AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+      this.props.collection,
+      'NAVIGATE_TO_COLLECTION_DETAILS',
     );
   }
 }

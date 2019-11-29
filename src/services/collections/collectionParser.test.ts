@@ -53,6 +53,16 @@ describe('parsing a single collections API response', () => {
     );
   });
 
+  it('parses non-edit links', () => {
+    const data = collectionResponse();
+
+    const parsed: VideoCollection = parseCollectionResponse({ data });
+
+    expect(parsed.links.interactedWith.getOriginalLink()).toEqual(
+      'https://api.example.com/v1/collections/id/events',
+    );
+  });
+
   it('parses videos', () => {
     const data = collectionResponse();
 

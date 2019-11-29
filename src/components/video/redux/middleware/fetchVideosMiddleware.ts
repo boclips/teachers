@@ -16,7 +16,7 @@ import { storeVideosAction } from '../actions/storeVideosAction';
 
 export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 
-const searchVideos = (store: Store<State>) => {
+const searchVideosAndCollections = (store: Store<State>) => {
   if (store.getState().links && store.getState().links.videos) {
     dispatchSearchActions(store);
   }
@@ -41,8 +41,8 @@ const onFetchPromotedVideos = (
   });
 };
 
-const onUrlChangeMiddleware = sideEffect(onLocationChanged, searchVideos);
-const onLinksFetched = sideEffect(storeLinksAction, searchVideos);
+const onUrlChangeMiddleware = sideEffect(onLocationChanged, searchVideosAndCollections);
+const onLinksFetched = sideEffect(storeLinksAction, searchVideosAndCollections);
 
 export default [
   onUrlChangeMiddleware,

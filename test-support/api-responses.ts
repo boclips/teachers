@@ -188,6 +188,11 @@ export function collectionResponse(
         href: `${prefix}/v1/collections/${id}`,
         templated: false,
       },
+      interactedWith:
+        {
+          href: `${prefix}/v1/collections/${id}/events`,
+          templated: false,
+        },
       edit: editable
         ? {
             href: `${prefix}/v1/collections/${id}`,

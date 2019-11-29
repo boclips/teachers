@@ -1,5 +1,8 @@
+import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { getBoclipsClient } from '../../apiClient';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 
@@ -24,6 +27,26 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
     const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
     return client.eventsClient.trackPageRendered({ url });
+  }
+
+  public async trackCollectionInteractedWith(
+    collection: VideoCollection,
+    subtype: keyof typeof CollectionInteractionType,
+  ) {
+    const client = (await getBoclipsClient()) as FakeBoclipsClient;
+
+    return client.eventsClient.trackCollectionInteraction(
+      {
+        id: collection.id,
+        links: {
+          self: convertToApiClientLink(collection.links.self),
+          interactedWith: convertToApiClientLink(
+            collection.links.interactedWith,
+          ),
+        },
+      },
+      { subtype: CollectionInteractionType[subtype] },
+    );
   }
 
   public async trackUserExpired(): Promise<void> {

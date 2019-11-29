@@ -1,5 +1,8 @@
 import axios from 'axios';
+import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
+import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { getBoclipsClient } from '../../apiClient';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 
@@ -22,6 +25,26 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
     const client = await getBoclipsClient();
 
     return client.eventsClient.trackPageRendered({ url });
+  }
+
+  public async trackCollectionInteractedWith(
+    collection: VideoCollection,
+    subtype: keyof typeof CollectionInteractionType,
+  ): Promise<void> {
+    const client = await getBoclipsClient();
+
+    return client.eventsClient.trackCollectionInteraction(
+      {
+        id: collection.id,
+        links: {
+          self: convertToApiClientLink(collection.links.self),
+          interactedWith: convertToApiClientLink(
+            collection.links.interactedWith,
+          ),
+        },
+      },
+      { subtype: CollectionInteractionType[subtype] }
+    );
   }
 
   public async trackUserExpired(): Promise<void> {
