@@ -35,6 +35,6 @@ export const dispatchSearchActions = (store: Store<RouterState>) => {
     const sortBy = null;
 
     store.dispatch(searchVideosAction({ query, page, filters, sortBy }));
-    store.dispatch(searchCollectionsAction({ query }));
+    store.dispatch(searchCollectionsAction({ query, filters }));
   }
 };

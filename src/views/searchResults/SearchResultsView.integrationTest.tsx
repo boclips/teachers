@@ -214,40 +214,43 @@ test('redirects when clicking on first title', async () => {
 });
 
 it('renders collections, when there are no video results', () => {
-  const { queryByText, queryByTestId } = renderWithStore(<SearchResultsView />, {
-    initialState: {
-      search: {
-        videoSearch: VideoSearchFactory.sample({ query: 'testing dogs' }),
-        collectionSearch: CollectionSearchFactory.sample({
-          query: 'testing dogs',
-          collectionIds: ['collection-id-one'],
-        }),
-      },
-      entities: {
-        collections: {
-          byId: {
-            'collection-id-one': VideoCollectionFactory.sample({
-              id: 'collection-id-one',
-              title: 'My Collection Title: Testing dogs',
-            }),
+  const { queryByText, queryByTestId } = renderWithStore(
+    <SearchResultsView />,
+    {
+      initialState: {
+        search: {
+          videoSearch: VideoSearchFactory.sample({ query: 'testing dogs' }),
+          collectionSearch: CollectionSearchFactory.sample({
+            query: 'testing dogs',
+            collectionIds: ['collection-id-one'],
+          }),
+        },
+        entities: {
+          collections: {
+            byId: {
+              'collection-id-one': VideoCollectionFactory.sample({
+                id: 'collection-id-one',
+                title: 'My Collection Title: Testing dogs',
+              }),
+            },
+          },
+          videos: {
+            byId: {
+              'video-id': VideoFactory.sample({
+                id: 'video-id',
+                title: 'The video',
+              }),
+            },
           },
         },
-        videos: {
-          byId: {
-            'video-id': VideoFactory.sample({
-              id: 'video-id',
-              title: 'The video',
-            }),
+        router: RouterFactory.sample({
+          location: {
+            search: 'testing dogs',
           },
-        },
+        } as any),
       },
-      router: RouterFactory.sample({
-        location: {
-          search: 'testing dogs',
-        },
-      } as any),
     },
-  });
+  );
 
   expect(queryByText('My Collection Title: Testing dogs')).toBeInTheDocument();
   expect(queryByText('The video')).not.toBeInTheDocument();
