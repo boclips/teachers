@@ -55,12 +55,19 @@ class SearchResultsView extends React.PureComponent<
     if (this.props.loading) {
       return this.renderResultPlaceholders();
     }
-    if (this.props.videoResults.videos.length > 0) {
+
+    const hasSearchResults =
+      this.props.videoResults.videos.length > 0 ||
+      this.props.collectionResults.collections.length > 0;
+
+    if (hasSearchResults) {
       return this.renderResults();
     }
+
     if (this.props.videoResults.query.length > 0) {
       return this.renderZeroResultsMessage();
     }
+
     return null;
   }
 
@@ -80,18 +87,23 @@ class SearchResultsView extends React.PureComponent<
   }
 
   public renderPagination() {
+    if (
+      !this.props.videoResults.paging ||
+      this.props.videoResults.paging.totalPages === 0
+    ) {
+      return null;
+    }
+
     return (
-      this.props.videoResults.paging && (
-        <section className={'results-pagination'} data-qa="pagination">
-          <Pagination
-            current={this.props.currentPage}
-            defaultCurrent={this.props.currentPage}
-            defaultPageSize={this.props.videoResults.paging.size}
-            total={this.props.videoResults.paging.totalElements}
-            onChange={this.changePage}
-          />
-        </section>
-      )
+      <section className={'results-pagination'} data-qa="pagination">
+        <Pagination
+          current={this.props.currentPage}
+          defaultCurrent={this.props.currentPage}
+          defaultPageSize={this.props.videoResults.paging.size}
+          total={this.props.videoResults.paging.totalElements}
+          onChange={this.changePage}
+        />
+      </section>
     );
   }
 

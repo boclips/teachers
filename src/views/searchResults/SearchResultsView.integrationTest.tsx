@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from 'antd/lib/button/button';
 import {
   collectionResponse,
@@ -14,6 +15,15 @@ import { ClosableTag } from '../../components/common/tags/Tag';
 import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
 import DurationSlider from '../../components/searchResults/filters/DurationSlider';
 import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/filters/FilterButton';
+import {
+  CollectionSearchFactory,
+  RouterFactory,
+  VideoCollectionFactory,
+  VideoFactory,
+  VideoSearchFactory,
+} from '../../../test-support/factories';
+import { renderWithStore } from '../../../test-support/renderWithStore';
+import SearchResultsView from './SearchResultsView';
 
 beforeEach(() => {
   try {
@@ -201,4 +211,45 @@ test('redirects when clicking on first title', async () => {
   const searchPage = await SearchPage.load({ q: query });
   searchPage.clickOnFirstTitle();
   await searchPage.isOnDetailsPage();
+});
+
+it('renders collections, when there are no video results', () => {
+  const { queryByText, queryByTestId } = renderWithStore(<SearchResultsView />, {
+    initialState: {
+      search: {
+        videoSearch: VideoSearchFactory.sample({ query: 'testing dogs' }),
+        collectionSearch: CollectionSearchFactory.sample({
+          query: 'testing dogs',
+          collectionIds: ['collection-id-one'],
+        }),
+      },
+      entities: {
+        collections: {
+          byId: {
+            'collection-id-one': VideoCollectionFactory.sample({
+              id: 'collection-id-one',
+              title: 'My Collection Title: Testing dogs',
+            }),
+          },
+        },
+        videos: {
+          byId: {
+            'video-id': VideoFactory.sample({
+              id: 'video-id',
+              title: 'The video',
+            }),
+          },
+        },
+      },
+      router: RouterFactory.sample({
+        location: {
+          search: 'testing dogs',
+        },
+      } as any),
+    },
+  });
+
+  expect(queryByText('My Collection Title: Testing dogs')).toBeInTheDocument();
+  expect(queryByText('The video')).not.toBeInTheDocument();
+  expect(queryByTestId('pagination')).not.toBeInTheDocument();
 });
