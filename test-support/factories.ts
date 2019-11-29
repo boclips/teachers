@@ -243,10 +243,10 @@ export class VideoSearchFactory {
       query: 'hello',
       videoIds: [],
       paging: {
-        number: 1,
+        number: 0,
         size: 10,
-        totalElements: 10,
-        totalPages: 10,
+        totalElements: 0,
+        totalPages: 0,
       },
       loading: false,
       ...arg,
