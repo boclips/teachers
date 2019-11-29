@@ -4,11 +4,35 @@ import {Provider} from 'react-redux';
 import {MemoryRouter} from 'react-router';
 import {Store} from 'redux';
 import {By} from '../../../test-support/By';
-import {MockStoreFactory, RouterFactory, SearchFactory, VideoSearchFactory,} from '../../../test-support/factories';
+import {
+  CollectionSearchFactory,
+  MockStoreFactory,
+  RouterFactory,
+  SearchFactory,
+  VideoSearchFactory,
+} from '../../../test-support/factories';
 import SearchResultsView from './SearchResultsView';
 
 test('shows placeholders when results are loading', () => {
   const store = createStore('donuts', true);
+  const wrapper = mountWith(store);
+
+  const placeholders = wrapper.find(By.dataQa('search-results-placeholders'));
+
+  expect(placeholders).toExist();
+});
+
+test('shows placeholders when collection results are loading, but videos have loaded', () => {
+  const store = createStore('donuts', false, true);
+  const wrapper = mountWith(store);
+
+  const placeholders = wrapper.find(By.dataQa('search-results-placeholders'));
+
+  expect(placeholders).toExist();
+});
+
+test('shows placeholders when videos results are loading, but collections have loaded', () => {
+  const store = createStore('donuts', true, false);
   const wrapper = mountWith(store);
 
   const placeholders = wrapper.find(By.dataQa('search-results-placeholders'));
@@ -46,14 +70,19 @@ function mountWith(store: Store) {
   );
 }
 
-function createStore(query: string, isLoading = false) {
+function createStore(query: string, videosAreLoading = false, collectionsAreLoading = false) {
   return MockStoreFactory.sample({
     search: SearchFactory.sample({
       videoSearch: {
         ...VideoSearchFactory.sample(),
-        loading: isLoading,
+        loading: videosAreLoading,
         query,
       },
+      collectionSearch: {
+        ...CollectionSearchFactory.sample(),
+        loading: collectionsAreLoading,
+        query
+      }
     }),
     router: {
       ...RouterFactory.sample(),

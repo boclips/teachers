@@ -133,7 +133,7 @@ function mapStateToProps(state: State): StateProps {
   const { search, links, router, user } = state;
 
   return {
-    loading: search.videoSearch.loading,
+    loading: search.videoSearch.loading || search.collectionSearch.loading,
     videoResults: {
       ...search.videoSearch,
       videos: getVideosFromSearchResult(state),
