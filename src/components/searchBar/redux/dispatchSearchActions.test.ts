@@ -5,6 +5,8 @@ import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest'
 import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
 import { MockStoreFactory } from './../../../../test-support/factories';
 import { dispatchSearchActions } from './dispatchSearchActions';
+import { searchVideosAction } from './actions/searchVideosActions';
+import { searchCollectionsAction } from './actions/searchCollectionsActions';
 
 function getStore(params: string = '') {
   return MockStoreFactory.sample({
@@ -128,6 +130,29 @@ describe('when on the videos page', () => {
     const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.age_range_min).toEqual(4);
     expect(action.payload.filters.age_range_max).toEqual(12);
+  });
+
+  it('does not search for collections when filters are applied', () => {
+    const store = getStore('age_range_min=4&age_range_max=12');
+    dispatchSearchActions(store);
+
+    const actions = store.getActions();
+
+    expect(actions).toHaveLength(1);
+
+    expect(actions[0].type).toEqual(searchVideosAction.type);
+  });
+
+  it('does search for collections when filters are not applied', () => {
+    const store = getStore();
+    dispatchSearchActions(store);
+
+    const actions = store.getActions();
+
+    expect(actions).toHaveLength(2);
+
+    expect(actions[0].type).toContain(searchVideosAction.type);
+    expect(actions[1].type).toContain(searchCollectionsAction.type);
   });
 
   it('defaults subjects to undefined if not present', () => {
