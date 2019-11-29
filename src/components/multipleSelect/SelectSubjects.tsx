@@ -37,7 +37,6 @@ export class SelectSubjects extends React.PureComponent<Props, State> {
     return (
       <MultiSelect
         filterOption={SelectSubjects.filter}
-        mode="multiple"
         placeholder={this.props.placeholder}
         data-qa="subjects"
         onChange={this.onChange}

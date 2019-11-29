@@ -12,32 +12,35 @@
       display: none;
     }
   }
-}
 
-.ant-dropdown {
-  margin-top: -28px !important;
+  &__dropdown.ant-dropdown {
+    margin-top: -28px !important;
 
-  &-menu-item {
-    padding: 0;
+    &-menu-item {
+      padding: 0;
+    }
+
+    button.ant-btn {
+      width: 100%;
+      padding: 10px 14px;
+      margin: 0;
+      height: auto;
+      text-align: left;
+
+      .ant-btn--borderless();
+    }
   }
 
-  button.ant-btn {
-    width: 100%;
-    padding: 10px 14px;
-    margin: 0;
-    height: auto;
-    text-align: left;
+  &__dropdown,
+  & {
+    .anticon {
+      font-size: 24px;
+      height: 24px;
+      width: 24px;
 
-    .ant-btn--borderless();
-  }
-}
-
-.anticon {
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
-
-  & + span {
-    margin-left: 8px;
+      & + span {
+        margin-left: 8px;
+      }
+    }
   }
 }

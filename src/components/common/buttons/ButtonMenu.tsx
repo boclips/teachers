@@ -30,7 +30,12 @@ export class ButtonMenu extends React.PureComponent<Props> {
 
     return (
       <section className={classnames('button-menu', this.props.className)}>
-        <Dropdown overlay={menu()} placement="bottomRight" trigger={['click']}>
+        <Dropdown
+          overlayClassName="button-menu__dropdown"
+          overlay={menu()}
+          placement="bottomRight"
+          trigger={['click']}
+        >
           <Button className="button-menu__expand">
             <Icon component={MoreSVG} />
           </Button>
