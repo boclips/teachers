@@ -55,7 +55,11 @@ export default class HomeView extends PureComponent {
               <Row>
                 <Col>
                   <section className="more-collections">
-                    <Link to="/public-collections" onClick={this.track} tabIndex={-1}>
+                    <Link
+                      to="/public-collections"
+                      onClick={this.track}
+                      tabIndex={-1}
+                    >
                       <Button htmlType="button" size="large">
                         Explore more collections
                       </Button>

@@ -132,5 +132,5 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
       this.props.collection,
       'NAVIGATE_TO_COLLECTION_DETAILS',
     );
-  }
+  };
 }

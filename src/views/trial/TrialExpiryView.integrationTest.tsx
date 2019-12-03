@@ -3,7 +3,7 @@ import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { renderWithStore } from '../../../test-support/renderWithStore';
 import { Link } from '../../types/Link';
 import { getBoclipsClient } from '../../services/apiClient';
-import {LinksFactory} from "../../../test-support/factories";
+import { LinksFactory } from '../../../test-support/factories';
 import { TrialExpiredView } from './TrialExpiredView';
 
 describe('TrialExpiryView', () => {
@@ -38,7 +38,7 @@ describe('TrialExpiryView', () => {
   it('does not tell the user the trial is over, when it is not over', async () => {
     const { queryByText } = renderWithStore(<TrialExpiredView />, {
       initialState: {
-        links: LinksFactory.sample()
+        links: LinksFactory.sample(),
       },
     });
 

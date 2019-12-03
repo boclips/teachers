@@ -37,7 +37,9 @@ describe('on store login', () => {
       new ApiStub({
         _links: {
           ...links._links,
-          reportAccessExpired: { href: 'https://api.example.com/v1/events/expired-access' },
+          reportAccessExpired: {
+            href: 'https://api.example.com/v1/events/expired-access',
+          },
         },
       }).fetchUser(userResponse());
 

@@ -44,7 +44,12 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
   public render() {
     return (
       <Button tabIndex={1} onClick={this.handleClick}>
-        <img width="24" height="24" src={GoogleClassroomIcon} alt="Google Classroom logo"/>
+        <img
+          width="24"
+          height="24"
+          src={GoogleClassroomIcon}
+          alt="Google Classroom logo"
+        />
         <span className="google-classroom-button__label">
           Send to Google Classroom
         </span>

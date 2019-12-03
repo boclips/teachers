@@ -29,7 +29,8 @@ const videos = [
   }),
 ];
 
-const getCollection = (numberOfVideos: number) => VideoCollectionFactory.sample({
+const getCollection = (numberOfVideos: number) =>
+  VideoCollectionFactory.sample({
     videoIds: videos
       .slice(0, numberOfVideos)
       .map(video => VideoIdFactory.sample({ value: video.id })),

@@ -1,10 +1,10 @@
-import {render as rtlRender} from '@testing-library/react';
-import {createMemoryHistory} from 'history';
+import { render as rtlRender } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
 import React from 'react';
-import {Provider} from 'react-redux';
-import {Router} from 'react-router';
-import {applyMiddleware, createStore} from 'redux';
-import {createReducer} from '../src/app/redux/createReducer';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import { applyMiddleware, createStore } from 'redux';
+import { createReducer } from '../src/app/redux/createReducer';
 import State from '../src/types/State';
 
 interface Options {
@@ -15,11 +15,7 @@ interface Options {
 
 export const renderWithStore = (
   ui,
-  {
-    initialState = {},
-    reducers = [],
-    middlewares = [],
-  }: Options = {},
+  { initialState = {}, reducers = [], middlewares = [] }: Options = {},
 ) => {
   const store = createStore(
     createReducer(...reducers),
@@ -27,7 +23,7 @@ export const renderWithStore = (
     applyMiddleware(...middlewares),
   );
 
-  function Wrapper({children}) {
+  function Wrapper({ children }) {
     return (
       <Provider store={store}>
         <Router history={createMemoryHistory({})}>{children}</Router>

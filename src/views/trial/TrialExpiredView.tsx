@@ -8,7 +8,7 @@ import SadTeacher from '../../../resources/images/sad-teacher.svg';
 import PageLayout from '../../components/layout/PageLayout';
 import { Link } from '../../types/Link';
 import State from '../../types/State';
-import AnalyticsFactory from "../../services/analytics/AnalyticsFactory";
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
 interface StateProps {
   reportAccessExpiredLink: Link;
@@ -66,7 +66,7 @@ class TrialExpiredViewComponent extends React.PureComponent<
       this.props.redirectToHomepage();
     } else {
       // noinspection JSIgnoredPromiseFromCall
-      AnalyticsFactory.internalAnalytics().trackUserExpired()
+      AnalyticsFactory.internalAnalytics().trackUserExpired();
     }
   }
 }

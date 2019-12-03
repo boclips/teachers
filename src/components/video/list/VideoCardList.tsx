@@ -22,7 +22,7 @@ interface CollectionProps extends Props {
 class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <TransitionGroup component={null} exit={true}>
           {this.props.videos.map((video, index) => (
             <CSSTransition

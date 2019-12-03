@@ -1,9 +1,9 @@
-import {mount} from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
-import {Provider} from 'react-redux';
-import {MemoryRouter} from 'react-router';
-import {Store} from 'redux';
-import {By} from '../../../test-support/By';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
+import { Store } from 'redux';
+import { By } from '../../../test-support/By';
 import {
   CollectionSearchFactory,
   MockStoreFactory,
@@ -70,7 +70,11 @@ function mountWith(store: Store) {
   );
 }
 
-function createStore(query: string, videosAreLoading = false, collectionsAreLoading = false) {
+function createStore(
+  query: string,
+  videosAreLoading = false,
+  collectionsAreLoading = false,
+) {
   return MockStoreFactory.sample({
     search: SearchFactory.sample({
       videoSearch: {
@@ -81,8 +85,8 @@ function createStore(query: string, videosAreLoading = false, collectionsAreLoad
       collectionSearch: {
         ...CollectionSearchFactory.sample(),
         loading: collectionsAreLoading,
-        query
-      }
+        query,
+      },
     }),
     router: {
       ...RouterFactory.sample(),

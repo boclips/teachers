@@ -16,7 +16,10 @@ const { Content } = Layout;
 const DisciplineSection = () => (
   <React.Fragment>
     <DisciplineCardList limit={4} />
-    <Link to={'/our-subjects'} className={'disciplines-section__all-subjects link--tabbable'}>
+    <Link
+      to={'/our-subjects'}
+      className={'disciplines-section__all-subjects link--tabbable'}
+    >
       Explore all subjects <ForwardArrowIcon />
     </Link>
   </React.Fragment>

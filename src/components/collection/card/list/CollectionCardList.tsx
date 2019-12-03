@@ -99,9 +99,7 @@ export class CollectionCardList extends React.PureComponent<
                   lg={{ span: this.singleColumn() ? 24 : 8 }}
                 >
                   <CollectionCardContainer
-                    mode={
-                      this.props.grid ? 'tiny' : 'regular'
-                    }
+                    mode={this.props.grid ? 'tiny' : 'regular'}
                     collection={collection}
                   />
                 </Col>
