@@ -10,7 +10,6 @@ test('parses all links', async () => {
     _links: {
       searchVideos: { href: '/videos', templated: false },
       video: { href: '/videos/{id}', templated: true },
-      createPlaybackEvent: { href: '/events' },
       createNoSearchResultsEvent: { href: '/events/no-search-results' },
       collection: { href: '/collection/{id}', templated: true },
       createCollection: { href: '/collections' },
@@ -29,7 +28,6 @@ test('parses all links', async () => {
   const expectedLinks: Links = {
     videos: new Link({ href: '/videos', templated: false }),
     video: new Link({ href: '/videos/{id}', templated: true }),
-    createPlaybackEvent: new Link({ href: '/events' }),
     createNoSearchResultsEvent: new Link({
       href: '/events/no-search-results',
     }),
@@ -64,7 +62,6 @@ describe('when anonymous user', () => {
     MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
-        createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
       },
     });
@@ -73,7 +70,6 @@ describe('when anonymous user', () => {
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),
-      createPlaybackEvent: new Link({ href: '/events' }),
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
@@ -88,7 +84,6 @@ describe('when activate link available', () => {
     MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
-        createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         activate: { href: '/users', templated: false },
       },
@@ -98,7 +93,6 @@ describe('when activate link available', () => {
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),
-      createPlaybackEvent: new Link({ href: '/events' }),
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
@@ -114,7 +108,6 @@ describe('when reportAccessExpired link available', () => {
     MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
-        createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         reportAccessExpired: { href: '/renew-access', templated: false },
       },
@@ -124,7 +117,6 @@ describe('when reportAccessExpired link available', () => {
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),
-      createPlaybackEvent: new Link({ href: '/events' }),
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
@@ -140,7 +132,6 @@ describe('when profile link available', () => {
     MockFetchVerify.get(`${prefix}/v1/`, {
       _links: {
         video: { href: '/videos/{id}', templated: true },
-        createPlaybackEvent: { href: '/events' },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
         profile: { href: '/users/{id}', templated: true },
       },
@@ -150,7 +141,6 @@ describe('when profile link available', () => {
 
     const expectedLinks: Links = {
       video: new Link({ href: '/videos/{id}', templated: true }),
-      createPlaybackEvent: new Link({ href: '/events' }),
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),

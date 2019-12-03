@@ -14,9 +14,6 @@ export const links = {
       href: `${prefix}/v1/videos/{id}`,
       templated: true,
     },
-    createPlaybackEvent: {
-      href: `${prefix}/v1/events`,
-    },
     collection: {
       href: `${prefix}/v1/collections/{id}`,
       templated: true,

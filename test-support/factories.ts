@@ -161,8 +161,6 @@ export class LinksFactory {
         arg.discoverCollections ||
         new Link({ href: '/collections?query={query}', templated: true }),
       video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
-      createPlaybackEvent:
-        arg.createPlaybackEvent || new Link({ href: '/events' }),
       createNoSearchResultsEvent:
         arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
       activate: arg.activate,

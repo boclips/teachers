@@ -10,7 +10,6 @@ export default function fetchLinks(prefix: string) {
       (body): Links => {
         const links: Links = {
           video: new Link(body._links.video),
-          createPlaybackEvent: new Link(body._links.createPlaybackEvent),
           createNoSearchResultsEvent: new Link(
             body._links.createNoSearchResultsEvent,
           ),
