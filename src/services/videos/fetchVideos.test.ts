@@ -5,6 +5,7 @@ import { videos } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
 import { Constants } from '../../app/AppConstants';
 import { Link } from '../../types/Link';
+import { VideoType } from '../../types/Video';
 import fetchVideos from './fetchVideos';
 
 let queryParams = null;
@@ -16,7 +17,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max,subject}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max,subject,type}',
       templated: true,
     }),
   });
@@ -32,6 +33,7 @@ beforeEach(async () => {
         duration_max: 200,
         age_range_min: 5,
         age_range_max: 11,
+        type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
         subject: ['subject-one-id', 'subject-two-id'],
       },
       sortBy: 'RELEASE_DATE',
@@ -45,6 +47,13 @@ beforeEach(async () => {
 
 test('requests the correct search query', () => {
   expect(queryParams.query).toEqual('foo');
+});
+
+test('includes video type in a search request', () => {
+  expect(queryParams.type).toIncludeSameMembers([
+    VideoType.STOCK,
+    VideoType.INSTRUCTIONAL,
+  ]);
 });
 
 test('includes page and size params in the request', () => {

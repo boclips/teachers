@@ -9,6 +9,7 @@ import { fetchPromotedVideosAction } from '../../components/video/redux/actions/
 import { getPromotedVideoIds } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
 import './HomeViewVideoList.less';
+import { VideoType } from '../../types/Video';
 
 interface DispatchProps {
   fetchPromotedVideos: () => void;
@@ -45,21 +46,24 @@ export class HomeViewVideoList extends React.PureComponent<
 const mapStateToProps = (state: State): StateProps => ({
   videoIds: getPromotedVideoIds(state),
 });
+
+export const linkFetchPromotedVideosToDispatch = (dispatch: Dispatch) => () => {
+  dispatch(
+    fetchPromotedVideosAction({
+      filters: {
+        promoted: true,
+        includeTags: [Constants.CLASSROOM],
+        type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
+      },
+      page: 1,
+      size: 3,
+      sortBy: 'RANDOM',
+    }),
+  );
+};
+
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  fetchPromotedVideos: () => {
-    dispatch(
-      fetchPromotedVideosAction({
-        filters: {
-          promoted: true,
-          includeTags: [Constants.CLASSROOM],
-          excludeTags: [Constants.NEWS],
-        },
-        page: 1,
-        size: 3,
-        sortBy: 'RANDOM',
-      }),
-    );
-  },
+  fetchPromotedVideos: linkFetchPromotedVideosToDispatch(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeViewVideoList);

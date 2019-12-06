@@ -18,6 +18,7 @@ export default function fetchVideos(
     include_tag: searchRequest.filters.includeTags,
     exclude_tag: searchRequest.filters.excludeTags,
     sort_by: searchRequest.sortBy,
+    type: searchRequest.filters.type,
     duration_min: durationConverter.secondsToIso(
       searchRequest.filters.duration_min,
     ),

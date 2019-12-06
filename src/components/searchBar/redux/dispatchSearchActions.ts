@@ -2,18 +2,18 @@ import queryString from 'query-string';
 import { Store } from 'redux';
 import { Constants } from '../../../app/AppConstants';
 import { RouterState } from '../../../types/State';
-import { RequestFilters } from '../../../types/VideoSearchRequest';
+import { VideoRequestFilters } from '../../../types/VideoSearchRequest';
+import { VideoType } from '../../../types/Video';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
 
-const getFilters = (queryParams: any): RequestFilters => {
+const getFilters = (queryParams: any): VideoRequestFilters => {
   const includeTags = [Constants.CLASSROOM];
-  const excludeTags = [Constants.NEWS];
 
   return {
     subject: queryParams.subject || undefined,
     includeTags,
-    excludeTags,
+    type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
     duration_min: +queryParams.duration_min || undefined,
     duration_max: +queryParams.duration_max || undefined,
     age_range_min: +queryParams.age_range_min || undefined,
@@ -35,6 +35,6 @@ export const dispatchSearchActions = (store: Store<RouterState>) => {
     const sortBy = null;
 
     store.dispatch(searchVideosAction({ query, page, filters, sortBy }));
-    store.dispatch(searchCollectionsAction({ query, filters }));
+    store.dispatch(searchCollectionsAction({ query }));
   }
 };

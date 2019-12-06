@@ -1,14 +1,15 @@
 export interface VideoSearchRequest {
   query?: string;
   page: number;
-  filters: RequestFilters;
+  filters: VideoRequestFilters;
   sortBy: SortBy;
   size?: number;
 }
 
-export interface RequestFilters {
+export interface VideoRequestFilters {
   includeTags: string[];
-  excludeTags: string[];
+  excludeTags?: string[];
+  type?: string[];
   duration_min?: number;
   duration_max?: number;
   age_range_min?: number;

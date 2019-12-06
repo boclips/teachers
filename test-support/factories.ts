@@ -30,6 +30,7 @@ import {
   VideoCollection,
   VideoCollectionLinks,
 } from '../src/types/VideoCollection';
+import PageSpec from '../src/types/PageSpec';
 import { video177 } from './api-responses';
 
 export class VideoFactory {
@@ -123,10 +124,21 @@ export class VideoCollectionLinksFactory {
       remove: arg.remove || undefined,
       bookmark: arg.bookmark || undefined,
       unbookmark: arg.unbookmark || undefined,
-      interactedWith: arg.interactedWith || undefined
+      interactedWith: arg.interactedWith || undefined,
     });
   }
 }
+
+export class PageSpecFactory {
+         public static sample(arg: Partial<PageSpec> = {}): PageSpec {
+           return Object.freeze({
+             number: arg.number || 0,
+             size: arg.size || 10,
+             totalElements: arg.totalElements || 0,
+             totalPages: arg.totalPages || 0,
+           });
+         }
+       }
 
 export class PageableCollectionsFactory {
   public static sample(arg: Partial<Pageable<string>> = {}): Pageable<string> {

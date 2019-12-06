@@ -3,7 +3,8 @@ import { Constants } from '../../../app/AppConstants';
 import { Action } from '../../../app/redux/actions';
 import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
 import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
-import { MockStoreFactory } from './../../../../test-support/factories';
+import { VideoType } from '../../../types/Video';
+import { MockStoreFactory } from '../../../../test-support/factories';
 import { dispatchSearchActions } from './dispatchSearchActions';
 
 function getStore(params: string = '') {
@@ -39,82 +40,74 @@ it('does not dispatch a SearchRequest when not on a videos page', () => {
 });
 
 describe('when on the videos page', () => {
-  it('passes the query into the action', () => {
-    const store = getStore();
+  let store;
+  let action: Action<VideoSearchRequest>;
 
+  beforeEach(() => {
+    store = getStore();
     dispatchSearchActions(store);
 
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
+    action = store.getActions()[0];
+  });
 
+  it('passes the query into the action', () => {
     expect(action).toBeTruthy();
     expect(action.payload.query).toEqual('Testing123');
   });
 
   it('passes the expected page number into the action', () => {
-    const store = getStore();
-
-    dispatchSearchActions(store);
-
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
-
     expect(action).toBeTruthy();
     expect(action.payload.page).toEqual(3);
   });
 
-  it('filters the results by CLASSROOM and excludes NEWS by default', () => {
-    const store = getStore();
-
-    dispatchSearchActions(store);
-
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
-
+  it('filters the results by CLASSROOM tags', () => {
     expect(action).toBeTruthy();
     expect(action.payload.filters.includeTags).toEqual([Constants.CLASSROOM]);
-    expect(action.payload.filters.excludeTags).toEqual([Constants.NEWS]);
+  });
+
+  it('filters the results by non-NEWS types', () => {
+    expect(action).toBeTruthy();
+    expect(action.payload.filters.type).toHaveLength(2);
+    expect(action.payload.filters.type).toIncludeSameMembers([
+      VideoType.INSTRUCTIONAL,
+      VideoType.STOCK,
+    ]);
   });
 
   it('searches collections', () => {
-    const store = getStore();
+    const collectionSearchAction: Action<CollectionSearchRequest> = store.getActions()[1];
 
-    dispatchSearchActions(store);
-
-    const action: Action<CollectionSearchRequest> = store.getActions()[1];
-
-    expect(action).toBeTruthy();
-    expect(action.payload.query).toEqual('Testing123');
+    expect(collectionSearchAction).toBeTruthy();
+    expect(collectionSearchAction.payload.query).toEqual('Testing123');
   });
 
   it('filters by duration', () => {
-    const store = getStore(`duration_min=60&duration_max=190`);
+    store = getStore(`duration_min=60&duration_max=190`);
     dispatchSearchActions(store);
+    action = store.getActions()[0];
 
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.duration_min).toEqual(60);
     expect(action.payload.filters.duration_max).toEqual(190);
   });
 
   it('defaults durations to undefined if non-existent', () => {
-    const store = getStore();
-    dispatchSearchActions(store);
-
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.duration_min).toBeUndefined();
     expect(action.payload.filters.duration_max).toBeUndefined();
   });
 
   it('filters by subject', () => {
-    const store = getStore('subject=subject-one-id');
+    store = getStore('subject=subject-one-id');
     dispatchSearchActions(store);
+    action = store.getActions()[0];
 
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.subject).toContain('subject-one-id');
   });
 
   it('filters by multiple subjects', () => {
-    const store = getStore('subject=subject-one-id,subject-two-id');
+    store = getStore('subject=subject-one-id,subject-two-id');
     dispatchSearchActions(store);
+    action = store.getActions()[0];
 
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.subject).toEqual([
       'subject-one-id',
       'subject-two-id',
@@ -122,19 +115,15 @@ describe('when on the videos page', () => {
   });
 
   it('filters by age range', () => {
-    const store = getStore('age_range_min=4&age_range_max=12');
+    store = getStore('age_range_min=4&age_range_max=12');
     dispatchSearchActions(store);
+    action = store.getActions()[0];
 
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.age_range_min).toEqual(4);
     expect(action.payload.filters.age_range_max).toEqual(12);
   });
 
   it('defaults subjects to undefined if not present', () => {
-    const store = getStore();
-    dispatchSearchActions(store);
-
-    const action: Action<VideoSearchRequest> = store.getActions()[0];
     expect(action.payload.filters.subject).toBeUndefined();
   });
 });

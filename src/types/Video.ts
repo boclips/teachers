@@ -1,6 +1,6 @@
-import { Duration } from 'moment';
-import { Link } from './Link';
-import { Subject } from './Subject';
+import {Duration} from 'moment';
+import {Link} from './Link';
+import {Subject} from './Subject';
 
 export interface VideoLinks {
   self: Link;
@@ -33,8 +33,15 @@ export interface Video {
   promoted?: boolean;
 }
 
+export enum VideoType {
+  NEWS = "NEWS",
+  STOCK = "STOCK",
+  INSTRUCTIONAL = "INSTRUCTIONAL"
+}
+
 export class StreamPlayback {
-  public constructor(private streamUrl: string) {}
+  public constructor(private streamUrl: string) {
+  }
 
   public getUrl(): string {
     return this.streamUrl;
@@ -42,7 +49,8 @@ export class StreamPlayback {
 }
 
 export class YoutubePlayback {
-  public constructor(private youtubeId: string) {}
+  public constructor(private youtubeId: string) {
+  }
 
   public getId(): string {
     return this.youtubeId;
