@@ -130,15 +130,15 @@ export class VideoCollectionLinksFactory {
 }
 
 export class PageSpecFactory {
-         public static sample(arg: Partial<PageSpec> = {}): PageSpec {
-           return Object.freeze({
-             number: arg.number || 0,
-             size: arg.size || 10,
-             totalElements: arg.totalElements || 0,
-             totalPages: arg.totalPages || 0,
-           });
-         }
-       }
+  public static sample(arg: Partial<PageSpec> = {}): PageSpec {
+    return Object.freeze({
+      number: arg.number || 0,
+      size: arg.size || 10,
+      totalElements: arg.totalElements || 0,
+      totalPages: arg.totalPages || 0,
+    });
+  }
+}
 
 export class PageableCollectionsFactory {
   public static sample(arg: Partial<Pageable<string>> = {}): Pageable<string> {

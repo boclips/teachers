@@ -9,7 +9,9 @@ export default function tagVideo(video: Video, tag: Tag): Promise<Video> {
     .patch(
       video.links.tag.getOriginalLink(),
       tag.links.self.getOriginalLink(),
-      { headers: { 'content-type': 'text/uri-list' } },
+      {
+        headers: { 'content-type': 'text/uri-list' },
+      },
     )
     .then(response => response.data)
     .then(convertVideoResource)

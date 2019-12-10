@@ -120,7 +120,10 @@ describe('when reportAccessExpired link available', () => {
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
-      reportAccessExpired: new Link({ href: '/renew-access', templated: false }),
+      reportAccessExpired: new Link({
+        href: '/renew-access',
+        templated: false,
+      }),
     };
 
     expect(links).toEqual(expectedLinks);

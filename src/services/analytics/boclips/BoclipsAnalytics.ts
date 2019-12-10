@@ -12,9 +12,12 @@ export interface BoclipsAnalytics {
 
   trackPageRendered(url: string): Promise<void>;
 
-  trackCollectionInteractedWith(collection: VideoCollection, subtype: keyof typeof CollectionInteractionType): Promise<void>;
+  trackCollectionInteractedWith(
+    collection: VideoCollection,
+    subtype: keyof typeof CollectionInteractionType,
+  ): Promise<void>;
 
-  trackUserExpired(): Promise<void>
+  trackUserExpired(): Promise<void>;
 }
 
 export default new HttpBoclipsAnalytics();

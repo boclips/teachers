@@ -69,7 +69,9 @@ describe('collection search middleware', () => {
       expect(store.getActions()[0].type).toEqual(
         storeCollectionSearchResultsAction.type,
       );
-      expect(store.getActions()[0].payload).toEqual(objectContaining({collections:[]}));
+      expect(store.getActions()[0].payload).toEqual(
+        objectContaining({ collections: [] }),
+      );
     });
   });
 });

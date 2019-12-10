@@ -43,7 +43,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
           ),
         },
       },
-      { subtype: CollectionInteractionType[subtype] }
+      { subtype: CollectionInteractionType[subtype] },
     );
   }
 

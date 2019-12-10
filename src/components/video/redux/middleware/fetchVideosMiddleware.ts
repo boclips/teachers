@@ -41,7 +41,10 @@ const onFetchPromotedVideos = (
   });
 };
 
-const onUrlChangeMiddleware = sideEffect(onLocationChanged, searchVideosAndCollections);
+const onUrlChangeMiddleware = sideEffect(
+  onLocationChanged,
+  searchVideosAndCollections,
+);
 const onLinksFetched = sideEffect(storeLinksAction, searchVideosAndCollections);
 
 export default [

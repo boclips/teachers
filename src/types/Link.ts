@@ -25,4 +25,5 @@ export interface RawLink {
   templated?: boolean;
 }
 
-export const convertToApiClientLink = (link: Link): ApiLink => new ApiLink({ href: link.getOriginalLink() });
+export const convertToApiClientLink = (link: Link): ApiLink =>
+  new ApiLink({ href: link.getOriginalLink() });

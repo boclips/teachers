@@ -18,7 +18,10 @@ export default abstract class AbstractBoclipsAnalytics
 
   public abstract trackPageRendered(url: string): Promise<void>;
 
-  abstract trackCollectionInteractedWith(collection: VideoCollection, subtype: string): Promise<void>;
+  abstract trackCollectionInteractedWith(
+    collection: VideoCollection,
+    subtype: string,
+  ): Promise<void>;
 
   public abstract trackUserExpired(): Promise<void>;
 
@@ -26,5 +29,4 @@ export default abstract class AbstractBoclipsAnalytics
     video: Video,
     interactionType: string,
   ): Promise<void>;
-
 }
