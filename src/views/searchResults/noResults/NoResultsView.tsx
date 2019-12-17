@@ -37,7 +37,7 @@ export default class NoResultsView extends React.Component<Props, State> {
                 <em>{this.props.query}</em>
               </h1>
               <p className="description" data-qa="description">
-                We'll look into why we couldn't find any videos matching your
+                We&apos;ll look into why we couldn&apos;t find any videos matching your
                 search.
               </p>
             </div>

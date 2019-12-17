@@ -66,7 +66,7 @@ export class DiscoverCollectionsView extends PureComponent<
                     </strong>
                     {this.props.subjects && this.props.subjects.length === 1 && (
                       <span className="discipline-subject">
-                        <strong> > </strong>
+                        <strong> &gt; </strong>
                         {this.props.subjects[0].name}
                       </span>
                     )}

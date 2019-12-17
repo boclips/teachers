@@ -11,7 +11,7 @@ test('can set correct initial age range for slider when age range is an interval
   const store = MockStoreFactory.sample();
   const wrapper = mount(
     <Provider store={store}>
-      <>
+      <React.Fragment>
         <CollectionEditForm
           title="irrelevant"
           isPublic={true}
@@ -20,7 +20,7 @@ test('can set correct initial age range for slider when age range is an interval
           description=""
           ageRange={new AgeRange(3, 9)}
         />
-      </>
+      </React.Fragment>
     </Provider>,
   );
 

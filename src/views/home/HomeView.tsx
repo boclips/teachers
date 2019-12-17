@@ -29,7 +29,7 @@ export default class HomeView extends PureComponent {
                 >
                   <section className="home-search">
                     <section className="home-searchbar">
-                      <label>I'm looking for a video about:</label>
+                      <label>I&apos;m looking for a video about:</label>
                       <SearchBar />
                     </section>
                   </section>

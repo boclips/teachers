@@ -9,7 +9,7 @@ module.exports = {
     project: 'tsconfig.eslint.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prefer-arrow', 'import'],
+  plugins: ['@typescript-eslint', 'prefer-arrow', 'import', 'react'],
   rules: {
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
@@ -121,9 +121,20 @@ module.exports = {
     'prefer-const': 'error',
     'quote-props': 'off',
     radix: 'error',
+    'react/no-direct-mutation-state': 'error',
+    'react/no-find-dom-node': 'error',
+    'react/no-is-mounted': 'error',
+    'react/no-string-refs': 'error',
+    'react/no-unescaped-entities': 'error',
+    'react/jsx-fragments': ['error', 'element'],
     'space-before-function-paren': 'off',
     'spaced-comment': 'error',
     'use-isnan': 'error',
     'valid-typeof': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 };

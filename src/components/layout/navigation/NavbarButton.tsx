@@ -27,12 +27,12 @@ class NavbarButton extends React.PureComponent<Props> {
         data-qa={this.props.dataQa}
         onClick={this.props.onClick}
       >
-        <>
+        <React.Fragment>
           <span className={'icon-container'} aria-hidden={true}>
             {this.props.icon}
           </span>
           <span className={'icon-label'}>{this.props.label}</span>
-        </>
+        </React.Fragment>
       </Link>
     );
   }

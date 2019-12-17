@@ -22,7 +22,7 @@ class DisciplineLogo extends React.Component<Props> {
   };
 
   public render() {
-    return <>{this.ImagesMap[`${this.props.discipline.code}`]}</>;
+    return <React.Fragment>{this.ImagesMap[`${this.props.discipline.code}`]}</React.Fragment>;
   }
 }
 export default DisciplineLogo;

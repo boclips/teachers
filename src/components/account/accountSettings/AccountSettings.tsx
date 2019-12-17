@@ -45,7 +45,7 @@ class AccountSettings extends React.Component<
 
   public render() {
     return (
-      <>
+      <React.Fragment>
         {this.showSettings() && (
           <section>
             <h1 className="extra-big">Settings</h1>
@@ -57,14 +57,14 @@ class AccountSettings extends React.Component<
               subjects={this.props.userProfile.subjects}
             />
             {this.isUserAmerican() && (
-              <>
+              <React.Fragment>
                 <hr className="account-settings__divider" />
                 <SchoolSettings
                   school={this.props.userProfile.school.name}
                   state={this.props.userProfile.state.name}
                   onEdit={this.toggleSchoolSettingsForm}
                 />
-              </>
+              </React.Fragment>
             )}
           </section>
         )}
@@ -92,7 +92,7 @@ class AccountSettings extends React.Component<
             />
           </section>
         )}
-      </>
+      </React.Fragment>
     );
   }
 

@@ -70,7 +70,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     }
 
     return (
-      <>
+      <React.Fragment>
         <span className="display-tablet-and-desktop">
           <Popover
             title={this.props.loading ? 'Loading collections...' : 'Save to:'}
@@ -98,7 +98,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             {this.menu()}
           </Drawer>
         </span>
-      </>
+      </React.Fragment>
     );
   }
 
@@ -160,7 +160,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     ));
 
     return (
-      <>
+      <React.Fragment>
         <InfiniteScroll
           dataLength={this.props.collections.length}
           next={this.props.fetchNextPage}
@@ -213,7 +213,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             </section>
           )}
         </div>
-      </>
+      </React.Fragment>
     );
   }
 

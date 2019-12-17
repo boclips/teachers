@@ -18,13 +18,13 @@ export default class LoggedOutView extends React.PureComponent {
             </Col>
             <Col sm={{ span: 24 }} md={{ span: 16 }}>
               <section className="message">
-                <h1 className="big-title">You're now logged out!</h1>
+                <h1 className="big-title">You&apos;re now logged out!</h1>
                 <p>
-                  We're sorry to see you go but hopefully will see you again
+                  We&apos;re sorry to see you go but hopefully will see you again
                   soon.
                 </p>
                 <p className="action">
-                  <Link to={'/'}>Click here if you'd like to log in again</Link>
+                  <Link to={'/'}>Click here if you&apos;d like to log in again</Link>
                 </p>
               </section>
             </Col>
