@@ -1,9 +1,9 @@
 import classnames from 'classnames';
 import React from 'react';
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
-interface Props extends RouteComponentProps {
+interface Props {
   onClick?: () => void;
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   icon: React.ReactNode;
   label: string;
   link?: string;
@@ -11,33 +11,28 @@ interface Props extends RouteComponentProps {
   className?: string;
 }
 
-class NavbarButton extends React.PureComponent<Props> {
+export class NavbarButton extends React.PureComponent<Props> {
+  public static defaultProps = {
+    target: '',
+  };
+
   public render() {
     return (
-      <Link
-        to={this.props.link}
-        className={classnames(
-          'navbar-buttons__link link--tabbable',
-          this.props.className,
-          {
-            active: this.isActive(),
-          },
-        )}
-        tabIndex={0}
+      <a
+        href={this.props.link}
+        target={this.props.target}
+        className={classnames('navbar-buttons__button', this.props.className)}
         data-qa={this.props.dataQa}
         onClick={this.props.onClick}
+        role="button"
       >
         <React.Fragment>
-          <span className={'icon-container'} aria-hidden={true}>
+          <span tabIndex={0} className={'icon'} aria-hidden={true}>
             {this.props.icon}
           </span>
           <span className={'icon-label'}>{this.props.label}</span>
         </React.Fragment>
-      </Link>
+      </a>
     );
   }
-
-  private isActive = () => this.props.location.pathname === this.props.link;
 }
-
-export default withRouter(NavbarButton);

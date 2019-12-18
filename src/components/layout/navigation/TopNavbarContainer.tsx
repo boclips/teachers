@@ -5,7 +5,7 @@ import { UserState } from '../../../types/State';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
-import TopNavbar from './TopNavbar';
+import { TopNavbar } from './TopNavbar';
 
 interface Props extends WithMediaBreakPointProps {
   showTabs?: boolean;
@@ -17,7 +17,9 @@ interface StateProps {
   authorized: boolean;
 }
 
-class TopNavbarContainer extends React.PureComponent<Props & StateProps> {
+class TopNavbarContainerComponent extends React.PureComponent<
+  Props & StateProps
+> {
   public static defaultProps = {
     showTabs: false,
     showSearchBar: false,
@@ -52,6 +54,6 @@ function mapStateToProps(state: UserState): StateProps {
   };
 }
 
-export default connect(mapStateToProps)(
-  withMediaBreakPoint(TopNavbarContainer),
+export const TopNavbarContainer = connect(mapStateToProps)(
+  withMediaBreakPoint(TopNavbarContainerComponent),
 );
