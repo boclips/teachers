@@ -14,7 +14,7 @@ interface Options {
 }
 
 export interface ResultingContext extends RenderResult {
-  store: Store
+  store: Store;
 }
 
 export const renderWithStore = (

@@ -258,8 +258,8 @@ class OnboardingForm extends React.Component<
                       Your school
                     </h1>
                     <p className="onboarding-form__text">
-                      We&apos;d like to know where you teach so that we can provide
-                      your community with the most relevant resources.
+                      We&apos;d like to know where you teach so that we can
+                      provide your community with the most relevant resources.
                     </p>
                     {this.state.screenReaderErrors && (
                       <ScreenReaderErrors

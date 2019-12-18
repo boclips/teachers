@@ -19,7 +19,7 @@ describe('Header when authenticated', () => {
           user: UserProfileFactory.sample(),
         },
       },
-    )
+    );
   });
 
   it('Renders a desktop and mobile Your Account button', () => {
