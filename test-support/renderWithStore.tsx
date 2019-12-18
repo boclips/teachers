@@ -1,9 +1,9 @@
-import { render as rtlRender } from '@testing-library/react';
+import { render as rtlRender, RenderResult } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 import { createReducer } from '../src/app/redux/createReducer';
 import State from '../src/types/State';
 
@@ -13,10 +13,14 @@ interface Options {
   middlewares?: any[];
 }
 
+export interface ResultingContext extends RenderResult {
+  store: Store
+}
+
 export const renderWithStore = (
   ui,
   { initialState = {}, reducers = [], middlewares = [] }: Options = {},
-) => {
+): ResultingContext => {
   const store = createStore(
     createReducer(...reducers),
     initialState,

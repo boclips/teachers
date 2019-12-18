@@ -3,7 +3,7 @@ import { PrivacyPolicyLink } from '../account/form/PrivacyPolicyLink';
 import { TermsAndConditionsLink } from '../account/form/TermsAndConditionsLink';
 import './BoclipsFooter.less';
 
-export default class BoclipsFooter extends React.PureComponent {
+export class BoclipsFooter extends React.PureComponent {
   public render() {
     return (
       <footer className="boclips-footer ant-layout-content">

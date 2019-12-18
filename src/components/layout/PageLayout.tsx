@@ -3,9 +3,9 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
-import BoclipsFooter from '../common/BoclipsFooter';
-import MobileBottomNavbar from './navigation/MobileBottomNavbar';
-import TopNavbarContainer from './navigation/TopNavbarContainer';
+import { BoclipsFooter } from '../common/BoclipsFooter';
+import { MobileBottomNavbar } from './navigation/MobileBottomNavbar';
+import { TopNavbarContainer } from './navigation/TopNavbarContainer';
 import './PageLayout.less';
 
 const { Header, Content } = Layout;
