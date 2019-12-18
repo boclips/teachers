@@ -17,8 +17,8 @@
     "lint:fix": "npm-run-all --print-label lint:eslint:fix lint:prettier:fix",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:eslint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
-    "lint:prettier": "prettier --config .prettierrc --check \"**/*.{ts,tsx}\"",
-    "lint:prettier:fix": "prettier --config .prettierrc --write \"**/*.{ts,tsx}\"",
+    "lint:prettier": "prettier --config .prettierrc --check \"**/*.ts\"",
+    "lint:prettier:fix": "prettier --config .prettierrc --write \"**/*.ts\"",
     "storybook": "start-storybook -s ./ --port 9090"
   },
   "repository": {

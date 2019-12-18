@@ -6,7 +6,7 @@ import boclipsLogo from '../../../../resources/images/boclips-logo.png';
 import BoclipsMobileLogo from '../../../../resources/images/boclips-mobile-logo.svg';
 import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
-import { NavbarButtonsContainer } from './NavbarButtonsContainer';
+import NavbarButtonsContainer from './NavbarButtonsContainer';
 import './TopNavbar.less';
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 
 const { Content } = Layout;
 
-export const TopNavbar = React.memo((props: Props) => (
+const TopNavbar = React.memo((props: Props) => (
   <React.Fragment>
     <Content className="top-navbar">
       <Row>
@@ -43,7 +43,7 @@ export const TopNavbar = React.memo((props: Props) => (
             xs={{ span: 18 }}
             sm={{ span: 20 }}
             md={{ span: 20 }}
-            lg={{ span: 10 }}
+            lg={{ span: 12 }}
           >
             <SearchBar />
           </Col>
@@ -66,7 +66,7 @@ export const TopNavbar = React.memo((props: Props) => (
             </Col>
           )
         )}
-        <Col xs={{ span: 6 }} sm={{ span: 4 }} lg={{ span: 8 }}>
+        <Col xs={{ span: 6 }} sm={{ span: 4 }} lg={{ span: 6 }}>
           {props.authorized && props.showNavigation && (
             <div>
               {props.isMobile ? (
@@ -81,3 +81,5 @@ export const TopNavbar = React.memo((props: Props) => (
     </Content>
   </React.Fragment>
 ));
+
+export default TopNavbar;

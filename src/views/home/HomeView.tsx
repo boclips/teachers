@@ -5,7 +5,7 @@ import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import PublicCollectionsGrid from '../../components/collection/grid/public/PublicCollectionsGrid';
-import { BoclipsFooter } from '../../components/common/BoclipsFooter';
+import BoclipsFooter from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';

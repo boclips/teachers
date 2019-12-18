@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { UserState } from '../../../types/State';
 import './MobileBottomNavbar.less';
-import { NavbarButtonsContainer } from './NavbarButtonsContainer';
+import NavbarButtonsContainer from './NavbarButtonsContainer';
 
 interface StateProps {
   authorized: boolean;
 }
 
-class MobileBottomNavbarComponent extends React.PureComponent<StateProps> {
+class MobileBottomNavbar extends React.PureComponent<StateProps> {
   public render() {
     return (
       this.props.authorized && (
@@ -26,6 +26,4 @@ function mapStateToProps(state: UserState): StateProps {
   };
 }
 
-export const MobileBottomNavbar = connect(mapStateToProps)(
-  MobileBottomNavbarComponent,
-);
+export default connect(mapStateToProps)(MobileBottomNavbar);

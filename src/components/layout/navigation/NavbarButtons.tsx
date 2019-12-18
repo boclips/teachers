@@ -1,35 +1,24 @@
 import React from 'react';
 import HomeIcon from '../../../../resources/images/home-on.svg';
 import SubjectsIcon from '../../../../resources/images/subjects.svg';
-import { NavbarRouterButton } from './NavbarRouterButton';
-import { NavbarButton } from './NavbarButton';
+import NavbarButton from '../navigation/NavbarButton';
 
 const HomeLink = React.memo(() => (
-  <NavbarRouterButton
-    link="/"
+  <NavbarButton
+    link={'/'}
     icon={<HomeIcon />}
-    label="Home page"
-    dataQa="home-page-icon"
+    label={'Home page'}
+    dataQa={'home-page-icon'}
   />
 ));
 
 const SubjectsLink = React.memo(() => (
-  <NavbarRouterButton
-    link="/our-subjects"
-    icon={<SubjectsIcon />}
-    label="Subjects"
-    dataQa="subjects-page-icon"
-  />
-));
-
-const TutorialLink = React.memo(() => (
   <NavbarButton
-    target="_blank"
-    link="https://www.boclips.com/training"
+    link={'/our-subjects'}
     icon={<SubjectsIcon />}
-    label="Tutorials"
-    dataQa="tutorials-page-icon"
+    label={'Subjects'}
+    dataQa={'subjects-page-icon'}
   />
 ));
 
-export { HomeLink, SubjectsLink, TutorialLink };
+export { HomeLink, SubjectsLink };
