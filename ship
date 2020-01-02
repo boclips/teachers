@@ -15,7 +15,7 @@ then
     echo ""
     echo "Do you have time to upgrade the packages above?"
     READ_EXIT_CODE=0
-    read -t 5 -p "I am a responsible dev? [Y/n]" responsible || READ_EXIT_CODE=$?
+    read -t 10 -p "I am a responsible dev? [Y/n]" responsible || READ_EXIT_CODE=$?
     echo ""
 
     answer=''
