@@ -113,7 +113,9 @@ class CollectionHeader extends React.PureComponent<Props> {
           })}
         >
           <div
-            className="collection-header__description"
+            className={classnames('collection-header__description', {
+              details: this.props.mode === 'details',
+            })}
             data-qa="collection-description"
           >
             {this.props.collection.description}

@@ -23,31 +23,29 @@ class GenericVideoCardList extends React.PureComponent<GenericProps> {
   public render() {
     return (
       <Row gutter={[20, 20]}>
-        <TransitionGroup component={null} exit={true}>
-          {this.props.videos.map((video, index) => (
-            <CSSTransition
-              key={video ? video.id : index}
-              classNames="card-list"
-              timeout={500}
-            >
-              <Col span={24}>
-                <VideoCard
-                  video={video}
-                  currentCollection={this.props.currentCollection}
-                  videoIndex={index}
-                />
-              </Col>
-            </CSSTransition>
-          ))}
-        </TransitionGroup>
+        <ul className={'video-card-list'}>
+          <TransitionGroup component={null} exit={true}>
+            {this.props.videos.map((video, index) => (
+              <CSSTransition
+                key={video ? video.id : index}
+                classNames="card-list"
+                timeout={500}
+              >
+                <li>
+                  <Col span={24}>
+                    <VideoCard
+                      video={video}
+                      currentCollection={this.props.currentCollection}
+                      videoIndex={index}
+                    />
+                  </Col>
+                </li>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        </ul>
       </Row>
     );
-  }
-}
-
-export class SearchVideoCardList extends React.PureComponent<Props> {
-  public render() {
-    return <GenericVideoCardList {...this.props} />;
   }
 }
 
