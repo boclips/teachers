@@ -19,6 +19,7 @@
 
     .ant-popover-title {
       border-bottom: 0 !important;
+      padding-top: 10px !important;
     }
   }
 
@@ -48,8 +49,8 @@
 
     &,
     .ant-checkbox-wrapper {
-      color: @primary-color !important;
       width: 100%;
+      color: @primary-color !important;
     }
   }
 
@@ -61,9 +62,12 @@
   &__create-collection {
     font-weight: bold;
     cursor: pointer;
+    color: @blue-shade-4;
 
-    .anticon {
-      margin-right: 10px;
+    &-icon {
+      margin-right: 5px;
+      vertical-align: -4px;
+      font-size: 18px;
     }
   }
 
@@ -74,6 +78,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     vertical-align: bottom;
+    color: @blue-shade-4;
   }
 
   &__title-input {

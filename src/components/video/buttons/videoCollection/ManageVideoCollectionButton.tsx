@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import SaveSVG from '../../../../../resources/images/save.svg';
+import AddSVG from '../../../../../resources/images/add.svg';
 import { CreateCollectionRequest } from '../../../../services/collections/createCollection';
 import State from '../../../../types/State';
 import { Video } from '../../../../types/Video';
@@ -15,7 +16,7 @@ import withPageableCollection, {
   WithPageableCollectionProps,
 } from '../../../common/higerOrderComponents/withPageableCollection';
 import SavingButton from '../../../common/savingButton/SavingButton';
-import './manage-video-collection-button.less';
+import './ManageVideoCollectionButton.less';
 
 interface StateProps {
   updating: boolean;
@@ -208,8 +209,15 @@ class ManageVideoCollectionsButton extends React.PureComponent<
               className="manage-video-collection-button__create-collection"
               onClick={this.showCreateCollection}
             >
-              <Icon type="plus" />
-              New video collection
+              <span
+                className={
+                  'manage-video-collection-button__create-collection-icon'
+                }
+              >
+                <Icon component={AddSVG} />
+              </span>
+
+              <span>New video collection</span>
             </section>
           )}
         </div>
