@@ -405,26 +405,6 @@ describe('AnalyticsService', () => {
           }
         });
 
-        it('tracks subject tags clicked', () => {
-          analyticsService.trackSubjectTagClicked('1234');
-
-          const expectedPayload = {
-            subject_id: '1234',
-          };
-
-          expect(mockMixpanel.track).toHaveBeenCalledWith(
-            'SUBJECT_TAG_CLICKED',
-            expectedPayload,
-          );
-
-          if (appcuesInitialised) {
-            expect(mockAppcues.track).toHaveBeenCalledWith(
-              'SUBJECT_TAG_CLICKED',
-              expectedPayload,
-            );
-          }
-        });
-
         it('tracks my collections icon clicked', () => {
           analyticsService.trackMyCollectionsNavbarButtonClicked();
 

@@ -345,15 +345,6 @@ export default class AnalyticsService {
     this.trackAppcues(EventTypes.SEARCH_FILTERS_APPLIED, formData);
   }
 
-  public trackSubjectTagClicked(subjectId: string) {
-    const payload = {
-      subject_id: subjectId,
-    };
-
-    this.mixpanelInstance.track(EventTypes.SUBJECT_TAG_CLICKED, payload);
-    this.trackAppcues(EventTypes.SUBJECT_TAG_CLICKED, payload);
-  }
-
   public trackMyCollectionsNavbarButtonClicked() {
     this.mixpanelInstance.track(
       EventTypes.MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED,
