@@ -3,7 +3,6 @@ import React from 'react';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
-import StopClickPropagation from '../../common/StopClickPropagation';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import VideoPreviewBadge from '../card/VideoBadge';
@@ -60,14 +59,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
           <section className="badges-row">
             <div className="subjects-container">
               {this.props.video.subjects.map(subject => (
-                <StopClickPropagation key={subject.name}>
-                  <SubjectTag
-                    clickable={true}
-                    subjectName={subject.name}
-                    subjectId={subject.id}
-                    key={subject.name}
-                  />
-                </StopClickPropagation>
+                <SubjectTag subjectName={subject.name} key={subject.name} />
               ))}
             </div>
             <section className="badge-container">

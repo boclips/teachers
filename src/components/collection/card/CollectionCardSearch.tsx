@@ -85,15 +85,9 @@ export class CollectionCardSearch extends React.PureComponent<Props> {
           </section>
           <section className="collection-card__column-detail">
             <div className="tags-container">
-              <StopClickPropagation wrapper="span">
-                {this.props.collection.subjects.slice(0, 1).map(subjectId => (
-                  <ConnectedSubjectTag
-                    key={subjectId}
-                    id={subjectId}
-                    clickable={true}
-                  />
-                ))}
-              </StopClickPropagation>
+              {this.props.collection.subjects.slice(0, 1).map(subjectId => (
+                <ConnectedSubjectTag key={subjectId} id={subjectId} />
+              ))}
               {this.props.collection.ageRange.isBounded() && (
                 <AgeRangeTag
                   ageRange={this.props.collection.ageRange.getLabel()}

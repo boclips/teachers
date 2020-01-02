@@ -37,12 +37,7 @@ export class Profile extends React.Component<Props> {
         <AccountSettingsItem label="Subjects">
           <span data-qa="profile-subjects">
             {this.props.subjects.map((subject, index) => (
-              <ConnectedSubjectTag
-                id={subject}
-                key={index}
-                clickable={false}
-                hideLabel={true}
-              />
+              <ConnectedSubjectTag id={subject} key={index} hideLabel={true} />
             ))}
           </span>
         </AccountSettingsItem>

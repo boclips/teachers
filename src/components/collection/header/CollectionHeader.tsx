@@ -64,15 +64,9 @@ class CollectionHeader extends React.PureComponent<Props> {
   private renderSubtitleRow = () => {
     const tags = this.shouldRenderTagContainer() && (
       <div className="tags-container">
-        <StopClickPropagation wrapper="span">
-          {this.subjectTagsToRender().map(subjectId => (
-            <ConnectedSubjectTag
-              key={subjectId}
-              id={subjectId}
-              clickable={true}
-            />
-          ))}
-        </StopClickPropagation>
+        {this.subjectTagsToRender().map(subjectId => (
+          <ConnectedSubjectTag key={subjectId} id={subjectId} />
+        ))}
         {this.hasAgeRange() && (
           <AgeRangeTag ageRange={this.props.collection.ageRange.getLabel()} />
         )}

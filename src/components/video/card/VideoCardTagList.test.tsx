@@ -31,7 +31,7 @@ test('it does not render best for tags container if there is none on the video',
   expect(wrapper.find('.tag-list__best-for-container')).toHaveLength(0);
 });
 
-test('renders subject tags container if there are some on the video', () => {
+test('renders best for tags container if there are some on the video', () => {
   const video = VideoFactory.sample({ bestFor: 'Hook' });
   const wrapper = getWrapper({ video });
 
