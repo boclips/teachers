@@ -63,17 +63,20 @@
     color: @mid-blue;
   }
 
-  path {
+  path, circle {
     transition: fill 300ms ease-in-out;
   }
 
   &__button:not(:hover):not(.ant-dropdown-open) path,
-  &__link:not(:hover):not(.active) path {
+  &__link:not(:hover):not(.active) path,
+  &__button:not(:hover):not(.ant-dropdown-open) circle,
+  &__link:not(:hover):not(.active) circle{
     transition: fill 300ms ease-in-out;
     fill: @shade-5;
   }
 
-  &__button:hover:not(.ant-dropdown-open) path {
+  &__button:hover:not(.ant-dropdown-open) path,
+  &__button:hover:not(.ant-dropdown-open) circle{
     @media (max-width: @screen-lg-min) {
       transition: fill 300ms ease-in-out;
       fill: @shade-2;

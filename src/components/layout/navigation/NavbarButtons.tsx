@@ -1,6 +1,7 @@
 import React from 'react';
 import HomeIcon from '../../../../resources/images/home-on.svg';
 import SubjectsIcon from '../../../../resources/images/subjects.svg';
+import TutorialIcon from '../../../../resources/images/help-rollover.svg';
 import { NavbarRouterButton } from './NavbarRouterButton';
 import { NavbarButton } from './NavbarButton';
 
@@ -26,7 +27,7 @@ const TutorialLink = React.memo(() => (
   <NavbarButton
     target="_blank"
     link="https://www.boclips.com/training"
-    icon={<SubjectsIcon />}
+    icon={<TutorialIcon />}
     label="Tutorials"
     dataQa="tutorials-page-icon"
   />
