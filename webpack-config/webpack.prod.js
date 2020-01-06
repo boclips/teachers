@@ -25,10 +25,10 @@ module.exports = merge(common, {
   optimization: {
     minimizer: [
       new TerserPlugin({
-          cache: true,
-          parallel: true,
-          sourceMap: true,
-        }),
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
       new OptimizeCSSAssetsPlugin({}),
     ],
     splitChunks: {
