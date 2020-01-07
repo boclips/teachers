@@ -424,6 +424,9 @@ export function userResponse(id: string = 'my-user-id') {
       state: { name: 'California', id: 'CA' },
       name: 'My school',
     },
+    teacherPlatformAttributes: {
+      shareCode: 'BOB1',
+    },
     _links: {
       self: { href: `http://localhost/v1/users/my-user-id` },
     },

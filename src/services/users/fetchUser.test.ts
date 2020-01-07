@@ -27,5 +27,6 @@ describe('fetch user ', () => {
     expect(userProfile.country).toBeDefined();
     expect(userProfile.state).toBeDefined();
     expect(userProfile.school).toBeDefined();
+    expect(userProfile.shareCode).toBeDefined();
   });
 });

@@ -10,6 +10,7 @@ export interface UserProfile {
   email: string;
   firstName: string;
   lastName: string;
+  shareCode: string;
   subjects?: string[];
   ages?: number[];
   country?: Country;

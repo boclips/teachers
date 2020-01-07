@@ -16,6 +16,7 @@ export default function convertUserResource(resource: any): UserProfile {
       id: resource.organisationAccountId,
       name: resource.organisation ? resource.organisation.name : null,
     },
+    shareCode: resource.teacherPlatformAttributes.shareCode,
     links: { self: new Link(resource._links.self) },
   };
 }

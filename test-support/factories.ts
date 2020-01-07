@@ -227,6 +227,7 @@ export class UserProfileFactory {
       country: arg.country || { name: 'United States', id: 'USA' },
       state: arg.state || { name: 'New York', id: 'NY' },
       school: arg.school || SchoolFactory.sample(),
+      shareCode: arg.shareCode || 'SH4R',
     });
   }
 }
@@ -236,19 +237,6 @@ export class SchoolFactory {
     return Object.freeze({
       id: arg.id || '123',
       name: arg.name || 'My school',
-    });
-  }
-}
-
-export class LoginFactory {
-  public static sample(arg: Partial<UserProfile> = {}): UserProfile {
-    return Object.freeze({
-      email: arg.email || 'joe@boclips.com',
-      firstName: arg.firstName || 'joe',
-      lastName: arg.lastName || 'boclips',
-      analyticsId: arg.analyticsId || 'mixpanel-123',
-      id: arg.id || '1',
-      links: arg.links || UserProfileLinksFactory.sample(),
     });
   }
 }
