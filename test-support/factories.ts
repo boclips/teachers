@@ -565,7 +565,7 @@ export class MockStoreFactory {
 }
 
 interface VideoResource {
-  bestFor: { label: string };
+  bestForTags: Array<{ label: string }>;
   _links: {
     logInteraction: { href: string };
     rate: { templated: boolean; href: string };

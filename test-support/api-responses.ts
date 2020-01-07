@@ -82,7 +82,7 @@ export const video177 = Object.freeze({
     duration: 'PT1M2S',
   },
   badges: ['ad-free'],
-  bestFor: { label: 'Hook' },
+  bestForTags: [{ label: 'Hook' }],
   promoted: true,
   type: {
     name: 'educational',
