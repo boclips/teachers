@@ -239,7 +239,6 @@ describe('AnalyticsService', () => {
               SubjectFactory.sample({
                 id: 'maths-subject-id',
                 name: 'Maths',
-                lessonPlan: true,
               }),
             ],
             title: 'my video title',
@@ -264,7 +263,6 @@ describe('AnalyticsService', () => {
               {
                 id: 'maths-subject-id',
                 name: 'Maths',
-                lessonPlan: true,
                 links: {},
               },
             ],
@@ -318,7 +316,6 @@ describe('AnalyticsService', () => {
               {
                 id: 'maths-subject-id',
                 name: 'Maths',
-                lessonPlan: false,
                 links: {},
               },
             ],

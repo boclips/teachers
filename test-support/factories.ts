@@ -343,7 +343,6 @@ export class SubjectsFactory {
       ApiClientSubjectFactory.sample({
         id: 'subject-two-id',
         name: 'subject two',
-        lessonPlan: false,
       }),
       ...arg,
     ]) as Subject[];

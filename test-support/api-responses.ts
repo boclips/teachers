@@ -70,8 +70,8 @@ export const video177 = Object.freeze({
   releasedOn: '2018-02-11T10:12:33Z',
   createdBy: 'cp1',
   subjects: [
-    { id: 'maths-subject-id', name: 'Maths', lessonPlan: false, links: {} },
-    { id: 'physics-subject-id', name: 'Physics', lessonPlan: false, links: {} },
+    { id: 'maths-subject-id', name: 'Maths', links: {} },
+    { id: 'physics-subject-id', name: 'Physics', links: {} },
   ],
   rating: 3,
   yourRating: 5,

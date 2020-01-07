@@ -1,5 +1,4 @@
 import { Card } from 'antd';
-import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
@@ -46,10 +45,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
                 this.props.discipline.subjects.slice(0, 4),
               ).map(subject => (
                 <li
-                  className={classnames('discipline-card__subject-item', {
-                    'discipline-card__subject-item--lesson-plan':
-                      subject.lessonPlan,
-                  })}
+                  className={'discipline-card__subject-item'}
                   data-qa="discipline-subject"
                   key={`subject-${subject.id}`}
                 >
