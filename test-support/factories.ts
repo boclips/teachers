@@ -59,6 +59,10 @@ export class VideoFactory {
           href: `/v1/videos/${id}?rating={rating}`,
           templated: true,
         }),
+        validateShareCode: new Link({
+          href: `/v1/videos/${id}/match?shareCode={shareCode}`,
+          templated: true,
+        }),
       },
       promoted: arg.promoted || false,
     });
@@ -192,6 +196,19 @@ export class LinksFactory {
       tags: arg.tags || new Link({ href: '/tags' }),
       disciplines: arg.disciplines || new Link({ href: '/disciplines' }),
       countries: arg.countries || new Link({ href: '/countries' }),
+    });
+  }
+
+  public static sampleAnonymous(): Links {
+    return Object.freeze({
+      video: new Link({ href: '/videos/{id}', templated: true }),
+      createNoSearchResultsEvent: new Link({ href: '' }), // TODO this field should be optional so we do not use it in anonymous user setup
+      publicCollections: new Link({
+        href: '/collections?projection=list&public=true&page=0&size=30',
+        templated: false,
+      }),
+      createAccount: new Link({ href: '/users', templated: false }),
+      subjects: new Link({ href: '/subjects', templated: false }),
     });
   }
 }

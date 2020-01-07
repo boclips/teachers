@@ -4,17 +4,20 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { By } from '../../../test-support/By';
 import {
+  CollectionsFactory,
   EntitiesFactory,
   LinksFactory,
   MockStoreFactory,
+  RouterFactory,
   VideoFactory,
   VideoIdFactory,
 } from '../../../test-support/factories';
 import VideoPlayer from '../../components/video/player/VideoPlayer';
 import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
+import { renderWithStore } from '../../../test-support/renderWithStore';
 import VideoDetailsView from './VideoDetailsView';
 
-test('dispatches FETCH_VIDEO when mounted', () => {
+it('dispatches FETCH_VIDEO when mounted', () => {
   const store = MockStoreFactory.sample({
     video: { loading: false, id: null },
     links: LinksFactory.sample(),
@@ -31,7 +34,7 @@ test('dispatches FETCH_VIDEO when mounted', () => {
   expect(store.getActions()).toContainEqual(fetchVideoAction('123'));
 });
 
-test('renders video details when the video has loaded', () => {
+it('renders video details when the video has loaded', () => {
   const video = VideoFactory.sample();
   const store = MockStoreFactory.sample({
     entities: EntitiesFactory.sample({
@@ -62,4 +65,55 @@ test('renders video details when the video has loaded', () => {
     'Jun 20, 2018',
   );
   expect(wrapper.find(VideoPlayer)).toHaveProp('video', video);
+});
+
+it(`displays the sharecode modal for a shared video`, async () => {
+  const wrapper = renderWithStore(<VideoDetailsView videoId={'123'} />, {
+    initialState: {
+      router: RouterFactory.sample({
+        location: {
+          search: '?share=true',
+          pathname: '',
+          hash: '',
+          state: null,
+        },
+      }),
+      links: LinksFactory.sampleAnonymous(),
+      collections: CollectionsFactory.sample(),
+      entities: EntitiesFactory.sample({
+        videos: { byId: { '123': VideoFactory.sample() } },
+      }),
+    },
+  });
+
+  const button = wrapper.getByText('Watch video');
+
+  expect(wrapper.getByRole('dialog')).toBeInTheDocument();
+  expect(button).toBeInTheDocument();
+  expect(wrapper.getByText('Enter code to watch video')).toBeInTheDocument();
+});
+
+it(`does not require a sharecode for existing video links`, () => {
+  const wrapper = renderWithStore(<VideoDetailsView videoId={'123'} />, {
+    initialState: {
+      router: RouterFactory.sample({
+        location: {
+          search: '',
+          pathname: '',
+          hash: '',
+          state: null,
+        },
+      }),
+      links: LinksFactory.sampleAnonymous(),
+      collections: CollectionsFactory.sample(),
+      entities: EntitiesFactory.sample({
+        videos: { byId: { '123': VideoFactory.sample() } },
+      }),
+    },
+  });
+
+  expect(wrapper.queryByRole('dialog')).not.toBeInTheDocument();
+  expect(
+    wrapper.queryByText('Enter code to watch video'),
+  ).not.toBeInTheDocument();
 });
