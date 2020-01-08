@@ -1,11 +1,11 @@
 import { configure } from '@testing-library/dom';
+import 'jest-extended';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import * as AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
-import 'jest-extended';
 import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
 import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
@@ -23,6 +23,9 @@ jest.mock('react', () => {
   const r = jest.requireActual('react');
   return { ...r, memo: x => x };
 });
+
+// create window object
+declare const window: any;
 
 // JSDom doesn't implement scrollTo
 window.scrollTo = jest.fn();
