@@ -29,9 +29,7 @@ export default function convertVideoResource(resource: any): Video {
     rating: resource.rating,
     yourRating: resource.yourRating,
     bestFor:
-      (resource.bestForTags &&
-        resource.bestForTags[0] &&
-        resource.bestForTags[0].label) ||
+      (resource.bestFor && resource.bestFor[0] && resource.bestFor[0].label) ||
       null,
     promoted: resource.promoted,
     links: {
