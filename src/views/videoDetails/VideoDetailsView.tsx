@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import querystring from 'query-string';
+import { RouteComponentProps, withRouter } from 'react-router';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
@@ -17,6 +18,7 @@ interface OwnProps {
 interface StateProps {
   requireShareCode: boolean;
   video: Video | null;
+  userId: string;
 }
 
 interface DispatchProps {
@@ -24,7 +26,7 @@ interface DispatchProps {
 }
 
 export class VideoDetailsView extends PureComponent<
-  StateProps & DispatchProps
+  StateProps & DispatchProps & RouteComponentProps & OwnProps
 > {
   public render() {
     return (
@@ -48,6 +50,19 @@ export class VideoDetailsView extends PureComponent<
 
   public componentDidMount() {
     this.props.fetchVideo();
+    this.setUpReferer();
+  }
+
+  private setUpReferer() {
+    if (
+      this.props.userId ||
+      this.props.history.location.search.indexOf('referer=') === -1
+    ) {
+      this.props.history.push({
+        pathname: `/videos/${this.props.videoId}`,
+        search: `?referer=${this.props.userId || 'anonymous'}`,
+      });
+    }
   }
 }
 
@@ -57,6 +72,7 @@ const mapStateToProps = (state: State, props: OwnProps): StateProps => {
   return {
     video: getVideoById(state, props.videoId),
     requireShareCode: !!params.share,
+    userId: state.user ? state.user.id : undefined,
   };
 };
 
@@ -70,4 +86,4 @@ const mapDispatchToProps = (
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
-)(VideoDetailsView);
+)(withRouter(VideoDetailsView));

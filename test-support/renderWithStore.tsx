@@ -21,16 +21,24 @@ export const renderWithStore = (
   ui,
   { initialState = {}, reducers = [], middlewares = [] }: Options = {},
 ): ResultingContext => {
-  const store = createStore(
+  const store: Store = createStore(
     createReducer(...reducers),
     initialState,
     applyMiddleware(...middlewares),
   );
 
+  return renderWithCreatedStore(ui, store);
+};
+
+export const renderWithCreatedStore = (
+  ui,
+  store: Store,
+  history = createMemoryHistory({}),
+): ResultingContext => {
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
-        <Router history={createMemoryHistory({})}>{children}</Router>
+        <Router history={history}>{children}</Router>
       </Provider>
     );
   }
