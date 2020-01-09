@@ -13,5 +13,5 @@
     "resolveJsonModule": true,
     "incremental": true
   },
-  "include": ["jest-extended.d.ts"]
+  "files": ["jest-extended.d.ts"]
 }
