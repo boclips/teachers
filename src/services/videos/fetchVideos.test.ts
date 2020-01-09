@@ -50,10 +50,9 @@ test('requests the correct search query', () => {
 });
 
 test('includes video type in a search request', () => {
-  expect(queryParams.type).toIncludeSameMembers([
-    VideoType.STOCK,
-    VideoType.INSTRUCTIONAL,
-  ]);
+  expect(queryParams.type).toEqual(
+    expect.arrayContaining([VideoType.STOCK, VideoType.INSTRUCTIONAL]),
+  );
 });
 
 test('includes page and size params in the request', () => {

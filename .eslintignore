@@ -1,4 +1,3 @@
 node_modules
 dist
 webpack-config
-jest-extended.d.ts

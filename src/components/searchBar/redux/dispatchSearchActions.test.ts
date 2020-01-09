@@ -68,10 +68,9 @@ describe('when on the videos page', () => {
   it('filters the results by non-NEWS types', () => {
     expect(action).toBeTruthy();
     expect(action.payload.filters.type).toHaveLength(2);
-    expect(action.payload.filters.type).toIncludeSameMembers([
-      VideoType.INSTRUCTIONAL,
-      VideoType.STOCK,
-    ]);
+    expect(action.payload.filters.type).toEqual(
+      expect.arrayContaining([VideoType.INSTRUCTIONAL, VideoType.STOCK]),
+    );
   });
 
   it('searches collections', () => {

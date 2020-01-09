@@ -1,5 +1,4 @@
 import { configure } from '@testing-library/dom';
-import 'jest-extended';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import * as AxiosLogger from 'axios-logger';

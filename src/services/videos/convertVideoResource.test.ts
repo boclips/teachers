@@ -34,7 +34,7 @@ test('converts a video with stream playback', () => {
   expect(video.links.rate.getOriginalLink()).toBeTruthy();
   expect(video.links.tag.getOriginalLink()).toBeTruthy();
   expect(video.links.logInteraction.getOriginalLink()).toBeTruthy();
-  expect(video.promoted).toBeTrue();
+  expect(video.promoted).toEqual(true);
 });
 
 test('converts a video with youtube playback', () => {

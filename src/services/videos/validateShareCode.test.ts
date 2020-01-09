@@ -25,10 +25,10 @@ beforeEach(() => {
 
 test('returns true when the share code is correct', async () => {
   const validationResult = await validateShareCode(video, 'abc');
-  expect(validationResult).toBeTrue();
+  expect(validationResult).toEqual(true);
 });
 
 test('returns false when the share code is incorrect', async () => {
   const validationResult = await validateShareCode(video, 'cba');
-  expect(validationResult).toBeFalse();
+  expect(validationResult).toEqual(false);
 });

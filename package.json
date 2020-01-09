@@ -93,7 +93,6 @@
     "immer": "^5.1.0",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
-    "jest-extended": "^0.11.2",
     "jest-simple-dot-reporter": "^1.0.5",
     "js-cookie": "^2.2.1",
     "jsdom": "^15.2.1",

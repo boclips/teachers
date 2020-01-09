@@ -61,11 +61,11 @@ describe('share code validation', () => {
       if (expectToClose) {
         await expect(
           waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
-        ).resolves.toBeTrue();
+        ).resolves.toEqual(true);
       } else {
         expect(
           waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
-        ).toReject();
+        ).rejects.toThrow();
       }
     });
   });

@@ -86,7 +86,7 @@ describe('manipulating my collections', () => {
     expect(stateAfter.entities.collections.byId[collection.id].title).toEqual(
       'changed',
     );
-    expect(stateAfter.collections.updating).toBeFalse();
+    expect(stateAfter.collections.updating).toEqual(false);
   });
 });
 

@@ -12,6 +12,5 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "incremental": true
-  },
-  "files": ["jest-extended.d.ts"]
+  }
 }

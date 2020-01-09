@@ -8,7 +8,7 @@ it('creates a link without parameters when all params are null', () => {
     segment: null,
   });
 
-  expect(link).toEndWith('/videos/123');
+  expect(link).toMatch(/http.*\/videos\/123/);
 });
 it('adds refererId when user id is not null', () => {
   const link = getVideoDetailsLink({
@@ -18,7 +18,7 @@ it('adds refererId when user id is not null', () => {
     segment: null,
   });
 
-  expect(link).toEndWith('/videos/123?referer=dave');
+  expect(link).toMatch(/http:.*videos\/123\?referer=dave/);
 });
 
 it('adds segment bounds when segment is not null', () => {
@@ -29,7 +29,7 @@ it('adds segment bounds when segment is not null', () => {
     segment: { start: 10, end: 20 },
   });
 
-  expect(link).toEndWith('/videos/123?segmentStart=10&segmentEnd=20');
+  expect(link).toMatch(/http:.*videos\/123\?segmentStart=10&segmentEnd=20/);
 });
 
 it('creates an absolute link when requested', () => {
