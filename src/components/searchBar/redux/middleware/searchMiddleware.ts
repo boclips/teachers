@@ -31,8 +31,7 @@ export function onSearchCollections(
 ) {
   const links = store.getState().links;
 
-  const { includeTags, excludeTags, ...userFilters } =
-    searchRequest.filters || {};
+  const { isClassroom, ...userFilters } = searchRequest.filters || {};
 
   if (every(userFilters, isUndefined)) {
     searchCollections(searchRequest, links).then(results => {

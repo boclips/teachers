@@ -57,10 +57,7 @@ describe('searching videos', () => {
       searchVideosAction({
         query: 'donuts',
         page: 1,
-        filters: {
-          includeTags: [],
-          excludeTags: [],
-        },
+        filters: {},
         sortBy: null,
       }),
     );

@@ -1,5 +1,4 @@
 import { RouterActionType } from 'connected-react-router';
-import { Constants } from '../../../app/AppConstants';
 import { Action } from '../../../app/redux/actions';
 import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
 import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
@@ -60,9 +59,9 @@ describe('when on the videos page', () => {
     expect(action.payload.page).toEqual(3);
   });
 
-  it('filters the results by CLASSROOM tags', () => {
+  it('filters the results by is classroom', () => {
     expect(action).toBeTruthy();
-    expect(action.payload.filters.includeTags).toEqual([Constants.CLASSROOM]);
+    expect(action.payload.filters.isClassroom).toEqual(true);
   });
 
   it('filters the results by non-NEWS types', () => {

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import HeaderLogoSVG from '../../../resources/images/recommendations-logo.svg';
-import { Constants } from '../../app/AppConstants';
 import { SectionHeader } from '../../components/common/SectionHeader';
 import VerticalVideoList from '../../components/video/list/VerticalVideoList';
 import { fetchPromotedVideosAction } from '../../components/video/redux/actions/fetchPromotedVideosAction';
@@ -52,7 +51,7 @@ export const linkFetchPromotedVideosToDispatch = (dispatch: Dispatch) => () => {
     fetchPromotedVideosAction({
       filters: {
         promoted: true,
-        includeTags: [Constants.CLASSROOM],
+        isClassroom: true,
         type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
       },
       page: 1,

@@ -7,8 +7,7 @@ export interface VideoSearchRequest {
 }
 
 export interface VideoRequestFilters {
-  includeTags: string[];
-  excludeTags?: string[];
+  isClassroom?: boolean;
   type?: string[];
   duration_min?: number;
   duration_max?: number;

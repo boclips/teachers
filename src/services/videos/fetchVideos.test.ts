@@ -3,7 +3,6 @@ import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
 import { videos } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
-import { Constants } from '../../app/AppConstants';
 import { Link } from '../../types/Link';
 import { VideoType } from '../../types/Video';
 import fetchVideos from './fetchVideos';
@@ -17,7 +16,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max,subject,type}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max,subject,type,is_classroom}',
       templated: true,
     }),
   });
@@ -27,8 +26,7 @@ beforeEach(async () => {
       query: 'foo',
       page: 1,
       filters: {
-        includeTags: [Constants.CLASSROOM],
-        excludeTags: [Constants.NEWS],
+        isClassroom: true,
         duration_min: 100,
         duration_max: 200,
         age_range_min: 5,
@@ -61,11 +59,7 @@ test('includes page and size params in the request', () => {
 });
 
 test('only requests content for the classroom', () => {
-  expect(queryParams.include_tag).toEqual(Constants.CLASSROOM);
-});
-
-test('excludes news by default', () => {
-  expect(queryParams.exclude_tag).toEqual(Constants.NEWS);
+  expect(queryParams.is_classroom).toEqual('true');
 });
 
 test('includes sort_by when provided', () => {

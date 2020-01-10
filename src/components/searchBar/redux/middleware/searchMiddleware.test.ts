@@ -49,8 +49,6 @@ describe('collection search middleware', () => {
     const searchRequest: CollectionSearchRequest = {
       query: 'dogs',
       filters: {
-        includeTags: ['classroom'],
-        excludeTags: ['news'],
         duration_min: 10,
         duration_max: undefined,
         age_range_min: undefined,

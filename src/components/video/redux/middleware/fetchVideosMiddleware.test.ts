@@ -2,7 +2,6 @@ import configureStore from 'redux-mock-store';
 import eventually from '../../../../../test-support/eventually';
 import { linkFetchPromotedVideosToDispatch } from '../../../../views/home/HomeViewVideoList';
 import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
-import { Constants } from '../../../../app/AppConstants';
 import Mock = jest.Mock;
 import {
   PageSpecFactory,
@@ -39,7 +38,7 @@ describe('fetchVideosMiddleware', () => {
         fetchPromotedVideosAction({
           filters: {
             promoted: true,
-            includeTags: [Constants.CLASSROOM],
+            isClassroom: true,
             type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
           },
           page: 1,
