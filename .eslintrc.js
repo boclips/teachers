@@ -9,7 +9,13 @@ module.exports = {
     project: 'tsconfig.eslint.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prefer-arrow', 'import', 'react'],
+  plugins: [
+    '@typescript-eslint',
+    'prefer-arrow',
+    'import',
+    'react',
+    'react-hooks',
+  ],
   rules: {
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
@@ -127,6 +133,8 @@ module.exports = {
     'react/no-string-refs': 'error',
     'react/no-unescaped-entities': 'error',
     'react/jsx-fragments': ['error', 'element'],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     'space-before-function-paren': 'off',
     'spaced-comment': 'error',
     'use-isnan': 'error',
