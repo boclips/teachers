@@ -8,7 +8,6 @@ export interface VideoLinks {
   rate?: Link;
   tag?: Link;
   logInteraction?: Link;
-  validateShareCode?: Link;
 }
 
 export interface VideoId {

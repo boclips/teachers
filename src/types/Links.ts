@@ -19,4 +19,5 @@ export interface Links {
   disciplines?: Link;
   countries?: Link;
   reportAccessExpired?: Link;
+  validateShareCode?: Link;
 }

@@ -196,6 +196,12 @@ export class LinksFactory {
       tags: arg.tags || new Link({ href: '/tags' }),
       disciplines: arg.disciplines || new Link({ href: '/disciplines' }),
       countries: arg.countries || new Link({ href: '/countries' }),
+      validateShareCode:
+        arg.validateShareCode ||
+        new Link({
+          href: '/users/{id}/shareCode/{shareCode}',
+          templated: true,
+        }),
     });
   }
 

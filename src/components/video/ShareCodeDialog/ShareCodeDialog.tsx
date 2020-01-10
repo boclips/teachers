@@ -1,19 +1,21 @@
 import React from 'react';
 import { Button, Input } from 'antd';
-import { Video } from '../../../types/Video';
+import { connect } from 'react-redux';
 import validateShareCode from '../../../services/videos/validateShareCode';
 import Bodal from '../../common/Bodal';
+import State from '../../../types/State';
+import { Link } from '../../../types/Link';
 
-interface Props {
-  video: Video;
-}
-
-interface State {
+interface StateProps {
   shareCode: string;
   modalVisible: boolean;
 }
 
-export class ShareCodeDialog extends React.Component<Props, State> {
+interface OwnProps {
+  validateShareCodeLink: Link;
+}
+
+class ShareCodeDialogComponent extends React.Component<OwnProps, StateProps> {
   public state = {
     shareCode: '',
     modalVisible: true,
@@ -44,8 +46,20 @@ export class ShareCodeDialog extends React.Component<Props, State> {
     );
   }
   private validateCode = async () => {
-    if (await validateShareCode(this.props.video, this.state.shareCode)) {
+    if (
+      await validateShareCode(
+        this.props.validateShareCodeLink,
+        this.state.shareCode,
+      )
+    ) {
       this.setState({ modalVisible: false });
     }
   };
 }
+const mapStateToProps = (state: State): OwnProps => ({
+  validateShareCodeLink: state.links.validateShareCode,
+});
+export const ShareCodeDialog = connect(
+  mapStateToProps,
+  null,
+)(ShareCodeDialogComponent);

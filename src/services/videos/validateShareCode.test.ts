@@ -1,34 +1,36 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { VideoFactory } from '../../../test-support/factories';
+import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
 import validateShareCode from './validateShareCode';
-
-let video;
-
+let links;
 beforeEach(() => {
-  video = VideoFactory.sample({
-    links: {
-      validateShareCode: new Link({
-        href: 'videos/5c542abf5438cdbcb56df0bf/match?shareCode={shareCode}',
-        templated: true,
-      }),
-    } as any,
+  links = LinksFactory.sample({
+    validateShareCode: new Link({
+      href: '={shareCode}',
+      templated: true,
+    }),
   });
 
   const axiosMock = new MockAdapter(axios);
   axiosMock
-    .onGet(video.links.validateShareCode.getTemplatedLink({ shareCode: 'abc' }))
+    .onGet(links.validateShareCode.getTemplatedLink({ shareCode: 'abc' }))
     .reply(200);
   axiosMock.onGet().reply(403);
 });
 
 test('returns true when the share code is correct', async () => {
-  const validationResult = await validateShareCode(video, 'abc');
+  const validationResult = await validateShareCode(
+    links.validateShareCode,
+    'abc',
+  );
   expect(validationResult).toEqual(true);
 });
 
 test('returns false when the share code is incorrect', async () => {
-  const validationResult = await validateShareCode(video, 'cba');
+  const validationResult = await validateShareCode(
+    links.validateShareCode,
+    'cba',
+  );
   expect(validationResult).toEqual(false);
 });

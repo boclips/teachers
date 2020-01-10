@@ -6,13 +6,21 @@ import {
 } from '@testing-library/react';
 import React from 'react';
 import MockAdapter from 'axios-mock-adapter';
-import { VideoFactory } from '../../../../test-support/factories';
+import { Provider } from 'react-redux';
+import {
+  LinksFactory,
+  MockStoreFactory,
+} from '../../../../test-support/factories';
 import { ShareCodeDialog } from './ShareCodeDialog';
 
-const video = VideoFactory.sample();
+const links = LinksFactory.sample();
 
 it(`disables the watch video button while no shareCode is provided`, async () => {
-  const wrapper = render(<ShareCodeDialog video={video} />);
+  const wrapper = render(
+    <Provider store={MockStoreFactory.sample()}>
+      <ShareCodeDialog />
+    </Provider>,
+  );
   const button = wrapper.getByText('Watch video');
   const shareField = wrapper.getByRole('textbox');
 
@@ -27,9 +35,7 @@ describe('share code validation', () => {
   beforeEach(() => {
     const axiosMock = new MockAdapter(axios);
     axiosMock
-      .onGet(
-        video.links.validateShareCode.getTemplatedLink({ shareCode: 'abc' }),
-      )
+      .onGet(links.validateShareCode.getTemplatedLink({ shareCode: 'abc' }))
       .reply(200);
     axiosMock.onGet().reply(401);
   });
@@ -49,7 +55,11 @@ describe('share code validation', () => {
 
   testData.forEach(({ message, shareCode, expectToClose }) => {
     it(message, async () => {
-      const wrapper = render(<ShareCodeDialog video={video} />);
+      const wrapper = render(
+        <Provider store={MockStoreFactory.sample()}>
+          <ShareCodeDialog />
+        </Provider>,
+      );
       const button = wrapper.getByText('Watch video');
       const shareField = wrapper.getByPlaceholderText('Enter code');
       expect(button).toBeInTheDocument();
@@ -63,7 +73,7 @@ describe('share code validation', () => {
           waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
         ).resolves.toEqual(true);
       } else {
-        expect(
+        await expect(
           waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
         ).rejects.toThrow();
       }

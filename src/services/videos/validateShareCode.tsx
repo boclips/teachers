@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { Video } from '../../types/Video';
+import { Link } from '../../types/Link';
 
 export default function validateShareCode(
-  video: Video,
+  validateLink: Link,
   shareCode: string,
 ): Promise<boolean> {
   return axios
-    .get(video.links.validateShareCode.getTemplatedLink({ shareCode }))
+    .get(validateLink.getTemplatedLink({ shareCode }))
     .then(() => true)
     .catch(() => false);
 }

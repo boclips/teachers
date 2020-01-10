@@ -41,9 +41,7 @@ export class VideoDetailsView extends PureComponent<
             <VideoDetails video={this.props.video} />
           </section>
         </section>
-        {this.props.requireShareCode && (
-          <ShareCodeDialog video={this.props.video} />
-        )}
+        {this.props.requireShareCode && <ShareCodeDialog />}
       </PageLayout>
     );
   }
