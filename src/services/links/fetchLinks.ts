@@ -85,6 +85,10 @@ export default function fetchLinks(prefix: string) {
           links.tags = new Link(body._links.tags);
         }
 
+        if (body._links.validateShareCode) {
+          links.validateShareCode = new Link(body._links.validateShareCode);
+        }
+
         return links;
       },
     )
