@@ -5,7 +5,7 @@ import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
 import RateButton from '../rate/RateButton';
-import ShareButton from '../shareButton/ShareButton';
+import { ShareButton } from '../shareButton/ShareButton';
 import VideoCollectionButton from '../videoCollection/VideoCollectionButton';
 import './VideoButtons.less';
 

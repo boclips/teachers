@@ -14,7 +14,7 @@ beforeEach(() => {
 
   const axiosMock = new MockAdapter(axios);
   axiosMock
-    .onGet(links.validateShareCode.getTemplatedLink({ shareCode: 'abc' }))
+    .onGet(links.validateShareCode.getTemplatedLink({ shareCode: 'abc', id: 'user-id' }))
     .reply(200);
   axiosMock.onGet().reply(403);
 });
@@ -22,6 +22,7 @@ beforeEach(() => {
 test('returns true when the share code is correct', async () => {
   const validationResult = await validateShareCode(
     links.validateShareCode,
+    'user-id',
     'abc',
   );
   expect(validationResult).toEqual(true);
@@ -30,6 +31,7 @@ test('returns true when the share code is correct', async () => {
 test('returns false when the share code is incorrect', async () => {
   const validationResult = await validateShareCode(
     links.validateShareCode,
+    'user-id',
     'cba',
   );
   expect(validationResult).toEqual(false);

@@ -72,7 +72,7 @@ it(`displays the sharecode modal for a shared video`, async () => {
     initialState: {
       router: RouterFactory.sample({
         location: {
-          search: '?share=true',
+          search: '?referer=user-123&share=true',
           pathname: '',
           hash: '',
           state: null,
@@ -116,4 +116,26 @@ it(`does not require a sharecode for existing video links`, () => {
   expect(
     wrapper.queryByText('Enter code to watch video'),
   ).not.toBeInTheDocument();
+});
+
+it(`does not render a share button when user is anonymous`, () => {
+  const wrapper = renderWithStore(<VideoDetailsView videoId={'123'} />, {
+    initialState: {
+      router: RouterFactory.sample({
+        location: {
+          search: '',
+          pathname: '',
+          hash: '',
+          state: null,
+        },
+      }),
+      links: LinksFactory.sampleAnonymous(),
+      collections: CollectionsFactory.sample(),
+      entities: EntitiesFactory.sample({
+        videos: { byId: { '123': VideoFactory.sample() } },
+      }),
+    },
+  });
+
+  expect(wrapper.queryByText('Share')).not.toBeInTheDocument();
 });

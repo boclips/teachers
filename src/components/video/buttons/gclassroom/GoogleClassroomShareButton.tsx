@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React from 'react';
 import GoogleClassroomIcon from '../../../../../resources/images/google-classroom-logo.png';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import getVideoDetailsLink from '../../../../services/links/getVideoDetailsLink';
+import { getShareableVideoLink } from '../../../../services/links/getShareableVideoLink';
 import { Segment, Video } from '../../../../types/Video';
 import './GoogleClassroomShareButton.less';
 import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
@@ -19,12 +19,11 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
   }
 
   private handleClick = () => {
-    const link = getVideoDetailsLink({
-      absolute: true,
-      videoId: this.props.video.id,
-      userId: this.props.userId,
-      segment: this.props.segment,
-    });
+    const link = getShareableVideoLink(
+      this.props.video.id,
+      this.props.userId,
+      this.props.segment,
+    );
 
     AnalyticsFactory.externalAnalytics().trackVideoSharedInGoogle(
       this.props.video,

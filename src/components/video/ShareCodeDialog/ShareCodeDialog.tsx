@@ -1,65 +1,52 @@
-import React from 'react';
+import queryString from 'querystring';
+import React, { useState } from 'react';
 import { Button, Input } from 'antd';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import validateShareCode from '../../../services/videos/validateShareCode';
 import Bodal from '../../common/Bodal';
 import State from '../../../types/State';
-import { Link } from '../../../types/Link';
 
-interface StateProps {
-  shareCode: string;
-  modalVisible: boolean;
-}
+export const ShareCodeDialog = React.memo(() => {
+  const validationLink = useSelector(
+    (state: State) => state.links.validateShareCode,
+  );
+  const [shareCode, setShareCode] = useState('');
+  const [visible, setVisible] = useState(true);
 
-interface OwnProps {
-  validateShareCodeLink: Link;
-}
+  const search = useSelector((state: State) => state.router.location.search);
+  const refererId = queryString.decode(search.substr(1)).referer as string;
 
-class ShareCodeDialogComponent extends React.Component<OwnProps, StateProps> {
-  public state = {
-    shareCode: '',
-    modalVisible: true,
-  };
-  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ shareCode: event.currentTarget.value });
-  };
-
-  public render() {
-    return (
-      <Bodal
-        closable={false}
-        destroyOnClose={true}
-        visible={this.state.modalVisible}
-        footer={null}
-        title="Enter code to watch video"
-        width="360px"
-        className="share-code-dialog"
-      >
-        <Input
-          type={'text'}
-          placeholder={'Enter code'}
-          value={this.state.shareCode}
-          onChange={this.handleChange}
-        />
-        <Button onClick={this.validateCode}>Watch video</Button>
-      </Bodal>
-    );
+  if (!refererId) {
+    return null;
   }
-  private validateCode = async () => {
-    if (
-      await validateShareCode(
-        this.props.validateShareCodeLink,
-        this.state.shareCode,
-      )
-    ) {
-      this.setState({ modalVisible: false });
-    }
+
+  const handleOnClick = () => {
+    validateShareCode(validationLink, refererId, shareCode).then(valid => {
+      if (valid) {
+        setVisible(false);
+      }
+    });
   };
-}
-const mapStateToProps = (state: State): OwnProps => ({
-  validateShareCodeLink: state.links.validateShareCode,
+
+  return (
+    <Bodal
+      closable={false}
+      destroyOnClose={true}
+      visible={visible}
+      footer={null}
+      title="Enter code to watch video"
+      width="360px"
+      className="share-code-dialog"
+    >
+      <Input
+        type="text"
+        placeholder="Enter code"
+        value={shareCode}
+        onChange={event => setShareCode(event.currentTarget.value)}
+      />
+      <Button disabled={shareCode.length === 0} onClick={handleOnClick}>
+        Watch video
+      </Button>
+    </Bodal>
+  );
 });
-export const ShareCodeDialog = connect(
-  mapStateToProps,
-  null,
-)(ShareCodeDialogComponent);

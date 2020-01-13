@@ -7,24 +7,18 @@ import {
 } from '../../../../test-support/factories';
 import { noOp } from '../../../utils';
 import { storyWithProvider } from '../../../utils/index.stories';
-import ShareModal from './ShareModal';
+import { ShareModal } from './ShareModal';
 
 storiesOf('ShareModal', module)
   .addDecorator(storyWithProvider(MockStoreFactory.sample()))
-  .add(
-    'In mobile view',
-    () => (
-      <ShareModal
-        visible={true}
-        mobileView={true}
-        handleClose={noOp}
-        video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
-      />
-    ),
-    {
-      viewport: { defaultViewport: 'iphone6' },
-    },
-  )
+  .add('In mobile view', () => (
+    <ShareModal
+      visible={true}
+      mobileView={true}
+      handleClose={noOp}
+      video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
+    />
+  ))
   .add('In desktop view', () => (
     <ShareModal
       visible={true}

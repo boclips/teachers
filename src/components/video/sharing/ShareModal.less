@@ -1,9 +1,7 @@
 @import '../../../../resources/styles/_antd-theme.less';
-
-.share-modal .ant-modal-content .ant-modal-footer {
-  margin-top: 24px;
-
-  div {
+.share-modal {
+  div.share-buttons {
+    margin-top: 24px;
     display: flex;
     flex-wrap: wrap;
     padding-top: 14px;
@@ -36,6 +34,29 @@
         white-space: normal;
         text-align: left;
       }
+    }
+  }
+
+  .ant-modal-content .ant-modal-footer {
+    background-color: @shade-2;
+    margin: 24px 0 0 0;
+    padding: 24px 36px 26px 36px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .share-code {
+    text-align: center;
+
+    &__explainer {
+      margin: 0;
+    }
+
+    &__code {
+      color: @blue-shade-5;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 24px;
+      text-transform: lowercase;
     }
   }
 }

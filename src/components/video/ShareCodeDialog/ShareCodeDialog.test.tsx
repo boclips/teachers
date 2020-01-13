@@ -10,73 +10,99 @@ import { Provider } from 'react-redux';
 import {
   LinksFactory,
   MockStoreFactory,
+  RouterFactory,
 } from '../../../../test-support/factories';
 import { ShareCodeDialog } from './ShareCodeDialog';
 
-const links = LinksFactory.sample();
-
-it(`disables the watch video button while no shareCode is provided`, async () => {
-  const wrapper = render(
-    <Provider store={MockStoreFactory.sample()}>
-      <ShareCodeDialog />
-    </Provider>,
-  );
-  const button = wrapper.getByText('Watch video');
-  const shareField = wrapper.getByRole('textbox');
-
-  expect(button).toBeInTheDocument();
-  expect(shareField).toBeInTheDocument();
-  await fireEvent.click(button);
-
-  expect(wrapper.getByText('Watch video')).toBeInTheDocument();
-});
-
-describe('share code validation', () => {
-  beforeEach(() => {
-    const axiosMock = new MockAdapter(axios);
-    axiosMock
-      .onGet(links.validateShareCode.getTemplatedLink({ shareCode: 'abc' }))
-      .reply(200);
-    axiosMock.onGet().reply(401);
+describe('ShareCodeDialog', () => {
+  const links = LinksFactory.sample();
+  const store = MockStoreFactory.sample({
+    router: RouterFactory.sample({
+      location: {
+        pathname: '',
+        search: `?referer=test-id`,
+        hash: '',
+        state: null,
+      },
+    }),
   });
 
-  const testData = [
-    {
-      message: 'closes the share modal when share code is valid',
-      shareCode: 'abc',
-      expectToClose: true,
-    },
-    {
-      message: 'does not close the share modal when share code is invalid',
-      shareCode: 'foo',
-      expectToClose: false,
-    },
-  ];
+  it(`disables the watch video button while no shareCode is provided`, async () => {
+    const wrapper = render(
+      <Provider store={store}>
+        <ShareCodeDialog />
+      </Provider>,
+    );
 
-  testData.forEach(({ message, shareCode, expectToClose }) => {
-    it(message, async () => {
-      const wrapper = render(
-        <Provider store={MockStoreFactory.sample()}>
-          <ShareCodeDialog />
-        </Provider>,
-      );
-      const button = wrapper.getByText('Watch video');
-      const shareField = wrapper.getByPlaceholderText('Enter code');
-      expect(button).toBeInTheDocument();
-      expect(shareField).toBeInTheDocument();
+    const button = wrapper.getByText('Watch video').closest('button');
 
-      await fireEvent.change(shareField, { target: { value: shareCode } });
-      await fireEvent.click(button);
+    expect(button).toBeInTheDocument();
 
-      if (expectToClose) {
-        await expect(
-          waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
-        ).resolves.toEqual(true);
-      } else {
-        await expect(
-          waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
-        ).rejects.toThrow();
-      }
+    expect(button.disabled).toEqual(true);
+  });
+
+  it(`enables the watch video button when a shareCode is provided`, async () => {
+    const wrapper = render(
+      <Provider store={store}>
+        <ShareCodeDialog />
+      </Provider>,
+    );
+
+    const shareField = wrapper.getByPlaceholderText('Enter code');
+    await fireEvent.change(shareField, { target: { value: 'SHARECODE' } });
+
+    const button = wrapper.getByText('Watch video').closest('button');
+
+    expect(button.disabled).toEqual(false);
+  });
+
+  describe('share code validation', () => {
+    beforeEach(() => {
+      const axiosMock = new MockAdapter(axios);
+      axiosMock
+        .onGet(links.validateShareCode.getTemplatedLink({ id: 'test-id', shareCode: 'abc' }))
+        .reply(200);
+      axiosMock.onGet().reply(401);
+    });
+
+    const testData = [
+      {
+        message: 'closes the share modal when share code is valid',
+        shareCode: 'abc',
+        expectToClose: true,
+      },
+      {
+        message: 'does not close the share modal when share code is invalid',
+        shareCode: 'foo',
+        expectToClose: false,
+      },
+    ];
+
+    testData.forEach(({ message, shareCode, expectToClose }) => {
+      it(message, async () => {
+        const wrapper = render(
+          <Provider store={store}>
+            <ShareCodeDialog />
+          </Provider>,
+        );
+        const button = wrapper.getByText('Watch video');
+        const shareField = wrapper.getByPlaceholderText('Enter code');
+        expect(button).toBeInTheDocument();
+        expect(shareField).toBeInTheDocument();
+
+        await fireEvent.change(shareField, { target: { value: shareCode } });
+        await fireEvent.click(button);
+
+        if (expectToClose) {
+          await expect(
+            waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
+          ).resolves.toEqual(true);
+        } else {
+          await expect(
+            waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
+          ).rejects.toThrow();
+        }
+      });
     });
   });
 });

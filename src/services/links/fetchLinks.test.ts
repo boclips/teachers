@@ -63,8 +63,11 @@ describe('when anonymous user', () => {
       _links: {
         video: { href: '/videos/{id}', templated: true },
         createNoSearchResultsEvent: { href: '/events/no-search-results' },
-        validateShareCode: { href: '/{id}/shareCode/{shareCode}', templated:true}
+        validateShareCode: {
+          href: '/{id}/shareCode/{shareCode}',
+          templated: true,
         },
+      },
     });
 
     const links = await fetchLinks(prefix);
@@ -74,7 +77,10 @@ describe('when anonymous user', () => {
       createNoSearchResultsEvent: new Link({
         href: '/events/no-search-results',
       }),
-      validateShareCode: new Link({ href: '/{id}/shareCode/{shareCode}', templated:true})
+      validateShareCode: new Link({
+        href: '/{id}/shareCode/{shareCode}',
+        templated: true,
+      }),
     };
 
     expect(links).toEqual(expectedLinks);

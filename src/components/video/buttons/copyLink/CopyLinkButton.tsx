@@ -3,7 +3,7 @@ import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CopyLinkSVG from '../../../../../resources/images/copy-link.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import getVideoDetailsLink from '../../../../services/links/getVideoDetailsLink';
+import { getShareableVideoLink } from '../../../../services/links/getShareableVideoLink';
 import { Segment, Video } from '../../../../types/Video';
 import NotificationFactory from '../../../common/NotificationFactory';
 
@@ -29,12 +29,12 @@ export default class CopyLinkButton extends React.PureComponent<Props> {
   };
 
   public render() {
-    const link = getVideoDetailsLink({
-      absolute: true,
-      videoId: this.props.video.id,
-      userId: this.props.userId,
-      segment: this.props.segment,
-    });
+    const link = getShareableVideoLink(
+      this.props.video.id,
+      this.props.userId,
+      this.props.segment,
+    );
+
     return (
       <CopyToClipboard
         text={link}
