@@ -1,0 +1,32 @@
+@import "../../../../resources/styles/_colours";
+
+.share-code-dialog {
+  .ant-modal-content .ant-modal-body {
+    padding-bottom: 15px;
+  }
+
+  &__button {
+    width: 140px;
+  }
+
+  &__input {
+    width: 104px;
+    margin-right: 10px;
+
+    .share-code-dialog--invalid & {
+      border-color: @dark-red;
+    }
+  }
+
+  &__validation {
+    color: @dark-red;
+    margin: 0 0 0 5px;
+    font-size: 14px;
+    line-height: 21px;
+    visibility: hidden;
+
+    .share-code-dialog--invalid & {
+      visibility: visible;
+    }
+  }
+}

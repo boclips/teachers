@@ -60,7 +60,12 @@ describe('ShareCodeDialog', () => {
     beforeEach(() => {
       const axiosMock = new MockAdapter(axios);
       axiosMock
-        .onGet(links.validateShareCode.getTemplatedLink({ id: 'test-id', shareCode: 'abc' }))
+        .onGet(
+          links.validateShareCode.getTemplatedLink({
+            id: 'test-id',
+            shareCode: 'abc',
+          }),
+        )
         .reply(200);
       axiosMock.onGet().reply(401);
     });
@@ -85,7 +90,7 @@ describe('ShareCodeDialog', () => {
             <ShareCodeDialog />
           </Provider>,
         );
-        const button = wrapper.getByText('Watch video');
+        const button = wrapper.getByText('Watch video').closest('button');
         const shareField = wrapper.getByPlaceholderText('Enter code');
         expect(button).toBeInTheDocument();
         expect(shareField).toBeInTheDocument();
@@ -97,10 +102,12 @@ describe('ShareCodeDialog', () => {
           await expect(
             waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
           ).resolves.toEqual(true);
+          expect(wrapper.queryByText('Invalid code')).toBeNull();
         } else {
           await expect(
             waitForElementToBeRemoved(() => wrapper.getByText('Watch video')),
           ).rejects.toThrow();
+          expect(wrapper.getByText('Invalid code')).toBeVisible();
         }
       });
     });
