@@ -41,7 +41,7 @@ export default class CopyLinkButton extends React.PureComponent<Props> {
         onCopy={this.onClick}
         options={{ debug: true }}
       >
-        <Button data-qa="copy-link" tabIndex={0}>
+        <Button data-qa="copy-link" data-link={link} tabIndex={0}>
           <Icon component={CopyLinkSVG} /> Copy link
         </Button>
       </CopyToClipboard>

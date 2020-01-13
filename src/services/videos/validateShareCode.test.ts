@@ -14,7 +14,12 @@ beforeEach(() => {
 
   const axiosMock = new MockAdapter(axios);
   axiosMock
-    .onGet(links.validateShareCode.getTemplatedLink({ shareCode: 'abc', id: 'user-id' }))
+    .onGet(
+      links.validateShareCode.getTemplatedLink({
+        shareCode: 'abc',
+        id: 'user-id',
+      }),
+    )
     .reply(200);
   axiosMock.onGet().reply(403);
 });
