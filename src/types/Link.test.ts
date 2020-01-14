@@ -1,13 +1,37 @@
 import queryString from 'query-string';
 import { Link } from './Link';
 
-test('returns link when not templated', () => {
-  const link = new Link({ href: 'a-link' });
+describe('non-templated links', () => {
+  test('returns the link it was given', () => {
+    const link = new Link({ href: 'a-link' });
 
-  expect(link.getOriginalLink()).toEqual('a-link');
+    expect(link.getOriginalLink()).toEqual('a-link');
+  });
+
+  test('isTemplated returns false', () => {
+    const link = new Link({ href: 'a-link' });
+
+    expect(link.isTemplated).toBe(false);
+  });
+
+  test('isTemplated returns false when given an explicitly non-templated link', () => {
+    const link = new Link({ href: 'a-link', templated: false });
+
+    expect(link.isTemplated).toBe(false);
+  });
 });
 
 describe('templated link', () => {
+  test('isTemplated returns true', () => {
+    const link = new Link({
+      href:
+        'https://teachers.testing-boclips.com/v1/videos?query={query}&size={size}&page={page}{&include_tag}',
+      templated: true,
+    });
+
+    expect(link.isTemplated).toBe(true);
+  });
+
   test('can interpolate query params', () => {
     const link = new Link({
       href:

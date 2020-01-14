@@ -77,9 +77,86 @@ export const video177 = Object.freeze({
   yourRating: 5,
   playback: {
     type: 'STREAM',
-    thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
-    streamUrl: 'https://cdn.kaltura.com/stream/147.mpd',
     duration: 'PT1M2S',
+    _links: {
+      hlsStream: {
+        href: 'https://cdn.kaltura.com/stream/147.mpd',
+      },
+      thumbnail: {
+        href: 'https://cdn.kaltura.com/stream/147.mpd',
+        templated: false,
+      },
+    },
+  },
+  badges: ['ad-free'],
+  bestFor: [{ label: 'Hook' }],
+  promoted: true,
+  type: {
+    name: 'educational',
+    id: 1,
+  },
+});
+
+export const videoWithTemplatedThumbnail = Object.freeze({
+  ...video177Slim,
+  title: 'KS3/4 Science: Demonstrating Chemistry',
+  description: 'Matthew Tosh shows us the science.',
+  releasedOn: '2018-02-11T10:12:33Z',
+  createdBy: 'cp1',
+  subjects: [
+    { id: 'maths-subject-id', name: 'Maths', links: {} },
+    { id: 'physics-subject-id', name: 'Physics', links: {} },
+  ],
+  rating: 3,
+  yourRating: 5,
+  playback: {
+    type: 'STREAM',
+    duration: 'PT1M2S',
+    _links: {
+      hlsStream: {
+        href: 'https://cdn.kaltura.com/stream/147.mpd',
+      },
+      thumbnail: {
+        href:
+          'https://cdnapisec.kaltura.com/p/1776261/thumbnail/entry_id/0_yk29dggt/width/{thumbnailWidth}/vid_slices/3/vid_slice/1',
+        templated: true,
+      },
+    },
+  },
+  badges: ['ad-free'],
+  bestFor: [{ label: 'Hook' }],
+  promoted: true,
+  type: {
+    name: 'educational',
+    id: 1,
+  },
+});
+
+export const videoWithoutTemplatedThumbnail = Object.freeze({
+  ...video177Slim,
+  title: 'KS3/4 Science: Demonstrating Chemistry',
+  description: 'Matthew Tosh shows us the science.',
+  releasedOn: '2018-02-11T10:12:33Z',
+  createdBy: 'cp1',
+  subjects: [
+    { id: 'maths-subject-id', name: 'Maths', links: {} },
+    { id: 'physics-subject-id', name: 'Physics', links: {} },
+  ],
+  rating: 3,
+  yourRating: 5,
+  playback: {
+    type: 'STREAM',
+    duration: 'PT1M2S',
+    _links: {
+      hlsStream: {
+        href: 'https://cdn.kaltura.com/stream/147.mpd',
+      },
+      thumbnail: {
+        href:
+          'https://cdnapisec.kaltura.com/p/1776261/thumbnail/entry_id/0_yk29dggt/width/1200/vid_slices/3/vid_slice/1',
+        templated: false,
+      },
+    },
   },
   badges: ['ad-free'],
   bestFor: [{ label: 'Hook' }],
@@ -102,9 +179,16 @@ const video147 = Object.freeze({
   ],
   playback: {
     type: 'STREAM',
-    thumbnailUrl: 'https://cdn.kaltura.com/thumbs/147.jpg',
-    streamUrl: 'https://cdn.kaltura.com/stream/147.mpd',
     duration: 'PT1M3S',
+    _links: {
+      hlsStream: {
+        href: 'https://cdn.kaltura.com/stream/147.mpd',
+      },
+      thumbnail: {
+        href: 'https://cdn.kaltura.com/stream/147.mpd',
+        templated: false,
+      },
+    },
   },
   badges: ['ad-free'],
   type: {
@@ -123,9 +207,13 @@ export const youtubeVideo1 = {
   subjects: [],
   playback: {
     type: 'YOUTUBE',
-    thumbnailUrl: 'https://cdn.kaltura.com/thumbs/177.jpg',
     id: 'youtubeId',
     duration: 'PT1M2S',
+    _links: {
+      thumbnail: {
+        href: 'https://cdn.kaltura.com/thumbs/177.jpg',
+      },
+    },
   },
   badges: ['youtube'],
   type: {

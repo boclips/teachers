@@ -587,10 +587,14 @@ interface VideoResource {
   badges: string[];
   createdBy: string;
   playback: {
-    streamUrl: string;
     duration: string;
     type: string;
-    thumbnailUrl: string;
+    _links?: {
+      thumbnail: {
+        href: string;
+        templated: boolean;
+      };
+    };
   };
   id: string;
   yourRating: number;

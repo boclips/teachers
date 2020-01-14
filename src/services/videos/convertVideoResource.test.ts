@@ -1,5 +1,10 @@
 import * as moment from 'moment';
-import { video177, youtubeVideo1 } from '../../../test-support/api-responses';
+import {
+  video177,
+  videoWithoutTemplatedThumbnail,
+  videoWithTemplatedThumbnail,
+  youtubeVideo1,
+} from '../../../test-support/api-responses';
 import { SubjectFactory } from '../../../test-support/factories';
 import { StreamPlayback, YoutubePlayback } from '../../types/Video';
 import convertVideoResource from './convertVideoResource';
@@ -23,7 +28,6 @@ test('converts a video with stream playback', () => {
   expect(video.rating).toEqual(3);
   expect(video.yourRating).toEqual(5);
   expect(video.createdBy).toEqual('cp1');
-  expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
   expect(video.subjects).toEqual([mathsSubject, physicsSubject]);
   expect(video.playback instanceof StreamPlayback).toBeTruthy();
   expect((video.playback as StreamPlayback).getUrl()).toEqual(
@@ -35,6 +39,22 @@ test('converts a video with stream playback', () => {
   expect(video.links.tag.getOriginalLink()).toBeTruthy();
   expect(video.links.logInteraction.getOriginalLink()).toBeTruthy();
   expect(video.promoted).toEqual(true);
+});
+
+test('converts a video with templated thumbnail', () => {
+  const video = convertVideoResource(videoWithTemplatedThumbnail);
+
+  expect(video.thumbnailUrl).toEqual(
+    'https://cdnapisec.kaltura.com/p/1776261/thumbnail/entry_id/0_yk29dggt/width/500/vid_slices/3/vid_slice/1',
+  );
+});
+
+test('converts a video without templated thumbnail', () => {
+  const video = convertVideoResource(videoWithoutTemplatedThumbnail);
+
+  expect(video.thumbnailUrl).toEqual(
+    'https://cdnapisec.kaltura.com/p/1776261/thumbnail/entry_id/0_yk29dggt/width/1200/vid_slices/3/vid_slice/1',
+  );
 });
 
 test('converts a video with youtube playback', () => {

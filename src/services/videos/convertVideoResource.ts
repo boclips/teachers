@@ -2,16 +2,27 @@ import moment from 'moment';
 import { Link } from '../../types/Link';
 import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
 
+const DEFAULT_THUMBNAIL_WIDTH = 500;
+
 function getPlaybackProperties(
   resource: any,
 ): StreamPlayback | YoutubePlayback {
   if (resource.playback.type === 'STREAM') {
-    return new StreamPlayback(resource.playback.streamUrl);
+    return new StreamPlayback(resource.playback._links.hlsStream.href);
   } else if (resource.playback.type === 'YOUTUBE') {
     return new YoutubePlayback(resource.playback.id);
   } else {
     throw Error(`No valid playback object found on resource: ${resource}`);
   }
+}
+
+function getEffectiveThumbnailUrl(resource: any) {
+  const thumbnailLink = new Link(resource.playback._links.thumbnail);
+  return thumbnailLink.isTemplated
+    ? thumbnailLink.getTemplatedLink({
+        thumbnailWidth: DEFAULT_THUMBNAIL_WIDTH,
+      })
+    : thumbnailLink.getOriginalLink();
 }
 
 export default function convertVideoResource(resource: any): Video {
@@ -22,7 +33,7 @@ export default function convertVideoResource(resource: any): Video {
     duration: moment.duration(resource.playback.duration),
     releasedOn: new Date(resource.releasedOn),
     createdBy: resource.createdBy,
-    thumbnailUrl: resource.playback.thumbnailUrl,
+    thumbnailUrl: getEffectiveThumbnailUrl(resource),
     playback: getPlaybackProperties(resource),
     subjects: resource.subjects,
     badges: resource.badges,
