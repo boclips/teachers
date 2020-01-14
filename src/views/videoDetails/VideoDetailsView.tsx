@@ -1,87 +1,63 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import querystring from 'query-string';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { replace } from 'connected-react-router';
+import { useLocation } from 'react-router';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
-import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
 import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
-import { Video } from '../../types/Video';
 import { ShareCodeDialog } from '../../components/video/ShareCodeDialog/ShareCodeDialog';
+import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
 
-interface OwnProps {
+interface Props {
   videoId: string;
 }
 
-interface StateProps {
-  requireShareCode: boolean;
-  video: Video | null;
-  userId: string;
-}
+export const VideoDetailsView = (props: Props) => {
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-interface DispatchProps {
-  fetchVideo: () => void;
-}
+  const userId = useSelector((state: State) => state.user && state.user.id);
+  const video = useSelector((state: State) =>
+    getVideoById(state, props.videoId),
+  );
 
-export class VideoDetailsView extends PureComponent<
-  StateProps & DispatchProps & RouteComponentProps & OwnProps
-> {
-  public render() {
-    return (
-      <PageLayout
-        title={this.props.video && this.props.video.title}
-        showNavigation={true}
-        showFooter={true}
-        showSearchBar={true}
-      >
-        <section data-qa="video-details-page">
-          <section className="video-details-page" data-qa="video-details">
-            <VideoDetails video={this.props.video} />
-          </section>
-        </section>
-        {this.props.requireShareCode && <ShareCodeDialog />}
-      </PageLayout>
-    );
-  }
+  const params = querystring.parse(location.search);
+  const checkShareCode =
+    !!params.share && !!params.referer && params.referer !== 'anonymous';
 
-  public componentDidMount() {
-    this.props.fetchVideo();
-    this.setUpReferer();
-  }
+  useEffect(() => {
+    dispatch(fetchVideoAction(props.videoId));
+  }, [dispatch, props.videoId]);
 
-  private setUpReferer() {
-    if (
-      this.props.userId ||
-      this.props.history.location.search.indexOf('referer=') === -1
-    ) {
-      this.props.history.push({
-        pathname: `/videos/${this.props.videoId}`,
-        search: `?referer=${this.props.userId || 'anonymous'}`,
-      });
+  useEffect(() => {
+    if ((userId || !params.referer) && userId !== params.referer) {
+      dispatch(
+        replace({
+          pathname: `/videos/${props.videoId}`,
+          search: querystring.stringify({
+            ...params,
+            referer: userId || 'anonymous',
+          }),
+        }),
+      );
     }
-  }
-}
+  }, [dispatch, params, params.referer, props.videoId, userId]);
 
-const mapStateToProps = (state: State, props: OwnProps): StateProps => {
-  const params = querystring.parse(state.router.location.search);
-
-  return {
-    video: getVideoById(state, props.videoId),
-    requireShareCode: !!params.share,
-    userId: state.user ? state.user.id : undefined,
-  };
+  return (
+    <PageLayout
+      title={video && video.title}
+      showNavigation={true}
+      showFooter={true}
+      showSearchBar={true}
+    >
+      <section data-qa="video-details-page">
+        <section className="video-details-page" data-qa="video-details">
+          <VideoDetails video={video} />
+        </section>
+      </section>
+      {checkShareCode && <ShareCodeDialog userId={params.referer as string} />}
+    </PageLayout>
+  );
 };
-
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  ownProps: OwnProps,
-): DispatchProps => ({
-  fetchVideo: () => dispatch(fetchVideoAction(ownProps.videoId)),
-});
-
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withRouter(VideoDetailsView));

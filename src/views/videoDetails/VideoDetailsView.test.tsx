@@ -2,6 +2,10 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
+import { createMemoryHistory } from 'history';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import reduceReducers from 'reduce-reducers';
 import { By } from '../../../test-support/By';
 import {
   CollectionsFactory,
@@ -14,8 +18,13 @@ import {
 } from '../../../test-support/factories';
 import VideoPlayer from '../../components/video/player/VideoPlayer';
 import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
-import { renderWithStore } from '../../../test-support/renderWithStore';
-import VideoDetailsView from './VideoDetailsView';
+import {
+  renderWithCreatedStore,
+  renderWithStore,
+} from '../../../test-support/renderWithStore';
+import { createReducer } from '../../app/redux/createReducer';
+import { videoHandlers } from '../../components/video/redux/reducers/videoReducer';
+import { VideoDetailsView } from './VideoDetailsView';
 
 it('dispatches FETCH_VIDEO when mounted', () => {
   const store = MockStoreFactory.sample({
@@ -68,23 +77,46 @@ it('renders video details when the video has loaded', () => {
 });
 
 it(`displays the sharecode modal for a shared video`, async () => {
-  const wrapper = renderWithStore(<VideoDetailsView videoId={'123'} />, {
-    initialState: {
-      router: RouterFactory.sample({
-        location: {
-          search: '?referer=user-123&share=true',
-          pathname: '',
-          hash: '',
-          state: null,
-        },
-      }),
-      links: LinksFactory.sampleAnonymous(),
-      collections: CollectionsFactory.sample(),
-      entities: EntitiesFactory.sample({
-        videos: { byId: { '123': VideoFactory.sample() } },
-      }),
-    },
+  const history = createMemoryHistory({
+    initialEntries: ['/videos/123?referer=user-123&share=true'],
   });
+
+  const initialState = {
+    entities: EntitiesFactory.sample({
+      videos: {
+        byId: {
+          '123': VideoFactory.sample({
+            id: '123',
+            title: 'My Test Video',
+            description: 'Video description',
+          }),
+        },
+      },
+      collections: {
+        byId: {},
+      },
+    }),
+    collections: CollectionsFactory.sample(),
+    videos: {
+      promotedVideoIds: ['video-id'],
+    },
+    router: RouterFactory.sample(),
+    links: LinksFactory.sample(),
+  };
+
+  const store = createStore(
+    reduceReducers(
+      combineReducers({ router: connectRouter(history) }),
+      createReducer(...videoHandlers),
+    ),
+    initialState,
+    applyMiddleware(routerMiddleware(history)),
+  );
+  const wrapper = renderWithCreatedStore(
+    <VideoDetailsView videoId="123" />,
+    store,
+    history,
+  );
 
   const button = wrapper.getByText('Watch video');
 

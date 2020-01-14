@@ -1,4 +1,3 @@
-import queryString from 'querystring';
 import React, { useState } from 'react';
 import { Button, Input } from 'antd';
 import { useSelector } from 'react-redux';
@@ -8,7 +7,11 @@ import Bodal from '../../common/Bodal';
 import State from '../../../types/State';
 import './ShareCodeDialog.less';
 
-export const ShareCodeDialog = React.memo(() => {
+interface Props {
+  userId: string;
+}
+
+export const ShareCodeDialog = React.memo((props: Props) => {
   const validationLink = useSelector(
     (state: State) => state.links.validateShareCode,
   );
@@ -16,15 +19,8 @@ export const ShareCodeDialog = React.memo(() => {
   const [visible, setVisible] = useState(true);
   const [codeInvalid, setCodeInvalid] = useState(false);
 
-  const search = useSelector((state: State) => state.router.location.search);
-  const refererId = queryString.decode(search.substr(1)).referer as string;
-
-  if (!refererId) {
-    return null;
-  }
-
   const handleSubmit = event => {
-    validateShareCode(validationLink, refererId, shareCode).then(valid => {
+    validateShareCode(validationLink, props.userId, shareCode).then(valid => {
       if (valid) {
         setVisible(false);
       } else {

@@ -25,7 +25,7 @@ import {
   renderWithStore,
 } from '../../../test-support/renderWithStore';
 import State from '../../types/State';
-import VideoDetailsView from './VideoDetailsView';
+import { VideoDetailsView } from './VideoDetailsView';
 
 const collection = VideoCollectionFactory.sample({
   id: 'collection-id',
@@ -140,7 +140,7 @@ describe(`Video details view`, () => {
     await context.findByText('My Test Video');
 
     await wait(() => {
-      if (history.location.search !== '?referer=anonymous') {
+      if (history.location.search.match(/referer=anonymous/)) {
         throw Error();
       }
     });

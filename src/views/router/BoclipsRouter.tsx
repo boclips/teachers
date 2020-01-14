@@ -22,7 +22,7 @@ import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
-import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import { TrialExpiredView } from '../trial/TrialExpiredView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 

@@ -30,7 +30,7 @@ describe('ShareCodeDialog', () => {
   it(`disables the watch video button while no shareCode is provided`, async () => {
     const wrapper = render(
       <Provider store={store}>
-        <ShareCodeDialog />
+        <ShareCodeDialog userId="test-id" />
       </Provider>,
     );
 
@@ -44,7 +44,7 @@ describe('ShareCodeDialog', () => {
   it(`enables the watch video button when a shareCode is provided`, async () => {
     const wrapper = render(
       <Provider store={store}>
-        <ShareCodeDialog />
+        <ShareCodeDialog userId="test-id" />
       </Provider>,
     );
 
@@ -87,7 +87,7 @@ describe('ShareCodeDialog', () => {
       it(message, async () => {
         const wrapper = render(
           <Provider store={store}>
-            <ShareCodeDialog />
+            <ShareCodeDialog userId="test-id" />
           </Provider>,
         );
         const button = wrapper.getByText('Watch video').closest('button');

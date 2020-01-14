@@ -18,7 +18,7 @@ import { PublicCollectionListView } from '../collection/PublicCollectionListView
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
-import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import BoclipsRouter from './BoclipsRouter';
 
 test('shows video details view on /videos/{id}', () => {
