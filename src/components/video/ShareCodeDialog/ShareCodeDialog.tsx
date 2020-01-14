@@ -52,7 +52,7 @@ export const ShareCodeDialog = React.memo(() => {
         'share-code-dialog--invalid': codeInvalid,
       })}
     >
-      <form onSubmit={handleSubmit}>
+      <form action="#" onSubmit={handleSubmit}>
         <Input
           size={'large'}
           type="text"
