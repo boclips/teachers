@@ -22,7 +22,7 @@ export const ShareButton = React.memo<Props>(props => {
 
   return (
     <React.Fragment>
-      <Button onClick={() => setVisible(true)}>
+      <Button onClick={() => setVisible(true)} data-qa={'share-button'}>
         <Icon component={ShareSVG} />
         <span>Share</span>
       </Button>
