@@ -13,6 +13,7 @@ import {
   LinksFactory,
   MockStoreFactory,
   RouterFactory,
+  UserProfileFactory,
   VideoFactory,
   VideoIdFactory,
 } from '../../../test-support/factories';
@@ -102,6 +103,9 @@ it(`displays the sharecode modal for a shared video`, async () => {
     },
     router: RouterFactory.sample(),
     links: LinksFactory.sample(),
+    authentication: {
+      status: 'anonymous',
+    },
   };
 
   const store = createStore(
@@ -125,6 +129,57 @@ it(`displays the sharecode modal for a shared video`, async () => {
   expect(wrapper.getByText('Enter code to watch video')).toBeInTheDocument();
 });
 
+it(`does not show the sharecode modal for a logged in user`, async () => {
+  const history = createMemoryHistory({
+    initialEntries: ['/videos/123?referer=user-123&share=true'],
+  });
+
+  const initialState = {
+    entities: EntitiesFactory.sample({
+      videos: {
+        byId: {
+          '123': VideoFactory.sample({
+            id: '123',
+            title: 'My Test Video',
+            description: 'Video description',
+          }),
+        },
+      },
+      collections: {
+        byId: {},
+      },
+    }),
+    collections: CollectionsFactory.sample(),
+    videos: {
+      promotedVideoIds: ['video-id'],
+    },
+    router: RouterFactory.sample(),
+    links: LinksFactory.sample(),
+    user: UserProfileFactory.sample(),
+    authentication: {
+      status: 'authenticated',
+    },
+  };
+
+  const store = createStore(
+    reduceReducers(
+      combineReducers({ router: connectRouter(history) }),
+      createReducer(...videoHandlers),
+    ),
+    initialState,
+    applyMiddleware(routerMiddleware(history)),
+  );
+  const wrapper = renderWithCreatedStore(
+    <VideoDetailsView videoId="123" />,
+    store,
+    history,
+  );
+
+  const button = wrapper.queryByText('Watch video');
+
+  expect(button).not.toBeInTheDocument();
+});
+
 it(`does not require a sharecode for existing video links`, () => {
   const wrapper = renderWithStore(<VideoDetailsView videoId={'123'} />, {
     initialState: {
@@ -141,6 +196,9 @@ it(`does not require a sharecode for existing video links`, () => {
       entities: EntitiesFactory.sample({
         videos: { byId: { '123': VideoFactory.sample() } },
       }),
+      authentication: {
+        status: 'anonymous',
+      },
     },
   });
 
@@ -166,6 +224,9 @@ it(`does not render a share button when user is anonymous`, () => {
       entities: EntitiesFactory.sample({
         videos: { byId: { '123': VideoFactory.sample() } },
       }),
+      authentication: {
+        status: 'anonymous',
+      },
     },
   });
 

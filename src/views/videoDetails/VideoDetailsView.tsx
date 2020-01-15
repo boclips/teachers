@@ -18,6 +18,9 @@ export const VideoDetailsView = (props: Props) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const authenticated = useSelector(
+    (state: State) => state.authentication.status === 'authenticated',
+  );
   const userId = useSelector((state: State) => state.user && state.user.id);
   const video = useSelector((state: State) =>
     getVideoById(state, props.videoId),
@@ -25,7 +28,10 @@ export const VideoDetailsView = (props: Props) => {
 
   const params = querystring.parse(location.search);
   const checkShareCode =
-    !!params.share && !!params.referer && params.referer !== 'anonymous';
+    !authenticated &&
+    !!params.share &&
+    !!params.referer &&
+    params.referer !== 'anonymous';
 
   useEffect(() => {
     dispatch(fetchVideoAction(props.videoId));
