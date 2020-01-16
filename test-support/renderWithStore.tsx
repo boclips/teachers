@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { applyMiddleware, createStore, Store } from 'redux';
+import { History } from 'history';
 import { createReducer } from '../src/app/redux/createReducer';
 import State from '../src/types/State';
 
@@ -15,6 +16,7 @@ interface Options {
 
 export interface ResultingContext extends RenderResult {
   store: Store;
+  history: History;
 }
 
 export const renderWithStore = (
@@ -47,9 +49,10 @@ export const renderWithCreatedStore = (
     ...rtlRender(ui, {
       wrapper: Wrapper,
     }),
-    // Adding `store` to the returned utilities to allow us
+    // Adding `store`, and `history` to the returned utilities to allow us
     // To reference it in our tests (just try to avoid using
     // This to test implementation details).
     store,
+    history,
   };
 };
