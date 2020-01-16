@@ -11,6 +11,7 @@ import {
   video177,
 } from './api-responses';
 import MockFetchVerify from './MockFetchVerify';
+import { VideoResource } from './factories';
 
 interface VideoQueryOptions {
   query?: string;
@@ -32,7 +33,7 @@ interface CollectionOptions {
 }
 
 interface SingleVideoOptions {
-  video: any;
+  video: VideoResource;
 }
 
 export default class ApiStub {

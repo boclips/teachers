@@ -14,6 +14,7 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
+  VideoResourceFactory,
 } from '../../../../test-support/factories';
 import MockFetchVerify from '../../../../test-support/MockFetchVerify';
 import { renderWithStore } from '../../../../test-support/renderWithStore';
@@ -23,18 +24,21 @@ import { organizeById } from '../../../utils/entityMap';
 import { fetchVideosByIdsAction } from '../../video/redux/actions/fetchVideosByIdsAction';
 import { videoHandlers } from '../../video/redux/reducers/videoReducer';
 import fetchVideosForCollectionMiddleware from '../redux/middleware/fetchVideosForCollectionMiddleware';
+import { Link } from '../../../types/Link';
 import CollectionCardContainer from './CollectionCardContainer';
 
 describe('need to fetch videos scenarios', () => {
   test('fetches videos when no videos are loaded', () => {
-    const video = VideoFactory.sample({ id: '123' });
+    const video = VideoResourceFactory.sample({ id: '123' });
 
     const collection = VideoCollectionFactory.sample({
       id: 'target',
       videoIds: [
         {
           value: video.id,
-          links: video.links,
+          links: {
+            self: new Link(video._links.self),
+          },
         },
       ],
     });
@@ -56,7 +60,9 @@ describe('need to fetch videos scenarios', () => {
         videos: [
           {
             value: video.id,
-            links: video.links,
+            links: {
+              self: new Link(video._links.self),
+            },
           },
         ],
       }),
@@ -64,29 +70,32 @@ describe('need to fetch videos scenarios', () => {
   });
 
   test('fetches at most the 4 videos when no videos are loaded', () => {
-    const videos = [
-      VideoFactory.sample({ id: '1' }),
-      VideoFactory.sample({ id: '2' }),
-      VideoFactory.sample({ id: '3' }),
-      VideoFactory.sample({ id: '4' }),
-      VideoFactory.sample({ id: '5' }),
-      VideoFactory.sample({ id: '6' }),
+    const videoResources = [
+      VideoResourceFactory.sample({ id: '1' }),
+      VideoResourceFactory.sample({ id: '2' }),
+      VideoResourceFactory.sample({ id: '3' }),
+      VideoResourceFactory.sample({ id: '4' }),
+      VideoResourceFactory.sample({ id: '5' }),
+      VideoResourceFactory.sample({ id: '6' }),
     ];
 
     const collection = VideoCollectionFactory.sample({
       id: 'target',
-      videoIds: videos.map(v => ({ value: v.id, links: v.links })),
+      videoIds: videoResources.map(v => ({
+        value: v.id,
+        links: { self: new Link(v._links.self) },
+      })),
     });
 
     const store = createMockStore(collection, []);
 
     new ApiStub()
-      .fetchVideo({ video: videos[0] })
-      .fetchVideo({ video: videos[1] })
-      .fetchVideo({ video: videos[2] })
-      .fetchVideo({ video: videos[3] })
-      .fetchVideo({ video: videos[4] })
-      .fetchVideo({ video: videos[5] });
+      .fetchVideo({ video: videoResources[0] })
+      .fetchVideo({ video: videoResources[1] })
+      .fetchVideo({ video: videoResources[2] })
+      .fetchVideo({ video: videoResources[3] })
+      .fetchVideo({ video: videoResources[4] })
+      .fetchVideo({ video: videoResources[5] });
 
     mount(
       <Provider store={store}>

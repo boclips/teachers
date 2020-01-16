@@ -570,7 +570,7 @@ export class MockStoreFactory {
   };
 }
 
-interface VideoResource {
+export interface VideoResource {
   bestFor: Array<{ label: string }>;
   _links: {
     logInteraction: { href: string };
