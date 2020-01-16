@@ -167,54 +167,69 @@ export class UserProfileLinksFactory {
 }
 
 export class LinksFactory {
-  public static sample(arg: Partial<Links> = {}): Links {
+  public static sample(arg: Partial<Links> = {}, prefix: string = ''): Links {
     return Object.freeze({
-      videos: arg.videos || new Link({ href: '/videos' }),
+      videos: arg.videos || new Link({ href: `${prefix}${prefix}/videos` }),
       searchPublicCollections:
         arg.searchPublicCollections ||
-        new Link({ href: '/collections?query={query}', templated: true }),
+        new Link({
+          href: `${prefix}/collections?query={query}`,
+          templated: true,
+        }),
       discoverCollections:
         arg.discoverCollections ||
-        new Link({ href: '/collections?query={query}', templated: true }),
-      video: arg.video || new Link({ href: '/videos/{id}', templated: true }),
+        new Link({
+          href: `${prefix}/collections?query={query}`,
+          templated: true,
+        }),
+      video:
+        arg.video ||
+        new Link({ href: `${prefix}/videos/{id}`, templated: true }),
       createNoSearchResultsEvent:
-        arg.createNoSearchResultsEvent || new Link({ href: '/events/xxx' }),
+        arg.createNoSearchResultsEvent ||
+        new Link({ href: `${prefix}/events/xxx` }),
       activate: arg.activate,
       profile:
-        arg.profile || new Link({ href: '/v1/users/{id}', templated: true }),
+        arg.profile ||
+        new Link({ href: `${prefix}/v1/users/{id}`, templated: true }),
       createCollection:
-        arg.createCollection || new Link({ href: '/collections' }),
+        arg.createCollection || new Link({ href: `${prefix}/collections` }),
       myCollections:
-        arg.myCollections || new Link({ href: '/collections?owner=abc' }),
+        arg.myCollections ||
+        new Link({ href: `${prefix}/collections?owner=abc` }),
       publicCollections:
-        arg.publicCollections || new Link({ href: '/collections?public' }),
+        arg.publicCollections ||
+        new Link({ href: `${prefix}/collections?public` }),
       bookmarkedCollections:
-        arg.publicCollections || new Link({ href: '/collections?bookmarked' }),
-      collection: arg.collection || new Link({ href: '/collections/xxx' }),
-      createAccount: arg.createAccount || new Link({ href: '/users' }),
-      subjects: arg.subjects || new Link({ href: '/subjects' }),
-      tags: arg.tags || new Link({ href: '/tags' }),
-      disciplines: arg.disciplines || new Link({ href: '/disciplines' }),
-      countries: arg.countries || new Link({ href: '/countries' }),
+        arg.publicCollections ||
+        new Link({ href: `${prefix}/collections?bookmarked` }),
+      collection:
+        arg.collection || new Link({ href: `${prefix}/collections/xxx` }),
+      createAccount: arg.createAccount || new Link({ href: `${prefix}/users` }),
+      subjects: arg.subjects || new Link({ href: `${prefix}/subjects` }),
+      tags: arg.tags || new Link({ href: `${prefix}/tags` }),
+      disciplines:
+        arg.disciplines || new Link({ href: `${prefix}/disciplines` }),
+      countries: arg.countries || new Link({ href: `${prefix}/countries` }),
       validateShareCode:
         arg.validateShareCode ||
         new Link({
-          href: '/users/{id}/shareCode/{shareCode}',
+          href: `${prefix}/users/{id}/shareCode/{shareCode}`,
           templated: true,
         }),
     });
   }
 
-  public static sampleAnonymous(): Links {
+  public static sampleAnonymous(prefix: string = ''): Links {
     return Object.freeze({
-      video: new Link({ href: '/videos/{id}', templated: true }),
-      createNoSearchResultsEvent: new Link({ href: '' }), // TODO this field should be optional so we do not use it in anonymous user setup
+      video: new Link({ href: `${prefix}/videos/{id}`, templated: true }),
+      createNoSearchResultsEvent: new Link({ href: `` }), // TODO this field should be optional so we do not use it in anonymous user setup
       publicCollections: new Link({
-        href: '/collections?projection=list&public=true&page=0&size=30',
+        href: `${prefix}/collections?projection=list&public=true&page=0&size=30`,
         templated: false,
       }),
-      createAccount: new Link({ href: '/users', templated: false }),
-      subjects: new Link({ href: '/subjects', templated: false }),
+      createAccount: new Link({ href: `${prefix}/users`, templated: false }),
+      subjects: new Link({ href: `${prefix}/subjects`, templated: false }),
     });
   }
 }

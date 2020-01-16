@@ -37,9 +37,10 @@ interface SingleVideoOptions {
 }
 
 export default class ApiStub {
-  private readonly prefix: string = 'https://api.example.com';
-
-  public constructor(linksDefault: any = links) {
+  public constructor(
+    linksDefault: any = links,
+    private prefix: string = 'https://api.example.com',
+  ) {
     MockFetchVerify.clear();
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
     this.fetchCountries()
