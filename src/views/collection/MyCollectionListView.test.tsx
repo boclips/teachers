@@ -1,6 +1,6 @@
 import { ConnectedRouter } from 'connected-react-router';
 import { mount } from 'enzyme';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from '../../../test-support/By';

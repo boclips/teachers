@@ -1,5 +1,5 @@
 import { mount, ReactWrapper } from 'enzyme';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 import React from 'react';
 import App from '../../src/app/App';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';

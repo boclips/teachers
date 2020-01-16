@@ -1,5 +1,5 @@
 import { mount } from 'enzyme';
-import createMemoryHistory from 'history/createMemoryHistory';
+import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { ClickableCard, ClickableCardForRouter, Props } from './ClickableCard';
