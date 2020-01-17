@@ -370,21 +370,6 @@ describe('AnalyticsService', () => {
           );
         });
 
-        it('track user explores more collections on homepage', () => {
-          analyticsService.trackHomepageExploreCollections();
-
-          expect(mockMixpanel.track).toHaveBeenCalledWith(
-            'HOMEPAGE_EXPLORE_COLLECTIONS',
-          );
-
-          if (appcuesInitialised) {
-            expect(mockAppcues.track).toHaveBeenCalledWith(
-              'HOMEPAGE_EXPLORE_COLLECTIONS',
-              undefined,
-            );
-          }
-        });
-
         it('track when user applies search filters', () => {
           const data = { some: 'data' };
           analyticsService.trackSearchFiltersApplied(data);

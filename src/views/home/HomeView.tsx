@@ -1,14 +1,11 @@
-import { Button } from 'antd';
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
-import React, { PureComponent, SyntheticEvent } from 'react';
-import { Link } from 'react-router-dom';
+import React, { PureComponent } from 'react';
 import PublicCollectionsGrid from '../../components/collection/grid/public/PublicCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
-import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { VideosAndDisciplinesSection } from './VideosAndDisciplinesSection';
 
 import './HomeView.less';
@@ -52,30 +49,11 @@ export default class HomeView extends PureComponent {
                   </section>
                 </Col>
               </Row>
-              <Row>
-                <Col>
-                  <section className="more-collections">
-                    <Link
-                      to="/public-collections"
-                      onClick={this.track}
-                      tabIndex={-1}
-                    >
-                      <Button htmlType="button" size="large">
-                        Explore more collections
-                      </Button>
-                    </Link>
-                  </section>
-                </Col>
-              </Row>
             </Content>
           </section>
           <BoclipsFooter />
         </section>
       </React.Fragment>
     );
-  }
-
-  private track(_: SyntheticEvent) {
-    AnalyticsFactory.externalAnalytics().trackHomepageExploreCollections();
   }
 }

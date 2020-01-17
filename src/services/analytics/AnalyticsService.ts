@@ -326,11 +326,6 @@ export default class AnalyticsService {
     this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_CLOSED);
   }
 
-  public trackHomepageExploreCollections() {
-    this.mixpanelInstance.track(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS);
-    this.trackAppcues(EventTypes.HOMEPAGE_EXPLORE_COLLECTIONS, undefined);
-  }
-
   public trackMoreCollectionsLoaded(typeOfCollections: any) {
     const payload = {
       type: typeOfCollections,

@@ -14,7 +14,6 @@ import { BookmarkedCollectionListView } from '../collection/BookmarkedCollection
 import CollectionDetailsView from '../collection/CollectionDetailsView';
 import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
 import MyCollectionListView from '../collection/MyCollectionListView';
-import { PublicCollectionListView } from '../collection/PublicCollectionListView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
@@ -97,21 +96,6 @@ describe('when authorised', () => {
     );
 
     const collectionsView = wrapper.find(MyCollectionListView);
-    expect(collectionsView).toExist();
-  });
-
-  test('shows public collections view on /public-collections', () => {
-    const history = createMemoryHistory({
-      initialEntries: ['/public-collections'],
-    });
-
-    const wrapper = mount(
-      <Provider store={buildStore()}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const collectionsView = wrapper.find(PublicCollectionListView);
     expect(collectionsView).toExist();
   });
 
