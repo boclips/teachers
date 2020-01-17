@@ -12,7 +12,7 @@ import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import '../buttons/CollectionButtonsContainer.less';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import { LessonPlan } from '../lessonPlan/LessonPlan';
-import CollectionTitle from './CollectionTitle';
+import { CollectionTitle } from './CollectionTitle';
 
 import './CollectionHeader.less';
 

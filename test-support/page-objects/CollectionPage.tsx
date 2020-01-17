@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import App from '../../src/app/App';
 import CollectionHeader from '../../src/components/collection/header/CollectionHeader';
-import CollectionTitle from '../../src/components/collection/header/CollectionTitle';
+import { CollectionTitle } from '../../src/components/collection/header/CollectionTitle';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';

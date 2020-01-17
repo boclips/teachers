@@ -1,63 +1,53 @@
-import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import { By } from '../../../../test-support/By';
+import { render } from '@testing-library/react';
 import { VideoCollectionFactory } from '../../../../test-support/factories';
-import CollectionTitle from './CollectionTitle';
+import { CollectionTitle } from './CollectionTitle';
 
-const getComponent = collection =>
-  mount(
+const renderCollectionTitle = collection =>
+  render(
     <Router history={createMemoryHistory()}>
       <CollectionTitle collection={collection} />
     </Router>,
   );
 
 test('renders title', () => {
-  const collection = VideoCollectionFactory.sample({ title: 'hello' });
-  const wrapper = getComponent(collection);
-
-  expect(wrapper.find(By.dataQa('collection-title')).text()).toEqual('hello');
+  const collectionTitle = renderCollectionTitle(
+    VideoCollectionFactory.sample({ title: 'My collection' }),
+  );
+  expect(collectionTitle.getByText('My collection')).toBeInTheDocument();
 });
 
-test('Renders globe icon when collection is public and mine', () => {
-  const collection = VideoCollectionFactory.sample({
-    isPublic: true,
-    isMine: true,
+describe('Visibility icon', () => {
+  it('show private icon when collection is not public and mine', () => {
+    const collectionTitle = renderCollectionTitle(
+      VideoCollectionFactory.sample({
+        isPublic: false,
+        isMine: true,
+      }),
+    );
+
+    const icon = collectionTitle.queryByTestId('collection-visibility');
+    expect(icon).toBeInTheDocument();
   });
 
-  const wrapper = getComponent(collection);
-  const logo = wrapper.find(By.dataQa('collection-visibility'));
-  expect(logo.prop('className')).toContain('collection-title__logo--public');
-});
+  const noLogoCases = {
+    publicAndMine: [true, true],
+    publicAndNotMine: [true, false],
+    privateAndNotMine: [false, false],
+  };
 
-test('Renders padlock icon when collection is private and mine', () => {
-  const collection = VideoCollectionFactory.sample({
-    isPublic: false,
-    isMine: true,
+  it.each([
+    noLogoCases.publicAndMine,
+    noLogoCases.publicAndNotMine,
+    noLogoCases.privateAndNotMine,
+  ])('does not show any visibility icon', (isPublic, isMine) => {
+    const component = renderCollectionTitle(
+      VideoCollectionFactory.sample({ isPublic, isMine }),
+    );
+
+    const icon = component.queryByTestId('collection-visibility');
+    expect(icon).not.toBeInTheDocument();
   });
-
-  const wrapper = getComponent(collection);
-  const logo = wrapper.find(By.dataQa('collection-visibility'));
-  expect(logo.prop('className')).toContain('collection-title__logo--private');
-});
-
-test('Does not render padlock icon when not mine', () => {
-  const collection = VideoCollectionFactory.sample({
-    isPublic: true,
-    isMine: false,
-  });
-
-  const wrapper = getComponent(collection);
-  expect(wrapper.find(By.dataQa('collection-visibility'))).toHaveLength(0);
-});
-
-test('Does not render globe icon when not mine', () => {
-  const collection = VideoCollectionFactory.sample({
-    isPublic: false,
-    isMine: false,
-  });
-
-  const wrapper = getComponent(collection);
-  expect(wrapper.find(By.dataQa('collection-visibility'))).toHaveLength(0);
 });

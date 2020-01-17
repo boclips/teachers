@@ -13,7 +13,7 @@ import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import { LessonPlan } from '../lessonPlan/LessonPlan';
 import CollectionHeader, { Props } from './CollectionHeader';
-import CollectionTitle from './CollectionTitle';
+import { CollectionTitle } from './CollectionTitle';
 
 type CollectionCardRenderTestData<T = boolean> = Array<{
   mode: Props['mode'];
