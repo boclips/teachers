@@ -12,7 +12,8 @@ import { onboardUser, UpdateUserRequest } from './updateUser';
 jest.mock('../analytics/AnalyticsFactory');
 
 const links = LinksFactory.sample({
-  profile: new Link({ href: '/activate' }),
+  profile: new Link({ href: '/profile' }),
+  activate: new Link({ href: '/activate' }),
 });
 
 const userProfile = UserProfileFactory.sample({
@@ -31,7 +32,7 @@ AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 describe('when activate link present', () => {
   describe('when user activated successfully', () => {
     beforeEach(() => {
-      MockFetchVerify.put('/activate', undefined, 201);
+      MockFetchVerify.put('/profile', undefined, 201);
     });
 
     it('registers activation complete event', async () => {
@@ -55,7 +56,7 @@ describe('when activate link present', () => {
 
 describe('when user cannot be activated', () => {
   beforeEach(() => {
-    MockFetchVerify.put('/activate', null, 403);
+    MockFetchVerify.put('/profile', null, 403);
   });
 
   it('does not publish event to web analytics', () => {
@@ -66,8 +67,8 @@ describe('when user cannot be activated', () => {
 
 describe('when no activate link', () => {
   it('does not throw', () => {
-    expect(() =>
+    expect(
       onboardUser(LinksFactory.sample(), request, userProfile.email),
-    ).not.toThrow();
+    ).rejects.toBeUndefined();
   });
 });

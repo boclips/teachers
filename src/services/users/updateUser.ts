@@ -22,8 +22,8 @@ export function onboardUser(
   request: UpdateUserRequest,
   email: string,
 ): Promise<void> {
-  if (userCannotUpdate(links)) {
-    Promise.reject();
+  if (userCannotActivate(links) || userCannotUpdate(links)) {
+    return Promise.reject();
   }
 
   return updateUser(links, request, () => {
@@ -37,10 +37,14 @@ export function editUser(
   request: UpdateUserRequest,
 ): Promise<void> {
   if (userCannotUpdate(links)) {
-    Promise.reject();
+    return Promise.reject();
   }
 
   return updateUser(links, request);
+}
+
+function userCannotActivate(links: Links) {
+  return !links.activate;
 }
 
 function userCannotUpdate(links: Links) {
@@ -52,5 +56,10 @@ function updateUser(
   request: UpdateUserRequest,
   callback?: () => void,
 ) {
-  return axios.put(links.profile.getOriginalLink(), request).then(callback);
+  return axios
+    .put(links.profile.getOriginalLink(), request)
+    .then(callback)
+    .catch(error => {
+      console.error('An error occurred while updating the user', error);
+    });
 }

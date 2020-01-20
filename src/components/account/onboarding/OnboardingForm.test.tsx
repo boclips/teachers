@@ -18,7 +18,12 @@ import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
 
-jest.mock('../../../services/users/updateUser');
+jest.mock('../../../services/users/updateUser', () => ({
+  onboardUser: jest.fn().mockReturnValue(Promise.resolve()),
+}));
+jest.mock('../../../services/schools/searchSchools', () => ({
+  searchSchools: jest.fn().mockResolvedValue([]),
+}));
 
 AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
@@ -30,7 +35,6 @@ const links = LinksFactory.sample({
 describe('onboarding form', () => {
   let wrapper;
   beforeEach(() => {
-    mockOnboardUser.mockReturnValue(Promise.resolve());
     wrapper = mount(
       <Provider
         store={MockStoreFactory.sample({

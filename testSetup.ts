@@ -5,6 +5,7 @@ import * as AxiosLogger from 'axios-logger';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
+import { cleanup } from '@testing-library/react';
 import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
 import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
@@ -57,6 +58,11 @@ jest.mock(
 
 beforeEach(() => {
   FakeBoclipsAnalytics.reset();
+});
+
+afterEach(() => {
+  cleanup();
+  document.body.outerHTML = '';
 });
 
 // Setup for using @testing-library/react and @testing-library/dom
