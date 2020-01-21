@@ -81,7 +81,7 @@ const myCollection = VideoCollectionFactory.sample({
     self: new Link({ href: '' }),
     edit: new Link({ href: '' }),
     remove: new Link({ href: '' }),
-    bookmark: new Link({ href: ''}),
+    bookmark: new Link({ href: '' }),
   },
 });
 

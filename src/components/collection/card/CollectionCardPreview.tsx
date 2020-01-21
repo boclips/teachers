@@ -67,4 +67,25 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
       </Row>
     );
   }
+
+  public static Skeleton = () => (
+    <Row
+      type="flex"
+      gutter={[4, 4]}
+      className={'skeleton ant-skeleton ant-skeleton-active'}
+    >
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+    </Row>
+  );
 }

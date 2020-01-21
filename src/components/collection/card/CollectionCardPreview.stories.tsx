@@ -66,4 +66,5 @@ storiesOf('CollectionCardSearchPreview', module)
       collection={getCollection(5)}
       videos={videos.slice(0, 6)}
     />
-  ));
+  ))
+  .add('Skeleton', () => <CollectionCardPreview.Skeleton />);
