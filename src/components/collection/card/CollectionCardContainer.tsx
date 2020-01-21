@@ -9,7 +9,6 @@ import {
   VideosForCollectionRequest,
 } from '../../video/redux/actions/fetchVideosByIdsAction';
 import { getVideosByIds } from '../../video/redux/reducers/videoReducer';
-import { CollectionCardTiny } from './CollectionCardTiny';
 import { CollectionCard } from './CollectionCard';
 
 type Props = OwnProps & DispatchProps & StateProps;
@@ -33,18 +32,13 @@ class CollectionCardContainer extends React.PureComponent<Props> {
   public render() {
     const videos = this.props.videos.filter(video => video !== undefined);
 
-    if (this.props.mode === 'tiny') {
-      return (
-        <CollectionCardTiny
-          collection={this.props.collection}
-          videos={videos}
-        />
-      );
-    } else {
-      return (
-        <CollectionCard collection={this.props.collection} videos={videos} />
-      );
-    }
+    return (
+      <CollectionCard
+        tiny={this.props.mode === 'tiny'}
+        collection={this.props.collection}
+        videos={videos}
+      />
+    );
   }
 
   public componentDidMount() {

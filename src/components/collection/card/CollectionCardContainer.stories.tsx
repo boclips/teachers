@@ -17,7 +17,7 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import CollectionCardContainer from './CollectionCardContainer';
-import { CollectionCard } from './CollectionCard';
+import { CollectionCard, CollectionCardInner } from './CollectionCard';
 import { CollectionCardTiny } from './CollectionCardTiny';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
@@ -50,7 +50,7 @@ const videos = [
 ];
 
 const bookmarkableCollection = VideoCollectionFactory.sample({
-  title: "Someone else's collection title",
+  title: "Someone else's collection with a really really really long title",
   description:
     'What is Lorem Ipsum?\n' +
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,\nand more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n",
@@ -161,16 +161,16 @@ storiesOf('CollectionCardContainer', module)
     />
   ))
   .add('Tiny Card', () => (
-    <div style={{ width: '400px' }}>
+    <div style={{ maxWidth: '400px' }}>
       <CollectionCardContainer
         mode={'tiny'}
         collection={bookmarkableCollection}
       />{' '}
     </div>
   ))
-  .add('Regular Skeleton', () => <CollectionCard.Skeleton />)
+  .add('Regular Skeleton', () => <CollectionCardInner.Skeleton />)
   .add('Tiny Skeleton', () => (
-    <div style={{ width: '400px' }}>
+    <div style={{ maxWidth: '400px' }}>
       <CollectionCardTiny.Skeleton />
     </div>
   ));
