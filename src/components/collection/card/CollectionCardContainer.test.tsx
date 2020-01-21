@@ -50,7 +50,7 @@ describe('need to fetch videos scenarios', () => {
     mount(
       <Provider store={store}>
         <Router>
-          <CollectionCardContainer mode="regular" collection={collection} />
+          <CollectionCardContainer grid={false} collection={collection} />
         </Router>
       </Provider>,
     );
@@ -100,7 +100,7 @@ describe('need to fetch videos scenarios', () => {
     mount(
       <Provider store={store}>
         <Router>
-          <CollectionCardContainer mode="regular" collection={collection} />
+          <CollectionCardContainer grid={false} collection={collection} />
         </Router>
       </Provider>,
     );
@@ -122,7 +122,7 @@ describe('does not fetch videos scenarios', () => {
     mount(
       <Provider store={store}>
         <Router>
-          <CollectionCardContainer mode="regular" collection={collection} />
+          <CollectionCardContainer grid={false} collection={collection} />
         </Router>
       </Provider>,
     );
@@ -152,7 +152,7 @@ describe('does not fetch videos scenarios', () => {
     mount(
       <Provider store={store}>
         <Router>
-          <CollectionCardContainer mode="regular" collection={collection} />
+          <CollectionCardContainer grid={false} collection={collection} />
         </Router>
       </Provider>,
     );
@@ -182,7 +182,7 @@ describe('showing correct video previews', () => {
     );
 
     const { getByText, getByTestId } = await renderWithStore(
-      <CollectionCardContainer mode="regular" collection={collection} />,
+      <CollectionCardContainer grid={false} collection={collection} />,
       {
         initialState,
         reducers: videoHandlers,

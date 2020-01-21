@@ -17,8 +17,7 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import CollectionCardContainer from './CollectionCardContainer';
-import { CollectionCard, CollectionCardInner } from './CollectionCard';
-import { CollectionCardTiny } from './CollectionCardTiny';
+import { CollectionCardInner } from './CollectionCard';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
 
@@ -133,44 +132,30 @@ storiesOf('CollectionCardContainer', module)
     ),
   )
   .addDecorator(storyWithRouter())
-  .add('Regular Card with collection which is mine', () => (
-    <CollectionCardContainer mode={'regular'} collection={myCollection} />
+  .add('Card with collection which is mine', () => (
+    <CollectionCardContainer grid={false} collection={myCollection} />
   ))
-  .add('Regular Card with collection which is not bookmarked', () => (
-    <CollectionCardContainer
-      mode={'regular'}
-      collection={bookmarkableCollection}
-    />
+  .add('Card with collection which is not bookmarked', () => (
+    <CollectionCardContainer grid={false} collection={bookmarkableCollection} />
   ))
-  .add('Regular Card with collection which is bookmarked', () => (
-    <CollectionCardContainer
-      mode={'regular'}
-      collection={bookmarkedCollection}
-    />
+  .add('Card with collection which is bookmarked', () => (
+    <CollectionCardContainer grid={false} collection={bookmarkedCollection} />
   ))
-  .add('Regular Card with Lesson Plan', () => (
+  .add('Card with Lesson Plan', () => (
     <CollectionCardContainer
-      mode={'regular'}
+      grid={false}
       collection={collectionWithLessonPlan}
     />
   ))
-  .add('Regular Card without tags', () => (
-    <CollectionCardContainer
-      mode={'regular'}
-      collection={collectionWithoutTags}
-    />
+  .add('Card without tags', () => (
+    <CollectionCardContainer grid={false} collection={collectionWithoutTags} />
   ))
-  .add('Tiny Card', () => (
+  .add('Grid Card', () => (
     <div style={{ maxWidth: '400px' }}>
       <CollectionCardContainer
-        mode={'tiny'}
+        grid={true}
         collection={bookmarkableCollection}
       />{' '}
     </div>
   ))
-  .add('Regular Skeleton', () => <CollectionCardInner.Skeleton />)
-  .add('Tiny Skeleton', () => (
-    <div style={{ maxWidth: '400px' }}>
-      <CollectionCardTiny.Skeleton />
-    </div>
-  ));
+  .add('Skeleton', () => <CollectionCardInner.Skeleton />);
