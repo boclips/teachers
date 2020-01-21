@@ -3,12 +3,12 @@
 
 .button-row {
   width: 100%;
+  border-top: 2px solid @shade-2;
 
   .ant-btn-group {
-    border-top: 2px solid @shade-2;
     padding: 16px 0;
     line-height: 24px;
-    width: 100%;
+    display: inline-block;
 
     button {
       .ant-btn--borderless();
@@ -22,5 +22,9 @@
     button:last-child {
       border-right: none !important;
     }
+  }
+
+  &__group--right {
+    float: right;
   }
 }
