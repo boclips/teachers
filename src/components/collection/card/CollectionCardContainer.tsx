@@ -16,9 +16,7 @@ type Props = OwnProps & DispatchProps & StateProps;
 
 interface OwnProps {
   collection: VideoCollection;
-  tiny?: boolean;
-  // TODO(AO): Remove regular & search, can we use the tiny from above?
-  mode: 'tiny' | 'search' | 'regular';
+  mode: 'tiny' | 'regular';
 }
 
 const NUMBER_OF_PREVIEWS = 4;

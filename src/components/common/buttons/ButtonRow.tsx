@@ -3,15 +3,17 @@ import { Button } from 'antd';
 import './ButtonRow.less';
 
 interface Props {
-  buttons: React.ReactNode;
+  rightButtons?: React.ReactNode;
+  leftButtons?: React.ReactNode;
 }
 
-export class ButtonRow extends React.PureComponent<Props> {
-  public render() {
-    return (
-      <section className="button-row">
-        <Button.Group>{this.props.buttons}</Button.Group>
-      </section>
-    );
-  }
-}
+export const ButtonRow = React.memo((props: Props) => (
+  <section className="button-row">
+    {props.leftButtons && <Button.Group>{props.leftButtons}</Button.Group>}
+    {props.rightButtons && (
+      <Button.Group className={'button-row__group--right'}>
+        {props.rightButtons}
+      </Button.Group>
+    )}
+  </section>
+));

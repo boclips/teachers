@@ -26,7 +26,7 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
     const collectionCards: React.ReactElement[] = this.props.collections.map(
       collection => (
         <CollectionCardContainer
-          mode={'search'}
+          mode={'regular'}
           collection={collection}
           key={collection.id}
         />
