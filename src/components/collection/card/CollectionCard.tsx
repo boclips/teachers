@@ -28,34 +28,9 @@ export interface Props {
   grid: boolean;
 }
 
-export class CollectionCardInner extends React.PureComponent<
+class CollectionCardInner extends React.PureComponent<
   Props & WithMediaBreakPointProps
 > {
-  public static Skeleton = () => (
-    <Card
-      className={
-        'collection-card collection-card--search skeleton ant-skeleton ant-skeleton-active'
-      }
-      bordered={false}
-    >
-      <section className="ant-skeleton-content">
-        <h3 className="collection-title ant-skeleton-title" />
-        <div className="collection-card__detail-row">
-          <section className="collection-card__column-preview">
-            <CollectionCardPreview.Skeleton />
-          </section>
-          <section className="collection-card__column-detail">
-            <ul className="ant-skeleton-paragraph">
-              <li />
-              <li />
-              <li />
-            </ul>
-          </section>
-        </div>
-      </section>
-    </Card>
-  );
-
   public render() {
     const leftButtons = [
       (this.props.collection.links.bookmark ||
@@ -173,3 +148,28 @@ export class CollectionCardInner extends React.PureComponent<
 }
 
 export const CollectionCard = withMediaBreakPoint(CollectionCardInner);
+
+export const CollectionCardSkeleton = () => (
+  <Card
+    className={
+      'collection-card collection-card--search skeleton ant-skeleton ant-skeleton-active'
+    }
+    bordered={false}
+  >
+    <section className="ant-skeleton-content">
+      <h3 className="collection-title ant-skeleton-title" />
+      <div className="collection-card__detail-row">
+        <section className="collection-card__column-preview">
+          <CollectionCardPreview.Skeleton />
+        </section>
+        <section className="collection-card__column-detail">
+          <ul className="ant-skeleton-paragraph">
+            <li />
+            <li />
+            <li />
+          </ul>
+        </section>
+      </div>
+    </section>
+  </Card>
+);

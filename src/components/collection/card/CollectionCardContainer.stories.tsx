@@ -17,7 +17,7 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import CollectionCardContainer from './CollectionCardContainer';
-import { CollectionCardInner } from './CollectionCard';
+import { CollectionCardSkeleton } from './CollectionCard';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
 
@@ -158,4 +158,4 @@ storiesOf('CollectionCardContainer', module)
       />{' '}
     </div>
   ))
-  .add('Skeleton', () => <CollectionCardInner.Skeleton />);
+  .add('Skeleton', () => <CollectionCardSkeleton />);
