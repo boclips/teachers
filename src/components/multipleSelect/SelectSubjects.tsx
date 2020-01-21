@@ -6,7 +6,7 @@ export interface Props {
   label?: string;
   placeholder: string;
   subjects: Subject[];
-  onUpdateSubjects: (value: string[]) => void;
+  onUpdateSubjects?: (value: string[]) => void;
   initialValue: string[];
 }
 

@@ -2,9 +2,7 @@ import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import App from '../../src/app/App';
-import { RemoveCollectionButtonInner } from '../../src/components/collection/buttons/RemoveCollectionButton';
 import NotificationFactory from '../../src/components/common/NotificationFactory';
-import { By } from '../By';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 import { AbstractCollectionListPage } from './AbstractCollectionListPage';
@@ -29,26 +27,6 @@ export class MyCollectionListPage extends AbstractCollectionListPage {
 
     await page.hasLoaded();
     return page;
-  }
-
-  public deleteCollection(index: number) {
-    const reactWrapper = this.wrapper
-      .find(By.dataQa('collection-card'))
-      .at(index)
-      .find(RemoveCollectionButtonInner);
-    const component = reactWrapper.instance();
-
-    // @ts-ignore
-    component.confirmRemoveCollection();
-  }
-
-  public async assertNotification(message) {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      expect(NotificationFactory.success).toHaveBeenCalledWith({
-        message,
-      });
-    });
   }
 
   private async hasLoaded() {

@@ -1,161 +1,118 @@
+import React, { useRef, useState } from 'react';
 import { Button } from 'antd';
 import Icon from 'antd/lib/icon';
-import React from 'react';
-import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
-import { AgeRange, isEqualTo } from '../../../types/AgeRange';
-import { VideoCollection } from '../../../types/VideoCollection';
+import { useDispatch, useSelector } from 'react-redux';
+import { WrappedFormUtils } from 'antd/es/form/Form';
 import Bodal from '../../common/Bodal';
-import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
-import './EditCollectionButton.less';
+import State from '../../../types/State';
+import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
+import { VideoCollection } from '../../../types/VideoCollection';
+import {
+  editCollectionAction,
+  EditCollectionRequest,
+} from '../redux/actions/editCollectionAction';
 import CollectionEditForm, { EditableFields } from './EditCollectionForm';
+import './EditCollectionButton.less';
 
 interface Props {
   collection: VideoCollection;
-  canSave: boolean;
-  onUpdate: (request: EditCollectionRequest) => void;
-  classNameModifier?: string;
 }
 
-interface State {
-  visible: boolean;
-  hasAgeRangeBeenTouched: boolean;
-}
-
-export default class EditCollectionButton extends React.PureComponent<
-  Props,
-  State
-> {
-  private formRef: any;
-
-  public constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      visible: false,
-      hasAgeRangeBeenTouched: false,
-    };
+export const EditCollectionButton = React.memo(({ collection }: Props) => {
+  if (!collection.links.edit) {
+    return null;
   }
+  const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
+  const collectionEditFormRef = useRef(null);
 
-  private onAgeRangeChange = (ageRange: number[]) => {
-    this.formRef.props.form.setFieldsValue({
-      ageRange,
-    });
+  const disableButton = useSelector(
+    (state: State) => state.collections.loading || state.collections.updating,
+  );
 
-    this.setState({ hasAgeRangeBeenTouched: true });
-  };
+  const handleOk = () => {
+    const form: WrappedFormUtils = collectionEditFormRef.current.props.form;
 
-  public handleOk = () => {
-    const form = this.formRef.props.form;
     form.validateFields((formErrors, values: EditableFields) => {
       if (formErrors) {
         return;
       }
 
-      if (
-        this.hasFieldsChanged(values) ||
-        this.hasAgeRangeChanged(values.ageRange)
-      ) {
-        const collectionChanges = {
-          originalCollection: this.props.collection,
-          title:
-            values.title !== this.props.collection.title ? values.title : null,
-          isPublic:
-            values.isPublic !== this.props.collection.isPublic
-              ? values.isPublic
-              : null,
-          subjects:
-            values.subjects !== this.props.collection.subjects
-              ? values.subjects
-              : null,
-          ageRange: this.hasAgeRangeChanged(values.ageRange)
-            ? values.ageRange
-            : new AgeRange(),
-          description:
-            values.description !== this.props.collection.description
-              ? values.description
-              : null,
-        };
+      const changeRequest: EditCollectionRequest = {
+        originalCollection: collection,
+      };
 
-        form.resetFields();
-        this.props.onUpdate(collectionChanges);
+      let shouldSubmitChanges = false;
+
+      for (const key in values) {
+        if (values.hasOwnProperty(key) && form.isFieldTouched(key)) {
+          changeRequest[key] = values[key];
+
+          shouldSubmitChanges = true;
+        }
       }
 
-      this.setState({ visible: false });
+      if (shouldSubmitChanges) {
+        form.resetFields();
+        dispatch(editCollectionAction(changeRequest));
+      }
+
+      setVisible(false);
     });
   };
 
-  public handleCancel = () => {
-    this.setState({ visible: false });
-  };
-
-  public render() {
-    return (
-      <React.Fragment>
-        <Button
-          size={'large'}
-          onClick={this.showModal}
-          className={`collection-edit__button ${this.props.classNameModifier ||
-            ''}`}
-          data-qa="collection-edit-button"
-          disabled={!this.props.canSave || this.state.visible}
-        >
-          <Icon
-            theme="filled"
-            aria-label="Edit collection"
-            component={EditCollectionSVG}
-          />
-          Edit
-        </Button>
-        <Bodal
-          title="Edit collection"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          okButtonProps={{
-            size: 'large',
-            loading: !this.props.canSave,
-            disabled: !this.props.canSave,
+  return (
+    <React.Fragment>
+      <Button
+        size={'large'}
+        onClick={() => {
+          setVisible(true);
+        }}
+        className="collection-edit__button"
+        data-qa="collection-edit-button"
+        disabled={disableButton || visible}
+      >
+        <Icon
+          theme="filled"
+          aria-label="Edit collection"
+          component={EditCollectionSVG}
+        />
+        Edit
+      </Button>
+      <Bodal
+        title="Edit collection"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={() => {
+          setVisible(false);
+        }}
+        okButtonProps={{
+          size: 'large',
+          loading: disableButton,
+          disabled: disableButton,
+        }}
+        okText="Save"
+        cancelButtonProps={{ size: 'large' }}
+        closable={false}
+        width={655}
+        wrapClassName="edit-collection-modal"
+        destroyOnClose={true}
+      >
+        <CollectionEditForm
+          title={collection.title}
+          isPublic={collection.isPublic}
+          subjects={collection.subjects}
+          wrappedComponentRef={collectionEditFormRef}
+          ageRange={collection.ageRange}
+          onAgeRangeChange={(ageRange: number[]) => {
+            // TODO(AO): would this work if we didn't set the onChange on the AgeRangeSlider component in the form?
+            collectionEditFormRef.current.props.form.setFieldsValue({
+              ageRange,
+            });
           }}
-          okText="Save"
-          cancelButtonProps={{ size: 'large' }}
-          closable={false}
-          width={655}
-          wrapClassName="edit-collection-modal"
-        >
-          <CollectionEditForm
-            title={this.props.collection.title}
-            isPublic={this.props.collection.isPublic}
-            subjects={this.props.collection.subjects}
-            wrappedComponentRef={this.saveFormRef}
-            ageRange={this.props.collection.ageRange}
-            onAgeRangeChange={this.onAgeRangeChange}
-            description={this.props.collection.description}
-          />
-        </Bodal>
-      </React.Fragment>
-    );
-  }
-
-  private showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  };
-
-  private hasFieldsChanged = (values: EditableFields) =>
-    values.title !== this.props.collection.title ||
-    values.isPublic !== this.props.collection.isPublic ||
-    values.subjects !== this.props.collection.subjects ||
-    values.description !== this.props.collection.description;
-
-  private saveFormRef = formRef => {
-    this.formRef = formRef;
-  };
-
-  private hasAgeRangeChanged(ageRange: AgeRange) {
-    return (
-      this.state.hasAgeRangeBeenTouched &&
-      !isEqualTo(this.props.collection.ageRange, ageRange)
-    );
-  }
-}
+          description={collection.description}
+        />
+      </Bodal>
+    </React.Fragment>
+  );
+});

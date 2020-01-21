@@ -10,14 +10,14 @@ import {
 } from '../../video/redux/actions/fetchVideosByIdsAction';
 import { getVideosByIds } from '../../video/redux/reducers/videoReducer';
 import { CollectionCardTiny } from './CollectionCardTiny';
-import { CollectionCardRegular } from './CollectionCardRegular';
-import { CollectionCardSearch } from './CollectionCardSearch';
+import { CollectionCard } from './CollectionCard';
 
 type Props = OwnProps & DispatchProps & StateProps;
 
 interface OwnProps {
   collection: VideoCollection;
   tiny?: boolean;
+  // TODO(AO): Remove regular & search, can we use the tiny from above?
   mode: 'tiny' | 'search' | 'regular';
 }
 
@@ -42,23 +42,9 @@ class CollectionCardContainer extends React.PureComponent<Props> {
           videos={videos}
         />
       );
-    } else if (this.props.mode === 'regular') {
-      return (
-        <CollectionCardRegular
-          collection={this.props.collection}
-          videos={videos}
-        />
-      );
-    } else if (this.props.mode === 'search') {
-      return (
-        <CollectionCardSearch
-          collection={this.props.collection}
-          videos={videos}
-        />
-      );
     } else {
-      throw new Error(
-        'CollectionCardContainer invalid mode:' + this.props.mode,
+      return (
+        <CollectionCard collection={this.props.collection} videos={videos} />
       );
     }
   }

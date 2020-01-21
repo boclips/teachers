@@ -6,7 +6,7 @@ import {
   VideoFactory,
   VideoIdFactory,
 } from '../../../../test-support/factories';
-import { CollectionCardSearchPreview } from './CollectionCardSearchPreview';
+import { CollectionCardPreview } from './CollectionCardPreview';
 
 const videos = [
   VideoFactory.sample({
@@ -38,31 +38,31 @@ const getCollection = (numberOfVideos: number) =>
 
 storiesOf('CollectionCardSearchPreview', module)
   .add('With one video', () => (
-    <CollectionCardSearchPreview
+    <CollectionCardPreview
       collection={getCollection(1)}
       videos={videos.slice(0, 1)}
     />
   ))
   .add('With two videos', () => (
-    <CollectionCardSearchPreview
+    <CollectionCardPreview
       collection={getCollection(2)}
       videos={videos.slice(0, 2)}
     />
   ))
   .add('With three videos', () => (
-    <CollectionCardSearchPreview
+    <CollectionCardPreview
       collection={getCollection(3)}
       videos={videos.slice(0, 3)}
     />
   ))
   .add('With four videos', () => (
-    <CollectionCardSearchPreview
+    <CollectionCardPreview
       collection={getCollection(4)}
       videos={videos.slice(0, 4)}
     />
   ))
   .add('With six videos', () => (
-    <CollectionCardSearchPreview
+    <CollectionCardPreview
       collection={getCollection(5)}
       videos={videos.slice(0, 6)}
     />

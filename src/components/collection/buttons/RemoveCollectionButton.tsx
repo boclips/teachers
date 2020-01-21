@@ -1,46 +1,26 @@
 import { Icon, Modal } from 'antd';
 import Button from 'antd/lib/button';
-import React, { PureComponent, SyntheticEvent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import DeleteIconSVG from '../../../../resources/images/delete-collection.svg';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { deleteCollectionAction } from '../redux/actions/deleteCollectionAction';
 import './RemoveCollectionButton.less';
 
-interface OwnProps {
+interface Props {
   collection: VideoCollection;
-  classNameModifier?: string;
 }
 
-interface DispatchProps {
-  onDeleteCollectionAction: (VideoCollection) => void;
-}
-
-export class RemoveCollectionButtonInner extends PureComponent<
-  OwnProps & DispatchProps
-> {
-  public render() {
-    return this.props.collection.links.remove ? (
-      <Button
-        onClick={this.removeCollection}
-        data-qa="delete-collection"
-        size={'large'}
-        aria-label="Delete collection"
-        className={`collection-edit__button ${this.props.classNameModifier ||
-          ''}`}
-      >
-        <Icon component={DeleteIconSVG} aria-label="Delete collection" />
-        Delete
-      </Button>
-    ) : null;
+export const RemoveCollectionButton = React.memo(({ collection }: Props) => {
+  if (!collection.links.remove) {
+    return null;
   }
 
-  public removeCollection = (e: SyntheticEvent) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
+  const dispatch = useDispatch();
+
+  const handleClick = (event: React.MouseEvent) => {
+    event.preventDefault();
 
     const confirm = Modal.confirm;
 
@@ -48,10 +28,13 @@ export class RemoveCollectionButtonInner extends PureComponent<
       title: (
         <span>
           Are you sure you want to delete the collection{' '}
-          <i>{this.props.collection.title}</i>?
+          <i>{collection.title}</i>?
         </span>
       ),
-      onOk: this.confirmRemoveCollection,
+      onOk: () => {
+        AnalyticsFactory.externalAnalytics().trackCollectionRemoved(collection);
+        dispatch(deleteCollectionAction(collection));
+      },
       okText: 'Delete',
       okButtonProps: {
         size: 'large',
@@ -69,23 +52,17 @@ export class RemoveCollectionButtonInner extends PureComponent<
       },
     });
   };
-  public confirmRemoveCollection = () => {
-    AnalyticsFactory.externalAnalytics().trackCollectionRemoved(
-      this.props.collection,
-    );
-    this.props.onDeleteCollectionAction(this.props.collection);
-  };
-}
 
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  return {
-    onDeleteCollectionAction: (collection: VideoCollection) => {
-      dispatch(deleteCollectionAction(collection));
-    },
-  };
-}
-
-export default connect<{}, DispatchProps, OwnProps>(
-  undefined,
-  mapDispatchToProps,
-)(RemoveCollectionButtonInner);
+  return (
+    <Button
+      onClick={handleClick}
+      data-qa="delete-collection"
+      size="large"
+      aria-label="Delete collection"
+      className="collection-edit__button"
+    >
+      <Icon component={DeleteIconSVG} aria-label="Delete collection" />
+      Delete
+    </Button>
+  );
+});

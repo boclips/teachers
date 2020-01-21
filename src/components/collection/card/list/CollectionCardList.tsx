@@ -7,6 +7,7 @@ import { CollectionCard } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
 import { FiniteGrid } from '../../../common/Grid/FiniteGrid';
 import { InfiniteGrid } from '../../../common/Grid/InfiniteGrid';
+import { CollectionCardTiny } from '../CollectionCardTiny';
 import { PageableCollectionCardListProps } from './PageableCollectionCardList';
 
 interface InfiniteScrollProps {
@@ -121,7 +122,11 @@ export class CollectionCardList extends React.PureComponent<
         md={{ span: this.singleColumn() ? 24 : 12 }}
         lg={{ span: this.singleColumn() ? 24 : 8 }}
       >
-        <CollectionCard.Skeleton tiny={this.props.grid} />
+        {this.props.grid ? (
+          <CollectionCard.Skeleton />
+        ) : (
+          <CollectionCardTiny.Skeleton />
+        )}
       </Col>
     ));
   }

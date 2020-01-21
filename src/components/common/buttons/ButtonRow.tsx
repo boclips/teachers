@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import './ButtonRow.less';
 
 interface Props {
-  buttons: React.ReactNode[];
+  buttons: React.ReactNode;
 }
 
 export class ButtonRow extends React.PureComponent<Props> {
