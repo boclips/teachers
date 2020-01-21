@@ -18,23 +18,19 @@ import { RemoveCollectionButton } from '../buttons/RemoveCollectionButton';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
-import { CollectionCardPreview } from './CollectionCardPreview';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
+import { CollectionCardPreview } from './CollectionCardPreview';
 
 export interface Props {
   collection: VideoCollection;
   videos: Video[];
-  tiny?: boolean;
+  grid: boolean;
 }
 
 export class CollectionCardInner extends React.PureComponent<
   Props & WithMediaBreakPointProps
 > {
-  public static defaultProps = {
-    tiny: false,
-  };
-
   public static Skeleton = () => (
     <Card
       className={
@@ -81,13 +77,14 @@ export class CollectionCardInner extends React.PureComponent<
         />
       ),
     ];
+
     return (
       <ClickableCard
         href={`/collections/${this.props.collection.id}`}
         bordered={false}
         key={`card-${this.props.collection.id}`}
         className={classnames('collection-card collection-card--search', {
-          tiny: this.isSmallCard(),
+          'collection-card--grid': this.isSmallCard(),
         })}
         data-qa="collection-card"
         data-state={this.props.collection.title}
@@ -163,12 +160,9 @@ export class CollectionCardInner extends React.PureComponent<
     );
   }
 
-  private isSmallCard = () => {
-    return (
-      this.props.tiny ||
-      this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width
-    );
-  };
+  private isSmallCard = () =>
+    this.props.grid ||
+    this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width;
 
   private emitCollectionInteractedWithEvent = () => {
     AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
