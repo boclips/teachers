@@ -23,7 +23,7 @@ export class ButtonMenu extends React.PureComponent<Props> {
     const menu = () => (
       <Menu className="button-row__container">
         {this.props.buttons.map((button, index) => (
-          <Menu.Item key={index}>{button}</Menu.Item>
+          button && <Menu.Item key={index}>{button}</Menu.Item>
         ))}
       </Menu>
     );
