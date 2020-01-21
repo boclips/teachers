@@ -15,7 +15,7 @@ type Props = OwnProps & DispatchProps & StateProps;
 
 interface OwnProps {
   collection: VideoCollection;
-  mode: 'tiny' | 'regular';
+  grid: boolean;
 }
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -34,7 +34,7 @@ class CollectionCardContainer extends React.PureComponent<Props> {
 
     return (
       <CollectionCard
-        tiny={this.props.mode === 'tiny'}
+        grid={this.props.grid}
         collection={this.props.collection}
         videos={videos}
       />
