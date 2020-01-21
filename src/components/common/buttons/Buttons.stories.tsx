@@ -10,11 +10,14 @@ import { ButtonMenu } from './ButtonMenu';
 
 storiesOf('Buttons', module)
   .add('Button Row', () => {
-    const buttons: React.ReactElement[] = [
+    const leftButtons: React.ReactElement[] = [
       <Button>
         <Icon component={ShareSVG} />
         First
       </Button>,
+      ];
+
+    const rightButtons: React.ReactElement[] = [
       <Button>
         <Icon component={BookmarkFilledSVG} />
         Second
@@ -25,7 +28,7 @@ storiesOf('Buttons', module)
       </Button>,
     ];
 
-    return <ButtonRow buttons={buttons} />;
+    return <ButtonRow leftButtons={leftButtons} rightButtons={rightButtons} />;
   })
   .add('ButtonMenu - one button', () => {
     const buttons = [

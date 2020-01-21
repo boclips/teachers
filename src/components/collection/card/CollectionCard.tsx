@@ -109,11 +109,15 @@ export class CollectionCard extends React.PureComponent<Props> {
               }}
             >
               <ButtonRow
-                buttons={
+                leftButtons={
                   <React.Fragment>
                     <BookmarkCollectionButton
                       collection={this.props.collection}
                     />
+                  </React.Fragment>
+                }
+                rightButtons={
+                  <React.Fragment>
                     <EditCollectionButton collection={this.props.collection} />
                     <RemoveCollectionButton
                       collection={this.props.collection}

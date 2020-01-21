@@ -17,6 +17,8 @@ import {
 import { Link } from '../../../types/Link';
 import { VideoCollection } from '../../../types/VideoCollection';
 import CollectionCardContainer from './CollectionCardContainer';
+import { CollectionCard } from './CollectionCard';
+import { CollectionCardTiny } from './CollectionCardTiny';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
 
@@ -47,8 +49,8 @@ const videos = [
   }),
 ];
 
-const collection = VideoCollectionFactory.sample({
-  title: 'My collection title',
+const bookmarkableCollection = VideoCollectionFactory.sample({
+  title: "Someone else's collection title",
   description:
     'What is Lorem Ipsum?\n' +
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,\nand more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n",
@@ -64,9 +66,50 @@ const collection = VideoCollectionFactory.sample({
   },
 });
 
+const myCollection = VideoCollectionFactory.sample({
+  title: 'My collection title',
+  description:
+    'What is Lorem Ipsum?\n' +
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,\nand more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n",
+  ageRange: new AgeRange(3, 5),
+  subjects: [subject.id],
+  updatedAt: '2018-12-12T12:12:12',
+  isMine: true,
+  isPublic: true,
+  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  links: {
+    self: new Link({ href: '' }),
+    edit: new Link({ href: '' }),
+    remove: new Link({ href: '' }),
+    bookmark: new Link({ href: ''}),
+  },
+});
+
+const bookmarkedCollection = VideoCollectionFactory.sample({
+  title: 'My bookmarked collection',
+  description:
+    'What is Lorem Ipsum?\n' +
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,\nand more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n",
+  ageRange: new AgeRange(3, 5),
+  subjects: [subject.id],
+  updatedAt: '2018-12-12T12:12:12',
+  isMine: false,
+  isPublic: true,
+  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  links: {
+    self: new Link({ href: '' }),
+    unbookmark: new Link({ href: '' }),
+  },
+});
+
 const collectionWithLessonPlan: VideoCollection = {
-  ...collection,
+  ...bookmarkableCollection,
   attachments: [AttachmentFactory.sample()],
+};
+const collectionWithoutTags: VideoCollection = {
+  ...bookmarkableCollection,
+  subjects: [],
+  ageRange: new AgeRange(),
 };
 
 storiesOf('CollectionCardContainer', module)
@@ -90,20 +133,44 @@ storiesOf('CollectionCardContainer', module)
     ),
   )
   .addDecorator(storyWithRouter())
-  .add('Regular Card', () => (
-    <CollectionCardContainer mode={'regular'} collection={collection} />
+  .add('Regular Card with collection which is mine', () => (
+    <CollectionCardContainer mode={'regular'} collection={myCollection} />
+  ))
+  .add('Regular Card with collection which is not bookmarked', () => (
+    <CollectionCardContainer
+      mode={'regular'}
+      collection={bookmarkableCollection}
+    />
+  ))
+  .add('Regular Card with collection which is bookmarked', () => (
+    <CollectionCardContainer
+      mode={'regular'}
+      collection={bookmarkedCollection}
+    />
+  ))
+  .add('Regular Card with Lesson Plan', () => (
+    <CollectionCardContainer
+      mode={'regular'}
+      collection={collectionWithLessonPlan}
+    />
+  ))
+  .add('Regular Card without tags', () => (
+    <CollectionCardContainer
+      mode={'regular'}
+      collection={collectionWithoutTags}
+    />
   ))
   .add('Tiny Card', () => (
     <div style={{ width: '400px' }}>
-      <CollectionCardContainer mode={'tiny'} collection={collection} />{' '}
+      <CollectionCardContainer
+        mode={'tiny'}
+        collection={bookmarkableCollection}
+      />{' '}
     </div>
   ))
-  .add('Search Card', () => (
-    <CollectionCardContainer mode={'search'} collection={collection} />
-  ))
-  .add('Search Card with Lesson Plan', () => (
-    <CollectionCardContainer
-      mode={'search'}
-      collection={collectionWithLessonPlan}
-    />
+  .add('Regular Skeleton', () => <CollectionCard.Skeleton />)
+  .add('Tiny Skeleton', () => (
+    <div style={{ width: '400px' }}>
+      <CollectionCardTiny.Skeleton />
+    </div>
   ));
