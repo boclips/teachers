@@ -1,4 +1,5 @@
 import { Card } from 'antd';
+import classnames from 'classnames';
 import React from 'react';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
@@ -14,14 +15,26 @@ import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import { EditCollectionButton } from '../buttons/EditCollectionButton';
 import { RemoveCollectionButton } from '../buttons/RemoveCollectionButton';
+import withMediaBreakPoint, {
+  WithMediaBreakPointProps,
+} from '../../common/higerOrderComponents/withMediaBreakPoint';
 import { CollectionCardPreview } from './CollectionCardPreview';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
+import { ButtonMenu } from '../../common/buttons/ButtonMenu';
 
 export interface Props {
   collection: VideoCollection;
   videos: Video[];
+  tiny?: boolean;
 }
 
-export class CollectionCard extends React.PureComponent<Props> {
+export class CollectionCardInner extends React.PureComponent<
+  Props & WithMediaBreakPointProps
+> {
+  public static defaultProps = {
+    tiny: false,
+  };
+
   public static Skeleton = () => (
     <Card
       className={
@@ -48,20 +61,50 @@ export class CollectionCard extends React.PureComponent<Props> {
   );
 
   public render() {
+    const leftButtons = [
+      (this.props.collection.links.bookmark ||
+        this.props.collection.links.unbookmark) && (
+        <BookmarkCollectionButton
+          key="bookmark"
+          collection={this.props.collection}
+        />
+      ),
+    ];
+    const rightButtons = [
+      this.props.collection.links.edit && (
+        <EditCollectionButton key="edit" collection={this.props.collection} />
+      ),
+      this.props.collection.links.remove && (
+        <RemoveCollectionButton
+          key="remove"
+          collection={this.props.collection}
+        />
+      ),
+    ];
     return (
       <ClickableCard
         href={`/collections/${this.props.collection.id}`}
         bordered={false}
         key={`card-${this.props.collection.id}`}
-        className="collection-card collection-card--search"
+        className={classnames('collection-card collection-card--search', {
+          tiny: this.isSmallCard(),
+        })}
         data-qa="collection-card"
         data-state={this.props.collection.title}
         onMouseDown={this.emitCollectionInteractedWithEvent}
       >
-        <CollectionTitle
-          collection={this.props.collection}
-          showBookmarkButton={true}
-        />
+        <section className="collection-card__title">
+          <CollectionTitle collection={this.props.collection} />
+
+          {this.isSmallCard() && (
+            <StopClickPropagation
+              wrapper="div"
+              wrapperProps={{ className: 'button-menu-container' }}
+            >
+              <ButtonMenu buttons={[...leftButtons, ...rightButtons]} />
+            </StopClickPropagation>
+          )}
+        </section>
         <section className="collection-card__subtitle">
           <span>
             <span data-qa="collection-number-of-videos">
@@ -101,35 +144,31 @@ export class CollectionCard extends React.PureComponent<Props> {
             >
               {this.props.collection.description}
             </div>
-            <StopClickPropagation
-              wrapperProps={{
-                className:
-                  'collection-card__buttons display-tablet-and-desktop',
-              }}
-            >
-              <ButtonRow
-                leftButtons={
-                  <React.Fragment>
-                    <BookmarkCollectionButton
-                      collection={this.props.collection}
-                    />
-                  </React.Fragment>
-                }
-                rightButtons={
-                  <React.Fragment>
-                    <EditCollectionButton collection={this.props.collection} />
-                    <RemoveCollectionButton
-                      collection={this.props.collection}
-                    />
-                  </React.Fragment>
-                }
-              />
-            </StopClickPropagation>
+            {!this.isSmallCard() && (
+              <StopClickPropagation
+                wrapperProps={{
+                  className:
+                    'collection-card__buttons display-tablet-and-desktop',
+                }}
+              >
+                <ButtonRow
+                  leftButtons={leftButtons}
+                  rightButtons={rightButtons}
+                />
+              </StopClickPropagation>
+            )}
           </section>
         </div>
       </ClickableCard>
     );
   }
+
+  private isSmallCard = () => {
+    return (
+      this.props.tiny ||
+      this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width
+    );
+  };
 
   private emitCollectionInteractedWithEvent = () => {
     AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
@@ -138,3 +177,5 @@ export class CollectionCard extends React.PureComponent<Props> {
     );
   };
 }
+
+export const CollectionCard = withMediaBreakPoint(CollectionCardInner);
