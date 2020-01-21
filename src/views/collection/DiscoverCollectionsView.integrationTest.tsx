@@ -18,7 +18,6 @@ test('displays maths collections', async () => {
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
     numberOfVideos: 1,
-    updatedAt: 'Jan 16, 2019',
   });
 });
 
@@ -43,6 +42,5 @@ test('displays arts discipline', async () => {
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
     numberOfVideos: 1,
-    updatedAt: 'Jan 16, 2019',
   });
 });

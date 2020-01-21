@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
-import { AgeRange } from '../../types/AgeRange';
 
 export const editCollection = (
   request: EditCollectionRequest,
@@ -16,9 +15,10 @@ export const editCollection = (
       title: request.title,
       isPublic: request.isPublic,
       subjects: request.subjects,
-      ageRange: request.ageRange.isBounded()
-        ? request.ageRange
-        : new AgeRange(),
+      ageRange:
+        request.ageRange && request.ageRange.isBounded()
+          ? request.ageRange
+          : null,
       description: request.description,
     })
     .then(() => true);

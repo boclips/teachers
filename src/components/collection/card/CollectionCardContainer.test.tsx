@@ -192,7 +192,7 @@ describe('showing correct video previews', () => {
 
     expect(getByText('+')).toBeInTheDocument();
     expect(
-      within(getByTestId('collection-video-preview-counter')).getByText('3'),
+      within(getByTestId('video-counter-count')).getByText('3'),
     ).toBeInTheDocument();
   });
 });
