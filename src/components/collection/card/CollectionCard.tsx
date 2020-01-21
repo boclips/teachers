@@ -28,45 +28,49 @@ export interface Props {
   grid: boolean;
 }
 
-class CollectionCardInner extends React.PureComponent<
-  Props & WithMediaBreakPointProps
-> {
-  public render() {
+export const CollectionCard = withMediaBreakPoint(
+  React.memo((props: Props & WithMediaBreakPointProps) => {
+    const isSmallCard =
+      props.grid || props.mediaBreakpoint.width <= MediaBreakpoints.sm.width;
+
     const leftButtons = [
-      (this.props.collection.links.bookmark ||
-        this.props.collection.links.unbookmark) && (
+      (props.collection.links.bookmark ||
+        props.collection.links.unbookmark) && (
         <BookmarkCollectionButton
           key="bookmark"
-          collection={this.props.collection}
+          collection={props.collection}
         />
       ),
     ];
+
     const rightButtons = [
-      this.props.collection.links.edit && (
-        <EditCollectionButton key="edit" collection={this.props.collection} />
+      props.collection.links.edit && (
+        <EditCollectionButton key="edit" collection={props.collection} />
       ),
-      this.props.collection.links.remove && (
-        <RemoveCollectionButton
-          key="remove"
-          collection={this.props.collection}
-        />
+      props.collection.links.remove && (
+        <RemoveCollectionButton key="remove" collection={props.collection} />
       ),
     ];
 
     return (
       <ClickableCard
-        href={`/collections/${this.props.collection.id}`}
+        href={`/collections/${props.collection.id}`}
         bordered={false}
-        key={`card-${this.props.collection.id}`}
+        key={`card-${props.collection.id}`}
         className={classnames('collection-card collection-card--search', {
-          'collection-card--grid': this.isSmallCard(),
+          'collection-card--grid': isSmallCard,
         })}
         data-qa="collection-card"
-        data-state={this.props.collection.title}
-        onMouseDown={this.emitCollectionInteractedWithEvent}
+        data-state={props.collection.title}
+        onMouseDown={() => {
+          AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+            props.collection,
+            'NAVIGATE_TO_COLLECTION_DETAILS',
+          );
+        }}
       >
         <section className="collection-card__title">
-          <CollectionTitle collection={this.props.collection} />
+          <CollectionTitle collection={props.collection} />
 
           {this.isSmallCard() && (
             <StopClickPropagation
@@ -80,12 +84,12 @@ class CollectionCardInner extends React.PureComponent<
         <section className="collection-card__subtitle">
           <span>
             <span data-qa="collection-number-of-videos">
-              {this.props.collection.videoIds.length}
+              {props.collection.videoIds.length}
             </span>{' '}
             videos
           </span>
-          {this.props.collection.attachments &&
-            this.props.collection.attachments.length > 0 && (
+          {props.collection.attachments &&
+            props.collection.attachments.length > 0 && (
               <span className="collection-card__lesson-plan">
                 {' '}
                 + <LessonPlanSVG /> Lesson Plan
@@ -95,28 +99,26 @@ class CollectionCardInner extends React.PureComponent<
         <div className="collection-card__detail-row">
           <section className="collection-card__column-preview">
             <CollectionCardPreview
-              collection={this.props.collection}
-              videos={this.props.videos}
+              collection={props.collection}
+              videos={props.videos}
             />
           </section>
           <section className="collection-card__column-detail">
             <div className="tags-container">
-              {this.props.collection.subjects.slice(0, 1).map(subjectId => (
+              {props.collection.subjects.slice(0, 1).map(subjectId => (
                 <ConnectedSubjectTag key={subjectId} id={subjectId} />
               ))}
-              {this.props.collection.ageRange.isBounded() && (
-                <AgeRangeTag
-                  ageRange={this.props.collection.ageRange.getLabel()}
-                />
+              {props.collection.ageRange.isBounded() && (
+                <AgeRangeTag ageRange={props.collection.ageRange.getLabel()} />
               )}
             </div>
             <div
               className="collection-card__description-preview"
               data-qa="collection-description"
             >
-              {this.props.collection.description}
+              {props.collection.description}
             </div>
-            {!this.isSmallCard() && (
+            {!isSmallCard && (
               <StopClickPropagation
                 wrapperProps={{
                   className:
@@ -133,21 +135,8 @@ class CollectionCardInner extends React.PureComponent<
         </div>
       </ClickableCard>
     );
-  }
-
-  private isSmallCard = () =>
-    this.props.grid ||
-    this.props.mediaBreakpoint.width <= MediaBreakpoints.sm.width;
-
-  private emitCollectionInteractedWithEvent = () => {
-    AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
-      this.props.collection,
-      'NAVIGATE_TO_COLLECTION_DETAILS',
-    );
-  };
-}
-
-export const CollectionCard = withMediaBreakPoint(CollectionCardInner);
+  }),
+);
 
 export const CollectionCardSkeleton = () => (
   <Card
