@@ -11,30 +11,20 @@ interface SubjectsFormProps {
   initialValue: string[];
 }
 
-export class SubjectsForm extends React.Component<
-  FormComponentProps & SubjectsFormProps
-> {
-  public onUpdateSubjects = (value: string[]) => {
-    this.props.form.setFieldsValue({ subjects: value });
-  };
-
-  public render() {
-    return (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('subjects', {
-          rules: [{ type: 'array' }],
-          initialValue: this.props.initialValue,
-        })(
-          <SelectSubjects
-            subjects={this.props.subjects}
-            placeholder={this.props.placeholder}
-            label={this.props.label}
-            onUpdateSubjects={this.onUpdateSubjects}
-            initialValue={this.props.initialValue}
-            data-qa="subject-select"
-          />,
-        )}
-      </Form.Item>
-    );
-  }
-}
+export const SubjectsForm = (props: FormComponentProps & SubjectsFormProps) => (
+  <Form.Item className="form__item" label={props.label} colon={false}>
+    {props.form.getFieldDecorator('subjects', {
+      rules: [{ type: 'array' }],
+      initialValue: props.initialValue,
+      trigger: 'onUpdateSubjects',
+    })(
+      <SelectSubjects
+        subjects={props.subjects}
+        placeholder={props.placeholder}
+        label={props.label}
+        initialValue={props.initialValue}
+        data-qa="subject-select"
+      />,
+    )}
+  </Form.Item>
+);

@@ -14,7 +14,6 @@ export abstract class AbstractCollectionListPage {
         numberOfVideos: Number(
           findOne(el, 'collection-number-of-videos').text(),
         ),
-        updatedAt: findOne(el, 'collection-updated-at').text(),
       }));
   }
 

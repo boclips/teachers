@@ -8,7 +8,7 @@ import { editCollection } from './editCollection';
 test('edit collection', async () => {
   MockFetchVerify.patch(
     '/v1/collections/the-id',
-    { title: 'avideo', isPublic: false, ageRange: { min: null, max: null } },
+    { title: 'avideo', isPublic: false, ageRange: null },
     204,
   );
 
@@ -32,7 +32,7 @@ test('change subjects on collection', async () => {
     {
       title: 'avideo',
       subjects: ['id-one', 'id-two'],
-      ageRange: { min: null, max: null },
+      ageRange: null,
     },
     204,
   );
@@ -77,7 +77,7 @@ test('change description of collection', async () => {
     {
       title: 'avideo',
       description: 'new description',
-      ageRange: { min: null, max: null },
+      ageRange: null,
     },
     204,
   );

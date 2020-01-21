@@ -6,7 +6,7 @@ import {
   VideoFactory,
   VideoIdFactory,
 } from '../../../../test-support/factories';
-import { CollectionCardSearchPreview } from './CollectionCardSearchPreview';
+import { CollectionCardPreview } from './CollectionCardPreview';
 
 describe('Rendering a full grid of video previews', () => {
   const videos = [
@@ -39,7 +39,7 @@ describe('Rendering a full grid of video previews', () => {
 
   it('renders a one video collection with one thumbnail with three placeholders', () => {
     const previews = mount(
-      <CollectionCardSearchPreview
+      <CollectionCardPreview
         collection={getCollection(1)}
         videos={videos.slice(0, 1)}
       />,
@@ -50,7 +50,7 @@ describe('Rendering a full grid of video previews', () => {
 
   it('renders a two video collection with two thumbnails with two placeholders', () => {
     const previews = mount(
-      <CollectionCardSearchPreview
+      <CollectionCardPreview
         collection={getCollection(2)}
         videos={videos.slice(0, 2)}
       />,
@@ -61,7 +61,7 @@ describe('Rendering a full grid of video previews', () => {
 
   it('renders a four video collection with four thumbnails with no placeholders', () => {
     const previews = mount(
-      <CollectionCardSearchPreview
+      <CollectionCardPreview
         collection={getCollection(4)}
         videos={videos.slice(0, 4)}
       />,
@@ -72,7 +72,7 @@ describe('Rendering a full grid of video previews', () => {
 
   it('renders a five video collection with three thumbnails and one placeholder containing "+ 2 videos"', () => {
     const previews = mount(
-      <CollectionCardSearchPreview
+      <CollectionCardPreview
         collection={getCollection(5)}
         videos={videos.slice(0, 5)}
       />,
@@ -85,7 +85,7 @@ describe('Rendering a full grid of video previews', () => {
 
   it('renders a six video collection with three thumbnails and one placeholder containing "+ 3 videos"', () => {
     const previews = mount(
-      <CollectionCardSearchPreview
+      <CollectionCardPreview
         collection={getCollection(6)}
         videos={videos.slice(0, 6)}
       />,

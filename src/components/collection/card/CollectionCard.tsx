@@ -1,28 +1,29 @@
-import classnames from 'classnames';
 import React from 'react';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { ButtonRow } from '../../common/buttons/ButtonRow';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
-import { CollectionSubtitle } from '../CollectionSubtitle';
-import CollectionHeader from '../header/CollectionHeader';
-import CollectionCardVideoPreviews from './CollectionCardVideoPreviews';
-
 import './CollectionCard.less';
+import { CollectionTitle } from '../header/CollectionTitle';
+import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
+import StopClickPropagation from '../../common/StopClickPropagation';
+import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
+import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
+import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
+import { EditCollectionButton } from '../buttons/EditCollectionButton';
+import { RemoveCollectionButton } from '../buttons/RemoveCollectionButton';
+import { CollectionCardPreview } from './CollectionCardPreview';
 
 export interface Props {
   collection: VideoCollection;
-  numberOfPreviews: number;
-  tiny?: boolean;
   videos: Video[];
 }
 
 export class CollectionCard extends React.PureComponent<Props> {
-  public static Skeleton = (props: { tiny: boolean }) => (
+  public static Skeleton = () => (
     <section
-      className={
-        'collection-card skeleton ant-skeleton ant-skeleton-active' +
-        (props.tiny ? ' tiny' : '')
-      }
+      className={'collection-card skeleton ant-skeleton ant-skeleton-active'}
     >
       <section className="ant-skeleton-content">
         <h3 className="collection-title ant-skeleton-title" />
@@ -53,40 +54,84 @@ export class CollectionCard extends React.PureComponent<Props> {
         href={`/collections/${this.props.collection.id}`}
         bordered={false}
         key={`card-${this.props.collection.id}`}
-        className={classnames('collection-card', {
-          tiny: this.props.tiny,
-        })}
+        className="collection-card collection-card--search"
         data-qa="collection-card"
         data-state={this.props.collection.title}
+        onMouseDown={this.emitCollectionInteractedWithEvent}
       >
-        <CollectionHeader
+        <CollectionTitle
           collection={this.props.collection}
-          mode={this.props.tiny ? 'tiny-card' : 'card'}
+          showBookmarkButton={true}
         />
-        <CollectionCardVideoPreviews
-          numberOfPreviews={this.props.numberOfPreviews}
-          videos={this.props.videos}
-          isGrid={this.props.tiny}
-          id={this.props.collection.id}
-          numberOfVideos={this.props.collection.videoIds.length}
-        />
-        {this.props.tiny && (
-          <React.Fragment>
-            <CollectionSubtitle
-              classname="highlight collection-subtitle tiny"
-              collection={this.props.collection}
-            />
-            {this.props.collection.description && (
-              <div
-                data-qa="collection-description"
-                className="collection-card__description-preview tiny"
-              >
-                {this.props.collection.description}
-              </div>
+        <section className="collection-card__subtitle">
+          <span>
+            <span data-qa="collection-number-of-videos">
+              {this.props.collection.videoIds.length}
+            </span>{' '}
+            videos
+          </span>
+          {this.props.collection.attachments &&
+            this.props.collection.attachments.length > 0 && (
+              <span className="collection-card__lesson-plan">
+                {' '}
+                + <LessonPlanSVG /> Lesson Plan
+              </span>
             )}
-          </React.Fragment>
-        )}
+        </section>
+        <div className="collection-card__detail-row">
+          <section className="collection-card__column-preview">
+            <CollectionCardPreview
+              collection={this.props.collection}
+              videos={this.props.videos}
+            />
+          </section>
+          <section className="collection-card__column-detail">
+            <div className="tags-container">
+              {this.props.collection.subjects.slice(0, 1).map(subjectId => (
+                <ConnectedSubjectTag key={subjectId} id={subjectId} />
+              ))}
+              {this.props.collection.ageRange.isBounded() && (
+                <AgeRangeTag
+                  ageRange={this.props.collection.ageRange.getLabel()}
+                />
+              )}
+            </div>
+            <div
+              className="collection-card__description-preview"
+              data-qa="collection-description"
+            >
+              {this.props.collection.description}
+            </div>
+            <StopClickPropagation
+              wrapperProps={{
+                className:
+                  'collection-card__buttons display-tablet-and-desktop',
+              }}
+            >
+              <ButtonRow
+                buttons={
+                  <React.Fragment>
+                    <BookmarkCollectionButton
+                      collection={this.props.collection}
+                    />
+                    <EditCollectionButton collection={this.props.collection} />
+                    <RemoveCollectionButton
+                      collection={this.props.collection}
+                    />
+                  </React.Fragment>
+                }
+              />
+            </StopClickPropagation>
+          </section>
+        </div>
       </ClickableCard>
     );
   }
+
+  private emitCollectionInteractedWithEvent = () => {
+    AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+      this.props.collection,
+      'NAVIGATE_TO_COLLECTION_DETAILS',
+    );
+  };
 }

@@ -35,10 +35,6 @@ describe('when can edit collection', () => {
       editCollectionAction({
         originalCollection: collection,
         title: 'test',
-        isPublic: null,
-        subjects: null,
-        ageRange: new AgeRange(),
-        description: null,
       }),
     );
   });
@@ -63,10 +59,6 @@ describe('when can edit collection', () => {
       editCollectionAction({
         originalCollection: collection,
         isPublic: true,
-        title: null,
-        subjects: null,
-        ageRange: new AgeRange(),
-        description: null,
       }),
     );
   });
@@ -92,11 +84,7 @@ describe('when can edit collection', () => {
     expect(store.getActions()).toContainEqual(
       editCollectionAction({
         originalCollection: collection,
-        isPublic: null,
-        title: null,
         subjects: ['subject-one-id', 'subject-two-id'],
-        ageRange: new AgeRange(),
-        description: null,
       }),
     );
   });
@@ -120,11 +108,7 @@ describe('when can edit collection', () => {
     expect(store.getActions()).toContainEqual(
       editCollectionAction({
         originalCollection: collection,
-        isPublic: null,
-        title: null,
         description: 'new description',
-        ageRange: new AgeRange(),
-        subjects: null,
       }),
     );
   });
@@ -151,11 +135,7 @@ describe('when can edit collection', () => {
       expect(store.getActions()).toContainEqual(
         editCollectionAction({
           originalCollection: collection,
-          title: null,
           ageRange: new AgeRange(5, 11),
-          subjects: null,
-          isPublic: null,
-          description: null,
         }),
       );
     });
@@ -181,11 +161,7 @@ describe('when can edit collection', () => {
       expect(store.getActions()).toContainEqual(
         editCollectionAction({
           originalCollection: collection,
-          title: null,
           ageRange: new AgeRange(11, 19),
-          subjects: null,
-          isPublic: null,
-          description: null,
         }),
       );
     });
@@ -207,11 +183,7 @@ describe('when can edit collection', () => {
       expect(store.getActions()).toContainEqual(
         editCollectionAction({
           originalCollection: collection,
-          title: null,
           ageRange: new AgeRange(11, 16),
-          subjects: null,
-          isPublic: null,
-          description: null,
         }),
       );
     });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { Video } from '../../../types/Video';
-import './CollectionCardSearchPreview.less';
+import './CollectionCardPreview.less';
 import { VideoCollection } from '../../../types/VideoCollection';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   videos: Video[];
 }
 
-export class CollectionCardSearchPreview extends React.PureComponent<Props> {
+export class CollectionCardPreview extends React.PureComponent<Props> {
   public render() {
     const totalVideoCount = this.props.collection.videoIds.length;
 
@@ -44,7 +44,10 @@ export class CollectionCardSearchPreview extends React.PureComponent<Props> {
               totalVideoCount > gridSize && (
                 <span className="video-counter">
                   <span className="count">
-                    +<span>{totalVideoCount - (gridSize - 1)}</span>
+                    +
+                    <span data-qa="video-counter-count">
+                      {totalVideoCount - (gridSize - 1)}
+                    </span>
                   </span>
                   <span className="label">videos</span>
                 </span>

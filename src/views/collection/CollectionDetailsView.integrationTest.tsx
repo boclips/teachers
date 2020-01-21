@@ -3,17 +3,8 @@ import {
   video177Slim,
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
-import { By } from '../../../test-support/By';
 import eventually from '../../../test-support/eventually';
-import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
-import EditCollectionButton from '../../components/collection/buttons/EditCollectionButton';
-import {
-  CollectionEditModalHelper,
-  CollectionFormHelper,
-} from '../../components/collection/buttons/EditCollectionButton.test';
-import AgeRangeSlider from '../../components/common/AgeRangeSlider';
-import { AgeRange } from '../../types/AgeRange';
 
 describe('when video collection', () => {
   test('displays collection basic details', async () => {
@@ -90,84 +81,6 @@ describe('when collection not found', () => {
 });
 
 describe('when editable collection', () => {
-  test('can edit title of collection', async () => {
-    new ApiStub()
-      .defaultUser()
-      .fetchCollections()
-      .fetchVideo();
-
-    const collectionPage = await CollectionPage.load();
-    const wrapper = collectionPage.wrapper;
-
-    expect(collectionPage.isEditable()).toBeTruthy();
-
-    CollectionEditModalHelper.openModal(wrapper);
-    const newTitle = 'this is a shiny new title';
-    CollectionFormHelper.editCollectionText(wrapper, newTitle);
-    MockFetchVerify.patch(
-      'https://api.example.com/v1/collections/id',
-      {
-        title: newTitle,
-        isPublic: null,
-        subjects: null,
-        ageRange: { min: null, max: null },
-        description: null,
-      },
-      204,
-    );
-    CollectionEditModalHelper.confirmModal(wrapper.find(EditCollectionButton));
-
-    await eventually(() => {
-      expect(wrapper.find(By.dataQa('collection-title')).text()).toEqual(
-        newTitle,
-      );
-    });
-
-    await eventually(() => {
-      // TODO: wrapper.html() does not contain an element with data-qa="age-range". Yet, wrapper.find will find one.
-      expect(wrapper.html().indexOf('data-qa="age-range"')).toBeGreaterThan(0);
-    });
-  });
-
-  test('can edit age range of collection', async () => {
-    new ApiStub()
-      .defaultUser()
-      .fetchCollections()
-      .fetchVideo();
-
-    MockFetchVerify.patch(
-      'https://api.example.com/v1/collections/id',
-      {
-        title: null,
-        isPublic: null,
-        subjects: null,
-        ageRange: { min: 5, max: 11 },
-        description: null,
-      },
-      204,
-    );
-
-    const collectionPage = await CollectionPage.load();
-    const wrapper = collectionPage.wrapper;
-
-    expect(collectionPage.isEditable()).toBeTruthy();
-    CollectionEditModalHelper.openModal(wrapper);
-
-    const slider = wrapper.find(AgeRangeSlider);
-
-    slider.props().onChange(new AgeRange(5, 11));
-    CollectionEditModalHelper.confirmModal(wrapper.find(EditCollectionButton));
-
-    await eventually(() => {
-      expect(
-        wrapper
-          .find(By.dataQa('age-range'))
-          .find(By.dataQa('filter-tag'))
-          .text(),
-      ).toEqual('5-11');
-    });
-  });
-
   test('can remove a video', async () => {
     new ApiStub()
       .defaultUser()
