@@ -3,11 +3,10 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import CollectionsLoaded from '../../CollectionsLoaded';
-import { CollectionCard } from '../CollectionCard';
+import { CollectionCardSkeleton } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
 import { FiniteGrid } from '../../../common/Grid/FiniteGrid';
 import { InfiniteGrid } from '../../../common/Grid/InfiniteGrid';
-import { CollectionCardTiny } from '../CollectionCardTiny';
 import { PageableCollectionCardListProps } from './PageableCollectionCardList';
 
 interface InfiniteScrollProps {
@@ -100,7 +99,7 @@ export class CollectionCardList extends React.PureComponent<
                   lg={{ span: this.singleColumn() ? 24 : 8 }}
                 >
                   <CollectionCardContainer
-                    grid={this.props.grid }
+                    grid={this.props.grid}
                     collection={collection}
                   />
                 </Col>
@@ -122,11 +121,7 @@ export class CollectionCardList extends React.PureComponent<
         md={{ span: this.singleColumn() ? 24 : 12 }}
         lg={{ span: this.singleColumn() ? 24 : 8 }}
       >
-        {this.props.grid ? (
-          <CollectionCard.Skeleton />
-        ) : (
-          <CollectionCardTiny.Skeleton />
-        )}
+        <CollectionCardSkeleton />
       </Col>
     ));
   }
