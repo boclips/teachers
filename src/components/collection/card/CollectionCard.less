@@ -68,30 +68,24 @@
     padding: 12px 0;
   }
 
-  &.skeleton {
-    background-color: white;
-    border: 1px solid @shade-2;
+  &.skeleton.ant-skeleton-active .ant-skeleton-content {
+    display: block;
+
+    .collection-title {
+      height: 24px;
+      margin-bottom: 0.5em;
+      margin-top: 0;
+    }
+
+    .ant-skeleton-paragraph li {
+      height: 24px;
+    }
+
+    .ant-skeleton-avatar,
+    .ant-skeleton-paragraph > li,
     .ant-skeleton-title {
-      width: 400px;
-    }
-
-    .ant-skeleton-avatar {
-      margin: 29px 0px;
-    }
-
-    .collection-video-preview {
-      display: flex;
-    }
-
-    &.tiny {
-      .ant-skeleton-title {
-        width: 200px;
-        margin-bottom: 20px;
-      }
-
-      .ant-skeleton-avatar {
-        margin: 0px;
-      }
+      background: linear-gradient(90deg, #cfd6e6 25%, #b5bccc 37%, #cfd6e6 63%);
+      background-size: 400% 100%;
     }
   }
 

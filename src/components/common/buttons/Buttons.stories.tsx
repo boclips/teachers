@@ -15,7 +15,7 @@ storiesOf('Buttons', module)
         <Icon component={ShareSVG} />
         First
       </Button>,
-      ];
+    ];
 
     const rightButtons: React.ReactElement[] = [
       <Button>
