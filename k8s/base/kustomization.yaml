@@ -7,10 +7,10 @@ resources:
 commonLabels:
   app: teachers
 commonAnnotations:
-  boclips-version: "1"
+  boclips-version: "2"
 images:
 - name: eu.gcr.io/boclips-prod/boclips/teachers
-  newTag: "1"
+  newTag: "2"
 patches:
 - path: pre-stop-nginx-spa.yaml
   target:
