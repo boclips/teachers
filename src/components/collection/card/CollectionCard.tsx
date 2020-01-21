@@ -1,3 +1,4 @@
+import { Card } from 'antd';
 import React from 'react';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
@@ -22,30 +23,28 @@ export interface Props {
 
 export class CollectionCard extends React.PureComponent<Props> {
   public static Skeleton = () => (
-    <section
-      className={'collection-card skeleton ant-skeleton ant-skeleton-active'}
+    <Card
+      className={
+        'collection-card collection-card--search skeleton ant-skeleton ant-skeleton-active'
+      }
+      bordered={false}
     >
       <section className="ant-skeleton-content">
         <h3 className="collection-title ant-skeleton-title" />
-        <span className="highlight">
-          <span />
-        </span>
-        <section className="collection-video-previews">
-          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
-            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+        <div className="collection-card__detail-row">
+          <section className="collection-card__column-preview">
+            <CollectionCardPreview.Skeleton />
           </section>
-          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
-            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
+          <section className="collection-card__column-detail">
+            <ul className="ant-skeleton-paragraph">
+              <li />
+              <li />
+              <li />
+            </ul>
           </section>
-          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
-            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
-          </section>
-          <section className="ant-skeleton-avatar ant-skeleton-avatar-lg collection-video-preview">
-            <section className="ant-skeleton-avatar ant-skeleton-avatar-lg video-container" />
-          </section>
-        </section>
+        </div>
       </section>
-    </section>
+    </Card>
   );
 
   public render() {

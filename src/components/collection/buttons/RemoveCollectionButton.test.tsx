@@ -115,7 +115,9 @@ describe('RemoveCollectionButton', () => {
 
     await waitForElementToBeRemoved(() => context.getByText(/Are you sure.*/));
 
-    expect(await context.findByText(/.*has been deleted.*/)).toBeInTheDocument();
+    expect(
+      await context.findByText(/.*has been deleted.*/),
+    ).toBeInTheDocument();
 
     await eventually(() => {
       expect(
