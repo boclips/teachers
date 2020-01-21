@@ -15,7 +15,7 @@ interface Options {
 }
 
 export interface ResultingContext extends RenderResult {
-  store: Store;
+  store: Store<State>;
   history: History;
 }
 

@@ -26,12 +26,12 @@ describe('VideoDetailsView', () => {
       initialEntries: initialHistory,
     });
 
-    const store = createBoclipsStore(history, {
+    const store = createBoclipsStore({
       ...MockStoreFactory.sampleState({
         links: LinksFactory.sample({}, 'https://api.example.com/v1'),
       }),
       ...initialState,
-    });
+    }, history);
 
     return renderWithCreatedStore(
       <VideoDetailsView videoId={video.id} />,
