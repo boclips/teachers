@@ -28,9 +28,9 @@ export default class App extends PureComponent<Props> {
     history: createBrowserHistory(),
   };
 
-  private store = createBoclipsStore(this.props.history, {
+  private store = createBoclipsStore({
     apiPrefix: this.props.apiPrefix,
-  });
+  }, this.props.history);
 
   public render() {
     return (
