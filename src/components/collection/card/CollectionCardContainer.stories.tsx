@@ -158,4 +158,9 @@ storiesOf('CollectionCardContainer', module)
       />{' '}
     </div>
   ))
+  .add('Grid Card with no tags', () => (
+    <div style={{ maxWidth: '400px' }}>
+      <CollectionCardContainer grid={true} collection={collectionWithoutTags} />{' '}
+    </div>
+  ))
   .add('Skeleton', () => <CollectionCardSkeleton />);
