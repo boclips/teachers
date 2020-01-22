@@ -1,19 +1,19 @@
 import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import { VideoCollection } from '../../../types/VideoCollection';
-import { ButtonMenu } from '../../common/buttons/ButtonMenu';
-import StopClickPropagation from '../../common/StopClickPropagation';
-import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
-import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
-import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
-import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
-import '../buttons/CollectionButtonsContainer.less';
-import { CollectionSubtitle } from '../CollectionSubtitle';
-import { LessonPlan } from '../lessonPlan/LessonPlan';
-import { CollectionTitle } from '../title/CollectionTitle';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import { ButtonMenu } from '../../../common/buttons/ButtonMenu';
+import StopClickPropagation from '../../../common/StopClickPropagation';
+import { AgeRangeTag } from '../../../common/tags/AgeRangeTag';
+import { ConnectedSubjectTag } from '../../../common/tags/SubjectTag';
+import BookmarkCollectionButton from '../../buttons/bookmark/BookmarkCollectionButton';
+import CollectionButtonsContainer from '../../buttons/CollectionButtonsContainer';
+import '../../buttons/CollectionButtonsContainer.less';
 
 import './CollectionHeader.less';
+import { CollectionTitle } from '../../title/CollectionTitle';
+import { CollectionSubtitle } from '../../CollectionSubtitle';
+import { LessonPlan } from '../../lessonPlan/LessonPlan';
 
 export interface Props {
   collection: VideoCollection;
