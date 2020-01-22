@@ -33,6 +33,12 @@ export const CollectionCard = withMediaBreakPoint(
     const isSmallCard =
       props.grid || props.mediaBreakpoint.width <= MediaBreakpoints.sm.width;
 
+    const collectionHasTags =
+      props.collection.subjects.length > 0 ||
+      props.collection.ageRange.isBounded();
+
+    const displayTags = props.grid || collectionHasTags;
+
     const leftButtons = [
       (props.collection.links.bookmark ||
         props.collection.links.unbookmark) && (
@@ -72,7 +78,7 @@ export const CollectionCard = withMediaBreakPoint(
         <section className="collection-card__title">
           <CollectionTitle collection={props.collection} />
 
-          {this.isSmallCard() && (
+          {isSmallCard && (
             <StopClickPropagation
               wrapper="div"
               wrapperProps={{ className: 'button-menu-container' }}
@@ -104,14 +110,18 @@ export const CollectionCard = withMediaBreakPoint(
             />
           </section>
           <section className="collection-card__column-detail">
-            <div className="tags-container">
-              {props.collection.subjects.slice(0, 1).map(subjectId => (
-                <ConnectedSubjectTag key={subjectId} id={subjectId} />
-              ))}
-              {props.collection.ageRange.isBounded() && (
-                <AgeRangeTag ageRange={props.collection.ageRange.getLabel()} />
-              )}
-            </div>
+            {displayTags && (
+              <div className="tags-container" data-qa={'tags-container'}>
+                {props.collection.subjects.slice(0, 1).map(subjectId => (
+                  <ConnectedSubjectTag key={subjectId} id={subjectId} />
+                ))}
+                {props.collection.ageRange.isBounded() && (
+                  <AgeRangeTag
+                    ageRange={props.collection.ageRange.getLabel()}
+                  />
+                )}
+              </div>
+            )}
             <div
               className="collection-card__description-preview"
               data-qa="collection-description"
