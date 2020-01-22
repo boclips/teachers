@@ -1,6 +1,5 @@
 import { Card, Col, Row } from 'antd';
 import { Skeleton as AntSkeleton } from 'antd';
-import classnames from 'classnames';
 import React from 'react';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
@@ -12,16 +11,15 @@ import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
 import '../buttons/CollectionButtonsContainer.less';
 import { CollectionSubtitle } from '../CollectionSubtitle';
 import { LessonPlan } from '../lessonPlan/LessonPlan';
-import { CollectionTitle } from './CollectionTitle';
+import { CollectionTitle } from '../title/CollectionTitle';
 
 import './CollectionHeader.less';
 
 export interface Props {
-  mode?: 'tiny-card' | 'card' | 'details';
   collection: VideoCollection;
 }
 
-class CollectionHeader extends React.PureComponent<Props> {
+export class CollectionHeader extends React.PureComponent<Props> {
   public render() {
     return (
       <React.Fragment>
@@ -50,12 +48,10 @@ class CollectionHeader extends React.PureComponent<Props> {
               ]}
             />
           </span>
-          {this.props.mode !== 'tiny-card' && (
-            <CollectionButtonsContainer
-              collection={this.props.collection}
-              className="collection-edit__card"
-            />
-          )}
+          <CollectionButtonsContainer
+            collection={this.props.collection}
+            className="collection-edit__card"
+          />
         </StopClickPropagation>
       </Col>
     </Row>
@@ -63,8 +59,8 @@ class CollectionHeader extends React.PureComponent<Props> {
 
   private renderSubtitleRow = () => {
     const tags = this.shouldRenderTagContainer() && (
-      <div className="tags-container">
-        {this.subjectTagsToRender().map(subjectId => (
+      <div className="tags-container" data-qa={'tags-container'}>
+        {this.props.collection.subjects.map(subjectId => (
           <ConnectedSubjectTag key={subjectId} id={subjectId} />
         ))}
         {this.hasAgeRange() && (
@@ -73,11 +69,9 @@ class CollectionHeader extends React.PureComponent<Props> {
       </div>
     );
 
-    const subtitle = this.props.mode !== 'tiny-card' && (
+    const subtitle = (
       <CollectionSubtitle
-        classname={classnames('highlight collection-subtitle header', {
-          'no-lesson-plan': this.props.mode === 'details',
-        })}
+        classname={'highlight collection-subtitle header no-lesson-plan'}
         collection={this.props.collection}
       />
     );
@@ -91,14 +85,13 @@ class CollectionHeader extends React.PureComponent<Props> {
   };
 
   private renderDescriptionRow = () => {
-    if (this.props.mode === 'tiny-card') {
-      return null;
-    }
-
     const lessonPlanToRender = this.getLessonPlan();
 
     return (
-      <Row className="collection-header__description-row">
+      <Row
+        className="collection-header__description-row"
+        data-qa={'collection-description-row'}
+      >
         <Col
           {...(lessonPlanToRender && {
             sm: { span: 24 },
@@ -107,9 +100,7 @@ class CollectionHeader extends React.PureComponent<Props> {
           })}
         >
           <div
-            className={classnames('collection-header__description', {
-              details: this.props.mode === 'details',
-            })}
+            className={'collection-header__description details'}
             data-qa="collection-description"
           >
             {this.props.collection.description}
@@ -141,20 +132,10 @@ class CollectionHeader extends React.PureComponent<Props> {
     </section>
   );
 
-  /**
-   * We need to render the tag container when tiny-card, because we need to
-   * keep vertical alignment for the video previews
-   */
   private shouldRenderTagContainer = () =>
-    this.props.mode === 'tiny-card' || this.hasAgeRange() || this.hasSubjects();
-
-  private subjectTagsToRender = () =>
-    this.props.mode === 'details'
-      ? this.props.collection.subjects
-      : this.props.collection.subjects.slice(0, 1);
+    this.hasAgeRange() || this.hasSubjects();
 
   private getLessonPlan = () =>
-    this.props.mode === 'details' &&
     this.props.collection.attachments.find(
       attachment => attachment.type === 'LESSON_PLAN',
     );
@@ -162,5 +143,3 @@ class CollectionHeader extends React.PureComponent<Props> {
   private hasAgeRange = () => this.props.collection.ageRange.isBounded();
   private hasSubjects = () => this.props.collection.subjects.length > 0;
 }
-
-export default CollectionHeader;
