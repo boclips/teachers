@@ -10,7 +10,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: teachers
-        image: eu.gcr.io/boclips-prod/boclips/teachers:1
+        image: app:1
         env:
         - name: SENTRY_RELEASE
           value: teachers-$(VERSION)
