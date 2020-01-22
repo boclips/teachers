@@ -2,8 +2,8 @@ import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import App from '../../src/app/App';
-import CollectionHeader from '../../src/components/collection/header/CollectionHeader';
-import { CollectionTitle } from '../../src/components/collection/header/CollectionTitle';
+import { CollectionHeader } from '../../src/components/collection/header/CollectionHeader';
+import { CollectionTitle } from '../../src/components/collection/title/CollectionTitle';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
@@ -74,24 +74,12 @@ export class CollectionPage {
     return this.wrapper.find(By.dataQa('collection-edit-button')).length > 0;
   }
 
-  public getVideoCard(index: number) {
-    return findAll(this.wrapper, 'video-card').at(index);
-  }
-
   public removeVideo(index: number) {
     return findAll(this.wrapper, 'video-card')
       .at(index)
       .find(By.dataQa('remove-from-collection', 'button'))
       .first()
       .simulate('click');
-  }
-
-  public isRemovableVideo(index: number) {
-    return (
-      findAll(this.wrapper, 'video-card')
-        .at(index)
-        .find(By.dataQa('remove-from-collection', 'button')).length > 0
-    );
   }
 
   private async hasLoaded() {

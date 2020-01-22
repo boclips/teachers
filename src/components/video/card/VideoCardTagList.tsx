@@ -13,7 +13,7 @@ const VideoCardTagList = React.memo((props: Props) => (
     {props.video.subjects.length !== 0 && (
       <div className="tag-list__subjects-container">
         {props.video.subjects.map(subject => (
-          <SubjectTag subjectName={subject.name} />
+          <SubjectTag subjectName={subject.name} key={subject.id} />
         ))}
       </div>
     )}
