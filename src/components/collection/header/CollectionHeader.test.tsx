@@ -1,341 +1,180 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
 import {
   AttachmentFactory,
+  CollectionsFactory,
+  SubjectFactory,
   VideoCollectionFactory,
+  VideoIdFactory,
 } from '../../../../test-support/factories';
+import { Link } from '../../../types/Link';
+import { renderWithStore } from '../../../../test-support/renderWithStore';
 import { AgeRange } from '../../../types/AgeRange';
-import { ButtonMenu } from '../../common/buttons/ButtonMenu';
-import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
-import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
-import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
-import CollectionButtonsContainer from '../buttons/CollectionButtonsContainer';
-import { CollectionSubtitle } from '../CollectionSubtitle';
-import { LessonPlan } from '../lessonPlan/LessonPlan';
-import CollectionHeader, { Props } from './CollectionHeader';
-import { CollectionTitle } from './CollectionTitle';
+import { CollectionHeader } from './CollectionHeader';
 
-type CollectionCardRenderTestData<T = boolean> = Array<{
-  mode: Props['mode'];
-  expectRendered?: T;
-}>;
-
-describe('the title', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: true },
-    { mode: 'tiny-card', expectRendered: true },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({ title: 'hello' });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const titleComponent = wrapper.find(CollectionTitle);
-
-      if (expectRendered) {
-        expect(titleComponent).toExist();
-        expect(titleComponent.props().collection).toEqual(collection);
-      } else {
-        expect(titleComponent).not.toExist();
-      }
+describe('CollectionHeader', () => {
+  it('renders the title', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      title: 'My collection',
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+
+    expect(component.getByText('My collection')).toBeInTheDocument();
   });
-});
 
-describe('the bookmark button', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details' },
-    { mode: 'card' },
-    { mode: 'tiny-card' },
-  ];
-
-  testData.map(({ mode }) => {
-    it(`does render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({ title: 'hello' });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      expect(wrapper.find(ButtonMenu)).toExist();
-      const buttonMenu = wrapper.find(ButtonMenu).dive();
-      expect(buttonMenu.find(BookmarkCollectionButton)).toExist();
-      expect(
-        buttonMenu
-          .find(BookmarkCollectionButton)
-          .first()
-          .props().collection,
-      ).toEqual(collection);
+  it('renders the bookmark button', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      links: {
+        self: new Link({ href: '' }),
+        bookmark: new Link({ href: '' }),
+      },
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+    expect(component.getByTestId('bookmark-collection')).toBeInTheDocument();
   });
-});
 
-describe('the edit collection buttons', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: true },
-    { mode: 'tiny-card', expectRendered: false },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({ title: 'hello' });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const buttonContainer = wrapper.find(CollectionButtonsContainer);
-
-      if (expectRendered) {
-        expect(buttonContainer).toExist();
-        expect(buttonContainer.props().collection).toEqual(collection);
-      } else {
-        expect(buttonContainer).not.toExist();
-      }
+  it('renders the collection buttons', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      links: {
+        self: new Link({ href: '' }),
+        edit: new Link({ href: '' }),
+        remove: new Link({ href: '' }),
+      },
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
+    );
+    expect(component.getByTestId('collection-edit-button')).toBeInTheDocument();
+    expect(component.getByTestId('delete-collection')).toBeInTheDocument();
   });
-});
 
-describe('the subtitle', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: true },
-    { mode: 'tiny-card', expectRendered: false },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({ title: 'hello' });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      if (expectRendered) {
-        expect(wrapper.find(CollectionSubtitle)).toExist();
-      } else {
-        expect(wrapper.find(CollectionSubtitle)).not.toExist();
-      }
+  it('renders the subtitle', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      videoIds: [VideoIdFactory.sample()],
+      updatedAt: '2018-12-12T12:12:12',
+      attachments: [AttachmentFactory.sample()],
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+    expect(component.getByTestId('collection-number-of-videos')).toContainHTML(
+      '1',
+    );
+    expect(component.getByTestId('collection-lesson-plan')).toBeInTheDocument();
+    expect(component.getByTestId('collection-updated-at')).toContainHTML(
+      '<span>Dec 12, 2018</span>',
+    );
   });
-});
 
-describe('subject tags when present', () => {
-  const subjects = ['hello', 'world'];
-
-  const testData: CollectionCardRenderTestData<number> = [
-    { mode: 'details', expectRendered: subjects.length },
-    { mode: 'card', expectRendered: 1 },
-    { mode: 'tiny-card', expectRendered: 1 },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does render ${expectRendered} of subjects in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({ subjects });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const subjectTags = wrapper.find(ConnectedSubjectTag);
-      expect(subjectTags.length).toEqual(expectRendered);
-
-      for (let i = 0; i < expectRendered; i++) {
-        expect(subjectTags.at(i).prop('id')).toEqual(subjects[i]);
-      }
+  it('renders tags when present', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      subjects: ['subject-id'],
+      ageRange: new AgeRange(5, 7),
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+      {
+        initialState: {
+          subjects: [
+            SubjectFactory.sample({ id: 'subject-id', name: 'Maths' }),
+          ],
+        },
+      },
+    );
+    expect(component.getByText('Maths')).toBeInTheDocument();
+    expect(component.getByText('5-7')).toBeInTheDocument();
   });
-});
 
-describe('subject tags when not present', () => {
-  const testData: CollectionCardRenderTestData<number> = [
-    { mode: 'details' },
-    { mode: 'card' },
-    { mode: 'tiny-card' },
-  ];
-
-  testData.map(({ mode }) => {
-    it(`does not render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample();
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const subjectTags = wrapper.find(ConnectedSubjectTag);
-      expect(subjectTags).not.toExist();
+  it('renders no tags container when no tags are present', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+    expect(component.queryByTestId('tags-container')).not.toBeInTheDocument();
   });
-});
 
-describe('age range when present', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: true },
-    { mode: 'tiny-card', expectRendered: true },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({
-        ageRange: new AgeRange(3, 9),
-      });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode="tiny-card" />,
-      );
-
-      if (expectRendered) {
-        expect(wrapper.find(AgeRangeTag)).toExist();
-        expect(wrapper.find(AgeRangeTag).props().ageRange).toEqual('3-9');
-      } else {
-        expect(wrapper.find(AgeRangeTag)).not.toExist();
-      }
+  it('renders the description', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      description: 'My description',
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+    expect(component.getByText('My description')).toBeInTheDocument();
   });
-});
 
-describe('age range when not present', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details' },
-    { mode: 'card' },
-    { mode: 'tiny-card' },
-  ];
-
-  testData.map(({ mode }) => {
-    it(`does not render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample();
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      expect(wrapper.find(AgeRangeTag)).not.toExist();
+  it('renders a lesson plan when present and restricts the description', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      description: 'My description',
+      attachments: [
+        AttachmentFactory.sample({
+          description: '1. Point one of my lesson plan',
+        }),
+      ],
     });
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+    const descriptionRow = component.getByTestId('collection-description-row');
+    const descriptionColumn = descriptionRow.children.item(0);
+
+    expect(descriptionColumn.className).toBe(
+      'ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-16',
+    );
+    expect(component.getByText('Lesson plan outline')).toBeInTheDocument();
+    expect(
+      component.getByText('Point one of my lesson plan'),
+    ).toBeInTheDocument();
   });
-});
 
-describe('tags container when no subject or age tags are present', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: false },
-    { mode: 'card', expectRendered: false },
-    { mode: 'tiny-card', expectRendered: true },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({
-        ageRange: null,
-        subjects: [],
-      });
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      if (expectRendered) {
-        expect(wrapper.find('.tags-container')).toExist();
-      } else {
-        expect(wrapper.find('.tags-container')).not.toExist();
-      }
+  it('does not restrict the description when no lesson plan is present', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      description: 'My description',
     });
-  });
-});
+    const component = renderWithStore(
+      <Router history={createMemoryHistory()}>
+        <CollectionHeader collection={collection} />
+      </Router>,
+    );
+    const descriptionRow = component.getByTestId('collection-description-row');
+    const descriptionColumn = descriptionRow.children.item(0);
 
-describe('description', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: true },
-    { mode: 'tiny-card', expectRendered: false },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample({
-        description: 'My awesome description for the collection',
-      });
-
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const description = wrapper.find('[data-qa="collection-description"]');
-
-      if (expectRendered) {
-        expect(description).toExist();
-        expect(description.prop('children')).toEqual(collection.description);
-      } else {
-        expect(description).not.toExist();
-      }
-    });
-  });
-});
-
-describe('lesson plan when one exists', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details', expectRendered: true },
-    { mode: 'card', expectRendered: false },
-    { mode: 'tiny-card', expectRendered: false },
-  ];
-
-  testData.map(({ mode, expectRendered }) => {
-    it(`does ${expectRendered ? '' : 'not '}render in ${mode}`, () => {
-      const lessonPlanAttachment = AttachmentFactory.sample();
-      const otherAttachment = AttachmentFactory.sample({
-        type: 'NOT_A_LESSON_PLAN',
-      } as any);
-      const collection = VideoCollectionFactory.sample({
-        attachments: [otherAttachment, lessonPlanAttachment],
-      });
-
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const lessonPlan = wrapper.find(LessonPlan);
-
-      if (expectRendered) {
-        expect(lessonPlan).toExist();
-        expect(lessonPlan.prop('attachment')).toEqual(lessonPlanAttachment);
-        expect(lessonPlan.prop('collectionId')).toEqual(collection.id);
-      } else {
-        expect(lessonPlan).not.toExist();
-      }
-    });
-  });
-});
-
-describe('lesson plan when one does not exist', () => {
-  const testData: CollectionCardRenderTestData = [
-    { mode: 'details' },
-    { mode: 'card' },
-  ];
-
-  testData.map(({ mode }) => {
-    it(`does not render in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample();
-
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      expect(wrapper.find(LessonPlan)).not.toExist();
-    });
-
-    it(`the description column to not be restrained in ${mode}`, () => {
-      const collection = VideoCollectionFactory.sample();
-
-      const wrapper = shallow(
-        <CollectionHeader collection={collection} mode={mode} />,
-      );
-
-      const descriptionRow = wrapper.find(
-        '.collection-header__description-row',
-      );
-      expect(descriptionRow).toExist();
-
-      const descriptionColumn = descriptionRow.childAt(0);
-      expect(descriptionColumn).toExist();
-      expect(descriptionColumn.prop('sm')).toBeFalsy();
-      expect(descriptionColumn.prop('md')).toBeFalsy();
-      expect(descriptionColumn.prop('lg')).toBeFalsy();
-    });
+    expect(descriptionColumn.className).toBe('ant-col');
   });
 });

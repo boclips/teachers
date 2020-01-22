@@ -7,7 +7,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import { ButtonRow } from '../../common/buttons/ButtonRow';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import './CollectionCard.less';
-import { CollectionTitle } from '../header/CollectionTitle';
+import { CollectionTitle } from '../title/CollectionTitle';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
@@ -58,6 +58,10 @@ export const CollectionCard = withMediaBreakPoint(
       ),
     ];
 
+    const filteredButtons = [...leftButtons, ...rightButtons].filter(
+      button => button !== undefined,
+    );
+
     return (
       <ClickableCard
         href={`/collections/${props.collection.id}`}
@@ -83,7 +87,7 @@ export const CollectionCard = withMediaBreakPoint(
               wrapper="div"
               wrapperProps={{ className: 'button-menu-container' }}
             >
-              <ButtonMenu buttons={[...leftButtons, ...rightButtons]} />
+              <ButtonMenu buttons={filteredButtons} />
             </StopClickPropagation>
           )}
         </section>

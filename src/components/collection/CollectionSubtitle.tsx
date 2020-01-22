@@ -16,7 +16,10 @@ export class CollectionSubtitle extends React.Component<Props> {
         {this.props.collection.attachments &&
           this.props.collection.attachments.length > 0 && (
             <span>
-              <span className={'collection-subtitle__lesson-plan-tag'}>
+              <span
+                className={'collection-subtitle__lesson-plan-tag'}
+                data-qa={'collection-lesson-plan'}
+              >
                 <strong>
                   <LessonPlanSVG />
                   Lesson Plan

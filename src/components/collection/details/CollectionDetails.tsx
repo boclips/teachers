@@ -14,7 +14,7 @@ import {
   fetchVideosByIdsAction,
   VideosForCollectionRequest,
 } from '../../video/redux/actions/fetchVideosByIdsAction';
-import CollectionHeader from '../header/CollectionHeader';
+import { CollectionHeader } from '../header/CollectionHeader';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 import { getCollectionById } from '../redux/reducers/collectionsReducer';
@@ -64,7 +64,7 @@ class CollectionDetails extends PureComponent<
         <Helmet>
           <title>{this.props.collection.title}</title>
         </Helmet>
-        <CollectionHeader collection={this.props.collection} mode="details" />
+        <CollectionHeader collection={this.props.collection} />
         {this.props.collection.videoIds.length === 0
           ? this.renderEmptyCollection()
           : videos && (
