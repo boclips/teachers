@@ -11,7 +11,7 @@ import {
   editCollectionAction,
   EditCollectionRequest,
 } from '../redux/actions/editCollectionAction';
-import CollectionEditForm, { EditableFields } from './EditCollectionForm';
+import EditCollectionForm, { EditableFields } from './EditCollectionForm';
 import './EditCollectionButton.less';
 
 interface Props {
@@ -98,18 +98,12 @@ export const EditCollectionButton = React.memo(({ collection }: Props) => {
         wrapClassName="edit-collection-modal"
         destroyOnClose={true}
       >
-        <CollectionEditForm
+        <EditCollectionForm
           title={collection.title}
           isPublic={collection.isPublic}
           subjects={collection.subjects}
           wrappedComponentRef={collectionEditFormRef}
           ageRange={collection.ageRange}
-          onAgeRangeChange={(ageRange: number[]) => {
-            // TODO(AO): would this work if we didn't set the onChange on the AgeRangeSlider component in the form?
-            collectionEditFormRef.current.props.form.setFieldsValue({
-              ageRange,
-            });
-          }}
           description={collection.description}
         />
       </Bodal>

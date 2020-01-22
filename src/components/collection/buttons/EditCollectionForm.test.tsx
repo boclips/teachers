@@ -6,23 +6,23 @@ import { AgeRange } from '../../../types/AgeRange';
 import { BoclipsSlider } from '../../common/BoclipsSlider';
 import CollectionEditForm from './EditCollectionForm';
 
-test('can set correct initial age range for slider when age range is an interval', () => {
-  const ageRangeChange = () => false;
-  const store = MockStoreFactory.sample();
-  const wrapper = mount(
-    <Provider store={store}>
-      <React.Fragment>
-        <CollectionEditForm
-          title="irrelevant"
-          isPublic={true}
-          subjects={[]}
-          onAgeRangeChange={ageRangeChange}
-          description=""
-          ageRange={new AgeRange(3, 9)}
-        />
-      </React.Fragment>
-    </Provider>,
-  );
+describe('EditCollectionForm', () => {
+  it('can set correct initial age range for slider when age range is an interval', () => {
+    const store = MockStoreFactory.sample();
+    const wrapper = mount(
+      <Provider store={store}>
+        <React.Fragment>
+          <CollectionEditForm
+            title="irrelevant"
+            isPublic={true}
+            subjects={[]}
+            description=""
+            ageRange={new AgeRange(3, 9)}
+          />
+        </React.Fragment>
+      </Provider>,
+    );
 
-  expect(wrapper.find(BoclipsSlider).props().defaultValue).toEqual([3, 9]);
+    expect(wrapper.find(BoclipsSlider).props().defaultValue).toEqual([3, 9]);
+  });
 });

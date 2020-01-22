@@ -17,9 +17,7 @@ export interface EditableFields {
   description: string;
 }
 
-export interface Props extends EditableFields, FormComponentProps {
-  onAgeRangeChange: (e) => void;
-}
+type Props = EditableFields & FormComponentProps;
 
 class EditCollectionForm extends React.PureComponent<
   Props & ReturnType<typeof mapStateToProps>
@@ -50,7 +48,6 @@ class EditCollectionForm extends React.PureComponent<
           })(
             <AgeRangeSlider
               ageRange={this.props.ageRange}
-              onChange={this.props.onAgeRangeChange}
             />,
           )}
         </Form.Item>
