@@ -1,15 +1,21 @@
 import { Checkbox, Form, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AgeRange } from '../../../types/AgeRange';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
 import AgeRangeSlider from '../../common/AgeRangeSlider';
 import './EditCollectionForm.less';
+import Bodal from '../../common/Bodal';
+import {
+  editCollectionAction,
+  EditCollectionRequest,
+} from '../redux/actions/editCollectionAction';
+import { VideoCollection } from '../../../types/VideoCollection';
 
-export interface EditableFields {
+interface EditableFields {
   title: string;
   isPublic: boolean;
   subjects: string[];
@@ -17,25 +23,77 @@ export interface EditableFields {
   description: string;
 }
 
-type Props = EditableFields & FormComponentProps;
+interface Props extends FormComponentProps {
+  collection: VideoCollection;
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+  disableButton: boolean;
+}
 
-class EditCollectionForm extends React.PureComponent<
-  Props & ReturnType<typeof mapStateToProps>
-> {
-  public render() {
-    const { getFieldDecorator } = this.props.form;
+export const EditCollectionForm = Form.create<Props>()((props: Props) => {
+  const subjectsInStore = useSelector((state: State) => state.subjects);
+  const { getFieldDecorator } = props.form;
+  const dispatch = useDispatch();
 
-    return (
+  const handleOk = () => {
+    props.form.validateFields((formErrors, values: EditableFields) => {
+      if (formErrors) {
+        return;
+      }
+
+      const changeRequest: EditCollectionRequest = {
+        originalCollection: props.collection,
+      };
+
+      let shouldSubmitChanges = false;
+
+      for (const key in values) {
+        if (values.hasOwnProperty(key) && props.form.isFieldTouched(key)) {
+          changeRequest[key] = values[key];
+
+          shouldSubmitChanges = true;
+        }
+      }
+
+      if (shouldSubmitChanges) {
+        props.form.resetFields();
+        dispatch(editCollectionAction(changeRequest));
+      }
+
+      props.setVisible(false);
+    });
+  };
+
+  return (
+    <Bodal
+      title="Edit collection"
+      visible={props.visible}
+      onOk={handleOk}
+      onCancel={() => {
+        props.setVisible(false);
+      }}
+      okButtonProps={{
+        size: 'large',
+        loading: props.disableButton,
+        disabled: props.disableButton,
+      }}
+      okText="Save"
+      cancelButtonProps={{ size: 'large' }}
+      closable={false}
+      width={655}
+      wrapClassName="edit-collection-modal"
+      destroyOnClose={true}
+    >
       <Form className="form-edit-collection">
         <Form.Item className="form__item">
-          {getFieldDecorator('title', { initialValue: this.props.title })(
+          {getFieldDecorator('title', { initialValue: props.collection.title })(
             <Input data-qa="title-edit" />,
           )}
         </Form.Item>
         <Form.Item className="form__item">
           {getFieldDecorator('isPublic', {
             valuePropName: 'checked',
-            initialValue: this.props.isPublic,
+            initialValue: props.collection.isPublic,
           })(
             <Checkbox data-qa="visibility-edit">
               Public (anyone can see it)
@@ -44,23 +102,19 @@ class EditCollectionForm extends React.PureComponent<
         </Form.Item>
         <Form.Item className="form__item" label="Age">
           {getFieldDecorator('ageRange', {
-            initialValue: this.props.ageRange,
-          })(
-            <AgeRangeSlider
-              ageRange={this.props.ageRange}
-            />,
-          )}
+            initialValue: props.collection.ageRange,
+          })(<AgeRangeSlider ageRange={props.collection.ageRange} />)}
         </Form.Item>
         <SubjectsForm
-          form={this.props.form}
-          subjects={this.props.subjectsInStore}
+          form={props.form}
+          subjects={subjectsInStore}
           placeholder="Choose from our list.."
-          initialValue={this.props.subjects}
+          initialValue={props.collection.subjects}
           label="Subjects"
         />
         <Form.Item className="form__item" label="Description">
           {getFieldDecorator('description', {
-            initialValue: this.props.description,
+            initialValue: props.collection.description,
           })(
             <TextArea
               data-qa="description-edit"
@@ -71,14 +125,6 @@ class EditCollectionForm extends React.PureComponent<
           )}
         </Form.Item>
       </Form>
-    );
-  }
-}
-
-const mapStateToProps = (state: State) => ({
-  subjectsInStore: state.subjects,
+    </Bodal>
+  );
 });
-
-export default connect(mapStateToProps)(
-  Form.create<Props>()(EditCollectionForm),
-);
