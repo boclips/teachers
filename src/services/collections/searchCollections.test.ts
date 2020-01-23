@@ -14,7 +14,7 @@ beforeEach(async () => {
 
   const links = LinksFactory.sample({
     searchPublicCollections: new Link({
-      href: '/v1/collections?query={query}',
+      href: '/v1/collections?query={query}&size={size}',
       templated: true,
     }),
   });
@@ -32,4 +32,5 @@ beforeEach(async () => {
 
 test('requests the correct search query', () => {
   expect(queryParams.query).toEqual('foo');
+  expect(queryParams.size).toEqual('5');
 });
