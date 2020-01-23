@@ -58,7 +58,6 @@ describe('MyCollectionListView', () => {
     expect(getByText(collection.description)).toBeInTheDocument();
 
     expect(getByText('Edit')).toBeInTheDocument();
-    expect(getByText('Delete')).toBeInTheDocument();
   });
 
   it('when there are multiple collections only show my collections', () => {
@@ -93,7 +92,7 @@ describe('MyCollectionListView', () => {
     // Intentionally not using ApiStub so we only set up what is needed
     MockFetchVerify.delete(`/v1/collections/${myCollectionToDelete.id}/delete`);
 
-    const { getAllByTestId, findByRole } = renderWithStore(
+    const { findByTestId, getAllByTestId, findByRole } = renderWithStore(
       <MyCollectionListView />,
       {
         initialState: createStateWithMyCollections([
@@ -114,8 +113,10 @@ describe('MyCollectionListView', () => {
     const collectionNotToBeDeleted = myCollectionsBeforeDelete[1];
 
     fireEvent.click(
-      within(collectionToBeDeleted).getByTestId('delete-collection'),
+      within(collectionToBeDeleted).getByTestId('collection-edit-button'),
     );
+
+    fireEvent.click(await findByTestId('delete-collection'));
 
     // Check the delete confirmation dialog
     const deleteDialog = await findByRole('dialog');
@@ -153,6 +154,7 @@ function createStateWithMyCollections(myCollections: VideoCollection[]) {
         links: {},
       },
     }),
+    subjects: [],
   };
 }
 

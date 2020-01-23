@@ -65,6 +65,7 @@ describe('EditCollectionForm', () => {
       id: '123',
       links: VideoCollectionLinksFactory.sample({
         edit: new Link({ href: '/collections/123' }),
+        remove: new Link({ href: '/collections/123' }),
       }),
       ...args,
     });
@@ -260,6 +261,25 @@ describe('EditCollectionForm', () => {
       await fireEvent.click(component.getByText('Save'));
 
       expect(axiosMock.history.patch).toHaveLength(0);
+    });
+  });
+
+  describe('Removing the collection', () => {
+    it('renders a remove button', () => {
+      const collection = getCollection();
+
+      const component = renderEditForm(collection);
+
+      expect(component.getByText('Delete Collection')).toBeInTheDocument();
+    });
+    it('opens a modal when clicking on remove button', async () => {
+      const collection = getCollection();
+
+      const component = renderEditForm(collection);
+
+      fireEvent.click(component.getByText('Delete Collection'));
+
+      expect(await component.findByText(/are you sure/i)).toBeInTheDocument();
     });
   });
 });
