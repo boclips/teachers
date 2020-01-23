@@ -1,0 +1,265 @@
+import { fireEvent } from '@testing-library/react';
+import React, { Ref } from 'react';
+import { SliderProps } from 'antd/lib/slider';
+import { SelectProps } from 'antd/lib/select';
+import {
+  MockStoreFactory,
+  SubjectsFactory,
+  VideoCollectionFactory,
+  VideoCollectionLinksFactory,
+} from '../../../../test-support/factories';
+import { AgeRange } from '../../../types/AgeRange';
+import { Link } from '../../../types/Link';
+import { createBoclipsStore } from '../../../app/redux/store';
+import { renderWithCreatedStore } from '../../../../test-support/renderWithStore';
+import MockFetchVerify, {
+  axiosMock,
+} from '../../../../test-support/MockFetchVerify';
+import { VideoCollection } from '../../../types/VideoCollection';
+import eventually from '../../../../test-support/eventually';
+import { EditCollectionForm } from './EditCollectionForm';
+
+jest.mock('antd/lib/slider', () =>
+  React.forwardRef((props: SliderProps, ref: Ref<any>) => (
+    <input
+      ref={ref}
+      role="slider"
+      onChange={event => {
+        props.onChange(JSON.parse(event.target.value));
+      }}
+      data-value-json={JSON.stringify(props.value)}
+      value={props.value as any}
+      data-default-value-json={JSON.stringify(props.defaultValue)}
+      data-qa="slider"
+    />
+  )),
+);
+
+jest.mock('antd/lib/select', () => {
+  const Select = React.forwardRef((props: SelectProps, ref: Ref<any>) => (
+    <input
+      ref={ref}
+      type="text"
+      role="select"
+      onChange={event => {
+        props.onChange(JSON.parse(event.target.value), null);
+      }}
+      data-value-json={JSON.stringify(props.value)}
+      value={props.value as any}
+      data-default-value-json={JSON.stringify(props.defaultValue)}
+      data-qa="select"
+    />
+  ));
+  // @ts-ignore
+  Select.Option = () => <span>test</span>;
+  return Select;
+});
+
+describe('EditCollectionForm', () => {
+  beforeEach(() => {
+    MockFetchVerify.patch('/collections/123', undefined, 204);
+  });
+
+  const getCollection = (args: Partial<VideoCollection> = {}) =>
+    VideoCollectionFactory.sample({
+      id: '123',
+      links: VideoCollectionLinksFactory.sample({
+        edit: new Link({ href: '/collections/123' }),
+      }),
+      ...args,
+    });
+
+  const renderEditForm = (collection: VideoCollection) => {
+    const store = createBoclipsStore(
+      MockStoreFactory.sampleState({
+        subjects: SubjectsFactory.sample(),
+      }),
+    );
+
+    return renderWithCreatedStore(
+      <EditCollectionForm
+        setVisible={jest.fn()}
+        visible={true}
+        disableButton={false}
+        collection={collection}
+      />,
+      store,
+    );
+  };
+
+  it('has the values of the collection in the form', async () => {
+    const collection = VideoCollectionFactory.sample({
+      title: 'My test collection',
+      description: 'Test description',
+      subjects: ['maths', 'arts'],
+      isPublic: true,
+      ageRange: new AgeRange(5, 14),
+      links: VideoCollectionLinksFactory.sample({
+        edit: new Link({ href: '/collections/123' }),
+      }),
+    });
+
+    const component = renderEditForm(collection);
+
+    expect(component.getByText('Edit collection')).toBeVisible();
+
+    const getInputByTestId = testId =>
+      component.getByTestId(testId) as HTMLInputElement;
+
+    expect(getInputByTestId('title-edit').value).toEqual('My test collection');
+    expect(getInputByTestId('visibility-edit').checked).toEqual(true);
+    expect(getInputByTestId('description-edit').value).toEqual(
+      'Test description',
+    );
+    expect(getInputByTestId('select').value).toContain('maths,arts');
+
+    expect(
+      component.getByTestId('slider').getAttribute('data-default-value-json'),
+    ).toEqual('[5,14]');
+  });
+
+  describe('Submitting the form', () => {
+    it('updates the title', async () => {
+      const collection = getCollection({
+        title: 'Old Title',
+      });
+
+      const component = renderEditForm(collection);
+
+      fireEvent.change(component.getByDisplayValue('Old Title'), {
+        target: { value: 'New Title' },
+      });
+
+      await fireEvent.click(component.getByText('Save'));
+
+      await eventually(() => {
+        const updatedCollection = component.store.getState().entities
+          .collections.byId[collection.id];
+        expect(updatedCollection).toBeDefined();
+        expect(updatedCollection.title).toEqual('New Title');
+      });
+    });
+
+    it('updates the visibility', async () => {
+      const collection = getCollection({
+        isPublic: true,
+      });
+
+      const component = renderEditForm(collection);
+
+      fireEvent.click(component.getByTestId('visibility-edit'));
+
+      await fireEvent.click(component.getByText('Save'));
+
+      await eventually(() => {
+        const updatedCollection = component.store.getState().entities
+          .collections.byId[collection.id];
+        expect(updatedCollection).toBeDefined();
+        expect(updatedCollection.isPublic).toEqual(false);
+      });
+    });
+
+    it('changing the subjects of a collection fires a patch action', async () => {
+      const collection = getCollection({
+        subjects: [],
+      });
+
+      const component = renderEditForm(collection);
+
+      fireEvent.change(component.getByTestId('select'), {
+        target: { value: JSON.stringify(['subject-one-id', 'subject-two-id']) },
+      });
+
+      await fireEvent.click(component.getByText('Save'));
+
+      await eventually(() => {
+        const updatedCollection = component.store.getState().entities
+          .collections.byId[collection.id];
+        expect(updatedCollection).toBeDefined();
+        expect(updatedCollection.subjects).toEqual([
+          'subject-one-id',
+          'subject-two-id',
+        ]);
+      });
+    });
+
+    it('updates the description', async () => {
+      const collection = getCollection({
+        description: 'Old Description',
+      });
+
+      const component = renderEditForm(collection);
+
+      fireEvent.change(component.getByText('Old Description'), {
+        target: { value: 'New Description' },
+      });
+
+      await fireEvent.click(component.getByText('Save'));
+
+      await eventually(() => {
+        const updatedCollection = component.store.getState().entities
+          .collections.byId[collection.id];
+        expect(updatedCollection).toBeDefined();
+        expect(updatedCollection.description).toEqual('New Description');
+      });
+    });
+
+    describe('updating the age range', () => {
+      const testData = [
+        {
+          message: 'is an interval',
+          initialAgeRange: new AgeRange(3, 9),
+          newAgeRange: { min: 6, max: 7 },
+        },
+        {
+          message: 'increased to max',
+          initialAgeRange: new AgeRange(11, 16),
+          newAgeRange: { min: 11, max: 19 },
+        },
+        {
+          message: 'was unbounded',
+          initialAgeRange: new AgeRange(),
+          newAgeRange: { min: 11, max: 16 },
+        },
+      ];
+
+      testData.forEach(({ message, initialAgeRange, newAgeRange }) => {
+        it(`updates when age range ${message}`, async () => {
+          const collection = getCollection({
+            ageRange: initialAgeRange,
+          });
+          const component = renderEditForm(collection);
+
+          fireEvent.change(component.getByTestId('slider'), {
+            target: {
+              value: JSON.stringify([newAgeRange.min, newAgeRange.max]),
+            },
+          });
+
+          await fireEvent.click(component.getByText('Save'));
+
+          await eventually(() => {
+            const updatedCollection = component.store.getState().entities
+              .collections.byId[collection.id];
+            expect(updatedCollection).toBeDefined();
+            expect(updatedCollection.ageRange.resolveMin()).toEqual(
+              newAgeRange.min,
+            );
+            expect(updatedCollection.ageRange.resolveMax()).toEqual(
+              newAgeRange.max,
+            );
+          });
+        });
+      });
+    });
+
+    it('does not update a collection without any changes', async () => {
+      const collection = getCollection({});
+      const component = renderEditForm(collection);
+
+      await fireEvent.click(component.getByText('Save'));
+
+      expect(axiosMock.history.patch).toHaveLength(0);
+    });
+  });
+});

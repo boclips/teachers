@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import { AgeRange } from '../../types/AgeRange';
-import AgeRangeSlider from './AgeRangeSlider';
+import { AgeRangeSlider } from './AgeRangeSlider';
 import { BoclipsSlider } from './BoclipsSlider';
 
 describe('tests slider onchange is called correctly', () => {

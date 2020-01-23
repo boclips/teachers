@@ -5,7 +5,7 @@ import { BoclipsSlider } from '../../common/BoclipsSlider';
 import DurationBounds from './DurationBounds';
 
 interface Props {
-  onChange: (duration: Range) => void;
+  onChange?: (duration: Range) => void;
   min?: number;
   max?: number;
 }

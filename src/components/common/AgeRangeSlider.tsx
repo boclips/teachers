@@ -1,18 +1,19 @@
 import { SliderValue } from 'antd/lib/slider';
 import React from 'react';
 import { AgeRange } from '../../types/AgeRange';
+import { Range } from '../../types/Range';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
 import { BoclipsSlider } from './BoclipsSlider';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from './higerOrderComponents/withMediaBreakPoint';
 
-interface Props extends WithMediaBreakPointProps {
-  onChange: (e) => void;
+export interface Props extends WithMediaBreakPointProps {
+  onChange: (event: Range) => void;
   ageRange: AgeRange;
 }
 
-class AgeRangeSlider extends React.Component<Props> {
+class AgeRangeSliderInner extends React.Component<Props> {
   private getMarks = () => ({
     3: '3',
     5: '5',
@@ -61,8 +62,8 @@ class AgeRangeSlider extends React.Component<Props> {
       return;
     }
 
-    this.props.onChange(new AgeRange(min, max === 19 ? null : max));
+    this.props.onChange({ min, max: max === 19 ? null : max });
   };
 }
 
-export default withMediaBreakPoint(AgeRangeSlider);
+export const AgeRangeSlider = withMediaBreakPoint(AgeRangeSliderInner);

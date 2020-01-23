@@ -1,12 +1,14 @@
-import { Checkbox, Form, Input } from 'antd';
+import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
+import Checkbox from 'antd/lib/checkbox';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AgeRange } from '../../../types/AgeRange';
+import { Range } from '../../../types/Range';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
-import AgeRangeSlider from '../../common/AgeRangeSlider';
+import { AgeRangeSlider } from '../../common/AgeRangeSlider';
 import './EditCollectionForm.less';
 import Bodal from '../../common/Bodal';
 import {
@@ -19,7 +21,7 @@ interface EditableFields {
   title: string;
   isPublic: boolean;
   subjects: string[];
-  ageRange: AgeRange;
+  ageRange: Range;
   description: string;
 }
 
@@ -49,7 +51,11 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
 
       for (const key in values) {
         if (values.hasOwnProperty(key) && props.form.isFieldTouched(key)) {
-          changeRequest[key] = values[key];
+          if (key === 'ageRange') {
+            changeRequest[key] = new AgeRange(values[key].min, values[key].max);
+          } else {
+            changeRequest[key] = values[key];
+          }
 
           shouldSubmitChanges = true;
         }

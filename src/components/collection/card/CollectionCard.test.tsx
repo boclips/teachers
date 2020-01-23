@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { CollectionCard } from './CollectionCard';
+import { Router } from 'react-router';
 import {
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
-import { Router } from 'react-router';
 import { AgeRange } from '../../../types/AgeRange';
+import { CollectionCard } from './CollectionCard';
 
 describe('CollectionCard', () => {
   it('displays the tags container when the given collection has tags', () => {
