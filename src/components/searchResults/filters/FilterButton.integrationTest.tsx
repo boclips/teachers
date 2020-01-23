@@ -11,9 +11,8 @@ import {
   RouterFactory,
 } from '../../../../test-support/factories';
 import { setWidth } from '../../../../test-support/setWidth';
-import { AgeRange } from '../../../types/AgeRange';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
-import AgeRangeSlider from '../../common/AgeRangeSlider';
+import { AgeRangeSlider } from '../../common/AgeRangeSlider';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationSlider from './DurationSlider';
@@ -138,7 +137,7 @@ describe('when a filter is submitted', () => {
     wrapper
       .find(AgeRangeSlider)
       .props()
-      .onChange(new AgeRange(5, 11));
+      .onChange({ min: 5, max: 11 });
 
     simulator.click(
       wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),

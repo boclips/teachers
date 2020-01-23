@@ -7,7 +7,7 @@ import { Range } from '../../../types/Range';
 import { SubjectState } from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
-import AgeRangeSlider from '../../common/AgeRangeSlider';
+import { AgeRangeSlider } from '../../common/AgeRangeSlider';
 import DurationSlider from './DurationSlider';
 
 export interface FilterFormEditableFields {
@@ -34,7 +34,7 @@ class FilterButtonForm extends React.Component<Props> {
   private onDurationChange = (duration: Range) => {
     this.props.form.setFieldsValue({ duration });
   };
-  private onAgeRangeChange = (ageRange: Range) => {
+  private onChange = (ageRange: Range) => {
     this.props.form.setFieldsValue({ ageRange });
   };
 
@@ -68,7 +68,7 @@ class FilterButtonForm extends React.Component<Props> {
               ageRange={
                 new AgeRange(this.props.ageRangeMin, this.props.ageRangeMax)
               }
-              onChange={this.onAgeRangeChange}
+              onChange={this.onChange}
               data-qa="age-range-slider"
             />,
           )}

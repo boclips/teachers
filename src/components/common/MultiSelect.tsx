@@ -1,5 +1,4 @@
-import { Select } from 'antd';
-import { SelectProps } from 'antd/lib/select';
+import Select, { SelectProps } from 'antd/lib/select';
 import React from 'react';
 import './MultiSelect.less';
 
