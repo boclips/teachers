@@ -14,7 +14,6 @@ import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import { EditCollectionButton } from '../buttons/EditCollectionButton';
-import { RemoveCollectionButton } from '../buttons/RemoveCollectionButton';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
@@ -52,9 +51,6 @@ export const CollectionCard = withMediaBreakPoint(
     const rightButtons = [
       props.collection.links.edit && (
         <EditCollectionButton key="edit" collection={props.collection} />
-      ),
-      props.collection.links.remove && (
-        <RemoveCollectionButton key="remove" collection={props.collection} />
       ),
     ];
 

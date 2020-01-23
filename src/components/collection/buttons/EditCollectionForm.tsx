@@ -2,6 +2,7 @@ import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
 import Checkbox from 'antd/lib/checkbox';
+import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AgeRange } from '../../../types/AgeRange';
@@ -16,6 +17,7 @@ import {
   EditCollectionRequest,
 } from '../redux/actions/editCollectionAction';
 import { VideoCollection } from '../../../types/VideoCollection';
+import { RemoveCollectionButton } from './RemoveCollectionButton';
 
 interface EditableFields {
   title: string;
@@ -74,17 +76,35 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
     <Bodal
       title="Edit collection"
       visible={props.visible}
-      onOk={handleOk}
-      onCancel={() => {
-        props.setVisible(false);
-      }}
-      okButtonProps={{
-        size: 'large',
-        loading: props.disableButton,
-        disabled: props.disableButton,
-      }}
-      okText="Save"
-      cancelButtonProps={{ size: 'large' }}
+      footer={[
+        <RemoveCollectionButton
+          onOpen={() => props.setVisible(false)}
+          onClose={() => props.setVisible(true)}
+          collection={props.collection}
+          key="remove"
+        />,
+        <Button
+          key="close"
+          onClick={() => {
+            props.setVisible(false);
+          }}
+          size="large"
+          loading={props.disableButton}
+          disabled={props.disableButton}
+        >
+          Cancel
+        </Button>,
+        <Button
+          key="save"
+          onClick={handleOk}
+          size="large"
+          type="primary"
+          loading={props.disableButton}
+          disabled={props.disableButton}
+        >
+          Save
+        </Button>,
+      ]}
       closable={false}
       width={655}
       wrapClassName="edit-collection-modal"

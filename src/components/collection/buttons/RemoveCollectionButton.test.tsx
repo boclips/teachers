@@ -44,7 +44,7 @@ describe('RemoveCollectionButton', () => {
       <RemoveCollectionButton collection={collection} />,
     );
 
-    expect(context.queryByText('Delete')).toBeInTheDocument();
+    expect(context.queryByText('Delete Collection')).toBeInTheDocument();
   });
   it('asks for confirmation when clicked', async () => {
     const collection = VideoCollectionFactory.sample({
@@ -68,7 +68,7 @@ describe('RemoveCollectionButton', () => {
       store,
     );
 
-    const button = context.getByText('Delete');
+    const button = context.getByText('Delete Collection');
 
     fireEvent.click(button);
 
@@ -100,7 +100,7 @@ describe('RemoveCollectionButton', () => {
       store,
     );
 
-    const button = context.getByText('Delete');
+    const button = context.getByText('Delete Collection');
 
     fireEvent.click(button);
 

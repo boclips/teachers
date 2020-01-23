@@ -1,3 +1,4 @@
+@import '../../../../resources/styles/_antd-theme.less';
 @import '../../../../resources/styles/_colours.less';
 
 .form-edit-collection {
@@ -29,5 +30,28 @@
 
   .ant-select-selection__placeholder {
     font-weight: normal;
+  }
+}
+
+.edit-collection-modal {
+  .ant-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .delete {
+    margin-right: auto;
+    padding: 0;
+    border: none;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    .ant-modal-footer {
+      flex-direction: column-reverse;
+
+      button {
+        margin: 0 0 8px 0;
+      }
+    }
   }
 }

@@ -10,10 +10,12 @@ import './RemoveCollectionButton.less';
 
 interface Props {
   collection: VideoCollection;
+  onOpen?: () => void;
+  onClose?: () => void;
 }
 
-export const RemoveCollectionButton = React.memo(({ collection }: Props) => {
-  if (!collection.links.remove) {
+export const RemoveCollectionButton = React.memo((props: Props) => {
+  if (!props.collection.links.remove) {
     return null;
   }
 
@@ -21,6 +23,9 @@ export const RemoveCollectionButton = React.memo(({ collection }: Props) => {
 
   const handleClick = (event: React.MouseEvent) => {
     event.preventDefault();
+    if (props.onOpen) {
+      props.onOpen();
+    }
 
     const confirm = Modal.confirm;
 
@@ -28,12 +33,19 @@ export const RemoveCollectionButton = React.memo(({ collection }: Props) => {
       title: (
         <span>
           Are you sure you want to delete the collection{' '}
-          <i>{collection.title}</i>?
+          <i>{props.collection.title}</i>?
         </span>
       ),
       onOk: () => {
-        AnalyticsFactory.externalAnalytics().trackCollectionRemoved(collection);
-        dispatch(deleteCollectionAction(collection));
+        AnalyticsFactory.externalAnalytics().trackCollectionRemoved(
+          props.collection,
+        );
+        dispatch(deleteCollectionAction(props.collection));
+      },
+      onCancel: () => {
+        if (props.onClose) {
+          props.onClose();
+        }
       },
       okText: 'Delete',
       okButtonProps: {
@@ -59,10 +71,11 @@ export const RemoveCollectionButton = React.memo(({ collection }: Props) => {
       data-qa="delete-collection"
       size="large"
       aria-label="Delete collection"
-      className="collection-edit__button"
+      type="link"
+      className="delete"
     >
       <Icon component={DeleteIconSVG} aria-label="Delete collection" />
-      Delete
+      Delete Collection
     </Button>
   );
 });
