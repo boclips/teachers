@@ -3,10 +3,22 @@
 .collection-card {
   animation: slide-in 0.5s 0s both;
   background-color: @shade-2;
+  min-width: 0;
 
   .collection-card__title {
     display: flex;
     justify-content: space-between;
+
+    .collection-title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      -webkit-line-clamp: 1;
+    }
+
+    .collection-title-section {
+      min-width: 0;
+    }
   }
 
   .collection-card__subtitle {
@@ -24,6 +36,14 @@
     .tag {
       background-color: @shade-1;
       max-width: 198px;
+    }
+  }
+
+  &__lesson-plan {
+    svg {
+      path {
+        fill: @shade-6;
+      }
     }
   }
 

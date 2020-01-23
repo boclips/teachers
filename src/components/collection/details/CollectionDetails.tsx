@@ -14,10 +14,10 @@ import {
   fetchVideosByIdsAction,
   VideosForCollectionRequest,
 } from '../../video/redux/actions/fetchVideosByIdsAction';
-import { CollectionHeader } from './header/CollectionHeader';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 import { getCollectionById } from '../redux/reducers/collectionsReducer';
+import { CollectionHeader } from './header/CollectionHeader';
 
 interface OwnProps {
   collectionId: string;

@@ -72,7 +72,6 @@ describe('CollectionHeader', () => {
       id: 'collection-id',
       videoIds: [VideoIdFactory.sample()],
       updatedAt: '2018-12-12T12:12:12',
-      attachments: [AttachmentFactory.sample()],
     });
     const component = renderWithStore(
       <Router history={createMemoryHistory()}>
@@ -82,7 +81,6 @@ describe('CollectionHeader', () => {
     expect(component.getByTestId('collection-number-of-videos')).toContainHTML(
       '1',
     );
-    expect(component.getByTestId('collection-lesson-plan')).toBeInTheDocument();
     expect(component.getByTestId('collection-updated-at')).toContainHTML(
       '<span>Dec 12, 2018</span>',
     );

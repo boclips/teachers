@@ -71,7 +71,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
 
     const subtitle = (
       <CollectionSubtitle
-        classname={'highlight collection-subtitle header no-lesson-plan'}
+        classname={'highlight collection-subtitle header'}
         collection={this.props.collection}
       />
     );

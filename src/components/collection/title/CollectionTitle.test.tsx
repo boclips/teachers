@@ -12,11 +12,13 @@ const renderCollectionTitle = collection =>
     </Router>,
   );
 
-test('renders title', () => {
-  const collectionTitle = renderCollectionTitle(
-    VideoCollectionFactory.sample({ title: 'My collection' }),
-  );
-  expect(collectionTitle.getByText('My collection')).toBeInTheDocument();
+describe('displaying the title', () => {
+  it('renders title', () => {
+    const collectionTitle = renderCollectionTitle(
+      VideoCollectionFactory.sample({ title: 'My collection' }),
+    );
+    expect(collectionTitle.getByText('My collection')).toBeInTheDocument();
+  });
 });
 
 describe('Visibility icon', () => {
