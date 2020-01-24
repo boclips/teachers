@@ -58,4 +58,32 @@ describe('CollectionCard', () => {
 
     expect(tagsContainer).not.toBeInTheDocument();
   });
+
+  describe('displaying video titles when there is no description', () => {
+    it('with tags and no extra videos', () => {
+      const collection = VideoCollectionFactory.sample({
+        id: 'collection-id',
+        title: 'My collection',
+        ageRange: new AgeRange(5, 7),
+        description: null,
+      });
+      const videos = [
+        VideoFactory.sample({ id: '1', title: 'Video 1', createdBy: 'Person 1' }),
+        VideoFactory.sample({ id: '2', title: 'Video 2', createdBy: 'Person 2' }),
+      ];
+
+      const component = render(
+        <Router history={createMemoryHistory()}>
+          <CollectionCard
+            collection={collection}
+            videos={videos}
+            grid={false}
+          />
+        </Router>,
+      );
+
+      expect(component.getByText('"Video 1" by Person 1')).toBeVisible();
+      expect(component.getByText('"Video 2" by Person 2')).toBeVisible();
+    });
+  });
 });

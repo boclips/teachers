@@ -111,6 +111,18 @@ const collectionWithoutTags: VideoCollection = {
   ageRange: new AgeRange(),
 };
 
+const collectionWithoutDescription: VideoCollection = {
+  ...bookmarkableCollection,
+  description: "",
+};
+
+const collectionWithoutDescriptionAndTags: VideoCollection = {
+  ...bookmarkableCollection,
+  subjects: [],
+  ageRange: new AgeRange(),
+  description: "",
+};
+
 storiesOf('CollectionCardContainer', module)
   .addDecorator(storyWithAuthentication())
   .addDecorator(
@@ -150,6 +162,12 @@ storiesOf('CollectionCardContainer', module)
   .add('Card without tags', () => (
     <CollectionCardContainer grid={false} collection={collectionWithoutTags} />
   ))
+  .add('Card without description', () => (
+    <CollectionCardContainer grid={false} collection={collectionWithoutDescription} />
+  ))
+  .add('Card without tags and description', () => (
+    <CollectionCardContainer grid={false} collection={collectionWithoutDescriptionAndTags} />
+  ))
   .add('Grid Card', () => (
     <div style={{ maxWidth: '400px' }}>
       <CollectionCardContainer
@@ -166,6 +184,11 @@ storiesOf('CollectionCardContainer', module)
   .add('Grid Card which is mine', () => (
     <div style={{ maxWidth: '400px' }}>
       <CollectionCardContainer grid={true} collection={myCollection} />{' '}
+    </div>
+  ))
+  .add('Grid Card with no description', () => (
+    <div style={{ maxWidth: '400px' }}>
+      <CollectionCardContainer grid={true} collection={collectionWithoutDescription} />{' '}
     </div>
   ))
   .add('Skeleton', () => <CollectionCardSkeleton />);

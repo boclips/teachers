@@ -58,6 +58,28 @@ export const CollectionCard = withMediaBreakPoint(
       button => button !== undefined,
     );
 
+    const collectionHasNoDescription =
+      props.collection.description === null ||
+      props.collection.description === '';
+
+    const renderDescription = () => {
+      if (
+        collectionHasNoDescription
+      ) {
+        return (
+          <ul>
+            {props.videos.map(video => (
+              <li key={video.id}>
+                <span>"{video.title}" by {video.createdBy}</span>
+              </li>
+            ))}
+          </ul>
+        );
+      }
+
+      return props.collection.description;
+    };
+
     return (
       <ClickableCard
         href={`/collections/${props.collection.id}`}
@@ -126,7 +148,7 @@ export const CollectionCard = withMediaBreakPoint(
               className="collection-card__description-preview"
               data-qa="collection-description"
             >
-              {props.collection.description}
+              {renderDescription()}
             </div>
             {!isSmallCard && (
               <StopClickPropagation
