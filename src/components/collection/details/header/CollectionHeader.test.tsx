@@ -64,7 +64,9 @@ describe('CollectionHeader', () => {
       },
     );
     expect(component.getByTestId('collection-edit-button')).toBeInTheDocument();
-    expect(component.getByTestId('delete-collection')).toBeInTheDocument();
+    expect(
+      component.queryByTestId('delete-collection'),
+    ).not.toBeInTheDocument();
   });
 
   it('renders the subtitle', () => {

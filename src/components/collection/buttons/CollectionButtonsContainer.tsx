@@ -9,7 +9,6 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
 import './CollectionButtonsContainer.less';
 import { EditCollectionButton } from './EditCollectionButton';
-import { RemoveCollectionButton } from './RemoveCollectionButton';
 
 interface Props extends WithMediaBreakPointProps {
   collection: VideoCollection;
@@ -34,7 +33,6 @@ class CollectionButtonsContainer extends React.PureComponent<
     return this.props.mediaBreakpoint.width > MediaBreakpoints.md.width ? (
       <div className={this.props.className}>
         <EditCollectionButton collection={this.props.collection} />
-        <RemoveCollectionButton collection={this.props.collection} />
       </div>
     ) : (
       <span className={this.props.className}>
@@ -53,9 +51,6 @@ class CollectionButtonsContainer extends React.PureComponent<
     <Menu className="collection-edit-dropdown">
       <Menu.Item>
         <EditCollectionButton collection={this.props.collection} />
-      </Menu.Item>
-      <Menu.Item>
-        <RemoveCollectionButton collection={this.props.collection} />
       </Menu.Item>
     </Menu>
   );
