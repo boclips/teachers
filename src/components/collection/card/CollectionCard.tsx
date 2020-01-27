@@ -19,6 +19,7 @@ import withMediaBreakPoint, {
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
+import BulletSVG from '../../../../resources/images/bullet.svg';
 import { CollectionCardPreview } from './CollectionCardPreview';
 
 export interface Props {
@@ -63,14 +64,13 @@ export const CollectionCard = withMediaBreakPoint(
       props.collection.description === '';
 
     const renderDescription = () => {
-      if (
-        collectionHasNoDescription
-      ) {
+      if (collectionHasNoDescription) {
         return (
           <ul>
             {props.videos.map(video => (
               <li key={video.id}>
-                <span>"{video.title}" by {video.createdBy}</span>
+                <BulletSVG className="collection-card__description-preview__icon" />
+                <span>{`"${video.title}" by ${video.createdBy}`}</span>
               </li>
             ))}
           </ul>

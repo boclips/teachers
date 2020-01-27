@@ -113,14 +113,14 @@ const collectionWithoutTags: VideoCollection = {
 
 const collectionWithoutDescription: VideoCollection = {
   ...bookmarkableCollection,
-  description: "",
+  description: '',
 };
 
 const collectionWithoutDescriptionAndTags: VideoCollection = {
   ...bookmarkableCollection,
   subjects: [],
   ageRange: new AgeRange(),
-  description: "",
+  description: '',
 };
 
 storiesOf('CollectionCardContainer', module)
@@ -163,10 +163,16 @@ storiesOf('CollectionCardContainer', module)
     <CollectionCardContainer grid={false} collection={collectionWithoutTags} />
   ))
   .add('Card without description', () => (
-    <CollectionCardContainer grid={false} collection={collectionWithoutDescription} />
+    <CollectionCardContainer
+      grid={false}
+      collection={collectionWithoutDescription}
+    />
   ))
   .add('Card without tags and description', () => (
-    <CollectionCardContainer grid={false} collection={collectionWithoutDescriptionAndTags} />
+    <CollectionCardContainer
+      grid={false}
+      collection={collectionWithoutDescriptionAndTags}
+    />
   ))
   .add('Grid Card', () => (
     <div style={{ maxWidth: '400px' }}>
@@ -188,7 +194,10 @@ storiesOf('CollectionCardContainer', module)
   ))
   .add('Grid Card with no description', () => (
     <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid={true} collection={collectionWithoutDescription} />{' '}
+      <CollectionCardContainer
+        grid={true}
+        collection={collectionWithoutDescription}
+      />{' '}
     </div>
   ))
   .add('Skeleton', () => <CollectionCardSkeleton />);

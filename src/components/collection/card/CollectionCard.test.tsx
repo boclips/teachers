@@ -68,8 +68,16 @@ describe('CollectionCard', () => {
         description: null,
       });
       const videos = [
-        VideoFactory.sample({ id: '1', title: 'Video 1', createdBy: 'Person 1' }),
-        VideoFactory.sample({ id: '2', title: 'Video 2', createdBy: 'Person 2' }),
+        VideoFactory.sample({
+          id: '1',
+          title: 'Video 1',
+          createdBy: 'Person 1',
+        }),
+        VideoFactory.sample({
+          id: '2',
+          title: 'Video 2',
+          createdBy: 'Person 2',
+        }),
       ];
 
       const component = render(
