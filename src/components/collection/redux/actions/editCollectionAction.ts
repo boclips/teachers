@@ -3,8 +3,11 @@ import { AgeRange } from '../../../../types/AgeRange';
 import { VideoCollection } from './../../../../types/VideoCollection';
 
 export interface EditCollectionRequest {
-  // TODO(AO): Refactor this out a bit
-  originalCollection: VideoCollection;
+  collection: VideoCollection;
+  changes: VideoCollectionChanges;
+}
+
+export interface VideoCollectionChanges {
   title?: string;
   isPublic?: boolean;
   subjects?: string[];

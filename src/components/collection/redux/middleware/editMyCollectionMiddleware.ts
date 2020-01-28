@@ -14,7 +14,7 @@ export function onEditCollection(
   store: MiddlewareAPI,
   request: EditCollectionRequest,
 ) {
-  editCollection(request)
+  editCollection(request.collection, request.changes)
     .then(() => {
       const updatedCollection: VideoCollection = createUpdatedCollection(
         request,
@@ -27,37 +27,23 @@ export function onEditCollection(
       NotificationFactory.error({ message: 'Error renaming collection.' });
     });
 
-  if (request.title != null) {
+  if (request.changes.title != null) {
     AnalyticsFactory.externalAnalytics().trackCollectionRenamed(request);
   }
 
-  if (request.isPublic != null) {
+  if (request.changes.isPublic != null) {
     AnalyticsFactory.externalAnalytics().trackCollectionVisiblityChange(
       request,
     );
   }
 }
 
-const createUpdatedCollection = (request: EditCollectionRequest) => ({
-  ...request.originalCollection,
-  title:
-    request.title != null ? request.title : request.originalCollection.title,
-  isPublic:
-    request.isPublic != null
-      ? request.isPublic
-      : request.originalCollection.isPublic,
-  subjects:
-    request.subjects != null
-      ? request.subjects
-      : request.originalCollection.subjects,
-  ageRange:
-    request.ageRange && request.ageRange.isBounded()
-      ? request.ageRange
-      : request.originalCollection.ageRange,
-  description:
-    request.description != null
-      ? request.description
-      : request.originalCollection.description,
+const createUpdatedCollection = ({
+  collection,
+  changes,
+}: EditCollectionRequest) => ({
+  ...collection,
+  ...changes,
 });
 
 export default sideEffect(editCollectionAction, onEditCollection);

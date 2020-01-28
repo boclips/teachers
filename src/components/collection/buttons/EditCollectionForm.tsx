@@ -5,8 +5,6 @@ import Checkbox from 'antd/lib/checkbox';
 import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AgeRange } from '../../../types/AgeRange';
-import { Range } from '../../../types/Range';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
 import { AgeRangeSlider } from '../../common/AgeRangeSlider';
@@ -15,17 +13,10 @@ import Bodal from '../../common/Bodal';
 import {
   editCollectionAction,
   EditCollectionRequest,
+  VideoCollectionChanges,
 } from '../redux/actions/editCollectionAction';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { RemoveCollectionButton } from './RemoveCollectionButton';
-
-interface EditableFields {
-  title: string;
-  isPublic: boolean;
-  subjects: string[];
-  ageRange: Range;
-  description: string;
-}
 
 interface Props extends FormComponentProps {
   collection: VideoCollection;
@@ -40,24 +31,21 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
   const dispatch = useDispatch();
 
   const handleOk = () => {
-    props.form.validateFields((formErrors, values: EditableFields) => {
+    props.form.validateFields((formErrors, values: VideoCollectionChanges) => {
       if (formErrors) {
         return;
       }
 
       const changeRequest: EditCollectionRequest = {
-        originalCollection: props.collection,
+        collection: props.collection,
+        changes: {},
       };
 
       let shouldSubmitChanges = false;
 
       for (const key in values) {
         if (values.hasOwnProperty(key) && props.form.isFieldTouched(key)) {
-          if (key === 'ageRange') {
-            changeRequest[key] = new AgeRange(values[key].min, values[key].max);
-          } else {
-            changeRequest[key] = values[key];
-          }
+          changeRequest.changes[key] = values[key];
 
           shouldSubmitChanges = true;
         }

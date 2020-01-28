@@ -15,6 +15,7 @@ import { SubjectsForm } from '../../account/form/SubjectsForm';
 import { AgeRangeSlider } from '../../common/AgeRangeSlider';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
+import { AgeRange } from '../../../types/AgeRange';
 import DurationSlider from './DurationSlider';
 import FilterButtonConnected, {
   FilterButtonWithMediaBreakPoint as FilterButton,
@@ -137,7 +138,7 @@ describe('when a filter is submitted', () => {
     wrapper
       .find(AgeRangeSlider)
       .props()
-      .onChange({ min: 5, max: 11 });
+      .onChange(new AgeRange(5, 11));
 
     simulator.click(
       wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),

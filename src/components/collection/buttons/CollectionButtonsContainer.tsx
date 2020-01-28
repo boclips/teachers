@@ -6,7 +6,7 @@ import withMediaBreakPoint, {
 } from '../../../components/common/higerOrderComponents/withMediaBreakPoint';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { EditCollectionRequest } from '../redux/actions/editCollectionAction';
+import { VideoCollectionChanges } from '../redux/actions/editCollectionAction';
 import './CollectionButtonsContainer.less';
 import { EditCollectionButton } from './EditCollectionButton';
 
@@ -20,7 +20,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  patchCollection: (request: EditCollectionRequest) => void;
+  patchCollection: (request: VideoCollectionChanges) => void;
 }
 
 class CollectionButtonsContainer extends React.PureComponent<

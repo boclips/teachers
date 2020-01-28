@@ -171,8 +171,8 @@ export default class AnalyticsService {
 
   public trackCollectionRenamed(request: EditCollectionRequest): void {
     const payload = {
-      collection_title: request.title,
-      collection_id: request.originalCollection.id,
+      collection_title: request.changes.title,
+      collection_id: request.collection.id,
     };
 
     this.mixpanelInstance.track(EventTypes.COLLECTION_RENAMED, payload);
@@ -181,8 +181,8 @@ export default class AnalyticsService {
 
   public trackCollectionVisiblityChange(request: EditCollectionRequest): void {
     const payload = {
-      collection_visibility: request.isPublic,
-      collection_id: request.originalCollection.id,
+      collection_visibility: request.changes.isPublic,
+      collection_id: request.collection.id,
     };
 
     this.mixpanelInstance.track(EventTypes.VISIBILITY_CHANGED, payload);

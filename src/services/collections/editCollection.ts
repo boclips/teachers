@@ -1,25 +1,27 @@
 import axios from 'axios';
-import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
+import { VideoCollectionChanges } from '../../components/collection/redux/actions/editCollectionAction';
+import { VideoCollection } from '../../types/VideoCollection';
 
 export const editCollection = (
-  request: EditCollectionRequest,
+  collection: VideoCollection,
+  changes: VideoCollectionChanges,
 ): Promise<boolean> => {
-  if (!request.originalCollection.links.edit) {
+  if (!collection.links.edit) {
     return Promise.reject();
   }
 
-  const endpoint = request.originalCollection.links.edit.getOriginalLink();
+  const endpoint = collection.links.edit.getOriginalLink();
 
   return axios
     .patch(endpoint, {
-      title: request.title,
-      isPublic: request.isPublic,
-      subjects: request.subjects,
+      title: changes.title,
+      isPublic: changes.isPublic,
+      subjects: changes.subjects,
       ageRange:
-        request.ageRange && request.ageRange.isBounded()
-          ? request.ageRange
+        changes.ageRange && changes.ageRange.isBounded()
+          ? changes.ageRange
           : null,
-      description: request.description,
+      description: changes.description,
     })
     .then(() => true);
 };

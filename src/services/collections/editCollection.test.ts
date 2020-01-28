@@ -5,93 +5,103 @@ import { Link } from '../../types/Link';
 import { VideoCollectionLinksFactory } from './../../../test-support/factories';
 import { editCollection } from './editCollection';
 
-test('edit collection', async () => {
-  MockFetchVerify.patch(
-    '/v1/collections/the-id',
-    { title: 'avideo', isPublic: false, ageRange: null },
-    204,
-  );
+describe('editCollection', () => {
+  test('edits a collection', async () => {
+    MockFetchVerify.patch(
+      '/v1/collections/the-id',
+      { title: 'avideo', isPublic: false, ageRange: null },
+      204,
+    );
 
-  const success = await editCollection({
-    originalCollection: VideoCollectionFactory.sample({
-      links: VideoCollectionLinksFactory.sample({
-        edit: new Link({ href: '/v1/collections/the-id' }),
+    const success = await editCollection(
+      VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: '/v1/collections/the-id' }),
+        }),
       }),
-    }),
-    title: 'avideo',
-    isPublic: false,
-    ageRange: new AgeRange(),
+      {
+        title: 'avideo',
+        isPublic: false,
+        ageRange: new AgeRange(),
+      },
+    );
+
+    expect(success).toEqual(true);
   });
 
-  expect(success).toEqual(true);
-});
+  test('change subjects on collection', async () => {
+    MockFetchVerify.patch(
+      '/v1/collections/the-id',
+      {
+        title: 'avideo',
+        subjects: ['id-one', 'id-two'],
+        ageRange: null,
+      },
+      204,
+    );
 
-test('change subjects on collection', async () => {
-  MockFetchVerify.patch(
-    '/v1/collections/the-id',
-    {
-      title: 'avideo',
-      subjects: ['id-one', 'id-two'],
-      ageRange: null,
-    },
-    204,
-  );
-
-  const success = await editCollection({
-    originalCollection: VideoCollectionFactory.sample({
-      links: VideoCollectionLinksFactory.sample({
-        edit: new Link({ href: '/v1/collections/the-id' }),
+    const success = await editCollection(
+      VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: '/v1/collections/the-id' }),
+        }),
       }),
-    }),
-    title: 'avideo',
-    subjects: ['id-one', 'id-two'],
-    ageRange: new AgeRange(),
+      {
+        title: 'avideo',
+        subjects: ['id-one', 'id-two'],
+        ageRange: new AgeRange(),
+      },
+    );
+
+    expect(success).toEqual(true);
   });
 
-  expect(success).toEqual(true);
-});
+  test('change age range on collection', async () => {
+    MockFetchVerify.patch(
+      '/v1/collections/the-id',
+      { title: 'avideo', ageRange: { min: 7, max: 11 } },
+      204,
+    );
 
-test('change age range on collection', async () => {
-  MockFetchVerify.patch(
-    '/v1/collections/the-id',
-    { title: 'avideo', ageRange: { min: 7, max: 11 } },
-    204,
-  );
-
-  const success = await editCollection({
-    originalCollection: VideoCollectionFactory.sample({
-      links: VideoCollectionLinksFactory.sample({
-        edit: new Link({ href: '/v1/collections/the-id' }),
+    const success = await editCollection(
+      VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: '/v1/collections/the-id' }),
+        }),
       }),
-    }),
-    title: 'avideo',
-    ageRange: new AgeRange(7, 11),
+      {
+        title: 'avideo',
+        ageRange: new AgeRange(7, 11),
+      },
+    );
+
+    expect(success).toEqual(true);
   });
 
-  expect(success).toEqual(true);
-});
+  test('change description of collection', async () => {
+    MockFetchVerify.patch(
+      '/v1/collections/the-id',
+      {
+        title: 'avideo',
+        description: 'new description',
+        ageRange: null,
+      },
+      204,
+    );
 
-test('change description of collection', async () => {
-  MockFetchVerify.patch(
-    '/v1/collections/the-id',
-    {
-      title: 'avideo',
-      description: 'new description',
-      ageRange: null,
-    },
-    204,
-  );
-
-  const success = await editCollection({
-    originalCollection: VideoCollectionFactory.sample({
-      links: VideoCollectionLinksFactory.sample({
-        edit: new Link({ href: '/v1/collections/the-id' }),
+    const success = await editCollection(
+      VideoCollectionFactory.sample({
+        links: VideoCollectionLinksFactory.sample({
+          edit: new Link({ href: '/v1/collections/the-id' }),
+        }),
       }),
-    }),
-    title: 'avideo',
-    description: 'new description',
-    ageRange: new AgeRange(),
-  });
+      {
+        title: 'avideo',
+        description: 'new description',
+        ageRange: new AgeRange(),
+      },
+    );
 
-  expect(success).toEqual(true);
+    expect(success).toEqual(true);
+  });
 });

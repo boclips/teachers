@@ -31,13 +31,6 @@ interface StateProps {
 interface Props extends FormComponentProps, FilterProps, StateProps {}
 
 class FilterButtonForm extends React.Component<Props> {
-  private onDurationChange = (duration: Range) => {
-    this.props.form.setFieldsValue({ duration });
-  };
-  private onChange = (ageRange: Range) => {
-    this.props.form.setFieldsValue({ ageRange });
-  };
-
   public render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -52,7 +45,6 @@ class FilterButtonForm extends React.Component<Props> {
             <DurationSlider
               min={this.props.durationMin}
               max={this.props.durationMax}
-              onChange={this.onDurationChange}
               data-qa="duration-slider"
             />,
           )}
@@ -68,7 +60,6 @@ class FilterButtonForm extends React.Component<Props> {
               ageRange={
                 new AgeRange(this.props.ageRangeMin, this.props.ageRangeMax)
               }
-              onChange={this.onChange}
               data-qa="age-range-slider"
             />,
           )}
