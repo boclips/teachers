@@ -18,7 +18,11 @@ export class CollectionTitle extends React.PureComponent<Props> {
           tabIndex={0}
           className="collection-title"
         >
-          <Link to={`/collections/${this.props.collection.id}`} tabIndex={-1}>
+          <Link
+            to={`/collections/${this.props.collection.id}`}
+            tabIndex={-1}
+            onClick={this.handleOnClick}
+          >
             {this.props.collection.title}
           </Link>
           {this.props.collection.isMine && !this.props.collection.isPublic && (
@@ -31,4 +35,6 @@ export class CollectionTitle extends React.PureComponent<Props> {
       </section>
     );
   }
+
+  private handleOnClick = event => event.preventDefault();
 }

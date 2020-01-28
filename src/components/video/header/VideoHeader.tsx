@@ -17,7 +17,9 @@ export const VideoHeader = withRouter(
   React.memo((props: Props & RouteComponentProps) => (
     <section className={'card-video-header'}>
       <h1 className="title clamp-2-lines" data-qa="video-title">
-        <Link to={`/videos/${props.video.id}`}>{props.video.title}</Link>
+        <Link to={`/videos/${props.video.id}`} onClick={onClick}>
+          {props.video.title}
+        </Link>
       </h1>
       <section className="badge-container">
         <VideoPreviewBadge video={props.video} />
@@ -39,3 +41,5 @@ export const VideoHeader = withRouter(
     </section>
   )),
 );
+
+const onClick = event => event.preventDefault();
