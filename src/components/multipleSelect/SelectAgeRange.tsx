@@ -4,7 +4,7 @@ import { AgeRange } from '../../types/AgeRange';
 import MultiSelect from '../common/MultiSelect';
 
 interface Props {
-  onUpdateAgeRange: (value: string[]) => void;
+  onChange?: (value: string[]) => void;
   initialValue?: number[];
 }
 
@@ -42,7 +42,7 @@ export class SelectAgeRange extends React.PureComponent<Props> {
     const sorted = AgeRange.removeDuplicates(parsed);
     const stringified = sorted.map(it => it.encodeJSON());
 
-    this.props.onUpdateAgeRange(stringified);
+    this.props.onChange(stringified);
   };
 
   private generateOptions() {

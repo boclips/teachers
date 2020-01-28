@@ -10,10 +10,6 @@ interface Props {
 }
 
 export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
-  public onUpdateAgeRange = (value: string[]) => {
-    this.props.form.setFieldsValue({ ageRange: value });
-  };
-
   public render() {
     return (
       <Form.Item
@@ -30,7 +26,6 @@ export class AgeRangeForm extends React.Component<FormComponentProps & Props> {
             : [],
         })(
           <SelectAgeRange
-            onUpdateAgeRange={this.onUpdateAgeRange}
             data-qa={'age-select-input'}
             initialValue={this.props.initialValue}
           />,
