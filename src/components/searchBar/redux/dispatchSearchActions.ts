@@ -3,10 +3,14 @@ import { Store } from 'redux';
 import { RouterState } from '../../../types/State';
 import { VideoRequestFilters } from '../../../types/VideoSearchRequest';
 import { VideoType } from '../../../types/Video';
+import {
+  CollectionRequestFilters,
+  CollectionSearchRequest,
+} from '../../../types/CollectionSearchRequest';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
 
-const getFilters = (queryParams: any): VideoRequestFilters => ({
+const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,
   isClassroom: true,
   type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
@@ -14,6 +18,10 @@ const getFilters = (queryParams: any): VideoRequestFilters => ({
   duration_max: +queryParams.duration_max || undefined,
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
+});
+
+const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
+  subject: queryParams.subject || undefined,
 });
 
 export const dispatchSearchActions = (store: Store<RouterState>) => {
@@ -24,12 +32,19 @@ export const dispatchSearchActions = (store: Store<RouterState>) => {
       arrayFormat: 'comma',
     });
     const query = queryParams.q as string;
-    const page = parseInt(queryParams.page as string, 10);
 
-    const filters = getFilters(queryParams);
-    const sortBy = null;
+    const videoSearchRequest = {
+      query,
+      page: parseInt(queryParams.page as string, 10),
+      filters: getVideoFilters(queryParams),
+      sortBy: null,
+    };
+    const collectionSearchRequest: CollectionSearchRequest = {
+      query,
+      filters: getCollectionFilters(queryParams),
+    };
 
-    store.dispatch(searchVideosAction({ query, page, filters, sortBy }));
-    store.dispatch(searchCollectionsAction({ query }));
+    store.dispatch(searchVideosAction(videoSearchRequest));
+    store.dispatch(searchCollectionsAction(collectionSearchRequest));
   }
 };

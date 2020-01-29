@@ -6,7 +6,6 @@ import { CollectionSearchResult } from '../../../../types/SearchResults';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import eventually from '../../../../../test-support/eventually';
 import { onSearchCollections } from './searchMiddleware';
-import objectContaining = jasmine.objectContaining;
 
 jest.mock('../../../../services/collections/searchCollections');
 
@@ -37,7 +36,7 @@ describe('collection search middleware', () => {
     });
   });
 
-  it('dispatches an empty collectionSearchResponse when filters are applied', () => {
+  it('make an API call when subject filter is applied', () => {
     const store = MockStoreFactory.sample();
 
     const collectionSearchResult: CollectionSearchResult = {
@@ -49,27 +48,20 @@ describe('collection search middleware', () => {
     const searchRequest: CollectionSearchRequest = {
       query: 'dogs',
       filters: {
-        duration_min: 10,
-        duration_max: undefined,
-        age_range_min: undefined,
-        age_range_max: undefined,
-        subject: undefined,
-        promoted: undefined,
+        subject: 'subject-id-1',
       },
     };
 
     onSearchCollections(store, searchRequest);
 
-    expect(searchCollections).toHaveBeenCalledTimes(0);
+    expect(searchCollections).toHaveBeenCalledTimes(1);
 
     return eventually(() => {
       expect(store.getActions()).toHaveLength(1);
       expect(store.getActions()[0].type).toEqual(
         storeCollectionSearchResultsAction.type,
       );
-      expect(store.getActions()[0].payload).toEqual(
-        objectContaining({ collections: [] }),
-      );
+      expect(store.getActions()[0].payload).toEqual(collectionSearchResult);
     });
   });
 });

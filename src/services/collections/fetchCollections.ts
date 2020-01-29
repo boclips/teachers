@@ -12,7 +12,7 @@ export const fetchPageableCollections = (
   axios
     .get(
       request.request
-        ? links[request.key].getTemplatedLink(request.request)
+        ? links[request.key].getTemplatedLink(request.request.filters)
         : links[request.key].getOriginalLink(),
     )
     .then(response => parseScrollableCollectionsListResponse(response));

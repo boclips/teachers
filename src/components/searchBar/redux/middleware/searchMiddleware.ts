@@ -1,6 +1,4 @@
 import { MiddlewareAPI } from 'redux';
-import isUndefined from 'lodash/isUndefined';
-import every from 'lodash/every';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import searchCollections from '../../../../services/collections/searchCollections';
@@ -31,22 +29,11 @@ export function onSearchCollections(
 ) {
   const links = store.getState().links;
 
-  const { isClassroom, ...userFilters } = searchRequest.filters || {};
+  searchCollections(searchRequest, links).then(results => {
+    store.dispatch(storeCollectionSearchResultsAction(results));
 
-  if (every(userFilters, isUndefined)) {
-    searchCollections(searchRequest, links).then(results => {
-      store.dispatch(storeCollectionSearchResultsAction(results));
-
-      AnalyticsFactory.externalAnalytics().trackCollectionSearch(results);
-    });
-  } else {
-    store.dispatch(
-      storeCollectionSearchResultsAction({
-        collections: [],
-        query: searchRequest.query,
-      }),
-    );
-  }
+    AnalyticsFactory.externalAnalytics().trackCollectionSearch(results);
+  });
 }
 
 export default [

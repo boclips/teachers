@@ -1,7 +1,8 @@
-import { VideoRequestFilters } from './VideoSearchRequest';
+export interface CollectionRequestFilters {
+  subject: string | string[];
+}
 
 export interface CollectionSearchRequest {
   query?: string;
-  subject?: string[];
-  filters?: VideoRequestFilters;
+  filters?: CollectionRequestFilters;
 }

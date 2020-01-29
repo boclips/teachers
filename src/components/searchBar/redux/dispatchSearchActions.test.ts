@@ -93,7 +93,7 @@ describe('when on the videos page', () => {
     expect(action.payload.filters.duration_max).toBeUndefined();
   });
 
-  it('filters by subject', () => {
+  it('filters videos by subject', () => {
     store = getStore('subject=subject-one-id');
     dispatchSearchActions(store);
     action = store.getActions()[0];
@@ -101,12 +101,33 @@ describe('when on the videos page', () => {
     expect(action.payload.filters.subject).toContain('subject-one-id');
   });
 
-  it('filters by multiple subjects', () => {
+  it('filters videos by multiple subjects', () => {
     store = getStore('subject=subject-one-id,subject-two-id');
     dispatchSearchActions(store);
     action = store.getActions()[0];
 
     expect(action.payload.filters.subject).toEqual([
+      'subject-one-id',
+      'subject-two-id',
+    ]);
+  });
+
+  it('filters collections by subject', () => {
+    store = getStore('subject=subject-one-id');
+    dispatchSearchActions(store);
+    const collectionSearchAction = store.getActions()[1];
+
+    expect(collectionSearchAction.payload.filters.subject).toContain(
+      'subject-one-id',
+    );
+  });
+
+  it('filters collections by multiple subjects', () => {
+    store = getStore('subject=subject-one-id,subject-two-id');
+    dispatchSearchActions(store);
+    const collectionSearchAction = store.getActions()[1];
+
+    expect(collectionSearchAction.payload.filters.subject).toEqual([
       'subject-one-id',
       'subject-two-id',
     ]);

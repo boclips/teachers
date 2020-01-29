@@ -10,7 +10,7 @@ export default function searchPublicCollections(
 ): Promise<CollectionSearchResult> {
   const url = links.searchPublicCollections.getTemplatedLink({
     query: searchRequest.query,
-    subject: searchRequest.subject,
+    subject: searchRequest.filters && searchRequest.filters.subject,
     size: 5,
   });
   return axios.get(url).then(response => ({
