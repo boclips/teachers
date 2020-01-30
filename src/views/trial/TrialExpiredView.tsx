@@ -13,7 +13,7 @@ export const TrialExpiredView = () => {
   const dispatch = useDispatch();
 
   const userHasExpired = useSelector(
-    (state: State) => !!state.links.reportAccessExpired,
+    (state: State) => !!state.links.entries.reportAccessExpired,
   );
 
   useEffect(() => {

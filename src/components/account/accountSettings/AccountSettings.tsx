@@ -131,7 +131,7 @@ function mapStateToProps(state: State): AccountProps {
   return {
     userProfile: state.user,
     subjects: state.subjects,
-    links: state.links,
+    links: state.links.entries,
     countries: state.countries,
   };
 }

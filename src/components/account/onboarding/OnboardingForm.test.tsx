@@ -7,6 +7,7 @@ import { By } from '../../../../test-support/By';
 import {
   CountryFactory,
   LinksFactory,
+  LinksStateValueFactory,
   MockStoreFactory,
   SubjectFactory,
 } from '../../../../test-support/factories';
@@ -52,7 +53,7 @@ describe('onboarding form', () => {
               states: [{ id: 'state-1', name: 'State 1' }],
             }),
           ],
-          links,
+          links: LinksStateValueFactory.sample(links),
         })}
       >
         <OnboardingForm />

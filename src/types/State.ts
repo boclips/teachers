@@ -10,8 +10,13 @@ import { Tag } from './Tag';
 import { Video, VideoId } from './Video';
 import { VideoCollection } from './VideoCollection';
 
+export interface LinksStateValue {
+  entries: Links;
+  loadingState: 'loading' | 'failure' | 'success';
+}
+
 export interface LinksState {
-  links: Links;
+  links: LinksStateValue;
 }
 
 export interface VideoSearchStateValue {

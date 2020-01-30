@@ -1,15 +1,15 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../../app/redux/actions';
 import { fetchTags } from '../../../../../services/tags/fetchTags';
-import State from '../../../../../types/State';
 import { Tag } from '../../../../../types/Tag';
 import { fetchedTagsAction } from '../actions/fetchedTagsAction';
 import { fetchTagsAction } from '../actions/fetchTagsAction';
+import { Links } from '../../../../../types/Links';
 
 export function onFetchTags(store: MiddlewareAPI) {
-  const state: State = store.getState();
+  const links: Links = store.getState().links.entries;
 
-  fetchTags(state.links).then((tags: Tag[]) => {
+  fetchTags(links).then((tags: Tag[]) => {
     store.dispatch(fetchedTagsAction(tags));
   });
 }

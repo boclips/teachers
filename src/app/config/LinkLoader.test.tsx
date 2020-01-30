@@ -5,11 +5,11 @@ import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import { MockStoreFactory } from '../../../test-support/factories';
 import { LoadingComponent } from '../../components/common/LoadingComponent';
-import { Links } from '../../types/Links';
-import { AuthenticationStateValue } from '../../types/State';
+import { AuthenticationStateValue, LinksStateValue } from '../../types/State';
 import { Action } from '../redux/actions';
 import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
+import { ErrorView } from '../../views/error/ErrorView';
 import { UnconnectedLinkLoader } from './LinkLoader';
 import LinkLoader from './LinkLoader';
 
@@ -28,7 +28,7 @@ const mountComponent = (store: Store) =>
 
 const getMockStore = (
   authentication: AuthenticationStateValue,
-  links?: Partial<Links>,
+  links?: Partial<LinksStateValue>,
 ) =>
   MockStoreFactory.sample({
     authentication,
@@ -87,6 +87,21 @@ describe('when authentication is resolved', () => {
     const childComponent = component.find(ChildComponent);
     expect(childComponent).not.toExist();
   });
+
+  it('renders a nonRecoverable error page if links cannot be fetched', () => {
+    const store = getMockStore(
+      { status: 'authenticated' },
+      { entries: null, loadingState: 'failure' },
+    );
+
+    const component = mountComponent(store);
+
+    const errorView = component.find(ErrorView);
+    const childComponent = component.find(ChildComponent);
+
+    expect(errorView).toExist();
+    expect(childComponent).not.toExist();
+  });
 });
 
 describe('The component can update links once authenticated', () => {
@@ -97,7 +112,10 @@ describe('The component can update links once authenticated', () => {
     const component = mount(
       <UnconnectedLinkLoader
         authenticationResolved={false}
-        linksHaveLoaded={false}
+        links={{
+          entries: null,
+          loadingState: null,
+        }}
         fetchLinks={fetchLinksSpy}
         requestAuthentication={requestAuthenticationSpy}
       >
@@ -111,7 +129,7 @@ describe('The component can update links once authenticated', () => {
 
     expect(fetchLinksSpy).toHaveBeenCalledTimes(1);
 
-    component.setProps({ linksHaveLoaded: true });
+    component.setProps({ links: { entries: [], loadingState: 'success' } });
 
     const child = component.find(ChildComponent);
     expect(child).toExist();

@@ -13,7 +13,7 @@ interface Props {
 
 export const ShareCodeDialog = React.memo((props: Props) => {
   const validationLink = useSelector(
-    (state: State) => state.links.validateShareCode,
+    (state: State) => state.links.entries.validateShareCode,
   );
   const [shareCode, setShareCode] = useState('');
   const [visible, setVisible] = useState(true);

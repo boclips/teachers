@@ -4,15 +4,17 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import { MockStoreFactory } from '../../../../test-support/factories';
 import { storyWithProvider } from '../../../utils/index.stories';
+import { Links } from '../../../types/Links';
 import { ShareCodeDialog } from './ShareCodeDialog';
 
 const store = MockStoreFactory.sample();
 
 const axiosMock = new MockAdapter(axios);
+const links: Links = store.getState().links.entries;
 
 axiosMock
   .onGet(
-    store.getState().links.validateShareCode.getTemplatedLink({
+    links.validateShareCode.getTemplatedLink({
       id: 'test-id',
       shareCode: 'abc',
     }),

@@ -5,12 +5,13 @@ import { fetchCollection } from '../../../../services/collections/fetchCollectio
 import { LinksState } from '../../../../types/State';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
+import { Links } from '../../../../types/Links';
 
 export function onFetchCollection(
   store: MiddlewareAPI<any, LinksState>,
   collectionId: string,
 ) {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   fetchCollection(links, collectionId)
     .then(collection => {
       store.dispatch(storeCollectionAction(collection));

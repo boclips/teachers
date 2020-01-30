@@ -10,12 +10,13 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
+import { Links } from '../../../../types/Links';
 
 export function onSearchVideos(
   store: MiddlewareAPI<any, LinksState & CollectionState>,
   searchRequest: VideoSearchRequest,
 ) {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   fetchVideos(searchRequest, links).then(results => {
     store.dispatch(storeVideoSearchResultsAction(results));
 
@@ -27,7 +28,7 @@ export function onSearchCollections(
   store: MiddlewareAPI<any, LinksState & CollectionState>,
   searchRequest: CollectionSearchRequest,
 ) {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
 
   searchCollections(searchRequest, links).then(results => {
     store.dispatch(storeCollectionSearchResultsAction(results));

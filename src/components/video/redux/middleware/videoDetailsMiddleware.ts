@@ -6,12 +6,14 @@ import { LinksState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { fetchVideoAction } from '../actions/fetchVideoAction';
 import { storeVideoAction } from '../actions/storeVideoAction';
+import { Links } from '../../../../types/Links';
 
 export function onFetchVideo(
   store: MiddlewareAPI<Dispatch, LinksState>,
   videoId: string,
 ) {
-  return fetchVideo(videoId, store.getState().links)
+  const links: Links = store.getState().links.entries;
+  return fetchVideo(videoId, links)
     .then((video: Video) => {
       AnalyticsFactory.externalAnalytics().trackVideoVisited(video);
       return video;

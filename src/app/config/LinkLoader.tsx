@@ -2,12 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { LoadingComponent } from '../../components/common/LoadingComponent';
-import { AuthenticationState, LinksState } from '../../types/State';
+import {
+  AuthenticationState,
+  LinksState,
+  LinksStateValue,
+} from '../../types/State';
 import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
+import { ErrorView } from '../../views/error/ErrorView';
 
 interface StateProps {
-  linksHaveLoaded: boolean;
+  links: LinksStateValue;
   authenticationResolved: boolean;
 }
 
@@ -29,7 +34,7 @@ export class UnconnectedLinkLoader extends React.PureComponent<Props> {
 
   public componentDidUpdate(prevProps: Props): void {
     if (
-      !this.props.linksHaveLoaded &&
+      this.linksNotLoaded() &&
       this.props.authenticationResolved &&
       prevProps.authenticationResolved !== this.props.authenticationResolved
     ) {
@@ -38,18 +43,30 @@ export class UnconnectedLinkLoader extends React.PureComponent<Props> {
   }
 
   public render() {
-    if (!this.props.linksHaveLoaded) {
+    if (this.linksNotLoaded()) {
       return <LoadingComponent />;
     }
 
+    if (this.props.links.loadingState === 'failure') {
+      return <ErrorView nonRecoverable={true} />;
+    }
+
     return this.props.children;
+  }
+
+  private linksNotLoaded(): boolean {
+    return (
+      !this.props.links ||
+      this.props.links.loadingState === null ||
+      this.props.links.loadingState === 'loading'
+    );
   }
 }
 
 const mapStateToProps = (
   state: LinksState & AuthenticationState,
 ): StateProps => ({
-  linksHaveLoaded: !!state.links,
+  links: state.links,
   authenticationResolved:
     state.authentication && state.authentication.status !== null,
 });

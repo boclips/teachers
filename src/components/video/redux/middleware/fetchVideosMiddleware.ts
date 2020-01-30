@@ -13,17 +13,19 @@ import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction'
 import { fetchVideosAction } from '../actions/fetchVideosAction';
 import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
 import { storeVideosAction } from '../actions/storeVideosAction';
+import { Links } from '../../../../types/Links';
 
 export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 
 const searchVideosAndCollections = (store: Store<State>) => {
-  if (store.getState().links && store.getState().links.videos) {
+  const links: Links = store.getState().links.entries;
+  if (links && links.videos) {
     dispatchSearchActions(store);
   }
 };
 
 const onFetchVideos = (store: Store<State>, request: VideoSearchRequest) => {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   fetchVideos(request, links).then(result => {
     store.dispatch(storeVideosAction({ videos: result.videos }));
   });
@@ -33,7 +35,7 @@ const onFetchPromotedVideos = (
   store: Store<State>,
   request: VideoSearchRequest,
 ) => {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   fetchVideos(request, links).then(result => {
     store.dispatch(
       storePromotedVideosAction({ promotedVideos: result.videos }),

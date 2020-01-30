@@ -23,9 +23,10 @@ import {
 import State from '../../types/State';
 import { authenticationReducer } from './authentication/reducers/authenticationReducer';
 import { createReducer, noReducer } from './createReducer';
-import { linksReducer } from './links/reducers/linksReducer';
+import { linkHandlers } from './links/reducers/linksReducer';
 
 const stateReducer: Reducer<State> = createReducer(
+  ...linkHandlers,
   ...videoSearchHandlers,
   ...collectionSearchHandlers,
   ...collectionHandlers,
@@ -39,7 +40,8 @@ export const createReducers = (history: History<any>): Reducer<State> =>
     combineReducers({
       entities: noReducer({ collections: { byId: {} }, videos: { byId: {} } }),
       search: noReducer(initialSearchState),
-      links: linksReducer,
+      links: noReducer({ entries: null, loadingState: null }),
+      loadingState: null,
       video: noReducer(initialVideoState),
       videos: noReducer({ promotedVideoIds: [] }),
       user: userDetailsFetchedReducer,

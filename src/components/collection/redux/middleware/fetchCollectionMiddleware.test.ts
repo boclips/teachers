@@ -13,7 +13,8 @@ const mockStore = configureStore<{}>([fetchCollectionMiddleware]);
 
 test('dispatches a store action per successfully fetched collection', async () => {
   const collection = VideoCollectionFactory.sample();
-  const store = mockStore({});
+  const store = mockStore({ links: { entries: [], loadingState: 'success' } });
+
   fetchCollectionMock.mockReturnValue(Promise.resolve(collection));
 
   store.dispatch(fetchCollectionAction('collection-id'));

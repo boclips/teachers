@@ -256,7 +256,7 @@ function mapStateToProps(state: State): CreateAccountProps {
   const utm = extractUtmParams(queryParam);
 
   return {
-    links: state.links,
+    links: state.links.entries,
     referralCode: extractQueryParam(queryParam, 'REFERRALCODE'),
     utm,
   };

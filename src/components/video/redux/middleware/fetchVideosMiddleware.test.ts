@@ -25,7 +25,9 @@ describe('fetchVideosMiddleware', () => {
       }),
     );
 
-    const store = mockStore({});
+    const store = mockStore({
+      links: { entries: [], loadingState: 'success' },
+    });
 
     const fetchPromotedVideos = linkFetchPromotedVideosToDispatch(
       store.dispatch,

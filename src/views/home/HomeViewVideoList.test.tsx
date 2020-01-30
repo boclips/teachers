@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router';
 import { By } from '../../../test-support/By';
 import {
   EntitiesFactory,
-  LinksFactory,
+  LinksStateValueFactory,
   MockStoreFactory,
   VideoFactory,
 } from '../../../test-support/factories';
@@ -38,7 +38,7 @@ it('renders a video list with ids', () => {
     videos: {
       promotedVideoIds: [promotedVideo.id],
     },
-    links: LinksFactory.sample(),
+    links: LinksStateValueFactory.sample(),
   });
   const wrapper = mount(
     <Provider store={store}>
@@ -72,7 +72,7 @@ it('does not render if there are no promoted videos', () => {
     videos: {
       promotedVideoIds: [],
     },
-    links: LinksFactory.sample(),
+    links: LinksStateValueFactory.sample(),
   });
   const wrapper = mount(
     <Provider store={store}>

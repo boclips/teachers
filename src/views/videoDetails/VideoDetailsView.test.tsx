@@ -3,7 +3,7 @@ import { waitForElement } from '@testing-library/react';
 import React from 'react';
 import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
 import {
-  LinksFactory,
+  LinksStateValueFactory,
   MockStoreFactory,
   UserProfileFactory,
   VideoResourceFactory,
@@ -29,7 +29,10 @@ describe('VideoDetailsView', () => {
     const store = createBoclipsStore(
       {
         ...MockStoreFactory.sampleState({
-          links: LinksFactory.sample({}, 'https://api.example.com/v1'),
+          links: LinksStateValueFactory.sample(
+            {},
+            'https://api.example.com/v1',
+          ),
         }),
         ...initialState,
       },

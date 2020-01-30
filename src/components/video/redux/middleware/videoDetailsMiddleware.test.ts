@@ -16,7 +16,7 @@ const mockStore = configureStore<{}>([videoDetailsMiddleware]);
 test('fetches and stores a video on FETCH_VIDEO', async () => {
   const video = VideoFactory.sample();
 
-  const store = mockStore({});
+  const store = mockStore({ links: { entries: [], loadingState: 'success' } });
 
   fetchVideoMock.mockReturnValue(Promise.resolve(video));
 

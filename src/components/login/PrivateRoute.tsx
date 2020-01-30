@@ -87,12 +87,12 @@ function mapStateToProps(
   return {
     isAuthenticated:
       state.authentication && state.authentication.status === 'authenticated',
-    accessExpired: !!state.links.reportAccessExpired,
+    accessExpired: !!state.links.entries.reportAccessExpired,
     canRenderComponent:
       state.authentication &&
       state.authentication.status === 'authenticated' &&
       !!state.user &&
-      !state.links.reportAccessExpired,
+      !state.links.entries.reportAccessExpired,
   };
 }
 

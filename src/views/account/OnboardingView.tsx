@@ -45,7 +45,7 @@ export class OnboardingViewComponent extends PureComponent<
 }
 
 const mapStateToProps = (state: State): StateProps => ({
-  userCanActivate: !!state.links.activate,
+  userCanActivate: !!state.links.entries.activate,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({

@@ -35,7 +35,7 @@ class CreateAccountView extends PureComponent<StateProps & DispatchProps> {
 
 function mapStateToProps(state: State): StateProps {
   return {
-    canCreateAccount: !!state.links.createAccount,
+    canCreateAccount: !!state.links.entries.createAccount,
   };
 }
 

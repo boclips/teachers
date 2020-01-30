@@ -14,8 +14,11 @@ describe('when accounts cannot be created', () => {
   it('redirects to homepage without createAccount link', async () => {
     const store = MockStoreFactory.sample({
       links: {
-        ...LinksFactory.sample(),
-        createAccount: undefined,
+        loadingState: 'success',
+        entries: {
+          ...LinksFactory.sample(),
+          createAccount: undefined,
+        },
       },
     });
 

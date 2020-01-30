@@ -142,7 +142,7 @@ function mapStateToProps(state: State): StateProps {
       ...search.collectionSearch,
       collections: getCollectionsFromSearchResult(state),
     },
-    links,
+    links: links ? links.entries : null,
     currentPage: +queryString.parse(router.location.search).page || 1,
     userId: user ? user.id : null,
   };

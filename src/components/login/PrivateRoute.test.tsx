@@ -4,10 +4,12 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import { push } from 'connected-react-router';
-import { MockStoreFactory } from '../../../test-support/factories';
+import {
+  LinksFactory,
+  MockStoreFactory,
+} from '../../../test-support/factories';
 import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
 import { Link } from '../../types/Link';
-import { Links } from '../../types/Links';
 import PrivateRoute from './PrivateRoute';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
@@ -55,9 +57,13 @@ describe('conditional rendering of children', () => {
       authentication: {
         status: 'authenticated',
       },
-      links: ({
-        reportAccessExpired: new Link({ href: '/events/access-expired' }),
-      } as Partial<Links>) as any,
+      links: {
+        loadingState: 'success',
+        entries: {
+          ...LinksFactory.sample(),
+          reportAccessExpired: new Link({ href: '/events/access-expired' }),
+        },
+      },
     });
 
     getComponentWrapper(store);

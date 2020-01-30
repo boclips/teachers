@@ -9,12 +9,13 @@ import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
 import { onCreateCollectionAction } from '../actions/onCreateCollectionAction';
+import { Links } from '../../../../types/Links';
 
 export function onCreateCollection(
   store: MiddlewareAPI,
   request: CreateCollectionRequest,
 ) {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   createCollection(links, request)
     .then(() => {
       store.dispatch(onCreateCollectionAction());

@@ -18,6 +18,7 @@ import State, {
   CollectionSearchStateValue,
   CollectionsStateValue,
   EntityStateValue,
+  LinksStateValue,
   Pageable,
   SearchStateValue,
   VideoSearchStateValue,
@@ -201,7 +202,7 @@ export class LinksFactory {
         arg.publicCollections ||
         new Link({ href: `${prefix}/collections?public` }),
       bookmarkedCollections:
-        arg.publicCollections ||
+        arg.bookmarkedCollections ||
         new Link({ href: `${prefix}/collections?bookmarked` }),
       collection:
         arg.collection || new Link({ href: `${prefix}/collections/xxx` }),
@@ -217,6 +218,18 @@ export class LinksFactory {
           href: `${prefix}/users/{id}/shareCode/{shareCode}`,
           templated: true,
         }),
+    });
+  }
+}
+
+export class LinksStateValueFactory {
+  public static sample(
+    arg: Partial<Links> = {},
+    prefix: string = '',
+  ): LinksStateValue {
+    return Object.freeze({
+      loadingState: 'success',
+      entries: LinksFactory.sample(arg, prefix),
     });
   }
 
@@ -563,7 +576,7 @@ export class MockStoreFactory {
         },
       }),
       apiPrefix: 'https://api.example.com',
-      links: LinksFactory.sample(),
+      links: LinksStateValueFactory.sample(),
       search: SearchFactory.sample(),
       user: UserProfileFactory.sample(),
       video: {

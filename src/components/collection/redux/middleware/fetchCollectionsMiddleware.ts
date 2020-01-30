@@ -5,9 +5,10 @@ import { fetchPageableCollections } from '../../../../services/collections/fetch
 import { LinksState } from '../../../../types/State';
 import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
+import { Links } from '../../../../types/Links';
 
 export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   fetchPageableCollections(links, { key: 'myCollections' })
     .then(collections => {
       store.dispatch(

@@ -322,7 +322,7 @@ function mapDispatchToProps(
 function mapStateToProps({ collections, links }: State): StateProps {
   return {
     updating: collections.updating,
-    canFetchMyCollections: links.myCollections && true,
+    canFetchMyCollections: links.entries.myCollections && true,
   };
 }
 

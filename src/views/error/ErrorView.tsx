@@ -5,12 +5,15 @@ import { Link } from 'react-router-dom';
 import SadTeacher from '../../../resources/images/sad-teacher.svg';
 import PageLayout from '../../components/layout/PageLayout';
 
-export const ErrorView = () => (
+interface Props {
+  nonRecoverable?: boolean;
+}
+export const ErrorView = (props: Props) => (
   <PageLayout
     title="Something went wrong."
-    showNavigation={true}
+    showNavigation={!props.nonRecoverable}
     showFooter={true}
-    showSearchBar={true}
+    showSearchBar={!props.nonRecoverable}
   >
     <section className="illustrated-page">
       <Row>
@@ -23,10 +26,12 @@ export const ErrorView = () => (
           <section className="message">
             <h1 className="big-title">Oops!!</h1>
             <p>Something went wrong.</p>
-            <p>
-              You can start a new search or explore our subject list in the top
-              bar or <Link to="/">return to the homepage</Link>
-            </p>
+            {!props.nonRecoverable && (
+              <p>
+                You can start a new search or explore our subject list in the
+                top bar or <Link to="/">return to the homepage</Link>
+              </p>
+            )}
           </section>
         </Col>
       </Row>

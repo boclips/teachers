@@ -156,7 +156,7 @@ class CollectionDetails extends PureComponent<
 
 function mapStateToProps(state: State, props: OwnProps): StateProps {
   const userId = state.user ? state.user.id : null;
-  const links = state.links;
+  const links: Links = state.links.entries;
   const collection = getCollectionById(state, props.collectionId);
   return { userId, links, collection, videos: state.entities.videos.byId };
 }

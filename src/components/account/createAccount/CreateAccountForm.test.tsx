@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { By } from '../../../../test-support/By';
 import {
-  LinksFactory,
+  LinksStateValueFactory,
   MockStoreFactory,
   RouterFactory,
 } from '../../../../test-support/factories';
@@ -17,7 +17,7 @@ describe('create account form', () => {
   let wrapper;
   const store = MockStoreFactory.sample({
     router: RouterFactory.sample(),
-    links: LinksFactory.sample(),
+    links: LinksStateValueFactory.sample(),
   });
   beforeEach(() => {
     wrapper = mount(

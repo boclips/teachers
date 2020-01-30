@@ -14,12 +14,13 @@ import {
   fetchPageableCollectionsAction,
 } from '../actions/fetchPageableCollectionsAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
+import { Links } from '../../../../types/Links';
 
 export function onFetchCollections(
   store: MiddlewareAPI<any, LinksState>,
   request: FetchPageableCollectionRequest,
 ) {
-  const links = store.getState().links;
+  const links: Links = store.getState().links.entries;
   fetchPageableCollections(links, request)
     .then(collections => {
       store.dispatch(

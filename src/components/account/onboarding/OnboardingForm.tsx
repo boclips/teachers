@@ -467,7 +467,7 @@ class OnboardingForm extends React.Component<
 
 function mapStateToProps(state: State): OnboardingProps {
   return {
-    links: state.links,
+    links: state.links.entries,
     subjects: state.subjects,
     countries: state.countries,
     userProfile: state.user,

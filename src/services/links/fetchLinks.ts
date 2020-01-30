@@ -91,6 +91,5 @@ export default function fetchLinks(prefix: string) {
 
         return links;
       },
-    )
-    .catch(console.error);
+    );
 }
