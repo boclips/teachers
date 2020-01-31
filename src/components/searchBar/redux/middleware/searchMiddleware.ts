@@ -1,7 +1,7 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import searchCollections from '../../../../services/collections/searchCollections';
+import { searchCollections } from '../../../../services/collections/searchCollections';
 import fetchVideos from '../../../../services/videos/fetchVideos';
 import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
 import { CollectionState, LinksState } from '../../../../types/State';

@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { collectionsResponse } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
-import searchCollections from './searchCollections';
+import { searchCollections } from './searchCollections';
 
 describe('searchCollections', () => {
   let axiosMock;
