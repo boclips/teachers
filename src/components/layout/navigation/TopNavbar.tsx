@@ -51,7 +51,7 @@ export const TopNavbar = React.memo((props: Props) => (
           props.isMobile && (
             <Col xs={{ span: 18 }} sm={{ span: 20 }}>
               <section className="mobile-logo-wrapper">
-                {!props.showNavigation ? (
+                {props.showNavigation ? (
                   <Link
                     to="/"
                     data-qa="boclips-logo"

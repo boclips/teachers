@@ -17,12 +17,12 @@ export const ErrorView = (props: Props) => (
   >
     <section className="illustrated-page">
       <Row>
-        <Col sm={{ span: 24 }} md={{ span: 12 }}>
+        <Col xs={{ span: 0 }} lg={{ span: 12 }}>
           <section className="illustration">
             <SadTeacher />
           </section>
         </Col>
-        <Col sm={{ span: 24 }} md={{ span: 12 }}>
+        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
           <section className="message">
             <h1 className="big-title">Oops!!</h1>
             <p>Something went wrong.</p>
