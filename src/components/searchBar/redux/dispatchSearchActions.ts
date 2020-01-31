@@ -22,6 +22,8 @@ const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
 
 const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
   subject: queryParams.subject || undefined,
+  age_range_min: +queryParams.age_range_min || undefined,
+  age_range_max: +queryParams.age_range_max || undefined,
 });
 
 export const dispatchSearchActions = (store: Store<RouterState>) => {

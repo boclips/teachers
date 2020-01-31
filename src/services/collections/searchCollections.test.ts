@@ -17,7 +17,7 @@ describe('searchCollections', () => {
     links = LinksFactory.sample({
       searchPublicCollections: new Link({
         href:
-          '/v1/collections?public=true{&query,subject,projection,page,size}',
+          '/v1/collections?public=true{&query,subject,projection,page,size,age_range_min,age_range_max}',
         templated: true,
       }),
     });
@@ -53,5 +53,24 @@ describe('searchCollections', () => {
     queryParams = queryString.parse(url.split('?')[1]);
 
     expect(queryParams.subject).toEqual('my-subject-id-1,my-subject-id-2');
+  });
+
+  test('searches with a age range filter', async () => {
+    await searchCollections(
+      {
+        query: 'foo',
+        filters: {
+          age_range_min: 5,
+          age_range_max: 7,
+        },
+      },
+      links,
+    );
+
+    const url = axiosMock.history.get[0].url;
+    queryParams = queryString.parse(url.split('?')[1]);
+
+    expect(queryParams.age_range_min).toEqual('5');
+    expect(queryParams.age_range_max).toEqual('7');
   });
 });

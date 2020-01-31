@@ -136,10 +136,13 @@ describe('when on the videos page', () => {
   it('filters by age range', () => {
     store = getStore('age_range_min=4&age_range_max=12');
     dispatchSearchActions(store);
-    action = store.getActions()[0];
+    const videoAction = store.getActions()[0];
+    const collectionAction = store.getActions()[1];
 
-    expect(action.payload.filters.age_range_min).toEqual(4);
-    expect(action.payload.filters.age_range_max).toEqual(12);
+    expect(videoAction.payload.filters.age_range_min).toEqual(4);
+    expect(videoAction.payload.filters.age_range_max).toEqual(12);
+    expect(collectionAction.payload.filters.age_range_min).toEqual(4);
+    expect(collectionAction.payload.filters.age_range_max).toEqual(12);
   });
 
   it('defaults subjects to undefined if not present', () => {

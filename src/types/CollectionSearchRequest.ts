@@ -1,5 +1,7 @@
 export interface CollectionRequestFilters {
-  subject: string | string[];
+  subject?: string | string[];
+  age_range_min?: number;
+  age_range_max?: number;
 }
 
 export interface CollectionSearchRequest {

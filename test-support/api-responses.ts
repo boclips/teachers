@@ -7,7 +7,7 @@ export const links = {
       templated: true,
     },
     searchPublicCollections: {
-      href: `${prefix}/v1/collections{?query,subject}`,
+      href: `${prefix}/v1/collections{?query,subject,age_range_min,age_range_max}`,
       templated: true,
     },
     video: {
