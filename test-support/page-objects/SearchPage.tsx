@@ -89,11 +89,4 @@ export class SearchPage {
       findOne(this.wrapper, 'search-page');
     });
   }
-
-  public async hasCollections() {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      findOne(this.wrapper, 'collection-card');
-    });
-  }
 }

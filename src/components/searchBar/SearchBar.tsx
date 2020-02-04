@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../types/State';
-import { bulkOverrideSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {
@@ -34,7 +34,7 @@ function mapStateToProps(state: RouterState): StateProps {
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onQuerySubmitted: (query: string) => {
-      dispatch(bulkOverrideSearchParamsAction([{ page: 1 }, { q: query }]));
+      dispatch(bulkUpdateSearchParamsAction([{ page: 1 }, { q: query }]));
     },
   };
 }

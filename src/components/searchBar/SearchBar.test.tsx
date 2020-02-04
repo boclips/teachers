@@ -6,7 +6,7 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../test-support/factories';
-import { bulkOverrideSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
 
@@ -45,6 +45,6 @@ test('dispatches a navigation action when query submitted callback invoked', () 
   statefulSearchBar.prop('onSubmit')(query);
 
   expect(store.getActions()).toContainEqual(
-    bulkOverrideSearchParamsAction([{ page: 1 }, { q: 'the meaning of life' }]),
+    bulkUpdateSearchParamsAction([{ page: 1 }, { q: 'the meaning of life' }]),
   );
 });

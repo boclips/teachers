@@ -42,7 +42,9 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
         <TransitionGroup component={null} exit={true}>
           {videosAndCollectionElements.map((element, index) => (
             <CSSTransition key={index} classNames="card-list" timeout={500}>
-              <Col span={24}>{element}</Col>
+              <Col span={24} key={element.key}>
+                {element}
+              </Col>
             </CSSTransition>
           ))}
         </TransitionGroup>

@@ -2,6 +2,7 @@ import { fireEvent } from '@testing-library/dom';
 import React from 'react';
 import Button from 'antd/lib/button/button';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { within } from '@testing-library/react';
 import {
   collectionResponse,
   collectionsResponse,
@@ -21,9 +22,16 @@ import {
   VideoFactory,
   VideoSearchFactory,
   RouterFactory,
+  UserProfileFactory,
+  SubjectFactory,
+  CollectionsFactory,
+  LinksStateValueFactory,
 } from '../../../test-support/factories';
 import { SearchPage } from '../../../test-support/page-objects/SearchPage';
-import { renderWithStore } from '../../../test-support/renderWithStore';
+import {
+  renderWithCreatedStore,
+  renderWithStore,
+} from '../../../test-support/renderWithStore';
 import { findElement } from '../../../testSetup';
 import { ClosableTag } from '../../components/common/tags/Tag';
 import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
@@ -31,6 +39,7 @@ import DurationSlider from '../../components/searchResults/filters/DurationSlide
 import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/filters/FilterButton';
 import { getBoclipsClient } from '../../services/apiClient';
 import { Link } from '../../types/Link';
+import { createBoclipsStore } from '../../app/redux/store';
 import SearchResultsView from './SearchResultsView';
 
 beforeEach(() => {
@@ -191,6 +200,65 @@ describe('search results', () => {
           .props().value,
       ).toEqual('1m-4m');
     });
+  });
+
+  test('persists filters across different searches', async () => {
+    const store = createBoclipsStore(
+      MockStoreFactory.sampleState({
+        search: {
+          videoSearch: VideoSearchFactory.sample({
+            videoIds: ['video-id-one', 'video-id-two'],
+            paging: {
+              number: 1,
+              size: 10,
+              totalElements: 2,
+              totalPages: 1,
+            },
+          }),
+          collectionSearch: CollectionSearchFactory.sample(),
+        },
+        user: UserProfileFactory.sample(),
+        subjects: [
+          SubjectFactory.sample({ id: 'subject-one-id', name: 'Mathematics' }),
+        ],
+        entities: EntitiesFactory.sample({
+          videos: {
+            byId: {
+              'video-id-one': VideoFactory.sample({ id: 'video-id-one' }),
+              'video-id-two': VideoFactory.sample({ id: 'video-id-two' }),
+            },
+          },
+        }),
+        collections: CollectionsFactory.sample(),
+        links: LinksStateValueFactory.sample(),
+        router: RouterFactory.sample({
+          location: {
+            pathname: '',
+            search:
+              '?q=fractions&age_range_min=11&age_range_max=14&subject=subject-one-id',
+            hash: '',
+            state: null,
+          },
+        }),
+      }),
+    );
+    const searchPage = renderWithCreatedStore(<SearchResultsView />, store);
+    const searchInput = await searchPage.findByTestId('search-input');
+
+    fireEvent.input(searchInput, {
+      target: {
+        value: 'percentages',
+      },
+    });
+
+    fireEvent.click(searchPage.getByText('Search'));
+
+    const filtersBar = await searchPage.findByTestId('filters-bar');
+    const ageFilter = within(filtersBar).getByText('11-14');
+    const subjectFilter = within(filtersBar).getByText('Mathematics');
+
+    expect(ageFilter).toBeInTheDocument();
+    expect(subjectFilter).toBeInTheDocument();
   });
 
   test('shows total count of videos and collections', async () => {

@@ -20,7 +20,7 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
     }
 
     return (
-      <div className="filters-bar">
+      <div className="filters-bar" data-qa={'filters-bar'}>
         <Row>
           <span data-qa="filters-bar-label" className="filters-bar__label">
             Filters applied:
