@@ -45,6 +45,7 @@ export const ShareModal = React.memo<Props>(props => {
         <GoogleClassroomShareButton
           video={props.video}
           userId={user.id}
+          shareCode={user.shareCode}
           segment={segment}
         />
       </div>
