@@ -36,7 +36,7 @@ export class GoogleClassroomShareButton extends React.Component<Props> {
     const url: string = new GoogleClassroomUrlBuilder()
       .setTitle(this.props.video.title)
       .setVideoUrl(link)
-      .setBody(`Use code ${this.props.shareCode} to view this.`)
+      // .setBody(`Use code ${this.props.shareCode} to view this.`)
       .build();
 
     window.open(url, '_blank', 'height=570,width=520');

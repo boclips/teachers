@@ -29,7 +29,7 @@ it('opens a new window with the correct url', () => {
   expect(url).toContain('1999');
   expect(url).toContain('2999');
   expect(url).toContain('bob');
-  expect(url).toContain('ZXY1');
+  expect(url).not.toContain('ZXY1');
   expect(target).toEqual('_blank');
   expect(windowParams).toEqual('height=570,width=520');
 });
