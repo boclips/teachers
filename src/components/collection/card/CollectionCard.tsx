@@ -13,6 +13,7 @@ import StopClickPropagation from '../../common/StopClickPropagation';
 import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
+import MyCollectionSVG from '../../../../resources/images/my-account.svg'
 import { EditCollectionButton } from '../buttons/EditCollectionButton';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
@@ -108,6 +109,7 @@ export const CollectionCard = withMediaBreakPoint(
               <ButtonMenu buttons={filteredButtons} />
             </StopClickPropagation>
           )}
+          {props.collection.isMine && !isSmallCard && <span className={"collection-card__owner-label"}><MyCollectionSVG /> Your collection</span>}
         </section>
         <section className="collection-card__subtitle">
           <span>

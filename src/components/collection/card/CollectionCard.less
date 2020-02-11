@@ -44,6 +44,31 @@
 
   &__lesson-plan {
     svg {
+      position: relative;
+      path {
+        fill: @shade-6;
+      }
+    }
+  }
+
+  &__owner-label {
+    background-color: #ffffff;
+    color: @shade-6;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 21px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 40px;
+    width: 154px;
+    border-radius: 0 8px 0 8px;
+    align-content: space-between;
+    text-align: center;
+    padding-top: 8px;
+    box-shadow: -2px 2px 2px 0 rgba(100,113,169,0.5);
+
+    svg {
       path {
         fill: @shade-6;
       }
