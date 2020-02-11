@@ -207,6 +207,11 @@ const createMockStore = (collection: VideoCollection, videos: Video[]) =>
       myCollections: PageableCollectionsFactory.sample({
         items: [collection.id],
       }),
+      myResources: PageableCollectionsFactory.sample(
+        {
+          items: [collection.id]
+        }
+      ),
       discoverCollections: undefined,
       publicCollections: undefined,
       bookmarkedCollections: undefined,

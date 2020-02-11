@@ -20,6 +20,7 @@ test('parses all links', async () => {
       countries: { href: '/countries' },
       tags: { href: '/tags' },
       disciplines: { href: '/disciplines' },
+      mySavedCollections: { href: '/collections?projection=list&page=0&size=30&owner=123&bookmarked=true&sort_by=TITLE'}
     },
   });
 
@@ -52,6 +53,7 @@ test('parses all links', async () => {
     disciplines: new Link({
       href: '/disciplines',
     }),
+    myResources: new Link({href: '/collections?projection=list&page=0&size=30&owner=123&bookmarked=true&sort_by=TITLE'})
   };
 
   expect(links).toEqual(expectedLinks);
