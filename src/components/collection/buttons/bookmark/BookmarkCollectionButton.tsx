@@ -2,7 +2,7 @@ import { Button, Icon } from 'antd';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import BookmarkEmptySVG from '../../../../../resources/images/bookmarked.svg';
+import RemoveBookmarkSVG from '../../../../../resources/images/remove-video.svg';
 import BookmarkFilledSVG from '../../../../../resources/images/unbookmarked.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../../types/VideoCollection';
@@ -58,11 +58,12 @@ export class BookmarkCollectionButtonInner extends PureComponent<
           >
             <React.Fragment>
               <Icon
-                component={BookmarkEmptySVG}
-                aria-label="Unbookmark a collection"
-                title="Button to unbookmark a collection"
+                component={RemoveBookmarkSVG}
+                aria-label="Remove collection bookmark"
+                title="Button to remove the collection bookmark"
+                className="bookmark-button__remove-icon"
               />
-              <span>Unbookmark</span>
+              <span>Remove</span>
             </React.Fragment>
           </Button>
         </A11yButton>
