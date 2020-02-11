@@ -89,6 +89,10 @@ export default function fetchLinks(prefix: string) {
           links.validateShareCode = new Link(body._links.validateShareCode);
         }
 
+        if (body._links.mySavedCollections) {
+          links.myResources = new Link(body._links.mySavedCollections);
+        }
+
         return links;
       },
     );

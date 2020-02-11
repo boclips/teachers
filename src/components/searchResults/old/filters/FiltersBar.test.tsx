@@ -2,10 +2,7 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { By } from 'test-support/By';
-import {
-  MockStoreFactory,
-  RouterFactory,
-} from 'test-support/factories';
+import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { setWidth } from 'test-support/setWidth';
 import SubjectFilterTag from '../../filters/SubjectFilterTag';
 import FiltersBarWrapper, { FiltersBar } from './FiltersBar';

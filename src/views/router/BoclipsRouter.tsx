@@ -25,6 +25,7 @@ import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import { TrialExpiredView } from '../trial/TrialExpiredView';
 import { ErrorView } from '../error/ErrorView';
 import { ConnectedNewSearchResultsView } from '../searchResults/NewSearchResultsView';
+import MyResourcesListView from '../collection/MyResourcesListView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
@@ -99,6 +100,11 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <PrivateRoute
               path="/collections"
               component={MyCollectionListView}
+              exact={true}
+            />
+            <PrivateRoute
+              path="/resources"
+              component={MyResourcesListView}
               exact={true}
             />
             <PrivateRoute

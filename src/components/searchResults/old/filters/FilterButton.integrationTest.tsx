@@ -6,10 +6,7 @@ import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import { By } from 'test-support/By';
 import EventSimulator from 'test-support/EventSimulator';
-import {
-  MockStoreFactory,
-  RouterFactory,
-} from 'test-support/factories';
+import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { setWidth } from 'test-support/setWidth';
 import { AgeRange } from 'src/types/AgeRange';
 import { SubjectsForm } from '../../../account/form/SubjectsForm';

@@ -18,6 +18,7 @@ import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
 import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
+import MyResourcesListView from '../collection/MyResourcesListView';
 import BoclipsRouter from './BoclipsRouter';
 
 test('shows video details view on /videos/{id}', () => {
@@ -82,6 +83,21 @@ describe('when authorised', () => {
 
     const videoDetailsView = wrapper.find(HomeView);
     expect(videoDetailsView).toExist();
+  });
+
+  test('shows resources view on /resources', () => {
+    const history = createMemoryHistory({
+      initialEntries: ['/resources'],
+    });
+
+    const wrapper = mount(
+      <Provider store={buildStore()}>
+        <BoclipsRouter history={history} />
+      </Provider>,
+    );
+
+    const resourcesView = wrapper.find(MyResourcesListView);
+    expect(resourcesView).toExist();
   });
 
   test('shows collections view on /collections', () => {

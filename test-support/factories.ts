@@ -360,6 +360,10 @@ export class CollectionsFactory {
         items: [],
         links: {},
       },
+      myResources: {
+        items: [],
+        links: {},
+      },
       collectionIdBeingViewed: collection.id,
       ...arg,
     });
