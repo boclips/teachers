@@ -28,6 +28,7 @@ interface StateProps {
   videos: Array<Video | undefined>;
 }
 
+
 class CollectionCardContainer extends React.PureComponent<Props> {
   public render() {
     const videos = this.props.videos.filter(video => video !== undefined);

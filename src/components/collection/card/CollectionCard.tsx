@@ -87,6 +87,7 @@ export const CollectionCard = withMediaBreakPoint(
         key={`card-${props.collection.id}`}
         className={classnames('collection-card collection-card--search', {
           'collection-card--grid': isSmallCard,
+          'collection-card--owned': this.props.collection.isMine
         })}
         data-qa="collection-card"
         data-state={props.collection.title}
