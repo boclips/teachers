@@ -20,4 +20,5 @@ export interface Links {
   countries?: Link;
   reportAccessExpired?: Link;
   validateShareCode?: Link;
+  myResources?: Link;
 }
