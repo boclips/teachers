@@ -4,7 +4,6 @@ import MyAccountSVG from '../../../../resources/images/my-account.svg';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import {
   AccountSettingsLink,
-  BookmarkedCollectionsLink,
   LogoutLink,
   UserCollectionsLink,
 } from './MenuOptions';
@@ -34,12 +33,9 @@ class AccountMenuComponent extends React.Component<Props, State> {
         <UserCollectionsLink />
       </Menu.Item>
       <Menu.Item key="2">
-        <BookmarkedCollectionsLink />
-      </Menu.Item>
-      <Menu.Item key="3">
         <AccountSettingsLink />
       </Menu.Item>
-      <Menu.Item key="4">
+      <Menu.Item key="3">
         <LogoutLink onClick={this.props.onLogout} />
       </Menu.Item>
     </Menu>

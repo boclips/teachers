@@ -11,6 +11,8 @@ import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
+import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
+import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
 import {
   EntitiesFactory,
   MockStoreFactory,
@@ -66,6 +68,65 @@ describe('manipulating my collections', () => {
     expect(
       stateAfter.entities.collections.byId[collection.id],
     ).not.toBeUndefined();
+  });
+
+  test('adds bookmarked collection to myCollections', () => {
+    const toBeBookmarkedCollection = VideoCollectionFactory.sample();
+    const untouchedCollection = VideoCollectionFactory.sample({
+      id: 'another-collection',
+    });
+
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: EntitiesFactory.sample({
+        collections: {
+          byId: { [untouchedCollection.id]: untouchedCollection },
+        },
+      }),
+      collections: CollectionsFactory.sample({
+        myCollections: PageableCollectionsFactory.sample({
+          items: [untouchedCollection.id],
+        }),
+      }),
+    });
+    const action = onCollectionBookmarkedAction(toBeBookmarkedCollection);
+
+    const updatedBookmarks = testReducer(stateBefore, action).collections
+      .myCollections.items;
+
+    expect(updatedBookmarks).toHaveLength(2);
+    expect(updatedBookmarks).toContain(toBeBookmarkedCollection.id);
+    expect(updatedBookmarks).toContain(untouchedCollection.id);
+  });
+
+  test('remove a bookmarked collection', () => {
+    const toBeUnbookmarkedCollection = VideoCollectionFactory.sample();
+    const untouchedCollection = VideoCollectionFactory.sample({
+      id: 'another-collection',
+    });
+
+    const stateBefore: State = MockStoreFactory.sampleState({
+      entities: EntitiesFactory.sample({
+        collections: {
+          byId: {
+            [toBeUnbookmarkedCollection.id]: toBeUnbookmarkedCollection,
+            [untouchedCollection.id]: untouchedCollection,
+          },
+        },
+      }),
+      collections: CollectionsFactory.sample({
+        myCollections: PageableCollectionsFactory.sample({
+          items: [toBeUnbookmarkedCollection.id, untouchedCollection.id],
+        }),
+      }),
+    });
+
+    const action = onCollectionUnbookmarkedAction(toBeUnbookmarkedCollection);
+
+    const updatedBookmarks = testReducer(stateBefore, action).collections
+      .myCollections.items;
+
+    expect(updatedBookmarks).toHaveLength(1);
+    expect(updatedBookmarks).toContain(untouchedCollection.id);
   });
 
   test('can edit a collection', () => {

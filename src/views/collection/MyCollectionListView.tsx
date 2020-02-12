@@ -8,11 +8,11 @@ import PageableCollectionCardList from '../../components/collection/card/list/Pa
 import PageLayout from '../../components/layout/PageLayout';
 import './MyCollectionListView.less';
 
-export default class MyCollectionListView extends PureComponent {
+export class MyCollectionListView extends PureComponent {
   public render() {
     return (
       <PageLayout
-        title="Your Collections"
+        title="Your Resources"
         showSearchBar={true}
         showNavigation={true}
         showFooter={true}
@@ -29,7 +29,7 @@ export default class MyCollectionListView extends PureComponent {
       <PageableCollectionCardList
         title={
           <span>
-            <Icon component={collectionsSVG} /> Your video collections
+            <Icon component={collectionsSVG} /> Your resources
           </span>
         }
         collectionKey="myCollections"
@@ -43,11 +43,10 @@ export default class MyCollectionListView extends PureComponent {
       <Row className="collections-view-empty" data-qa="collections-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
           <EmptyCollectionSVG />
-          <h1 data-qa="no-collections">You have no collections, yet.</h1>
-          <p>
-            Use the Save button on your favourite videos to create your very own
-            collection.
-          </p>
+          <h1 data-qa="no-collections">
+            You don&apos;t have any saved resources, yet.
+          </h1>
+          <p>Save your favourite videos and collections here.</p>
         </Col>
       </Row>
     );

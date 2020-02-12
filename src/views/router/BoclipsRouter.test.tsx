@@ -13,7 +13,6 @@ import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import { CollectionDetailsView } from '../collection/CollectionDetailsView';
 import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
-import MyCollectionListView from '../collection/MyCollectionListView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import SearchResultsView from '../searchResults/SearchResultsView';
@@ -85,21 +84,6 @@ describe('when authorised', () => {
     expect(videoDetailsView).toExist();
   });
 
-  test('shows resources view on /resources', () => {
-    const history = createMemoryHistory({
-      initialEntries: ['/resources'],
-    });
-
-    const wrapper = mount(
-      <Provider store={buildStore()}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const resourcesView = wrapper.find(MyResourcesListView);
-    expect(resourcesView).toExist();
-  });
-
   test('shows collections view on /collections', () => {
     const history = createMemoryHistory({
       initialEntries: ['/collections'],
@@ -111,7 +95,7 @@ describe('when authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(MyCollectionListView);
+    const collectionsView = wrapper.find(MyResourcesListView);
     expect(collectionsView).toExist();
   });
 
@@ -284,7 +268,7 @@ describe('when not authorised', () => {
       </Provider>,
     );
 
-    const collectionsView = wrapper.find(MyCollectionListView);
+    const collectionsView = wrapper.find(MyResourcesListView);
     expect(collectionsView).not.toExist();
   });
 

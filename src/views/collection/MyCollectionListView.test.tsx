@@ -10,7 +10,7 @@ import {
   PageableCollectionsFactory,
 } from '../../../test-support/factories';
 import { CollectionsStateValue } from '../../types/State';
-import MyCollectionListView from './MyCollectionListView';
+import { MyCollectionListView } from './MyCollectionListView';
 
 function render(collection: CollectionsStateValue) {
   const store = MockStoreFactory.sample({
@@ -40,6 +40,6 @@ test('displays an empty state when no collections', () => {
   );
 
   expect(wrapper.find(By.dataQa('no-collections'))).toHaveText(
-    'You have no collections, yet.',
+    "You don't have any saved resources, yet.",
   );
 });

@@ -14,9 +14,8 @@ import { AccountSettingsView } from '../account/AccountSettingsView';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
-import { CollectionDetailsView } from '../collection/CollectionDetailsView';
+import {CollectionDetailsView} from '../collection/CollectionDetailsView';
 import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
-import MyCollectionListView from '../collection/MyCollectionListView';
 import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
@@ -99,11 +98,6 @@ class BoclipsRouter extends Component<Props & StateProps> {
             />
             <PrivateRoute
               path="/collections"
-              component={MyCollectionListView}
-              exact={true}
-            />
-            <PrivateRoute
-              path="/resources"
               component={MyResourcesListView}
               exact={true}
             />

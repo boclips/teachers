@@ -24,6 +24,9 @@ export const links = {
     bookmarkedCollections: {
       href: `${prefix}/v1/collections?bookmarked=true`,
     },
+    mySavedCollections: {
+      href: `${prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
+    },
     myCollections: {
       href: `${prefix}/v1/collections?projection=list&owner=me`,
     },

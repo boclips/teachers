@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import State from '../../../../types/State';
+import State, { CollectionMap } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 
@@ -89,3 +89,54 @@ const onUpdateCollection = (
       updatedCollection.id
     ] = updatedCollection;
   });
+
+export const onCollectionUnbookmarked = (
+  state: State,
+  unbookmarkedCollection: VideoCollection,
+): State =>
+  produce(state, draftState => {
+    draftState.entities.collections.byId = updateCollections(
+      state.entities.collections,
+      unbookmarkedCollection,
+    );
+
+    const myCollections = draftState.collections.myCollections;
+    if (myCollections) {
+      const collections = myCollections.items || [];
+      collections.splice(
+        collections.findIndex(id => id === unbookmarkedCollection.id),
+        1,
+      );
+    }
+  });
+
+export const onCollectionBookmarked = (
+  state: State,
+  bookmarkedCollection: VideoCollection,
+): State =>
+  produce(state, draftState => {
+    draftState.entities.collections.byId = updateCollections(
+      state.entities.collections,
+      bookmarkedCollection,
+    );
+
+    const myCollections = draftState.collections.myCollections;
+    if (myCollections) {
+      myCollections.items = myCollections.items || [];
+      myCollections.items.push(bookmarkedCollection.id);
+    }
+  });
+
+const updateCollections = (
+  state: { byId: CollectionMap },
+  collection: VideoCollection,
+) => ({
+  ...state.byId,
+  [collection.id]: {
+    ...state.byId[collection.id],
+    ...{
+      updatedAt: collection.updatedAt,
+      links: collection.links,
+    },
+  },
+});

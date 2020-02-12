@@ -32,14 +32,12 @@ import { storeCollectionBeingViewedAction } from '../actions/storeCollectionBein
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import {
-  onCollectionBookmarked,
-  onCollectionUnbookmarked,
-} from './bookmarkCollectionsReducer';
-import {
   onAddVideoToMyCollectionAction,
   onMyCollectionEdited,
   onMyCollectionRemoved,
   onRemoveVideoFromMyCollectionAction,
+  onCollectionBookmarked,
+  onCollectionUnbookmarked,
 } from './myCollectionsReducer';
 import {
   onAppendPageableCollectionsAction,

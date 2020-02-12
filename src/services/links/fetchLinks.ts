@@ -40,6 +40,10 @@ export default function fetchLinks(prefix: string) {
           links.collection = new Link(body._links.collection);
         }
 
+        if (body._links.mySavedCollections) {
+          links.myResources = new Link(body._links.mySavedCollections);
+        }
+
         if (body._links.myCollections) {
           links.myCollections = new Link(body._links.myCollections);
         }
@@ -87,10 +91,6 @@ export default function fetchLinks(prefix: string) {
 
         if (body._links.validateShareCode) {
           links.validateShareCode = new Link(body._links.validateShareCode);
-        }
-
-        if (body._links.mySavedCollections) {
-          links.myResources = new Link(body._links.mySavedCollections);
         }
 
         return links;

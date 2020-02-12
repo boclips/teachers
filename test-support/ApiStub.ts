@@ -141,9 +141,17 @@ export default class ApiStub {
         `${this.prefix}/v1/collections?projection=list&owner=me`,
         collectionsList,
       );
+      MockFetchVerify.getOnce(
+        `${this.prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
+        collectionsList,
+      );
     } else {
       MockFetchVerify.get(
         `${this.prefix}/v1/collections?projection=list&owner=me`,
+        collectionsList,
+      );
+      MockFetchVerify.get(
+        `${this.prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
         collectionsList,
       );
     }

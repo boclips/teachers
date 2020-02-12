@@ -2,25 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
-import BookmarkedIconSVG from '../../../../resources/images/my-bookmarks.svg';
 import SettingsSVG from '../../../../resources/images/settings.svg';
 
 type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
-
-class BookmarkedCollectionsLink extends React.PureComponent<Props> {
-  public render = () => (
-    <Link
-      to={'/bookmarked-collections'}
-      data-qa="bookmarked-collections"
-      onClick={this.props.onClick}
-    >
-      <span className="icon-container">
-        <BookmarkedIconSVG aria-hidden="true" />
-      </span>
-      <span>Your bookmarks</span>
-    </Link>
-  );
-}
 
 class UserCollectionsLink extends React.PureComponent<Props> {
   public render = () => (
@@ -32,7 +16,7 @@ class UserCollectionsLink extends React.PureComponent<Props> {
       <span className="icon-container">
         <CollectionsIcon aria-hidden="true" />
       </span>
-      <span>Your collections</span>
+      <span>Your resources</span>
     </Link>
   );
 }
@@ -63,9 +47,4 @@ class LogoutLink extends React.PureComponent<Props> {
   );
 }
 
-export {
-  AccountSettingsLink,
-  BookmarkedCollectionsLink,
-  UserCollectionsLink,
-  LogoutLink,
-};
+export { AccountSettingsLink, UserCollectionsLink, LogoutLink };
