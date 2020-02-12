@@ -13,14 +13,12 @@ test('parses all links', async () => {
       createNoSearchResultsEvent: { href: '/events/no-search-results' },
       collection: { href: '/collection/{id}', templated: true },
       createCollection: { href: '/collections' },
-      myCollections: { href: '/collections?owner=123' },
       publicCollections: { href: '/collections?list=yes&public=true' },
-      bookmarkedCollections: { href: '/collections?bookmarked=true' },
       subjects: { href: '/subjects' },
       countries: { href: '/countries' },
       tags: { href: '/tags' },
       disciplines: { href: '/disciplines' },
-      mySavedCollections: { href: '/collections?projection=list&page=0&size=30&owner=123&bookmarked=true&sort_by=TITLE'}
+      myCollections: { href: '/collections?projection=list&page=0&size=30&owner=123&bookmarked=true&sort_by=TITLE'}
     },
   });
 
@@ -33,13 +31,9 @@ test('parses all links', async () => {
       href: '/events/no-search-results',
     }),
     collection: new Link({ href: '/collection/{id}', templated: true }),
-    myCollections: new Link({ href: '/collections?owner=123' }),
     createCollection: new Link({ href: '/collections' }),
     publicCollections: new Link({
       href: '/collections?list=yes&public=true',
-    }),
-    bookmarkedCollections: new Link({
-      href: '/collections?bookmarked=true',
     }),
     subjects: new Link({
       href: '/subjects',
@@ -53,7 +47,7 @@ test('parses all links', async () => {
     disciplines: new Link({
       href: '/disciplines',
     }),
-    myResources: new Link({href: '/collections?projection=list&page=0&size=30&owner=123&bookmarked=true&sort_by=TITLE'})
+    myCollections: new Link({href: '/collections?projection=list&page=0&size=30&owner=123&bookmarked=true&sort_by=TITLE'})
   };
 
   expect(links).toEqual(expectedLinks);

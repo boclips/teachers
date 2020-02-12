@@ -105,10 +105,8 @@ export interface CollectionsStateValue {
   loading: boolean;
   updating: boolean;
   myCollections: Pageable<string>;
-  myResources?: Pageable<string>;
   publicCollections: Pageable<string>;
   discoverCollections: Pageable<string>;
-  bookmarkedCollections: Pageable<string>;
   collectionIdBeingViewed?: string;
 }
 

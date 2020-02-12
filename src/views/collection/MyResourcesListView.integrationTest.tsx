@@ -46,7 +46,7 @@ describe('MyResourcesListView', () => {
           },
         }),
         collections: CollectionsFactory.sample({
-          myResources: { items: [collection.id], links: {} },
+          myCollections: { items: [collection.id], links: {} },
         }),
       },
     });
@@ -83,7 +83,7 @@ describe('MyResourcesListView', () => {
           },
         }),
         collections: CollectionsFactory.sample({
-          myResources: {
+          myCollections: {
             items: [myCollection.id, bookmarkedCollection.id],
             links: {},
           },
