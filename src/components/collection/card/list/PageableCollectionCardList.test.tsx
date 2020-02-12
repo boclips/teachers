@@ -24,21 +24,21 @@ describe('some collection', () => {
           title={'blah'}
           maxNumberOfCollections={1}
           description=""
-          collectionKey="bookmarkedCollections"
+          collectionKey="myCollections"
         />
       </Provider>,
     );
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      fetchPageableCollectionsAction({ key: 'bookmarkedCollections' }),
+      fetchPageableCollectionsAction({ key: 'myCollections' }),
     );
   });
 
   test('does not fetch a collection if component has some collections when mounted', () => {
     const store = MockStoreFactory.sample({
       collections: CollectionsFactory.sample({
-        bookmarkedCollections: PageableCollectionsFactory.sample({
+        myCollections: PageableCollectionsFactory.sample({
           items: [VideoCollectionFactory.sample().id],
         }),
       }),
@@ -51,7 +51,7 @@ describe('some collection', () => {
             title={'blah'}
             maxNumberOfCollections={1}
             description=""
-            collectionKey="bookmarkedCollections"
+            collectionKey="myCollections"
           />
         </MemoryRouter>
       </Provider>,
@@ -63,7 +63,7 @@ describe('some collection', () => {
   test('renders empty component if no collections in pageable resource', () => {
     const store = MockStoreFactory.sample({
       collections: CollectionsFactory.sample({
-        bookmarkedCollections: PageableCollectionsFactory.sample({
+        myCollections: PageableCollectionsFactory.sample({
           items: [],
         }),
       }),
@@ -75,7 +75,7 @@ describe('some collection', () => {
           title={'blah'}
           maxNumberOfCollections={1}
           description=""
-          collectionKey="bookmarkedCollections"
+          collectionKey="myCollections"
           renderIfEmptyCollection={<div data-qa="test">Hello</div>}
         />
       </Provider>,

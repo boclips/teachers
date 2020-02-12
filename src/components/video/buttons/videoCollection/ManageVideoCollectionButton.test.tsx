@@ -192,7 +192,6 @@ const mountWith = (
       }),
       discoverCollections: undefined,
       publicCollections: undefined,
-      bookmarkedCollections: undefined,
       loading,
       updating,
     },

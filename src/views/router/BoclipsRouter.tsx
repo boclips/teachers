@@ -13,8 +13,7 @@ import { RouterState } from '../../types/State';
 import { AccountSettingsView } from '../account/AccountSettingsView';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
-import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
-import {CollectionDetailsView} from '../collection/CollectionDetailsView';
+import { CollectionDetailsView } from '../collection/CollectionDetailsView';
 import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
@@ -104,11 +103,6 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <PrivateRoute
               path="/discover-collections"
               component={discoverCollectionsView}
-              exact={true}
-            />
-            <PrivateRoute
-              path="/bookmarked-collections"
-              component={BookmarkedCollectionListView}
               exact={true}
             />
             <PrivateRoute

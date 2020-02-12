@@ -28,8 +28,6 @@ export const appendPageableCollectionsAction = (
   request: AppendCollectionRequest,
 ) => {
   switch (request.key) {
-    case 'bookmarkedCollections':
-      return appendBookmarkedCollectionsAction(request);
     case 'publicCollections':
       return appendPublicCollectionsAction(request);
     case 'myCollections':

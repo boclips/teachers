@@ -66,44 +66,6 @@ test('can store a collection', () => {
 });
 
 describe('appending pageable collections to different keys', () => {
-  test('appending bookmarked collections', () => {
-    const stateBefore: State = MockStoreFactory.sampleState({
-      collections: {
-        updating: false,
-        loading: false,
-        myCollections: undefined,
-        publicCollections: undefined,
-        discoverCollections: undefined,
-        bookmarkedCollections: PageableCollectionsFactory.sample(),
-      },
-    });
-
-    const nextCollectionLink = new Link({
-      href: 'next-arrow.svg',
-      templated: false,
-    });
-
-    const action = appendPageableCollectionsAction({
-      collections: {
-        items: [VideoCollectionFactory.sample({ id: '1' })],
-        links: {
-          next: nextCollectionLink,
-        },
-      },
-      key: 'bookmarkedCollections',
-    });
-
-    const stateAfter = testReducer(stateBefore, action);
-
-    expect(stateAfter.entities.collections.byId['1']).not.toBeUndefined();
-    expect(stateAfter.collections.bookmarkedCollections.items).toContainEqual(
-      '1',
-    );
-    expect(stateAfter.collections.bookmarkedCollections.links.next).toEqual(
-      nextCollectionLink,
-    );
-  });
-
   test('appending public collections', () => {
     const stateBefore: State = MockStoreFactory.sampleState({
       collections: {
@@ -112,7 +74,6 @@ describe('appending pageable collections to different keys', () => {
         myCollections: undefined,
         discoverCollections: undefined,
         publicCollections: PageableCollectionsFactory.sample(),
-        bookmarkedCollections: undefined,
       },
     });
 
@@ -146,7 +107,6 @@ describe('appending pageable collections to different keys', () => {
         myCollections: undefined,
         discoverCollections: PageableCollectionsFactory.sample(),
         publicCollections: undefined,
-        bookmarkedCollections: undefined,
       },
     });
 
@@ -180,7 +140,6 @@ describe('appending pageable collections to different keys', () => {
         myCollections: PageableCollectionsFactory.sample(),
         discoverCollections: undefined,
         publicCollections: undefined,
-        bookmarkedCollections: undefined,
       },
     });
 

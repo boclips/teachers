@@ -21,9 +21,6 @@ export const links = {
     publicCollections: {
       href: `${prefix}/v1/collections?public=true`,
     },
-    bookmarkedCollections: {
-      href: `${prefix}/v1/collections?bookmarked=true`,
-    },
     mySavedCollections: {
       href: `${prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
     },

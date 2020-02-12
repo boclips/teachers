@@ -2,7 +2,7 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
-import PublicCollectionsGrid from '../../components/collection/grid/public/PublicCollectionsGrid';
+import PublicCollectionsGrid from '../../components/collection/grid/PublicCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';

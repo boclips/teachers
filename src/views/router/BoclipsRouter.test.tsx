@@ -10,7 +10,6 @@ import AccountSettings from '../../components/account/accountSettings/AccountSet
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
-import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
 import { CollectionDetailsView } from '../collection/CollectionDetailsView';
 import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
 import HomeView from '../home/HomeView';
@@ -133,21 +132,6 @@ describe('when authorised', () => {
     expect(collectionsView).toExist();
     expect(collectionsView).toHaveProp('subjectIds', ['maths', 'myths']);
     expect(collectionsView).toHaveProp('disciplineId', 'stuff');
-  });
-
-  test('shows bookmarked collections view on /bookmarked-collections', () => {
-    const history = createMemoryHistory({
-      initialEntries: ['/bookmarked-collections'],
-    });
-
-    const wrapper = mount(
-      <Provider store={buildStore()}>
-        <BoclipsRouter history={history} />
-      </Provider>,
-    );
-
-    const collectionsView = wrapper.find(BookmarkedCollectionListView);
-    expect(collectionsView).toExist();
   });
 
   test('shows new account form on /onboarding', () => {

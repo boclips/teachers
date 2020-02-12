@@ -108,7 +108,6 @@ export interface CollectionsStateValue {
   myResources?: Pageable<string>;
   publicCollections: Pageable<string>;
   discoverCollections: Pageable<string>;
-  bookmarkedCollections: Pageable<string>;
   collectionIdBeingViewed?: string;
 }
 

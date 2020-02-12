@@ -50,7 +50,6 @@ export const initialCollectionsState: CollectionsStateValue = {
   myCollections: undefined,
   publicCollections: undefined,
   discoverCollections: undefined,
-  bookmarkedCollections: undefined,
   collectionIdBeingViewed: undefined,
   loading: true,
   updating: false,

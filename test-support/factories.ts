@@ -206,9 +206,6 @@ export class LinksFactory {
       publicCollections:
         arg.publicCollections ||
         new Link({ href: `${prefix}/collections?public` }),
-      bookmarkedCollections:
-        arg.bookmarkedCollections ||
-        new Link({ href: `${prefix}/collections?bookmarked` }),
       collection:
         arg.collection || new Link({ href: `${prefix}/collections/xxx` }),
       createAccount: arg.createAccount || new Link({ href: `${prefix}/users` }),
@@ -327,7 +324,7 @@ export class RouterFactory {
     return Object.freeze({
       location: {
         pathname: '',
-        search: `?q=hsgsfi`,
+        search: `?q=hi`,
         hash: '',
         state: null,
       },
@@ -352,11 +349,6 @@ export class CollectionsFactory {
         links: {},
       },
       discoverCollections: {
-        items: [],
-        links: {},
-      },
-
-      bookmarkedCollections: {
         items: [],
         links: {},
       },
@@ -556,9 +548,6 @@ export class MockStoreFactory {
     const collections = state.collections || CollectionsFactory.sample();
 
     const allCollections = [
-      ...(collections.bookmarkedCollections
-        ? collections.bookmarkedCollections.items
-        : []),
       ...(collections.discoverCollections
         ? collections.discoverCollections.items
         : []),
