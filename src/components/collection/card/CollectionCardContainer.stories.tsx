@@ -191,6 +191,13 @@ storiesOf('CollectionCardContainer', module)
       <CollectionCardContainer grid={true} collection={myCollection} />{' '}
     </div>
   ))
+
+  .add('Grid Card which is bookmarked', () => (
+    <div style={{ maxWidth: '400px' }}>
+      <CollectionCardContainer grid={true} collection={bookmarkedCollection} />{' '}
+    </div>
+  ))
+
   .add('Grid Card with no description', () => (
     <div style={{ maxWidth: '400px' }}>
       <CollectionCardContainer

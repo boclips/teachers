@@ -109,19 +109,18 @@ export const CollectionCard = withMediaBreakPoint(
               <ButtonMenu buttons={filteredButtons} />
             </StopClickPropagation>
           )}
-          {props.collection.isMine && !isSmallCard && (
-            <span className={'collection-card__owner-label'}>
+        </section>
+        <section className="collection-card__subtitle">
+          {props.collection.isMine && (
+            <span className={classnames('collection-card__owner-label', {'collection-card__owner-label--left': props.grid})}>
               <MyCollectionSVG /> Your collection
             </span>
           )}
-        </section>
-        <section className="collection-card__subtitle">
           <span>
             <span data-qa="collection-number-of-videos">
               {props.collection.videoIds.length}
             </span>{' '}
             videos
-          </span>
           {props.collection.attachments &&
             props.collection.attachments.length > 0 && (
               <span className="collection-card__lesson-plan">
@@ -129,6 +128,7 @@ export const CollectionCard = withMediaBreakPoint(
                 + <LessonPlanSVG /> Lesson Plan
               </span>
             )}
+          </span>
         </section>
         <div className="collection-card__detail-row">
           <section className="collection-card__column-preview">

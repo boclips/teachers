@@ -28,6 +28,8 @@
     margin: 0 0 7px 0;
     font-weight: 700;
     color: @shade-6;
+    display: flex;
+    justify-content: space-between;
   }
 
   .tags-container {
@@ -58,19 +60,35 @@
     font-weight: bold;
     line-height: 21px;
     position: absolute;
-    top: 0;
-    right: 0;
     height: 40px;
     width: 154px;
     border-radius: 0 8px 0 8px;
     align-content: space-between;
     text-align: center;
     padding-top: 8px;
-    box-shadow: -2px 2px 2px 0 rgba(100,113,169,0.5);
+    box-shadow: -2px 2px 2px 0 #6471a9;
+    top: 0;
+    right: 0;
 
     svg {
       path {
         fill: @shade-6;
+      }
+    }
+    &--left {
+      position: relative;
+      //left:0;
+      display: inline-block;
+      width: 142px;
+      height: 28px;
+      padding-top: 2px;
+      margin-left: -16px;
+      border-radius: 0 8px 8px 0;
+      box-shadow: 2px 2px 2px 0 #6471a9;
+      padding-left: 8px;
+      svg {
+        height: 20px;
+        width: 20px;
       }
     }
   }
