@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import RemoveBookmarkSVG from '../../../../../resources/images/remove-video.svg';
-import BookmarkFilledSVG from '../../../../../resources/images/unbookmarked.svg';
+import SaveBookmarkSVG from '../../../../../resources/images/save.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { A11yButton } from '../../../common/a11y/A11yButton';
@@ -40,9 +40,10 @@ export class BookmarkCollectionButtonInner extends PureComponent<
           >
             <React.Fragment>
               <Icon
-                component={BookmarkFilledSVG}
+                component={SaveBookmarkSVG}
                 aria-label="Bookmark a collection"
                 title="Button to bookmark a collection"
+                className="bookmark-button__icon"
               />
               <span>Bookmark</span>
             </React.Fragment>
@@ -61,7 +62,7 @@ export class BookmarkCollectionButtonInner extends PureComponent<
                 component={RemoveBookmarkSVG}
                 aria-label="Remove collection bookmark"
                 title="Button to remove the collection bookmark"
-                className="bookmark-button__remove-icon"
+                className="bookmark-button__icon"
               />
               <span>Remove</span>
             </React.Fragment>

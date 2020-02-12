@@ -2,8 +2,8 @@ import { storiesOf } from '@storybook/react';
 import React from 'react';
 
 import { Button, Icon } from 'antd';
-import BookmarkEmptySVG from '../../../../resources/images/bookmarked.svg';
-import BookmarkFilledSVG from '../../../../resources/images/unbookmarked.svg';
+import BookmarkEmptySVG from '../../../../resources/images/save.svg';
+import BookmarkFilledSVG from '../../../../resources/images/remove-video.svg';
 import ShareSVG from '../../../../resources/images/share.svg';
 import { ButtonRow } from './ButtonRow';
 import { ButtonMenu } from './ButtonMenu';
