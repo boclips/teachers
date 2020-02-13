@@ -19,7 +19,9 @@
     "lint:eslint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "lint:prettier": "prettier --config .prettierrc --check \"**/*.{ts,tsx}\"",
     "lint:prettier:fix": "prettier --config .prettierrc --write \"**/*.{ts,tsx}\"",
-    "storybook": "start-storybook -s ./ --port 9090"
+    "storybook:build": "build-storybook -s ./ --port 9090",
+    "storybook": "start-storybook -s ./ --port 9090",
+    "snapshot": "build-storybook && percy-storybook --widths=320,1280"
   },
   "repository": {
     "type": "git",
@@ -40,6 +42,7 @@
   },
   "homepage": "https://github.com/knowledgemotion/teachers#readme",
   "devDependencies": {
+    "@percy/storybook": "^3.2.0",
     "@storybook/addon-actions": "^5.3.13",
     "@storybook/addon-console": "^1.2.1",
     "@storybook/addon-viewport": "^5.3.13",

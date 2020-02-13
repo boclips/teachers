@@ -1,4 +1,4 @@
-import { storiesOf } from '@storybook/react';
+import {storiesOf} from '@storybook/react';
 import React from 'react';
 import {
   AttachmentFactory,
@@ -8,18 +8,18 @@ import {
   VideoFactory,
   VideoIdFactory,
 } from '../../../../test-support/factories';
-import { AgeRange } from '../../../types/AgeRange';
+import {AgeRange} from '../../../types/AgeRange';
 import {
   storyWithAuthentication,
   storyWithProvider,
   storyWithRouter,
 } from '../../../utils/index.stories';
-import { Link } from '../../../types/Link';
-import { VideoCollection } from '../../../types/VideoCollection';
+import {Link} from '../../../types/Link';
+import {VideoCollection} from '../../../types/VideoCollection';
 import CollectionCardContainer from './CollectionCardContainer';
-import { CollectionCardSkeleton } from './CollectionCard';
+import {CollectionCardSkeleton} from './CollectionCard';
 
-const subject = SubjectFactory.sample({ name: 'My Subject' });
+const subject = SubjectFactory.sample({name: 'My Subject'});
 
 const videos = [
   VideoFactory.sample({
@@ -58,10 +58,10 @@ const bookmarkableCollection = VideoCollectionFactory.sample({
   updatedAt: '2018-12-12T12:12:12',
   isMine: false,
   isPublic: true,
-  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  videoIds: videos.map(video => VideoIdFactory.sample({value: video.id})),
   links: {
-    self: new Link({ href: '' }),
-    bookmark: new Link({ href: '' }),
+    self: new Link({href: ''}),
+    bookmark: new Link({href: ''}),
   },
 });
 
@@ -75,12 +75,12 @@ const myCollection = VideoCollectionFactory.sample({
   updatedAt: '2018-12-12T12:12:12',
   isMine: true,
   isPublic: true,
-  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  videoIds: videos.map(video => VideoIdFactory.sample({value: video.id})),
   links: {
-    self: new Link({ href: '' }),
-    edit: new Link({ href: '' }),
-    remove: new Link({ href: '' }),
-    bookmark: new Link({ href: '' }),
+    self: new Link({href: ''}),
+    edit: new Link({href: ''}),
+    remove: new Link({href: ''}),
+    bookmark: new Link({href: ''}),
   },
 });
 
@@ -94,10 +94,10 @@ const bookmarkedCollection = VideoCollectionFactory.sample({
   updatedAt: '2018-12-12T12:12:12',
   isMine: false,
   isPublic: true,
-  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  videoIds: videos.map(video => VideoIdFactory.sample({value: video.id})),
   links: {
-    self: new Link({ href: '' }),
-    unbookmark: new Link({ href: '' }),
+    self: new Link({href: ''}),
+    unbookmark: new Link({href: ''}),
   },
 });
 
@@ -145,13 +145,19 @@ storiesOf('CollectionCardContainer', module)
   )
   .addDecorator(storyWithRouter())
   .add('Card with collection which is mine', () => (
-    <CollectionCardContainer grid={false} collection={myCollection} />
-  ))
+      <CollectionCardContainer grid={false} collection={myCollection}/>),
+    {
+      viewport: undefined,
+      percy: {
+        skip: false
+      }
+    }
+  )
   .add('Card with collection which is not bookmarked', () => (
-    <CollectionCardContainer grid={false} collection={bookmarkableCollection} />
+    <CollectionCardContainer grid={false} collection={bookmarkableCollection}/>
   ))
   .add('Card with collection which is bookmarked', () => (
-    <CollectionCardContainer grid={false} collection={bookmarkedCollection} />
+    <CollectionCardContainer grid={false} collection={bookmarkedCollection}/>
   ))
   .add('Card with Lesson Plan', () => (
     <CollectionCardContainer
@@ -160,7 +166,7 @@ storiesOf('CollectionCardContainer', module)
     />
   ))
   .add('Card without tags', () => (
-    <CollectionCardContainer grid={false} collection={collectionWithoutTags} />
+    <CollectionCardContainer grid={false} collection={collectionWithoutTags}/>
   ))
   .add('Card without description', () => (
     <CollectionCardContainer
@@ -175,7 +181,7 @@ storiesOf('CollectionCardContainer', module)
     />
   ))
   .add('Grid Card', () => (
-    <div style={{ maxWidth: '400px' }}>
+    <div style={{maxWidth: '400px'}}>
       <CollectionCardContainer
         grid={true}
         collection={bookmarkableCollection}
@@ -183,21 +189,22 @@ storiesOf('CollectionCardContainer', module)
     </div>
   ))
   .add('Grid Card with no tags', () => (
-    <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid={true} collection={collectionWithoutTags} />{' '}
+    <div style={{maxWidth: '400px'}}>
+      <CollectionCardContainer grid={true}
+                               collection={collectionWithoutTags}/>{' '}
     </div>
   ))
   .add('Grid Card which is mine', () => (
-    <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid={true} collection={myCollection} />{' '}
+    <div style={{maxWidth: '400px'}}>
+      <CollectionCardContainer grid={true} collection={myCollection}/>{' '}
     </div>
   ))
   .add('Grid Card with no description', () => (
-    <div style={{ maxWidth: '400px' }}>
+    <div style={{maxWidth: '400px'}}>
       <CollectionCardContainer
         grid={true}
         collection={collectionWithoutDescription}
       />{' '}
     </div>
   ))
-  .add('Skeleton', () => <CollectionCardSkeleton />);
+  .add('Skeleton', () => <CollectionCardSkeleton/>);

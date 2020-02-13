@@ -1,7 +1,7 @@
-import { configure } from '@storybook/react';
+import {configure} from '@storybook/react';
 import '@storybook/addon-console';
-import { addParameters } from '@storybook/react';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport/dist/defaults';
+import {addParameters} from '@storybook/react';
+import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport/dist/defaults';
 
 import '../src/index.less';
 
@@ -13,4 +13,11 @@ function loadStories() {
 
 configure(loadStories, module);
 
-addParameters({ viewport: { viewports: INITIAL_VIEWPORTS } });
+addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS
+  },
+  percy: {
+    skip: true
+  }
+});

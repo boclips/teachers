@@ -36,6 +36,8 @@ export class AppConstants {
      * When running locally, we should return the environment that has been
      * configured in .env.dev rather than the hostname.
      */
+    // TODO(AO): Make this much smarter.
+    return 'TESTING';
 
     const domain = process.env.ENVIRONMENT_DOMAIN
       ? '.' + process.env.ENVIRONMENT_DOMAIN
