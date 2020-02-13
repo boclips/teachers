@@ -1,3 +1,5 @@
+import { createMemoryHistory } from 'history';
+import React from 'react';
 import {
   collectionResponse,
   video177Slim,
@@ -5,6 +7,15 @@ import {
 import ApiStub from '../../../test-support/ApiStub';
 import eventually from '../../../test-support/eventually';
 import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
+import { createBoclipsStore } from '../../app/redux/store';
+import {
+  LinksStateValueFactory,
+  MockStoreFactory,
+  UserProfileFactory,
+  VideoCollectionFactory,
+} from '../../../test-support/factories';
+import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
+import { CollectionDetailsView } from './CollectionDetailsView';
 
 describe('when video collection', () => {
   test('displays collection basic details', async () => {
@@ -46,6 +57,40 @@ describe('when video collection', () => {
       badgeAlt: 'Ad free',
       subjects: ['Maths', 'Physics'],
       playerVideoId: '177',
+    });
+  });
+
+  test(`adds the referer id to the url`, async () => {
+    const existingHistory = createMemoryHistory({
+      initialEntries: ['/collection/123'],
+    });
+
+    const collection = VideoCollectionFactory.sample();
+
+    const store = createBoclipsStore(
+      {
+        ...MockStoreFactory.sampleState({
+          links: LinksStateValueFactory.sample(
+            {},
+            'https://api.example.com/v1',
+          ),
+        }),
+        authentication: {
+          status: 'authenticated',
+        },
+        user: UserProfileFactory.sample({ id: 'user-123' }),
+      },
+      existingHistory,
+    );
+
+    const { history } = renderWithCreatedStore(
+      <CollectionDetailsView collectionId={collection.id} />,
+      store,
+      existingHistory,
+    );
+
+    await eventually(() => {
+      expect(history.location.search).toContain('referer=user-123');
     });
   });
 });

@@ -116,32 +116,6 @@ describe('VideoDetailsView', () => {
 
       expect(queryByText('Share')).not.toBeInTheDocument();
     });
-
-    it('does not update the "referer" query param if it is set', async () => {
-      const { findByText, history } = createViewWrapper(
-        ['/videos/123?referer=user-id-1'],
-        unauthenticatedState,
-      );
-
-      await findByText(video.title);
-
-      await eventually(() => {
-        expect(history.location.search).toContain('referer=user-id-1');
-      });
-    });
-
-    it('adds an anonymous "referer" query param if it was missing', async () => {
-      const { findByText, history } = createViewWrapper(
-        ['/videos/123'],
-        unauthenticatedState,
-      );
-
-      await findByText(video.title);
-
-      await eventually(() => {
-        expect(history.location.search).toContain('referer=anonymous');
-      });
-    });
   });
 
   describe('When authenticated', () => {
@@ -172,21 +146,6 @@ describe('VideoDetailsView', () => {
     it('sets the "referer" query param', async () => {
       const { findByText, history } = createViewWrapper(
         ['/videos/123'],
-        authenticatedState,
-      );
-
-      await findByText(video.title);
-
-      await eventually(() => {
-        expect(history.location.search).toContain(
-          `referer=${authenticatedState.user.id}`,
-        );
-      });
-    });
-
-    it('sets overwrites the "referer" query param if it is already set', async () => {
-      const { findByText, history } = createViewWrapper(
-        ['/videos/123?referer=user-id-1'],
         authenticatedState,
       );
 

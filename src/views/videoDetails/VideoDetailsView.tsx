@@ -9,12 +9,14 @@ import { getVideoById } from '../../components/video/redux/reducers/videoReducer
 import State from '../../types/State';
 import { ShareCodeDialog } from '../../components/video/ShareCodeDialog/ShareCodeDialog';
 import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
+import { useRefererIdInjector } from '../../hooks/useRefererIdInjector';
 
 interface Props {
   videoId: string;
 }
 
 export const VideoDetailsView = (props: Props) => {
+  useRefererIdInjector();
   const dispatch = useDispatch();
   const location = useLocation();
 

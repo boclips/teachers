@@ -11,7 +11,7 @@ import DisciplineCardList from '../../components/disciplines/DisciplineCardList'
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { BookmarkedCollectionListView } from '../collection/BookmarkedCollectionListView';
-import CollectionDetailsView from '../collection/CollectionDetailsView';
+import { CollectionDetailsView } from '../collection/CollectionDetailsView';
 import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
 import MyCollectionListView from '../collection/MyCollectionListView';
 import HomeView from '../home/HomeView';
