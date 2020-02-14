@@ -66,7 +66,7 @@
     align-content: space-between;
     text-align: center;
     padding-top: 8px;
-    box-shadow: -2px 2px 2px 0 #6471a9;
+    box-shadow: -2px 2px 2px 0 @shade-6;
     top: 0;
     right: 0;
 
@@ -75,22 +75,7 @@
         fill: @shade-6;
       }
     }
-    &--left {
-      position: relative;
-      //left:0;
-      display: inline-block;
-      width: 142px;
-      height: 28px;
-      padding-top: 2px;
-      margin-left: -16px;
-      border-radius: 0 8px 8px 0;
-      box-shadow: 2px 2px 2px 0 #6471a9;
-      padding-left: 8px;
-      svg {
-        height: 20px;
-        width: 20px;
-      }
-    }
+
   }
 
   &__description-preview {
@@ -190,6 +175,22 @@
 
     .tags-container {
       margin: 0;
+    }
+
+    .collection-card__owner-label {
+      position: relative;
+      display: inline-block;
+      width: 142px;
+      height: 28px;
+      padding-top: 2px;
+      margin-left: -16px;
+      border-radius: 0 8px 8px 0;
+      box-shadow: 2px 2px 2px 0 @shade-6;
+      padding-left: 8px;
+      svg {
+        height: 20px;
+        width: 20px;
+      }
     }
   }
 

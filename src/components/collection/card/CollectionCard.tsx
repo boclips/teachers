@@ -100,7 +100,6 @@ export const CollectionCard = withMediaBreakPoint(
       >
         <section className="collection-card__title">
           <CollectionTitle collection={props.collection} />
-
           {isSmallCard && (
             <StopClickPropagation
               wrapper="div"
@@ -112,7 +111,7 @@ export const CollectionCard = withMediaBreakPoint(
         </section>
         <section className="collection-card__subtitle">
           {props.collection.isMine && (
-            <span className={classnames('collection-card__owner-label', {'collection-card__owner-label--left': props.grid})}>
+            <span className="collection-card__owner-label">
               <MyCollectionSVG /> Your collection
             </span>
           )}
@@ -121,13 +120,13 @@ export const CollectionCard = withMediaBreakPoint(
               {props.collection.videoIds.length}
             </span>{' '}
             videos
-          {props.collection.attachments &&
-            props.collection.attachments.length > 0 && (
-              <span className="collection-card__lesson-plan">
-                {' '}
-                + <LessonPlanSVG /> Lesson Plan
-              </span>
-            )}
+            {props.collection.attachments &&
+              props.collection.attachments.length > 0 && (
+                <span className="collection-card__lesson-plan">
+                  {' '}
+                  + <LessonPlanSVG /> Lesson Plan
+                </span>
+              )}
           </span>
         </section>
         <div className="collection-card__detail-row">
