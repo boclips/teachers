@@ -5,9 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
 import { Constants } from '../../app/AppConstants';
-import PrivateRoute, {
-  PrivateRouteComponentParams,
-} from '../../components/login/PrivateRoute';
+import PrivateRoute from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { RouterState } from '../../types/State';
 import { AccountSettingsView } from '../account/AccountSettingsView';
@@ -31,12 +29,8 @@ const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
 );
 
 const collectionView = (
-  props: PrivateRouteComponentParams<{ collectionId: string }>,
-) => (
-  <CollectionDetailsView
-    collectionId={props.computedMatch.params.collectionId}
-  />
-);
+  props: RouteComponentProps<{ collectionId: string }>,
+) => <CollectionDetailsView collectionId={props.match.params.collectionId} />;
 
 const discoverCollectionsView = (props: RouteComponentProps) => {
   const queryParams = queryString.parse(props.location.search);
@@ -95,19 +89,22 @@ class BoclipsRouter extends Component<Props & StateProps> {
               component={OnboardingView}
               exact={true}
             />
-            <PrivateRoute
-              path="/collections"
-              component={MyResourcesListView}
-              exact={true}
-            />
+            <Route path="/collections">
+              <Switch>
+                <Route
+                  path="/collections/:collectionId"
+                  component={collectionView}
+                />
+                <PrivateRoute
+                  path="/collections"
+                  component={MyResourcesListView}
+                />
+              </Switch>
+            </Route>
             <PrivateRoute
               path="/discover-collections"
               component={discoverCollectionsView}
               exact={true}
-            />
-            <PrivateRoute
-              path="/collections/:collectionId"
-              component={collectionView}
             />
             <PrivateRoute
               path="/our-subjects"

@@ -11,6 +11,8 @@ import { fetchVideosByIdsAction } from '../../video/redux/actions/fetchVideosByI
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 import { getCollectionById } from '../redux/reducers/collectionsReducer';
+import { CollectionShareCodeDialog } from '../../video/ShareCodeDialog/CollectionShareCodeDialog';
+import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionHeader } from './header/CollectionHeader';
 
@@ -30,6 +32,7 @@ export const CollectionDetailsSkeleton = () => (
 
 export const CollectionDetails = (props: OwnProps) => {
   const dispatch = useDispatch();
+  const referer = useRefererIdInjector();
   const [requestedCollection, setRequestedCollection] = useState<string>(null);
   const collection = useSelector((state: State) =>
     getCollectionById(state, props.collectionId),
@@ -80,17 +83,25 @@ export const CollectionDetails = (props: OwnProps) => {
   ]);
 
   if (!collection) {
-    if (collectionsLoading) {
+    const promptForShareCode =
+      !collectionsLoading &&
+      requestedCollection === props.collectionId &&
+      referer &&
+      referer !== 'anonymous';
+
+    if (collectionsLoading || promptForShareCode) {
       return (
         <React.Fragment>
           <CollectionDetailsSkeleton />
+          {promptForShareCode && (
+            <CollectionShareCodeDialog collectionId={props.collectionId} />
+          )}
         </React.Fragment>
       );
     } else {
       return <CollectionDetailsNotFound />;
     }
   }
-
   return (
     <CollectionDetailsFull
       collection={collection}

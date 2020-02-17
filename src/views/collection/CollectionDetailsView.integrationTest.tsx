@@ -142,6 +142,29 @@ describe('CollectionDetailsView', () => {
       ).toBeInTheDocument();
     });
 
+    it('Shows skeleton and prompt for a share code when not loaded and referer set', async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=test-id'],
+      });
+
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            // TODO - use useLocation in component
+            router: { location: { search: '?referer=user1123' } } as any,
+          }),
+          history,
+        ),
+        history,
+      );
+
+      expect(
+        await wrapper.findByTestId('collection-skeleton'),
+      ).toBeInTheDocument();
+      expect(await wrapper.findByText('View collection')).toBeInTheDocument();
+    });
+
     it('Shows not found illustration when not found and no share code possible', async () => {
       const history = createMemoryHistory({
         initialEntries: ['/collections/none-collection'],
@@ -198,6 +221,24 @@ describe('CollectionDetailsView', () => {
         expect(collectionPage.getVideos()).toHaveLength(1);
         expect(collectionPage.isEditable()).toBeFalsy();
       });
+    });
+  });
+
+  describe(`when viewing collection using referer and shareCode`, () => {
+    test(`renders the CollectionShareCodeDialog`, async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/123?referer=test-123'],
+      });
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId={'123'} />,
+        createBoclipsStore(MockStoreFactory.sampleState(), history),
+        history,
+      );
+
+      expect(await wrapper.findByRole('dialog')).toBeInTheDocument();
+      expect(
+        await wrapper.findByText('Enter code to view collection'),
+      ).toBeInTheDocument();
     });
   });
 });
