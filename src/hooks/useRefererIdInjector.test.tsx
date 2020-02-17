@@ -14,8 +14,8 @@ import { useRefererIdInjector } from './useRefererIdInjector';
 describe(`withRefererId`, () => {
   const render = (initialHistory, initialState) => {
     const DivWithRefererId = () => {
-      useRefererIdInjector();
-      return <div>text</div>;
+      const oldRefererId = useRefererIdInjector();
+      return <div data-referer-id={oldRefererId}>text</div>;
     };
     const history = createMemoryHistory({
       initialEntries: initialHistory,
@@ -48,12 +48,13 @@ describe(`withRefererId`, () => {
         authenticatedState,
       );
 
-      await findByText('text');
+      const div = await findByText('text');
 
       await eventually(() => {
         expect(history.location.search).toContain(
           `referer=${authenticatedState.user.id}`,
         );
+        expect(div.getAttribute('data-referer-id')).toEqual(null);
       });
     });
 
@@ -63,12 +64,13 @@ describe(`withRefererId`, () => {
         authenticatedState,
       );
 
-      await findByText('text');
+      const div = await findByText('text');
 
       await eventually(() => {
         expect(history.location.search).toContain(
           `referer=${authenticatedState.user.id}`,
         );
+        expect(div.getAttribute('data-referer-id')).toEqual('user-id-1');
       });
     });
   });
@@ -86,10 +88,11 @@ describe(`withRefererId`, () => {
         unauthenticatedState,
       );
 
-      await findByText('text');
+      const div = await findByText('text');
 
       await eventually(() => {
         expect(history.location.search).toContain('referer=user-id-1');
+        expect(div.getAttribute('data-referer-id')).toEqual('user-id-1');
       });
     });
 
@@ -99,10 +102,11 @@ describe(`withRefererId`, () => {
         unauthenticatedState,
       );
 
-      await findByText('text');
+      const div = await findByText('text');
 
       await eventually(() => {
         expect(history.location.search).toContain('referer=anonymous');
+        expect(div.getAttribute('data-referer-id')).toEqual(null);
       });
     });
   });
