@@ -9,16 +9,19 @@ import { Links } from '../../../../types/Links';
 
 export function onFetchCollection(
   store: MiddlewareAPI<any, LinksState>,
-  collectionId: string,
+  { id, referer, shareCode },
 ) {
   const links: Links = store.getState().links.entries;
-  fetchCollection(links, collectionId)
+  fetchCollection(links, id, referer, shareCode)
     .then(collection => {
       store.dispatch(storeCollectionAction(collection));
       AnalyticsFactory.externalAnalytics().trackCollectionVisited(collection);
     })
     .catch(e => {
-      if (e && e.response && e.response.status === 404) {
+      if (
+        (e && e.response && e.response.status === 404) ||
+        e.response.status === 403
+      ) {
         store.dispatch(storeCollectionAction(null));
       } else {
         console.error(e);

@@ -17,7 +17,28 @@ test('dispatches a store action per successfully fetched collection', async () =
 
   fetchCollectionMock.mockReturnValue(Promise.resolve(collection));
 
-  store.dispatch(fetchCollectionAction('collection-id'));
+  store.dispatch(fetchCollectionAction({ id: 'collection-id' }));
+
+  await eventually(() => {
+    expect(store.getActions()).toContainEqual(
+      storeCollectionAction(collection),
+    );
+  });
+});
+
+test('dispatches a store action per successfully fetched collection by referer and shareCode', async () => {
+  const collection = VideoCollectionFactory.sample();
+  const store = mockStore({ links: { entries: [], loadingState: 'success' } });
+
+  fetchCollectionMock.mockReturnValue(Promise.resolve(collection));
+
+  store.dispatch(
+    fetchCollectionAction({
+      id: 'collection-id',
+      shareCode: 'abc',
+      referer: 'user-id',
+    }),
+  );
 
   await eventually(() => {
     expect(store.getActions()).toContainEqual(

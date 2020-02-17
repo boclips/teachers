@@ -1,5 +1,7 @@
 import { actionCreatorFactory } from './../../../../app/redux/actions';
 
-export const fetchCollectionAction = actionCreatorFactory<string>(
-  'FETCH_COLLECTION',
-);
+export const fetchCollectionAction = actionCreatorFactory<{
+  id: string;
+  referer?: string;
+  shareCode?: string;
+}>('FETCH_COLLECTION');

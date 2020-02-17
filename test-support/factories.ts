@@ -207,7 +207,8 @@ export class LinksFactory {
         arg.publicCollections ||
         new Link({ href: `${prefix}/collections?public` }),
       collection:
-        arg.collection || new Link({ href: `${prefix}/collections/xxx` }),
+        arg.collection ||
+        new Link({ href: `${prefix}/collections/{id}{?referer,shareCode}` }),
       createAccount: arg.createAccount || new Link({ href: `${prefix}/users` }),
       subjects: arg.subjects || new Link({ href: `${prefix}/subjects` }),
       tags: arg.tags || new Link({ href: `${prefix}/tags` }),
