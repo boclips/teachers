@@ -12,7 +12,7 @@ import {
   MockStoreFactory,
   RouterFactory,
 } from '../../../../test-support/factories';
-import { ShareCodeDialog } from './ShareCodeDialog';
+import { VideoShareCodeDialog } from './VideoShareCodeDialog';
 
 describe('ShareCodeDialog', () => {
   const links = LinksFactory.sample();
@@ -26,34 +26,35 @@ describe('ShareCodeDialog', () => {
       },
     }),
   });
+  describe('video ShareCodeDialog', () => {
+    it(`disables the watch video button while no shareCode is provided`, async () => {
+      const wrapper = render(
+        <Provider store={store}>
+          <VideoShareCodeDialog userId="test-id" />
+        </Provider>,
+      );
 
-  it(`disables the watch video button while no shareCode is provided`, async () => {
-    const wrapper = render(
-      <Provider store={store}>
-        <ShareCodeDialog userId="test-id" />
-      </Provider>,
-    );
+      const button = wrapper.getByText('Watch video').closest('button');
 
-    const button = wrapper.getByText('Watch video').closest('button');
+      expect(button).toBeInTheDocument();
 
-    expect(button).toBeInTheDocument();
+      expect(button.disabled).toEqual(true);
+    });
 
-    expect(button.disabled).toEqual(true);
-  });
+    it(`enables the watch video button when a shareCode is provided`, async () => {
+      const wrapper = render(
+        <Provider store={store}>
+          <VideoShareCodeDialog userId="test-id" />
+        </Provider>,
+      );
 
-  it(`enables the watch video button when a shareCode is provided`, async () => {
-    const wrapper = render(
-      <Provider store={store}>
-        <ShareCodeDialog userId="test-id" />
-      </Provider>,
-    );
+      const shareField = wrapper.getByPlaceholderText('Enter code');
+      await fireEvent.change(shareField, { target: { value: 'SHARECODE' } });
 
-    const shareField = wrapper.getByPlaceholderText('Enter code');
-    await fireEvent.change(shareField, { target: { value: 'SHARECODE' } });
+      const button = wrapper.getByText('Watch video').closest('button');
 
-    const button = wrapper.getByText('Watch video').closest('button');
-
-    expect(button.disabled).toEqual(false);
+      expect(button.disabled).toEqual(false);
+    });
   });
 
   describe('share code validation', () => {
@@ -87,7 +88,7 @@ describe('ShareCodeDialog', () => {
       it(message, async () => {
         const wrapper = render(
           <Provider store={store}>
-            <ShareCodeDialog userId="test-id" />
+            <VideoShareCodeDialog userId="test-id" />
           </Provider>,
         );
         const button = wrapper.getByText('Watch video').closest('button');

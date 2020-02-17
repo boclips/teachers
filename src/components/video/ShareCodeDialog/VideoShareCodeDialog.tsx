@@ -11,7 +11,7 @@ interface Props {
   userId: string;
 }
 
-export const ShareCodeDialog = React.memo((props: Props) => {
+export const VideoShareCodeDialog = React.memo((props: Props) => {
   const validationLink = useSelector(
     (state: State) => state.links.entries.validateShareCode,
   );
@@ -42,7 +42,7 @@ export const ShareCodeDialog = React.memo((props: Props) => {
       destroyOnClose={true}
       visible={visible}
       footer={null}
-      title="Enter code to watch video"
+      title={`Enter code to watch video`}
       width="360px"
       className={classnames('share-code-dialog', {
         'share-code-dialog--invalid': codeInvalid,

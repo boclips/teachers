@@ -5,7 +5,7 @@ import axios from 'axios';
 import { MockStoreFactory } from '../../../../test-support/factories';
 import { storyWithProvider } from '../../../utils/index.stories';
 import { Links } from '../../../types/Links';
-import { ShareCodeDialog } from './ShareCodeDialog';
+import { VideoShareCodeDialog } from './VideoShareCodeDialog';
 
 const store = MockStoreFactory.sample();
 
@@ -23,4 +23,4 @@ axiosMock
 
 storiesOf('ShareCodeDialog', module)
   .addDecorator(storyWithProvider(store))
-  .add('Default', () => <ShareCodeDialog userId="test-id" />);
+  .add('Default', () => <VideoShareCodeDialog userId="test-id" />);
