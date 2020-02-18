@@ -6,7 +6,8 @@ import FilterIconSVG from '../../../../resources/images/filter-icon.svg';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 import { Range } from '../../../../types/Range';
 import Bodal from '../../../common/Bodal';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../../common/higerOrderComponents/withMediaBreakPoint';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';

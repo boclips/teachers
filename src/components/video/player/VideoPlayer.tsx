@@ -8,7 +8,8 @@ import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import { Segment, Video } from '../../../types/Video';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
 

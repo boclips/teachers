@@ -1,7 +1,8 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
 import React from 'react';
 import MoreSVG from '../../../../resources/images/more.svg';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../../components/common/higerOrderComponents/withMediaBreakPoint';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';

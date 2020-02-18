@@ -4,7 +4,8 @@ import Layout from 'antd/lib/layout/layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';

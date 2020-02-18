@@ -9,7 +9,7 @@ interface State {
   width: Breakpoint;
 }
 
-const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
+export const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
   Component: React.ComponentType<P>,
 ) =>
   class WithMediaBreakPoint extends React.Component<
@@ -64,5 +64,3 @@ const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
       );
     }
   };
-
-export default withMediaBreakPoint;

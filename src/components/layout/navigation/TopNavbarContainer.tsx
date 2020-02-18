@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { UserState } from '../../../types/State';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
 import { TopNavbar } from './TopNavbar';

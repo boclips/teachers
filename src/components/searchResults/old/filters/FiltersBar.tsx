@@ -1,7 +1,8 @@
 import { Row } from 'antd';
 import React from 'react';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../../common/higerOrderComponents/withMediaBreakPoint';
 import AgeRangeFilterTag from '../../filters/AgeRangeFilterTag';

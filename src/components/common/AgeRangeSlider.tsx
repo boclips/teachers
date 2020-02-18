@@ -3,7 +3,8 @@ import React from 'react';
 import { AgeRange } from '../../types/AgeRange';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
 import { BoclipsSlider } from './BoclipsSlider';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from './higerOrderComponents/withMediaBreakPoint';
 

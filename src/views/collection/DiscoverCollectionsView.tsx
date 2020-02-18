@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import collectionsImg from '../../../resources/images/collections.png';
 import SubjectsSVG from '../../../resources/images/subjects.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';

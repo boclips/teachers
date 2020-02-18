@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';

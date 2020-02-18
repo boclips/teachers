@@ -15,7 +15,8 @@ import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import MyCollectionSVG from '../../../../resources/images/my-account.svg';
 import { EditCollectionButton } from '../buttons/EditCollectionButton';
-import withMediaBreakPoint, {
+import {
+  withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
