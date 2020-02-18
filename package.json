@@ -42,6 +42,7 @@
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.13",
     "@storybook/addon-console": "^1.2.1",
+    "@storybook/addon-knobs": "^5.3.13",
     "@storybook/addon-viewport": "^5.3.13",
     "@storybook/react": "^5.3.13",
     "@testing-library/dom": "^6.12.2",
