@@ -14,7 +14,6 @@ storiesOf('ShareModal', module)
   .add('In mobile view', () => (
     <ShareModal
       visible={true}
-      mobileView={true}
       handleClose={noOp}
       video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
     />
@@ -22,7 +21,6 @@ storiesOf('ShareModal', module)
   .add('In desktop view', () => (
     <ShareModal
       visible={true}
-      mobileView={false}
       handleClose={noOp}
       video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
     />

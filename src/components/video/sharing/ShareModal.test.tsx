@@ -11,7 +11,6 @@ describe('Share modal', () => {
     const video = VideoFactory.sample();
     const { getByText } = renderWithStore(
       <ShareModal
-        mobileView={false}
         video={video}
         handleClose={() => {}}
         visible={true}
@@ -35,7 +34,6 @@ describe('Share modal', () => {
     const video = VideoFactory.sample();
     const { getByText } = renderWithStore(
       <ShareModal
-        mobileView={false}
         video={video}
         handleClose={() => {}}
         visible={true}

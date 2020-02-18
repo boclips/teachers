@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useMediaBreakPoint } from '../../../hooks/useMediaBreakPoint';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import { Segment, Video } from '../../../types/Video';
 import Bodal from '../../common/Bodal';
@@ -10,7 +12,6 @@ import { ShareForm } from './ShareForm';
 import './ShareModal.less';
 
 interface Props {
-  mobileView: boolean;
   video: Video;
   handleClose: () => void;
   visible: boolean;
@@ -19,10 +20,12 @@ interface Props {
 export const ShareModal = React.memo<Props>(props => {
   const [segment, setSegment] = useState<Segment>(null);
   const user = useSelector((state: State) => state.user);
+  const width = useMediaBreakPoint();
+  const mobileView = width.width <= MediaBreakpoints.md.width;
 
   return (
     <Bodal
-      title={`Share ${props.mobileView ? 'video' : props.video.title}`}
+      title={`Share ${mobileView ? 'video' : props.video.title}`}
       visible={props.visible}
       onCancel={props.handleClose}
       footer={

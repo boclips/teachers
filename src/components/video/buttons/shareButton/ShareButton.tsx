@@ -9,7 +9,6 @@ import State from '../../../../types/State';
 
 interface Props {
   video: Video;
-  mobileView: boolean;
 }
 
 export const ShareButton = React.memo<Props>(props => {
@@ -29,7 +28,6 @@ export const ShareButton = React.memo<Props>(props => {
       <ShareModal
         video={props.video}
         handleClose={() => setVisible(false)}
-        mobileView={props.mobileView}
         visible={visible}
       />
     </React.Fragment>
