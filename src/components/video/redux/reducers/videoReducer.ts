@@ -1,11 +1,8 @@
 import produce from 'immer';
-import {
-  actionHandler,
-  ActionHandler,
-} from '../../../../app/redux/createReducer';
-import State, { VideoStateValue } from '../../../../types/State';
-import { Video } from '../../../../types/Video';
-import { organizeById } from '../../../../utils/entityMap';
+import { actionHandler, ActionHandler } from 'src/app/redux/createReducer';
+import State, { VideoStateValue } from 'src/types/State';
+import { Video } from 'src/types/Video';
+import { organizeById } from 'src/utils/entityMap';
 import { fetchVideoAction } from '../actions/fetchVideoAction';
 import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
 import { storeVideoAction } from '../actions/storeVideoAction';

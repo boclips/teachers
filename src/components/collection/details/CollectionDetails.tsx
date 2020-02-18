@@ -3,11 +3,11 @@ import React, { PureComponent } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import EmptyCollectionSVG from '../../../../resources/images/empty-collection.svg';
-import SadTeacherSVG from '../../../../resources/images/sad-teacher.svg';
-import { Links } from '../../../types/Links';
-import State, { VideoMap } from '../../../types/State';
-import { VideoCollection } from '../../../types/VideoCollection';
+import { VideoCollection } from 'src/types/VideoCollection';
+import State, { VideoMap } from 'src/types/State';
+import { Links } from 'src/types/Links';
+import SadTeacherSVG from 'resources/images/sad-teacher.svg';
+import EmptyCollectionSVG from 'resources/images/empty-collection.svg';
 import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
 import { CollectionVideoCardList } from '../../video/list/VideoCardList';
 import {

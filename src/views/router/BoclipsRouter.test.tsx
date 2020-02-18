@@ -2,10 +2,7 @@ import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
-import {
-  MockStoreFactory,
-  UserProfileFactory,
-} from '../../../test-support/factories';
+import { MockStoreFactory, UserProfileFactory } from 'test-support/factories';
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import CreateAccountView from '../account/CreateAccountView';

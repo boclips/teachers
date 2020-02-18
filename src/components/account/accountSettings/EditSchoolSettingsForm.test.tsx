@@ -1,16 +1,16 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from '../../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   CountryFactory,
   LinksFactory,
   MockStoreFactory,
   UserProfileFactory,
-} from '../../../../test-support/factories';
-import { editUser } from '../../../services/users/updateUser';
+} from 'test-support/factories';
+import { editUser } from 'src/services/users/updateUser';
 import Mock = jest.Mock;
-import { Link } from '../../../types/Link';
+import { Link } from 'src/types/Link';
 import { SchoolForm } from '../form/SchoolForm';
 import { StatesForm } from '../form/StatesForm';
 import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';

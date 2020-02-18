@@ -2,11 +2,11 @@ import {
   collectionResponseWithSubject,
   collectionsResponse,
   videosResponse,
-} from '../../../test-support/api-responses';
-import ApiStub from '../../../test-support/ApiStub';
-import { VideoResourceFactory } from '../../../test-support/factories';
-import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
-import { HomePage } from '../../../test-support/page-objects/HomePage';
+} from 'test-support/api-responses';
+import ApiStub from 'test-support/ApiStub';
+import { VideoResourceFactory } from 'test-support/factories';
+import { fakeSubjectsSetup } from 'test-support/fakeApiClientSetup';
+import { HomePage } from 'test-support/page-objects/HomePage';
 
 describe('Home page', () => {
   test('loads public collections', async () => {

@@ -2,10 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import {
-  MockStoreFactory,
-  RouterFactory,
-} from '../../../../test-support/factories';
+import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import SubjectFilterTag from './SubjectFilterTag';

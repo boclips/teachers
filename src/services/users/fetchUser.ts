@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Links } from '../../types/Links';
+import { Links } from 'src/types/Links';
 import convertUserResource from './convertUserResource';
 import { UserProfile } from './UserProfile';
 

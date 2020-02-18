@@ -2,13 +2,13 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { By } from '../../../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   CollectionsFactory,
   MockStoreFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
-} from '../../../../../test-support/factories';
+} from 'test-support/factories';
 import { fetchPageableCollectionsAction } from '../../redux/actions/fetchPageableCollectionsAction';
 import PageableCollectionCardList from './PageableCollectionCardList';
 

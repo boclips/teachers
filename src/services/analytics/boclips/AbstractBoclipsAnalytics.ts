@@ -1,5 +1,5 @@
-import { Video } from '../../../types/Video';
-import { VideoCollection } from '../../../types/VideoCollection';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 import { BoclipsAnalytics } from './BoclipsAnalytics';
 
 export default abstract class AbstractBoclipsAnalytics

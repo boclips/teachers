@@ -2,9 +2,9 @@ import { Icon, Modal } from 'antd';
 import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import DeleteIconSVG from '../../../../resources/images/delete-collection.svg';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { VideoCollection } from '../../../types/VideoCollection';
+import DeleteIconSVG from 'resources/images/delete-collection.svg';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { VideoCollection } from 'src/types/VideoCollection';
 import { deleteCollectionAction } from '../redux/actions/deleteCollectionAction';
 import './RemoveCollectionButton.less';
 

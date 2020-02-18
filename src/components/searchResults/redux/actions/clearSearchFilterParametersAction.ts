@@ -1,4 +1,4 @@
-import { actionCreatorFactoryVoid } from './../../../../app/redux/actions';
+import { actionCreatorFactoryVoid } from 'src/app/redux/actions';
 
 const clearSearchFilterParametersAction = actionCreatorFactoryVoid(
   'CLEAR_SEARCH_FILTERS_PARAMETERS',

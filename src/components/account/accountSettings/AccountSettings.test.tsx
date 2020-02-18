@@ -1,15 +1,15 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from '../../../../test-support/By';
+import { fetchUser } from 'src/services/users/fetchUser';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { analyticsMock } from 'test-support/getAnalyticsMock';
 import {
   CountryFactory,
   MockStoreFactory,
   UserProfileFactory,
-} from '../../../../test-support/factories';
-import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { fetchUser } from '../../../services/users/fetchUser';
+} from 'test-support/factories';
+import { By } from 'test-support/By';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import AccountSettings from './AccountSettings';
 import { EditProfileForm } from './EditProfileForm';

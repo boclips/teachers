@@ -1,5 +1,5 @@
 import React from 'react';
-import noResultsIllustration from '../../../resources/images/no-results-illustration.png';
+import noResultsIllustration from 'resources/images/no-results-illustration.png';
 
 export default class Error extends React.Component {
   public render() {

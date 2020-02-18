@@ -1,11 +1,11 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import removeFromCollection from '../../../../services/collections/removeFromCollection';
-import { Video } from '../../../../types/Video';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
+import { sideEffect } from 'src/app/redux/actions';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import removeFromCollection from 'src/services/collections/removeFromCollection';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
+import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
 
 export function onRemoveFromCollection(
   store: MiddlewareAPI,

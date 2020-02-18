@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Link } from '../../types/Link';
-import { Links } from '../../types/Links';
-import { Video } from '../../types/Video';
+import { Link } from 'src/types/Link';
+import { Links } from 'src/types/Links';
+import { Video } from 'src/types/Video';
 import convertVideoResource from './convertVideoResource';
 
 export default function fetchVideo(id: string, links: Links): Promise<Video> {

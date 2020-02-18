@@ -1,20 +1,20 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { sideEffect } from 'src/app/redux/actions';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import {
   fetchNextCollectionsPage,
   fetchPageableCollections,
-} from '../../../../services/collections/fetchCollections';
-import { ReadOnlyCollectionKey } from '../../../../types/CollectionKey';
-import { CollectionState, LinksState } from '../../../../types/State';
-import { appendPageableCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
-import { fetchNextPageableCollectionsAction } from '../actions/fetchNextPageableCollectionsAction';
+} from 'src/services/collections/fetchCollections';
+import { ReadOnlyCollectionKey } from 'src/types/CollectionKey';
+import { CollectionState, LinksState } from 'src/types/State';
+import { Links } from 'src/types/Links';
+import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import {
   FetchPageableCollectionRequest,
   fetchPageableCollectionsAction,
 } from '../actions/fetchPageableCollectionsAction';
-import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-import { Links } from '../../../../types/Links';
+import { fetchNextPageableCollectionsAction } from '../actions/fetchNextPageableCollectionsAction';
+import { appendPageableCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
 
 export function onFetchCollections(
   store: MiddlewareAPI<any, LinksState>,

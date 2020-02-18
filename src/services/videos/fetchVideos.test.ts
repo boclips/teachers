@@ -1,10 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
-import { videos } from '../../../test-support/api-responses';
-import { LinksFactory } from '../../../test-support/factories';
-import { Link } from '../../types/Link';
-import { VideoType } from '../../types/Video';
+import { videos } from 'test-support/api-responses';
+import { LinksFactory } from 'test-support/factories';
+import { Link } from 'src/types/Link';
+import { VideoType } from 'src/types/Video';
 import fetchVideos from './fetchVideos';
 
 let queryParams = null;

@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MockStoreFactory } from '../../../../../test-support/factories';
+import { MockStoreFactory } from 'test-support/factories';
 import { fetchPageableCollectionsAction } from '../../redux/actions/fetchPageableCollectionsAction';
 import PublicCollectionsGrid from './PublicCollectionsGrid';
 

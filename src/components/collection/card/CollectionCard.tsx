@@ -1,25 +1,25 @@
 import { Card } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { Video } from '../../../types/Video';
-import { VideoCollection } from '../../../types/VideoCollection';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import BulletSVG from 'resources/images/bullet.svg';
+import LessonPlanSVG from 'resources/images/lesson-plan-icon.svg';
+import { VideoCollection } from 'src/types/VideoCollection';
+import { Video } from 'src/types/Video';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { ButtonRow } from '../../common/buttons/ButtonRow';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import './CollectionCard.less';
 import { CollectionTitle } from '../title/CollectionTitle';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import { EditCollectionButton } from '../buttons/EditCollectionButton';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
-import BulletSVG from '../../../../resources/images/bullet.svg';
 import { CollectionCardPreview } from './CollectionCardPreview';
 
 export interface Props {

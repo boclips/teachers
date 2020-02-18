@@ -4,10 +4,10 @@ import { Player as PlayerComponent } from 'boclips-player-react';
 import querystring from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import State from '../../../types/State';
-import { Segment, Video } from '../../../types/Video';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import State from 'src/types/State';
+import { Segment, Video } from 'src/types/Video';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';

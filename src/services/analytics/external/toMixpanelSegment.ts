@@ -1,4 +1,4 @@
-import { Video } from '../../../types/Video';
+import { Video } from 'src/types/Video';
 
 export const toMixpanelSegment = (
   video: Video,

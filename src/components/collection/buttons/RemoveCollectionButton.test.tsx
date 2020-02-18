@@ -10,15 +10,15 @@ import {
   SubjectsFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from '../../../../test-support/factories';
-import { Link } from '../../../types/Link';
+} from 'test-support/factories';
+import { Link } from 'src/types/Link';
 import {
   renderWithStore,
   renderWithCreatedStore,
-} from '../../../../test-support/renderWithStore';
-import { createBoclipsStore } from '../../../app/redux/store';
-import eventually from '../../../../test-support/eventually';
-import MockFetchVerify from '../../../../test-support/MockFetchVerify';
+} from 'test-support/renderWithStore';
+import { createBoclipsStore } from 'src/app/redux/store';
+import eventually from 'test-support/eventually';
+import MockFetchVerify from 'test-support/MockFetchVerify';
 import { RemoveCollectionButton } from './RemoveCollectionButton';
 
 describe('RemoveCollectionButton', () => {

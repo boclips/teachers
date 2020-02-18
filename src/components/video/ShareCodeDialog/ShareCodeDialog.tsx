@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Input } from 'antd';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
-import validateShareCode from '../../../services/videos/validateShareCode';
+import validateShareCode from 'src/services/videos/validateShareCode';
+import State from 'src/types/State';
 import Bodal from '../../common/Bodal';
-import State from '../../../types/State';
 import './ShareCodeDialog.less';
 
 interface Props {

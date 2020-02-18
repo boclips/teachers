@@ -1,9 +1,9 @@
 import { Card } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
-import { Discipline } from '../../types/Discipline';
-import { Subject } from '../../types/Subject';
+import ForwardArrowIcon from 'resources/images/forward-arrow.svg';
+import { Discipline } from 'src/types/Discipline';
+import { Subject } from 'src/types/Subject';
 import DisciplineLogo from './DisciplineLogo';
 
 import './DisciplineCard.less';

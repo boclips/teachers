@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { Link } from '../../types/Link';
-import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
+import { Link } from 'src/types/Link';
+import { StreamPlayback, Video, YoutubePlayback } from 'src/types/Video';
 
 const DEFAULT_THUMBNAIL_WIDTH = 500;
 

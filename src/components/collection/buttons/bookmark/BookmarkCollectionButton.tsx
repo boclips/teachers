@@ -2,13 +2,13 @@ import { Button, Icon } from 'antd';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import BookmarkEmptySVG from '../../../../../resources/images/bookmarked.svg';
-import BookmarkFilledSVG from '../../../../../resources/images/unbookmarked.svg';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import { A11yButton } from '../../../common/a11y/A11yButton';
-import { bookmarkCollectionAction } from '../../redux/actions/bookmarkCollectionAction';
+import BookmarkEmptySVG from 'resources/images/bookmarked.svg';
+import BookmarkFilledSVG from 'resources/images/unbookmarked.svg';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { VideoCollection } from 'src/types/VideoCollection';
+import { A11yButton } from 'src/components/common/a11y/A11yButton';
 import { unbookmarkCollectionAction } from '../../redux/actions/unbookmarkCollectionAction';
+import { bookmarkCollectionAction } from '../../redux/actions/bookmarkCollectionAction';
 import './BookmarkCollectionButton.less';
 
 interface OwnProps {

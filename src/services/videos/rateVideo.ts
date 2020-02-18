@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Video } from '../../types/Video';
+import { Video } from 'src/types/Video';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import convertVideoResource from './convertVideoResource';
 

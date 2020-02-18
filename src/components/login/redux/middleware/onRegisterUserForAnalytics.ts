@@ -1,7 +1,7 @@
 import { Store } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { UserProfile } from '../../../../services/users/UserProfile';
+import { sideEffect } from 'src/app/redux/actions';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { UserProfile } from 'src/services/users/UserProfile';
 import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
 
 const identifyUsers = (_: Store, user: UserProfile) => {

@@ -1,6 +1,6 @@
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
-import { Video } from '../../../types/Video';
-import { VideoCollection } from '../../../types/VideoCollection';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 import HttpBoclipsAnalytics from './HttpBoclipsAnalytics';
 
 export interface BoclipsAnalytics {

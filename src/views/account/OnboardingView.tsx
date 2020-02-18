@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { replace } from 'connected-react-router';
+import State from 'src/types/State';
 import OnboardingForm from '../../components/account/onboarding/OnboardingForm';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import './OnboardingView.less';
-import State from '../../types/State';
 
 interface StateProps {
   userCanActivate: boolean;

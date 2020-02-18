@@ -1,12 +1,6 @@
-import {
-  actionHandler,
-  ActionHandler,
-} from '../../../../app/redux/createReducer';
-import State, {
-  CollectionsStateValue,
-  isMyCollection,
-} from '../../../../types/State';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import { VideoCollection } from 'src/types/VideoCollection';
+import State, { CollectionsStateValue, isMyCollection } from 'src/types/State';
+import { actionHandler, ActionHandler } from 'src/app/redux/createReducer';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import {
   appendBookmarkedCollectionsAction,

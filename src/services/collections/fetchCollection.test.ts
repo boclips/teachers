@@ -4,9 +4,9 @@ import {
   collectionResponse,
   collectionResponseWithSubject,
   video177Slim,
-} from '../../../test-support/api-responses';
-import { LinksFactory } from '../../../test-support/factories';
-import { Link } from '../../types/Link';
+} from 'test-support/api-responses';
+import { LinksFactory } from 'test-support/factories';
+import { Link } from 'src/types/Link';
 import { fetchCollection } from './fetchCollection';
 
 test('returns available collections in skinny format', async () => {

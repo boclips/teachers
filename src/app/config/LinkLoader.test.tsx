@@ -3,13 +3,13 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import { MockStoreFactory } from '../../../test-support/factories';
-import { LoadingComponent } from '../../components/common/LoadingComponent';
-import { AuthenticationStateValue, LinksStateValue } from '../../types/State';
+import { ErrorView } from 'src/views/error/ErrorView';
+import { AuthenticationStateValue, LinksStateValue } from 'src/types/State';
+import { LoadingComponent } from 'src/components/common/LoadingComponent';
+import { MockStoreFactory } from 'test-support/factories';
 import { Action } from '../redux/actions';
 import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
-import { ErrorView } from '../../views/error/ErrorView';
 import { UnconnectedLinkLoader } from './LinkLoader';
 import LinkLoader from './LinkLoader';
 

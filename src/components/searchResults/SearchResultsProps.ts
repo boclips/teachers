@@ -1,7 +1,7 @@
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from '../../types/SearchResults';
+} from 'src/types/SearchResults';
 
 export default interface SearchResultsProps {
   videoResults: VideoSearchResult;

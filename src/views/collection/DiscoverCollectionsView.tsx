@@ -3,19 +3,19 @@ import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import collectionsImg from '../../../resources/images/collections.png';
-import SubjectsSVG from '../../../resources/images/subjects.svg';
-import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
+import SubjectsSVG from 'resources/images/subjects.svg';
+import collectionsImg from 'resources/images/collections.png';
+import { Discipline } from 'src/types/Discipline';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import { DisciplineState } from 'src/types/State';
+import { Subject } from 'src/types/Subject';
+import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+import PageLayout from '../../components/layout/PageLayout';
+import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
-import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
-import PageLayout from '../../components/layout/PageLayout';
-import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import { Discipline } from '../../types/Discipline';
-import MediaBreakpoints from '../../types/MediaBreakpoints';
-import { DisciplineState } from '../../types/State';
-import { Subject } from '../../types/Subject';
+import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import './DiscoverCollectionsView.less';
 
 interface OwnProps {

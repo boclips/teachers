@@ -2,12 +2,12 @@ import { Col } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import SubjectsSVG from '../../../resources/images/our-subjects.svg';
-import { Discipline } from '../../types/Discipline';
-import State from '../../types/State';
-import { generateBorderRadiusClassNames } from '../../utils';
-import { SectionHeader } from '../common/SectionHeader';
+import SubjectsSVG from 'resources/images/our-subjects.svg';
+import { Discipline } from 'src/types/Discipline';
+import State from 'src/types/State';
+import { generateBorderRadiusClassNames } from 'src/utils';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
+import { SectionHeader } from '../common/SectionHeader';
 import { DisciplineCard } from './DisciplineCard';
 import './DisciplineCardList.less';
 

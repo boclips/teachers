@@ -1,7 +1,7 @@
 import React from 'react';
-import badgeAdFree from '../../../../resources/images/badge-ad-free.png';
-import badgeYoutube from '../../../../resources/images/badge-youtube.png';
-import { Video } from '../../../types/Video';
+import badgeAdFree from 'resources/images/badge-ad-free.png';
+import badgeYoutube from 'resources/images/badge-youtube.png';
+import { Video } from 'src/types/Video';
 
 interface Props {
   video: Video;

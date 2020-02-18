@@ -1,9 +1,6 @@
 import React from 'react';
-import { renderWithStore } from '../../../../test-support/renderWithStore';
-import {
-  UserProfileFactory,
-  VideoFactory,
-} from '../../../../test-support/factories';
+import { renderWithStore } from 'test-support/renderWithStore';
+import { UserProfileFactory, VideoFactory } from 'test-support/factories';
 import { ShareModal } from './ShareModal';
 
 describe('Share modal', () => {

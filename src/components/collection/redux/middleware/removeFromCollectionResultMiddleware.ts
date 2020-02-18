@@ -1,6 +1,6 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import NotificationFactory from '../../../common/NotificationFactory';
+import { sideEffect } from 'src/app/redux/actions';
+import NotificationFactory from 'src/components/common/NotificationFactory';
 import { onRemoveFromCollectionAction } from '../actions/onRemoveFromCollectionAction';
 import { UpdateCollectionResult } from './addToCollectionResultMiddleware';
 

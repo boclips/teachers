@@ -1,13 +1,13 @@
 import { push } from 'connected-react-router';
 import React from 'react';
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { deleteCollection } from '../../../../services/collections/deleteCollection';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import NotificationFactory from '../../../common/NotificationFactory';
-import { deleteCollectionAction } from '../actions/deleteCollectionAction';
+import { sideEffect } from 'src/app/redux/actions';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { deleteCollection } from 'src/services/collections/deleteCollection';
+import { VideoCollection } from 'src/types/VideoCollection';
+import NotificationFactory from 'src/components/common/NotificationFactory';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
+import { deleteCollectionAction } from '../actions/deleteCollectionAction';
 
 export function onDeleteCollection(
   store: MiddlewareAPI,

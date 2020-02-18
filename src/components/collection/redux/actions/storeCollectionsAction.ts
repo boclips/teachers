@@ -1,8 +1,8 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { CollectionKey } from '../../../../types/CollectionKey';
-import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
-import { Pageable } from '../../../../types/State';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import { actionCreatorFactory } from 'src/app/redux/actions';
+import { CollectionKey } from 'src/types/CollectionKey';
+import { CollectionSearchRequest } from 'src/types/CollectionSearchRequest';
+import { Pageable } from 'src/types/State';
+import { VideoCollection } from 'src/types/VideoCollection';
 
 export interface StoreCollectionsRequest {
   collections: Pageable<VideoCollection>;

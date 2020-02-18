@@ -1,6 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
-import { By } from '../../../../test-support/By';
+import { By } from 'test-support/By';
 import NoResultsView from './NoResultsView';
 
 describe('no results view', () => {

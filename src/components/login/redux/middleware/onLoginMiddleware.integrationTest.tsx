@@ -1,11 +1,11 @@
 import { push } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
-import { links, userResponse } from '../../../../../test-support/api-responses';
-import ApiStub from '../../../../../test-support/ApiStub';
-import eventually from '../../../../../test-support/eventually';
-import convertUserResource from '../../../../services/users/convertUserResource';
+import { fetchTagsAction } from 'src/components/common/tags/redux/actions/fetchTagsAction';
+import convertUserResource from 'src/services/users/convertUserResource';
+import eventually from 'test-support/eventually';
+import ApiStub from 'test-support/ApiStub';
+import { links, userResponse } from 'test-support/api-responses';
 import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
-import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
 import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
 import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';

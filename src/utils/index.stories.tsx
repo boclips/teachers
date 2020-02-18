@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import BoclipsSecurity from 'boclips-js-security';
-import State from '../types/State';
+import State from 'src/types/State';
 import { noOp } from './index';
 
 export const storyWithProvider = (store: Store<State>) => story => (

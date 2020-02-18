@@ -11,7 +11,7 @@ import {
   LinksFactory,
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
+} from 'test-support/factories';
 import { ShareCodeDialog } from './ShareCodeDialog';
 
 describe('ShareCodeDialog', () => {

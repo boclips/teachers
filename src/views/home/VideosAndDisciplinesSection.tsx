@@ -3,12 +3,12 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import ForwardArrowIcon from 'resources/images/forward-arrow.svg';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
-import MediaBreakpoints from '../../types/MediaBreakpoints';
 import HomeViewVideoList from './HomeViewVideoList';
 
 const { Content } = Layout;

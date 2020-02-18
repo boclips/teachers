@@ -1,6 +1,6 @@
 import { Form } from 'antd';
 import React from 'react';
-import { Segment, Video } from '../../../types/Video';
+import { Segment, Video } from 'src/types/Video';
 import { RestrictiveTimePicker } from '../../common/RestrictiveTimePicker';
 import './ShareForm.less';
 

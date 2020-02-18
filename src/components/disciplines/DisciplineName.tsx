@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Discipline } from '../../types/Discipline';
-import { DisciplineState } from '../../types/State';
+import { Discipline } from 'src/types/Discipline';
+import { DisciplineState } from 'src/types/State';
 
 interface Props {
   subjectId: string;

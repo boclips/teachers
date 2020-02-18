@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, Dispatch } from 'redux';
-import { CollectionKey } from '../../../types/CollectionKey';
-import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
-import Page from '../../../types/Page';
-import State from '../../../types/State';
-import { VideoCollection } from '../../../types/VideoCollection';
-import { fetchNextPageableCollectionsAction } from '../../collection/redux/actions/fetchNextPageableCollectionsAction';
-import { fetchPageableCollectionsAction } from '../../collection/redux/actions/fetchPageableCollectionsAction';
+import { CollectionKey } from 'src/types/CollectionKey';
+import { CollectionSearchRequest } from 'src/types/CollectionSearchRequest';
+import Page from 'src/types/Page';
+import State from 'src/types/State';
+import { VideoCollection } from 'src/types/VideoCollection';
 import { getCollectionsByIds } from '../../collection/redux/reducers/collectionsReducer';
+import { fetchPageableCollectionsAction } from '../../collection/redux/actions/fetchPageableCollectionsAction';
+import { fetchNextPageableCollectionsAction } from '../../collection/redux/actions/fetchNextPageableCollectionsAction';
 
 interface Props {
   collectionKey: CollectionKey;

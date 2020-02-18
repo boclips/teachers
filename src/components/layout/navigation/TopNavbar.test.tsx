@@ -2,11 +2,8 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link, MemoryRouter } from 'react-router-dom';
-import {
-  MockStoreFactory,
-  UserProfileFactory,
-} from '../../../../test-support/factories';
-import { setWidth } from '../../../../test-support/setWidth';
+import { setWidth } from 'test-support/setWidth';
+import { MockStoreFactory, UserProfileFactory } from 'test-support/factories';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import { NavbarButtonsContainer } from './NavbarButtonsContainer';
 import { TopNavbarContainer } from './TopNavbarContainer';

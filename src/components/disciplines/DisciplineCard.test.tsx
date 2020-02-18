@@ -1,11 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { By } from '../../../test-support/By';
-import {
-  DisciplineFactory,
-  SubjectFactory,
-} from '../../../test-support/factories';
+import { By } from 'test-support/By';
+import { DisciplineFactory, SubjectFactory } from 'test-support/factories';
 import { DisciplineCard } from './DisciplineCard';
 
 test('renders a card with title', () => {

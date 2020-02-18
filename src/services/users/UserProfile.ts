@@ -1,7 +1,7 @@
-import { Country } from '../../types/Country';
-import { Link } from '../../types/Link';
-import { School } from '../../types/School';
-import { UsaState } from '../../types/UsaState';
+import { Country } from 'src/types/Country';
+import { Link } from 'src/types/Link';
+import { School } from 'src/types/School';
+import { UsaState } from 'src/types/UsaState';
 import Utm from '../account/Utm';
 
 export interface UserProfile {

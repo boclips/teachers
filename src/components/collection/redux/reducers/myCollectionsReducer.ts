@@ -1,7 +1,7 @@
 import { produce } from 'immer';
-import State from '../../../../types/State';
-import { Video, VideoId } from '../../../../types/Video';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import State from 'src/types/State';
+import { Video, VideoId } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 
 export const onAddVideoToMyCollectionAction = (
   state: State,

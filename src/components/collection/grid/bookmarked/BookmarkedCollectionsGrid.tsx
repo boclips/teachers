@@ -1,9 +1,9 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React from 'react';
-import EmptyCollectionSVG from '../../../../..//resources/images/empty-collection.svg';
-import BookmarkFilledSVG from '../../../../..//resources/images/unbookmarked.svg';
-import bookmarkedCollectionsImg from '../../../../../resources/images/bookmarked-collections.png';
+import EmptyCollectionSVG from 'resources/images/empty-collection.svg';
+import BookmarkFilledSVG from 'resources/images/unbookmarked.svg';
+import bookmarkedCollectionsImg from 'resources/images/bookmarked-collections.png';
 import PageableCollectionCardList from '../../card/list/PageableCollectionCardList';
 
 class BookmarkedCollectionsGrid extends React.PureComponent {

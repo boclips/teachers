@@ -3,11 +3,11 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { editUser } from '../../../services/users/updateUser';
-import { UserProfile } from '../../../services/users/UserProfile';
-import { Country } from '../../../types/Country';
-import { Links } from '../../../types/Links';
-import { UsaState } from '../../../types/UsaState';
+import { UsaState } from 'src/types/UsaState';
+import { Links } from 'src/types/Links';
+import { Country } from 'src/types/Country';
+import { UserProfile } from 'src/services/users/UserProfile';
+import { editUser } from 'src/services/users/updateUser';
 import {
   ScreenReaderError,
   ScreenReaderErrors,

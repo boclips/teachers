@@ -1,7 +1,7 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { Pageable } from '../../../../types/State';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import { CollectionKey } from './../../../../types/CollectionKey';
+import { actionCreatorFactory } from 'src/app/redux/actions';
+import { Pageable } from 'src/types/State';
+import { VideoCollection } from 'src/types/VideoCollection';
+import { CollectionKey } from 'src/types/CollectionKey';
 
 export interface AppendCollectionRequest {
   collections: Pageable<VideoCollection>;

@@ -3,13 +3,13 @@ import MockAdapter from 'axios-mock-adapter';
 import {
   collectionResponseWithSubject,
   collectionsResponse,
-} from '../../../test-support/api-responses';
+} from 'test-support/api-responses';
 import {
   LinksFactory,
   PageableCollectionsFactory,
-} from '../../../test-support/factories';
-import { AgeRange } from '../../types/AgeRange';
-import { Link } from '../../types/Link';
+} from 'test-support/factories';
+import { AgeRange } from 'src/types/AgeRange';
+import { Link } from 'src/types/Link';
 import {
   fetchNextCollectionsPage,
   fetchPageableCollections,

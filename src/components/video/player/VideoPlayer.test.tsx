@@ -8,13 +8,13 @@ import {
   MockStoreFactory,
   RouterFactory,
   VideoFactory,
-} from '../../../../test-support/factories';
+} from 'test-support/factories';
 import {
   ProviderComponent,
   ProviderComponentProps,
-} from '../../../../test-support/ProviderComponent';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import State from '../../../types/State';
+} from 'test-support/ProviderComponent';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import State from 'src/types/State';
 import VideoPlayer, { OwnProps } from './VideoPlayer';
 
 jest.mock('boclips-player');

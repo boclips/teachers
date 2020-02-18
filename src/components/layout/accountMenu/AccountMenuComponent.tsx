@@ -1,6 +1,6 @@
 import { Dropdown, Menu } from 'antd';
 import React, { SyntheticEvent } from 'react';
-import MyAccountSVG from '../../../../resources/images/my-account.svg';
+import MyAccountSVG from 'resources/images/my-account.svg';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import {
   AccountSettingsLink,

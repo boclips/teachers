@@ -1,10 +1,10 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../../app/redux/actions';
-import { fetchTags } from '../../../../../services/tags/fetchTags';
-import { Tag } from '../../../../../types/Tag';
-import { fetchedTagsAction } from '../actions/fetchedTagsAction';
+import { sideEffect } from 'src/app/redux/actions';
+import { fetchTags } from 'src/services/tags/fetchTags';
+import { Tag } from 'src/types/Tag';
+import { Links } from 'src/types/Links';
 import { fetchTagsAction } from '../actions/fetchTagsAction';
-import { Links } from '../../../../../types/Links';
+import { fetchedTagsAction } from '../actions/fetchedTagsAction';
 
 export function onFetchTags(store: MiddlewareAPI) {
   const links: Links = store.getState().links.entries;

@@ -1,11 +1,9 @@
-import { links, userResponse } from '../../../test-support/api-responses';
-import ApiStub from '../../../test-support/ApiStub';
-import eventually from '../../../test-support/eventually';
-import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
-import MockFetchVerify, {
-  axiosMock,
-} from '../../../test-support/MockFetchVerify';
-import { OnboardingPage } from '../../../test-support/page-objects/OnboardingPage';
+import { links, userResponse } from 'test-support/api-responses';
+import ApiStub from 'test-support/ApiStub';
+import eventually from 'test-support/eventually';
+import { fakeSubjectsSetup } from 'test-support/fakeApiClientSetup';
+import MockFetchVerify, { axiosMock } from 'test-support/MockFetchVerify';
+import { OnboardingPage } from 'test-support/page-objects/OnboardingPage';
 
 describe('When user is not activated', () => {
   beforeEach(() => {

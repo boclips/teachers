@@ -1,4 +1,4 @@
-import { Constants } from '../../app/AppConstants';
+import { Constants } from 'src/app/AppConstants';
 import AnalyticsService from './AnalyticsService';
 import boclipsAnalytics, { BoclipsAnalytics } from './boclips/BoclipsAnalytics';
 import { initializeMixpanel } from './external/initializeMixpanel';

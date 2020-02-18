@@ -1,6 +1,6 @@
 import { Icon } from 'antd';
 import React from 'react';
-import CloseSVG from '../../../../resources/images/close.svg';
+import CloseSVG from 'resources/images/close.svg';
 import './Tag.less';
 
 interface TagProps {

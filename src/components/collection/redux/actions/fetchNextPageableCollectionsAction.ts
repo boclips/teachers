@@ -1,5 +1,5 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { CollectionKey } from './../../../../types/CollectionKey';
+import { actionCreatorFactory } from 'src/app/redux/actions';
+import { CollectionKey } from 'src/types/CollectionKey';
 
 export const fetchNextPageableCollectionsAction = actionCreatorFactory<
   CollectionKey

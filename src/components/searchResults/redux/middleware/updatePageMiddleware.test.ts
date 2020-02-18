@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router';
-import eventually from '../../../../../test-support/eventually';
-import { setupStore } from '../../../../../test-support/setupStore';
+import eventually from 'test-support/eventually';
+import { setupStore } from 'test-support/setupStore';
 import { updatePageAction } from '../actions/updatePageAction';
 
 it('updates page in url parameters', async () => {

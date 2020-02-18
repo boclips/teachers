@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Link } from '../../types/Link';
-import { Links } from '../../types/Links';
-import { Tag } from '../../types/Tag';
+import { Link } from 'src/types/Link';
+import { Links } from 'src/types/Links';
+import { Tag } from 'src/types/Tag';
 
 export function fetchTags(links: Links): Promise<Tag[]> {
   return axios

@@ -4,7 +4,7 @@ import difference from 'lodash/difference';
 import range from 'lodash/range';
 import * as moment from 'moment';
 import * as React from 'react';
-import { noOp } from '../../utils';
+import { noOp } from 'src/utils';
 import { RestrictiveTimePicker } from './RestrictiveTimePicker';
 
 it('matches the snapshot when rendering a restricted timepicker', () => {

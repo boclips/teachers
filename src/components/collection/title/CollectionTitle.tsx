@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PrivateLogoSVG from '../../../../resources/images/private.svg';
-import { VideoCollection } from '../../../types/VideoCollection';
+import PrivateLogoSVG from 'resources/images/private.svg';
+import { VideoCollection } from 'src/types/VideoCollection';
 import './CollectionTitle.less';
 
 interface Props {

@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import State from '../../types/State';
+import State from 'src/types/State';
 
 interface Props {
   showWhileLoading: React.ReactNode;

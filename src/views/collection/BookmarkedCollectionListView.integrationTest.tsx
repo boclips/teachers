@@ -1,5 +1,5 @@
-import ApiStub from '../../../test-support/ApiStub';
-import { BookmarkedCollectionListPage } from '../../../test-support/page-objects/BookmarkedCollectionListPage';
+import ApiStub from 'test-support/ApiStub';
+import { BookmarkedCollectionListPage } from 'test-support/page-objects/BookmarkedCollectionListPage';
 
 test('displays bookmarked collections list', async () => {
   new ApiStub()

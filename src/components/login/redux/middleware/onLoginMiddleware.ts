@@ -1,19 +1,19 @@
 import { push } from 'connected-react-router';
 import { Store } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
-import { fetchPageableCollections } from '../../../../services/collections/fetchCollections';
-import fetchLinks from '../../../../services/links/fetchLinks';
-import { fetchUser } from '../../../../services/users/fetchUser';
-import { UserProfile } from '../../../../services/users/UserProfile';
-import { Links } from '../../../../types/Links';
-import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
-import { fetchTagsAction } from '../../../common/tags/redux/actions/fetchTagsAction';
-import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
-import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
-import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
-import { userDetailsFetched } from '../actions/userDetailsFetched';
+import { sideEffect } from 'src/app/redux/actions';
+import { storeLinksAction } from 'src/app/redux/links/actions/storeLinksAction';
+import { fetchPageableCollections } from 'src/services/collections/fetchCollections';
+import fetchLinks from 'src/services/links/fetchLinks';
+import { fetchUser } from 'src/services/users/fetchUser';
+import { UserProfile } from 'src/services/users/UserProfile';
+import { Links } from 'src/types/Links';
+import { fetchTagsAction } from 'src/components/common/tags/redux/actions/fetchTagsAction';
 import { userLoggedIn } from '../actions/userLoggedIn';
+import { userDetailsFetched } from '../actions/userDetailsFetched';
+import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
+import { fetchSubjectsAction } from '../../../multipleSelect/redux/actions/fetchSubjectsAction';
+import { fetchDisciplinesAction } from '../../../disciplines/redux/actions/fetchDisciplinesAction';
+import { storeCollectionsAction } from '../../../collection/redux/actions/storeCollectionsAction';
 
 const onLoggedIn = (store: Store) => {
   fetchLinks(store.getState().apiPrefix)

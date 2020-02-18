@@ -1,6 +1,6 @@
-import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { Link } from '../../types/Link';
-import { Links } from '../../types/Links';
+import MockFetchVerify from 'test-support/MockFetchVerify';
+import { Link } from 'src/types/Link';
+import { Links } from 'src/types/Links';
 import fetchLinks from './fetchLinks';
 
 const prefix = 'https://api.example.com';

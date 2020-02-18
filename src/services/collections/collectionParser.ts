@@ -1,9 +1,9 @@
-import { AgeRange } from '../../types/AgeRange';
-import { Attachment } from '../../types/Attachment';
-import { Link, RawLink } from '../../types/Link';
-import { Pageable } from '../../types/State';
-import { VideoId } from '../../types/Video';
-import { VideoCollection } from '../../types/VideoCollection';
+import { AgeRange } from 'src/types/AgeRange';
+import { Attachment } from 'src/types/Attachment';
+import { Link, RawLink } from 'src/types/Link';
+import { Pageable } from 'src/types/State';
+import { VideoId } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 
 export const parseCollectionResponse = (response: any): VideoCollection =>
   parseCollectionListResponse(response.data);

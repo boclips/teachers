@@ -1,5 +1,5 @@
 import React from 'react';
-import MediaBreakpoints, { Breakpoint } from '../../../types/MediaBreakpoints';
+import MediaBreakpoints, { Breakpoint } from 'src/types/MediaBreakpoints';
 
 export interface WithMediaBreakPointProps {
   mediaBreakpoint: Breakpoint;

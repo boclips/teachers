@@ -1,11 +1,11 @@
 import { Button, Icon } from 'antd';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import ShareSVG from '../../../../../resources/images/share.svg';
-import { Video } from '../../../../types/Video';
-import { ShareModal } from '../../sharing/ShareModal';
+import ShareSVG from 'resources/images/share.svg';
+import { Video } from 'src/types/Video';
 import './ShareButton.less';
-import State from '../../../../types/State';
+import State from 'src/types/State';
+import { ShareModal } from '../../sharing/ShareModal';
 
 interface Props {
   video: Video;

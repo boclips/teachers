@@ -1,10 +1,10 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import { unbookmarkCollection } from '../../../../services/collections/unbookmarkCollection';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import NotificationFactory from '../../../common/NotificationFactory';
-import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
+import { sideEffect } from 'src/app/redux/actions';
+import { unbookmarkCollection } from 'src/services/collections/unbookmarkCollection';
+import { VideoCollection } from 'src/types/VideoCollection';
+import NotificationFactory from 'src/components/common/NotificationFactory';
 import { unbookmarkCollectionAction } from '../actions/unbookmarkCollectionAction';
+import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 
 export function onUnbookmarkCollection(
   store: MiddlewareAPI,

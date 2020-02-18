@@ -1,10 +1,10 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import { bookmarkCollection } from '../../../../services/collections/bookmarkCollection';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import NotificationFactory from '../../../common/NotificationFactory';
-import { bookmarkCollectionAction } from '../actions/bookmarkCollectionAction';
+import { sideEffect } from 'src/app/redux/actions';
+import { bookmarkCollection } from 'src/services/collections/bookmarkCollection';
+import { VideoCollection } from 'src/types/VideoCollection';
+import NotificationFactory from 'src/components/common/NotificationFactory';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
+import { bookmarkCollectionAction } from '../actions/bookmarkCollectionAction';
 
 export function onBookmarkCollection(
   store: MiddlewareAPI,

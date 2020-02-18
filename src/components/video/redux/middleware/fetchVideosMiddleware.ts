@@ -1,19 +1,16 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { Store } from 'redux';
-import {
-  actionCreatorFactory,
-  sideEffect,
-} from '../../../../app/redux/actions';
-import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
-import fetchVideos from '../../../../services/videos/fetchVideos';
-import State from '../../../../types/State';
-import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
-import { dispatchSearchActions } from '../../../searchBar/redux/dispatchSearchActions';
-import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
-import { fetchVideosAction } from '../actions/fetchVideosAction';
-import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
+import { actionCreatorFactory, sideEffect } from 'src/app/redux/actions';
+import { storeLinksAction } from 'src/app/redux/links/actions/storeLinksAction';
+import fetchVideos from 'src/services/videos/fetchVideos';
+import State from 'src/types/State';
+import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
+import { Links } from 'src/types/Links';
 import { storeVideosAction } from '../actions/storeVideosAction';
-import { Links } from '../../../../types/Links';
+import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
+import { fetchVideosAction } from '../actions/fetchVideosAction';
+import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
+import { dispatchSearchActions } from '../../../searchBar/redux/dispatchSearchActions';
 
 export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 

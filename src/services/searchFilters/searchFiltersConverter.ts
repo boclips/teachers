@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { SearchFiltersParameters } from '../../types/SearchFiltersParameters';
+import { SearchFiltersParameters } from 'src/types/SearchFiltersParameters';
 
 export default class SearchFiltersConverter {
   public fromSearchUrl(searchUrl: string): SearchFiltersParameters {

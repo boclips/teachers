@@ -6,9 +6,9 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
 import { cleanup } from '@testing-library/react';
+import eventually from 'test-support/eventually';
+import MockFetchVerify from 'test-support/MockFetchVerify';
 import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
-import eventually from './test-support/eventually';
-import MockFetchVerify from './test-support/MockFetchVerify';
 
 Enzyme.configure({ adapter: new Adapter() });
 

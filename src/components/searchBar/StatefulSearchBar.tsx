@@ -1,7 +1,7 @@
 import { AutoComplete } from 'antd';
 import Search from 'antd/lib/input/Search';
 import React from 'react';
-import logo from '../../../resources/images/search-icon.png';
+import logo from 'resources/images/search-icon.png';
 import { Completion, CompletionChunk, completionsFor } from './completions';
 import completionsCratedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';

@@ -1,4 +1,4 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
+import { actionCreatorFactory } from 'src/app/redux/actions';
 
 export interface PageChangeRequest {
   page: number;

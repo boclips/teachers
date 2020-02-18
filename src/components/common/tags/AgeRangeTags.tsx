@@ -1,5 +1,5 @@
 import React from 'react';
-import { AgeRange } from '../../../types/AgeRange';
+import { AgeRange } from 'src/types/AgeRange';
 import { AgeRangeTag } from './AgeRangeTag';
 
 interface Props {

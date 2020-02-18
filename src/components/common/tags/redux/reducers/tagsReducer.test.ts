@@ -1,4 +1,4 @@
-import { Link } from '../../../../../types/Link';
+import { Link } from 'src/types/Link';
 import { fetchedTagsAction } from '../actions/fetchedTagsAction';
 import { tagsReducer } from './tagsReducer';
 

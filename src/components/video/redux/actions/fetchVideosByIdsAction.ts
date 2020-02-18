@@ -1,5 +1,5 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { VideoId } from '../../../../types/Video';
+import { actionCreatorFactory } from 'src/app/redux/actions';
+import { VideoId } from 'src/types/Video';
 
 export interface VideosForCollectionRequest {
   videos: VideoId[];

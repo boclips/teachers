@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import * as React from 'react';
-import { By } from '../../../../test-support/By';
+import { By } from 'test-support/By';
 import SchoolSettings from './SchoolSettings';
 
 describe('school settings', () => {

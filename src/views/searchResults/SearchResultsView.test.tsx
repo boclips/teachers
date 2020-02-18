@@ -3,14 +3,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import { By } from '../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   CollectionSearchFactory,
   MockStoreFactory,
   RouterFactory,
   SearchFactory,
   VideoSearchFactory,
-} from '../../../test-support/factories';
+} from 'test-support/factories';
 import SearchResultsView from './SearchResultsView';
 
 test('shows placeholders when results are loading', () => {

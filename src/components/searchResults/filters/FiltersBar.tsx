@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import React from 'react';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../common/higerOrderComponents/withMediaBreakPoint';
@@ -10,8 +10,8 @@ import AppliedFiltersProvider, {
 } from './AppliedFiltersProvider';
 import ClearAllButton from './ClearAllButton';
 import DurationFilterTag from './DurationFilterTag';
-import './FiltersBar.less';
 import SubjectFilterTag from './SubjectFilterTag';
+import './FiltersBar.less';
 
 export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
   public render() {

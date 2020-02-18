@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SearchFiltersConverter from '../../../services/searchFilters/searchFiltersConverter';
-import State from '../../../types/State';
+import SearchFiltersConverter from 'src/services/searchFilters/searchFiltersConverter';
+import State from 'src/types/State';
 
 export interface StateProps {
   durationMin?: number;

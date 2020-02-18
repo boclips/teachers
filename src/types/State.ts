@@ -1,5 +1,5 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
-import { UserProfile } from '../services/users/UserProfile';
+import { UserProfile } from 'src/services/users/UserProfile';
 import { Country } from './Country';
 import { Discipline } from './Discipline';
 import { Link } from './Link';

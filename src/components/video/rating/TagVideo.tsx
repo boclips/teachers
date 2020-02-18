@@ -1,9 +1,9 @@
 import { Col, Radio, Row } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
-import { TagState } from '../../../types/State';
-import { Tag } from '../../../types/Tag';
-import { Video } from '../../../types/Video';
+import { TagState } from 'src/types/State';
+import { Tag } from 'src/types/Tag';
+import { Video } from 'src/types/Video';
 import './TagVideo.less';
 
 interface Props {

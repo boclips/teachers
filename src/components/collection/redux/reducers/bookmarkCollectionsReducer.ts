@@ -1,6 +1,6 @@
 import { produce } from 'immer';
-import State, { CollectionMap } from '../../../../types/State';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import State, { CollectionMap } from 'src/types/State';
+import { VideoCollection } from 'src/types/VideoCollection';
 
 export const onCollectionUnbookmarked = (
   state: State,

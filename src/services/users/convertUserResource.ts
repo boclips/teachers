@@ -1,4 +1,4 @@
-import { Link } from '../../types/Link';
+import { Link } from 'src/types/Link';
 import { UserProfile } from './UserProfile';
 
 export default function convertUserResource(resource: any): UserProfile {

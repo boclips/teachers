@@ -3,21 +3,21 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
 import Mock = jest.Mock;
-import { By } from '../../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   CountryFactory,
   LinksFactory,
   LinksStateValueFactory,
   MockStoreFactory,
   SubjectFactory,
-} from '../../../../test-support/factories';
-import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { RegistrationContext } from '../../../services/session/RegistrationContext';
-import { onboardUser } from '../../../services/users/updateUser';
-import { Link } from '../../../types/Link';
-import OnboardingForm from './OnboardingForm';
+} from 'test-support/factories';
+import { analyticsMock } from 'test-support/getAnalyticsMock';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { RegistrationContext } from 'src/services/session/RegistrationContext';
+import { onboardUser } from 'src/services/users/updateUser';
+import { Link } from 'src/types/Link';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
+import OnboardingForm from './OnboardingForm';
 
 jest.mock('../../../services/users/updateUser', () => ({
   onboardUser: jest.fn().mockReturnValue(Promise.resolve()),

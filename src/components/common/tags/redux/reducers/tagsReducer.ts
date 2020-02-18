@@ -1,8 +1,8 @@
 import { Reducer } from 'redux';
+import { Tag } from 'src/types/Tag';
 import createReducerWithInitialState, {
   actionHandler,
 } from '../../../../../app/redux/createReducer';
-import { Tag } from '../../../../../types/Tag';
 import { fetchedTagsAction } from '../actions/fetchedTagsAction';
 
 export const tagsReducer: Reducer<Tag[]> = createReducerWithInitialState(

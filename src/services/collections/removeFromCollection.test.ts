@@ -1,11 +1,11 @@
-import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { Link } from '../../types/Link';
+import MockFetchVerify from 'test-support/MockFetchVerify';
+import { Link } from 'src/types/Link';
 import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
   VideoIdFactory,
-} from './../../../test-support/factories';
+} from 'test-support/factories';
 import removeFromCollection from './removeFromCollection';
 
 const video = VideoFactory.sample({ id: '123' });

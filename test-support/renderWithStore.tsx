@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { applyMiddleware, createStore, Store } from 'redux';
 import { History } from 'history';
-import { createReducer } from '../src/app/redux/createReducer';
+import { createReducer } from 'src/app/redux/createReducer';
 import State from '../src/types/State';
 
 interface Options {

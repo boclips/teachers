@@ -1,14 +1,14 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
 import React from 'react';
-import MoreSVG from '../../../../resources/images/more.svg';
+import MoreSVG from 'resources/images/more.svg';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import { VideoCollection } from 'src/types/VideoCollection';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../../components/common/higerOrderComponents/withMediaBreakPoint';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import { VideoCollection } from '../../../types/VideoCollection';
 import { VideoCollectionChanges } from '../redux/actions/editCollectionAction';
-import './CollectionButtonsContainer.less';
 import { EditCollectionButton } from './EditCollectionButton';
+import './CollectionButtonsContainer.less';
 
 interface Props extends WithMediaBreakPointProps {
   collection: VideoCollection;

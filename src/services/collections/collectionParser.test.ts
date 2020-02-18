@@ -4,10 +4,10 @@ import {
   collectionResponseWithSubject,
   video177,
   youtubeVideo1,
-} from '../../../test-support/api-responses';
-import { Link } from '../../types/Link';
-import { Pageable } from '../../types/State';
-import { VideoCollection } from '../../types/VideoCollection';
+} from 'test-support/api-responses';
+import { Link } from 'src/types/Link';
+import { Pageable } from 'src/types/State';
+import { VideoCollection } from 'src/types/VideoCollection';
 import {
   parseCollectionResponse,
   parseCollectionsListResponse,

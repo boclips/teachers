@@ -1,4 +1,4 @@
-import { CountryFactory } from '../../../../../../test-support/factories';
+import { CountryFactory } from 'test-support/factories';
 import { fetchedCountriesAction } from '../actions/fetchedCountriesAction';
 import { countriesReducer } from './countriesReducer';
 

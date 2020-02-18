@@ -1,5 +1,5 @@
-import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { VideoSearchResult } from '../../../../types/SearchResults';
+import { actionCreatorFactory } from 'src/app/redux/actions';
+import { VideoSearchResult } from 'src/types/SearchResults';
 
 export const storeVideoSearchResultsAction = actionCreatorFactory<
   VideoSearchResult

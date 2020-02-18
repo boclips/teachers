@@ -5,21 +5,21 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoSearchFactory,
-} from '../../../../../test-support/factories';
-import { createReducer } from '../../../../app/redux/createReducer';
+} from 'test-support/factories';
+import { createReducer } from 'src/app/redux/createReducer';
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from '../../../../types/SearchResults';
+} from 'src/types/SearchResults';
 import State, {
   CollectionSearchStateValue,
   VideoSearchStateValue,
-} from '../../../../types/State';
+} from 'src/types/State';
+import { CollectionSearchFactory } from 'test-support/factories';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-import { CollectionSearchFactory } from './../../../../../test-support/factories';
 import {
   collectionSearchHandlers,
   getCollectionsFromSearchResult,

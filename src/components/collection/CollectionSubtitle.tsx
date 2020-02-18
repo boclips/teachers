@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoCollection } from '../../types/VideoCollection';
+import { VideoCollection } from 'src/types/VideoCollection';
 import DateFormatter from '../common/formatters/DateFormatter';
 import './CollectionSubtitle.less';
 

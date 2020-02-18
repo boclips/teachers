@@ -2,13 +2,10 @@ import { Radio } from 'antd';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import {
-  MockStoreFactory,
-  VideoFactory,
-} from '../../../../test-support/factories';
-import { Link } from '../../../types/Link';
-import { Video } from '../../../types/Video';
-import { noOp } from '../../../utils';
+import { MockStoreFactory, VideoFactory } from 'test-support/factories';
+import { Link } from 'src/types/Link';
+import { Video } from 'src/types/Video';
+import { noOp } from 'src/utils';
 import TagVideo from './TagVideo';
 
 function mountTagVideo(video: Video) {

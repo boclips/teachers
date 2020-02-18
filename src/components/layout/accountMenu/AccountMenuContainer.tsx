@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
 import BoclipsSecurity from 'boclips-js-security';
 import React, { PureComponent, SyntheticEvent } from 'react';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import AccountMenuComponent from './AccountMenuComponent';
 import AccountMenuMobile from './AccountMenuMobileComponent';
 

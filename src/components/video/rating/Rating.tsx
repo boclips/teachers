@@ -1,9 +1,9 @@
 import { Rate, Tooltip } from 'antd';
 import React from 'react';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { Video } from '../../../types/Video';
-import './Rating.less';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Video } from 'src/types/Video';
 import VideoFeedbackModal from './VideoFeedbackModal';
+import './Rating.less';
 
 export interface RatingProps {
   video: Video;

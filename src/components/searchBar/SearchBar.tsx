@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { RouterState } from '../../types/State';
+import { RouterState } from 'src/types/State';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import StatefulSearchBar from './StatefulSearchBar';
 

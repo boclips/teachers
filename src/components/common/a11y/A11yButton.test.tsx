@@ -1,6 +1,6 @@
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
-import { noOp } from '../../../utils';
+import { noOp } from 'src/utils';
 import { A11yButton, Props } from './A11yButton';
 
 const getComponent = (props?: Partial<Props>): ReactWrapper => {

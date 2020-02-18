@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Links } from '../../types/Links';
+import { Links } from 'src/types/Links';
 import Utm from '../account/Utm';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 

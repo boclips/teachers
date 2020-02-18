@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { AgeRange } from '../../../types/AgeRange';
+import { AgeRange } from 'src/types/AgeRange';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 
 interface Props {

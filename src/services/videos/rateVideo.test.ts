@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
-import { video177 } from '../../../test-support/api-responses';
-import { VideoFactory } from '../../../test-support/factories';
+import { video177 } from 'test-support/api-responses';
+import { VideoFactory } from 'test-support/factories';
 import rateVideo from './rateVideo';
 
 let queryParams = null;

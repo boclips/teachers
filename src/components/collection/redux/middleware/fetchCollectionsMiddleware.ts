@@ -1,11 +1,11 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import { fetchPageableCollections } from '../../../../services/collections/fetchCollections';
-import { LinksState } from '../../../../types/State';
-import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
+import { sideEffect } from 'src/app/redux/actions';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { fetchPageableCollections } from 'src/services/collections/fetchCollections';
+import { LinksState } from 'src/types/State';
+import { Links } from 'src/types/Links';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-import { Links } from '../../../../types/Links';
+import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
 
 export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
   const links: Links = store.getState().links.entries;

@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { AgeRange } from '../../types/AgeRange';
+import { AgeRange } from 'src/types/AgeRange';
 import { SelectAgeRange } from './SelectAgeRange';
 
 describe('SelectAgeRange', () => {

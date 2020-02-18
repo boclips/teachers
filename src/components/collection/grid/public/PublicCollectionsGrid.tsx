@@ -1,6 +1,6 @@
 import { Icon } from 'antd';
 import React from 'react';
-import collectionsSvg from '../../../../../resources/images/our-collections.svg';
+import collectionsSvg from 'resources/images/our-collections.svg';
 import PageableCollectionCardList from '../../card/list/PageableCollectionCardList';
 
 interface Props {

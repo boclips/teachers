@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { UserState } from '../../../types/State';
-import './MobileBottomNavbar.less';
+import { UserState } from 'src/types/State';
 import { NavbarButtonsContainer } from './NavbarButtonsContainer';
+import './MobileBottomNavbar.less';
 
 interface StateProps {
   authorized: boolean;

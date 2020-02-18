@@ -1,9 +1,9 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
+import { CollectionTitle } from 'src/components/collection/title/CollectionTitle';
+import { CollectionHeader } from 'src/components/collection/details/header/CollectionHeader';
 import App from '../../src/app/App';
-import { CollectionHeader } from '../../src/components/collection/details/header/CollectionHeader';
-import { CollectionTitle } from '../../src/components/collection/title/CollectionTitle';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';

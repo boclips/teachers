@@ -1,12 +1,12 @@
 import { Col } from 'antd';
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { VideoCollection } from '../../../../types/VideoCollection';
+import { FiniteGrid } from 'src/components/common/Grid/FiniteGrid';
+import { InfiniteGrid } from 'src/components/common/Grid/InfiniteGrid';
+import { VideoCollection } from 'src/types/VideoCollection';
 import CollectionsLoaded from '../../CollectionsLoaded';
 import { CollectionCardSkeleton } from '../CollectionCard';
 import CollectionCardContainer from '../CollectionCardContainer';
-import { FiniteGrid } from '../../../common/Grid/FiniteGrid';
-import { InfiniteGrid } from '../../../common/Grid/InfiniteGrid';
 import { PageableCollectionCardListProps } from './PageableCollectionCardList';
 
 interface InfiniteScrollProps {

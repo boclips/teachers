@@ -2,12 +2,12 @@ import { Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
-import { AgeRange } from '../../../types/AgeRange';
-import { Range } from '../../../types/Range';
-import { SubjectState } from '../../../types/State';
-import { Subject } from '../../../types/Subject';
-import { SubjectsForm } from '../../account/form/SubjectsForm';
+import { AgeRange } from 'src/types/AgeRange';
+import { Range } from 'src/types/Range';
+import { SubjectState } from 'src/types/State';
+import { Subject } from 'src/types/Subject';
 import { AgeRangeSlider } from '../../common/AgeRangeSlider';
+import { SubjectsForm } from '../../account/form/SubjectsForm';
 import DurationSlider from './DurationSlider';
 
 export interface FilterFormEditableFields {

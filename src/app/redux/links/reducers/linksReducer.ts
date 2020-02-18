@@ -1,7 +1,7 @@
-import { Links } from '../../../../types/Links';
+import State from 'src/types/State';
+import { Links } from 'src/types/Links';
 import { ActionHandler, actionHandler } from '../../createReducer';
 import { storeLinksAction } from '../actions/storeLinksAction';
-import State from '../../../../types/State';
 import { fetchLinksAction } from '../actions/fetchLinksAction';
 import { fetchLinksFailureAction } from '../actions/fetchLinksFailureAction';
 

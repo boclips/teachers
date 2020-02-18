@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import State from '../../../types/State';
-import { Video } from '../../../types/Video';
-import { VideoCollection } from '../../../types/VideoCollection';
+import State from 'src/types/State';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 import {
   fetchVideosByIdsAction,
   VideosForCollectionRequest,

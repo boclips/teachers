@@ -4,12 +4,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import { push } from 'connected-react-router';
-import {
-  LinksFactory,
-  MockStoreFactory,
-} from '../../../test-support/factories';
-import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
-import { Link } from '../../types/Link';
+import { LinksFactory, MockStoreFactory } from 'test-support/factories';
+import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
+import { Link } from 'src/types/Link';
 import PrivateRoute from './PrivateRoute';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;

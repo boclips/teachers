@@ -6,13 +6,13 @@ import {
   VideoCollectionLinksFactory,
   CollectionsFactory,
   MockStoreFactory,
-} from '../../../../test-support/factories';
-import { Link } from '../../../types/Link';
-import { createBoclipsStore } from '../../../app/redux/store';
+} from 'test-support/factories';
+import { Link } from 'src/types/Link';
+import { createBoclipsStore } from 'src/app/redux/store';
 import {
   renderWithCreatedStore,
   renderWithStore,
-} from '../../../../test-support/renderWithStore';
+} from 'test-support/renderWithStore';
 import { EditCollectionButton } from './EditCollectionButton';
 
 describe('EditCollectionButton', () => {

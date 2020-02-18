@@ -1,11 +1,11 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
-import addToCollection from '../../../../services/collections/addToCollection';
-import { Video } from '../../../../types/Video';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
+import { sideEffect } from 'src/app/redux/actions';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import addToCollection from 'src/services/collections/addToCollection';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 import { onAddToCollectionAction } from '../actions/onAddToCollectionAction';
+import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 
 export function onAddToCollection(
   store: MiddlewareAPI,

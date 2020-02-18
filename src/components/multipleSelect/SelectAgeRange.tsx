@@ -1,6 +1,6 @@
 import { SelectValue } from 'antd/lib/select';
 import React from 'react';
-import { AgeRange } from '../../types/AgeRange';
+import { AgeRange } from 'src/types/AgeRange';
 import MultiSelect from '../common/MultiSelect';
 
 interface Props {

@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { UserProfile } from '../../../services/users/UserProfile';
-import { Country } from '../../../types/Country';
-import { Links } from '../../../types/Links';
-import State from '../../../types/State';
-import { Subject } from '../../../types/Subject';
+import { UserProfile } from 'src/services/users/UserProfile';
+import { Country } from 'src/types/Country';
+import { Links } from 'src/types/Links';
+import State from 'src/types/State';
+import { Subject } from 'src/types/Subject';
 import { fetchCountriesAction } from '../onboarding/redux/actions/fetchCountriesAction';
-import './AccountSettings.less';
 import { EditProfileForm } from './EditProfileForm';
 import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
 import { Profile } from './Profile';
 import SchoolSettings from './SchoolSettings';
+import './AccountSettings.less';
 
 interface AccountProps {
   userProfile: UserProfile;

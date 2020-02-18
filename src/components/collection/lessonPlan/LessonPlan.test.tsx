@@ -2,10 +2,10 @@ import { Button } from 'antd';
 import { shallow } from 'enzyme';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { AttachmentFactory } from '../../../../test-support/factories';
-import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { Attachment } from '../../../types/Attachment';
+import { AttachmentFactory } from 'test-support/factories';
+import { analyticsMock } from 'test-support/getAnalyticsMock';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Attachment } from 'src/types/Attachment';
 import { LessonPlan } from './LessonPlan';
 
 jest.mock('../../../services/analytics/AnalyticsFactory');

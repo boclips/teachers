@@ -7,16 +7,14 @@ import {
   SubjectsFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from '../../../../test-support/factories';
-import { AgeRange } from '../../../types/AgeRange';
-import { Link } from '../../../types/Link';
-import { createBoclipsStore } from '../../../app/redux/store';
-import { renderWithCreatedStore } from '../../../../test-support/renderWithStore';
-import MockFetchVerify, {
-  axiosMock,
-} from '../../../../test-support/MockFetchVerify';
-import { VideoCollection } from '../../../types/VideoCollection';
-import eventually from '../../../../test-support/eventually';
+} from 'test-support/factories';
+import { AgeRange } from 'src/types/AgeRange';
+import { Link } from 'src/types/Link';
+import { createBoclipsStore } from 'src/app/redux/store';
+import { renderWithCreatedStore } from 'test-support/renderWithStore';
+import MockFetchVerify, { axiosMock } from 'test-support/MockFetchVerify';
+import { VideoCollection } from 'src/types/VideoCollection';
+import eventually from 'test-support/eventually';
 import { EditCollectionForm } from './EditCollectionForm';
 
 jest.mock('antd/lib/slider', () =>

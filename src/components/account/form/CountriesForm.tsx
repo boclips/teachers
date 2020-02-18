@@ -1,7 +1,7 @@
 import { Form, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { Country } from '../../../types/Country';
+import { Country } from 'src/types/Country';
 import MultiSelect from '../../common/MultiSelect';
 import '../../common/MultiSelect.less';
 

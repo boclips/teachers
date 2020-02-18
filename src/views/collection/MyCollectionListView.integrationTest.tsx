@@ -10,13 +10,13 @@ import {
   EntitiesFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from '../../../test-support/factories';
-import MockFetchVerify from '../../../test-support/MockFetchVerify';
-import { renderWithStore } from '../../../test-support/renderWithStore';
+} from 'test-support/factories';
+import MockFetchVerify from 'test-support/MockFetchVerify';
+import { renderWithStore } from 'test-support/renderWithStore';
+import { collectionHandlers } from 'src/components/collection/redux/reducers/collectionsReducer';
+import { Link } from 'src/types/Link';
+import { VideoCollection } from 'src/types/VideoCollection';
 import collectionMiddleware from '../../components/collection/redux/middleware/collectionMiddleware';
-import { collectionHandlers } from '../../components/collection/redux/reducers/collectionsReducer';
-import { Link } from '../../types/Link';
-import { VideoCollection } from '../../types/VideoCollection';
 import MyCollectionListView from './MyCollectionListView';
 
 describe('MyCollectionListView', () => {

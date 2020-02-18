@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import HeaderLogoSVG from '../../../resources/images/recommendations-logo.svg';
-import { SectionHeader } from '../../components/common/SectionHeader';
-import VerticalVideoList from '../../components/video/list/VerticalVideoList';
-import { fetchPromotedVideosAction } from '../../components/video/redux/actions/fetchPromotedVideosAction';
-import { getPromotedVideoIds } from '../../components/video/redux/reducers/videoReducer';
-import State from '../../types/State';
+import HeaderLogoSVG from 'resources/images/recommendations-logo.svg';
+import { SectionHeader } from 'src/components/common/SectionHeader';
+import { fetchPromotedVideosAction } from 'src/components/video/redux/actions/fetchPromotedVideosAction';
+import { getPromotedVideoIds } from 'src/components/video/redux/reducers/videoReducer';
+import State from 'src/types/State';
 import './HomeViewVideoList.less';
-import { VideoType } from '../../types/Video';
+import { VideoType } from 'src/types/Video';
+import VerticalVideoList from '../../components/video/list/VerticalVideoList';
 
 interface DispatchProps {
   fetchPromotedVideos: () => void;

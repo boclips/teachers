@@ -1,4 +1,4 @@
-import { videos } from '../../../test-support/api-responses';
+import { videos } from 'test-support/api-responses';
 import { parseVideosResponse } from './parseVideosResponse';
 
 test('parses a response from video-service to SearchResults', () => {

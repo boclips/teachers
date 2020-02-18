@@ -2,13 +2,13 @@ import { mount } from 'enzyme';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { By } from '../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   EntitiesFactory,
   LinksStateValueFactory,
   MockStoreFactory,
   VideoFactory,
-} from '../../../test-support/factories';
+} from 'test-support/factories';
 import VerticalVideoList from '../../components/video/list/VerticalVideoList';
 import { HomeViewVideoList } from './HomeViewVideoList';
 

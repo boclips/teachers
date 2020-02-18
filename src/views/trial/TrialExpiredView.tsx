@@ -4,9 +4,9 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
-import SadTeacher from '../../../resources/images/sad-teacher.svg';
+import SadTeacher from 'resources/images/sad-teacher.svg';
+import State from 'src/types/State';
 import PageLayout from '../../components/layout/PageLayout';
-import State from '../../types/State';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
 export const TrialExpiredView = () => {

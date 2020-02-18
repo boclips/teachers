@@ -2,13 +2,13 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { By } from '../../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
-import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
+} from 'test-support/factories';
+import { requestSsoAuthentication } from 'src/app/redux/authentication/actions/requestSsoAuthentication';
 import CreateAccountForm from './CreateAccountForm';
 
 jest.mock('boclips-js-security');

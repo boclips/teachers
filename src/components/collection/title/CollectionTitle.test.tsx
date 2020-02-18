@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { render } from '@testing-library/react';
-import { VideoCollectionFactory } from '../../../../test-support/factories';
+import { VideoCollectionFactory } from 'test-support/factories';
 import { CollectionTitle } from './CollectionTitle';
 
 const renderCollectionTitle = collection =>

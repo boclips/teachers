@@ -1,4 +1,4 @@
-import { Subject } from '../../types/Subject';
+import { Subject } from 'src/types/Subject';
 import { getBoclipsClient } from '../apiClient';
 
 export async function fetchSubjects(): Promise<Subject[]> {

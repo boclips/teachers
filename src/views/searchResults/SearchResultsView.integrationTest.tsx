@@ -8,10 +8,10 @@ import {
   collectionsResponse,
   video177,
   videos as videoResults,
-} from '../../../test-support/api-responses';
-import ApiStub from '../../../test-support/ApiStub';
-import { By } from '../../../test-support/By';
-import eventually from '../../../test-support/eventually';
+} from 'test-support/api-responses';
+import ApiStub from 'test-support/ApiStub';
+import { By } from 'test-support/By';
+import eventually from 'test-support/eventually';
 import {
   CollectionSearchFactory,
   EntitiesFactory,
@@ -26,20 +26,20 @@ import {
   SubjectFactory,
   CollectionsFactory,
   LinksStateValueFactory,
-} from '../../../test-support/factories';
-import { SearchPage } from '../../../test-support/page-objects/SearchPage';
+} from 'test-support/factories';
+import { SearchPage } from 'test-support/page-objects/SearchPage';
 import {
   renderWithCreatedStore,
   renderWithStore,
-} from '../../../test-support/renderWithStore';
-import { findElement } from '../../../testSetup';
-import { ClosableTag } from '../../components/common/tags/Tag';
-import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
-import DurationSlider from '../../components/searchResults/filters/DurationSlider';
+} from 'test-support/renderWithStore';
+import { findElement } from 'src/../testSetup';
+import { ClosableTag } from 'src/components/common/tags/Tag';
+import { getBoclipsClient } from 'src/services/apiClient';
+import { Link } from 'src/types/Link';
+import { createBoclipsStore } from 'src/app/redux/store';
 import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/filters/FilterButton';
-import { getBoclipsClient } from '../../services/apiClient';
-import { Link } from '../../types/Link';
-import { createBoclipsStore } from '../../app/redux/store';
+import DurationSlider from '../../components/searchResults/filters/DurationSlider';
+import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
 import SearchResultsView from './SearchResultsView';
 
 beforeEach(() => {

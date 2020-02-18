@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 import { useEffect } from 'react';
 import { replace } from 'connected-react-router';
 import querystring from 'query-string';
-import State from '../types/State';
+import State from 'src/types/State';
 
 export const useRefererIdInjector = () => {
   const dispatch = useDispatch();

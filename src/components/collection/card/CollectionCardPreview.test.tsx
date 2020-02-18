@@ -1,11 +1,11 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import { By } from '../../../../test-support/By';
+import { By } from 'test-support/By';
 import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
-} from '../../../../test-support/factories';
+} from 'test-support/factories';
 import { CollectionCardPreview } from './CollectionCardPreview';
 
 describe('Rendering a full grid of video previews', () => {

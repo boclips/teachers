@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
 import { mount } from 'enzyme';
 import React from 'react';
-import { Breakpoint } from '../../../types/MediaBreakpoints';
+import { Breakpoint } from 'src/types/MediaBreakpoints';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from './withMediaBreakPoint';

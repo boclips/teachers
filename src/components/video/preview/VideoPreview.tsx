@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import State from '../../../types/State';
-import { Video } from '../../../types/Video';
+import State from 'src/types/State';
+import { Video } from 'src/types/Video';
 import VideoPlayer from '../player/VideoPlayer';
 import { getVideoById } from '../redux/reducers/videoReducer';
 

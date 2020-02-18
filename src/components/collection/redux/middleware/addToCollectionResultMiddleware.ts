@@ -1,8 +1,8 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from '../../../../app/redux/actions';
-import { Video } from '../../../../types/Video';
-import { VideoCollection } from '../../../../types/VideoCollection';
-import NotificationFactory from '../../../common/NotificationFactory';
+import { sideEffect } from 'src/app/redux/actions';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
+import NotificationFactory from 'src/components/common/NotificationFactory';
 import { onAddToCollectionAction } from '../actions/onAddToCollectionAction';
 
 export const ERROR_DESCRIPTION = 'could not be added to the collection';

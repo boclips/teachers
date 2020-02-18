@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-import noResultsIllustration from '../../../../resources/images/no-results-illustration.png';
+import noResultsIllustration from 'resources/images/no-results-illustration.png';
 import './NoResultsView.less';
 
 interface Props {

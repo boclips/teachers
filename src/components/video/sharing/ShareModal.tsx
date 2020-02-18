@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import State from '../../../types/State';
-import { Segment, Video } from '../../../types/Video';
+import { Segment, Video } from 'src/types/Video';
+import State from 'src/types/State';
 import Bodal from '../../common/Bodal';
 import CopyLinkButton from '../buttons/copyLink/CopyLinkButton';
 import { GoogleClassroomShareButton } from '../buttons/gclassroom/GoogleClassroomShareButton';

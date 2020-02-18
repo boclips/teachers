@@ -5,7 +5,8 @@ import Checkbox from 'antd/lib/checkbox';
 import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import State from '../../../types/State';
+import { VideoCollection } from 'src/types/VideoCollection';
+import State from 'src/types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
 import { AgeRangeSlider } from '../../common/AgeRangeSlider';
 import './EditCollectionForm.less';
@@ -15,7 +16,6 @@ import {
   EditCollectionRequest,
   VideoCollectionChanges,
 } from '../redux/actions/editCollectionAction';
-import { VideoCollection } from '../../../types/VideoCollection';
 import { RemoveCollectionButton } from './RemoveCollectionButton';
 
 interface Props extends FormComponentProps {
