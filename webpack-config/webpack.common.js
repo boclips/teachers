@@ -23,6 +23,9 @@ module.exports = {
         __dirname,
         '../resources/icons.ts',
       ),
+      'src': path.resolve(__dirname, '../src'),
+      'resources': path.resolve(__dirname, '../resources'),
+      'test-support': path.resolve(__dirname, '../test-support'),
     },
   },
   module: {

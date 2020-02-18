@@ -11,6 +11,12 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "./src",
+    "paths": {
+      "src/*": ["*"],
+      "resources/*": ["../resources/*"],
+      "test-support/*": ["../test-support/*"]
+    }
   }
 }

@@ -50,3 +50,26 @@ Icons we wish to include in our bundle must be listed in `resources/icons.ts`.
 
 The list of icons contain the icons we actually use, as well as default icons used by ant-d components.
 Should default icons not render, then they need to be activated in `icons.ts`.
+
+### Imports
+
+As the project grows, so do the inter-dependencies between files. Relative paths used in import statements
+are OK on a small scale, but this project is past that point now.
+
+There are three aliases that have been configured for this project:
+- `src` which is an alias to `./src`
+- `resources` which is an alias to `./resources` 
+- `test-support` which is an alias to `./test-support`
+
+These can be referenced in a TypeScript file using the following syntax:
+```typescript
+import { MyComponent } from 'src/components/MyComponent';
+```
+
+Or in a LESS file using the following syntax:
+```less
+@import "~resources/less/app.less";
+```
+
+IntelliJ **should** automatically use these aliases when you import new components, and should not show
+any errors for these paths. However, if it does you should ensure that the webpack plugin is pointing to the common webpack configuration file.
