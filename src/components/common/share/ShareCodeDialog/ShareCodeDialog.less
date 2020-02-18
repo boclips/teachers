@@ -1,4 +1,4 @@
-@import "../../../../resources/styles/_colours";
+@import '../../../../../resources/styles/_colours';
 
 .share-code-dialog {
   .ant-modal-content .ant-modal-body {
@@ -13,7 +13,7 @@
     width: 104px;
     margin-right: 10px;
 
-    .share-code-dialog--invalid & {
+    &--invalid {
       border-color: @dark-red;
     }
   }
@@ -23,10 +23,5 @@
     margin: 0 0 0 5px;
     font-size: 14px;
     line-height: 21px;
-    visibility: hidden;
-
-    .share-code-dialog--invalid & {
-      visibility: visible;
-    }
   }
 }

@@ -11,7 +11,7 @@ import { fetchVideosByIdsAction } from '../../video/redux/actions/fetchVideosByI
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 import { getCollectionById } from '../redux/reducers/collectionsReducer';
-import { CollectionShareCodeDialog } from '../../video/ShareCodeDialog/CollectionShareCodeDialog';
+import { CollectionShareCodeDialog } from '../sharing/CollectionShareCodeDialog/CollectionShareCodeDialog';
 import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { CollectionHeader } from './header/CollectionHeader';

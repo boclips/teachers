@@ -11,7 +11,7 @@ import {
   LinksFactory,
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
+} from '../../../../../test-support/factories';
 import { VideoShareCodeDialog } from './VideoShareCodeDialog';
 
 describe('ShareCodeDialog', () => {
@@ -95,6 +95,8 @@ describe('ShareCodeDialog', () => {
         const shareField = wrapper.getByPlaceholderText('Enter code');
         expect(button).toBeInTheDocument();
         expect(shareField).toBeInTheDocument();
+
+        expect(wrapper.getByText('Invalid code')).not.toBeVisible();
 
         await fireEvent.change(shareField, { target: { value: shareCode } });
         await fireEvent.click(button);

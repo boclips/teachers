@@ -7,7 +7,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
-import { VideoShareCodeDialog } from '../../components/video/ShareCodeDialog/VideoShareCodeDialog';
+import { VideoShareCodeDialog } from '../../components/video/sharing/VideoShareCodeDialog/VideoShareCodeDialog';
 import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
 import { useRefererIdInjector } from '../../hooks/useRefererIdInjector';
 

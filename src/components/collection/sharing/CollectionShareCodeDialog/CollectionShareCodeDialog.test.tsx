@@ -1,14 +1,14 @@
 import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
 import React from 'react';
 import { createMemoryHistory } from 'history';
-import { MockStoreFactory } from '../../../../test-support/factories';
-import MockFetchVerify from '../../../../test-support/MockFetchVerify';
+import { MockStoreFactory } from '../../../../../test-support/factories';
+import MockFetchVerify from '../../../../../test-support/MockFetchVerify';
 import {
   collectionResponse,
   video177,
-} from '../../../../test-support/api-responses';
-import { createBoclipsStore } from '../../../app/redux/store';
-import { renderWithCreatedStore } from '../../../../test-support/renderWithStore';
+} from '../../../../../test-support/api-responses';
+import { createBoclipsStore } from '../../../../app/redux/store';
+import { renderWithCreatedStore } from '../../../../../test-support/renderWithStore';
 import { CollectionShareCodeDialog } from './CollectionShareCodeDialog';
 
 describe('CollectionShareCodeDialog', () => {
@@ -138,7 +138,7 @@ describe('CollectionShareCodeDialog', () => {
         expect(button).toBeInTheDocument();
         expect(shareField).toBeInTheDocument();
 
-        expect(wrapper.queryByText('Invalid code')).toBeNull();
+        expect(wrapper.getByText('Invalid code')).not.toBeVisible();
 
         await fireEvent.change(shareField, { target: { value: shareCode } });
         await fireEvent.click(button);
@@ -149,7 +149,6 @@ describe('CollectionShareCodeDialog', () => {
               wrapper.getByText('View collection'),
             ),
           ).resolves.toEqual(true);
-          expect(wrapper.queryByText('Invalid code')).toBeNull();
         } else {
           await expect(
             waitForElementToBeRemoved(() =>
