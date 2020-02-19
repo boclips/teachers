@@ -1,5 +1,9 @@
 import { actionCreatorFactory } from 'src/app/redux/actions';
 
+interface SearchPathname {
+  pathname?: string;
+}
+
 interface UpdateDurationFilter {
   duration_min: number;
   duration_max: number;
@@ -32,7 +36,8 @@ export type UpdateSearchParamsRequest =
   | UpdateAgeRangeFilter
   | UpdateSubjectFilter
   | UpdateSearchQuery
-  | UpdateSearchPage;
+  | UpdateSearchPage
+  | SearchPathname;
 
 export const updateSearchParamsAction = actionCreatorFactory<
   UpdateSearchParamsRequest

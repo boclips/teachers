@@ -3,15 +3,15 @@ import React from 'react';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
-} from '../../common/higerOrderComponents/withMediaBreakPoint';
-import AgeRangeFilterTag from './AgeRangeFilterTag';
+} from '../../../common/higerOrderComponents/withMediaBreakPoint';
+import AgeRangeFilterTag from '../../filters/AgeRangeFilterTag';
 import AppliedFiltersProvider, {
   AppliedFiltersInjectedProps,
-} from './AppliedFiltersProvider';
-import ClearAllButton from './ClearAllButton';
-import DurationFilterTag from './DurationFilterTag';
-import SubjectFilterTag from './SubjectFilterTag';
+} from '../../filters/AppliedFiltersProvider';
+import ClearAllButton from '../../filters/ClearAllButton';
+import DurationFilterTag from '../../filters/DurationFilterTag';
 import './FiltersBar.less';
+import SubjectFilterTag from '../../filters/SubjectFilterTag';
 
 export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
   public render() {

@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { By } from 'test-support/By';
 import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { setWidth } from 'test-support/setWidth';
+import SubjectFilterTag from '../../filters/SubjectFilterTag';
 import FiltersBarWrapper, { FiltersBar } from './FiltersBar';
 import FilterBarWrapper from './FiltersBar';
-import SubjectFilterTag from './SubjectFilterTag';
 
 it('does not render anything if there are no filters', () => {
   const store = MockStoreFactory.sample({

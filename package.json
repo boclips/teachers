@@ -44,6 +44,7 @@
     "@storybook/addon-console": "^1.2.1",
     "@storybook/addon-viewport": "^5.3.13",
     "@storybook/react": "^5.3.13",
+    "@testing-library/dom": "^6.12.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@types/enzyme": "^3.10.4",

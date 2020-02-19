@@ -9,11 +9,11 @@ import { setWidth } from 'test-support/setWidth';
 import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import EventSimulator from 'test-support/EventSimulator';
 import { By } from 'test-support/By';
-import { SubjectsForm } from '../../account/form/SubjectsForm';
-import { AgeRangeSlider } from '../../common/AgeRangeSlider';
-import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
-import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
-import DurationSlider from './DurationSlider';
+import { SubjectsForm } from '../../../account/form/SubjectsForm';
+import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
+import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
+import { bulkUpdateSearchParamsAction } from '../../../searchResults/redux/actions/updateSearchParametersActions';
+import DurationSlider from '../../../searchResults/filters/DurationSlider';
 import FilterButtonConnected, {
   FilterButtonWithMediaBreakPoint as FilterButton,
 } from './FilterButton';

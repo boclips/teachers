@@ -322,7 +322,7 @@ export class RouterFactory {
     return Object.freeze({
       location: {
         pathname: '',
-        search: `?q=hi`,
+        search: `?q=hsgsfi`,
         hash: '',
         state: null,
       },

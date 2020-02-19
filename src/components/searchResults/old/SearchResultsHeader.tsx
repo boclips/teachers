@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
+import SearchResultsCount from '../SearchResultsCount';
 import FilterButton from './filters/FilterButton';
-import SearchResultsCount from './SearchResultsCount';
 import './SearchResultsHeader.less';
 
 interface Props {

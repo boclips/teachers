@@ -37,7 +37,7 @@ import { ClosableTag } from 'src/components/common/tags/Tag';
 import { getBoclipsClient } from 'src/services/apiClient';
 import { Link } from 'src/types/Link';
 import { createBoclipsStore } from 'src/app/redux/store';
-import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/filters/FilterButton';
+import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/old/filters/FilterButton';
 import DurationSlider from '../../components/searchResults/filters/DurationSlider';
 import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
 import SearchResultsView from './SearchResultsView';

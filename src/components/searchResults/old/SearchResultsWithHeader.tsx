@@ -1,6 +1,6 @@
 import { Row } from 'antd';
 import React from 'react';
-import { SearchResultsCardList } from '../searchResults/SeachResultsCardList';
+import { SearchResultsCardList } from '../SeachResultsCardList';
 import FiltersBar from './filters/FiltersBar';
 import SearchResultsHeader from './SearchResultsHeader';
 import SearchResultsProps from './SearchResultsProps';

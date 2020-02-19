@@ -24,6 +24,7 @@ import SearchResultsView from '../searchResults/SearchResultsView';
 import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import { TrialExpiredView } from '../trial/TrialExpiredView';
 import { ErrorView } from '../error/ErrorView';
+import { ConnectedNewSearchResultsView } from '../searchResults/NewSearchResultsView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
 const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
@@ -70,6 +71,7 @@ interface Props {
 }
 
 class BoclipsRouter extends Component<Props & StateProps> {
+  // TODO(AG/EV) REMOVE /new-filters PATH AFTER NEW FILTERS ARE RELEASED!
   public render() {
     return (
       <ConnectedRouter history={this.props.history}>
@@ -85,6 +87,10 @@ class BoclipsRouter extends Component<Props & StateProps> {
                 <PrivateRoute path="/videos" component={SearchResultsView} />
               </Switch>
             </Route>
+            <PrivateRoute
+              path="/new-filters"
+              component={ConnectedNewSearchResultsView}
+            />
             <PrivateRoute
               path="/onboarding"
               component={OnboardingView}

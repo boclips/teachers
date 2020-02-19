@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { FiniteGrid } from 'src/components/common/Grid/FiniteGrid';
 import {
-  getCollectionsFromSearchResult,
-  getVideosFromSearchResult,
-} from 'src/components/searchBar/redux/reducers/searchReducer';
-import { updatePageAction } from 'src/components/searchResults/redux/actions/updatePageAction';
-import { VideoCardsPlaceholder } from 'src/components/searchResults/VideoCardsPlaceholder';
-import { Links } from 'src/types/Links';
-import {
   CollectionSearchResult,
   VideoSearchResult,
 } from 'src/types/SearchResults';
 import State from 'src/types/State';
-import SearchResultsWithHeader from '../../components/searchResults/SearchResultsWithHeader';
+import {
+  getCollectionsFromSearchResult,
+  getVideosFromSearchResult,
+} from '../../components/searchBar/redux/reducers/searchReducer';
+import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
+import SearchResultsWithHeader from '../../components/searchResults/old/SearchResultsWithHeader';
+import { VideoCardsPlaceholder } from '../../components/searchResults/VideoCardsPlaceholder';
+import { Links } from '../../types/Links';
 import PageLayout from '../../components/layout/PageLayout';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';

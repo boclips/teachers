@@ -7,12 +7,14 @@ import {
   PageChangeRequest,
   updatePageAction,
 } from '../actions/updatePageAction';
+import { getSearchPathname } from './updateSearchParametersMiddleware';
 
 export function onUpdatePage(
   store: MiddlewareAPI<any, State>,
   request: PageChangeRequest,
 ) {
-  const query = store.getState().router.location.search;
+  const { search: query, pathname } = store.getState().router.location;
+
   const parsedQuery = queryString.parse(query);
   const newQuery = {
     ...parsedQuery,
@@ -22,7 +24,8 @@ export function onUpdatePage(
 
   store.dispatch(
     push(
-      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+      getSearchPathname(pathname) +
+        queryString.stringify(newQuery, { arrayFormat: 'comma' }),
     ),
   );
 }

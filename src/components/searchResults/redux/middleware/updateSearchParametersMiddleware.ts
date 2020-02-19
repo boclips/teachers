@@ -13,11 +13,16 @@ import {
 } from '../actions/updateSearchParametersActions';
 import { bulkOverrideSearchParamsAction } from './../actions/updateSearchParametersActions';
 
+export function getSearchPathname(pathname) {
+  return pathname === '/new-filters' ? '/new-filters?' : '/videos?';
+}
+
+// TODO() rethink this whole file and refactor/rename
 export function onUpdateSearchParameter(
   store: MiddlewareAPI<any, State>,
   request: UpdateSearchParamsRequest,
 ) {
-  const query = store.getState().router.location.search;
+  const { search: query, pathname } = store.getState().router.location;
   const parsedQuery = queryString.parse(query);
   const newQuery = {
     ...parsedQuery,
@@ -27,7 +32,8 @@ export function onUpdateSearchParameter(
 
   store.dispatch(
     push(
-      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+      getSearchPathname(pathname) +
+        queryString.stringify(newQuery, { arrayFormat: 'comma' }),
     ),
   );
 }
@@ -56,7 +62,10 @@ export function onBulkUpdateSearchParameter(
 
   store.dispatch(
     push(
-      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+      getSearchPathname(pathname) +
+        queryString.stringify(newQuery, {
+          arrayFormat: 'comma',
+        }),
     ),
   );
 }
@@ -65,6 +74,7 @@ export function onBulkUpdateOverrideParams(
   store: MiddlewareAPI<any, State>,
   request: UpdateSearchParamsRequest[],
 ) {
+  const { pathname } = store.getState().router.location;
   const newQuery = {
     ...request.reduce((acc, value: any) => ({ ...acc, ...value }), {}),
     page: 1,
@@ -72,13 +82,14 @@ export function onBulkUpdateOverrideParams(
 
   store.dispatch(
     push(
-      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+      getSearchPathname(pathname) +
+        queryString.stringify(newQuery, { arrayFormat: 'comma' }),
     ),
   );
 }
 
 export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
-  const query = store.getState().router.location.search;
+  const { search: query, pathname } = store.getState().router.location;
   const parsedQuery = queryString.parse(query);
 
   const clearAllFiltersQuery: UpdateAllFilters = {
@@ -97,7 +108,8 @@ export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
 
   store.dispatch(
     push(
-      '/videos?' + queryString.stringify(newQuery, { arrayFormat: 'comma' }),
+      getSearchPathname(pathname) +
+        queryString.stringify(newQuery, { arrayFormat: 'comma' }),
     ),
   );
 }

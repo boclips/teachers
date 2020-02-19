@@ -5,14 +5,14 @@ import { Dispatch } from 'redux';
 import { Range } from 'src/types/Range';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
-import Bodal from '../../common/Bodal';
+import Bodal from '../../../common/Bodal';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
-} from '../../common/higerOrderComponents/withMediaBreakPoint';
-import { bulkUpdateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
+} from '../../../common/higerOrderComponents/withMediaBreakPoint';
+import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import AppliedFiltersProvider, {
   AppliedFiltersInjectedProps,
-} from './AppliedFiltersProvider';
+} from '../../filters/AppliedFiltersProvider';
 import './FilterButton.less';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 

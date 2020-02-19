@@ -1,0 +1,25 @@
+@import '../../../../../resources/styles/_colours.less';
+
+.filters-bar {
+  padding-top: 2px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  &__headings {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    color: @blue-shade-6;
+    font-weight: bold;
+    height: 24px;
+    font-size: 16px;
+  }
+
+  &__tags {
+    padding-top: 2px;
+    .tag__close svg path {
+      fill: #00217d;
+    }
+  }
+}
