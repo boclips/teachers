@@ -4,17 +4,14 @@ import {
   UserProfileFactory,
   VideoCollectionFactory,
 } from 'test-support/factories';
-import { CollectionShareModal } from 'src/components/collection/sharing/CollectionShareModal/CollectionShareModal';
+import { fireEvent } from '@testing-library/react';
+import { CollectionShareButton } from './CollectionShareButton';
 
-describe('Collection Share modal', () => {
+describe('CollectionShareButton', () => {
   it('displays the teacher share code', () => {
     const collection = VideoCollectionFactory.sample();
     const { getByText } = renderWithStore(
-      <CollectionShareModal
-        collection={collection}
-        handleClose={() => {}}
-        visible={true}
-      />,
+      <CollectionShareButton collection={collection} />,
       {
         initialState: {
           user: UserProfileFactory.sample({
@@ -23,6 +20,10 @@ describe('Collection Share modal', () => {
         },
       },
     );
+
+    const shareButton = getByText('Share');
+    expect(shareButton).toBeVisible();
+    fireEvent.click(shareButton);
 
     expect(
       getByText('Share this code with the link for access:'),
@@ -33,11 +34,7 @@ describe('Collection Share modal', () => {
   it('has a copy link and google classroom button', () => {
     const collection = VideoCollectionFactory.sample();
     const { getByText } = renderWithStore(
-      <CollectionShareModal
-        collection={collection}
-        handleClose={() => {}}
-        visible={true}
-      />,
+      <CollectionShareButton collection={collection} />,
       {
         initialState: {
           user: UserProfileFactory.sample({
@@ -46,6 +43,10 @@ describe('Collection Share modal', () => {
         },
       },
     );
+
+    const shareButton = getByText('Share');
+    expect(shareButton).toBeVisible();
+    fireEvent.click(shareButton);
 
     expect(getByText('Copy link')).toBeVisible();
     expect(getByText('Send to Google Classroom')).toBeVisible();

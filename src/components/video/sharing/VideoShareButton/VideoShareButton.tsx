@@ -1,25 +1,28 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Segment, Video } from 'src/types/Video';
+import '../../../common/share/ShareButton/ShareButton.less';
+import { ShareForm } from 'src/components/video/sharing/ShareForm';
+import { CopyLinkButton } from 'src/components/video/buttons/copyLink/CopyLinkButton';
+import { GoogleClassroomShareButton } from 'src/components/video/buttons/gclassroom/GoogleClassroomShareButton';
+import { useMediaBreakPoint } from 'src/hooks/useMediaBreakPoint';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { getShareableVideoLink } from 'src/services/links/getShareableVideoLink';
-import { useMediaBreakPoint } from '../../../../hooks/useMediaBreakPoint';
-import MediaBreakpoints from '../../../../types/MediaBreakpoints';
+import { ShareButton } from 'src/components/common/share/ShareButton/ShareButton';
 import State from '../../../../types/State';
-import { Segment, Video } from '../../../../types/Video';
-import Bodal from '../../../common/Bodal';
-import { CopyLinkButton } from '../../buttons/copyLink/CopyLinkButton';
-import { GoogleClassroomShareButton } from '../../buttons/gclassroom/GoogleClassroomShareButton';
-import { ShareForm } from '../ShareForm';
-import './VideoShareModal.less';
 
 interface Props {
   video: Video;
-  handleClose: () => void;
-  visible: boolean;
 }
 
-export const VideoShareModal = React.memo<Props>(props => {
+export const VideoShareButton = React.memo<Props>(props => {
+  const isAuthenticated = useSelector((state: State) => !!state.user);
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   const [segment, setSegment] = useState<Segment>(null);
   const user = useSelector((state: State) => state.user);
   const width = useMediaBreakPoint();
@@ -48,19 +51,9 @@ export const VideoShareModal = React.memo<Props>(props => {
   const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
 
   return (
-    <Bodal
+    <ShareButton
       title={`Share ${mobileView ? 'video' : props.video.title}`}
-      visible={props.visible}
-      onCancel={props.handleClose}
-      footer={
-        <section className="share-code">
-          <p className="share-code__explainer">
-            Share this code with the link for access:
-          </p>
-          <span className="share-code__code">{user.shareCode}</span>
-        </section>
-      }
-      wrapClassName="share-modal"
+      shareCode={user.shareCode}
     >
       <ShareForm video={props.video} onSegmentChange={setSegment} />
       <div className="share-buttons">
@@ -72,6 +65,6 @@ export const VideoShareModal = React.memo<Props>(props => {
           onClick={handleGoogleShare}
         />
       </div>
-    </Bodal>
+    </ShareButton>
   );
 });

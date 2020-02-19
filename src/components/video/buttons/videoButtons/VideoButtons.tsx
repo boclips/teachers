@@ -5,7 +5,7 @@ import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
 import RateButton from '../rate/RateButton';
-import { ShareButton } from '../shareButton/ShareButton';
+import { VideoShareButton } from '../../sharing/VideoShareButton/VideoShareButton';
 import VideoCollectionButton from '../videoCollection/VideoCollectionButton';
 import './VideoButtons.less';
 
@@ -32,7 +32,7 @@ export default class VideoButtons extends React.PureComponent<OwnProps> {
 const DesktopButtons = (props: OwnProps) => (
   <Button.Group>
     <VideoCollectionButton video={props.video} collection={props.collection} />
-    <ShareButton video={props.video} />
+    <VideoShareButton video={props.video} />
     <DownloadTranscriptButton video={props.video} />
   </Button.Group>
 );
@@ -41,7 +41,7 @@ const MobileButtons = (props: OwnProps) => {
   const menu = () => (
     <Menu className="video-buttons__container">
       <Menu.Item>
-        <ShareButton video={props.video} />
+        <VideoShareButton video={props.video} />
       </Menu.Item>
       {props.video.links.transcript && (
         <Menu.Item>
