@@ -1,25 +1,22 @@
 import { storiesOf } from '@storybook/react';
 import * as moment from 'moment';
 import React from 'react';
-import {
-  MockStoreFactory,
-  VideoFactory,
-} from '../../../../test-support/factories';
-import { noOp } from '../../../utils';
-import { storyWithProvider } from '../../../utils/index.stories';
-import { ShareModal } from './ShareModal';
+import { MockStoreFactory, VideoFactory } from 'test-support/factories';
+import { noOp } from '../../../../utils';
+import { storyWithProvider } from '../../../../utils/index.stories';
+import { VideoShareModal } from './VideoShareModal';
 
-storiesOf('ShareModal', module)
+storiesOf('VideoShareModal', module)
   .addDecorator(storyWithProvider(MockStoreFactory.sample()))
   .add('In mobile view', () => (
-    <ShareModal
+    <VideoShareModal
       visible={true}
       handleClose={noOp}
       video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}
     />
   ))
   .add('In desktop view', () => (
-    <ShareModal
+    <VideoShareModal
       visible={true}
       handleClose={noOp}
       video={VideoFactory.sample({ duration: moment.duration('PT2M44S') })}

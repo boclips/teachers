@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useMediaBreakPoint } from '../../../hooks/useMediaBreakPoint';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import State from '../../../types/State';
-import { Segment, Video } from '../../../types/Video';
-import Bodal from '../../common/Bodal';
-import CopyLinkButton from '../buttons/copyLink/CopyLinkButton';
-import { GoogleClassroomShareButton } from '../buttons/gclassroom/GoogleClassroomShareButton';
-import { ShareForm } from './ShareForm';
-import './ShareModal.less';
+import { useMediaBreakPoint } from '../../../../hooks/useMediaBreakPoint';
+import MediaBreakpoints from '../../../../types/MediaBreakpoints';
+import State from '../../../../types/State';
+import { Segment, Video } from '../../../../types/Video';
+import Bodal from '../../../common/Bodal';
+import CopyLinkButton from '../../buttons/copyLink/CopyLinkButton';
+import { GoogleClassroomShareButton } from '../../buttons/gclassroom/GoogleClassroomShareButton';
+import { ShareForm } from '../ShareForm';
+import './VideoShareModal.less';
 
 interface Props {
   video: Video;
@@ -17,7 +17,7 @@ interface Props {
   visible: boolean;
 }
 
-export const ShareModal = React.memo<Props>(props => {
+export const VideoShareModal = React.memo<Props>(props => {
   const [segment, setSegment] = useState<Segment>(null);
   const user = useSelector((state: State) => state.user);
   const width = useMediaBreakPoint();

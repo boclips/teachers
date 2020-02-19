@@ -1,20 +1,13 @@
 import React from 'react';
-import { renderWithStore } from '../../../../test-support/renderWithStore';
-import {
-  UserProfileFactory,
-  VideoFactory,
-} from '../../../../test-support/factories';
-import { ShareModal } from './ShareModal';
+import { renderWithStore } from 'test-support/renderWithStore';
+import { UserProfileFactory, VideoFactory } from 'test-support/factories';
+import { VideoShareModal } from './VideoShareModal';
 
-describe('Share modal', () => {
+describe('Video Share modal', () => {
   it('displays the teacher share code', () => {
     const video = VideoFactory.sample();
     const { getByText } = renderWithStore(
-      <ShareModal
-        video={video}
-        handleClose={() => {}}
-        visible={true}
-      />,
+      <VideoShareModal video={video} handleClose={() => {}} visible={true} />,
       {
         initialState: {
           user: UserProfileFactory.sample({
@@ -33,11 +26,7 @@ describe('Share modal', () => {
   it('has a copy link and google classroom button', () => {
     const video = VideoFactory.sample();
     const { getByText } = renderWithStore(
-      <ShareModal
-        video={video}
-        handleClose={() => {}}
-        visible={true}
-      />,
+      <VideoShareModal video={video} handleClose={() => {}} visible={true} />,
       {
         initialState: {
           user: UserProfileFactory.sample({

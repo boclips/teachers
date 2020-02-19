@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ShareSVG from '../../../../../resources/images/share.svg';
 import { Video } from '../../../../types/Video';
-import { ShareModal } from '../../sharing/ShareModal';
+import { VideoShareModal } from '../../sharing/VideoShareModal/VideoShareModal';
 import './ShareButton.less';
 import State from '../../../../types/State';
 
@@ -25,7 +25,7 @@ export const ShareButton = React.memo<Props>(props => {
         <Icon component={ShareSVG} />
         <span>Share</span>
       </Button>
-      <ShareModal
+      <VideoShareModal
         video={props.video}
         handleClose={() => setVisible(false)}
         visible={visible}
