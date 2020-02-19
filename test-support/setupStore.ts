@@ -4,7 +4,7 @@ import updatePageActionMiddleware from '../src/components/searchResults/redux/mi
 import UpdateSearchParametersMiddleware from '../src/components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import { RouterFactory } from './factories';
 
-export const setupStore = (query: string) => {
+export const setupStore = (query: string, pathname: string = '') => {
   const mockStore = configureStore<{ router: RouterState }>([
     ...UpdateSearchParametersMiddleware,
     updatePageActionMiddleware,
@@ -13,7 +13,7 @@ export const setupStore = (query: string) => {
   return mockStore({
     router: RouterFactory.sample({
       location: {
-        pathname: '',
+        pathname,
         search: `?${query}`,
         hash: '',
         state: null,

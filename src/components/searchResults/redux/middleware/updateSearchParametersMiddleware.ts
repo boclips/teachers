@@ -36,7 +36,12 @@ export function onBulkUpdateSearchParameter(
   store: MiddlewareAPI<any, State>,
   request: UpdateSearchParamsRequest[],
 ) {
-  const query = store.getState().router.location.search;
+  const pathname = store.getState().router.location.pathname;
+  let query = store.getState().router.location.search;
+
+  if (pathname === '/discover-collections') {
+    query = '';
+  }
   const parsedQuery = queryString.parse(query);
 
   const newQuery = {
