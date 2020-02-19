@@ -13,10 +13,11 @@ interface Props {
 }
 
 export const EditCollectionButton = React.memo(({ collection }: Props) => {
+  const [visible, setVisible] = useState(false);
+
   if (!collection.links.edit) {
     return null;
   }
-  const [visible, setVisible] = useState(false);
 
   const disableButton = useSelector(
     (state: State) => state.collections.loading || state.collections.updating,

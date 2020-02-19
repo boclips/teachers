@@ -6,23 +6,15 @@
     width: 40%;
   }
 
-  &__edit-button {
-    @media (min-width: @screen-md) {
-      float: right;
-    }
-  }
-
-  &__bookmark-button {
-    float: right;
-    width: 20px;
-
-    &.display-mobile {
-      margin-top: -28px;
-    }
-  }
-
   &__title-row {
     flex-wrap: nowrap;
+
+    .ant-col {
+      align-self: center;
+    }
+    .button-row {
+      border-top: none;
+    }
   }
 
   &__subtitle-row {

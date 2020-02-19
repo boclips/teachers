@@ -17,6 +17,11 @@ export const CollectionShareButton = React.memo<Props>(
   ({ collection }: Props) => {
     const user = useSelector((state: State) => state.user);
     const width = useMediaBreakPoint();
+
+    if (!collection || !user) {
+      return null;
+    }
+
     const mobileView = width.width <= MediaBreakpoints.md.width;
 
     const shareLink = getShareableCollectionLink(collection.id, user.id);

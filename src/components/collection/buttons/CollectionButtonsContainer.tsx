@@ -1,60 +1,60 @@
-import { Button, Dropdown, Icon, Menu } from 'antd';
 import React from 'react';
-import MoreSVG from '../../../../resources/images/more.svg';
-import {
-  withMediaBreakPoint,
-  WithMediaBreakPointProps,
-} from '../../../components/common/higerOrderComponents/withMediaBreakPoint';
-import MediaBreakpoints from '../../../types/MediaBreakpoints';
-import { VideoCollection } from '../../../types/VideoCollection';
-import { VideoCollectionChanges } from '../redux/actions/editCollectionAction';
+import MediaBreakpoints, { Breakpoint } from 'src/types/MediaBreakpoints';
+import { VideoCollection } from 'src/types/VideoCollection';
 import './CollectionButtonsContainer.less';
+import { ButtonRow } from 'src/components/common/buttons/ButtonRow';
+import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton/CollectionShareButton';
+import BookmarkCollectionButton from 'src/components/collection/buttons/bookmark/BookmarkCollectionButton';
+import { ButtonMenu } from 'src/components/common/buttons/ButtonMenu';
+import { useMediaBreakPoint } from 'src/hooks/useMediaBreakPoint';
 import { EditCollectionButton } from './EditCollectionButton';
 
-interface Props extends WithMediaBreakPointProps {
+interface Props {
   collection: VideoCollection;
-  className?: string;
+  desktopVisible?: boolean;
+  tabletVisible?: boolean;
+  overrideBreakpoint?: Breakpoint;
 }
 
-interface StateProps {
-  canSave: boolean;
-}
+export const CollectionButtonsContainer = ({
+  collection,
+  overrideBreakpoint,
+  desktopVisible = true,
+  tabletVisible = true,
+}: Props) => {
+  const actualBreakpoint = useMediaBreakPoint();
 
-interface DispatchProps {
-  patchCollection: (request: VideoCollectionChanges) => void;
-}
+  const viewIsTablet =
+    (overrideBreakpoint || actualBreakpoint).width < MediaBreakpoints.lg.width;
 
-class CollectionButtonsContainer extends React.PureComponent<
-  Props & StateProps & DispatchProps
-> {
-  public render() {
-    if (!this.props.collection.links.edit) {
+  if (viewIsTablet) {
+    if (!tabletVisible) {
       return null;
     }
-    return this.props.mediaBreakpoint.width > MediaBreakpoints.md.width ? (
-      <div className={this.props.className}>
-        <EditCollectionButton collection={this.props.collection} />
-      </div>
-    ) : (
-      <span className={this.props.className}>
-        <Button.Group>
-          <Dropdown overlay={this.menu()} trigger={['click']}>
-            <Button className="collection-edit__mobile ">
-              <Icon component={MoreSVG} aria-label="Modify collection" />
-            </Button>
-          </Dropdown>
-        </Button.Group>
-      </span>
+    return (
+      <ButtonMenu
+        buttons={[
+          <CollectionShareButton key="share" collection={collection} />,
+          <BookmarkCollectionButton key="bookmark" collection={collection} />,
+          <EditCollectionButton key="edit" collection={collection} />,
+        ]}
+      />
     );
   }
 
-  private menu = () => (
-    <Menu className="collection-edit-dropdown">
-      <Menu.Item>
-        <EditCollectionButton collection={this.props.collection} />
-      </Menu.Item>
-    </Menu>
-  );
-}
+  if (desktopVisible) {
+    return (
+      <ButtonRow
+        leftButtons={[
+          <CollectionShareButton key="share" collection={collection} />,
+          <BookmarkCollectionButton key="bookmark" collection={collection} />,
+        ]}
+        rightButtons={[
+          <EditCollectionButton key="edit" collection={collection} />,
+        ]}
+      />
+    );
+  }
 
-export default withMediaBreakPoint(CollectionButtonsContainer);
+  return null;
+};
