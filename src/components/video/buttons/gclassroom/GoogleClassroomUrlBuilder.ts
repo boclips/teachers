@@ -1,6 +1,6 @@
 import * as queryString from 'querystring';
 
-class GoogleClassroomUrlBuilder {
+export class GoogleClassroomUrlBuilder {
   private readonly baseUrl: string = 'https://classroom.google.com/u/0/share';
   private videoUrl: string;
   private videoTitle: string;
@@ -33,5 +33,3 @@ class GoogleClassroomUrlBuilder {
     return `${this.baseUrl}?${query}`;
   }
 }
-
-export default GoogleClassroomUrlBuilder;

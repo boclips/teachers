@@ -35,6 +35,16 @@ export const VideoShareModal = React.memo<Props>(props => {
       .catch(console.error);
   };
 
+  const handleGoogleShare = () => {
+    AnalyticsFactory.externalAnalytics().trackVideoSharedInGoogle(
+      props.video,
+      segment,
+    );
+    AnalyticsFactory.internalAnalytics()
+      .trackVideoSharedInGoogle(props.video)
+      .catch(console.error);
+  };
+
   const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
 
   return (
@@ -56,10 +66,10 @@ export const VideoShareModal = React.memo<Props>(props => {
       <div className="share-buttons">
         <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
         <GoogleClassroomShareButton
-          video={props.video}
-          userId={user.id}
-          shareCode={user.shareCode}
-          segment={segment}
+          link={shareLink}
+          postTitle={props.video.title}
+          // postBody={`Use code ${this.props.shareCode} to view this.`}
+          onClick={handleGoogleShare}
         />
       </div>
     </Bodal>

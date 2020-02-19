@@ -64,4 +64,27 @@ describe('Video Share modal', () => {
       interactionType: 'VIDEO_LINK_COPIED',
     });
   });
+
+  it('calls onClick when clicked on', () => {
+    const video = VideoFactory.sample();
+    const { getByText } = renderWithStore(
+      <VideoShareModal video={video} handleClose={() => {}} visible={true} />,
+      {
+        initialState: {
+          user: UserProfileFactory.sample({
+            shareCode: 'BOB1',
+          }),
+        },
+      },
+    );
+
+    const copyLink = getByText('Send to Google Classroom');
+    expect(copyLink).toBeVisible();
+    fireEvent.click(copyLink);
+
+    expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
+      video,
+      interactionType: 'VIDEO_SHARED_TO_GOOGLE_CLASSROOM',
+    });
+  });
 });

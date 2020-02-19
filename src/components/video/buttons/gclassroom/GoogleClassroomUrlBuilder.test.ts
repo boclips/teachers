@@ -1,4 +1,4 @@
-import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
+import { GoogleClassroomUrlBuilder } from './GoogleClassroomUrlBuilder';
 
 it('can build a valid url', () => {
   const url = new GoogleClassroomUrlBuilder()
