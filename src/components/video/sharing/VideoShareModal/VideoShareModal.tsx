@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { getShareableVideoLink } from 'src/services/links/getShareableVideoLink';
 import { useMediaBreakPoint } from '../../../../hooks/useMediaBreakPoint';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 import State from '../../../../types/State';
 import { Segment, Video } from '../../../../types/Video';
 import Bodal from '../../../common/Bodal';
-import CopyLinkButton from '../../buttons/copyLink/CopyLinkButton';
+import { CopyLinkButton } from '../../buttons/copyLink/CopyLinkButton';
 import { GoogleClassroomShareButton } from '../../buttons/gclassroom/GoogleClassroomShareButton';
 import { ShareForm } from '../ShareForm';
 import './VideoShareModal.less';
@@ -22,6 +24,18 @@ export const VideoShareModal = React.memo<Props>(props => {
   const user = useSelector((state: State) => state.user);
   const width = useMediaBreakPoint();
   const mobileView = width.width <= MediaBreakpoints.md.width;
+
+  const handleCopyLink = () => {
+    AnalyticsFactory.externalAnalytics().trackVideoLinkCopied(
+      props.video,
+      segment,
+    );
+    AnalyticsFactory.internalAnalytics()
+      .trackVideoLinkCopied(props.video)
+      .catch(console.error);
+  };
+
+  const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
 
   return (
     <Bodal
@@ -40,11 +54,7 @@ export const VideoShareModal = React.memo<Props>(props => {
     >
       <ShareForm video={props.video} onSegmentChange={setSegment} />
       <div className="share-buttons">
-        <CopyLinkButton
-          video={props.video}
-          userId={user.id}
-          segment={segment}
-        />
+        <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
         <GoogleClassroomShareButton
           video={props.video}
           userId={user.id}

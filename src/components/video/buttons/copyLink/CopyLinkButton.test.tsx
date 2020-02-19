@@ -1,35 +1,33 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { VideoFactory } from '../../../../../test-support/factories';
-import FakeBoclipsAnalytics from '../../../../services/analytics/boclips/FakeBoclipsAnalytics';
-import CopyLinkButton from './CopyLinkButton';
+import { noOp } from 'src/utils';
+import { CopyLinkButton } from './CopyLinkButton';
 
-it('sets video link', () => {
-  const wrapper = mount(
-    <CopyLinkButton
-      video={VideoFactory.sample()}
-      segment={{ start: 1, end: 5 }}
-      userId={'userId'}
-    />,
-  );
+describe('CopyLinkButton', () => {
+  it('sets the share link on the Copy component', () => {
+    const wrapper = mount(
+      <CopyLinkButton
+        onClick={noOp}
+        link="https://teachers.boclips.com/videos/123?referer=userId&segmentStart=1"
+      />,
+    );
 
-  const copyToClipboard = wrapper.find(CopyToClipboard);
-  expect(copyToClipboard.prop('text')).toContain('referer=userId');
-  expect(copyToClipboard.prop('text')).toContain('segmentStart=1');
-  expect(copyToClipboard.prop('text')).toContain('segmentEnd=5');
-});
+    const copyToClipboard = wrapper.find(CopyToClipboard);
+    expect(copyToClipboard.prop('text')).toEqual(
+      'https://teachers.boclips.com/videos/123?referer=userId&segmentStart=1',
+    );
+  });
 
-test('logs a boclips event when copied', () => {
-  const video = VideoFactory.sample();
-  const wrapper = mount(
-    <CopyLinkButton video={video} segment={null} userId={null} />,
-  );
+  it('calls the callback prop when clicked', () => {
+    const onClickSpy = jest.fn();
 
-  (wrapper.find(CopyToClipboard).prop('onCopy') as any)();
+    const wrapper = mount(
+      <CopyLinkButton link="https://example.com" onClick={onClickSpy} />,
+    );
 
-  expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
-    video,
-    interactionType: 'VIDEO_LINK_COPIED',
+    (wrapper.find(CopyToClipboard).prop('onCopy') as any)();
+
+    expect(onClickSpy).toHaveBeenCalled();
   });
 });

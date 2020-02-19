@@ -1,6 +1,8 @@
 import React from 'react';
 import { renderWithStore } from 'test-support/renderWithStore';
 import { UserProfileFactory, VideoFactory } from 'test-support/factories';
+import { fireEvent } from '@testing-library/react';
+import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
 import { VideoShareModal } from './VideoShareModal';
 
 describe('Video Share modal', () => {
@@ -38,5 +40,28 @@ describe('Video Share modal', () => {
 
     expect(getByText('Copy link')).toBeVisible();
     expect(getByText('Send to Google Classroom')).toBeVisible();
+  });
+
+  it('logs a boclips event when copied', () => {
+    const video = VideoFactory.sample();
+    const { getByText } = renderWithStore(
+      <VideoShareModal video={video} handleClose={() => {}} visible={true} />,
+      {
+        initialState: {
+          user: UserProfileFactory.sample({
+            shareCode: 'BOB1',
+          }),
+        },
+      },
+    );
+
+    const copyLink = getByText('Copy link');
+    expect(copyLink).toBeVisible();
+    fireEvent.click(copyLink);
+
+    expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
+      video,
+      interactionType: 'VIDEO_LINK_COPIED',
+    });
   });
 });
