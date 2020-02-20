@@ -1,6 +1,6 @@
 import BoclipsSecurity from 'boclips-js-security';
 import { Store } from 'redux';
-import { Constants } from 'src/app/AppConstants';
+import { Constants } from '../../../AppConstants';
 import { sideEffect } from '../../actions';
 import { authenticationResolved } from '../actions/authenticationResolved';
 import { requestAuthentication } from '../actions/requestAuthentication';

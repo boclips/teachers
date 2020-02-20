@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,
 } from '../../components/common/higerOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import PageLayout from '../../components/layout/PageLayout';
+import MediaBreakpoints from '../../types/MediaBreakpoints';
 
 class SubjectsViewComponent extends PureComponent<WithMediaBreakPointProps> {
   public render() {

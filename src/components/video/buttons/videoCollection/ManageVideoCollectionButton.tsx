@@ -3,19 +3,19 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import SaveSVG from 'resources/images/save.svg';
-import AddSVG from 'resources/images/add.svg';
-import { CreateCollectionRequest } from 'src/services/collections/createCollection';
-import State from 'src/types/State';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
-import SavingButton from 'src/components/common/savingButton/SavingButton';
+import SaveSVG from '../../../../../resources/images/save.svg';
+import AddSVG from '../../../../../resources/images/add.svg';
+import { CreateCollectionRequest } from '../../../../services/collections/createCollection';
+import State from '../../../../types/State';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import { addVideoToMyCollectionAction } from '../../../collection/redux/actions/addToMyCollectionAction';
+import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
+import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
 import withPageableCollection, {
   WithPageableCollectionProps,
 } from '../../../common/higerOrderComponents/withPageableCollection';
-import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
-import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
-import { addVideoToMyCollectionAction } from '../../../collection/redux/actions/addToMyCollectionAction';
+import SavingButton from '../../../common/savingButton/SavingButton';
 import './ManageVideoCollectionButton.less';
 
 interface StateProps {

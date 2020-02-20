@@ -1,7 +1,7 @@
 import { SubjectFactory } from 'boclips-api-client/dist/test-support';
 import React from 'react';
-import { SubjectsFactory } from 'test-support/factories';
-import { renderWithStore } from 'test-support/renderWithStore';
+import { SubjectsFactory } from '../../../../test-support/factories';
+import { renderWithStore } from '../../../../test-support/renderWithStore';
 import { ConnectedSubjectTag } from './SubjectTag';
 
 describe('Subject tag', () => {

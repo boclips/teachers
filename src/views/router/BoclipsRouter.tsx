@@ -4,12 +4,12 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import { RouterState } from 'src/types/State';
-import { Constants } from 'src/app/AppConstants';
+import { Constants } from '../../app/AppConstants';
 import PrivateRoute, {
   PrivateRouteComponentParams,
 } from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
+import { RouterState } from '../../types/State';
 import { AccountSettingsView } from '../account/AccountSettingsView';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';

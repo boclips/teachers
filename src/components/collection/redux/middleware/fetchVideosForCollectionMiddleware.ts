@@ -1,12 +1,12 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
-import { sideEffect } from 'src/app/redux/actions';
-import { fetchVideoFromSelfLink } from 'src/services/videos/fetchVideo';
-import { LinksState } from 'src/types/State';
-import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
+import { sideEffect } from '../../../../app/redux/actions';
+import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
+import { LinksState } from '../../../../types/State';
 import {
   fetchVideosByIdsAction,
   VideosForCollectionRequest,
 } from '../../../video/redux/actions/fetchVideosByIdsAction';
+import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
 
 export function onFetchVideosForCollection(
   store: MiddlewareAPI<Dispatch, LinksState>,

@@ -3,7 +3,7 @@ import {
   FakeBoclipsClient,
   SubjectFactory,
 } from 'boclips-api-client/dist/test-support';
-import { getBoclipsClient } from 'src/services/apiClient';
+import { getBoclipsClient } from '../src/services/apiClient';
 
 export const fakeSubjectsSetup = async () => {
   const subjectsClient: FakeSubjectsClient = ((await getBoclipsClient()) as FakeBoclipsClient)

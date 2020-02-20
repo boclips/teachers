@@ -1,11 +1,12 @@
 import React from 'react';
-import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
+
 import CollectionsLoaded from '../../components/collection/CollectionsLoaded';
 import CollectionDetails, {
   CollectionDetailsSkeleton,
 } from '../../components/collection/details/CollectionDetails';
 import PageLayout from '../../components/layout/PageLayout';
 import './CollectionDetailsView.less';
+import { useRefererIdInjector } from '../../hooks/useRefererIdInjector';
 
 interface Props {
   collectionId: string;

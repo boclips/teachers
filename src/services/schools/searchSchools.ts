@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Country } from 'src/types/Country';
-import { School } from 'src/types/School';
-import { UsaState } from 'src/types/UsaState';
+import { Country } from '../../types/Country';
+import { School } from '../../types/School';
+import { UsaState } from '../../types/UsaState';
 
 export function searchSchools(
   query: string,

@@ -5,23 +5,15 @@ import {
 } from 'connected-react-router';
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { UserProfile } from 'src/services/users/UserProfile';
-import { UserProfileLinks } from 'src/services/users/UserProfile';
-import { AgeRange } from 'src/types/AgeRange';
-import { Attachment } from 'src/types/Attachment';
-import { Country } from 'src/types/Country';
-import { Discipline } from 'src/types/Discipline';
-import { Link } from 'src/types/Link';
-import { Links } from 'src/types/Links';
-import { School } from 'src/types/School';
-import { Subject } from 'src/types/Subject';
-import { Tag } from 'src/types/Tag';
-import { StreamPlayback, Video, VideoId } from 'src/types/Video';
-import {
-  VideoCollection,
-  VideoCollectionLinks,
-} from 'src/types/VideoCollection';
-import PageSpec from '../src/types/PageSpec';
+import { UserProfile } from '../src/services/users/UserProfile';
+import { UserProfileLinks } from '../src/services/users/UserProfile';
+import { AgeRange } from '../src/types/AgeRange';
+import { Attachment } from '../src/types/Attachment';
+import { Country } from '../src/types/Country';
+import { Discipline } from '../src/types/Discipline';
+import { Link } from '../src/types/Link';
+import { Links } from '../src/types/Links';
+import { School } from '../src/types/School';
 import State, {
   CollectionSearchStateValue,
   CollectionsStateValue,
@@ -32,6 +24,14 @@ import State, {
   VideoSearchStateValue,
   VideosStateValue,
 } from '../src/types/State';
+import { Subject } from '../src/types/Subject';
+import { Tag } from '../src/types/Tag';
+import { StreamPlayback, Video, VideoId } from '../src/types/Video';
+import {
+  VideoCollection,
+  VideoCollectionLinks,
+} from '../src/types/VideoCollection';
+import PageSpec from '../src/types/PageSpec';
 import { video177 } from './api-responses';
 
 export class VideoFactory {

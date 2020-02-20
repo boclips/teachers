@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
-import { links } from 'test-support/api-responses';
-import ApiStub from 'test-support/ApiStub';
-import { CreateAccountPage } from 'test-support/page-objects/CreateAccountPage';
-import { RegistrationContextService } from 'src/services/session/RegistrationContextService';
+import { links } from '../../../test-support/api-responses';
+import ApiStub from '../../../test-support/ApiStub';
+import { CreateAccountPage } from '../../../test-support/page-objects/CreateAccountPage';
+import { RegistrationContextService } from '../../services/session/RegistrationContextService';
 
 describe('when view is mounted', () => {
   beforeEach(async () => {

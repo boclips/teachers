@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoFactory } from 'test-support/factories';
-import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
-import { noOp } from 'src/utils';
+import { VideoFactory } from '../../../../test-support/factories';
+import FakeBoclipsAnalytics from '../../../services/analytics/boclips/FakeBoclipsAnalytics';
+import { noOp } from '../../../utils';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { Props, VideoCard } from './VideoCard';

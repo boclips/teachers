@@ -1,19 +1,19 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from 'test-support/By';
-import EventSimulator from 'test-support/EventSimulator';
+import { By } from '../../../../test-support/By';
+import EventSimulator from '../../../../test-support/EventSimulator';
 import {
   LinksFactory,
   MockStoreFactory,
   SubjectsFactory,
   UserProfileFactory,
-} from 'test-support/factories';
-import { editUser } from 'src/services/users/updateUser';
-import { AgeRange } from 'src/types/AgeRange';
-import { Link } from 'src/types/Link';
-import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
+} from '../../../../test-support/factories';
+import { editUser } from '../../../services/users/updateUser';
+import { AgeRange } from '../../../types/AgeRange';
+import { Link } from '../../../types/Link';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
+import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { EditProfileForm } from './EditProfileForm';
 import Mock = jest.Mock;
 

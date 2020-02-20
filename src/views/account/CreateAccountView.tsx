@@ -2,9 +2,9 @@ import { replace } from 'connected-react-router';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import State from 'src/types/State';
 import CreateAccountForm from '../../components/account/createAccount/CreateAccountForm';
 import PageLayout from '../../components/layout/PageLayout';
+import State from '../../types/State';
 import './CreateAccountView.less';
 
 interface StateProps {

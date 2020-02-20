@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Links } from 'src/types/Links';
-import { VideoSearchResult } from 'src/types/SearchResults';
-import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
 import DurationConverter from '../../components/searchResults/filters/DurationConverter';
+import { Links } from '../../types/Links';
+import { VideoSearchResult } from '../../types/SearchResults';
+import { VideoSearchRequest } from '../../types/VideoSearchRequest';
 import { parseVideosResponse } from './parseVideosResponse';
 
 export default function fetchVideos(

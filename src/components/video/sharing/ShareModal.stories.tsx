@@ -1,9 +1,12 @@
 import { storiesOf } from '@storybook/react';
 import * as moment from 'moment';
 import React from 'react';
-import { MockStoreFactory, VideoFactory } from 'test-support/factories';
-import { noOp } from 'src/utils';
-import { storyWithProvider } from 'src/utils/index.stories';
+import {
+  MockStoreFactory,
+  VideoFactory,
+} from '../../../../test-support/factories';
+import { noOp } from '../../../utils';
+import { storyWithProvider } from '../../../utils/index.stories';
 import { ShareModal } from './ShareModal';
 
 storiesOf('ShareModal', module)

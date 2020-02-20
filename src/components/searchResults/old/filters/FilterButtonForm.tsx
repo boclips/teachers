@@ -6,8 +6,8 @@ import { AgeRange } from 'src/types/AgeRange';
 import { Range } from 'src/types/Range';
 import { SubjectState } from 'src/types/State';
 import { Subject } from 'src/types/Subject';
-import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
 import { SubjectsForm } from '../../../account/form/SubjectsForm';
+import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
 import DurationSlider from '../../filters/DurationSlider';
 
 export interface FilterFormEditableFields {

@@ -1,15 +1,15 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from 'src/app/redux/actions';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { sideEffect } from '../../../../app/redux/actions';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import {
   createCollection,
   CreateCollectionRequest,
-} from 'src/services/collections/createCollection';
-import NotificationFactory from 'src/components/common/NotificationFactory';
-import { Links } from 'src/types/Links';
-import { onCreateCollectionAction } from '../actions/onCreateCollectionAction';
-import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
+} from '../../../../services/collections/createCollection';
+import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
+import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
+import { onCreateCollectionAction } from '../actions/onCreateCollectionAction';
+import { Links } from '../../../../types/Links';
 
 export function onCreateCollection(
   store: MiddlewareAPI,

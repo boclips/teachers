@@ -1,6 +1,6 @@
 import queryString from 'querystring';
-import { Constants } from 'src/app/AppConstants';
-import { Segment } from 'src/types/Video';
+import { Constants } from '../../app/AppConstants';
+import { Segment } from '../../types/Video';
 
 export const getShareableVideoLink = (
   videoId: string,

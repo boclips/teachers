@@ -1,11 +1,11 @@
 import React from 'react';
-import ArtsIcon from 'resources/images/disciplines/discipline-arts.svg';
-import HumanitiesIcon from 'resources/images/disciplines/discipline-humanities.svg';
-import LanguagesIcon from 'resources/images/disciplines/discipline-languages.svg';
-import LifeSkillsIcon from 'resources/images/disciplines/discipline-life-skills.svg';
-import PedagogyIcon from 'resources/images/disciplines/discipline-pedagogy.svg';
-import StemIcon from 'resources/images/disciplines/discipline-stem.svg';
-import { Discipline } from 'src/types/Discipline';
+import ArtsIcon from '../../../resources/images/disciplines/discipline-arts.svg';
+import HumanitiesIcon from '../../../resources/images/disciplines/discipline-humanities.svg';
+import LanguagesIcon from '../../../resources/images/disciplines/discipline-languages.svg';
+import LifeSkillsIcon from '../../../resources/images/disciplines/discipline-life-skills.svg';
+import PedagogyIcon from '../../../resources/images/disciplines/discipline-pedagogy.svg';
+import StemIcon from '../../../resources/images/disciplines/discipline-stem.svg';
+import { Discipline } from '../../types/Discipline';
 
 interface Props {
   discipline: Discipline;

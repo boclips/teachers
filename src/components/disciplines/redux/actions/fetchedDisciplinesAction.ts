@@ -1,5 +1,5 @@
-import { actionCreatorFactory } from 'src/app/redux/actions';
-import { Discipline } from 'src/types/Discipline';
+import { actionCreatorFactory } from '../../../../app/redux/actions';
+import { Discipline } from '../../../../types/Discipline';
 
 export const fetchedDisciplinesAction = actionCreatorFactory<Discipline[]>(
   'DISCIPLINES_FETCHED',

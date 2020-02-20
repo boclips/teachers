@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button } from 'antd';
 import Icon from 'antd/lib/icon';
 import { useSelector } from 'react-redux';
-import State from 'src/types/State';
-import EditCollectionSVG from 'resources/images/edit-collection.svg';
-import { VideoCollection } from 'src/types/VideoCollection';
+import State from '../../../types/State';
+import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { EditCollectionForm } from './EditCollectionForm';
 import './EditCollectionButton.less';
 

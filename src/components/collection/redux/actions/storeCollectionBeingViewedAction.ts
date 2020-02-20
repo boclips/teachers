@@ -1,4 +1,4 @@
-import { actionCreatorFactory } from 'src/app/redux/actions';
+import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 export const storeCollectionBeingViewedAction = actionCreatorFactory<{
   id: string;

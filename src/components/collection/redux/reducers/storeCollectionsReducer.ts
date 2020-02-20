@@ -1,6 +1,6 @@
 import produce from 'immer';
-import State from 'src/types/State';
-import { VideoCollection } from 'src/types/VideoCollection';
+import State from '../../../../types/State';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import { AppendCollectionRequest } from '../actions/appendReadOnlyCollectionsAction';
 import { StoreCollectionsRequest } from '../actions/storeCollectionsAction';
 

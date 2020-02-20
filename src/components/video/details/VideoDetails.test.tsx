@@ -3,9 +3,12 @@ import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from 'test-support/By';
-import { MockStoreFactory, VideoFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
+import { By } from '../../../../test-support/By';
+import {
+  MockStoreFactory,
+  VideoFactory,
+} from '../../../../test-support/factories';
+import { Link } from '../../../types/Link';
 import VideoDetails from './VideoDetails';
 
 describe('The Buttons on the page', () => {

@@ -1,8 +1,8 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
 import React from 'react';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { Video } from 'src/types/Video';
-import MoreSVG from 'resources/images/more.svg';
+import MoreSVG from '../../../../../resources/images/more.svg';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
 import RateButton from '../rate/RateButton';
 import { ShareButton } from '../shareButton/ShareButton';

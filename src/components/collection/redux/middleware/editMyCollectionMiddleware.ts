@@ -1,14 +1,14 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from 'src/app/redux/actions';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { editCollection } from 'src/services/collections/editCollection';
-import NotificationFactory from 'src/components/common/NotificationFactory';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
+import { sideEffect } from '../../../../app/redux/actions';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { editCollection } from '../../../../services/collections/editCollection';
+import NotificationFactory from '../../../common/NotificationFactory';
 import {
   editCollectionAction,
   EditCollectionRequest,
 } from '../actions/editCollectionAction';
+import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
+import { VideoCollection } from './../../../../types/VideoCollection';
 
 export function onEditCollection(
   store: MiddlewareAPI,

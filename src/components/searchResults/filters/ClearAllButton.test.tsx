@@ -2,7 +2,10 @@ import { Button } from 'antd';
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MockStoreFactory, RouterFactory } from 'test-support/factories';
+import {
+  MockStoreFactory,
+  RouterFactory,
+} from '../../../../test-support/factories';
 import { clearSearchFilterParametersAction } from '../redux/actions/clearSearchFilterParametersAction';
 import ClearAllButton from './ClearAllButton';
 

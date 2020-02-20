@@ -1,10 +1,10 @@
 import { mocked } from 'ts-jest/utils';
-import { CollectionSearchRequest } from 'src/types/CollectionSearchRequest';
-import { MockStoreFactory } from 'test-support/factories';
-import { searchCollections } from 'src/services/collections/searchCollections';
-import { CollectionSearchResult } from 'src/types/SearchResults';
-import eventually from 'test-support/eventually';
+import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
+import { MockStoreFactory } from '../../../../../test-support/factories';
+import { searchCollections } from '../../../../services/collections/searchCollections';
+import { CollectionSearchResult } from '../../../../types/SearchResults';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
+import eventually from '../../../../../test-support/eventually';
 import { onSearchCollections } from './searchMiddleware';
 
 jest.mock('../../../../services/collections/searchCollections');

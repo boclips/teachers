@@ -1,8 +1,8 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { VideoCard } from '../card/VideoCard';
 import './VideoCardList.less';
 

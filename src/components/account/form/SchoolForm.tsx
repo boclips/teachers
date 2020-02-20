@@ -1,10 +1,10 @@
 import { AutoComplete, Form, Select } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { searchSchools } from 'src/services/schools/searchSchools';
-import { Country } from 'src/types/Country';
-import { School } from 'src/types/School';
-import { UsaState } from 'src/types/UsaState';
+import { searchSchools } from '../../../services/schools/searchSchools';
+import { Country } from '../../../types/Country';
+import { School } from '../../../types/School';
+import { UsaState } from '../../../types/UsaState';
 import MultiSelect from '../../common/MultiSelect';
 import '../../common/MultiSelect.less';
 

@@ -1,4 +1,4 @@
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import NotificationFactory from '../../common/NotificationFactory';
 
 export const handleUserExists = (values: any) => {

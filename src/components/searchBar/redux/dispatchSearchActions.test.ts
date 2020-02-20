@@ -1,9 +1,9 @@
 import { RouterActionType } from 'connected-react-router';
-import { Action } from 'src/app/redux/actions';
-import { CollectionSearchRequest } from 'src/types/CollectionSearchRequest';
-import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
-import { VideoType } from 'src/types/Video';
-import { MockStoreFactory } from 'test-support/factories';
+import { Action } from '../../../app/redux/actions';
+import { CollectionSearchRequest } from '../../../types/CollectionSearchRequest';
+import { VideoSearchRequest } from '../../../types/VideoSearchRequest';
+import { VideoType } from '../../../types/Video';
+import { MockStoreFactory } from '../../../../test-support/factories';
 import { dispatchSearchActions } from './dispatchSearchActions';
 
 function getStore(params: string = '') {

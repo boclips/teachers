@@ -1,7 +1,7 @@
 import { Button, Dropdown, Icon, Menu } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
-import MoreSVG from 'resources/images/more.svg';
+import MoreSVG from '../../../../resources/images/more.svg';
 
 import './ButtonMenu.less';
 

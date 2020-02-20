@@ -1,8 +1,8 @@
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { convertToApiClientLink } from 'src/types/Link';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { convertToApiClientLink } from '../../../types/Link';
+import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { getBoclipsClient } from '../../apiClient';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 

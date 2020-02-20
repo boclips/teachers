@@ -1,11 +1,11 @@
+import { createReducer } from '../../../../app/redux/createReducer';
+import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
+import { storeVideosAction } from '../actions/storeVideosAction';
 import {
   EntitiesFactory,
   MockStoreFactory,
   VideoFactory,
-} from 'test-support/factories';
-import { createReducer } from 'src/app/redux/createReducer';
-import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
-import { storeVideosAction } from '../actions/storeVideosAction';
+} from './../../../../../test-support/factories';
 import { storeVideoAction } from './../actions/storeVideoAction';
 import {
   getPromotedVideos,

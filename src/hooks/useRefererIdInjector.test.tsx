@@ -1,14 +1,14 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
-import eventually from 'test-support/eventually';
-import { createBoclipsStore } from 'src/app/redux/store';
+import eventually from '../../test-support/eventually';
+import { createBoclipsStore } from '../app/redux/store';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
   UserProfileFactory,
-} from 'test-support/factories';
-import { renderWithCreatedStore } from 'test-support/renderWithStore';
-import State from 'src/types/State';
+} from '../../test-support/factories';
+import { renderWithCreatedStore } from '../../test-support/renderWithStore';
+import State from '../types/State';
 import { useRefererIdInjector } from './useRefererIdInjector';
 
 describe(`withRefererId`, () => {

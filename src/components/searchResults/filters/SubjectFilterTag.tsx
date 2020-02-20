@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import State from 'src/types/State';
-import { Subject } from 'src/types/Subject';
+import State from '../../../types/State';
+import { Subject } from '../../../types/Subject';
 import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 

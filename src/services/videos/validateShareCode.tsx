@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Link } from 'src/types/Link';
+import { Link } from '../../types/Link';
 
 export default function validateShareCode(
   validateLink: Link,

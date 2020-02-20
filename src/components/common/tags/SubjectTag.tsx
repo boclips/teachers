@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import State from 'src/types/State';
-import { Subject } from 'src/types/Subject';
+import State from '../../../types/State';
+import { Subject } from '../../../types/Subject';
 import { Tag } from './Tag';
 
 interface SubjectTagProps {

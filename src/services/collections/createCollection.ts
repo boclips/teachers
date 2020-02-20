@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Links } from 'src/types/Links';
-import { Video } from 'src/types/Video';
+import { Links } from '../../types/Links';
+import { Video } from '../../types/Video';
 
 export interface CreateCollectionRequest {
   title: string;

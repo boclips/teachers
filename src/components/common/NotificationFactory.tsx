@@ -1,6 +1,6 @@
 import { notification } from 'antd';
 import React from 'react';
-import tickIcon from 'resources/images/green-check.png';
+import tickIcon from '../../../resources/images/green-check.png';
 
 import './NotificationFactory.less';
 

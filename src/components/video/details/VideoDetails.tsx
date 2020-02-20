@@ -1,6 +1,6 @@
 import { Icon, Skeleton } from 'antd';
 import React from 'react';
-import { Video } from 'src/types/Video';
+import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import { SubjectTag } from '../../common/tags/SubjectTag';

@@ -2,9 +2,9 @@ import { Dropdown, Menu } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import MySubjectSVG from 'resources/images/subjects.svg';
-import { Discipline } from 'src/types/Discipline';
-import { DisciplineState } from 'src/types/State';
+import MySubjectSVG from '../../../../resources/images/subjects.svg';
+import { Discipline } from '../../../types/Discipline';
+import { DisciplineState } from '../../../types/State';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import './SubjectMenuComponent.less';
 

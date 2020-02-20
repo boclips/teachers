@@ -3,20 +3,20 @@ import Mock = jest.Mock;
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from 'test-support/By';
-import eventually from 'test-support/eventually';
+import { By } from '../../../../test-support/By';
+import eventually from '../../../../test-support/eventually';
 import {
   MockStoreFactory,
   TagFactory,
   TagsFactory,
   VideoFactory,
-} from 'test-support/factories';
-import tagVideo from 'src/services/tags/tagVideo';
-import { Link } from 'src/types/Link';
-import { Video } from 'src/types/Video';
-import { noOp } from 'src/utils';
-import VideoFeedbackModal from './VideoFeedbackModal';
+} from '../../../../test-support/factories';
+import tagVideo from '../../../services/tags/tagVideo';
+import { Link } from '../../../types/Link';
+import { Video } from '../../../types/Video';
+import { noOp } from '../../../utils';
 import TagVideo from './TagVideo';
+import VideoFeedbackModal from './VideoFeedbackModal';
 
 jest.mock('../../../services/tags/tagVideo');
 const tagVideoMock = tagVideo as Mock;

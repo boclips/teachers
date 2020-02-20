@@ -1,8 +1,11 @@
-import eventually from 'test-support/eventually';
-import { LinksFactory, UserProfileFactory } from 'test-support/factories';
-import { analyticsMock } from 'test-support/getAnalyticsMock';
-import MockFetchVerify from 'test-support/MockFetchVerify';
-import { Link } from 'src/types/Link';
+import eventually from '../../../test-support/eventually';
+import {
+  LinksFactory,
+  UserProfileFactory,
+} from '../../../test-support/factories';
+import { analyticsMock } from '../../../test-support/getAnalyticsMock';
+import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { Link } from '../../types/Link';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import { onboardUser, UpdateUserRequest } from './updateUser';
 

@@ -2,9 +2,9 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import RemoveSVG from 'resources/images/remove-video.svg';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
+import RemoveSVG from '../../../../../resources/images/remove-video.svg';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import { removeVideoFromMyCollectionAction } from '../../../collection/redux/actions/removeFromMyCollectionAction';
 
 interface Props {

@@ -1,15 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { LoadingComponent } from 'src/components/common/LoadingComponent';
+import { LoadingComponent } from '../../components/common/LoadingComponent';
 import {
   AuthenticationState,
   LinksState,
   LinksStateValue,
-} from 'src/types/State';
-import { ErrorView } from 'src/views/error/ErrorView';
-import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
+} from '../../types/State';
 import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
+import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
+import { ErrorView } from '../../views/error/ErrorView';
 
 interface StateProps {
   links: LinksStateValue;

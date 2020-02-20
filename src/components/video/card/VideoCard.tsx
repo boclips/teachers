@@ -1,15 +1,15 @@
 import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { Video } from 'src/types/Video';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
-import VideoCardTagList from './VideoCardTagList';
 import './VideoCard.less';
+import VideoCardTagList from './VideoCardTagList';
 
 export interface Props {
   video: Video | null;

@@ -1,4 +1,4 @@
-import { actionCreatorFactoryVoid } from 'src/app/redux/actions';
+import { actionCreatorFactoryVoid } from '../../../../app/redux/actions';
 
 export const fetchMyCollectionsAction = actionCreatorFactoryVoid(
   'FETCH_MY_COLLECTIONS',

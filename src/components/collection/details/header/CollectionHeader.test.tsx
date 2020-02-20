@@ -7,10 +7,10 @@ import {
   SubjectFactory,
   VideoCollectionFactory,
   VideoIdFactory,
-} from 'test-support/factories';
-import { Link } from 'src/types/Link';
-import { renderWithStore } from 'test-support/renderWithStore';
-import { AgeRange } from 'src/types/AgeRange';
+} from '../../../../../test-support/factories';
+import { Link } from '../../../../types/Link';
+import { renderWithStore } from '../../../../../test-support/renderWithStore';
+import { AgeRange } from '../../../../types/AgeRange';
 import { CollectionHeader } from './CollectionHeader';
 
 describe('CollectionHeader', () => {

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { Country } from 'src/types/Country';
-import { Link } from 'src/types/Link';
-import { Links } from 'src/types/Links';
+import { Country } from '../../types/Country';
+import { Link } from '../../types/Link';
+import { Links } from '../../types/Links';
 
 export function fetchCountries(links: Links): Promise<Country[]> {
   return axios

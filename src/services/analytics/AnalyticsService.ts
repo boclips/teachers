@@ -1,19 +1,19 @@
-import { Constants } from 'src/app/AppConstants';
-import { EditCollectionRequest } from 'src/components/collection/redux/actions/editCollectionAction';
-import { Attachment } from 'src/types/Attachment';
+import { Constants } from '../../app/AppConstants';
+import { EditCollectionRequest } from '../../components/collection/redux/actions/editCollectionAction';
+import { Attachment } from '../../types/Attachment';
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from 'src/types/SearchResults';
-import { Tag } from 'src/types/Tag';
-import { Segment, Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { UserProfile } from '../users/UserProfile';
-import { UpdateUserRequest } from '../users/updateUser';
+} from '../../types/SearchResults';
+import { Tag } from '../../types/Tag';
+import { Segment, Video } from '../../types/Video';
+import { VideoCollection } from '../../types/VideoCollection';
 import { CreateCollectionRequest } from '../collections/createCollection';
-import { toMixpanelVideo } from './external/toMixpanelVideo';
-import { toMixpanelSegment } from './external/toMixpanelSegment';
+import { UpdateUserRequest } from '../users/updateUser';
+import { UserProfile } from '../users/UserProfile';
 import EventTypes from './external/EventTypes';
+import { toMixpanelSegment } from './external/toMixpanelSegment';
+import { toMixpanelVideo } from './external/toMixpanelVideo';
 
 export default class AnalyticsService {
   private mixpanelInstance: Mixpanel;

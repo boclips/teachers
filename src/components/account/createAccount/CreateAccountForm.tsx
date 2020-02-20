@@ -3,34 +3,34 @@ import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import GoogleSVG from 'resources/images/google.svg';
-import MicrosoftSVG from 'resources/images/office-365.svg';
-import RegistrationLogoSVG from 'resources/images/registration-logo.svg';
-import { requestSsoAuthentication } from 'src/app/redux/authentication/actions/requestSsoAuthentication';
+import GoogleSVG from '../../../../resources/images/google.svg';
+import MicrosoftSVG from '../../../../resources/images/office-365.svg';
+import RegistrationLogoSVG from '../../../../resources/images/registration-logo.svg';
+import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
   CreateAccountRequest,
-} from 'src/services/account/createAccount';
-import Utm from 'src/services/account/Utm';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { RegistrationContext } from 'src/services/session/RegistrationContext';
-import { RegistrationContextService } from 'src/services/session/RegistrationContextService';
-import { Links } from 'src/types/Links';
-import State from 'src/types/State';
-import { extractQueryParam } from '../referral/extractQueryParam';
-import { transformErrors } from '../form/FormHelper';
+} from '../../../services/account/createAccount';
+import Utm from '../../../services/account/Utm';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { RegistrationContext } from '../../../services/session/RegistrationContext';
+import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
+import { Links } from '../../../types/Links';
+import State from '../../../types/State';
 import {
   ScreenReaderError,
   ScreenReaderErrors,
 } from '../../common/a11y/ScreenReaderErrors';
-import { Recaptcha } from './recaptcha/Recaptcha';
-import { PasswordForm } from './PasswordForm';
-import { LoginLink } from './LoginLink';
-import { EmailForm } from './EmailForm';
-import { handleError, handleUserExists } from './createAccountHelpers';
-import { CreateAccountConfirmation } from './CreateAccountConfirmation';
+import { transformErrors } from '../form/FormHelper';
+import { extractQueryParam } from '../referral/extractQueryParam';
 import { CaptchaNotice } from './CaptchaNotice';
+import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
+import { handleError, handleUserExists } from './createAccountHelpers';
+import { EmailForm } from './EmailForm';
+import { LoginLink } from './LoginLink';
+import { PasswordForm } from './PasswordForm';
+import { Recaptcha } from './recaptcha/Recaptcha';
 
 interface CreateAccountProps {
   links: Links;

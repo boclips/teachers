@@ -1,8 +1,8 @@
 import { push } from 'connected-react-router';
 import queryString from 'query-string';
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from 'src/app/redux/actions';
-import State from 'src/types/State';
+import { sideEffect } from '../../../../app/redux/actions';
+import State from '../../../../types/State';
 import {
   PageChangeRequest,
   updatePageAction,

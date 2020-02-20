@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { CollectionSearchRequest } from 'src/types/CollectionSearchRequest';
-import { Links } from 'src/types/Links';
-import { CollectionSearchResult } from 'src/types/SearchResults';
+import { CollectionSearchRequest } from '../../types/CollectionSearchRequest';
+import { Links } from '../../types/Links';
+import { CollectionSearchResult } from '../../types/SearchResults';
 import { parseCollectionsListResponse } from './collectionParser';
 
 export const searchCollections = (

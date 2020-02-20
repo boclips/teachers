@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { MockStoreFactory } from 'test-support/factories';
+import { MockStoreFactory } from '../../../../test-support/factories';
 import { AgeRangeTag } from './AgeRangeTag';
 import AgeRangeTags from './AgeRangeTags';
 

@@ -1,6 +1,9 @@
 import configureStore from 'redux-mock-store';
-import NotificationFactory from 'src/components/common/NotificationFactory';
-import { VideoCollectionFactory, VideoFactory } from 'test-support/factories';
+import NotificationFactory from '../../../common/NotificationFactory';
+import {
+  VideoCollectionFactory,
+  VideoFactory,
+} from './../../../../../test-support/factories';
 import {
   ERROR_DESCRIPTION,
   onAddToCollectionResult,

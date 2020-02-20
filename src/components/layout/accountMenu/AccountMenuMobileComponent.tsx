@@ -1,14 +1,14 @@
 import { Drawer, Menu } from 'antd';
 import React, { SyntheticEvent } from 'react';
-import MyAccountSVG from 'resources/images/my-account.svg';
+import MyAccountSVG from '../../../../resources/images/my-account.svg';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
+import './AccountMenuMobileComponent.less';
 import {
   AccountSettingsLink,
   BookmarkedCollectionsLink,
   LogoutLink,
   UserCollectionsLink,
 } from './MenuOptions';
-import './AccountMenuMobileComponent.less';
 
 interface State {
   visible: boolean;

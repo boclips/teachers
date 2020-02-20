@@ -1,5 +1,5 @@
 import configureStore from 'redux-mock-store';
-import { userLoggedIn } from 'src/components/login/redux/actions/userLoggedIn';
+import { userLoggedIn } from '../../../../components/login/redux/actions/userLoggedIn';
 import { authenticationResolved } from '../actions/authenticationResolved';
 import onAuthenticationResolvedMiddleware from './onAuthenticationResolvedMiddleware';
 

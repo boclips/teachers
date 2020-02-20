@@ -1,6 +1,6 @@
 import { History, createMemoryHistory } from 'history';
 import { createStore } from 'redux';
-import State from 'src/types/State';
+import State from '../../types/State';
 import { createMiddleware } from '../middleware';
 import { createReducers } from './reducers';
 

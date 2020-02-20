@@ -2,28 +2,28 @@ import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import reduceReducers from 'reduce-reducers';
 import { combineReducers, Reducer } from 'redux';
-import { countriesReducer } from 'src/components/account/onboarding/redux/reducers/countriesReducer';
+import { countriesReducer } from '../../components/account/onboarding/redux/reducers/countriesReducer';
 import {
   collectionHandlers,
   initialCollectionsState,
-} from 'src/components/collection/redux/reducers/collectionsReducer';
-import { tagsReducer } from 'src/components/common/tags/redux/reducers/tagsReducer';
-import { disciplinesReducer } from 'src/components/disciplines/redux/reducers/disciplinesReducer';
-import { userDetailsFetchedReducer } from 'src/components/login/redux/reducers/userDetailsFetchedReducer';
-import { subjectsReducer } from 'src/components/multipleSelect/redux/reducers/subjectsReducer';
+} from '../../components/collection/redux/reducers/collectionsReducer';
+import { tagsReducer } from '../../components/common/tags/redux/reducers/tagsReducer';
+import { disciplinesReducer } from '../../components/disciplines/redux/reducers/disciplinesReducer';
+import { userDetailsFetchedReducer } from '../../components/login/redux/reducers/userDetailsFetchedReducer';
+import { subjectsReducer } from '../../components/multipleSelect/redux/reducers/subjectsReducer';
 import {
   collectionSearchHandlers,
   initialSearchState,
   videoSearchHandlers,
-} from 'src/components/searchBar/redux/reducers/searchReducer';
+} from '../../components/searchBar/redux/reducers/searchReducer';
 import {
   initialVideoState,
   videoHandlers,
-} from 'src/components/video/redux/reducers/videoReducer';
-import State from 'src/types/State';
-import { linkHandlers } from './links/reducers/linksReducer';
-import { createReducer, noReducer } from './createReducer';
+} from '../../components/video/redux/reducers/videoReducer';
+import State from '../../types/State';
 import { authenticationReducer } from './authentication/reducers/authenticationReducer';
+import { createReducer, noReducer } from './createReducer';
+import { linkHandlers } from './links/reducers/linksReducer';
 
 const stateReducer: Reducer<State> = createReducer(
   ...linkHandlers,

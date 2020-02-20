@@ -1,23 +1,26 @@
 import produce from 'immer';
-import { actionHandler, ActionHandler } from 'src/app/redux/createReducer';
-import { CollectionSearchRequest } from 'src/types/CollectionSearchRequest';
-import PageSpec from 'src/types/PageSpec';
+import {
+  actionHandler,
+  ActionHandler,
+} from '../../../../app/redux/createReducer';
+import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
+import PageSpec from '../../../../types/PageSpec';
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from 'src/types/SearchResults';
-import State, { SearchStateValue } from 'src/types/State';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
-import { organizeById } from 'src/utils/entityMap';
-import { VideoMap } from 'src/types/State';
-import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
-import { searchVideosAction } from '../actions/searchVideosActions';
-import { searchCollectionsAction } from '../actions/searchCollectionsActions';
-import { getVideosByIds } from '../../../video/redux/reducers/videoReducer';
+} from '../../../../types/SearchResults';
+import State, { SearchStateValue } from '../../../../types/State';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
+import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
+import { organizeById } from '../../../../utils/entityMap';
 import { getCollectionsByIds } from '../../../collection/redux/reducers/collectionsReducer';
+import { getVideosByIds } from '../../../video/redux/reducers/videoReducer';
+import { searchCollectionsAction } from '../actions/searchCollectionsActions';
+import { searchVideosAction } from '../actions/searchVideosActions';
+import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
+import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
+import { VideoMap } from './../../../../types/State';
 
 const defaultPaging: PageSpec = {
   totalElements: 0,

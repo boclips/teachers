@@ -1,9 +1,9 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from 'test-support/By';
-import EventSimulator from 'test-support/EventSimulator';
-import { MockStoreFactory } from 'test-support/factories';
+import { By } from '../../../../test-support/By';
+import EventSimulator from '../../../../test-support/EventSimulator';
+import { MockStoreFactory } from '../../../../test-support/factories';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import { Profile } from './Profile';

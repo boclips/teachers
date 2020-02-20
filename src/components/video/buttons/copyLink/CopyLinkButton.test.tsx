@@ -1,8 +1,8 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { VideoFactory } from 'test-support/factories';
-import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
+import { VideoFactory } from '../../../../../test-support/factories';
+import FakeBoclipsAnalytics from '../../../../services/analytics/boclips/FakeBoclipsAnalytics';
 import CopyLinkButton from './CopyLinkButton';
 
 it('sets video link', () => {

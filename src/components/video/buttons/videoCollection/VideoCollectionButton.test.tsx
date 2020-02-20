@@ -4,13 +4,13 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
-} from 'test-support/factories';
-import { Link } from 'src/types/Link';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
-import VideoCollectionButton from './VideoCollectionButton';
-import RemoveFromVideoCollectionButton from './RemoveFromVideoCollectionButton';
+} from '../../../../../test-support/factories';
+import { Link } from '../../../../types/Link';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import ManageVideoCollectionsButton from './ManageVideoCollectionButton';
+import RemoveFromVideoCollectionButton from './RemoveFromVideoCollectionButton';
+import VideoCollectionButton from './VideoCollectionButton';
 
 const getWrapper = (
   givenProps: Partial<{

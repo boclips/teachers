@@ -1,5 +1,5 @@
-import { actionCreatorFactory } from 'src/app/redux/actions';
-import { Video } from 'src/types/Video';
+import { actionCreatorFactory } from '../../../../app/redux/actions';
+import { Video } from '../../../../types/Video';
 
 export const storeVideosAction = actionCreatorFactory<{
   videos: Video[];

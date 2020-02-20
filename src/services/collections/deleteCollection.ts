@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { VideoCollection } from '../../types/VideoCollection';
 
 export const deleteCollection = (
   collection: VideoCollection,

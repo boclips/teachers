@@ -1,4 +1,4 @@
-import { Video } from 'src/types/Video';
+import { Video } from '../../../types/Video';
 
 export const toMixpanelVideo = (video: Video) => ({
   video_id: video.id,

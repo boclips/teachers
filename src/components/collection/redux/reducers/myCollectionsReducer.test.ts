@@ -4,15 +4,18 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
-} from 'test-support/factories';
-import { createReducer } from 'src/app/redux/createReducer';
-import State from 'src/types/State';
-import { EntitiesFactory, MockStoreFactory } from 'test-support/factories';
-import { CollectionMap, VideoMap } from 'src/types/State';
+} from '../../../../../test-support/factories';
+import { createReducer } from '../../../../app/redux/createReducer';
+import State from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
+import {
+  EntitiesFactory,
+  MockStoreFactory,
+} from './../../../../../test-support/factories';
+import { CollectionMap, VideoMap } from './../../../../types/State';
 import { collectionHandlers } from './collectionsReducer';
 
 const testReducer = createReducer(...collectionHandlers);

@@ -1,18 +1,18 @@
 import { createMemoryHistory } from 'history';
 import { waitForElement } from '@testing-library/react';
 import React from 'react';
-import { renderWithCreatedStore } from 'test-support/renderWithStore';
+import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
   UserProfileFactory,
   VideoResourceFactory,
-} from 'test-support/factories';
-import { VideoDetailsPage } from 'test-support/page-objects/VideoDetailsPage';
-import ApiStub from 'test-support/ApiStub';
-import State from 'src/types/State';
-import { createBoclipsStore } from 'src/app/redux/store';
-import eventually from 'test-support/eventually';
+} from '../../../test-support/factories';
+import { VideoDetailsPage } from '../../../test-support/page-objects/VideoDetailsPage';
+import ApiStub from '../../../test-support/ApiStub';
+import State from '../../types/State';
+import { createBoclipsStore } from '../../app/redux/store';
+import eventually from '../../../test-support/eventually';
 import { VideoDetailsView } from './VideoDetailsView';
 
 describe('VideoDetailsView', () => {

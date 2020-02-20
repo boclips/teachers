@@ -1,6 +1,6 @@
 import React from 'react';
-import DownArrowSvg from 'resources/images/down-arrow.svg';
-import UpArrowSvg from 'resources/images/up-arrow.svg';
+import DownArrowSvg from '../../../../resources/images/down-arrow.svg';
+import UpArrowSvg from '../../../../resources/images/up-arrow.svg';
 
 interface Props {
   active: boolean;

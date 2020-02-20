@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { loadReCaptcha, ReCaptcha } from 'react-recaptcha-v3';
-import { Constants } from 'src/app/AppConstants';
+import { Constants } from '../../../../app/AppConstants';
 import './Recaptcha.less';
 
 export interface Props {

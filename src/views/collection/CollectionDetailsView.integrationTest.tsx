@@ -1,17 +1,20 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
-import { collectionResponse, video177Slim } from 'test-support/api-responses';
-import ApiStub from 'test-support/ApiStub';
-import eventually from 'test-support/eventually';
-import { CollectionPage } from 'test-support/page-objects/CollectionPage';
-import { createBoclipsStore } from 'src/app/redux/store';
+import {
+  collectionResponse,
+  video177Slim,
+} from '../../../test-support/api-responses';
+import ApiStub from '../../../test-support/ApiStub';
+import eventually from '../../../test-support/eventually';
+import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
+import { createBoclipsStore } from '../../app/redux/store';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
   UserProfileFactory,
   VideoCollectionFactory,
-} from 'test-support/factories';
-import { renderWithCreatedStore } from 'test-support/renderWithStore';
+} from '../../../test-support/factories';
+import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
 import { CollectionDetailsView } from './CollectionDetailsView';
 
 describe('when video collection', () => {

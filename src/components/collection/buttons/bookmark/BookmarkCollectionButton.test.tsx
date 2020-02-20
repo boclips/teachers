@@ -1,12 +1,12 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from 'test-support/By';
+import { By } from '../../../../../test-support/By';
 import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from 'test-support/factories';
-import { Link } from 'src/types/Link';
-import { noOp } from 'src/utils';
+} from '../../../../../test-support/factories';
+import { Link } from '../../../../types/Link';
+import { noOp } from '../../../../utils';
 import { BookmarkCollectionButtonInner } from './BookmarkCollectionButton';
 
 describe('BookmarkCollectionButton', () => {

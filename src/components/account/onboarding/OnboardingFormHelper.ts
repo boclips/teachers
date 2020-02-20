@@ -1,7 +1,7 @@
 import { Carousel } from 'antd';
 import { ReactWrapper } from 'enzyme';
-import { By } from 'test-support/By';
-import EventSimulator from 'test-support/EventSimulator';
+import { By } from '../../../../test-support/By';
+import EventSimulator from '../../../../test-support/EventSimulator';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 

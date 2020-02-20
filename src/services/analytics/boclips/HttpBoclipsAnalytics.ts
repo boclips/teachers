@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
-import { convertToApiClientLink } from 'src/types/Link';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { convertToApiClientLink } from '../../../types/Link';
+import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
 import { getBoclipsClient } from '../../apiClient';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 

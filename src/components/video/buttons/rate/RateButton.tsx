@@ -1,8 +1,8 @@
 import { Button, Icon } from 'antd';
 import React from 'react';
-import RateIcon from 'resources/images/rate.svg';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { Video } from 'src/types/Video';
+import RateIcon from '../../../../../resources/images/rate.svg';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { Video } from '../../../../types/Video';
 import VideoFeedbackModal from '../../rating/VideoFeedbackModal';
 
 export interface RatingProps {

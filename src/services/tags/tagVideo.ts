@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Tag } from 'src/types/Tag';
-import { Video } from 'src/types/Video';
+import { Tag } from '../../types/Tag';
+import { Video } from '../../types/Video';
 import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import convertVideoResource from '../videos/convertVideoResource';
 

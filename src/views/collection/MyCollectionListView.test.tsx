@@ -3,13 +3,13 @@ import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from 'test-support/By';
+import { By } from '../../../test-support/By';
 import {
   CollectionsFactory,
   MockStoreFactory,
   PageableCollectionsFactory,
-} from 'test-support/factories';
-import { CollectionsStateValue } from 'src/types/State';
+} from '../../../test-support/factories';
+import { CollectionsStateValue } from '../../types/State';
 import MyCollectionListView from './MyCollectionListView';
 
 function render(collection: CollectionsStateValue) {

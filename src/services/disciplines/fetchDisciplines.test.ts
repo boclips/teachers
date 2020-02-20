@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { disciplinesResponse } from 'test-support/api-responses';
-import { LinksFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
+import { disciplinesResponse } from '../../../test-support/api-responses';
+import { LinksFactory } from '../../../test-support/factories';
+import { Link } from '../../types/Link';
 import { fetchDisciplines } from './fetchDisciplines';
 
 const links = LinksFactory.sample({

@@ -1,8 +1,8 @@
 import { Reducer } from 'redux';
-import { UserProfile } from 'src/services/users/UserProfile';
 import createReducerWithInitialState, {
   actionHandler,
 } from '../../../../app/redux/createReducer';
+import { UserProfile } from '../../../../services/users/UserProfile';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 
 export const userDetailsFetchedReducer: Reducer<UserProfile> = createReducerWithInitialState(

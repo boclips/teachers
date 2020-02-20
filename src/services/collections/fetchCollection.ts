@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Links } from 'src/types/Links';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { Links } from '../../types/Links';
+import { VideoCollection } from '../../types/VideoCollection';
 import { parseCollectionResponse } from './collectionParser';
 
 export const fetchCollection = (

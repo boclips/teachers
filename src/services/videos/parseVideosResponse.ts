@@ -1,4 +1,4 @@
-import { VideoSearchResult } from 'src/types/SearchResults';
+import { VideoSearchResult } from '../../types/SearchResults';
 import convertVideoResource from './convertVideoResource';
 
 export function parseVideosResponse(

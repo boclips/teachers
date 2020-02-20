@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { schoolsResponse } from 'test-support/api-responses';
-import { CountryFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
+import { schoolsResponse } from '../../../test-support/api-responses';
+import { CountryFactory } from '../../../test-support/factories';
+import { Link } from '../../types/Link';
 import { searchSchools } from './searchSchools';
 
 const country = CountryFactory.sample({

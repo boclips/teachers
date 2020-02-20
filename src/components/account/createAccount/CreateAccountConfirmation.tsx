@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import wavingHand from 'resources/images/waving-hand.png';
+import wavingHand from '../../../../resources/images/waving-hand.png';
 
 export class CreateAccountConfirmation extends React.Component {
   public render() {

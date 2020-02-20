@@ -5,7 +5,7 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
-} from 'test-support/factories';
+} from '../../../../test-support/factories';
 import { CollectionCardPreview } from './CollectionCardPreview';
 
 const videos = [

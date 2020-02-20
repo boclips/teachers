@@ -4,22 +4,22 @@ import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Subject } from 'src/types/Subject';
-import State from 'src/types/State';
-import { UsaState } from 'src/types/UsaState';
-import { Links } from 'src/types/Links';
-import { Country } from 'src/types/Country';
-import { AgeRange } from 'src/types/AgeRange';
-import { UserProfile } from 'src/services/users/UserProfile';
-import { onboardUser } from 'src/services/users/updateUser';
-import { RegistrationContextService } from 'src/services/session/RegistrationContextService';
-import { RegistrationContext } from 'src/services/session/RegistrationContext';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import NotificationFactory from '../../common/NotificationFactory';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { RegistrationContext } from '../../../services/session/RegistrationContext';
+import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
+import { onboardUser } from '../../../services/users/updateUser';
+import { UserProfile } from '../../../services/users/UserProfile';
+import { AgeRange } from '../../../types/AgeRange';
+import { Country } from '../../../types/Country';
+import { Links } from '../../../types/Links';
+import State from '../../../types/State';
+import { Subject } from '../../../types/Subject';
+import { UsaState } from '../../../types/UsaState';
 import {
   ScreenReaderError,
   ScreenReaderErrors,
 } from '../../common/a11y/ScreenReaderErrors';
+import NotificationFactory from '../../common/NotificationFactory';
 import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
 import { updateUserAction } from '../accountSettings/redux/actions/updateUserAction';
 import { AgeRangeForm } from '../form/AgeRangeForm';

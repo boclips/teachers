@@ -1,8 +1,8 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
-import { OnboardingFormHelper } from 'src/components/account/onboarding/OnboardingFormHelper';
 import App from '../../src/app/App';
+import { OnboardingFormHelper } from '../../src/components/account/onboarding/OnboardingFormHelper';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 

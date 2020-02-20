@@ -1,10 +1,10 @@
 import { Button } from 'antd';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import LessonClip from 'resources/images/lesson-clip.svg';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { Attachment } from 'src/types/Attachment';
-import { VideoCollection } from 'src/types/VideoCollection';
+import LessonClip from '../../../../resources/images/lesson-clip.svg';
+import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
+import { Attachment } from '../../../types/Attachment';
+import { VideoCollection } from '../../../types/VideoCollection';
 import './LessonPlan.less';
 
 interface Props {

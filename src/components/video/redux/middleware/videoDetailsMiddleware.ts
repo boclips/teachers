@@ -1,12 +1,12 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
-import { sideEffect } from 'src/app/redux/actions';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import fetchVideo from 'src/services/videos/fetchVideo';
-import { LinksState } from 'src/types/State';
-import { Video } from 'src/types/Video';
-import { Links } from 'src/types/Links';
-import { storeVideoAction } from '../actions/storeVideoAction';
+import { sideEffect } from '../../../../app/redux/actions';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import fetchVideo from '../../../../services/videos/fetchVideo';
+import { LinksState } from '../../../../types/State';
+import { Video } from '../../../../types/Video';
 import { fetchVideoAction } from '../actions/fetchVideoAction';
+import { storeVideoAction } from '../actions/storeVideoAction';
+import { Links } from '../../../../types/Links';
 
 export function onFetchVideo(
   store: MiddlewareAPI<Dispatch, LinksState>,

@@ -8,8 +8,8 @@ import {
   MockStoreFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
-} from 'test-support/factories';
-import { Link } from 'src/types/Link';
+} from '../../../../test-support/factories';
+import { Link } from '../../../types/Link';
 import withPageableCollection, {
   WithPageableCollectionProps,
 } from './withPageableCollection';

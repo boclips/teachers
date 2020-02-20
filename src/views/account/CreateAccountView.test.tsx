@@ -4,7 +4,10 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { LinksFactory, MockStoreFactory } from 'test-support/factories';
+import {
+  LinksFactory,
+  MockStoreFactory,
+} from '../../../test-support/factories';
 import CreateAccountView from './CreateAccountView';
 
 describe('when accounts cannot be created', () => {

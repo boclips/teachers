@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import { renderWithStore } from 'test-support/renderWithStore';
+import { renderWithStore } from '../../../test-support/renderWithStore';
 import { ErrorView } from './ErrorView';
 
 describe('ErrorView', () => {

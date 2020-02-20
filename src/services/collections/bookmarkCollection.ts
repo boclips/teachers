@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { VideoCollection } from '../../types/VideoCollection';
 import { parseCollectionResponse } from './collectionParser';
 
 export const bookmarkCollection = (

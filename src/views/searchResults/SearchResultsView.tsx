@@ -3,12 +3,8 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { FiniteGrid } from 'src/components/common/Grid/FiniteGrid';
-import {
-  CollectionSearchResult,
-  VideoSearchResult,
-} from 'src/types/SearchResults';
-import State from 'src/types/State';
+import { FiniteGrid } from '../../components/common/Grid/FiniteGrid';
+import PageLayout from '../../components/layout/PageLayout';
 import {
   getCollectionsFromSearchResult,
   getVideosFromSearchResult,
@@ -17,7 +13,11 @@ import { updatePageAction } from '../../components/searchResults/redux/actions/u
 import SearchResultsWithHeader from '../../components/searchResults/old/SearchResultsWithHeader';
 import { VideoCardsPlaceholder } from '../../components/searchResults/VideoCardsPlaceholder';
 import { Links } from '../../types/Links';
-import PageLayout from '../../components/layout/PageLayout';
+import {
+  CollectionSearchResult,
+  VideoSearchResult,
+} from '../../types/SearchResults';
+import State from '../../types/State';
 import NoResultsView from './noResults/NoResultsView';
 import './SearchResultsView.less';
 

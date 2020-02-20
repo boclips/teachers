@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Link } from 'src/types/Link';
-import { Links } from 'src/types/Links';
+import { Link } from '../../types/Link';
+import { Links } from '../../types/Links';
 
 export default function fetchLinks(prefix: string) {
   return axios

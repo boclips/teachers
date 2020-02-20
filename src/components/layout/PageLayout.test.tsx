@@ -2,8 +2,8 @@ import React from 'react';
 import {
   renderWithStore,
   ResultingContext,
-} from 'test-support/renderWithStore';
-import { UserProfileFactory } from 'test-support/factories';
+} from '../../../test-support/renderWithStore';
+import { UserProfileFactory } from '../../../test-support/factories';
 import PageLayout from './PageLayout';
 
 describe('Header when authenticated', () => {

@@ -4,9 +4,9 @@ import {
   videoWithoutTemplatedThumbnail,
   videoWithTemplatedThumbnail,
   youtubeVideo1,
-} from 'test-support/api-responses';
-import { SubjectFactory } from 'test-support/factories';
-import { StreamPlayback, YoutubePlayback } from 'src/types/Video';
+} from '../../../test-support/api-responses';
+import { SubjectFactory } from '../../../test-support/factories';
+import { StreamPlayback, YoutubePlayback } from '../../types/Video';
 import convertVideoResource from './convertVideoResource';
 
 test('converts a video with stream playback', () => {

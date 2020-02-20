@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { video177 } from 'test-support/api-responses';
-import ApiStub from 'test-support/ApiStub';
+import { video177 } from '../../../../test-support/api-responses';
+import ApiStub from '../../../../test-support/ApiStub';
 import {
   CollectionsFactory,
   EntitiesFactory,
@@ -15,16 +15,16 @@ import {
   VideoFactory,
   VideoIdFactory,
   VideoResourceFactory,
-} from 'test-support/factories';
-import MockFetchVerify from 'test-support/MockFetchVerify';
-import { renderWithStore } from 'test-support/renderWithStore';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { organizeById } from 'src/utils/entityMap';
-import { Link } from 'src/types/Link';
-import fetchVideosForCollectionMiddleware from '../redux/middleware/fetchVideosForCollectionMiddleware';
-import { videoHandlers } from '../../video/redux/reducers/videoReducer';
+} from '../../../../test-support/factories';
+import MockFetchVerify from '../../../../test-support/MockFetchVerify';
+import { renderWithStore } from '../../../../test-support/renderWithStore';
+import { Video } from '../../../types/Video';
+import { VideoCollection } from '../../../types/VideoCollection';
+import { organizeById } from '../../../utils/entityMap';
 import { fetchVideosByIdsAction } from '../../video/redux/actions/fetchVideosByIdsAction';
+import { videoHandlers } from '../../video/redux/reducers/videoReducer';
+import fetchVideosForCollectionMiddleware from '../redux/middleware/fetchVideosForCollectionMiddleware';
+import { Link } from '../../../types/Link';
 import CollectionCardContainer from './CollectionCardContainer';
 
 describe('need to fetch videos scenarios', () => {

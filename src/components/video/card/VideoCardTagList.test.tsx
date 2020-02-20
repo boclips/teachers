@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoFactory } from 'test-support/factories';
-import { Video } from 'src/types/Video';
+import { VideoFactory } from '../../../../test-support/factories';
+import { Video } from '../../../types/Video';
 import VideoCardTagList from './VideoCardTagList';
 
 const getWrapper = (givenProps: Partial<{ video: Video }> = {}) => {

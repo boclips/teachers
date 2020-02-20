@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { VideoCollectionChanges } from 'src/components/collection/redux/actions/editCollectionAction';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { VideoCollectionChanges } from '../../components/collection/redux/actions/editCollectionAction';
+import { VideoCollection } from '../../types/VideoCollection';
 
 export const editCollection = (
   collection: VideoCollection,

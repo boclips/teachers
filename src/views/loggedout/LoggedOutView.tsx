@@ -2,7 +2,7 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import wavingHand from 'resources/images/waving-hand.png';
+import wavingHand from '../../../resources/images/waving-hand.png';
 import PageLayout from '../../components/layout/PageLayout';
 
 export default class LoggedOutView extends React.PureComponent {

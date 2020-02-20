@@ -1,5 +1,5 @@
 import React from 'react';
-import { Video } from 'src/types/Video';
+import { Video } from '../../../types/Video';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import { Tag } from '../../common/tags/Tag';
 import './VideoCardTagList.less';

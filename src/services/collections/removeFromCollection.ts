@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { Video } from '../../types/Video';
+import { VideoCollection } from './../../types/VideoCollection';
 
 export default function removeFromCollection(
   video: Video,

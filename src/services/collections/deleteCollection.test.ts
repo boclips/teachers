@@ -1,9 +1,9 @@
-import MockFetchVerify from 'test-support/MockFetchVerify';
-import { Link } from 'src/types/Link';
+import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { Link } from '../../types/Link';
 import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from 'test-support/factories';
+} from './../../../test-support/factories';
 import { deleteCollection } from './deleteCollection';
 
 test('delete collection', async () => {

@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MockStore } from 'redux-mock-store';
-import { By } from 'test-support/By';
+import { By } from '../../../../../test-support/By';
 import {
   EntitiesFactory,
   MockStoreFactory,
@@ -10,11 +10,11 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
-} from 'test-support/factories';
-import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
-import SavingButton from 'src/components/common/savingButton/SavingButton';
+} from '../../../../../test-support/factories';
+import { Video } from '../../../../types/Video';
+import { VideoCollection } from '../../../../types/VideoCollection';
 import { createCollectionAction } from '../../../collection/redux/actions/createCollectionAction';
+import SavingButton from '../../../common/savingButton/SavingButton';
 import ManageVideoCollectionsButton from './ManageVideoCollectionButton';
 
 let store: MockStore;

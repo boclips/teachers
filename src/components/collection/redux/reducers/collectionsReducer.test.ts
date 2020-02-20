@@ -2,7 +2,7 @@ import {
   EntitiesFactory,
   MockStoreFactory,
   VideoCollectionFactory,
-} from 'test-support/factories';
+} from './../../../../../test-support/factories';
 import { getCollectionsByIds } from './collectionsReducer';
 
 describe('selectors', () => {

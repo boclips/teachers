@@ -1,8 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { video177 } from 'test-support/api-responses';
-import { TagFactory, VideoFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
+import { video177 } from '../../../test-support/api-responses';
+import { TagFactory, VideoFactory } from '../../../test-support/factories';
+import { Link } from '../../types/Link';
 import tagVideo from './tagVideo';
 
 let body = null;

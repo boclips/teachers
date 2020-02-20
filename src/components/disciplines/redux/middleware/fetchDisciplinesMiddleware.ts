@@ -1,10 +1,10 @@
 import { MiddlewareAPI } from 'redux';
-import { sideEffect } from 'src/app/redux/actions';
-import { fetchDisciplines } from 'src/services/disciplines/fetchDisciplines';
-import { Discipline } from 'src/types/Discipline';
-import { Links } from 'src/types/Links';
-import { fetchedDisciplinesAction } from '../actions/fetchedDisciplinesAction';
+import { sideEffect } from '../../../../app/redux/actions';
+import { fetchDisciplines } from '../../../../services/disciplines/fetchDisciplines';
+import { Discipline } from '../../../../types/Discipline';
 import { fetchDisciplinesAction } from '../actions/fetchDisciplinesAction';
+import { fetchedDisciplinesAction } from '../actions/fetchedDisciplinesAction';
+import { Links } from '../../../../types/Links';
 
 export function onFetchDisciplines(store: MiddlewareAPI) {
   const links: Links = store.getState().links.entries;

@@ -2,8 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { PageRenderedRequest } from 'boclips-api-client/dist/sub-clients/events/model/PageRenderedRequest';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { VideoFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
+import { VideoFactory } from '../../../../test-support/factories';
+import { Link } from '../../../types/Link';
 import { getBoclipsClient } from '../../apiClient';
 import HttpBoclipsAnalytics from './HttpBoclipsAnalytics';
 

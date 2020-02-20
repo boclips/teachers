@@ -1,9 +1,9 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
-import { collectionsResponse } from 'test-support/api-responses';
-import { LinksFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
+import { collectionsResponse } from '../../../test-support/api-responses';
+import { LinksFactory } from '../../../test-support/factories';
+import { Link } from '../../types/Link';
 import { searchCollections } from './searchCollections';
 
 describe('searchCollections', () => {

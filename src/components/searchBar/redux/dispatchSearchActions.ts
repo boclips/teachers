@@ -1,14 +1,14 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
-import { RouterState } from 'src/types/State';
-import { VideoRequestFilters } from 'src/types/VideoSearchRequest';
-import { VideoType } from 'src/types/Video';
+import { RouterState } from '../../../types/State';
+import { VideoRequestFilters } from '../../../types/VideoSearchRequest';
+import { VideoType } from '../../../types/Video';
 import {
   CollectionRequestFilters,
   CollectionSearchRequest,
-} from 'src/types/CollectionSearchRequest';
-import { searchVideosAction } from './actions/searchVideosActions';
+} from '../../../types/CollectionSearchRequest';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
+import { searchVideosAction } from './actions/searchVideosActions';
 
 const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,

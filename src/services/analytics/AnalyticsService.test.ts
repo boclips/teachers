@@ -6,10 +6,10 @@ import {
   UserProfileFactory,
   VideoCollectionFactory,
   VideoFactory,
-} from 'test-support/factories';
-import { Constants } from 'src/app/AppConstants';
-import { VideoSearchResult } from 'src/types/SearchResults';
-import { StreamPlayback } from 'src/types/Video';
+} from '../../../test-support/factories';
+import { Constants } from '../../app/AppConstants';
+import { VideoSearchResult } from '../../types/SearchResults';
+import { StreamPlayback } from '../../types/Video';
 import { UpdateUserRequest } from '../users/updateUser';
 import AnalyticsService from './AnalyticsService';
 

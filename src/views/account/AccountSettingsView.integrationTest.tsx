@@ -3,18 +3,18 @@ import {
   links,
   schoolsResponse,
   userResponse,
-} from 'test-support/api-responses';
-import ApiStub from 'test-support/ApiStub';
-import { By } from 'test-support/By';
-import { fakeSubjectsSetup } from 'test-support/fakeApiClientSetup';
-import { AccountSettingsPage } from 'test-support/page-objects/AccountSettingsPage';
-import { Profile } from 'src/components/account/accountSettings/Profile';
-import { SchoolForm } from 'src/components/account/form/SchoolForm';
-import Mock = jest.Mock;
-import { SubjectTag } from 'src/components/common/tags/SubjectTag';
-import { editUser } from 'src/services/users/updateUser';
+} from '../../../test-support/api-responses';
+import ApiStub from '../../../test-support/ApiStub';
+import { By } from '../../../test-support/By';
+import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
+import { AccountSettingsPage } from '../../../test-support/page-objects/AccountSettingsPage';
+import { Profile } from '../../components/account/accountSettings/Profile';
 import SchoolSettings from '../../components/account/accountSettings/SchoolSettings';
+import { SchoolForm } from '../../components/account/form/SchoolForm';
+import Mock = jest.Mock;
 import EditButton from '../../components/common/buttons/EditButton';
+import { SubjectTag } from '../../components/common/tags/SubjectTag';
+import { editUser } from '../../services/users/updateUser';
 
 jest.mock('../../services/users/updateUser');
 

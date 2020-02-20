@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
-import eventually from 'test-support/eventually';
-import { VideoCollectionFactory } from 'test-support/factories';
-import { fetchCollection } from 'src/services/collections/fetchCollection';
+import eventually from '../../../../../test-support/eventually';
+import { VideoCollectionFactory } from '../../../../../test-support/factories';
+import { fetchCollection } from '../../../../services/collections/fetchCollection';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import fetchCollectionMiddleware from './fetchCollectionMiddleware';

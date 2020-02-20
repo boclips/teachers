@@ -1,7 +1,10 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { CollectionsFactory, MockStoreFactory } from 'test-support/factories';
+import {
+  CollectionsFactory,
+  MockStoreFactory,
+} from '../../../test-support/factories';
 import CollectionsLoaded from './CollectionsLoaded';
 
 it('renders loading component when loading is true', () => {

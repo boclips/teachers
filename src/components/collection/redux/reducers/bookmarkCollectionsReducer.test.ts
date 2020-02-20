@@ -3,13 +3,16 @@ import {
   PageableCollectionsFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from 'test-support/factories';
-import { createReducer } from 'src/app/redux/createReducer';
-import { Link } from 'src/types/Link';
-import State from 'src/types/State';
-import { EntitiesFactory, MockStoreFactory } from 'test-support/factories';
-import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
+} from '../../../../../test-support/factories';
+import { createReducer } from '../../../../app/redux/createReducer';
+import { Link } from '../../../../types/Link';
+import State from '../../../../types/State';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
+import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
+import {
+  EntitiesFactory,
+  MockStoreFactory,
+} from './../../../../../test-support/factories';
 import { collectionHandlers } from './collectionsReducer';
 
 const testReducer = createReducer(...collectionHandlers);

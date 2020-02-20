@@ -1,5 +1,5 @@
 import { Reducer } from 'redux';
-import { AuthenticationStateValue } from 'src/types/State';
+import { AuthenticationStateValue } from '../../../../types/State';
 import createReducerWithInitialState, {
   actionHandler,
 } from '../../createReducer';

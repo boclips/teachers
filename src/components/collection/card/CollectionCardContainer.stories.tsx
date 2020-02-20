@@ -7,17 +7,17 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
-} from 'test-support/factories';
-import { AgeRange } from 'src/types/AgeRange';
+} from '../../../../test-support/factories';
+import { AgeRange } from '../../../types/AgeRange';
 import {
   storyWithAuthentication,
   storyWithProvider,
   storyWithRouter,
-} from 'src/utils/index.stories';
-import { Link } from 'src/types/Link';
-import { VideoCollection } from 'src/types/VideoCollection';
-import { CollectionCardSkeleton } from './CollectionCard';
+} from '../../../utils/index.stories';
+import { Link } from '../../../types/Link';
+import { VideoCollection } from '../../../types/VideoCollection';
 import CollectionCardContainer from './CollectionCardContainer';
+import { CollectionCardSkeleton } from './CollectionCard';
 
 const subject = SubjectFactory.sample({ name: 'My Subject' });
 

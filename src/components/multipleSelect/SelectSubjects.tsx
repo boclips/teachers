@@ -1,5 +1,5 @@
 import React from 'react';
-import { Subject } from 'src/types/Subject';
+import { Subject } from '../../types/Subject';
 import MultiSelect from '../common/MultiSelect';
 
 export interface Props {

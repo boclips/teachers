@@ -1,9 +1,12 @@
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { renderWithStore } from 'test-support/renderWithStore';
-import { Link } from 'src/types/Link';
-import { getBoclipsClient } from 'src/services/apiClient';
-import { LinksFactory, LinksStateValueFactory } from 'test-support/factories';
+import { renderWithStore } from '../../../test-support/renderWithStore';
+import { Link } from '../../types/Link';
+import { getBoclipsClient } from '../../services/apiClient';
+import {
+  LinksFactory,
+  LinksStateValueFactory,
+} from '../../../test-support/factories';
 import { TrialExpiredView } from './TrialExpiredView';
 
 describe('TrialExpiryView', () => {

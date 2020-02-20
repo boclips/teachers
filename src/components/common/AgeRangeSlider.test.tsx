@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '../../types/AgeRange';
 import { AgeRangeSlider } from './AgeRangeSlider';
 import { BoclipsSlider } from './BoclipsSlider';
 

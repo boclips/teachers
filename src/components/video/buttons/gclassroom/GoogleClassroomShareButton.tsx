@@ -1,11 +1,11 @@
 import { Button } from 'antd';
 import React from 'react';
-import GoogleClassroomIcon from 'resources/images/google-classroom-logo.png';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { getShareableVideoLink } from 'src/services/links/getShareableVideoLink';
-import { Segment, Video } from 'src/types/Video';
-import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
+import GoogleClassroomIcon from '../../../../../resources/images/google-classroom-logo.png';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { getShareableVideoLink } from '../../../../services/links/getShareableVideoLink';
+import { Segment, Video } from '../../../../types/Video';
 import './GoogleClassroomShareButton.less';
+import GoogleClassroomUrlBuilder from './GoogleClassroomUrlBuilder';
 
 interface Props {
   video: Video;

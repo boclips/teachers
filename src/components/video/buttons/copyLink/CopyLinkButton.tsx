@@ -1,11 +1,11 @@
 import { Button, Icon } from 'antd';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import CopyLinkSVG from 'resources/images/copy-link.svg';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-import { getShareableVideoLink } from 'src/services/links/getShareableVideoLink';
-import { Segment, Video } from 'src/types/Video';
-import NotificationFactory from 'src/components/common/NotificationFactory';
+import CopyLinkSVG from '../../../../../resources/images/copy-link.svg';
+import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
+import { getShareableVideoLink } from '../../../../services/links/getShareableVideoLink';
+import { Segment, Video } from '../../../../types/Video';
+import NotificationFactory from '../../../common/NotificationFactory';
 
 interface Props {
   video: Video;

@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { FetchPageableCollectionRequest } from 'src/components/collection/redux/actions/fetchPageableCollectionsAction';
-import { Links } from 'src/types/Links';
-import { Pageable } from 'src/types/State';
-import { VideoCollection } from 'src/types/VideoCollection';
+import { FetchPageableCollectionRequest } from '../../components/collection/redux/actions/fetchPageableCollectionsAction';
+import { Links } from '../../types/Links';
+import { Pageable } from '../../types/State';
+import { VideoCollection } from '../../types/VideoCollection';
 import { parseScrollableCollectionsListResponse } from './collectionParser';
 
 export const fetchPageableCollections = (

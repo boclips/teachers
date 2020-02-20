@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoFactory } from 'test-support/factories';
-import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
+import { VideoFactory } from '../../../../../test-support/factories';
+import FakeBoclipsAnalytics from '../../../../services/analytics/boclips/FakeBoclipsAnalytics';
 import { GoogleClassroomShareButton } from './GoogleClassroomShareButton';
 
 it('opens a new window with the correct url', () => {

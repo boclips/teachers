@@ -1,7 +1,7 @@
 import { Icon } from 'antd';
 import React from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Video } from 'src/types/Video';
+import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import StopClickPropagation from '../../common/StopClickPropagation';

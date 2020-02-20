@@ -1,7 +1,7 @@
 import { SliderValue } from 'antd/lib/slider';
 import React from 'react';
-import { AgeRange } from 'src/types/AgeRange';
-import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import { AgeRange } from '../../types/AgeRange';
+import MediaBreakpoints from '../../types/MediaBreakpoints';
 import { BoclipsSlider } from './BoclipsSlider';
 import withMediaBreakPoint, {
   WithMediaBreakPointProps,

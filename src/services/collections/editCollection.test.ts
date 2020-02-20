@@ -1,8 +1,8 @@
-import { VideoCollectionFactory } from 'test-support/factories';
-import MockFetchVerify from 'test-support/MockFetchVerify';
-import { AgeRange } from 'src/types/AgeRange';
-import { Link } from 'src/types/Link';
-import { VideoCollectionLinksFactory } from 'test-support/factories';
+import { VideoCollectionFactory } from '../../../test-support/factories';
+import MockFetchVerify from '../../../test-support/MockFetchVerify';
+import { AgeRange } from '../../types/AgeRange';
+import { Link } from '../../types/Link';
+import { VideoCollectionLinksFactory } from './../../../test-support/factories';
 import { editCollection } from './editCollection';
 
 describe('editCollection', () => {

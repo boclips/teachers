@@ -1,5 +1,5 @@
-import ApiStub from 'test-support/ApiStub';
-import { DiscoverCollectionListPage } from 'test-support/page-objects/DiscoverCollectionListPage';
+import ApiStub from '../../../test-support/ApiStub';
+import { DiscoverCollectionListPage } from '../../../test-support/page-objects/DiscoverCollectionListPage';
 
 test('displays maths collections', async () => {
   new ApiStub()

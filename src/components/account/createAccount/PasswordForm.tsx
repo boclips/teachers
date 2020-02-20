@@ -1,8 +1,8 @@
 import { Form, Icon, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import ErrorSvg from 'resources/images/validation-error.svg';
-import SuccessSvg from 'resources/images/validation-success.svg';
+import ErrorSvg from '../../../../resources/images/validation-error.svg';
+import SuccessSvg from '../../../../resources/images/validation-success.svg';
 import './PasswordForm.less';
 
 interface State {

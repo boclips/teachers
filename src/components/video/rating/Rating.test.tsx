@@ -1,12 +1,12 @@
 import { Rate } from 'antd';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from 'test-support/By';
-import { VideoFactory } from 'test-support/factories';
-import { Link } from 'src/types/Link';
-import { Video } from 'src/types/Video';
-import VideoFeedbackModal from './VideoFeedbackModal';
+import { By } from '../../../../test-support/By';
+import { VideoFactory } from '../../../../test-support/factories';
+import { Link } from '../../../types/Link';
+import { Video } from '../../../types/Video';
 import Rating from './Rating';
+import VideoFeedbackModal from './VideoFeedbackModal';
 
 const getShallowRating = (video: Video) => shallow(<Rating video={video} />);
 
