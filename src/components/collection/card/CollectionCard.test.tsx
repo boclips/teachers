@@ -1,7 +1,4 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router';
 import { createBoclipsStore } from 'src/app/redux/store';
 import { renderWithCreatedStore } from 'test-support/renderWithStore';
 import {

@@ -95,7 +95,7 @@ describe('BoclipsRouter', () => {
         </Provider>,
       );
 
-    const collectionsView = wrapper.find(MyResourcesListView);
+      const collectionsView = wrapper.find(MyResourcesListView);
       expect(collectionsView).toExist();
     });
 
@@ -253,7 +253,7 @@ describe('BoclipsRouter', () => {
         </Provider>,
       );
 
-    const collectionsView = wrapper.find(MyResourcesListView);
+      const collectionsView = wrapper.find(MyResourcesListView);
       expect(collectionsView).not.toExist();
     });
 

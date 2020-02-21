@@ -17,7 +17,10 @@ interface OwnProps {
 export default class VideoButtons extends React.PureComponent<OwnProps> {
   public render() {
     return (
-      <section className="video-buttons__container" data-qa="video-buttons-container">
+      <section
+        className="video-buttons__container"
+        data-qa="video-buttons-container"
+      >
         <section className="display-desktop">
           <DesktopButtons {...this.props} />
         </section>

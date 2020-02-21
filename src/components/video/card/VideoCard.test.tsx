@@ -1,15 +1,15 @@
 import React from 'react';
-import FakeBoclipsAnalytics from '../../../services/analytics/boclips/FakeBoclipsAnalytics';
-import { VideoCard } from './VideoCard';
 import { Link } from 'src/types/Link';
 import { renderWithCreatedStore } from 'test-support/renderWithStore';
 import { createBoclipsStore } from 'src/app/redux/store';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import FakeBoclipsAnalytics from '../../../services/analytics/boclips/FakeBoclipsAnalytics';
 import {
   MockStoreFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
+import { VideoCard } from './VideoCard';
 
 describe('when outside video collection', () => {
   let history;
@@ -90,7 +90,9 @@ describe(`when unauthenticated`, () => {
       history,
     );
 
-    expect(component.queryByTestId('video-buttons-container')).not.toBeInTheDocument();
+    expect(
+      component.queryByTestId('video-buttons-container'),
+    ).not.toBeInTheDocument();
     expect(component.queryByText('Transcript')).not.toBeInTheDocument();
     expect(component.queryByText('Share')).not.toBeInTheDocument();
     expect(component.queryByText('Save')).not.toBeInTheDocument();
