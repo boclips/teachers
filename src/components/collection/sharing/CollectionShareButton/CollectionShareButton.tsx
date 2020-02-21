@@ -17,8 +17,9 @@ export const CollectionShareButton = React.memo<Props>(
   ({ collection }: Props) => {
     const user = useSelector((state: State) => state.user);
     const width = useMediaBreakPoint();
+    const unShareable = !collection.isPublic && !collection.isMine;
 
-    if (!collection || !user) {
+    if (!collection || !user || unShareable) {
       return null;
     }
 

@@ -51,4 +51,22 @@ describe('CollectionShareButton', () => {
     expect(getByText('Copy link')).toBeVisible();
     expect(getByText('Send to Google Classroom')).toBeVisible();
   });
+
+  it(`does not render the share button on other peoples private collections`, () => {
+    const notMyCollection = VideoCollectionFactory.sample({
+      isMine: false,
+      isPublic: false,
+    });
+
+    const { queryByText } = renderWithStore(
+      <CollectionShareButton collection={notMyCollection} />,
+      {
+        initialState: {
+          user: UserProfileFactory.sample(),
+        },
+      },
+    );
+
+    expect(queryByText('Share')).not.toBeInTheDocument();
+  });
 });
