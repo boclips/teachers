@@ -1,8 +1,8 @@
 import { Col } from 'antd';
 import React from 'react';
-import { VideoCard } from '../video/card/VideoCard';
+import { VideoCardSkeleton } from '../video/card/VideoCard';
 
-const SearchResultsPlaceholder = React.memo(() => <VideoCard.Skeleton />);
+const SearchResultsPlaceholder = React.memo(() => <VideoCardSkeleton />);
 
 export const VideoCardsPlaceholder = React.memo(() => (
   <React.Fragment>

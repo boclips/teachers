@@ -1,48 +1,116 @@
-import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoFactory } from '../../../../test-support/factories';
 import FakeBoclipsAnalytics from '../../../services/analytics/boclips/FakeBoclipsAnalytics';
-import { noOp } from '../../../utils';
-import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
-import VideoButtons from '../buttons/videoButtons/VideoButtons';
-import { Props, VideoCard } from './VideoCard';
-
-const video = VideoFactory.sample();
-
-const getWrapper = (givenProps: Partial<Props> = {}) => {
-  const props: Props = {
-    video,
-    history: {
-      push: noOp,
-    } as any,
-    ...givenProps,
-  } as any;
-  return shallow(<VideoCard {...props} />);
-};
+import { VideoCard } from './VideoCard';
+import { Link } from 'src/types/Link';
+import { renderWithCreatedStore } from 'test-support/renderWithStore';
+import { createBoclipsStore } from 'src/app/redux/store';
+import { fireEvent } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import {
+  MockStoreFactory,
+  VideoFactory,
+} from '../../../../test-support/factories';
 
 describe('when outside video collection', () => {
+  let history;
+  let store;
+  let component;
+  let video;
+
+  beforeEach(() => {
+    video = VideoFactory.sample({
+      links: {
+        self: new Link({ href: `/v1/videos/123` }),
+        transcript: new Link({ href: `/v1/videos/123` }),
+      },
+    });
+    history = createMemoryHistory();
+    store = createBoclipsStore(MockStoreFactory.sampleState(), history);
+    component = renderWithCreatedStore(
+      <VideoCard video={video} />,
+      store,
+      history,
+    );
+  });
+
   it('renders video buttons', () => {
-    const wrapper = getWrapper();
-    expect(wrapper.find(VideoButtons)).toExist();
+    expect(component.getByText('Transcript')).toBeInTheDocument();
+  });
+
+  it('Renders a ClickableCard, with the video details href', async () => {
+    const card = component.getByTestId('video-card');
+    expect(card).toBeInTheDocument();
+
+    await fireEvent.click(card);
+
+    expect(history.location.pathname).toEqual('/videos/123');
+  });
+
+  it('logs a navigation event in BoclipsAnalytics on mousedown', async () => {
+    const card = component.getByTestId('video-card');
+    expect(card).toBeInTheDocument();
+
+    await fireEvent.mouseDown(card);
+
+    expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
+      video,
+      interactionType: 'NAVIGATE_TO_VIDEO_DETAILS',
+    });
   });
 });
 
-it('Renders a ClickableCard, with the video details href', () => {
-  const wrapper = getWrapper();
+describe(`when unauthenticated`, () => {
+  const history = createMemoryHistory();
+  const store = createBoclipsStore(
+    MockStoreFactory.sampleState({
+      authentication: { status: 'anonymous' },
+      user: undefined,
+      links: {
+        loadingState: 'success',
+        entries: {
+          myCollections: null,
+          video: new Link({ href: `/videos/{id}`, templated: true }),
+          createNoSearchResultsEvent: new Link({
+            href: `/videos/{id}`,
+            templated: true,
+          }),
+        },
+      },
+    }),
+    history,
+  );
 
-  const card = wrapper.find(ClickableCard);
+  it(`does not render the video card buttons when there are no appropriate links`, () => {
+    const videoWithNoLinks = VideoFactory.sample({
+      links: { self: new Link({ href: `/v1/videos/123` }) },
+    });
+    const component = renderWithCreatedStore(
+      <VideoCard video={videoWithNoLinks} />,
+      store,
+      history,
+    );
 
-  expect(card).toExist();
-  expect(card.props().href).toEqual('/videos/123');
-});
+    expect(component.queryByTestId('video-buttons-container')).not.toBeInTheDocument();
+    expect(component.queryByText('Transcript')).not.toBeInTheDocument();
+    expect(component.queryByText('Share')).not.toBeInTheDocument();
+    expect(component.queryByText('Save')).not.toBeInTheDocument();
+  });
 
-it('logs a navigation event in BoclipsAnalytics on mousedown', () => {
-  const wrapper = getWrapper();
+  it(`renders the transcript button when available`, () => {
+    const videoWithTranscriptLink = VideoFactory.sample({
+      links: {
+        self: new Link({ href: `/v1/videos/123` }),
+        transcript: new Link({ href: `/v1/videos/123` }),
+      },
+    });
+    const component = renderWithCreatedStore(
+      <VideoCard video={videoWithTranscriptLink} />,
+      store,
+      history,
+    );
 
-  wrapper.simulate('mouseDown', {});
-
-  expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
-    video,
-    interactionType: 'NAVIGATE_TO_VIDEO_DETAILS',
+    expect(component.queryByText('Transcript')).toBeInTheDocument();
+    expect(component.queryByText('Share')).not.toBeInTheDocument();
+    expect(component.queryByText('Save')).not.toBeInTheDocument();
   });
 });

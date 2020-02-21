@@ -2,7 +2,7 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import FilterIconSVG from '../../../../resources/images/filter-icon.svg';
+import FilterIconSVG from 'resources/images/filter-icon.svg';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 import { Range } from '../../../../types/Range';
 import Bodal from '../../../common/Bodal';

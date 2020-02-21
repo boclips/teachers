@@ -1,5 +1,7 @@
 import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
+import State from 'src/types/State';
+import { useSelector } from 'react-redux';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -17,69 +19,69 @@ export interface Props {
   currentCollection?: VideoCollection;
 }
 
-export class VideoCard extends React.PureComponent<Props> {
-  public static Skeleton = () => (
-    <Card className="video-card skeleton" bordered={false}>
-      <AntSkeleton
-        loading={true}
-        active={true}
-        title={{ width: '150px' }}
-        paragraph={{ rows: 5 }}
-        avatar={{ shape: 'square', size: 'large' }}
-      />
-    </Card>
-  );
-
-  public render() {
-    if (!this.props.video) {
-      return <VideoCard.Skeleton />;
-    }
-
-    return (
-      <ClickableCard
-        className="video-card"
-        bordered={false}
-        href={`/videos/${this.props.video.id}`}
-        onMouseDown={this.emitVideoLinkClickEvent}
-        data-qa="video-card"
-      >
-        <VideoHeader video={this.props.video} />
-
-        <StopClickPropagation
-          wrapper="section"
-          wrapperProps={{ className: 'video-preview' }}
-        >
-          <div aria-label={'video player'} tabIndex={0}>
-            <VideoPlayer
-              video={this.props.video}
-              videoIndex={this.props.videoIndex}
-              mode="card"
-            />
-          </div>
-        </StopClickPropagation>
-
-        <section className="video-details">
-          <VideoCardTagList video={this.props.video} />
-          <p data-qa="video-description" className="description clamp-3-lines">
-            {this.props.video.description}
-          </p>
-          <Row className="buttons-row">
-            <StopClickPropagation>
-              <VideoButtons
-                video={this.props.video}
-                collection={this.props.currentCollection}
-              />
-            </StopClickPropagation>
-          </Row>
-        </section>
-      </ClickableCard>
-    );
+export const VideoCardSkeleton = () => (
+  <Card className="video-card skeleton" bordered={false}>
+    <AntSkeleton
+      loading={true}
+      active={true}
+      title={{ width: '150px' }}
+      paragraph={{ rows: 5 }}
+      avatar={{ shape: 'square', size: 'large' }}
+    />
+  </Card>
+);
+export const VideoCard = React.memo<Props>(props => {
+  if (!props.video) {
+    return <VideoCardSkeleton />;
   }
+  const isAuthenticated = useSelector((state: State) => !!state.user);
 
-  private emitVideoLinkClickEvent = () => {
+
+  const emitVideoLinkClickEvent = () => {
     // Noinspection JSIgnoredPromiseFromCall
-    AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(
-      this.props.video,
-    );
+    AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(props.video);
   };
-}
+  const renderVideoButtons = props.video.links.transcript || isAuthenticated;
+
+  return (
+    <ClickableCard
+      className="video-card"
+      bordered={false}
+      href={`/videos/${props.video.id}`}
+      onMouseDown={emitVideoLinkClickEvent}
+      data-qa="video-card"
+    >
+      <VideoHeader video={props.video} />
+
+      <StopClickPropagation
+        wrapper="section"
+        wrapperProps={{ className: 'video-preview' }}
+      >
+        <div aria-label={'video player'} tabIndex={0}>
+          <VideoPlayer
+            video={props.video}
+            videoIndex={props.videoIndex}
+            mode="card"
+          />
+        </div>
+      </StopClickPropagation>
+
+      <section className="video-details">
+        <VideoCardTagList video={props.video} />
+        <p data-qa="video-description" className="description clamp-3-lines">
+          {props.video.description}
+        </p>
+        <Row className="buttons-row">
+          <StopClickPropagation>
+            {renderVideoButtons && (
+              <VideoButtons
+                video={props.video}
+                collection={props.currentCollection}
+              />
+            )}
+          </StopClickPropagation>
+        </Row>
+      </section>
+    </ClickableCard>
+  );
+});
