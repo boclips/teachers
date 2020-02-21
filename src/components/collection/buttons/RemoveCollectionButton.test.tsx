@@ -14,9 +14,8 @@ import {
 import { Link } from 'src/types/Link';
 import {
   renderWithStore,
-  renderWithCreatedStore,
+  renderWithBoclipsStore,
 } from 'test-support/renderWithStore';
-import { createBoclipsStore } from 'src/app/redux/store';
 import eventually from 'test-support/eventually';
 import MockFetchVerify from 'test-support/MockFetchVerify';
 import { RemoveCollectionButton } from './RemoveCollectionButton';
@@ -54,18 +53,14 @@ describe('RemoveCollectionButton', () => {
       }),
     });
 
-    const store = createBoclipsStore(
+    const context = renderWithBoclipsStore(
+      <RemoveCollectionButton collection={collection} />,
       MockStoreFactory.sampleState({
         subjects: SubjectsFactory.sample(),
         collections: CollectionsFactory.sample({
           myCollections: { items: [collection.id], links: {} },
         }),
       }),
-    );
-
-    const context = renderWithCreatedStore(
-      <RemoveCollectionButton collection={collection} />,
-      store,
     );
 
     const button = context.getByText('Delete Collection');
@@ -84,20 +79,16 @@ describe('RemoveCollectionButton', () => {
       }),
     });
 
-    const store = createBoclipsStore(
+    MockFetchVerify.delete('/collections/123', undefined, 204);
+
+    const context = renderWithBoclipsStore(
+      <RemoveCollectionButton collection={collection} />,
       MockStoreFactory.sampleState({
         subjects: SubjectsFactory.sample(),
         collections: CollectionsFactory.sample({
           myCollections: { items: [collection.id], links: {} },
         }),
       }),
-    );
-
-    MockFetchVerify.delete('/collections/123', undefined, 204);
-
-    const context = renderWithCreatedStore(
-      <RemoveCollectionButton collection={collection} />,
-      store,
     );
 
     const button = context.getByText('Delete Collection');

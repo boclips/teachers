@@ -82,59 +82,67 @@ const Filters = (
           overflowedIndicator={<DropdownArrow active={true} />}
         >
           <SubMenu title={'Age'} key="age" className={'filter-form__section'}>
-            <Form.Item>
-              {getFieldDecorator('ageRange', {
-                initialValue: {
-                  min: props.ageRangeMin,
-                  max: props.ageRangeMax,
-                },
-              })(
-                <AgeRangeSlider
-                  ageRange={new AgeRange(props.ageRangeMin, props.ageRangeMax)}
-                  data-qa="age-range-slider"
-                />,
-              )}
-            </Form.Item>
+            <React.Fragment>
+              <Form.Item>
+                {getFieldDecorator('ageRange', {
+                  initialValue: {
+                    min: props.ageRangeMin,
+                    max: props.ageRangeMax,
+                  },
+                })(
+                  <AgeRangeSlider
+                    ageRange={
+                      new AgeRange(props.ageRangeMin, props.ageRangeMax)
+                    }
+                    data-qa="age-range-slider"
+                  />,
+                )}
+              </Form.Item>
+            </React.Fragment>
           </SubMenu>
           <SubMenu
             title={'Duration'}
             key="duration"
             className={'filter-form__section'}
           >
-            <Form.Item>
-              {getFieldDecorator('duration', {
-                initialValue: {
-                  min: props.durationMin,
-                  max: props.durationMax,
-                },
-              })(
-                <DurationSlider
-                  min={props.durationMin}
-                  max={props.durationMax}
-                  data-qa="duration-slider"
-                />,
-              )}
-            </Form.Item>
+            <React.Fragment>
+              <Form.Item>
+                {getFieldDecorator('duration', {
+                  initialValue: {
+                    min: props.durationMin,
+                    max: props.durationMax,
+                  },
+                })(
+                  <DurationSlider
+                    min={props.durationMin}
+                    max={props.durationMax}
+                    data-qa="duration-slider"
+                  />,
+                )}
+              </Form.Item>
+            </React.Fragment>
           </SubMenu>
           <SubMenu
             title={'Subjects'}
             key="subject"
             className={'filter-form__section'}
           >
-            <Form.Item colon={false}>
-              {getFieldDecorator('subjects', {
-                rules: [{ type: 'array' }],
-                initialValue: props.subjectIds,
-                trigger: 'onUpdateSubjects',
-              })(
-                <SelectSubjects
-                  subjects={subjects}
-                  placeholder="Choose from our list.."
-                  initialValue={props.subjectIds}
-                  data-qa="subject-select"
-                />,
-              )}
-            </Form.Item>
+            <React.Fragment>
+              <Form.Item colon={false}>
+                {getFieldDecorator('subjects', {
+                  rules: [{ type: 'array' }],
+                  initialValue: props.subjectIds,
+                  trigger: 'onUpdateSubjects',
+                })(
+                  <SelectSubjects
+                    subjects={subjects}
+                    placeholder="Choose from our list.."
+                    initialValue={props.subjectIds}
+                    data-qa="subject-select"
+                  />,
+                )}
+              </Form.Item>
+            </React.Fragment>
           </SubMenu>
         </Menu>
         <Button htmlType="submit" type={'primary'}>

@@ -8,9 +8,8 @@ import {
   MockStoreFactory,
 } from 'test-support/factories';
 import { Link } from 'src/types/Link';
-import { createBoclipsStore } from 'src/app/redux/store';
 import {
-  renderWithCreatedStore,
+  renderWithBoclipsStore,
   renderWithStore,
 } from 'test-support/renderWithStore';
 import { EditCollectionButton } from './EditCollectionButton';
@@ -98,16 +97,13 @@ describe('EditCollectionButton', () => {
 
   it('opens the form when the button is clicked', async () => {
     const collection = getEditableCollection();
+    const initialState = MockStoreFactory.sampleState({
+      subjects: SubjectsFactory.sample(),
+    });
 
-    const store = createBoclipsStore(
-      MockStoreFactory.sampleState({
-        subjects: SubjectsFactory.sample(),
-      }),
-    );
-
-    const component = renderWithCreatedStore(
+    const component = renderWithBoclipsStore(
       <EditCollectionButton collection={collection} />,
-      store,
+      initialState,
     );
 
     const editButton = component.getByText('Edit').closest('button');

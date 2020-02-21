@@ -1,10 +1,18 @@
 import React from 'react';
 import { within, fireEvent } from '@testing-library/react';
 import { waitForElement } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import ApiStub from 'test-support/ApiStub';
 import {
-  renderWithCreatedStore,
+  collectionResponse,
+  collectionsResponse,
+  videos as videoResults,
+} from 'test-support/api-responses';
+import { Route } from 'react-router';
+import {
+  renderWithConnectedRoutes,
   renderWithStore,
-} from '../../../test-support/renderWithStore';
+} from 'test-support/renderWithStore';
 import {
   LinksStateValueFactory,
   RouterFactory,
@@ -12,8 +20,8 @@ import {
   SubjectFactory,
   SubjectsFactory,
   UserProfileFactory,
-} from '../../../test-support/factories';
-import { createBoclipsStore } from '../../app/redux/store';
+} from 'test-support/factories';
+import { createBoclipsStore } from 'src/app/redux/store';
 import { ConnectedNewSearchResultsView } from './NewSearchResultsView';
 
 describe('SearchResultsView', () => {
@@ -49,37 +57,42 @@ describe('SearchResultsView', () => {
     expect(view.getByText('Apply filters')).toBeInTheDocument();
   });
 
-  xit(`clicking on Apply filters adds selected filters to search params`, async () => {
-    const store = createBoclipsStore({
-      subjects: SubjectsFactory.sample([
-        SubjectFactory.sample({ name: 'Arts' }),
-      ]),
-      search: SearchFactory.sample(),
-      router: RouterFactory.sample({
-        location: {
-          pathname: '/new-filters',
-          search: '',
-          hash: '',
-          state: null,
-        },
-      }),
-      user: UserProfileFactory.sample(),
-      links: LinksStateValueFactory.sample(),
+  it(`clicking on Apply filters adds selected filters to search params`, async () => {
+    const initialQuery = 'hello';
+    const history = createMemoryHistory({
+      initialEntries: [`/new-filters?q=${initialQuery}`],
     });
-
-    const { getByText, findByText, getByTestId } = renderWithCreatedStore(
-      <ConnectedNewSearchResultsView />,
-      store,
+    const store = createBoclipsStore(
+      {
+        subjects: SubjectsFactory.sample([
+          SubjectFactory.sample({ name: 'Arts' }),
+        ]),
+        links: LinksStateValueFactory.sample({}, '/v1'),
+      },
+      history,
     );
 
-    const subjectsInput = getByText('Choose from our list..');
+    new ApiStub()
+      .defaultUser()
+      .queryVideos({ query: initialQuery, results: videoResults })
+      .queryCollections({
+        query: initialQuery,
+        results: collectionsResponse([collectionResponse()]),
+      });
+
+    const { getByText, findByText, getByTestId } = renderWithConnectedRoutes(
+      <Route path={'/new-filters'} component={ConnectedNewSearchResultsView} />,
+      store,
+      history,
+    );
+
+    const subjectsInput = await findByText('Choose from our list..');
     await fireEvent.click(subjectsInput);
 
     const artsOption = await findByText('Arts');
     await fireEvent.click(artsOption);
 
     const applyFilters = getByText('Apply filters').closest('button');
-    await fireEvent.click(getByText('Filter results'));
     await fireEvent.click(applyFilters);
 
     await waitForElement(() => getByTestId('subject-filter-tag'));

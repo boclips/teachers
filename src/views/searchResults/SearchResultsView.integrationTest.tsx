@@ -29,14 +29,13 @@ import {
 } from 'test-support/factories';
 import { SearchPage } from 'test-support/page-objects/SearchPage';
 import {
-  renderWithCreatedStore,
+  renderWithBoclipsStore,
   renderWithStore,
 } from 'test-support/renderWithStore';
 import { findElement } from 'src/../testSetup';
 import { ClosableTag } from 'src/components/common/tags/Tag';
 import { getBoclipsClient } from 'src/services/apiClient';
 import { Link } from 'src/types/Link';
-import { createBoclipsStore } from 'src/app/redux/store';
 import { FilterButtonWithMediaBreakPoint as FilterButton } from '../../components/searchResults/old/filters/FilterButton';
 import DurationSlider from '../../components/searchResults/filters/DurationSlider';
 import DurationFilterTag from '../../components/searchResults/filters/DurationFilterTag';
@@ -203,46 +202,48 @@ describe('search results', () => {
   });
 
   test('persists filters across different searches', async () => {
-    const store = createBoclipsStore(
-      MockStoreFactory.sampleState({
-        search: {
-          videoSearch: VideoSearchFactory.sample({
-            videoIds: ['video-id-one', 'video-id-two'],
-            paging: {
-              number: 1,
-              size: 10,
-              totalElements: 2,
-              totalPages: 1,
-            },
-          }),
-          collectionSearch: CollectionSearchFactory.sample(),
+    const initialState = MockStoreFactory.sampleState({
+      search: {
+        videoSearch: VideoSearchFactory.sample({
+          videoIds: ['video-id-one', 'video-id-two'],
+          paging: {
+            number: 1,
+            size: 10,
+            totalElements: 2,
+            totalPages: 1,
+          },
+        }),
+        collectionSearch: CollectionSearchFactory.sample(),
+      },
+      user: UserProfileFactory.sample(),
+      subjects: [
+        SubjectFactory.sample({ id: 'subject-one-id', name: 'Mathematics' }),
+      ],
+      entities: EntitiesFactory.sample({
+        videos: {
+          byId: {
+            'video-id-one': VideoFactory.sample({ id: 'video-id-one' }),
+            'video-id-two': VideoFactory.sample({ id: 'video-id-two' }),
+          },
         },
-        user: UserProfileFactory.sample(),
-        subjects: [
-          SubjectFactory.sample({ id: 'subject-one-id', name: 'Mathematics' }),
-        ],
-        entities: EntitiesFactory.sample({
-          videos: {
-            byId: {
-              'video-id-one': VideoFactory.sample({ id: 'video-id-one' }),
-              'video-id-two': VideoFactory.sample({ id: 'video-id-two' }),
-            },
-          },
-        }),
-        collections: CollectionsFactory.sample(),
-        links: LinksStateValueFactory.sample(),
-        router: RouterFactory.sample({
-          location: {
-            pathname: '',
-            search:
-              '?q=fractions&age_range_min=11&age_range_max=14&subject=subject-one-id',
-            hash: '',
-            state: null,
-          },
-        }),
       }),
+      collections: CollectionsFactory.sample(),
+      links: LinksStateValueFactory.sample(),
+      router: RouterFactory.sample({
+        location: {
+          pathname: '',
+          search:
+            '?q=fractions&age_range_min=11&age_range_max=14&subject=subject-one-id',
+          hash: '',
+          state: null,
+        },
+      }),
+    });
+
+    const searchPage = renderWithBoclipsStore(
+      <SearchResultsView />,
+      initialState,
     );
-    const searchPage = renderWithCreatedStore(<SearchResultsView />, store);
     const searchInput = await searchPage.findByTestId('search-input');
 
     fireEvent.input(searchInput, {

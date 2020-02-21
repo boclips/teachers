@@ -6,6 +6,8 @@ import { Router } from 'react-router';
 import { applyMiddleware, createStore, Store } from 'redux';
 import { History } from 'history';
 import { createReducer } from 'src/app/redux/createReducer';
+import { ConnectedRouter } from 'connected-react-router';
+import { createBoclipsStore } from 'src/app/redux/store';
 import State from '../src/types/State';
 
 interface Options {
@@ -29,13 +31,23 @@ export const renderWithStore = (
     applyMiddleware(...middlewares),
   );
 
-  return renderWithCreatedStore(ui, store);
+  return renderWithCreatedStore(ui, store, createMemoryHistory({}));
+};
+
+export const renderWithBoclipsStore = (
+  ui,
+  initialState: Partial<State> = {},
+  history = createMemoryHistory(),
+): ResultingContext => {
+  const store = createBoclipsStore(initialState, history);
+
+  return renderWithCreatedStore(ui, store, history);
 };
 
 export const renderWithCreatedStore = (
   ui,
   store: Store,
-  history = createMemoryHistory({}),
+  history,
 ): ResultingContext => {
   function Wrapper({ children }) {
     return (
@@ -52,6 +64,28 @@ export const renderWithCreatedStore = (
     // Adding `store`, and `history` to the returned utilities to allow us
     // To reference it in our tests (just try to avoid using
     // This to test implementation details).
+    store,
+    history,
+  };
+};
+
+export const renderWithConnectedRoutes = (
+  routes,
+  store: Store,
+  history: History,
+): ResultingContext => {
+  function Wrapper({ children }) {
+    return (
+      <Provider store={store}>
+        <ConnectedRouter history={history}>{children}</ConnectedRouter>
+      </Provider>
+    );
+  }
+
+  return {
+    ...rtlRender(routes, {
+      wrapper: Wrapper,
+    }),
     store,
     history,
   };

@@ -170,7 +170,12 @@ export class UserProfileLinksFactory {
 export class LinksFactory {
   public static sample(arg: Partial<Links> = {}, prefix: string = ''): Links {
     return Object.freeze({
-      videos: arg.videos || new Link({ href: `${prefix}${prefix}/videos` }),
+      videos:
+        arg.videos ||
+        new Link({
+          href: `${prefix}/videos/{?query,sort_by,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom}`,
+          templated: true,
+        }),
       searchPublicCollections:
         arg.searchPublicCollections ||
         new Link({
@@ -192,7 +197,7 @@ export class LinksFactory {
       activate: arg.activate,
       profile:
         arg.profile ||
-        new Link({ href: `${prefix}/v1/users/{id}`, templated: true }),
+        new Link({ href: `${prefix}/users/{id}`, templated: true }),
       createCollection:
         arg.createCollection || new Link({ href: `${prefix}/collections` }),
       myCollections:

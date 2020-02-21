@@ -10,8 +10,7 @@ import {
 } from 'test-support/factories';
 import { AgeRange } from 'src/types/AgeRange';
 import { Link } from 'src/types/Link';
-import { createBoclipsStore } from 'src/app/redux/store';
-import { renderWithCreatedStore } from 'test-support/renderWithStore';
+import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import MockFetchVerify, { axiosMock } from 'test-support/MockFetchVerify';
 import { VideoCollection } from 'src/types/VideoCollection';
 import eventually from 'test-support/eventually';
@@ -68,23 +67,18 @@ describe('EditCollectionForm', () => {
       ...args,
     });
 
-  const renderEditForm = (collection: VideoCollection) => {
-    const store = createBoclipsStore(
-      MockStoreFactory.sampleState({
-        subjects: SubjectsFactory.sample(),
-      }),
-    );
-
-    return renderWithCreatedStore(
+  const renderEditForm = (collection: VideoCollection) =>
+    renderWithBoclipsStore(
       <EditCollectionForm
         setVisible={jest.fn()}
         visible={true}
         disableButton={false}
         collection={collection}
       />,
-      store,
+      MockStoreFactory.sampleState({
+        subjects: SubjectsFactory.sample(),
+      }),
     );
-  };
 
   it('has the values of the collection in the form', async () => {
     const collection = VideoCollectionFactory.sample({
