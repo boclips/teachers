@@ -23,6 +23,7 @@ import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
 import BulletSVG from '../../../../resources/images/bullet.svg';
 import { CollectionCardPreview } from './CollectionCardPreview';
+import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton/CollectionShareButton';
 
 export interface Props {
   collection: VideoCollection;
@@ -49,6 +50,7 @@ export const CollectionCard = withMediaBreakPoint(
           collection={props.collection}
         />
       ),
+      <CollectionShareButton key="share" collection={props.collection}/>
     ];
 
     const rightButtons = [

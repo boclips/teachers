@@ -45,7 +45,7 @@ export class BookmarkCollectionButtonInner extends PureComponent<
                 title="Button to bookmark a collection"
                 className="bookmark-button__icon"
               />
-              <span>Bookmark</span>
+              <span>Save</span>
             </React.Fragment>
           </Button>
         </A11yButton>

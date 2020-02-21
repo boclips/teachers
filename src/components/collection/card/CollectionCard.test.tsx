@@ -2,7 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
+import { createBoclipsStore } from 'src/app/redux/store';
+import { renderWithCreatedStore } from 'test-support/renderWithStore';
 import {
+  MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
 } from '../../../../test-support/factories';
@@ -17,10 +20,10 @@ describe('CollectionCard', () => {
       ageRange: new AgeRange(7, 11),
     });
     const videos = [VideoFactory.sample()];
-    const component = render(
-      <Router history={createMemoryHistory()}>
-        <CollectionCard collection={collection} videos={videos} grid={false} />,
-      </Router>,
+    const store = createBoclipsStore(MockStoreFactory.sampleState());
+    const component = renderWithCreatedStore(
+      <CollectionCard collection={collection} videos={videos} grid={false} />,
+      store,
     );
     const tagsContainer = component.getByTestId('tags-container');
 
@@ -33,10 +36,10 @@ describe('CollectionCard', () => {
       title: 'My collection',
     });
     const videos = [VideoFactory.sample()];
-    const component = render(
-      <Router history={createMemoryHistory()}>
-        <CollectionCard collection={collection} videos={videos} grid={true} />,
-      </Router>,
+    const store = createBoclipsStore(MockStoreFactory.sampleState());
+    const component = renderWithCreatedStore(
+      <CollectionCard collection={collection} videos={videos} grid={true} />,
+      store,
     );
     const tagsContainer = component.getByTestId('tags-container');
 
@@ -49,10 +52,10 @@ describe('CollectionCard', () => {
       title: 'My collection',
     });
     const videos = [VideoFactory.sample()];
-    const component = render(
-      <Router history={createMemoryHistory()}>
-        <CollectionCard collection={collection} videos={videos} grid={false} />,
-      </Router>,
+    const store = createBoclipsStore(MockStoreFactory.sampleState());
+    const component = renderWithCreatedStore(
+      <CollectionCard collection={collection} videos={videos} grid={false} />,
+      store,
     );
     const tagsContainer = component.queryByTestId('tags-container');
 
@@ -80,14 +83,10 @@ describe('CollectionCard', () => {
         }),
       ];
 
-      const component = render(
-        <Router history={createMemoryHistory()}>
-          <CollectionCard
-            collection={collection}
-            videos={videos}
-            grid={false}
-          />
-        </Router>,
+      const store = createBoclipsStore(MockStoreFactory.sampleState());
+      const component = renderWithCreatedStore(
+        <CollectionCard collection={collection} videos={videos} grid={false} />,
+        store,
       );
 
       expect(component.getByText('"Video 1" by Person 1')).toBeVisible();
