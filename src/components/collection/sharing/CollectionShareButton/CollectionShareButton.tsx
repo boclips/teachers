@@ -50,7 +50,7 @@ export const CollectionShareButton = React.memo<Props>(
           <GoogleClassroomShareButton
             link={shareLink}
             postTitle={collection.title}
-            // postBody={`Use code ${this.props.shareCode} to view this.`}
+            postBody={`Use code ${user.shareCode} to view this.`}
             onClick={handleGoogleShare}
           />
         </div>
