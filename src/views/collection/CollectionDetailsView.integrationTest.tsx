@@ -2,6 +2,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import {
   collectionResponse,
+  video177,
   video177Slim,
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
@@ -24,6 +25,7 @@ describe('CollectionDetailsView', () => {
       new ApiStub()
         .defaultUser()
         .fetchCollections()
+        .fetchCollection(collectionResponse([], 'id'))
         .fetchVideo();
 
       const collectionPage = await CollectionPage.load();
@@ -38,16 +40,14 @@ describe('CollectionDetailsView', () => {
     });
 
     test('displays video collection with videos', async () => {
-      // Given: the api returns what we say
       new ApiStub()
         .defaultUser()
         .fetchCollections()
+        .fetchCollection(collectionResponse([video177], 'id'))
         .fetchVideo();
 
-      // When: the page is loaded
       const collectionPage = await CollectionPage.load();
 
-      // Then: we get the right elements. We get one element.
       expect(collectionPage.isEmptyCollection()).toBeFalsy();
       expect(collectionPage.getVideos()).toHaveLength(1);
       expect(collectionPage.getVideos()[0]).toMatchObject({
@@ -130,7 +130,11 @@ describe('CollectionDetailsView', () => {
     });
 
     it('Shows skeleton while loading', async () => {
-      const history = createMemoryHistory();
+      const history = createMemoryHistory({
+        initialEntries: [
+          '/collections/slow-loading-collection?referer=test-id',
+        ],
+      });
       const wrapper = renderWithCreatedStore(
         <CollectionDetailsView collectionId="slow-loading-collection" />,
         createBoclipsStore(MockStoreFactory.sampleState(), history),
@@ -191,10 +195,11 @@ describe('CollectionDetailsView', () => {
       new ApiStub()
         .defaultUser()
         .fetchCollections()
+        .fetchCollection(collectionResponse([video177Slim], '789'))
         .fetchVideo()
         .removeFromCollection();
 
-      const collectionPage = await CollectionPage.load();
+      const collectionPage = await CollectionPage.load('789');
       expect(collectionPage.getVideos()).toHaveLength(1);
 
       collectionPage.removeVideo(0);
@@ -224,8 +229,8 @@ describe('CollectionDetailsView', () => {
     });
   });
 
-  describe(`when viewing collection using referer and shareCode`, () => {
-    test(`renders the CollectionShareCodeDialog`, async () => {
+  describe(`sharing`, () => {
+    test(`prompts for share code when referer set`, async () => {
       const history = createMemoryHistory({
         initialEntries: ['/collections/123?referer=test-123'],
       });
@@ -235,10 +240,22 @@ describe('CollectionDetailsView', () => {
         history,
       );
 
-      expect(await wrapper.findByRole('dialog')).toBeInTheDocument();
       expect(
         await wrapper.findByText('Enter code to view collection'),
       ).toBeInTheDocument();
+    });
+
+    test(`renders not found when referer not set`, async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/123'],
+      });
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId={'123'} />,
+        createBoclipsStore(MockStoreFactory.sampleState(), history),
+        history,
+      );
+
+      expect(await wrapper.findByText('Oops!!')).toBeInTheDocument();
     });
   });
 });

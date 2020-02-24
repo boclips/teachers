@@ -23,42 +23,6 @@ describe('CollectionShareCodeDialog', () => {
     store = createBoclipsStore(MockStoreFactory.sampleState(), history);
   });
 
-  it('does not render when there is no referer set', () => {
-    history = createMemoryHistory({
-      initialEntries: ['/collections/123'],
-    });
-
-    store = createBoclipsStore(MockStoreFactory.sampleState(), history);
-
-    const wrapper = renderWithCreatedStore(
-      <CollectionShareCodeDialog collectionId={'123'} />,
-      store,
-      history,
-    );
-
-    const title = wrapper.queryByText('Enter code to view collection');
-
-    expect(title).not.toBeInTheDocument();
-  });
-
-  it('does not render when the referer is anonymous', () => {
-    history = createMemoryHistory({
-      initialEntries: ['/collections/123?referer=anonymous'],
-    });
-
-    store = createBoclipsStore(MockStoreFactory.sampleState(), history);
-
-    const wrapper = renderWithCreatedStore(
-      <CollectionShareCodeDialog collectionId={'123'} />,
-      store,
-      history,
-    );
-
-    const title = wrapper.queryByText('Enter code to view collection');
-
-    expect(title).not.toBeInTheDocument();
-  });
-
   describe('collection ShareCodeDialog', () => {
     it(`disables the View collection button while no shareCode is provided`, async () => {
       const wrapper = renderWithCreatedStore(

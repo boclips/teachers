@@ -125,11 +125,6 @@ export const getCollectionById = (
   state: State,
   collectionId: string,
 ): VideoCollection => {
-  // TODO(AO): Necessary?
-  // if (isMyCollection(state.collections.myCollections.items, collectionId)) {
-  //   return state.entities.collections.byId[collectionId];
-  // }
-
   if (state.collections.collectionIdBeingViewed === null) {
     return null;
   }

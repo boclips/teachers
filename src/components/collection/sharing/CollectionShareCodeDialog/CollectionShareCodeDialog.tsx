@@ -11,11 +11,6 @@ interface Props {
 
 export const CollectionShareCodeDialog = React.memo((props: Props) => {
   const referer = useRefererIdInjector();
-
-  if (!referer || referer === 'anonymous') {
-    return null;
-  }
-
   const [visible, setVisible] = useState(true);
   const [codeInvalid, setCodeInvalid] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -47,7 +42,6 @@ export const CollectionShareCodeDialog = React.memo((props: Props) => {
         shareCode,
       }),
     );
-    // Start loading spinner
     setSubmitted(true);
   };
 
