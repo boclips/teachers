@@ -41,6 +41,7 @@ export const ShareCodeDialog = (props: Props) => {
             'share-code-dialog__input--invalid': props.codeInvalid,
           })}
           placeholder="Enter code"
+          data-qa="share-code-input"
           value={shareCode}
           onChange={event => {
             setShareCode(event.currentTarget.value);
@@ -48,6 +49,7 @@ export const ShareCodeDialog = (props: Props) => {
         />
         <Button
           className="share-code-dialog__button"
+          data-qa="share-code-submit"
           type={'primary'}
           size={'large'}
           disabled={shareCode.length === 0}
