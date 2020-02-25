@@ -16,13 +16,8 @@ interface Props {
   video: Video;
 }
 
-export const VideoShareButton = React.memo<Props>(props => {
+export const VideoShareButton = (props: Props) => {
   const isAuthenticated = useSelector((state: State) => !!state.user);
-
-  if (!isAuthenticated) {
-    return null;
-  }
-
   const [segment, setSegment] = useState<Segment>(null);
   const user = useSelector((state: State) => state.user);
   const width = useMediaBreakPoint();
@@ -48,23 +43,29 @@ export const VideoShareButton = React.memo<Props>(props => {
       .catch(console.error);
   };
 
-  const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
+  if (isAuthenticated) {
+    const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
 
-  return (
-    <ShareButton
-      title={`Share ${mobileView ? 'video' : props.video.title}`}
-      shareCode={user.shareCode}
-    >
-      <ShareForm video={props.video} onSegmentChange={setSegment} />
-      <div className="share-buttons">
-        <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
-        <GoogleClassroomShareButton
-          link={shareLink}
-          postTitle={props.video.title}
-          // postBody={`Use code ${this.props.shareCode} to view this.`}
-          onClick={handleGoogleShare}
-        />
-      </div>
-    </ShareButton>
-  );
-});
+    return (
+      isAuthenticated && (
+        <ShareButton
+          title={`Share ${mobileView ? 'video' : props.video.title}`}
+          shareCode={user.shareCode}
+        >
+          <ShareForm video={props.video} onSegmentChange={setSegment} />
+          <div className="share-buttons">
+            <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
+            <GoogleClassroomShareButton
+              link={shareLink}
+              postTitle={props.video.title}
+              postBody={`Use code ${user.shareCode} to view this.`}
+              onClick={handleGoogleShare}
+            />
+          </div>
+        </ShareButton>
+      )
+    );
+  } else {
+    return null
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CollectionDetailsContent } from 'src/components/collection/details/CollectionDetailsContent';
 import { CollectionDetailsNotFound } from 'src/components/collection/details/CollectionDetailsNotFound';
@@ -15,8 +15,8 @@ interface OwnProps {
   collectionId: string;
 }
 
-export const CollectionDetails = (props: OwnProps) => {
-  const dispatch = useDispatch();
+export const CollectionDetails = React.memo((props: OwnProps) => {
+  const dispatch = useCallback(useDispatch(), []);
   const referer = useRefererIdInjector();
   const collection = useSelector((state: State) =>
     getCollectionById(state, props.collectionId),
@@ -27,11 +27,8 @@ export const CollectionDetails = (props: OwnProps) => {
 
   useEffect(() => {
     dispatch(fetchCollectionAction({ id: props.collectionId }));
-  }, []);
-
-  useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
-  }, [props.collectionId]);
+  }, [dispatch, props.collectionId]);
 
   if (!collection) {
     // TODO: referer anonymous and user not logged in, or 404
@@ -55,4 +52,4 @@ export const CollectionDetails = (props: OwnProps) => {
   }
 
   return <CollectionDetailsContent collection={collection} userId={userId} />;
-};
+});

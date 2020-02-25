@@ -24,13 +24,13 @@ export const CollectionDetailsContent = (props: {
         }),
       );
     }
-  }, []);
+  }, [dispatch, props.collection.videoIds]);
 
   useEffect(() => {
     setVideos(
       props.collection.videoIds.map(videoId => videosState.byId[videoId.value]),
     );
-  }, [videosState.byId]);
+  }, [props.collection.videoIds, videosState.byId]);
 
   return (
     <section className="collection-view__collection-details">

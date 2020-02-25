@@ -37,7 +37,7 @@ export const VideoDetailsView = (props: Props) => {
 
   useEffect(() => {
     dispatch(fetchVideoAction(props.videoId));
-  }, []);
+  }, [dispatch, props.videoId]);
 
   useEffect(() => {
     if ((userId || !params.referer) && userId !== params.referer) {
