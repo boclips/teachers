@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import React from 'react';
 import {
   SubjectsFactory,
@@ -30,7 +30,17 @@ describe('EditCollectionButton', () => {
   it('does not render, when the collection is not yours', () => {
     const collection = getUneditableCollection();
 
-    const component = render(<EditCollectionButton collection={collection} />);
+    const component = renderWithStore(
+      <EditCollectionButton collection={collection} />,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample({
+            loading: false,
+            updating: false,
+          }),
+        },
+      },
+    );
 
     expect(component.queryByText('Edit')).not.toBeInTheDocument();
   });

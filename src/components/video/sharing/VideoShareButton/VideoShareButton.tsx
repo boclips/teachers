@@ -47,25 +47,23 @@ export const VideoShareButton = (props: Props) => {
     const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
 
     return (
-      isAuthenticated && (
-        <ShareButton
-          title={`Share ${mobileView ? 'video' : props.video.title}`}
-          shareCode={user.shareCode}
-        >
-          <ShareForm video={props.video} onSegmentChange={setSegment} />
-          <div className="share-buttons">
-            <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
-            <GoogleClassroomShareButton
-              link={shareLink}
-              postTitle={props.video.title}
-              postBody={`Use code ${user.shareCode} to view this.`}
-              onClick={handleGoogleShare}
-            />
-          </div>
-        </ShareButton>
-      )
+      <ShareButton
+        title={`Share ${mobileView ? 'video' : props.video.title}`}
+        shareCode={user.shareCode}
+      >
+        <ShareForm video={props.video} onSegmentChange={setSegment} />
+        <div className="share-buttons">
+          <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
+          <GoogleClassroomShareButton
+            link={shareLink}
+            postTitle={props.video.title}
+            postBody={`Use code ${user.shareCode} to view this.`}
+            onClick={handleGoogleShare}
+          />
+        </div>
+      </ShareButton>
     );
   } else {
-    return null
+    return null;
   }
 };

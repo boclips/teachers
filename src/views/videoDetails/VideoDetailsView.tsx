@@ -51,7 +51,6 @@ export const VideoDetailsView = (props: Props) => {
         }),
       );
     }
-
   }, [dispatch, params, props.videoId, userId]);
 
   return (

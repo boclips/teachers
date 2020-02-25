@@ -23,6 +23,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
 
     expect(component.getByText('My collection')).toBeInTheDocument();
@@ -40,6 +45,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
     expect(component.getByTestId('bookmark-collection')).toBeInTheDocument();
   });
@@ -79,6 +89,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
     expect(component.getByTestId('collection-number-of-videos')).toContainHTML(
       '1',
@@ -103,6 +118,7 @@ describe('CollectionHeader', () => {
           subjects: [
             SubjectFactory.sample({ id: 'subject-id', name: 'Maths' }),
           ],
+          collections: CollectionsFactory.sample(),
         },
       },
     );
@@ -118,6 +134,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
     expect(component.queryByTestId('tags-container')).not.toBeInTheDocument();
   });
@@ -131,6 +152,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
     expect(component.getByText('My description')).toBeInTheDocument();
   });
@@ -149,6 +175,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
     const descriptionRow = component.getByTestId('collection-description-row');
     const descriptionColumn = descriptionRow.children.item(0);
@@ -171,6 +202,11 @@ describe('CollectionHeader', () => {
       <Router history={createMemoryHistory()}>
         <CollectionHeader collection={collection} />
       </Router>,
+      {
+        initialState: {
+          collections: CollectionsFactory.sample(),
+        },
+      },
     );
     const descriptionRow = component.getByTestId('collection-description-row');
     const descriptionColumn = descriptionRow.children.item(0);

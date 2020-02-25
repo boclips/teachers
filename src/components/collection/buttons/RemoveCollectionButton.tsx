@@ -15,10 +15,6 @@ interface Props {
 }
 
 export const RemoveCollectionButton = React.memo((props: Props) => {
-  if (!props.collection.links.remove) {
-    return null;
-  }
-
   const dispatch = useDispatch();
 
   const handleClick = (event: React.MouseEvent) => {
@@ -65,17 +61,21 @@ export const RemoveCollectionButton = React.memo((props: Props) => {
     });
   };
 
-  return (
-    <Button
-      onClick={handleClick}
-      data-qa="delete-collection"
-      size="large"
-      aria-label="Delete collection"
-      type="link"
-      className="delete"
-    >
-      <Icon component={DeleteIconSVG} aria-label="Delete collection" />
-      Delete Collection
-    </Button>
-  );
+  if (props.collection.links.remove) {
+    return (
+      <Button
+        onClick={handleClick}
+        data-qa="delete-collection"
+        size="large"
+        aria-label="Delete collection"
+        type="link"
+        className="delete"
+      >
+        <Icon component={DeleteIconSVG} aria-label="Delete collection" />
+        Delete Collection
+      </Button>
+    );
+  } else {
+    return null;
+  }
 });
