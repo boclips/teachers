@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBoclipsStore } from 'src/app/redux/store';
-import { renderWithCreatedStore } from 'test-support/renderWithStore';
+import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import {
   MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
-} from '../../../../test-support/factories';
-import { AgeRange } from '../../../types/AgeRange';
+} from 'test-support/factories';
+import { AgeRange } from 'src/types/AgeRange';
 import { CollectionCard } from './CollectionCard';
 
 describe('CollectionCard', () => {
@@ -18,7 +18,7 @@ describe('CollectionCard', () => {
     });
     const videos = [VideoFactory.sample()];
     const store = createBoclipsStore(MockStoreFactory.sampleState());
-    const component = renderWithCreatedStore(
+    const component = renderWithBoclipsStore(
       <CollectionCard collection={collection} videos={videos} grid={false} />,
       store,
     );
@@ -34,7 +34,7 @@ describe('CollectionCard', () => {
     });
     const videos = [VideoFactory.sample()];
     const store = createBoclipsStore(MockStoreFactory.sampleState());
-    const component = renderWithCreatedStore(
+    const component = renderWithBoclipsStore(
       <CollectionCard collection={collection} videos={videos} grid={true} />,
       store,
     );
@@ -50,7 +50,7 @@ describe('CollectionCard', () => {
     });
     const videos = [VideoFactory.sample()];
     const store = createBoclipsStore(MockStoreFactory.sampleState());
-    const component = renderWithCreatedStore(
+    const component = renderWithBoclipsStore(
       <CollectionCard collection={collection} videos={videos} grid={false} />,
       store,
     );
@@ -81,7 +81,7 @@ describe('CollectionCard', () => {
       ];
 
       const store = createBoclipsStore(MockStoreFactory.sampleState());
-      const component = renderWithCreatedStore(
+      const component = renderWithBoclipsStore(
         <CollectionCard collection={collection} videos={videos} grid={false} />,
         store,
       );

@@ -31,13 +31,13 @@ export const VideoDetailsView = (props: Props) => {
   const params = querystring.parse(location.search);
   const checkShareCode =
     !authenticated &&
-    !!params.share &&
-    !!params.referer &&
+    params.share &&
+    params.referer &&
     params.referer !== 'anonymous';
 
   useEffect(() => {
     dispatch(fetchVideoAction(props.videoId));
-  }, [dispatch, props.videoId]);
+  }, []);
 
   useEffect(() => {
     if ((userId || !params.referer) && userId !== params.referer) {
@@ -51,7 +51,8 @@ export const VideoDetailsView = (props: Props) => {
         }),
       );
     }
-  }, [dispatch, params, params.referer, props.videoId, userId]);
+
+  }, [dispatch, params, props.videoId, userId]);
 
   return (
     <PageLayout

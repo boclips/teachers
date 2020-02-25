@@ -8,8 +8,7 @@ export const getShareableVideoLink = (
   segment: Segment = null,
 ): string => {
   const params: { [key: string]: any } = {
-    // Uncomment when feature is safe for release
-    // share: true,
+    share: true,
     referer: userId,
   };
 
