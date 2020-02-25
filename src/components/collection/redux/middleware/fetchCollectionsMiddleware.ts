@@ -12,7 +12,7 @@ export function onFetchCollections(store: MiddlewareAPI<any, LinksState>) {
   fetchPageableCollections(links, { key: 'myCollections' })
     .then(collections => {
       store.dispatch(
-        storeCollectionsAction({ collections, key: 'myCollections' }),
+        storeCollectionsAction({ collections, key: 'myResources' }),
       );
       AnalyticsFactory.externalAnalytics().trackMyCollectionsVisited();
     })

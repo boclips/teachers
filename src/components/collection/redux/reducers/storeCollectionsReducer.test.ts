@@ -15,10 +15,10 @@ import { collectionHandlers } from './collectionsReducer';
 
 const testReducer = createReducer(...collectionHandlers);
 
-test('can store my collections', () => {
+test('can store my resources', () => {
   const collectionToFetch = VideoCollectionFactory.sample();
 
-  const collections = CollectionsFactory.sample({ myCollections: undefined });
+  const collections = CollectionsFactory.sample({ myResources: undefined });
 
   const stateBefore: State = MockStoreFactory.sampleState({
     entities: EntitiesFactory.sample({ collections: { byId: {} } }),
@@ -30,12 +30,12 @@ test('can store my collections', () => {
       items: [collectionToFetch],
       links: {},
     },
-    key: 'myCollections',
+    key: 'myResources',
   });
 
   const stateAfter = testReducer(stateBefore, action);
 
-  expect(stateAfter.collections.myCollections.items).toEqual([
+  expect(stateAfter.collections.myResources.items).toEqual([
     collectionToFetch.id,
   ]);
   expect(stateAfter.entities.collections.byId).toEqual({
@@ -132,12 +132,13 @@ describe('appending pageable collections to different keys', () => {
     );
   });
 
-  test('appending mycollections', () => {
+  test('appending myResources', () => {
     const stateBefore: State = MockStoreFactory.sampleState({
       collections: {
         updating: false,
         loading: false,
-        myCollections: PageableCollectionsFactory.sample(),
+        myCollections: undefined,
+        myResources: PageableCollectionsFactory.sample(),
         discoverCollections: undefined,
         publicCollections: undefined,
       },
@@ -155,12 +156,12 @@ describe('appending pageable collections to different keys', () => {
           next: nextCollectionLink,
         },
       },
-      key: 'myCollections',
+      key: 'myResources',
     });
 
     const stateAfter = testReducer(stateBefore, action);
 
-    expect(stateAfter.collections.myCollections.links.next).toEqual(
+    expect(stateAfter.collections.myResources.links.next).toEqual(
       nextCollectionLink,
     );
   });

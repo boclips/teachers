@@ -31,7 +31,7 @@ export const appendPageableCollectionsAction = (
   switch (request.key) {
     case 'publicCollections':
       return appendPublicCollectionsAction(request);
-    case 'myCollections':
+    case 'myResources':
       return appendMyCollectionsAction(request);
     case 'discoverCollections':
       return appendDiscoverCollectionsAction(request);
