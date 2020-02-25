@@ -4,10 +4,7 @@ import { AppliedFilters } from './AppliedFilters';
 import { FiltersWithForm } from './Filters';
 import './FilterPanel.less';
 
-interface Props {
-  onApplyFilters?: () => void;
-}
-export const FilterPanel = (props: Props) => (
+export const FilterPanel = () => (
   <div data-qa={'search-filters-menu'} className="search-filters-menu">
     <h1>Filter results</h1>
     <AppliedFiltersProvider>
@@ -15,7 +12,7 @@ export const FilterPanel = (props: Props) => (
     </AppliedFiltersProvider>
 
     <AppliedFiltersProvider>
-      <FiltersWithForm onApplyFilters={props.onApplyFilters} />
+      <FiltersWithForm />
     </AppliedFiltersProvider>
   </div>
 );

@@ -25,17 +25,12 @@ interface FilterRequest {
   subjects?: string[];
 }
 
-interface Props {
-  onApplyFilters?: () => void;
-}
-
-const Filters = (
-  props: FormComponentProps & AppliedFiltersInjectedProps & Props,
-) => {
+const Filters = (props: FormComponentProps & AppliedFiltersInjectedProps) => {
   const { getFieldDecorator } = props.form;
   const subjects = useSelector((state: State) => state.subjects);
   const dispatch = useDispatch();
-  const handleSubmit = () => {
+  const handleSubmit = event => {
+    event.preventDefault();
     props.form.validateFields((_, values: FilterFormEditableFields) => {
       const filterRequest: FilterRequest = {};
 
@@ -68,7 +63,6 @@ const Filters = (
             },
           ]),
         );
-        props.onApplyFilters();
       }
     });
   };
@@ -153,6 +147,4 @@ const Filters = (
   );
 };
 
-export const FiltersWithForm = Form.create<FormComponentProps & Props>()(
-  Filters,
-);
+export const FiltersWithForm = Form.create<FormComponentProps>()(Filters);

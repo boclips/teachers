@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Col, Drawer, Skeleton } from 'antd';
+import { Col, Drawer } from 'antd';
 import { FiniteGrid } from '../../components/common/Grid/FiniteGrid';
 import PageLayout from '../../components/layout/PageLayout';
 import {
@@ -58,30 +58,6 @@ class NewSearchResultsView extends React.PureComponent<
         showFooter={true}
         showSearchBar={true}
       >
-        {this.renderContent()}
-      </PageLayout>
-    );
-  }
-
-  private renderContent() {
-    if (this.props.loading) {
-      return this.showPlaceholders();
-    }
-
-    if (this.hasSearchResults()) {
-      return this.showSearchResults();
-    }
-
-    if (this.props.videoResults.query.length > 0) {
-      return this.showZeroResultsMessage();
-    }
-
-    return null;
-  }
-
-  private renderSearchLayout(resultContent: JSX.Element) {
-    return (
-      <React.Fragment>
         <section className={'search-results-container'} data-qa="search-page">
           <Col xs={{ span: 0 }} lg={{ span: 6 }}>
             <FilterPanel />
@@ -94,55 +70,43 @@ class NewSearchResultsView extends React.PureComponent<
             placement={'left'}
             width={'auto'}
           >
-            <FilterPanel onApplyFilters={this.onCloseFilterDrawer} />
+            <FilterPanel />
           </Drawer>
           <Col xs={{ span: 24 }} lg={{ span: 18 }}>
-            {resultContent}
+            {this.renderResults()}
           </Col>
         </section>
-      </React.Fragment>
+      </PageLayout>
     );
   }
 
-  private showSearchResults() {
-    const props = {
-      videoResults: this.props.videoResults,
-      collectionResults: this.props.collectionResults,
-      userId: this.props.userId,
-      currentPage: this.props.currentPage,
-      onPageChange: this.props.onPageChange,
-    };
+  private renderResults = () => {
+    if (this.props.loading) {
+      return (
+        <FiniteGrid>
+          <VideoCardsPlaceholder />
+        </FiniteGrid>
+      );
+    }
 
-    return this.renderSearchLayout(
-      <React.Fragment>
-        <SearchPanel {...props} onOpenFilterDrawer={this.onOpenFilterDrawer} />
-      </React.Fragment>,
-    );
-  }
+    if (this.hasSearchResults()) {
+      return (
+        <SearchPanel
+          videoResults={this.props.videoResults}
+          collectionResults={this.props.collectionResults}
+          userId={this.props.userId}
+          currentPage={this.props.currentPage}
+          onPageChange={this.props.onPageChange}
+          onOpenFilterDrawer={this.onOpenFilterDrawer}
+        />
+      );
+    }
+    if (this.props.videoResults.query.length > 0) {
+      return <NoResultsView query={this.props.videoResults.query} />;
+    }
 
-  private showZeroResultsMessage() {
-    return this.renderSearchLayout(
-      <NoResultsView query={this.props.videoResults.query} />,
-    );
-  }
-
-  private showPlaceholders() {
-    return (
-      <section
-        className="search-results-placeholders"
-        data-qa="search-results-placeholders"
-      >
-        <Col lg={{ span: 5 }}>
-          <Skeleton />
-        </Col>
-        <Col lg={{ span: 18 }}>
-          <FiniteGrid>
-            <VideoCardsPlaceholder />
-          </FiniteGrid>
-        </Col>
-      </section>
-    );
-  }
+    return null;
+  };
 
   private onCloseFilterDrawer = () => {
     this.setState({ filterDrawerVisible: false });
