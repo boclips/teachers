@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../components/common/higerOrderComponents/withMediaBreakPoint';
+} from '../../components/common/higherOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import PageLayout from '../../components/layout/PageLayout';
 import MediaBreakpoints from '../../types/MediaBreakpoints';

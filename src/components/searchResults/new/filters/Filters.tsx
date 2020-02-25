@@ -1,15 +1,15 @@
 import React from 'react';
-import { Button, Form, Menu } from 'antd';
+import { Form, Menu } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Subject } from 'src/types/Subject';
+import { WithAppliedSearchFiltersProps } from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
 import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
 import { AgeRange } from '../../../../types/AgeRange';
 import DurationSlider from '../../filters/DurationSlider';
 import State from '../../../../types/State';
-import { AppliedFiltersInjectedProps } from '../../filters/AppliedFiltersProvider';
 import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
-import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import { Range } from '../../../../types/Range';
 import DropdownArrow from '../../../layout/navigation/DropdownArrow';
 
@@ -19,56 +19,36 @@ interface FilterFormEditableFields {
   subjects?: string[];
 }
 
-interface FilterRequest {
+export interface FilterOptions {
   duration?: Range;
   ageRange?: Range;
   subjects?: string[];
 }
 
-const Filters = (props: FormComponentProps & AppliedFiltersInjectedProps) => {
+interface Props extends StateProps {
+  onApplyFilters: (FilterOptions) => void;
+}
+
+interface StateProps {
+  subjects?: Subject[];
+}
+
+const Filters = (
+  props: FormComponentProps & WithAppliedSearchFiltersProps & Props,
+) => {
+  const {
+    ageRangeMin,
+    ageRangeMax,
+    subjectIds,
+    durationMax,
+    durationMin,
+  } = props;
   const { getFieldDecorator } = props.form;
   const subjects = useSelector((state: State) => state.subjects);
-  const dispatch = useDispatch();
-  const handleSubmit = event => {
-    event.preventDefault();
-    props.form.validateFields((_, values: FilterFormEditableFields) => {
-      const filterRequest: FilterRequest = {};
 
-      filterRequest.duration = values.duration;
-      filterRequest.ageRange = values.ageRange;
-      filterRequest.subjects = values.subjects;
-
-      if (
-        props.form.isFieldsTouched() ||
-        values.subjects !== this.props.subjectIds
-      ) {
-        dispatch(
-          bulkUpdateSearchParamsAction([
-            {
-              duration_min:
-                filterRequest.duration && filterRequest.duration.min,
-              duration_max:
-                (filterRequest.duration && filterRequest.duration.max) ||
-                undefined,
-            },
-            {
-              age_range_min:
-                filterRequest.ageRange && filterRequest.ageRange.min,
-              age_range_max:
-                (filterRequest.ageRange && filterRequest.ageRange.max) ||
-                undefined,
-            },
-            {
-              subject: filterRequest.subjects,
-            },
-          ]),
-        );
-      }
-    });
-  };
   return (
     <section>
-      <Form className="filter-form" onSubmit={handleSubmit}>
+      <Form className="filter-form">
         <Menu
           mode={'inline'}
           defaultOpenKeys={['age', 'subject', 'duration']}
@@ -80,14 +60,12 @@ const Filters = (props: FormComponentProps & AppliedFiltersInjectedProps) => {
               <Form.Item>
                 {getFieldDecorator('ageRange', {
                   initialValue: {
-                    min: props.ageRangeMin,
-                    max: props.ageRangeMax,
+                    min: ageRangeMin,
+                    max: ageRangeMax,
                   },
                 })(
                   <AgeRangeSlider
-                    ageRange={
-                      new AgeRange(props.ageRangeMin, props.ageRangeMax)
-                    }
+                    ageRange={new AgeRange(ageRangeMin, ageRangeMax)}
                     data-qa="age-range-slider"
                   />,
                 )}
@@ -103,13 +81,13 @@ const Filters = (props: FormComponentProps & AppliedFiltersInjectedProps) => {
               <Form.Item>
                 {getFieldDecorator('duration', {
                   initialValue: {
-                    min: props.durationMin,
-                    max: props.durationMax,
+                    min: durationMin,
+                    max: durationMax,
                   },
                 })(
                   <DurationSlider
-                    min={props.durationMin}
-                    max={props.durationMax}
+                    min={durationMin}
+                    max={durationMax}
                     data-qa="duration-slider"
                   />,
                 )}
@@ -125,13 +103,13 @@ const Filters = (props: FormComponentProps & AppliedFiltersInjectedProps) => {
               <Form.Item colon={false}>
                 {getFieldDecorator('subjects', {
                   rules: [{ type: 'array' }],
-                  initialValue: props.subjectIds,
+                  initialValue: subjectIds,
                   trigger: 'onUpdateSubjects',
                 })(
                   <SelectSubjects
                     subjects={subjects}
                     placeholder="Choose from our list.."
-                    initialValue={props.subjectIds}
+                    initialValue={subjectIds}
                     data-qa="subject-select"
                   />,
                 )}
@@ -139,12 +117,24 @@ const Filters = (props: FormComponentProps & AppliedFiltersInjectedProps) => {
             </React.Fragment>
           </SubMenu>
         </Menu>
-        <Button htmlType="submit" type={'primary'}>
-          Apply filters
-        </Button>
       </Form>
     </section>
   );
 };
 
-export const FiltersWithForm = Form.create<FormComponentProps>()(Filters);
+export const FiltersWithForm = Form.create<FormComponentProps & Props>({
+  onValuesChange: (
+    props,
+    _changedValues,
+    allValues: FilterFormEditableFields,
+  ) => {
+    console.log('Filter onValuesChange');
+
+    const filterRequest: FilterOptions = {};
+
+    filterRequest.duration = allValues.duration;
+    filterRequest.ageRange = allValues.ageRange;
+    filterRequest.subjects = allValues.subjects;
+    props.onApplyFilters(filterRequest);
+  },
+})(Filters);

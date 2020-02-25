@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import withPageableCollection, {
   WithPageableCollectionProps,
-} from '../../../common/higerOrderComponents/withPageableCollection';
+} from '../../../common/higherOrderComponents/withPageableCollection';
 import {
   CollectionCardList,
   CollectionCardListProps,

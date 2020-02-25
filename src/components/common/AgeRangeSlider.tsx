@@ -6,7 +6,7 @@ import { BoclipsSlider } from './BoclipsSlider';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from './higerOrderComponents/withMediaBreakPoint';
+} from './higherOrderComponents/withMediaBreakPoint';
 
 export interface Props extends WithMediaBreakPointProps {
   onChange: (event: AgeRange) => void;

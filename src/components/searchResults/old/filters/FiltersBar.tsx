@@ -2,21 +2,22 @@ import { Row } from 'antd';
 import React from 'react';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import {
+  withAppliedSearchFilters,
+  WithAppliedSearchFiltersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
+import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../../common/higerOrderComponents/withMediaBreakPoint';
+} from '../../../common/higherOrderComponents/withMediaBreakPoint';
 import AgeRangeFilterTag from '../../filters/AgeRangeFilterTag';
-import AppliedFiltersProvider, {
-  AppliedFiltersInjectedProps,
-} from '../../filters/AppliedFiltersProvider';
 import ClearAllButton from '../../filters/ClearAllButton';
 import DurationFilterTag from '../../filters/DurationFilterTag';
 import './FiltersBar.less';
 import SubjectFilterTag from '../../filters/SubjectFilterTag';
 
-export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
-  public render() {
-    if (this.props.numberOfFiltersApplied === 0) {
+export const FiltersBar = withAppliedSearchFilters(
+  (props: WithAppliedSearchFiltersProps) => {
+    if (props.numberOfFiltersApplied === 0) {
       return null;
     }
 
@@ -29,17 +30,17 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
         </Row>
         <Row className="filters-bar__tags" align="middle" type="flex">
           <DurationFilterTag
-            durationMin={this.props.durationMin}
-            durationMax={this.props.durationMax}
+            durationMin={props.durationMin}
+            durationMax={props.durationMax}
           />
           <AgeRangeFilterTag
-            ageRangeMin={this.props.ageRangeMin}
-            ageRangeMax={this.props.ageRangeMax}
+            ageRangeMin={props.ageRangeMin}
+            ageRangeMax={props.ageRangeMax}
           />
-          {this.props.subjectIds &&
-            this.props.subjectIds.map(subjectId => (
+          {props.subjectIds &&
+            props.subjectIds.map(subjectId => (
               <SubjectFilterTag
-                subjectIds={this.props.subjectIds}
+                subjectIds={props.subjectIds}
                 key={subjectId}
                 subjectId={subjectId}
               />
@@ -48,16 +49,14 @@ export class FiltersBar extends React.Component<AppliedFiltersInjectedProps> {
         </Row>
       </div>
     );
-  }
-}
+  },
+);
 
 class FilterBarWrapper extends React.Component<WithMediaBreakPointProps> {
   public render() {
     return this.props.mediaBreakpoint.width <=
       MediaBreakpoints.md.width ? null : (
-      <AppliedFiltersProvider>
-        <FiltersBar />
-      </AppliedFiltersProvider>
+      <FiltersBar />
     );
   }
 }

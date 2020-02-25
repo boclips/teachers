@@ -19,7 +19,7 @@ import { EditCollectionButton } from '../buttons/EditCollectionButton';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../common/higerOrderComponents/withMediaBreakPoint';
+} from '../../common/higherOrderComponents/withMediaBreakPoint';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
 import BulletSVG from '../../../../resources/images/bullet.svg';

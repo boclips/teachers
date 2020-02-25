@@ -5,7 +5,7 @@ import { UserState } from '../../../types/State';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../common/higerOrderComponents/withMediaBreakPoint';
+} from '../../common/higherOrderComponents/withMediaBreakPoint';
 import { TopNavbar } from './TopNavbar';
 
 interface Props extends WithMediaBreakPointProps {

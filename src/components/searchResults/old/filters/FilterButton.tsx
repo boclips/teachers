@@ -2,18 +2,19 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Range } from 'src/types/Range';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
-import MediaBreakpoints from '../../../../types/MediaBreakpoints';
-import { Range } from '../../../../types/Range';
+import {
+  withAppliedSearchFilters,
+  WithAppliedSearchFiltersProps
+} from "src/components/common/higherOrderComponents/withAppliedSearchFilters";
 import Bodal from '../../../common/Bodal';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../../common/higerOrderComponents/withMediaBreakPoint';
+} from '../../../common/higherOrderComponents/withMediaBreakPoint';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
-import AppliedFiltersProvider, {
-  AppliedFiltersInjectedProps,
-} from '../../filters/AppliedFiltersProvider';
 import './FilterButton.less';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 
@@ -31,14 +32,14 @@ interface State {
   visible: boolean;
 }
 
-type Props = AppliedFiltersInjectedProps &
+type Props = WithAppliedSearchFiltersProps &
   DispatchProps &
   WithMediaBreakPointProps;
 
 class FilterButton extends React.Component<Props, State> {
   private formRef: any;
 
-  public constructor(props: DispatchProps & WithMediaBreakPointProps) {
+  public constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -152,16 +153,14 @@ const ConnectedFilterButton = connect(
   mapDispatchToProps,
 )(FilterButtonWithMediaBreakPoint);
 
-class FilterButtonWrapper extends React.Component<AppliedFiltersInjectedProps> {
+class FilterButtonWrapper extends React.Component<WithAppliedSearchFiltersProps> {
   public render() {
     return (
-      <AppliedFiltersProvider>
         <ConnectedFilterButton />
-      </AppliedFiltersProvider>
     );
   }
 }
 
 export { FilterButtonWithMediaBreakPoint };
 
-export default FilterButtonWrapper;
+export default withAppliedSearchFilters(FilterButtonWrapper);

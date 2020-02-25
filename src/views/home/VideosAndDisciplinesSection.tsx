@@ -7,7 +7,7 @@ import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../components/common/higerOrderComponents/withMediaBreakPoint';
+} from '../../components/common/higherOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
 import HomeViewVideoList from './HomeViewVideoList';

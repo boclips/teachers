@@ -1,12 +1,12 @@
 import React from 'react';
 import MediaBreakpoints, { Breakpoint } from 'src/types/MediaBreakpoints';
 import { VideoCollection } from 'src/types/VideoCollection';
-import './CollectionButtonsContainer.less';
 import { ButtonRow } from 'src/components/common/buttons/ButtonRow';
 import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton/CollectionShareButton';
 import BookmarkCollectionButton from 'src/components/collection/buttons/bookmark/BookmarkCollectionButton';
 import { ButtonMenu } from 'src/components/common/buttons/ButtonMenu';
 import { useMediaBreakPoint } from 'src/hooks/useMediaBreakPoint';
+import './CollectionButtonsContainer.less';
 import { EditCollectionButton } from './EditCollectionButton';
 
 interface Props {

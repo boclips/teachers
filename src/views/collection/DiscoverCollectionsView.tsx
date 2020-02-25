@@ -9,7 +9,7 @@ import PageableCollectionCardList from '../../components/collection/card/list/Pa
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../components/common/higerOrderComponents/withMediaBreakPoint';
+} from '../../components/common/higherOrderComponents/withMediaBreakPoint';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';

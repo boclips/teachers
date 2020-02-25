@@ -11,7 +11,7 @@ import { Segment, Video } from '../../../types/Video';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../common/higerOrderComponents/withMediaBreakPoint';
+} from '../../common/higherOrderComponents/withMediaBreakPoint';
 
 export interface OwnProps extends WithMediaBreakPointProps {
   video: Video;

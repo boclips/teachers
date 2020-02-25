@@ -1,11 +1,10 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import { storyWithProvider } from '../../../../utils/index.stories';
+import { storyWithProvider } from 'src/utils/index.stories';
 import {
   MockStoreFactory,
   RouterFactory,
-} from '../../../../../test-support/factories';
-import AppliedFiltersProvider from '../../filters/AppliedFiltersProvider';
+} from 'test-support/factories';
 import { FilterPanel } from './FilterPanel';
 
 storiesOf('FilterPanel', module)
@@ -24,9 +23,5 @@ storiesOf('FilterPanel', module)
           },
         }),
       }),
-    )(() => (
-      <AppliedFiltersProvider>
-        <FilterPanel />
-      </AppliedFiltersProvider>
-    )),
+    )(() => <FilterPanel />),
   );

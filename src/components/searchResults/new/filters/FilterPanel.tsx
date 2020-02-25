@@ -1,18 +1,46 @@
-import React from 'react';
-import AppliedFiltersProvider from '../../filters/AppliedFiltersProvider';
+import React, { useRef } from 'react';
+import { bulkUpdateSearchParamsAction } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
+import { useDispatch } from 'react-redux';
+import debounce from 'lodash/debounce';
 import { AppliedFilters } from './AppliedFilters';
-import { FiltersWithForm } from './Filters';
+import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
 
-export const FilterPanel = () => (
-  <div data-qa={'search-filters-menu'} className="search-filters-menu">
-    <h1>Filter results</h1>
-    <AppliedFiltersProvider>
-      <AppliedFilters />
-    </AppliedFiltersProvider>
+export const FilterPanel = () => {
+  const dispatch = useDispatch();
 
-    <AppliedFiltersProvider>
-      <FiltersWithForm />
-    </AppliedFiltersProvider>
-  </div>
-);
+  const applySearchFilters = (filterOptions: FilterOptions) => {
+    dispatch(
+      bulkUpdateSearchParamsAction([
+        {
+          duration_min: filterOptions.duration && filterOptions.duration.min,
+          duration_max:
+            (filterOptions.duration && filterOptions.duration.max) || undefined,
+        },
+        {
+          age_range_min: filterOptions.ageRange && filterOptions.ageRange.min,
+          age_range_max:
+            (filterOptions.ageRange && filterOptions.ageRange.max) || undefined,
+        },
+        {
+          subject: filterOptions.subjects,
+        },
+      ]),
+    );
+  };
+
+  const debouncedSearch = useRef(
+    debounce(
+      (filterOptions: FilterOptions) => applySearchFilters(filterOptions),
+      1000,
+    ),
+  ).current;
+
+  return (
+    <div data-qa={'search-filters-menu'} className="search-filters-menu">
+      <h1>Filter results</h1>
+      <AppliedFilters />
+      <FiltersWithForm onApplyFilters={debouncedSearch} />
+    </div>
+  );
+};

@@ -1,9 +1,7 @@
-import SearchFiltersConverter from './searchFiltersConverter';
+import { parseSearchFiltersFromUrl } from './searchFiltersConverter';
 
 it('converts duration search url string to SearchFilterParameters', () => {
-  const converter = new SearchFiltersConverter();
-
-  expect(converter.fromSearchUrl('?duration_min=1&duration_max=11')).toEqual({
+  expect(parseSearchFiltersFromUrl('?duration_min=1&duration_max=11')).toEqual({
     durationMin: 1,
     durationMax: 11,
     ageRangeMin: null,
@@ -13,9 +11,9 @@ it('converts duration search url string to SearchFilterParameters', () => {
 });
 
 it('converts age range search url string to SearchFilterParameters', () => {
-  const converter = new SearchFiltersConverter();
-
-  expect(converter.fromSearchUrl('?age_range_min=1&age_range_max=11')).toEqual({
+  expect(
+    parseSearchFiltersFromUrl('?age_range_min=1&age_range_max=11'),
+  ).toEqual({
     durationMin: null,
     durationMax: null,
     ageRangeMin: 1,
@@ -25,9 +23,7 @@ it('converts age range search url string to SearchFilterParameters', () => {
 });
 
 it('converts a single subject in the search url string to SearchFilterParameters', () => {
-  const converter = new SearchFiltersConverter();
-
-  expect(converter.fromSearchUrl('?subject=1')).toEqual({
+  expect(parseSearchFiltersFromUrl('?subject=1')).toEqual({
     durationMin: null,
     durationMax: null,
     ageRangeMin: null,
@@ -37,9 +33,7 @@ it('converts a single subject in the search url string to SearchFilterParameters
 });
 
 it('converts multiple subjects in the search url string to SearchFilterParameters', () => {
-  const converter = new SearchFiltersConverter();
-
-  expect(converter.fromSearchUrl('?subject=1,2,3')).toEqual({
+  expect(parseSearchFiltersFromUrl('?subject=1,2,3')).toEqual({
     durationMin: null,
     durationMax: null,
     ageRangeMin: null,
