@@ -37,7 +37,7 @@ export class ButtonMenu extends React.PureComponent<Props> {
           placement="bottomRight"
           trigger={['click']}
         >
-          <Button className="button-menu__expand">
+          <Button className="button-menu__expand" data-qa="open-button-menu">
             <Icon component={MoreSVG} />
           </Button>
         </Dropdown>
