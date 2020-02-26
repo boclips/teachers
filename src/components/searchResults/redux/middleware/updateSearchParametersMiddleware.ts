@@ -11,7 +11,6 @@ import {
   updateSearchParamsAction,
   UpdateSearchParamsRequest,
 } from '../actions/updateSearchParametersActions';
-import { bulkOverrideSearchParamsAction } from './../actions/updateSearchParametersActions';
 
 export function getSearchPathname(pathname) {
   return pathname === '/new-filters' ? '/new-filters?' : '/videos?';
@@ -70,25 +69,6 @@ export function onBulkUpdateSearchParameter(
   );
 }
 
-// TODO(AO): Remove?
-export function onBulkUpdateOverrideParams(
-  store: MiddlewareAPI<any, State>,
-  request: UpdateSearchParamsRequest[],
-) {
-  const { pathname } = store.getState().router.location;
-  const newQuery = {
-    ...request.reduce((acc, value: any) => ({ ...acc, ...value }), {}),
-    page: 1,
-  };
-
-  store.dispatch(
-    push(
-      getSearchPathname(pathname) +
-        queryString.stringify(newQuery, { arrayFormat: 'comma' }),
-    ),
-  );
-}
-
 export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
   const { search: query, pathname } = store.getState().router.location;
   const parsedQuery = queryString.parse(query);
@@ -118,6 +98,5 @@ export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
 export default [
   sideEffect(updateSearchParamsAction, onUpdateSearchParameter),
   sideEffect(bulkUpdateSearchParamsAction, onBulkUpdateSearchParameter),
-  sideEffect(bulkOverrideSearchParamsAction, onBulkUpdateOverrideParams),
   sideEffect(clearSearchFilterParametersAction, onAllFilterReset),
 ];

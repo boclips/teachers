@@ -46,7 +46,3 @@ export const updateSearchParamsAction = actionCreatorFactory<
 export const bulkUpdateSearchParamsAction = actionCreatorFactory<
   UpdateSearchParamsRequest[]
 >('BULK_UPDATE_SEARCH_PARAMS');
-
-export const bulkOverrideSearchParamsAction = actionCreatorFactory<
-  UpdateSearchParamsRequest[]
->('BULK_OVERRIDE_SEARCH_PARAMS');

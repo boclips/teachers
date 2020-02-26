@@ -3,7 +3,6 @@ import eventually from '../../../../../test-support/eventually';
 import { setupStore } from '../../../../../test-support/setupStore';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
-  bulkOverrideSearchParamsAction,
   bulkUpdateSearchParamsAction,
   updateSearchParamsAction,
 } from '../actions/updateSearchParametersActions';
@@ -114,18 +113,6 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(push('/videos?page=1&q=hi'));
-    });
-  });
-
-  it('ignores all previous values on override action', async () => {
-    const store = setupStore(
-      'mode=hello&q=hi&test=1&blah=123&duration_max=hello&page=10',
-    );
-
-    store.dispatch(bulkOverrideSearchParamsAction([{ q: '123' }]));
-
-    await eventually(() => {
-      expect(store.getActions()).toContainEqual(push('/videos?page=1&q=123'));
     });
   });
 

@@ -14,9 +14,9 @@ import withPageableCollection, {
   WithPageableCollectionProps,
 } from 'src/components/common/higherOrderComponents/withPageableCollection';
 import './ManageVideoCollectionButton.less';
-import {addVideoToMyCollectionAction} from "src/components/collection/redux/actions/addToMyCollectionAction";
-import {removeVideoFromMyCollectionAction} from "src/components/collection/redux/actions/removeFromMyCollectionAction";
-import {createCollectionAction} from "src/components/collection/redux/actions/createCollectionAction";
+import { addVideoToMyCollectionAction } from 'src/components/collection/redux/actions/addToMyCollectionAction';
+import { removeVideoFromMyCollectionAction } from 'src/components/collection/redux/actions/removeFromMyCollectionAction';
+import { createCollectionAction } from 'src/components/collection/redux/actions/createCollectionAction';
 
 interface StateProps {
   updating: boolean;
