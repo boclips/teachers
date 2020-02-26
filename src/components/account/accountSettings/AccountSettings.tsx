@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { ShareCode } from 'src/components/account/accountSettings/ShareCode';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
@@ -49,6 +50,7 @@ class AccountSettings extends React.Component<
         {this.showSettings() && (
           <section>
             <h1 className="extra-big">Settings</h1>
+            <ShareCode shareCode={this.props.userProfile.shareCode} />
             <Profile
               firstName={this.props.userProfile.firstName}
               onEdit={this.toggleEditProfileForm}

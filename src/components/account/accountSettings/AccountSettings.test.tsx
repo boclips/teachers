@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { ShareCode } from 'src/components/account/accountSettings/ShareCode';
 import { By } from '../../../../test-support/By';
 import {
   CountryFactory,
@@ -43,6 +44,7 @@ describe('account settings form', () => {
           user: UserProfileFactory.sample({
             country: { name: 'United States', id: 'USA' },
             state: { name: 'State 1', id: 'state-1' },
+            shareCode: 'GR47',
           }),
         })}
       >
@@ -82,6 +84,13 @@ describe('account settings form', () => {
 
     expect(wrapperWithAmericanTeacher.find(Profile)).not.toExist();
     expect(wrapperWithAmericanTeacher.find(EditProfileForm)).toExist();
+  });
+
+  it('renders the share code', () => {
+    const shareCodeComponent = wrapperWithAmericanTeacher
+      .find(ShareCode)
+      .find(By.dataQa('share-code'));
+    expect(shareCodeComponent.text()).toEqual('GR47');
   });
 
   describe('school settings', () => {
