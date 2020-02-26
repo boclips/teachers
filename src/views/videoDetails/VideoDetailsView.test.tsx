@@ -18,7 +18,7 @@ import { VideoDetailsView } from './VideoDetailsView';
 describe('VideoDetailsView', () => {
   const video = VideoResourceFactory.sample({
     title: 'Video Title To Show',
-    id: '123',
+    id: '177',
   });
 
   const createViewWrapper = (initialHistory, initialState) => {
@@ -53,7 +53,7 @@ describe('VideoDetailsView', () => {
       .fetchCollections();
   });
 
-  it.skip('fetches video details from the API & renders the result', async () => {
+  it('fetches video details from the API & renders the result', async () => {
     const videoDetailsPage = await VideoDetailsPage.load();
 
     expect(videoDetailsPage.getVideoDetails()).toEqual({

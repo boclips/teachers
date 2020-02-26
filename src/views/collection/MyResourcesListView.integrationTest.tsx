@@ -97,7 +97,7 @@ describe('MyResourcesListView', () => {
     expect(queryByText('Another')).not.toBeInTheDocument();
   });
 
-  xit('when user deletes a collection, it is no longer shown in the page', async () => {
+  it('when user deletes a collection, it is no longer shown in the page', async () => {
     const myCollectionToDelete = getCollectionWithData('123', 'delete this');
     const myOtherCollection = getCollectionWithData('456', 'sample');
 
