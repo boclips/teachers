@@ -14,7 +14,7 @@ import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { organizeById } from '../../../../utils/entityMap';
-import { getCollectionsByIds } from '../../../collection/redux/reducers/collectionsReducer';
+import { getCollectionsByIds } from '../../../collection/redux/reducers/collectionEntitiesReducer';
 import { getVideosByIds } from '../../../video/redux/reducers/videoReducer';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';

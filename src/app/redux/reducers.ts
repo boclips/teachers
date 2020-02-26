@@ -6,7 +6,7 @@ import { countriesReducer } from '../../components/account/onboarding/redux/redu
 import {
   collectionHandlers,
   initialCollectionsState,
-} from '../../components/collection/redux/reducers/collectionsReducer';
+} from '../../components/collection/redux/reducers/collectionEntitiesReducer';
 import { tagsReducer } from '../../components/common/tags/redux/reducers/tagsReducer';
 import { disciplinesReducer } from '../../components/disciplines/redux/reducers/disciplinesReducer';
 import { userDetailsFetchedReducer } from '../../components/login/redux/reducers/userDetailsFetchedReducer';

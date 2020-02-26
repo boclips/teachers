@@ -33,6 +33,8 @@ export const appendPageableCollectionsAction = (
       return appendPublicCollectionsAction(request);
     case 'myResources':
       return appendMyCollectionsAction(request);
+    case 'myCollections':
+      return appendMyCollectionsAction(request);
     case 'discoverCollections':
       return appendDiscoverCollectionsAction(request);
   }

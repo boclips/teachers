@@ -30,6 +30,7 @@ export const VideoCardSkeleton = () => (
     />
   </Card>
 );
+
 export const VideoCard = React.memo<Props>(props => {
   const isAuthenticated = useSelector((state: State) => !!state.user);
   const renderVideoButtons =

@@ -7,7 +7,7 @@ import {
   editCollectionAction,
   EditCollectionRequest,
 } from '../actions/editCollectionAction';
-import { onMyCollectionEditedAction } from '../actions/onMyCollectionEditedAction';
+import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { VideoCollection } from './../../../../types/VideoCollection';
 
 export function onEditCollection(
@@ -20,7 +20,7 @@ export function onEditCollection(
         request,
       );
 
-      store.dispatch(onMyCollectionEditedAction(updatedCollection));
+      store.dispatch(onCollectionEditedAction(updatedCollection));
     })
     .catch(error => {
       console.error(error);

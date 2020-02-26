@@ -6,7 +6,7 @@ import State from '../../../types/State';
 import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
-import { getCollectionById } from '../redux/reducers/collectionsReducer';
+import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
 import { CollectionShareCodeDialog } from '../sharing/CollectionShareCodeDialog/CollectionShareCodeDialog';
 import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { CollectionHeader } from './header/CollectionHeader';

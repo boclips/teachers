@@ -14,7 +14,7 @@ import {
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { renderWithStore } from '../../../test-support/renderWithStore';
 import collectionMiddleware from '../../components/collection/redux/middleware/collectionMiddleware';
-import { collectionHandlers } from '../../components/collection/redux/reducers/collectionsReducer';
+import { collectionHandlers } from '../../components/collection/redux/reducers/collectionEntitiesReducer';
 import { Link } from '../../types/Link';
 import { VideoCollection } from '../../types/VideoCollection';
 import MyResourcesListView from './MyResourcesListView';

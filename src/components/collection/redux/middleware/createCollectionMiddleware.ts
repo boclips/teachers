@@ -7,7 +7,7 @@ import {
 } from '../../../../services/collections/createCollection';
 import NotificationFactory from '../../../common/NotificationFactory';
 import { createCollectionAction } from '../actions/createCollectionAction';
-import { fetchMyCollectionsAction } from '../actions/fetchMyCollectionsAction';
+import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
 import { onCreateCollectionAction } from '../actions/onCreateCollectionAction';
 import { Links } from '../../../../types/Links';
 
@@ -19,7 +19,8 @@ export function onCreateCollection(
   createCollection(links, request)
     .then(() => {
       store.dispatch(onCreateCollectionAction());
-      store.dispatch(fetchMyCollectionsAction());
+      store.dispatch(fetchCollectionsAction('myCollections'));
+      store.dispatch(fetchCollectionsAction('myResources'));
     })
     .catch(() => {
       NotificationFactory.error({ message: 'Error creating collection.' });

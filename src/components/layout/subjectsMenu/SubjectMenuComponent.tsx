@@ -26,7 +26,6 @@ class SubjectMenuComponent extends React.Component<Props, State> {
 
   private setActive = visible => {
     this.setState({ dropdownVisible: visible });
-    console.log(`setting to visible: ${this.state.dropdownVisible}`);
   };
 
   public render() {

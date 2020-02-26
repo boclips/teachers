@@ -8,7 +8,7 @@ import State from '../../../types/State';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { fetchNextPageableCollectionsAction } from '../../collection/redux/actions/fetchNextPageableCollectionsAction';
 import { fetchPageableCollectionsAction } from '../../collection/redux/actions/fetchPageableCollectionsAction';
-import { getCollectionsByIds } from '../../collection/redux/reducers/collectionsReducer';
+import { getCollectionsByIds } from '../../collection/redux/reducers/collectionEntitiesReducer';
 
 interface Props {
   collectionKey: CollectionKey;
