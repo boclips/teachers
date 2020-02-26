@@ -26,7 +26,12 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   );
 
   useEffect(() => {
-    dispatch(fetchCollectionAction({ id: props.collectionId }));
+    if (!collection) {
+      dispatch(fetchCollectionAction({ id: props.collectionId }));
+    }
+  }, []);
+
+  useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
   }, [dispatch, props.collectionId]);
 
