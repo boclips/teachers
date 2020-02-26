@@ -8,7 +8,6 @@ import State from '../types/State';
 export const useRefererIdInjector = (): string => {
   const dispatch = useDispatch();
   const location = useLocation();
-
   const userId = useSelector((state: State) => state.user && state.user.id);
   const params = querystring.parse(location.search);
 

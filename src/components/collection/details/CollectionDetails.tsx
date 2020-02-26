@@ -29,11 +29,11 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     if (!collection) {
       dispatch(fetchCollectionAction({ id: props.collectionId }));
     }
-  }, []);
+  }, [collection, dispatch, props]);
 
   useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
-  }, [dispatch, props.collectionId]);
+  }, [dispatch, props]);
 
   if (!collection) {
     // TODO: referer anonymous and user not logged in, or 404

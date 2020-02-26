@@ -17,6 +17,7 @@ export interface Props {
   video: Video | null;
   videoIndex?: number;
   currentCollection?: VideoCollection;
+  referer?: string;
 }
 
 export const VideoCardSkeleton = () => (
@@ -36,9 +37,10 @@ export const VideoCard = React.memo<Props>(props => {
   const renderVideoButtons =
     (props.video && props.video.links.transcript) || isAuthenticated;
   const emitVideoLinkClickEvent = () => {
-    // Noinspection JSIgnoredPromiseFromCall
     AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(props.video);
   };
+
+  const refererParam = props.referer ? `?referer=${props.referer}` : '';
 
   if (!props.video) {
     return <VideoCardSkeleton />;
@@ -47,7 +49,7 @@ export const VideoCard = React.memo<Props>(props => {
       <ClickableCard
         className="video-card"
         bordered={false}
-        href={`/videos/${props.video.id}`}
+        href={`/videos/${props.video.id}${refererParam}`}
         onMouseDown={emitVideoLinkClickEvent}
         data-qa="video-card"
       >

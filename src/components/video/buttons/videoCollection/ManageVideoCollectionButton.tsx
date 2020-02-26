@@ -66,7 +66,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   }
 
   public render() {
-    if (!this.props.canFetchMyCollections) {
+    if (!this.props.canFetchMyCollections || !this.props.collections) {
       return null;
     }
 
