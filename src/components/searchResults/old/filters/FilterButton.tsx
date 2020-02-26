@@ -7,8 +7,8 @@ import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
 import {
   withAppliedSearchFilters,
-  WithAppliedSearchFiltersProps
-} from "src/components/common/higherOrderComponents/withAppliedSearchFilters";
+  WithAppliedSearchFiltersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
 import Bodal from '../../../common/Bodal';
 import {
   withMediaBreakPoint,
@@ -153,11 +153,11 @@ const ConnectedFilterButton = connect(
   mapDispatchToProps,
 )(FilterButtonWithMediaBreakPoint);
 
-class FilterButtonWrapper extends React.Component<WithAppliedSearchFiltersProps> {
+class FilterButtonWrapper extends React.Component<
+  WithAppliedSearchFiltersProps
+> {
   public render() {
-    return (
-        <ConnectedFilterButton />
-    );
+    return <ConnectedFilterButton />;
   }
 }
 

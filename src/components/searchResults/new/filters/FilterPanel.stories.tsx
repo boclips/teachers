@@ -1,10 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import { storyWithProvider } from 'src/utils/index.stories';
-import {
-  MockStoreFactory,
-  RouterFactory,
-} from 'test-support/factories';
+import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { FilterPanel } from './FilterPanel';
 
 storiesOf('FilterPanel', module)

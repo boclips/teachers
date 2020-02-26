@@ -16,13 +16,11 @@ export const SubjectsForm = (props: FormComponentProps & SubjectsFormProps) => (
     {props.form.getFieldDecorator('subjects', {
       rules: [{ type: 'array' }],
       initialValue: props.initialValue,
-      trigger: 'onUpdateSubjects',
     })(
       <SelectSubjects
         subjects={props.subjects}
         placeholder={props.placeholder}
         label={props.label}
-        initialValue={props.initialValue}
         data-qa="subject-select"
       />,
     )}

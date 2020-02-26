@@ -1,87 +1,46 @@
-import React from 'react';
-import { Subject } from '../../types/Subject';
+import React, { Ref } from 'react';
+import sortBy from 'lodash/sortBy';
+import { Subject } from 'src/types/Subject';
 import MultiSelect from '../common/MultiSelect';
 
 export interface Props {
-  label?: string;
+  label: string;
   placeholder: string;
   subjects: Subject[];
-  onUpdateSubjects?: (value: string[]) => void;
-  initialValue: string[];
+  onChange?: (value: string[]) => void;
+  value?: string[];
 }
 
 export interface State {
-  value: string[];
   sortedSubjects: Subject[];
 }
 
-export class SelectSubjects extends React.PureComponent<Props, State> {
-  public static defaultProps = {
-    label: '',
-  };
-
-  public state = {
-    value: this.props.initialValue,
-    sortedSubjects: SelectSubjects.sortSubjectsByName(this.props.subjects),
-  };
-
-  public componentDidUpdate(prevProps: Readonly<Props>): void {
-    if (prevProps.subjects !== this.props.subjects) {
-      this.setState({
-        sortedSubjects: SelectSubjects.sortSubjectsByName(this.props.subjects),
-      });
-    }
-  }
-
-  public render() {
-    return (
-      <MultiSelect
-        filterOption={SelectSubjects.filter}
-        placeholder={this.props.placeholder}
-        data-qa="subjects"
-        onChange={this.onChange}
-        aria-label={this.props.placeholder}
-        value={this.state.value}
-      >
-        {this.generateOptions()}
-      </MultiSelect>
-    );
-  }
-
-  private onChange = (newValue: string[]) => {
-    this.setState({ value: newValue }, () => {
-      this.props.onUpdateSubjects(this.state.value);
-    });
-  };
-
-  private generateOptions() {
-    const Option = MultiSelect.Option;
-
-    return this.state.sortedSubjects.map(subject => (
-      <Option
-        key={subject.name}
-        value={subject.id}
-        title={subject.name}
-        data-qa={subject.id}
-      >
-        {subject.name}
-      </Option>
-    ));
-  }
-
-  private static sortSubjectsByName(subjects: Readonly<Subject[]>): Subject[] {
-    return [...subjects].sort((a: Subject, b: Subject) => {
-      if (a.name > b.name) {
-        return 1;
+export const SelectSubjects = React.forwardRef(
+  (props: Props, ref: Ref<any>) => (
+    <MultiSelect
+      ref={ref}
+      filterOption={(inputValue, option) =>
+        option.props.title.toLowerCase().indexOf(inputValue.toLowerCase()) !==
+        -1
       }
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    });
-  }
-
-  private static filter(inputValue, option) {
-    return option.key.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
-  }
-}
+      placeholder={props.placeholder}
+      data-qa="subjects"
+      onChange={(value: string[]) => {
+        props.onChange(value);
+      }}
+      aria-label={props.placeholder}
+      value={props.value}
+    >
+      {sortBy(props.subjects, ['name']).map(subject => (
+        <MultiSelect.Option
+          key={subject.id}
+          value={subject.id}
+          data-qa={subject.id}
+          title={subject.name}
+        >
+          {subject.name}
+        </MultiSelect.Option>
+      ))}
+    </MultiSelect>
+  ),
+);

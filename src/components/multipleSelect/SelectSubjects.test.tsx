@@ -1,91 +1,83 @@
-import { Select } from 'antd';
 import { SubjectFactory } from 'boclips-api-client/dist/test-support';
-import { mount, shallow } from 'enzyme';
 import React from 'react';
-import { Props, SelectSubjects, State } from './SelectSubjects';
+import { render, fireEvent } from '@testing-library/react';
+import { SelectSubjects } from './SelectSubjects';
 
-test('renders a list of subjects alphabetically ordered', () => {
-  const wrapper = shallow(
-    <SelectSubjects
-      subjects={[
-        SubjectFactory.sample({ id: '1', name: 'Maths' }),
-        SubjectFactory.sample({ id: '3', name: 'Art' }),
-      ]}
-      onUpdateSubjects={jest.fn()}
-      placeholder="Select a subject"
-      initialValue={[]}
-    />,
-  );
+describe('SelectSubjects', () => {
+  test('renders a list of subjects alphabetically ordered', async () => {
+    const view = render(
+      <SelectSubjects
+        label={''}
+        subjects={[
+          SubjectFactory.sample({ id: '1', name: 'Maths' }),
+          SubjectFactory.sample({ id: '3', name: 'Art' }),
+        ]}
+        onChange={jest.fn()}
+        placeholder="Select a subject"
+        value={[]}
+      />,
+    );
 
-  const options = wrapper.find(Select.Option);
-  expect(options.at(0).prop('children')).toBe('Art');
-  expect(options.at(1).prop('children')).toBe('Maths');
-});
+    const selector = view.getByText('Select a subject');
+    fireEvent.click(selector);
 
-test('renders a list of subjects alphabetically ordered, after receiving an update', () => {
-  const subjects = [
-    { id: '1', name: 'Maths' },
-    { id: '3', name: 'Art' },
-  ];
+    const maths = await view.findByText('Maths');
+    const art = view.getByText('Art');
 
-  const wrapper = shallow(
-    <SelectSubjects
-      subjects={[]}
-      onUpdateSubjects={jest.fn()}
-      placeholder="Select a subject"
-      initialValue={[]}
-    />,
-  );
+    expect(maths).toBeInTheDocument();
+    expect(art).toBeInTheDocument();
 
-  const options = wrapper.find(Select.Option);
-  expect(options.length).toEqual(0);
+    const options = view.getAllByRole('option');
 
-  wrapper.setProps({ subjects });
+    expect(options[0].textContent).toContain('Art');
+    expect(options[1].textContent).toContain('Maths');
+  });
 
-  const optionsAfterUpdate = wrapper.find(Select.Option);
-  expect(optionsAfterUpdate.length).toEqual(2);
+  test('onSelection returns a list of selected ids', async () => {
+    const callback = jest.fn();
+    const view = render(
+      <SelectSubjects
+        label={''}
+        subjects={[
+          SubjectFactory.sample({ id: '1', name: 'Maths' }),
+          SubjectFactory.sample({ id: '3', name: 'Art' }),
+        ]}
+        onChange={callback}
+        placeholder="Select a subject"
+        value={[]}
+      />,
+    );
 
-  expect(optionsAfterUpdate.at(0).prop('children')).toBe('Art');
-  expect(optionsAfterUpdate.at(1).prop('children')).toBe('Maths');
-});
+    const selector = view.getByText('Select a subject');
+    fireEvent.click(selector);
 
-test('onSelection returns a list of selected ids', () => {
-  const callback = jest.fn();
-  const wrapper = mount(
-    <SelectSubjects
-      subjects={[
-        SubjectFactory.sample({ id: '1', name: 'Maths' }),
-        SubjectFactory.sample({ id: '3', name: 'Art' }),
-      ]}
-      onUpdateSubjects={callback}
-      placeholder="Select a subject"
-      initialValue={[]}
-    />,
-  );
+    const maths = await view.findByText('Maths');
 
-  wrapper.find('.ant-select').simulate('click');
-  const menuItems = wrapper.find('Trigger').find('MenuItem');
+    expect(maths).toBeInTheDocument();
 
-  menuItems.at(0).simulate('click');
-  menuItems.at(1).simulate('click');
+    fireEvent.click(maths);
 
-  expect(callback).toHaveBeenCalledTimes(2);
-  expect(callback).toHaveBeenCalledWith(['3', '1']);
-});
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(['1']);
+  });
 
-test('initial state for subjects is set by initial value', () => {
-  const callback = jest.fn();
-  const wrapper = mount<Props, State>(
-    <SelectSubjects
-      subjects={[
-        SubjectFactory.sample({ id: '1', name: 'Maths' }),
-        SubjectFactory.sample({ id: '3', name: 'Art' }),
-      ]}
-      onUpdateSubjects={callback}
-      placeholder="Select a subject"
-      initialValue={['1', '2']}
-    />,
-  );
+  it('renders the preselected value', () => {
+    const callback = jest.fn();
+    const view = render(
+      <SelectSubjects
+        label={''}
+        subjects={[
+          SubjectFactory.sample({ id: '1', name: 'Maths' }),
+          SubjectFactory.sample({ id: '3', name: 'Art' }),
+        ]}
+        onChange={callback}
+        placeholder="Select a subject"
+        value={['3']}
+      />,
+    );
 
-  expect(wrapper.state().value).toEqual(['1', '2']);
+    const art = view.getByText('Art');
+
+    expect(art).toBeInTheDocument();
+  });
 });

@@ -20,8 +20,10 @@ export const withAppliedSearchFilters = <
 >(
   Component: React.ComponentType<P>,
 ) => (props: Omit<P, keyof WithAppliedSearchFiltersProps>) => {
-  const location = useSelector((state: State) => state.router.location);
-  const searchFilters = parseSearchFiltersFromUrl(location.search);
+  const queryParams = useSelector(
+    (state: State) => state.router.location.search,
+  );
+  const searchFilters = parseSearchFiltersFromUrl(queryParams);
   const numberOfFiltersApplied = getNumberOfSearchFilters(searchFilters);
 
   const appliedFiltersProps: WithAppliedSearchFiltersProps = {
