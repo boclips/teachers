@@ -34,7 +34,7 @@ export interface Props {
 export const CollectionCard = withMediaBreakPoint(
   React.memo((props: Props & WithMediaBreakPointProps) => {
     const isSmallCard =
-      props.grid || props.mediaBreakpoint.width <= MediaBreakpoints.sm.width;
+      props.grid || props.mediaBreakpoint.width <= MediaBreakpoints.md.width;
 
     const collectionHasTags =
       props.collection.subjects.length > 0 ||
