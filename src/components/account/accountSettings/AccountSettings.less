@@ -57,12 +57,8 @@
     background: @shade-3;
     border-radius: 8px;
     margin-bottom: 32px;
-    padding: 16px;
-    height: 117px;
-
-    @media (min-width: @screen-md) {
-      height: 96px;
-    }
+    padding: 16px 0px 16px 8px;
+    overflow: hidden;
   }
 
   &sharecode {
@@ -90,6 +86,10 @@
         margin-left: 6px;
       }
     }
+  }
+
+  &sharecode-guidance {
+    padding-right: 10px;
   }
 
   &sharecode-icon {
