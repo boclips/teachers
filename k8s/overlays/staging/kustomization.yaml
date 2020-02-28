@@ -4,7 +4,7 @@ resources:
 - ../../base/
 namespace: staging
 replicas:
-- count: 3
+- count: 2
   name: teachers
 patches:
 - path: domain.yaml
