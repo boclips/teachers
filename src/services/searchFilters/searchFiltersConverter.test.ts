@@ -1,7 +1,10 @@
-import { parseSearchFiltersFromUrl } from './searchFiltersConverter';
+import { parseSearchParametersFromUrl } from './searchFiltersConverter';
 
 it('converts duration search url string to SearchFilterParameters', () => {
-  expect(parseSearchFiltersFromUrl('?duration_min=1&duration_max=11')).toEqual({
+  expect(
+    parseSearchParametersFromUrl('?duration_min=1&duration_max=11'),
+  ).toEqual({
+    query: null,
     durationMin: 1,
     durationMax: 11,
     ageRangeMin: null,
@@ -12,8 +15,9 @@ it('converts duration search url string to SearchFilterParameters', () => {
 
 it('converts age range search url string to SearchFilterParameters', () => {
   expect(
-    parseSearchFiltersFromUrl('?age_range_min=1&age_range_max=11'),
+    parseSearchParametersFromUrl('?age_range_min=1&age_range_max=11'),
   ).toEqual({
+    query: null,
     durationMin: null,
     durationMax: null,
     ageRangeMin: 1,
@@ -23,7 +27,8 @@ it('converts age range search url string to SearchFilterParameters', () => {
 });
 
 it('converts a single subject in the search url string to SearchFilterParameters', () => {
-  expect(parseSearchFiltersFromUrl('?subject=1')).toEqual({
+  expect(parseSearchParametersFromUrl('?subject=1')).toEqual({
+    query: null,
     durationMin: null,
     durationMax: null,
     ageRangeMin: null,
@@ -33,7 +38,8 @@ it('converts a single subject in the search url string to SearchFilterParameters
 });
 
 it('converts multiple subjects in the search url string to SearchFilterParameters', () => {
-  expect(parseSearchFiltersFromUrl('?subject=1,2,3')).toEqual({
+  expect(parseSearchParametersFromUrl('?subject=1,2,3')).toEqual({
+    query: null,
     durationMin: null,
     durationMax: null,
     ageRangeMin: null,

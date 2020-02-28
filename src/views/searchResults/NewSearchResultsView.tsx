@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Col, Drawer } from 'antd';
+import { NewNoResultsView } from 'src/views/searchResults/noResults/NewNoResultsView';
 import { FiniteGrid } from '../../components/common/Grid/FiniteGrid';
 import PageLayout from '../../components/layout/PageLayout';
 import {
@@ -19,7 +20,6 @@ import {
 import State from '../../types/State';
 import { FilterPanel } from '../../components/searchResults/new/filters/FilterPanel';
 import { SearchPanel } from '../../components/searchResults/new/SearchPanel';
-import NoResultsView from './noResults/NoResultsView';
 import './NewSearchResultsView.less';
 
 interface InternalState {
@@ -72,7 +72,11 @@ class NewSearchResultsView extends React.PureComponent<
           >
             <FilterPanel />
           </Drawer>
-          <Col xs={{ span: 24 }} lg={{ span: 18 }}>
+          <Col
+            xs={{ span: 24 }}
+            lg={{ span: 18 }}
+            className={'search-results-container__results'}
+          >
             {this.renderResults()}
           </Col>
         </section>
@@ -102,7 +106,7 @@ class NewSearchResultsView extends React.PureComponent<
       );
     }
     if (this.props.videoResults.query.length > 0) {
-      return <NoResultsView query={this.props.videoResults.query} />;
+      return <NewNoResultsView onOpenFilterDrawer={this.onOpenFilterDrawer} />;
     }
 
     return null;

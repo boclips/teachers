@@ -2,9 +2,9 @@ import { Row } from 'antd';
 import React from 'react';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import {
-  withAppliedSearchFilters,
-  WithAppliedSearchFiltersProps,
-} from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
+  withAppliedSearchParameters,
+  WithAppliedSearchParametersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
@@ -15,8 +15,8 @@ import DurationFilterTag from '../../filters/DurationFilterTag';
 import './FiltersBar.less';
 import SubjectFilterTag from '../../filters/SubjectFilterTag';
 
-export const FiltersBar = withAppliedSearchFilters(
-  (props: WithAppliedSearchFiltersProps) => {
+export const FiltersBar = withAppliedSearchParameters(
+  (props: WithAppliedSearchParametersProps) => {
     if (props.numberOfFiltersApplied === 0) {
       return null;
     }

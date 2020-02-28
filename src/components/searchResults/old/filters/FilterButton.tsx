@@ -6,9 +6,9 @@ import { Range } from 'src/types/Range';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
 import {
-  withAppliedSearchFilters,
-  WithAppliedSearchFiltersProps,
-} from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
+  withAppliedSearchParameters,
+  WithAppliedSearchParametersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import Bodal from '../../../common/Bodal';
 import {
   withMediaBreakPoint,
@@ -32,7 +32,7 @@ interface State {
   visible: boolean;
 }
 
-type Props = WithAppliedSearchFiltersProps &
+type Props = WithAppliedSearchParametersProps &
   DispatchProps &
   WithMediaBreakPointProps;
 
@@ -154,7 +154,7 @@ const ConnectedFilterButton = connect(
 )(FilterButtonWithMediaBreakPoint);
 
 class FilterButtonWrapper extends React.Component<
-  WithAppliedSearchFiltersProps
+  WithAppliedSearchParametersProps
 > {
   public render() {
     return <ConnectedFilterButton />;
@@ -163,4 +163,4 @@ class FilterButtonWrapper extends React.Component<
 
 export { FilterButtonWithMediaBreakPoint };
 
-export default withAppliedSearchFilters(FilterButtonWrapper);
+export default withAppliedSearchParameters(FilterButtonWrapper);

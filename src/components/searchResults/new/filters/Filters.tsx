@@ -7,9 +7,9 @@ import { AgeRange } from 'src/types/AgeRange';
 import { Range } from 'src/types/Range';
 import { Subject } from 'src/types/Subject';
 import {
-  withAppliedSearchFilters,
-  WithAppliedSearchFiltersProps,
-} from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
+  withAppliedSearchParameters,
+  WithAppliedSearchParametersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
 import DurationSlider from '../../filters/DurationSlider';
 import State from '../../../../types/State';
@@ -28,7 +28,7 @@ export interface FilterOptions {
   subjects?: string[];
 }
 
-interface Props extends StateProps, WithAppliedSearchFiltersProps {
+interface Props extends StateProps, WithAppliedSearchParametersProps {
   onApplyFilters: (FilterOptions) => void;
 }
 
@@ -135,7 +135,7 @@ const Filters = React.forwardRef(
   },
 );
 
-export const FiltersWithForm = withAppliedSearchFilters(
+export const FiltersWithForm = withAppliedSearchParameters(
   Form.create<FormComponentProps & Props>({
     onValuesChange: (
       props,

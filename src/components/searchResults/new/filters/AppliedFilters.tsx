@@ -1,17 +1,17 @@
 import { Row } from 'antd';
 import React from 'react';
 import {
-  withAppliedSearchFilters,
-  WithAppliedSearchFiltersProps,
-} from 'src/components/common/higherOrderComponents/withAppliedSearchFilters';
+  withAppliedSearchParameters,
+  WithAppliedSearchParametersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import AgeRangeFilterTag from '../../filters/AgeRangeFilterTag';
 import ClearAllButton from '../../filters/ClearAllButton';
 import DurationFilterTag from '../../filters/DurationFilterTag';
 import './AppliedFilters.less';
 import SubjectFilterTag from '../../filters/SubjectFilterTag';
 
-export const AppliedFilters = withAppliedSearchFilters(
-  (props: WithAppliedSearchFiltersProps) =>
+export const AppliedFilters = withAppliedSearchParameters(
+  (props: WithAppliedSearchParametersProps) =>
     props.numberOfFiltersApplied > 0 ? (
       <div className="filters-bar" data-qa={'filters-bar'}>
         <div className={'filters-bar__headings'}>

@@ -1,12 +1,13 @@
 import queryString from 'query-string';
 import { SearchFiltersParameters } from '../../types/SearchFiltersParameters';
 
-export const parseSearchFiltersFromUrl = (
+export const parseSearchParametersFromUrl = (
   url: string,
 ): SearchFiltersParameters => {
   const parsedUrl = queryString.parse(url);
 
   return {
+    query: parseQuery(parsedUrl.q),
     durationMin: +parsedUrl.duration_min || null,
     durationMax: +parsedUrl.duration_max || null,
     ageRangeMin: +parsedUrl.age_range_min || null,
@@ -42,3 +43,6 @@ export const getNumberOfSearchFilters = (
 
 const parseSubjects = (subject: string[] | string): string[] =>
   subject == null ? [] : subject.toString().split(',');
+
+const parseQuery = (query: string[] | string): string =>
+  query === null || query === undefined ? null : `${query}`;

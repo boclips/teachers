@@ -16,11 +16,11 @@ import { Route } from 'react-router';
 import { ConnectedNewSearchResultsView } from 'src/views/searchResults/NewSearchResultsView';
 import React from 'react';
 
-export function renderSearchResultsViewWithSampleData() {
-  const initialQuery = 'hello';
+export const renderSearchResultsView = (initialQuery: string) => {
   const history = createMemoryHistory({
     initialEntries: [`/new-filters?q=${initialQuery}`],
   });
+
   const store = createBoclipsStore(
     {
       subjects: SubjectsFactory.sample([
@@ -32,6 +32,16 @@ export function renderSearchResultsViewWithSampleData() {
     history,
   );
 
+  return renderWithConnectedRoutes(
+    <Route path={'/new-filters'} component={ConnectedNewSearchResultsView} />,
+    store,
+    history,
+  );
+};
+
+export const renderSearchResultsViewWithSampleData = (
+  initialQuery: string = 'hello',
+) => {
   new ApiStub()
     .defaultUser()
     .queryVideos({ query: initialQuery, results: videoResults })
@@ -40,9 +50,5 @@ export function renderSearchResultsViewWithSampleData() {
       results: collectionsResponse([collectionResponse()]),
     });
 
-  return renderWithConnectedRoutes(
-    <Route path={'/new-filters'} component={ConnectedNewSearchResultsView} />,
-    store,
-    history,
-  );
-}
+  return renderSearchResultsView(initialQuery);
+};
