@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { Range } from 'src/types/Range';
 import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationBounds from './DurationBounds';
 
 interface Props {
-  durationMin?: number;
-  durationMax?: number;
+  range: Range;
 }
 
 interface DispatchProps {
@@ -17,14 +17,14 @@ const durationBounds = new DurationBounds();
 
 class DurationFilterTag extends React.Component<Props & DispatchProps> {
   private getDurationLabel = () => {
-    const min = durationBounds.resolveMin(this.props.durationMin / 60);
-    const max = durationBounds.resolveMax(this.props.durationMax / 60);
+    const min = durationBounds.resolveMin(this.props.range.min / 60);
+    const max = durationBounds.resolveMax(this.props.range.max / 60);
 
     return max === durationBounds.MAX_DURATION ? `${min}m+` : `${min}m-${max}m`;
   };
 
   public shouldRender = () =>
-    this.props.durationMin == null && this.props.durationMax == null;
+    this.props.range.min == null && this.props.range.max == null;
 
   public render() {
     return this.shouldRender() ? null : (
@@ -43,8 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClose: () => {
     dispatch(
       updateSearchParamsAction({
-        duration_min: undefined,
-        duration_max: undefined,
+        duration: undefined,
       }),
     );
   },

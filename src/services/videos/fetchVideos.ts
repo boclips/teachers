@@ -11,6 +11,24 @@ export default function fetchVideos(
 ): Promise<VideoSearchResult> {
   const durationConverter = new DurationConverter();
 
+  const duration =
+    searchRequest.filters.duration &&
+    searchRequest.filters.duration.map(({ min, max }) => {
+      let durationString = '';
+
+      if (min) {
+        durationString += durationConverter.secondsToIso(min);
+      } else {
+        durationString += 'PT0M';
+      }
+
+      if (max) {
+        durationString += '-' + durationConverter.secondsToIso(max);
+      }
+
+      return durationString;
+    });
+
   const url = links.videos.getTemplatedLink({
     query: searchRequest.query,
     size: searchRequest.size || 10,
@@ -18,12 +36,7 @@ export default function fetchVideos(
     is_classroom: searchRequest.filters.isClassroom,
     sort_by: searchRequest.sortBy,
     type: searchRequest.filters.type,
-    duration_min: durationConverter.secondsToIso(
-      searchRequest.filters.duration_min,
-    ),
-    duration_max: durationConverter.secondsToIso(
-      searchRequest.filters.duration_max,
-    ),
+    duration,
     age_range_min: searchRequest.filters.age_range_min,
     age_range_max: searchRequest.filters.age_range_max,
     subject: searchRequest.filters.subject,

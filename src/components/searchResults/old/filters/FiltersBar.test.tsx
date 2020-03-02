@@ -29,7 +29,7 @@ it('renders text when there are valid filters', () => {
     router: RouterFactory.sample({
       location: {
         pathname: '',
-        search: '?q=nofilters&duration_min=1',
+        search: '?q=nofilters&duration=1',
         hash: '',
         state: null,
       },
@@ -53,7 +53,7 @@ it('renders a subject tag when there is a subject filter', () => {
       location: {
         pathname: '',
         search:
-          '?q=hashtagfilter&duration_min=1&subject=subject-one-id,subject-two-id',
+          '?q=hashtagfilter&duration=1&subject=subject-one-id,subject-two-id',
         hash: '',
         state: null,
       },

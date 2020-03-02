@@ -1,12 +1,12 @@
+import { Range } from 'src/types/Range';
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 interface SearchPathname {
   pathname?: string;
 }
 
-interface UpdateDurationFilter {
-  duration_min: number;
-  duration_max: number;
+export interface UpdateDurationFilter {
+  duration: Range[];
 }
 
 interface UpdateAgeRangeFilter {
@@ -46,3 +46,8 @@ export const updateSearchParamsAction = actionCreatorFactory<
 export const bulkUpdateSearchParamsAction = actionCreatorFactory<
   UpdateSearchParamsRequest[]
 >('BULK_UPDATE_SEARCH_PARAMS');
+
+export const isUpdateDurationFilterRequest = (
+  request: UpdateSearchParamsRequest,
+): request is UpdateDurationFilter =>
+  !!(request as UpdateDurationFilter).duration;

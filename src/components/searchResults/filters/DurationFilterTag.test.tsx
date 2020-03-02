@@ -10,14 +10,10 @@ import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import DurationFilterTag from './DurationFilterTag';
 
-const getWrapper = (
-  durationMin?: number,
-  durationMax?: number,
-  store?: Store,
-) =>
+const getWrapper = (min?: number, max?: number, store?: Store) =>
   mount(
     <Provider store={store || MockStoreFactory.sample()}>
-      <DurationFilterTag durationMin={durationMin} durationMax={durationMax} />
+      <DurationFilterTag range={{ min, max }} />
     </Provider>,
   );
 
@@ -46,7 +42,7 @@ it('removes duration from url on close', () => {
     router: RouterFactory.sample({
       location: {
         pathname: '',
-        search: '?hi&duration_min=123',
+        search: '?hi&duration=123',
         hash: '',
         state: null,
       },
@@ -62,9 +58,6 @@ it('removes duration from url on close', () => {
 
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
-    updateSearchParamsAction({
-      duration_min: undefined,
-      duration_max: undefined,
-    }),
+    updateSearchParamsAction({ duration: undefined }),
   );
 });

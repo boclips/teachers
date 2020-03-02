@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router';
-import queryString from 'query-string';
+import queryString  from 'query-string';
 import { MiddlewareAPI } from 'redux';
+import {requestToQueryParameters} from "src/services/searchFilters/searchFiltersConverter";
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import State from '../../../../types/State';
@@ -25,7 +26,7 @@ export function onUpdateSearchParameter(
   const parsedQuery = queryString.parse(query);
   const newQuery = {
     ...parsedQuery,
-    ...request,
+    ...requestToQueryParameters(request),
     page: 1,
   };
 
@@ -47,13 +48,14 @@ export function onBulkUpdateSearchParameter(
   if (pathname === '/discover-collections') {
     query = '';
   }
+
   const parsedQuery = queryString.parse(query);
 
   const newQuery = {
-    ...request.reduce(
-      (acc, value: UpdateSearchParamsRequest) => ({ ...acc, ...value }),
-      parsedQuery,
-    ),
+    ...parsedQuery,
+    ...request
+      .map(requestToQueryParameters)
+      .reduce((acc, param) => ({ ...acc, ...param })),
     page: 1,
   };
 
@@ -74,8 +76,7 @@ export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
   const parsedQuery = queryString.parse(query);
 
   const clearAllFiltersQuery: UpdateAllFilters = {
-    duration_min: undefined,
-    duration_max: undefined,
+    duration: undefined,
     age_range_min: undefined,
     age_range_max: undefined,
     subject: undefined,

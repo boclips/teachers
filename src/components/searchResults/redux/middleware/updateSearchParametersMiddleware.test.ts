@@ -8,12 +8,12 @@ import {
 } from '../actions/updateSearchParametersActions';
 describe(`updateSearchParametersMiddleware`, () => {
   it('updates query in url parameters', async () => {
-    const store = setupStore('q=test&duration_max=1');
+    const store = setupStore('q=test&duration=0-1');
     store.dispatch(updateSearchParamsAction({ q: '123' }));
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?duration_max=1&page=1&q=123'),
+        push('/videos?duration=0-1&page=1&q=123'),
       );
     });
   });
@@ -23,14 +23,13 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     store.dispatch(
       updateSearchParamsAction({
-        duration_min: 123,
-        duration_max: 4321,
+        duration: [{ min: 123, max: 4321 }],
       }),
     );
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?duration_max=4321&duration_min=123&page=1&q=hi'),
+        push('/videos?duration=123-4321&page=1&q=hi'),
       );
     });
   });
@@ -73,14 +72,13 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     store.dispatch(
       updateSearchParamsAction({
-        duration_min: 123,
-        duration_max: undefined,
+        duration: [{ min: 123 }],
       }),
     );
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?duration_min=123&page=1'),
+        push('/videos?duration=123&page=1'),
       );
     });
   });
@@ -89,8 +87,7 @@ describe(`updateSearchParametersMiddleware`, () => {
     const store = setupStore('q=hi&page=1&subject=6');
 
     const durationUpdate = {
-      duration_max: 1,
-      duration_min: 2,
+      duration: [{ min: 1, max: 2 }],
     };
 
     const subjectUpdate = { subject: ['new'] };
@@ -101,7 +98,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?duration_max=1&duration_min=2&page=1&q=hi&subject=new'),
+        push('/videos?duration=1-2&page=1&q=hi&subject=new'),
       );
     });
   });
@@ -118,7 +115,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
   it('clears filter on clear search filters action', async () => {
     const store = setupStore(
-      'mode=hello&q=hi&duration_max=hello&duration_min=123&age_range_min=5&age_range_max=11&subject=1&page=10',
+      'mode=hello&q=hi&duration=123&age_range_min=5&age_range_max=11&subject=1&page=10',
     );
 
     store.dispatch(clearSearchFilterParametersAction());

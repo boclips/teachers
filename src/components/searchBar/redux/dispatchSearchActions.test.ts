@@ -80,17 +80,23 @@ describe('when on the videos page', () => {
   });
 
   it('filters by duration', () => {
-    store = getStore(`duration_min=60&duration_max=190`);
+    store = getStore(`duration=60-190`);
     dispatchSearchActions(store);
     action = store.getActions()[0];
 
-    expect(action.payload.filters.duration_min).toEqual(60);
-    expect(action.payload.filters.duration_max).toEqual(190);
+    expect(action.payload.filters.duration).toEqual([{ min: 60, max: 190 }]);
   });
 
-  it('defaults durations to undefined if non-existent', () => {
-    expect(action.payload.filters.duration_min).toBeUndefined();
-    expect(action.payload.filters.duration_max).toBeUndefined();
+  it('filters by duration', () => {
+    store = getStore(`duration=60`);
+    dispatchSearchActions(store);
+    action = store.getActions()[0];
+
+    expect(action.payload.filters.duration).toEqual([{ min: 60 }]);
+  });
+
+  it('defaults duration to undefined if non-existent', () => {
+    expect(action.payload.filters.duration).toBeNull();
   });
 
   it('filters videos by subject', () => {
