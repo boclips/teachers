@@ -5,12 +5,12 @@ import {
   getNumberOfSearchFilters,
   parseSearchParametersFromUrl,
 } from 'src/services/searchFilters/searchFiltersConverter';
+import { Range } from 'src/types/Range';
 
 export interface WithAppliedSearchParametersProps {
   query: string | undefined;
   numberOfFiltersApplied: number | undefined;
-  durationMin: number | undefined;
-  durationMax: number | undefined;
+  duration: Range[];
   ageRangeMax: number | undefined;
   ageRangeMin: number | undefined;
   subjectIds: string[] | undefined;
@@ -29,8 +29,7 @@ export const withAppliedSearchParameters = <
 
   const appliedFiltersProps: WithAppliedSearchParametersProps = {
     query: searchParameters.query,
-    durationMin: searchParameters.durationMin,
-    durationMax: searchParameters.durationMax,
+    duration: searchParameters.duration,
     ageRangeMax: searchParameters.ageRangeMax,
     ageRangeMin: searchParameters.ageRangeMin,
     subjectIds: searchParameters.subject,

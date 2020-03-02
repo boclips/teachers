@@ -16,7 +16,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration_min,duration_max,age_range_min,age_range_max,subject,type,is_classroom}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration,duration_min,duration_max,age_range_min,age_range_max,subject,type,is_classroom}',
       templated: true,
     }),
   });
@@ -27,8 +27,7 @@ beforeEach(async () => {
       page: 1,
       filters: {
         isClassroom: true,
-        duration_min: 100,
-        duration_max: 200,
+        duration: [{ min: 100, max: 200 }],
         age_range_min: 5,
         age_range_max: 11,
         type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
@@ -66,9 +65,8 @@ test('includes sort_by when provided', () => {
   expect(queryParams.sort_by).toEqual('RELEASE_DATE');
 });
 
-test('converts durations to ISO-8601', () => {
-  expect(queryParams.duration_min).toEqual('PT1M40S');
-  expect(queryParams.duration_max).toEqual('PT3M20S');
+test('converts durations to ranges of ISO-8601', () => {
+  expect(queryParams.duration).toEqual('PT1M40S-PT3M20S');
 });
 
 test('includes age range min and max when provided', () => {

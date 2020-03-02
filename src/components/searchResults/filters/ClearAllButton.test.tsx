@@ -14,7 +14,7 @@ it('clears all filters when pressed', () => {
     router: RouterFactory.sample({
       location: {
         pathname: '',
-        search: '?q=123&duration_max=123',
+        search: '?q=123&duration=0-123',
         hash: '',
         state: null,
       },

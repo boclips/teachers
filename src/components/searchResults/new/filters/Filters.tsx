@@ -38,26 +38,13 @@ interface StateProps {
 
 const Filters = React.forwardRef(
   (props: FormComponentProps & Props, ref: Ref<any>) => {
-    const {
-      ageRangeMin,
-      ageRangeMax,
-      subjectIds,
-      durationMax,
-      durationMin,
-    } = props;
+    const { ageRangeMin, ageRangeMax, subjectIds, duration } = props;
     const { getFieldDecorator, resetFields } = props.form;
     const subjects = useSelector((state: State) => state.subjects);
 
     useEffect(() => {
       resetFields();
-    }, [
-      resetFields,
-      ageRangeMin,
-      ageRangeMax,
-      subjectIds,
-      durationMin,
-      durationMax,
-    ]);
+    }, [resetFields, ageRangeMin, ageRangeMax, subjectIds, duration]);
 
     return (
       <section ref={ref}>
@@ -94,13 +81,13 @@ const Filters = React.forwardRef(
                 <Form.Item>
                   {getFieldDecorator('duration', {
                     initialValue: {
-                      min: durationMin,
-                      max: durationMax,
+                      min: duration && duration.length && duration[0].min,
+                      max: duration && duration.length && duration[0].max,
                     },
                   })(
                     <DurationSlider
-                      min={durationMin}
-                      max={durationMax}
+                      min={duration && duration.length && duration[0].min}
+                      max={duration && duration.length && duration[0].max}
                       data-qa="duration-slider"
                     />,
                   )}

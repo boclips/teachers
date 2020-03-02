@@ -1,10 +1,7 @@
 import React from 'react';
 import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { renderWithStore } from 'test-support/renderWithStore';
-import {
-  withAppliedSearchParameters,
-  WithAppliedSearchParametersProps,
-} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
+import { withAppliedSearchParameters } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 
 const getWrapper = (query: string) => {
   const store = MockStoreFactory.sampleState({
@@ -12,81 +9,64 @@ const getWrapper = (query: string) => {
       location: { pathname: '', search: query, hash: '', state: null },
     }),
   });
+  const spyComponent = jest.fn().mockReturnValue(<div />);
 
-  const DummyComponent = withAppliedSearchParameters(
-    (props: WithAppliedSearchParametersProps) => (
-      <div>
-        {Object.keys(props).map(key => (
-          <div key={key}>{`${key}:${props[key]}`}</div>
-        ))}
-      </div>
-    ),
-  );
+  const DummyComponent = withAppliedSearchParameters(spyComponent);
 
-  return renderWithStore(<DummyComponent />, { initialState: store });
-};
+  renderWithStore(<DummyComponent />, { initialState: store });
 
-const expectSearchParameterProps = (
-  wrapper,
-  expectedProps: Partial<WithAppliedSearchParametersProps>,
-) => {
-  expectedProps = {
-    query: '',
-    durationMin: null,
-    durationMax: null,
-    subjectIds: [],
-    ageRangeMin: null,
-    ageRangeMax: null,
-    numberOfFiltersApplied: 0,
-    ...expectedProps,
-  };
-
-  Object.keys(expectedProps).forEach(key => {
-    expect(
-      wrapper.getByText(`${key}:${expectedProps[key]}`),
-    ).toBeInTheDocument();
-  });
+  return spyComponent;
 };
 
 describe('query text', () => {
   it('provides the query text', () => {
-    const wrapper = getWrapper(`?q=hi`);
+    const spy = getWrapper(`?q=hi`);
 
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
       numberOfFiltersApplied: 0,
+      ageRangeMin: null,
+      ageRangeMax: null,
+      duration: null,
+      subjectIds: [],
     });
   });
 });
 
 describe('duration filters', () => {
   it('provides duration with normal range', () => {
-    const wrapper = getWrapper(`?q=hi&duration_min=60&duration_max=180`);
+    const spy = getWrapper(`?q=hi&duration=60-180`);
 
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
-      durationMin: 60,
-      durationMax: 180,
+      duration: [{ min: 60, max: 180 }],
+      subjectIds: [],
+      ageRangeMin: null,
+      ageRangeMax: null,
       numberOfFiltersApplied: 1,
     });
   });
 
   it('provides valid duration with no max', () => {
-    const wrapper = getWrapper(`?q=hi&duration_min=180`);
-
-    expectSearchParameterProps(wrapper, {
+    const spy = getWrapper(`?q=hi&duration=180`);
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
-      durationMin: 180,
+      duration: [{ min: 180, max: undefined }],
+      subjectIds: [],
+      ageRangeMin: null,
+      ageRangeMax: null,
       numberOfFiltersApplied: 1,
     });
   });
 
   it('provides valid duration with no min', () => {
-    const wrapper = getWrapper(`?q=hi&duration_max=180`);
-
-    expectSearchParameterProps(wrapper, {
+    const spy = getWrapper(`?q=hi&duration=0-180`);
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
-      durationMax: 180,
+      duration: [{ min: 0, max: 180 }],
+      subjectIds: [],
+      ageRangeMin: null,
+      ageRangeMax: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -94,10 +74,12 @@ describe('duration filters', () => {
 
 describe('age range filters', () => {
   it('provides age range with both values', () => {
-    const wrapper = getWrapper(`?q=hi&age_range_min=5&age_range_max=11`);
+    const spy = getWrapper(`?q=hi&age_range_min=5&age_range_max=11`);
 
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
+      duration: null,
+      subjectIds: [],
       ageRangeMin: 5,
       ageRangeMax: 11,
       numberOfFiltersApplied: 1,
@@ -105,21 +87,27 @@ describe('age range filters', () => {
   });
 
   it('provides valid age range with no min', () => {
-    const wrapper = getWrapper(`?q=hi&age_range_max=11`);
+    const spy = getWrapper(`?q=hi&age_range_max=11`);
 
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
+      duration: null,
+      subjectIds: [],
+      ageRangeMin: null,
       ageRangeMax: 11,
       numberOfFiltersApplied: 1,
     });
   });
 
   it('provides valid age range with no max', () => {
-    const wrapper = getWrapper(`?q=hi&age_range_min=5`);
+    const spy = getWrapper(`?q=hi&age_range_min=5`);
 
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
+      duration: null,
+      subjectIds: [],
       ageRangeMin: 5,
+      ageRangeMax: null,
       numberOfFiltersApplied: 1,
     });
   });
@@ -127,20 +115,27 @@ describe('age range filters', () => {
 
 describe('subject filters', () => {
   it('provides single subject filter', () => {
-    const wrapper = getWrapper(`?q=hi&subject=subject-one-id`);
+    const spy = getWrapper(`?q=hi&subject=subject-one-id`);
 
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
+      duration: null,
       subjectIds: ['subject-one-id'],
+      ageRangeMin: null,
+      ageRangeMax: null,
       numberOfFiltersApplied: 1,
     });
   });
 
   it('provides multiple subject filter', () => {
-    const wrapper = getWrapper(`?q=hi&subject=subject-one-id,subject-two-id`);
-    expectSearchParameterProps(wrapper, {
+    const spy = getWrapper(`?q=hi&subject=subject-one-id,subject-two-id`);
+
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
+      duration: null,
       subjectIds: ['subject-one-id', 'subject-two-id'],
+      ageRangeMin: null,
+      ageRangeMax: null,
       numberOfFiltersApplied: 2,
     });
   });
@@ -148,13 +143,12 @@ describe('subject filters', () => {
 
 describe('number of filters applied', () => {
   it('calculates correctly for multiple filters', () => {
-    const wrapper = getWrapper(
-      `?q=hi&age_range_min=5&age_range_max=11&duration_min=60&duration_max=180`,
+    const spy = getWrapper(
+      `?q=hi&age_range_min=5&age_range_max=11&duration=60-180`,
     );
-    expectSearchParameterProps(wrapper, {
+    expect(spy.mock.calls[0][0]).toEqual({
       query: 'hi',
-      durationMin: 60,
-      durationMax: 180,
+      duration: [{ min: 60, max: 180 }],
       subjectIds: [],
       ageRangeMin: 5,
       ageRangeMax: 11,

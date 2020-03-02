@@ -17,8 +17,7 @@ export interface FilterFormEditableFields {
 }
 
 export interface FilterProps {
-  durationMin?: number;
-  durationMax?: number;
+  duration: Range;
   ageRangeMin?: number;
   ageRangeMax?: number;
   subjectIds?: string[];
@@ -38,13 +37,13 @@ class FilterButtonForm extends React.Component<Props> {
         <Form.Item className="filter-form__item" label="Duration">
           {getFieldDecorator('duration', {
             initialValue: {
-              min: this.props.durationMin,
-              max: this.props.durationMax,
+              min: this.props.duration && this.props.duration.min,
+              max: this.props.duration && this.props.duration.max,
             },
           })(
             <DurationSlider
-              min={this.props.durationMin}
-              max={this.props.durationMax}
+              min={this.props.duration && this.props.duration.min}
+              max={this.props.duration && this.props.duration.max}
               data-qa="duration-slider"
             />,
           )}

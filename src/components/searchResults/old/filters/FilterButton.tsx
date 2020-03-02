@@ -109,8 +109,7 @@ class FilterButton extends React.Component<Props, State> {
           visible={this.state.visible}
         >
           <FilterButtonForm
-            durationMin={this.props.durationMin}
-            durationMax={this.props.durationMax}
+            duration={this.props.duration && this.props.duration[0]}
             ageRangeMin={this.props.ageRangeMin}
             ageRangeMax={this.props.ageRangeMax}
             subjectIds={this.props.subjectIds}
@@ -127,9 +126,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       bulkUpdateSearchParamsAction([
         {
-          duration_min: filterRequest.duration && filterRequest.duration.min,
-          duration_max:
-            (filterRequest.duration && filterRequest.duration.max) || undefined,
+          duration: [filterRequest.duration],
         },
         {
           age_range_min: filterRequest.ageRange && filterRequest.ageRange.min,

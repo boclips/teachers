@@ -169,8 +169,7 @@ describe('default slider values', () => {
       store,
       <FilterButton
         onSubmit={jest.fn}
-        durationMin={4 * 60}
-        durationMax={10 * 60}
+        duration={[{ min: 4 * 60, max: 10 * 60 }]}
       />,
     );
 
@@ -241,8 +240,7 @@ describe('url changes', () => {
     expect(store.getActions()[0]).toEqual(
       bulkUpdateSearchParamsAction([
         {
-          duration_max: 130,
-          duration_min: 70,
+          duration: [{ min: 70, max: 130 }],
         },
         {
           age_range_max: 15,
@@ -287,8 +285,7 @@ describe('url changes', () => {
     expect(store.getActions()[0]).toEqual(
       bulkUpdateSearchParamsAction([
         {
-          duration_max: 130,
-          duration_min: 70,
+          duration: [{ min: 70, max: 130 }],
         },
         {
           age_range_min: undefined,
@@ -337,8 +334,7 @@ describe('url changes', () => {
     expect(store.getActions()[0]).toEqual(
       bulkUpdateSearchParamsAction([
         {
-          duration_max: undefined,
-          duration_min: 70,
+          duration: [{ min: 70, max: null }],
         },
         {
           age_range_max: undefined,
