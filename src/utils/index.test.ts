@@ -1,4 +1,4 @@
-import { generateBorderRadiusClassNames } from './index';
+import { generateBorderRadiusClassNames, generateUri } from './index';
 
 describe('Border radius classnames can be generated for a grid', () => {
   const testData = [
@@ -78,6 +78,43 @@ describe('Border radius classnames can be generated for a grid', () => {
 
         expect(classnames).toEqual(expectedClassnames.join(' '));
       });
+    });
+  });
+});
+
+describe('generateUri', () => {
+  const testData = [
+    {
+      path: null,
+      query: null,
+      expected: '',
+    },
+    {
+      path: '/test',
+      query: null,
+      expected: '/test',
+    },
+    {
+      path: '/test',
+      query: {
+        foo: 'bar',
+        num: 123,
+      },
+      expected: '/test?foo=bar&num=123',
+    },
+    {
+      path: '/test',
+      query: {
+        foo: ['bar1', 'bar2'],
+        fizz: false,
+      },
+      expected: '/test?fizz=false&foo=bar1&foo=bar2',
+    },
+  ];
+
+  testData.forEach(({ path, query, expected }, index) => {
+    it(`presents the correct uri. Case ${index}`, () => {
+      expect(generateUri(path, query)).toEqual(expected);
     });
   });
 });

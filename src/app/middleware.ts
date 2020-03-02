@@ -10,7 +10,7 @@ import collectionMiddleware from '../components/collection/redux/middleware/coll
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
 import fetchCountriesMiddleware from '../components/account/onboarding/redux/middleware/fetchCountriesMiddleware';
 import fetchTagsMiddleware from '../components/common/tags/redux/middleware/fetchTagsMiddleware';
-import updateSearchParametersMiddleware from '../components/searchResults/redux/middleware/updateSearchParametersMiddleware';
+import { updateSearchParametersMiddleware } from '../components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import { updatePageActionMiddleware } from '../components/searchResults/redux/middleware/updatePageActionMiddleware';
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
 import updateUserMiddleware from '../components/account/accountSettings/redux/middleware/updateUserMiddleware';

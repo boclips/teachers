@@ -1,13 +1,13 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
-import { parseRanges } from 'src/services/searchFilters/searchFiltersConverter';
-import { RouterState } from '../../../types/State';
-import { VideoRequestFilters } from '../../../types/VideoSearchRequest';
-import { VideoType } from '../../../types/Video';
+import { parseRanges } from 'src/services/searchParameters/searchParametersConverter';
+import { RouterState } from 'src/types/State';
+import { VideoRequestFilters } from 'src/types/VideoSearchRequest';
+import { VideoType } from 'src/types/Video';
 import {
   CollectionRequestFilters,
   CollectionSearchRequest,
-} from '../../../types/CollectionSearchRequest';
+} from 'src/types/CollectionSearchRequest';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
 
@@ -27,8 +27,7 @@ const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
 });
 
 export const dispatchSearchActions = (store: Store<RouterState>) => {
-  const { router } = store.getState();
-  const location = router.location;
+  const location = store.getState().router.location;
 
   // TODO(AG/EV) REMOVE /new-filters AFTER NEW FILTERS ARE RELEASED!
   if (

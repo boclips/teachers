@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import State from 'src/types/State';
 import {
-  getNumberOfSearchFilters,
-  parseSearchParametersFromUrl,
-} from 'src/services/searchFilters/searchFiltersConverter';
+  countSearchFilters,
+  convertQueryToSearchParameters,
+} from 'src/services/searchParameters/searchParametersConverter';
 import { Range } from 'src/types/Range';
+import { getSearch } from 'connected-react-router';
 
 export interface WithAppliedSearchParametersProps {
   query: string | undefined;
@@ -21,11 +21,10 @@ export const withAppliedSearchParameters = <
 >(
   Component: React.ComponentType<P>,
 ) => (props: Omit<P, keyof WithAppliedSearchParametersProps>) => {
-  const queryParams = useSelector(
-    (state: State) => state.router.location.search,
-  );
-  const searchParameters = parseSearchParametersFromUrl(queryParams);
-  const numberOfFiltersApplied = getNumberOfSearchFilters(searchParameters);
+  const queryParams = useSelector(getSearch);
+
+  const searchParameters = convertQueryToSearchParameters(queryParams);
+  const numberOfFiltersApplied = countSearchFilters(searchParameters);
 
   const appliedFiltersProps: WithAppliedSearchParametersProps = {
     query: searchParameters.query,

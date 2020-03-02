@@ -1,12 +1,12 @@
 import { RouterState } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
-import { updatePageActionMiddleware } from '../src/components/searchResults/redux/middleware/updatePageActionMiddleware';
-import UpdateSearchParametersMiddleware from '../src/components/searchResults/redux/middleware/updateSearchParametersMiddleware';
+import { updatePageActionMiddleware } from 'src/components/searchResults/redux/middleware/updatePageActionMiddleware';
+import { updateSearchParametersMiddleware } from 'src/components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import { RouterFactory } from './factories';
 
 export const setupStore = (query: string, pathname: string = '') => {
   const mockStore = configureStore<{ router: RouterState }>([
-    ...UpdateSearchParametersMiddleware,
+    ...updateSearchParametersMiddleware,
     updatePageActionMiddleware,
   ]);
 

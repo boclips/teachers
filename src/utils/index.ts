@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import queryString from 'query-string';
 
 export const noOp: (args?: any) => any = () => {};
 
@@ -18,3 +19,15 @@ export const generateBorderRadiusClassNames = (
       currentIndex === Math.ceil(sizeOfArray / columnCount) * columnCount - 1,
     'border-radius--last': currentIndex === sizeOfArray - 1,
   });
+
+export const generateUri = (path: string, query: any): string => {
+  if (!path) {
+    return '';
+  }
+
+  if (query) {
+    return `${path}?${queryString.stringify(query)}`;
+  }
+
+  return path;
+};

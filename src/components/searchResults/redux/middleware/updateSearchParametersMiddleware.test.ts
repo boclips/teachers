@@ -1,11 +1,12 @@
 import { push } from 'connected-react-router';
-import eventually from '../../../../../test-support/eventually';
-import { setupStore } from '../../../../../test-support/setupStore';
+import eventually from 'test-support/eventually';
+import { setupStore } from 'test-support/setupStore';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
   bulkUpdateSearchParamsAction,
   updateSearchParamsAction,
 } from '../actions/updateSearchParametersActions';
+
 describe(`updateSearchParametersMiddleware`, () => {
   it('updates query in url parameters', async () => {
     const store = setupStore('q=test&duration=0-1');

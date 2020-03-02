@@ -1,7 +1,7 @@
 import {
   parseRanges,
-  parseSearchParametersFromUrl,
-} from './searchFiltersConverter';
+  convertQueryToSearchParameters,
+} from './searchParametersConverter';
 
 it('converts a duration ranges', () => {
   expect(parseRanges(['15', '1-11'])).toEqual([
@@ -31,7 +31,7 @@ it('converts a lowerbound duration range', () => {
   ]);
 });
 it('converts duration search url string to SearchFilterParameters', () => {
-  expect(parseSearchParametersFromUrl('?duration=1-11')).toEqual({
+  expect(convertQueryToSearchParameters('?duration=1-11')).toEqual({
     query: null,
     duration: [{ min: 1, max: 11 }],
     ageRangeMin: null,
@@ -40,23 +40,23 @@ it('converts duration search url string to SearchFilterParameters', () => {
   });
 });
 it('converts two duration filters SearchFilterParameters', () => {
-  expect(parseSearchParametersFromUrl('?duration=1-11&duration=14-19')).toEqual(
-    {
-      query: null,
-      duration: [
-        { min: 1, max: 11 },
-        { min: 14, max: 19 },
-      ],
-      ageRangeMin: null,
-      ageRangeMax: null,
-      subject: [],
-    },
-  );
+  expect(
+    convertQueryToSearchParameters('?duration=1-11&duration=14-19'),
+  ).toEqual({
+    query: null,
+    duration: [
+      { min: 1, max: 11 },
+      { min: 14, max: 19 },
+    ],
+    ageRangeMin: null,
+    ageRangeMax: null,
+    subject: [],
+  });
 });
 
 it('converts age range search url string to SearchFilterParameters', () => {
   expect(
-    parseSearchParametersFromUrl('?age_range_min=1&age_range_max=11'),
+    convertQueryToSearchParameters('?age_range_min=1&age_range_max=11'),
   ).toEqual({
     query: null,
     duration: null,
@@ -67,7 +67,7 @@ it('converts age range search url string to SearchFilterParameters', () => {
 });
 
 it('converts a single subject in the search url string to SearchFilterParameters', () => {
-  expect(parseSearchParametersFromUrl('?subject=1')).toEqual({
+  expect(convertQueryToSearchParameters('?subject=1')).toEqual({
     query: null,
     duration: null,
     ageRangeMin: null,
@@ -77,7 +77,7 @@ it('converts a single subject in the search url string to SearchFilterParameters
 });
 
 it('converts multiple subjects in the search url string to SearchFilterParameters', () => {
-  expect(parseSearchParametersFromUrl('?subject=1,2,3')).toEqual({
+  expect(convertQueryToSearchParameters('?subject=1,2,3')).toEqual({
     query: null,
     duration: null,
     ageRangeMin: null,

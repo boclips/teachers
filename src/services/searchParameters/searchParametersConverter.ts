@@ -4,30 +4,11 @@ import {
   isUpdateDurationFilterRequest,
   UpdateSearchParamsRequest,
 } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
-import { SearchFiltersParameters } from '../../types/SearchFiltersParameters';
+import { SearchParameters } from '../../types/SearchParameters';
 
-export const parseRanges = (rangeStrings: string | string[]): Range[] => {
-  if (!rangeStrings) {
-    return null;
-  }
-  if (!Array.isArray(rangeStrings)) {
-    rangeStrings = [rangeStrings];
-  }
-
-  return rangeStrings.map(rangeString => {
-    const [min, max] = rangeString.split('-');
-
-    if (!min) {
-      return null;
-    }
-
-    return { min: parseInt(min, 10), max: max && parseInt(max, 10) };
-  });
-};
-
-export const parseSearchParametersFromUrl = (
+export const convertQueryToSearchParameters = (
   url: string,
-): SearchFiltersParameters => {
+): SearchParameters => {
   const parsedUrl = queryString.parse(url);
 
   return {
@@ -37,28 +18,6 @@ export const parseSearchParametersFromUrl = (
     ageRangeMax: +parsedUrl.age_range_max || null,
     subject: parseSubjects(parsedUrl.subject),
   };
-};
-
-export const getNumberOfSearchFilters = (
-  searchFilters: SearchFiltersParameters,
-): number => {
-  let numberOfFiltersApplied = 0;
-
-  if (searchFilters.duration !== null) {
-    numberOfFiltersApplied += searchFilters.duration.length;
-  }
-
-  if (
-    searchFilters.ageRangeMin !== null ||
-    searchFilters.ageRangeMax !== null
-  ) {
-    numberOfFiltersApplied += 1;
-  }
-  if (searchFilters.subject != null && searchFilters.subject.length > 0) {
-    numberOfFiltersApplied += searchFilters.subject.length;
-  }
-
-  return numberOfFiltersApplied;
 };
 
 export const requestToQueryParameters = (
@@ -79,8 +38,48 @@ export const requestToQueryParameters = (
   }
 };
 
+export const countSearchFilters = (searchFilters: SearchParameters): number => {
+  let numberOfFiltersApplied = 0;
+
+  if (searchFilters.duration !== null) {
+    numberOfFiltersApplied += searchFilters.duration.length;
+  }
+
+  if (
+    searchFilters.ageRangeMin !== null ||
+    searchFilters.ageRangeMax !== null
+  ) {
+    numberOfFiltersApplied += 1;
+  }
+
+  if (searchFilters.subject != null) {
+    numberOfFiltersApplied += searchFilters.subject.length;
+  }
+
+  return numberOfFiltersApplied;
+};
+
 const parseSubjects = (subject: string[] | string): string[] =>
   subject == null ? [] : subject.toString().split(',');
 
 const parseQuery = (query: string[] | string): string =>
   query === null || query === undefined ? null : `${query}`;
+
+export const parseRanges = (rangeStrings: string | string[]): Range[] => {
+  if (!rangeStrings) {
+    return null;
+  }
+  if (!Array.isArray(rangeStrings)) {
+    rangeStrings = [rangeStrings];
+  }
+
+  return rangeStrings.map(rangeString => {
+    const [min, max] = rangeString.split('-');
+
+    if (!min) {
+      return null;
+    }
+
+    return { min: parseInt(min, 10), max: max && parseInt(max, 10) };
+  });
+};
