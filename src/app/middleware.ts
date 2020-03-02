@@ -11,7 +11,7 @@ import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middlewa
 import fetchCountriesMiddleware from '../components/account/onboarding/redux/middleware/fetchCountriesMiddleware';
 import fetchTagsMiddleware from '../components/common/tags/redux/middleware/fetchTagsMiddleware';
 import updateSearchParametersMiddleware from '../components/searchResults/redux/middleware/updateSearchParametersMiddleware';
-import updatePageActionMiddleware from '../components/searchResults/redux/middleware/updatePageActionMiddleware';
+import { updatePageActionMiddleware } from '../components/searchResults/redux/middleware/updatePageActionMiddleware';
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
 import updateUserMiddleware from '../components/account/accountSettings/redux/middleware/updateUserMiddleware';
 import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';

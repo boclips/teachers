@@ -1,6 +1,6 @@
 import { RouterState } from 'connected-react-router';
 import configureStore from 'redux-mock-store';
-import updatePageActionMiddleware from '../src/components/searchResults/redux/middleware/updatePageActionMiddleware';
+import { updatePageActionMiddleware } from '../src/components/searchResults/redux/middleware/updatePageActionMiddleware';
 import UpdateSearchParametersMiddleware from '../src/components/searchResults/redux/middleware/updateSearchParametersMiddleware';
 import { RouterFactory } from './factories';
 
