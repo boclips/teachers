@@ -13,7 +13,7 @@ export const FilterPanel = () => {
     dispatch(
       bulkUpdateSearchParamsAction([
         {
-          duration: [filterOptions.duration],
+          duration: filterOptions.duration,
         },
         {
           age_range_min: filterOptions.ageRange && filterOptions.ageRange.min,

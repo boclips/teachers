@@ -21,9 +21,7 @@ export function onUpdatePage(
     page: request.page ? request.page : 1,
   };
 
-  store.dispatch(
-    push({ search: queryString.stringify(newQuery, { arrayFormat: 'comma' }) }),
-  );
+  store.dispatch(push({ search: queryString.stringify(newQuery) }));
 }
 
 export const updatePageActionMiddleware = sideEffect(

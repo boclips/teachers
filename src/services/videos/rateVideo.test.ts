@@ -14,7 +14,7 @@ beforeEach(async () => {
   await rateVideo(VideoFactory.sample(), 3);
 
   const url = axiosMock.history.patch[0].url;
-  queryParams = queryString.parse(url.split('?')[1], { arrayFormat: 'comma' });
+  queryParams = queryString.parse(url.split('?')[1]);
 });
 
 test('patches the correct rating', () => {

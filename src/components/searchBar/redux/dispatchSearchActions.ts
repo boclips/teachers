@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
-import { parseRanges } from 'src/services/searchParameters/searchParametersConverter';
+import { parseRanges } from 'src/types/Range';
 import { RouterState } from 'src/types/State';
 import { VideoRequestFilters } from 'src/types/VideoSearchRequest';
 import { VideoType } from 'src/types/Video';
@@ -34,9 +34,7 @@ export const dispatchSearchActions = (store: Store<RouterState>) => {
     (location.pathname === '/videos' || location.pathname === '/new-filters') &&
     location.search.indexOf('q')
   ) {
-    const queryParams = queryString.parse(location.search, {
-      arrayFormat: 'comma',
-    });
+    const queryParams = queryString.parse(location.search);
     const query = queryParams.q as string;
 
     const videoSearchRequest = {

@@ -108,7 +108,7 @@ describe('when on the videos page', () => {
   });
 
   it('filters videos by multiple subjects', () => {
-    store = getStore('subject=subject-one-id,subject-two-id');
+    store = getStore('subject=subject-one-id&subject=subject-two-id');
     dispatchSearchActions(store);
     action = store.getActions()[0];
 
@@ -129,7 +129,7 @@ describe('when on the videos page', () => {
   });
 
   it('filters collections by multiple subjects', () => {
-    store = getStore('subject=subject-one-id,subject-two-id');
+    store = getStore('subject=subject-one-id&subject=subject-two-id');
     dispatchSearchActions(store);
     const collectionSearchAction = store.getActions()[1];
 

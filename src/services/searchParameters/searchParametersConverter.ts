@@ -1,9 +1,9 @@
 import queryString, { ParsedQuery } from 'query-string';
-import { Range } from 'src/types/Range';
 import {
   isUpdateDurationFilterRequest,
   UpdateSearchParamsRequest,
 } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
+import { parseRanges, rangeToString } from 'src/types/Range';
 import { SearchParameters } from '../../types/SearchParameters';
 
 export const convertQueryToSearchParameters = (
@@ -24,13 +24,7 @@ export const requestToQueryParameters = (
   request: UpdateSearchParamsRequest,
 ): ParsedQuery<string | string[] | number> => {
   if (isUpdateDurationFilterRequest(request)) {
-    const duration = request.duration.map(durationRange => {
-      let s: string = '' + durationRange.min;
-      if (durationRange.max) {
-        s += '-' + durationRange.max;
-      }
-      return s;
-    });
+    const duration = request.duration.map(range => rangeToString(range));
 
     return { ...request, duration };
   } else {
@@ -64,22 +58,3 @@ const parseSubjects = (subject: string[] | string): string[] =>
 
 const parseQuery = (query: string[] | string): string =>
   query === null || query === undefined ? null : `${query}`;
-
-export const parseRanges = (rangeStrings: string | string[]): Range[] => {
-  if (!rangeStrings) {
-    return null;
-  }
-  if (!Array.isArray(rangeStrings)) {
-    rangeStrings = [rangeStrings];
-  }
-
-  return rangeStrings.map(rangeString => {
-    const [min, max] = rangeString.split('-');
-
-    if (!min) {
-      return null;
-    }
-
-    return { min: parseInt(min, 10), max: max && parseInt(max, 10) };
-  });
-};

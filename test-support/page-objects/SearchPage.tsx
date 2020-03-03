@@ -1,7 +1,7 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
-import URI from 'urijs';
+import { generateUri } from 'src/utils';
 import 'urijs/src/URITemplate';
 import App from '../../src/app/App';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
@@ -18,15 +18,12 @@ export class SearchPage {
     age_range_min?: number;
     age_range_max?: number;
   }) {
-    const browserUrl = URI.expand(
-      '/videos?page=1{&q,subject,age_range_min,age_range_max}',
-      params,
-    );
+    const browserUrl = generateUri('/videos', { ...params, page: 1 });
     const page = new SearchPage(
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: [browserUrl.href()],
+            initialEntries: [browserUrl],
           })}
           apiPrefix="https://api.example.com"
         />,

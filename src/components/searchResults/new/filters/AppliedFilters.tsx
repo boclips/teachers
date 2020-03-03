@@ -21,9 +21,10 @@ export const AppliedFilters = withAppliedSearchParameters(
           <ClearAllButton />
         </div>
         <Row className="filters-bar__tags" align="middle" type="flex">
-          {props.duration && props.duration.length && (
-            <DurationFilterTag range={props.duration[0]} />
-          )}
+          {props.duration &&
+            props.duration.map((durationRange, index) => (
+              <DurationFilterTag key={index} range={durationRange} />
+            ))}
           <AgeRangeFilterTag
             ageRangeMin={props.ageRangeMin}
             ageRangeMax={props.ageRangeMax}

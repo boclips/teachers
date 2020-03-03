@@ -1,29 +1,29 @@
-import React, { Ref, useEffect } from 'react';
 import { Form, Menu } from 'antd';
+import CheckboxGroup from 'antd/lib/checkbox/Group';
 import { FormComponentProps } from 'antd/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import React, { Ref, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { AgeRange } from 'src/types/AgeRange';
-import { Range } from 'src/types/Range';
-import { Subject } from 'src/types/Subject';
 import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
-import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
-import DurationSlider from '../../filters/DurationSlider';
+import { AgeRange } from 'src/types/AgeRange';
+import { parseRanges, Range, rangeToString } from 'src/types/Range';
+import { Subject } from 'src/types/Subject';
 import State from '../../../../types/State';
-import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
+import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
 import DropdownArrow from '../../../layout/navigation/DropdownArrow';
+import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
 
 interface FilterFormEditableFields {
-  duration?: Range;
+  duration?: string[];
   ageRange?: Range;
   subjects?: string[];
 }
 
 export interface FilterOptions {
-  duration?: Range;
+  duration?: Range[];
   ageRange?: Range;
   subjects?: string[];
 }
@@ -80,15 +80,19 @@ const Filters = React.forwardRef(
               <React.Fragment>
                 <Form.Item>
                   {getFieldDecorator('duration', {
-                    initialValue: {
-                      min: duration && duration.length && duration[0].min,
-                      max: duration && duration.length && duration[0].max,
-                    },
+                    initialValue: duration
+                      ? duration.map(range => rangeToString(range))
+                      : [],
                   })(
-                    <DurationSlider
-                      min={duration && duration.length && duration[0].min}
-                      max={duration && duration.length && duration[0].max}
-                      data-qa="duration-slider"
+                    <CheckboxGroup
+                      className="filter-form__checkbox-group"
+                      options={[
+                        { label: '0m - 2m', value: '0-120' },
+                        { label: '2m - 5m', value: '120-300' },
+                        { label: '5m - 10m', value: '300-600' },
+                        { label: '10m - 20m', value: '600-1200' },
+                        { label: '20m +', value: '1200' },
+                      ]}
                     />,
                   )}
                 </Form.Item>
@@ -124,16 +128,12 @@ const Filters = React.forwardRef(
 
 export const FiltersWithForm = withAppliedSearchParameters(
   Form.create<FormComponentProps & Props>({
-    onValuesChange: (
-      props,
-      _changedValues,
-      allValues: FilterFormEditableFields,
-    ) => {
+    onValuesChange: (props, _, allValues: FilterFormEditableFields) => {
       const filterRequest: FilterOptions = {};
-
-      filterRequest.duration = allValues.duration;
+      filterRequest.duration = parseRanges(allValues.duration);
       filterRequest.ageRange = allValues.ageRange;
       filterRequest.subjects = allValues.subjects;
+
       props.onApplyFilters(filterRequest);
     },
   })(Filters),

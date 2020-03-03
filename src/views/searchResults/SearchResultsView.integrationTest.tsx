@@ -197,7 +197,7 @@ describe('search results', () => {
           .find(DurationFilterTag)
           .find(ClosableTag)
           .props().value,
-      ).toEqual('1m-4m');
+      ).toEqual('1m - 4m');
     });
   });
 
