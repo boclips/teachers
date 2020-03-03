@@ -1,8 +1,8 @@
-import { Range } from 'src/types/Range';
+import { DurationRange } from 'src/types/DurationRange';
 
 export interface SearchParameters {
   query?: string;
-  duration?: Range[];
+  duration?: DurationRange[];
   ageRangeMin?: number;
   ageRangeMax?: number;
   subject?: string[];

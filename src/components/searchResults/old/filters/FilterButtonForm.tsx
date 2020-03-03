@@ -3,6 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AgeRange } from 'src/types/AgeRange';
+import { DurationRange } from 'src/types/DurationRange';
 import { Range } from 'src/types/Range';
 import { SubjectState } from 'src/types/State';
 import { Subject } from 'src/types/Subject';
@@ -17,7 +18,7 @@ export interface FilterFormEditableFields {
 }
 
 export interface FilterProps {
-  duration: Range;
+  duration: DurationRange;
   ageRangeMin?: number;
   ageRangeMax?: number;
   subjectIds?: string[];
