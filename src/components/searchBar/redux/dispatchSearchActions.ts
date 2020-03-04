@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import { Store } from 'redux';
-import { DurationRange } from 'src/types/DurationRange';
+import { parseRanges } from 'src/types/Range';
 import { RouterState } from 'src/types/State';
 import { VideoRequestFilters } from 'src/types/VideoSearchRequest';
 import { VideoType } from 'src/types/Video';
@@ -15,7 +15,7 @@ const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,
   isClassroom: true,
   type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
-  duration: DurationRange.fromStrings(queryParams.duration),
+  duration: parseRanges(queryParams.duration),
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
 });

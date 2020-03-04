@@ -1,5 +1,4 @@
 import { push } from 'connected-react-router';
-import { DurationRange } from 'src/types/DurationRange';
 import eventually from 'test-support/eventually';
 import { setupStore } from 'test-support/setupStore';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
@@ -25,7 +24,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     store.dispatch(
       updateSearchParamsAction({
-        duration: [new DurationRange({ min: 123, max: 4321 })],
+        duration: [{ min: 123, max: 4321 }],
       }),
     );
 
@@ -74,7 +73,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     store.dispatch(
       updateSearchParamsAction({
-        duration: [new DurationRange({ min: 123 })],
+        duration: [{ min: 123 }],
       }),
     );
 
@@ -89,7 +88,7 @@ describe(`updateSearchParametersMiddleware`, () => {
     const store = setupStore('q=hi&page=1&subject=6');
 
     const durationUpdate = {
-      duration: [new DurationRange({ min: 1, max: 2 })],
+      duration: [{ min: 1, max: 2 }],
     };
 
     const subjectUpdate = { subject: ['new'] };

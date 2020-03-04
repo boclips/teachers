@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { bulkUpdateSearchParamsAction } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
-import { DurationRange } from 'src/types/DurationRange';
 import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
@@ -14,7 +13,7 @@ export const FilterPanel = () => {
     dispatch(
       bulkUpdateSearchParamsAction([
         {
-          duration: DurationRange.fromStrings(filterOptions.duration),
+          duration: filterOptions.duration,
         },
         {
           age_range_min: filterOptions.ageRange && filterOptions.ageRange.min,

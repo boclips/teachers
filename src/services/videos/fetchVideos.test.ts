@@ -1,7 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
-import { DurationRange } from 'src/types/DurationRange';
 import { videos } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
@@ -28,7 +27,7 @@ beforeEach(async () => {
       page: 1,
       filters: {
         isClassroom: true,
-        duration: [new DurationRange({ min: 100, max: 200 })],
+        duration: [{ min: 100, max: 200 }],
         age_range_min: 5,
         age_range_max: 11,
         type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],

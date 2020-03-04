@@ -2,7 +2,6 @@ import { Button, Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { DurationRange } from 'src/types/DurationRange';
 import { Range } from 'src/types/Range';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
@@ -20,7 +19,7 @@ import './FilterButton.less';
 import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
 
 interface FilterRequest {
-  duration?: DurationRange;
+  duration?: Range;
   ageRange?: Range;
   subjects?: string[];
 }
@@ -69,8 +68,7 @@ class FilterButton extends React.Component<Props, State> {
     form.validateFields((_, values: FilterFormEditableFields) => {
       const filterRequest: FilterRequest = {};
 
-      filterRequest.duration =
-        values.duration.min && new DurationRange(values.duration);
+      filterRequest.duration = values.duration;
       filterRequest.ageRange = values.ageRange;
       filterRequest.subjects = values.subjects;
 

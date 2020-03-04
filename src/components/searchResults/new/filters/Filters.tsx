@@ -9,7 +9,7 @@ import {
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import { AgeRange } from 'src/types/AgeRange';
-import { Range } from 'src/types/Range';
+import { parseRanges, Range, rangeToString } from 'src/types/Range';
 import { Subject } from 'src/types/Subject';
 import State from '../../../../types/State';
 import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
@@ -23,7 +23,7 @@ interface FilterFormEditableFields {
 }
 
 export interface FilterOptions {
-  duration?: string[];
+  duration?: Range[];
   ageRange?: Range;
   subjects?: string[];
 }
@@ -81,7 +81,7 @@ const Filters = React.forwardRef(
                 <Form.Item>
                   {getFieldDecorator('duration', {
                     initialValue: duration
-                      ? duration.map(range => range.serialise())
+                      ? duration.map(range => rangeToString(range))
                       : [],
                   })(
                     <CheckboxGroup
@@ -130,7 +130,7 @@ export const FiltersWithForm = withAppliedSearchParameters(
   Form.create<FormComponentProps & Props>({
     onValuesChange: (props, _, allValues: FilterFormEditableFields) => {
       const filterRequest: FilterOptions = {};
-      filterRequest.duration = allValues.duration;
+      filterRequest.duration = parseRanges(allValues.duration);
       filterRequest.ageRange = allValues.ageRange;
       filterRequest.subjects = allValues.subjects;
 

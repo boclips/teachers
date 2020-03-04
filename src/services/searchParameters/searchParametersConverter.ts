@@ -3,7 +3,7 @@ import {
   isUpdateDurationFilterRequest,
   UpdateSearchParamsRequest,
 } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
-import { DurationRange } from 'src/types/DurationRange';
+import { parseRanges, rangeToString } from 'src/types/Range';
 import { SearchParameters } from '../../types/SearchParameters';
 
 export const convertQueryToSearchParameters = (
@@ -13,7 +13,7 @@ export const convertQueryToSearchParameters = (
 
   return {
     query: parseQuery(parsedUrl.q),
-    duration: DurationRange.fromStrings(parsedUrl.duration) || null,
+    duration: parseRanges(parsedUrl.duration) || null,
     ageRangeMin: +parsedUrl.age_range_min || null,
     ageRangeMax: +parsedUrl.age_range_max || null,
     subject: parseSubjects(parsedUrl.subject),
@@ -24,7 +24,7 @@ export const requestToQueryParameters = (
   request: UpdateSearchParamsRequest,
 ): ParsedQuery<string | string[] | number> => {
   if (isUpdateDurationFilterRequest(request)) {
-    const duration = request.duration.map(range => range.serialise());
+    const duration = request.duration.map(range => rangeToString(range));
 
     return { ...request, duration };
   } else {

@@ -79,20 +79,20 @@ describe('when on the videos page', () => {
     expect(collectionSearchAction.payload.query).toEqual('Testing123');
   });
 
-  it('filters by duration lower and upper', () => {
+  it('filters by duration', () => {
     store = getStore(`duration=60-190`);
     dispatchSearchActions(store);
     action = store.getActions()[0];
 
-    expect(action.payload.filters.duration[0].serialise()).toEqual('60-190');
+    expect(action.payload.filters.duration).toEqual([{ min: 60, max: 190 }]);
   });
 
-  it('filters by duration lower', () => {
+  it('filters by duration', () => {
     store = getStore(`duration=60`);
     dispatchSearchActions(store);
     action = store.getActions()[0];
 
-    expect(action.payload.filters.duration[0].serialise()).toEqual('60');
+    expect(action.payload.filters.duration).toEqual([{ min: 60 }]);
   });
 
   it('defaults duration to undefined if non-existent', () => {

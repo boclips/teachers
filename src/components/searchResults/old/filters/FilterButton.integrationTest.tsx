@@ -4,7 +4,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import { DurationRange } from 'src/types/DurationRange';
 import { By } from 'test-support/By';
 import EventSimulator from 'test-support/EventSimulator';
 import { MockStoreFactory, RouterFactory } from 'test-support/factories';
@@ -76,7 +75,7 @@ describe('when a filter is submitted', () => {
   });
 
   it('calls back with an updated duration', () => {
-    const spy: any = jest.fn();
+    const spy = jest.fn();
     const wrapper = mountWith(store, <FilterButton onSubmit={spy} />);
     const simulator = new EventSimulator(wrapper);
 
@@ -92,16 +91,15 @@ describe('when a filter is submitted', () => {
       wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),
     );
 
-    expect(spy.mock.calls[0][0].ageRange).toEqual({
-      max: undefined,
-      min: undefined,
+    expect(spy).toHaveBeenCalledWith({
+      ageRange: { max: undefined, min: undefined },
+      duration: { max: 240, min: 120 },
+      subjects: undefined,
     });
-    expect(spy.mock.calls[0][0].duration.serialise()).toEqual('120-240');
-    expect(spy.mock.calls[0][0].subjects).toEqual(undefined);
   });
 
   it('calls back with an updated subject list', () => {
-    const spy: any = jest.fn();
+    const spy = jest.fn();
     const wrapper = mountWith(store, <FilterButton onSubmit={spy} />);
     const simulator = new EventSimulator(wrapper);
 
@@ -120,16 +118,15 @@ describe('when a filter is submitted', () => {
       wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),
     );
 
-    expect(spy.mock.calls[0][0].ageRange).toEqual({
-      max: undefined,
-      min: undefined,
+    expect(spy).toHaveBeenCalledWith({
+      ageRange: { max: undefined, min: undefined },
+      duration: { max: undefined, min: undefined },
+      subjects: ['subject-one-id'],
     });
-    expect(spy.mock.calls[0][0].duration).toEqual(undefined);
-    expect(spy.mock.calls[0][0].subjects).toEqual(['subject-one-id']);
   });
 
   it('calls back with an updated age range', () => {
-    const spy: any = jest.fn();
+    const spy = jest.fn();
     const wrapper = mountWith(store, <FilterButton onSubmit={spy} />);
     const simulator = new EventSimulator(wrapper);
 
@@ -144,9 +141,11 @@ describe('when a filter is submitted', () => {
       wrapper.findWhere(n => n.length && n.text() === 'OK').find(Button),
     );
 
-    expect(spy.mock.calls[0][0].ageRange).toEqual({ max: 11, min: 5 });
-    expect(spy.mock.calls[0][0].duration).toEqual(undefined);
-    expect(spy.mock.calls[0][0].subjects).toEqual(undefined);
+    expect(spy).toHaveBeenCalledWith({
+      ageRange: { max: 11, min: 5 },
+      duration: { max: undefined, min: undefined },
+      subjects: undefined,
+    });
   });
 
   it("doesn't call back at all if there's no change to filters", () => {
@@ -170,7 +169,7 @@ describe('default slider values', () => {
       store,
       <FilterButton
         onSubmit={jest.fn}
-        duration={[new DurationRange({ min: 4 * 60, max: 10 * 60 })]}
+        duration={[{ min: 4 * 60, max: 10 * 60 }]}
       />,
     );
 
@@ -227,10 +226,10 @@ describe('url changes', () => {
       .find(FilterButton)
       .props()
       .onSubmit({
-        duration: new DurationRange({
+        duration: {
           min: 70,
           max: 130,
-        }),
+        },
         ageRange: {
           min: 10,
           max: 15,
@@ -238,19 +237,20 @@ describe('url changes', () => {
       });
 
     expect(store.getActions().length).toEqual(1);
-    expect(store.getActions()[0].type).toEqual(
-      bulkUpdateSearchParamsAction.type,
+    expect(store.getActions()[0]).toEqual(
+      bulkUpdateSearchParamsAction([
+        {
+          duration: [{ min: 70, max: 130 }],
+        },
+        {
+          age_range_max: 15,
+          age_range_min: 10,
+        },
+        {
+          subject: undefined,
+        },
+      ]),
     );
-
-    const payload = store.getActions()[0].payload;
-    expect(payload[0].duration[0].serialise()).toEqual('70-130');
-    expect(payload[1]).toEqual({
-      age_range_max: 15,
-      age_range_min: 10,
-    });
-    expect(payload[2]).toEqual({
-      subject: undefined,
-    });
   });
 
   it('updates with the only the correct duration, clearing other filters', () => {
@@ -275,22 +275,27 @@ describe('url changes', () => {
       .find(FilterButton)
       .props()
       .onSubmit({
-        duration: new DurationRange({
+        duration: {
           min: 70,
           max: 130,
-        }),
+        },
       });
 
     expect(store.getActions().length).toEqual(1);
-    const payload = store.getActions()[0].payload;
-    expect(payload[0].duration[0].serialise()).toEqual('70-130');
-    expect(payload[1]).toEqual({
-      age_range_min: undefined,
-      age_range_max: undefined,
-    });
-    expect(payload[2]).toEqual({
-      subject: undefined,
-    });
+    expect(store.getActions()[0]).toEqual(
+      bulkUpdateSearchParamsAction([
+        {
+          duration: [{ min: 70, max: 130 }],
+        },
+        {
+          age_range_min: undefined,
+          age_range_max: undefined,
+        },
+        {
+          subject: undefined,
+        },
+      ]),
+    );
   });
 
   it('does not pass null values to url', () => {
@@ -315,10 +320,10 @@ describe('url changes', () => {
       .find(FilterButton)
       .props()
       .onSubmit({
-        duration: new DurationRange({
+        duration: {
           min: 70,
           max: null,
-        }),
+        },
         ageRange: {
           min: 10,
           max: null,
@@ -326,15 +331,20 @@ describe('url changes', () => {
       });
 
     expect(store.getActions().length).toEqual(1);
-    const payload = store.getActions()[0].payload;
-    expect(payload[0].duration[0].serialise()).toEqual('70');
-    expect(payload[1]).toEqual({
-      age_range_max: undefined,
-      age_range_min: 10,
-    });
-    expect(payload[2]).toEqual({
-      subject: undefined,
-    });
+    expect(store.getActions()[0]).toEqual(
+      bulkUpdateSearchParamsAction([
+        {
+          duration: [{ min: 70, max: null }],
+        },
+        {
+          age_range_max: undefined,
+          age_range_min: 10,
+        },
+        {
+          subject: undefined,
+        },
+      ]),
+    );
   });
 });
 

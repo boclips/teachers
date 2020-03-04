@@ -1,4 +1,4 @@
-import { DurationRange } from 'src/types/DurationRange';
+import { Range } from 'src/types/Range';
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 interface SearchPathname {
@@ -6,7 +6,7 @@ interface SearchPathname {
 }
 
 export interface UpdateDurationFilter {
-  duration: DurationRange[];
+  duration: Range[];
 }
 
 interface UpdateAgeRangeFilter {
