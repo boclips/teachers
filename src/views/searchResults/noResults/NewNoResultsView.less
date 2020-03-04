@@ -2,6 +2,19 @@
 @import '../../../../resources/styles/_colours';
 
 .search-zero-results {
+
+  &__message {
+    @media (max-width: @screen-md) {
+      padding: 40px 0px 0px;
+    }
+  }
+
+  img {
+    animation: slide-in 0.5s 0s both;
+    padding-top: 12px;
+    margin-bottom: 20px;
+  }
+
   h1 {
     animation: slide-in 0.5s 0.2s both;
     font-size: 20px;

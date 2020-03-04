@@ -4,22 +4,26 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Col, Drawer } from 'antd';
 import { NewNoResultsView } from 'src/views/searchResults/noResults/NewNoResultsView';
-import { FiniteGrid } from '../../components/common/Grid/FiniteGrid';
-import PageLayout from '../../components/layout/PageLayout';
+import {
+  withAppliedSearchParameters,
+  WithAppliedSearchParametersProps,
+} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
+import { FiniteGrid } from 'src/components/common/Grid/FiniteGrid';
 import {
   getCollectionsFromSearchResult,
   getVideosFromSearchResult,
-} from '../../components/searchBar/redux/reducers/searchReducer';
-import { updatePageAction } from '../../components/searchResults/redux/actions/updatePageAction';
-import { VideoCardsPlaceholder } from '../../components/searchResults/VideoCardsPlaceholder';
-import { Links } from '../../types/Links';
+} from 'src/components/searchBar/redux/reducers/searchReducer';
+import { updatePageAction } from 'src/components/searchResults/redux/actions/updatePageAction';
+import { VideoCardsPlaceholder } from 'src/components/searchResults/VideoCardsPlaceholder';
+import { Links } from 'src/types/Links';
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from '../../types/SearchResults';
+} from 'src/types/SearchResults';
+import { FilterPanel } from 'src/components/searchResults/new/filters/FilterPanel';
+import { SearchPanel } from 'src/components/searchResults/new/SearchPanel';
 import State from '../../types/State';
-import { FilterPanel } from '../../components/searchResults/new/filters/FilterPanel';
-import { SearchPanel } from '../../components/searchResults/new/SearchPanel';
+import PageLayout from '../../components/layout/PageLayout';
 import './NewSearchResultsView.less';
 
 interface InternalState {
@@ -40,10 +44,12 @@ interface DispatchProps {
 }
 
 class NewSearchResultsView extends React.PureComponent<
-  StateProps & DispatchProps,
+  StateProps & DispatchProps & WithAppliedSearchParametersProps,
   InternalState
 > {
-  public constructor(props: StateProps & DispatchProps) {
+  public constructor(
+    props: StateProps & DispatchProps & WithAppliedSearchParametersProps,
+  ) {
     super(props);
     this.state = {
       filterDrawerVisible: false,
@@ -59,26 +65,7 @@ class NewSearchResultsView extends React.PureComponent<
         showSearchBar={true}
       >
         <section className={'search-results-container'} data-qa="search-page">
-          <Col xs={{ span: 0 }} lg={{ span: 6 }}>
-            <FilterPanel />
-          </Col>
-          <Drawer
-            className={'display-mobile-and-tablet filters-drawer'}
-            visible={this.state.filterDrawerVisible}
-            closable={true}
-            onClose={this.onCloseFilterDrawer}
-            placement={'left'}
-            width={'auto'}
-          >
-            <FilterPanel />
-          </Drawer>
-          <Col
-            xs={{ span: 24 }}
-            lg={{ span: 18 }}
-            className={'search-results-container__results'}
-          >
-            {this.renderResults()}
-          </Col>
+          {this.renderResults()}
         </section>
       </PageLayout>
     );
@@ -86,15 +73,15 @@ class NewSearchResultsView extends React.PureComponent<
 
   private renderResults = () => {
     if (this.props.loading) {
-      return (
+      return this.renderBasicLayoutWithFilterPanel(
         <FiniteGrid>
           <VideoCardsPlaceholder />
-        </FiniteGrid>
+        </FiniteGrid>,
       );
     }
 
     if (this.hasSearchResults()) {
-      return (
+      return this.renderBasicLayoutWithFilterPanel(
         <SearchPanel
           videoResults={this.props.videoResults}
           collectionResults={this.props.collectionResults}
@@ -102,15 +89,55 @@ class NewSearchResultsView extends React.PureComponent<
           currentPage={this.props.currentPage}
           onPageChange={this.props.onPageChange}
           onOpenFilterDrawer={this.onOpenFilterDrawer}
-        />
+        />,
       );
     }
-    if (this.props.videoResults.query.length > 0) {
-      return <NewNoResultsView onOpenFilterDrawer={this.onOpenFilterDrawer} />;
+    if (this.noResultsFound()) {
+      if (this.canUseFilters()) {
+        return this.renderBasicLayoutWithFilterPanel(
+          <NewNoResultsView
+            onOpenFilterDrawer={this.onOpenFilterDrawer}
+            canUseFilters={true}
+          />,
+        );
+      } else {
+        return (
+          <NewNoResultsView
+            onOpenFilterDrawer={this.onOpenFilterDrawer}
+            canUseFilters={false}
+          />
+        );
+      }
     }
-
     return null;
   };
+
+  private renderBasicLayoutWithFilterPanel = (
+    content: JSX.Element,
+  ): JSX.Element => (
+    <React.Fragment>
+      <Col xs={{ span: 0 }} lg={{ span: 6 }}>
+        <FilterPanel />
+      </Col>
+      <Drawer
+        className={'display-mobile-and-tablet filters-drawer'}
+        visible={this.state.filterDrawerVisible}
+        closable={true}
+        onClose={this.onCloseFilterDrawer}
+        placement={'left'}
+        width={'auto'}
+      >
+        <FilterPanel />
+      </Drawer>
+      <Col
+        xs={{ span: 24 }}
+        lg={{ span: 18 }}
+        className={'search-results-container__results'}
+      >
+        {content}
+      </Col>
+    </React.Fragment>
+  );
 
   private onCloseFilterDrawer = () => {
     this.setState({ filterDrawerVisible: false });
@@ -123,6 +150,14 @@ class NewSearchResultsView extends React.PureComponent<
   private hasSearchResults = () =>
     this.props.videoResults.videos.length > 0 ||
     this.props.collectionResults.collections.length > 0;
+
+  private noResultsFound = () =>
+    !this.props.loading && !this.hasSearchResults() && this.props.query;
+
+  private canUseFilters = () =>
+    this.props.loading ||
+    this.hasSearchResults() ||
+    this.props.numberOfFiltersApplied > 0;
 }
 
 function mapStateToProps(state: State): StateProps {
@@ -151,11 +186,9 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-export const ConnectedNewSearchResultsView = connect<
-  StateProps,
-  DispatchProps,
-  {}
->(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NewSearchResultsView);
+export const ConnectedNewSearchResultsView = withAppliedSearchParameters(
+  connect<StateProps, DispatchProps, {}>(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(NewSearchResultsView),
+);
