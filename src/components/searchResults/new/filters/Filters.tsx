@@ -15,7 +15,6 @@ import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
 import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
 import State from '../../../../types/State';
 import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
-import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
 
 const FilterKey = {
   AGE: 'age',
@@ -48,6 +47,10 @@ const Filters = React.forwardRef(
     const { ageRangeMin, ageRangeMax, subjectIds, duration } = props;
     const { getFieldDecorator, resetFields } = props.form;
     const subjects = useSelector((state: State) => state.subjects);
+    const subjectOptions = subjects.map(subject => ({
+      value: subject.id,
+      label: subject.name,
+    }));
     const [openFilters, setOpenFilters] = useState(() => [
       FilterKey.AGE,
       FilterKey.SUBJECTS,
@@ -138,11 +141,9 @@ const Filters = React.forwardRef(
                     rules: [{ type: 'array' }],
                     initialValue: subjectIds,
                   })(
-                    <SelectSubjects
-                      label=""
-                      subjects={subjects}
-                      placeholder="Choose from our list.."
-                      data-qa="subject-select"
+                    <CheckboxGroup
+                      className="filter-form__checkbox-group filter-form__subjects-group"
+                      options={subjectOptions}
                     />,
                   )}
                 </Form.Item>

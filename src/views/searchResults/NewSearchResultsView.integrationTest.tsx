@@ -11,7 +11,7 @@ import {
 import { waitForElement } from '@testing-library/react';
 
 describe('SearchResultsView', () => {
-  it('Filter panel is visible', () => {
+  it('panel contains filters for age, subjects and duration', () => {
     const view = renderSearchResultsViewWithSampleData();
     const sidebar = view.getByText('Filter results').closest('div');
 
@@ -21,23 +21,15 @@ describe('SearchResultsView', () => {
     expect(within(sidebar).getByText('Duration')).toBeInTheDocument();
   });
 
-  it(`changing the filters triggers a new search`, async () => {
-    const {
-      findByText,
-      getByTestId,
-      findByTestId,
-    } = renderSearchResultsViewWithSampleData();
+  it(`can change subject filters`, async () => {
+    const { findByLabelText } = renderSearchResultsViewWithSampleData();
 
-    const subjectsInput = await findByText('Choose from our list..');
-    await fireEvent.click(subjectsInput);
+    const artsCheckbox = await findByLabelText('Arts');
 
-    const artsOption = await findByText('Arts');
-    await fireEvent.click(artsOption);
-
-    await findByTestId('subject-filter-tag');
-
-    expect(getByTestId('subject-filter-tag')).toBeInTheDocument();
-  }, 10000);
+    expect(artsCheckbox.closest('input').checked).toEqual(false);
+    await fireEvent.click(artsCheckbox);
+    expect(artsCheckbox.closest('input').checked).toEqual(true);
+  });
 
   describe('no results found', () => {
     const helperMessageTitle =
@@ -45,8 +37,10 @@ describe('SearchResultsView', () => {
 
     const helperMessageDetails =
       "We'll look into why we couldn't find any videos matching your search but in the meantime have a look at our tips to improve your search results:";
+
     const helperMessageFiltersTip =
       'Remove filters to expand the scope of your search.';
+
     const helperMessageOtherTip =
       'Check the spelling of your search term for any typos.';
 
@@ -67,10 +61,7 @@ describe('SearchResultsView', () => {
           results: collectionsResponse([]),
         });
 
-      const subjectsInput = await view.findByText('Choose from our list..');
-      fireEvent.click(subjectsInput);
-
-      const artsOption = await view.findByText('Arts');
+      const artsOption = await view.findByLabelText('Arts');
       fireEvent.click(artsOption);
 
       await waitForElement(() => view.getByText(helperMessageTitle));

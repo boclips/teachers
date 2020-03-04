@@ -25,23 +25,16 @@ describe('SearchResultsView - mocked debounce', () => {
   it(`changing multiple filters does not trigger multiple searches but waits`, async () => {
     const view = renderSearchResultsViewWithSampleData();
 
-    const subjectsInput = await view.findByText('Choose from our list..');
-    await fireEvent.click(subjectsInput);
-
     axiosMock.resetHistory();
 
-    const artsOption = await view.findByText('Arts');
+    const artsOption = await view.findByLabelText('Arts');
     await fireEvent.click(artsOption);
 
-    const otherSubjectOption = await view.findByText('Other subject');
+    const otherSubjectOption = await view.findByLabelText('Other subject');
     await fireEvent.click(otherSubjectOption);
 
     debounce.triggerLastCallback();
 
-    const selectedSubjects = await view.findAllByTestId('subject-filter-tag');
-    expect(selectedSubjects.length).toEqual(2);
-    expect(selectedSubjects[0]).toBeInTheDocument();
-    expect(selectedSubjects[1]).toBeInTheDocument();
     // Should see only 2 requests (1 video search and 1 collection search) and not 4
     expect(axiosMock.history.get.length).toEqual(2);
   }, 10000);
