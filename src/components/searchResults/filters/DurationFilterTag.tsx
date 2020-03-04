@@ -1,15 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import {
-  withAppliedSearchParameters,
-  WithAppliedSearchParametersProps,
-} from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import { DurationRange } from 'src/types/DurationRange';
 import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 
-interface Props extends WithAppliedSearchParametersProps {
+interface Props {
   range: DurationRange;
 }
 
@@ -31,21 +27,14 @@ class DurationFilterTag extends React.Component<Props & DispatchProps> {
   }
 }
 
-const mapDispatchToProps = (
-  dispatch: Dispatch,
-  ownProps: Props,
-): DispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClose: () => {
     dispatch(
       updateSearchParamsAction({
-        duration: ownProps.duration.filter(
-          range => range.serialise() !== ownProps.range.serialise(),
-        ),
+        duration: undefined,
       }),
     );
   },
 });
 
-export default withAppliedSearchParameters(
-  connect(null, mapDispatchToProps)(DurationFilterTag),
-);
+export default connect(null, mapDispatchToProps)(DurationFilterTag);

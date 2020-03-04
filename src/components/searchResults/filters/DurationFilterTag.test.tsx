@@ -38,14 +38,14 @@ it('removes duration from url on close', () => {
     router: RouterFactory.sample({
       location: {
         pathname: '',
-        search: '?hi&duration=1-2&duration=2-3',
+        search: '?hi&duration=123',
         hash: '',
         state: null,
       },
     }),
   });
 
-  const wrapper = getWrapper(1, 2, store);
+  const wrapper = getWrapper(123, null, store);
 
   wrapper
     .find(ClosableTag)
@@ -53,6 +53,7 @@ it('removes duration from url on close', () => {
     .onClose();
 
   expect(store.getActions().length).toEqual(1);
-  expect(store.getActions()[0].type).toEqual(updateSearchParamsAction.type);
-  expect(store.getActions()[0].payload.duration[0].serialise()).toEqual('2-3');
+  expect(store.getActions()).toContainEqual(
+    updateSearchParamsAction({ duration: undefined }),
+  );
 });
