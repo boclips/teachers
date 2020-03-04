@@ -80,7 +80,7 @@ describe('SearchResultsView', () => {
       expect(view.getByText(helperMessageOtherTip)).toBeInTheDocument();
       expect(view.getByText('Filter results')).toBeInTheDocument();
       expect(view.queryByTestId('no-results-image')).not.toBeInTheDocument();
-    });
+    }, 10000);
 
     it('renders helper message with image and no filters bar', async () => {
       const initialQuery = 'hello';
