@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Range, rangeToString } from 'src/types/Range';
+import { DurationRange } from 'src/types/DurationRange';
 import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 
 interface Props {
-  range: Range;
+  range: DurationRange;
 }
 
 interface DispatchProps {
@@ -14,19 +14,12 @@ interface DispatchProps {
 }
 
 class DurationFilterTag extends React.Component<Props & DispatchProps> {
-  public shouldRender = () =>
-    this.props.range.min == null && this.props.range.max == null;
-
   public render() {
-    return this.shouldRender() ? null : (
+    return (
       <span data-qa="duration-filter-tag">
         <ClosableTag
           label="Duration"
-          value={rangeToString(
-            this.props.range,
-            seconds => `${seconds / 60}m`,
-            ' - ',
-          )}
+          value={this.props.range.getLabel()}
           onClose={this.props.onClose}
         />
       </span>

@@ -19,7 +19,7 @@ export const onLocationChanged = actionCreatorFactory<void>(LOCATION_CHANGE);
 
 const searchVideosAndCollections = (store: Store<State>) => {
   const links: Links = store.getState().links.entries;
-  if (links && links.videos) {
+  if (links?.videos) {
     dispatchSearchActions(store);
   }
 };

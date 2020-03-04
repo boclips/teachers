@@ -4,13 +4,13 @@ import {
   countSearchFilters,
   convertQueryToSearchParameters,
 } from 'src/services/searchParameters/searchParametersConverter';
-import { Range } from 'src/types/Range';
+import { DurationRange } from 'src/types/DurationRange';
 import { getSearch } from 'connected-react-router';
 
 export interface WithAppliedSearchParametersProps {
   query: string | undefined;
   numberOfFiltersApplied: number | undefined;
-  duration: Range[];
+  duration: DurationRange[];
   ageRangeMax: number | undefined;
   ageRangeMin: number | undefined;
   subjectIds: string[] | undefined;

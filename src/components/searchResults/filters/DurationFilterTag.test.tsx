@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
+import { DurationRange } from 'src/types/DurationRange';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -13,14 +14,9 @@ import DurationFilterTag from './DurationFilterTag';
 const getWrapper = (min?: number, max?: number, store?: Store) =>
   mount(
     <Provider store={store || MockStoreFactory.sample()}>
-      <DurationFilterTag range={{ min, max }} />
+      <DurationFilterTag range={new DurationRange({ min, max })} />
     </Provider>,
   );
-
-it('does not render anything if no duration filter', () => {
-  const wrapper = getWrapper();
-  expect(wrapper).toBeEmptyRender();
-});
 
 it('renders duration range with normal range', () => {
   const wrapper = getWrapper(120, 300);

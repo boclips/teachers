@@ -1,4 +1,4 @@
-import { Range } from 'src/types/Range';
+import { DurationRange } from 'src/types/DurationRange';
 
 export interface VideoSearchRequest {
   query?: string;
@@ -11,7 +11,7 @@ export interface VideoSearchRequest {
 export interface VideoRequestFilters {
   isClassroom?: boolean;
   type?: string[];
-  duration?: Range[];
+  duration?: DurationRange[];
   age_range_min?: number;
   age_range_max?: number;
   subject?: string[];
