@@ -44,5 +44,5 @@ describe('SearchResultsView - mocked debounce', () => {
     expect(selectedSubjects[1]).toBeInTheDocument();
     // Should see only 2 requests (1 video search and 1 collection search) and not 4
     expect(axiosMock.history.get.length).toEqual(2);
-  });
+  }, 10000);
 });

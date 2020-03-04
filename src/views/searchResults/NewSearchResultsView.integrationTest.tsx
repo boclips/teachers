@@ -54,7 +54,7 @@ describe('SearchResultsView', () => {
     await findByTestId('subject-filter-tag');
 
     expect(getByTestId('subject-filter-tag')).toBeInTheDocument();
-  });
+  }, 10000);
 
   describe('no results found', () => {
     const helperMessageTitle =
