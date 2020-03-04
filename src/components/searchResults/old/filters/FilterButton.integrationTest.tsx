@@ -205,6 +205,50 @@ describe('default slider values', () => {
 });
 
 describe('url changes', () => {
+  it('updates with the correct age range', () => {
+    store = MockStoreFactory.sample({
+      router: RouterFactory.sample({
+        location: {
+          pathname: '',
+          search: `?q=hi`,
+          hash: '',
+          state: null,
+        },
+      }),
+    });
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <FilterButtonConnected />
+      </Provider>,
+    );
+
+    wrapper
+      .find(FilterButton)
+      .props()
+      .onSubmit({
+        ageRange: {
+          min: 10,
+          max: 15,
+        },
+      });
+
+    expect(store.getActions().length).toEqual(1);
+    expect(store.getActions()[0].type).toEqual(
+      bulkUpdateSearchParamsAction.type,
+    );
+
+    const payload = store.getActions()[0].payload;
+    expect(payload[0].duration).toBeUndefined();
+    expect(payload[1]).toEqual({
+      age_range_max: 15,
+      age_range_min: 10,
+    });
+    expect(payload[2]).toEqual({
+      subject: undefined,
+    });
+  });
+
   it('updates with the correct duration and age range', () => {
     store = MockStoreFactory.sample({
       router: RouterFactory.sample({

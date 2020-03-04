@@ -128,7 +128,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(
       bulkUpdateSearchParamsAction([
         {
-          duration: [filterRequest.duration],
+          duration: filterRequest.duration && [filterRequest.duration],
         },
         {
           age_range_min: filterRequest.ageRange && filterRequest.ageRange.min,
