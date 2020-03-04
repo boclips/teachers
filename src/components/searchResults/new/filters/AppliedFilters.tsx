@@ -13,14 +13,17 @@ import SubjectFilterTag from '../../filters/SubjectFilterTag';
 export const AppliedFilters = withAppliedSearchParameters(
   (props: WithAppliedSearchParametersProps) =>
     props.numberOfFiltersApplied > 0 ? (
-      <div className="filters-bar" data-qa={'filters-bar'}>
-        <div className={'filters-bar__headings'}>
-          <span data-qa="filters-bar-title" className="filters-bar__title">
+      <div className="applied-filters-bar" data-qa={'filters-bar'}>
+        <div className={'applied-filters-bar__headings'}>
+          <span
+            data-qa="filters-bar-title"
+            className="applied-filters-bar__title"
+          >
             Filters applied
           </span>
           <ClearAllButton />
         </div>
-        <Row className="filters-bar__tags" align="middle" type="flex">
+        <Row className="applied-filters-bar__tags" align="middle" type="flex">
           {props.duration &&
             props.duration.map((durationRange, index) => (
               <DurationFilterTag key={index} range={durationRange} />

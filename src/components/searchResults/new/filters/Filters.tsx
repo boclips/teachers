@@ -2,7 +2,7 @@ import { Form, Menu } from 'antd';
 import CheckboxGroup from 'antd/lib/checkbox/Group';
 import { FormComponentProps } from 'antd/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import React, { Ref, useEffect } from 'react';
+import React, { Ref, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   withAppliedSearchParameters,
@@ -11,10 +11,17 @@ import {
 import { AgeRange } from 'src/types/AgeRange';
 import { parseRanges, Range, rangeToString } from 'src/types/Range';
 import { Subject } from 'src/types/Subject';
+import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
+import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
 import State from '../../../../types/State';
 import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
-import DropdownArrow from '../../../layout/navigation/DropdownArrow';
 import { SelectSubjects } from '../../../multipleSelect/SelectSubjects';
+
+const FilterKey = {
+  AGE: 'age',
+  DURATION: 'duration',
+  SUBJECTS: 'subjects',
+};
 
 interface FilterFormEditableFields {
   duration?: string[];
@@ -41,21 +48,43 @@ const Filters = React.forwardRef(
     const { ageRangeMin, ageRangeMax, subjectIds, duration } = props;
     const { getFieldDecorator, resetFields } = props.form;
     const subjects = useSelector((state: State) => state.subjects);
+    const [openFilters, setOpenFilters] = useState(() => [
+      FilterKey.AGE,
+      FilterKey.SUBJECTS,
+      FilterKey.DURATION,
+    ]);
 
     useEffect(() => {
       resetFields();
     }, [resetFields, ageRangeMin, ageRangeMax, subjectIds, duration]);
+
+    const onOpenChange = useCallback((openKeys: string[]) => {
+      setOpenFilters(openKeys);
+    }, []);
+
+    const isFilterOpen = (key: string) => openFilters.indexOf(key) > -1;
+
+    const renderSubMenuTitle = (title: string, key: string) => (
+      <span className={'filter-form__submenu-title'}>
+        {title}
+        {isFilterOpen(key) ? <ArrowUpSVG /> : <ArrowDownSVG />}
+      </span>
+    );
 
     return (
       <section ref={ref}>
         <Form className="filter-form">
           <Menu
             mode={'inline'}
-            defaultOpenKeys={['age', 'subject', 'duration']}
+            openKeys={openFilters}
             inlineIndent={0}
-            overflowedIndicator={<DropdownArrow active={true} />}
+            onOpenChange={onOpenChange}
           >
-            <SubMenu title={'Age'} key="age" className={'filter-form__section'}>
+            <SubMenu
+              title={renderSubMenuTitle('Age', FilterKey.AGE)}
+              key={FilterKey.AGE}
+              className={'filter-form__section'}
+            >
               <React.Fragment>
                 <Form.Item>
                   {getFieldDecorator('ageRange', {
@@ -73,8 +102,8 @@ const Filters = React.forwardRef(
               </React.Fragment>
             </SubMenu>
             <SubMenu
-              title={'Duration'}
-              key="duration"
+              title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
+              key={FilterKey.DURATION}
               className={'filter-form__section'}
             >
               <React.Fragment>
@@ -99,8 +128,8 @@ const Filters = React.forwardRef(
               </React.Fragment>
             </SubMenu>
             <SubMenu
-              title={'Subjects'}
-              key="subject"
+              title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
+              key={FilterKey.SUBJECTS}
               className={'filter-form__section'}
             >
               <React.Fragment>
