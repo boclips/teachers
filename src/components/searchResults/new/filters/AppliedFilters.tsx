@@ -36,6 +36,12 @@ export const AppliedFilters = withAppliedSearchParameters(
                 ageRangeMax={ageRange.resolveMax()}
               />
             ))}
+          {props.ageRangeMin && (
+            <AgeRangeFilterTag
+              ageRangeMin={props.ageRangeMin}
+              ageRangeMax={props.ageRangeMax}
+            />
+          )}
           {props.subjectIds &&
             props.subjectIds.map(subjectId => (
               <SubjectFilterTag

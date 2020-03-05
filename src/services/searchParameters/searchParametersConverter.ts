@@ -25,8 +25,8 @@ export const countSearchFilters = (searchFilters: SearchParameters): number => {
     numberOfFiltersApplied += searchFilters.duration.length;
   }
 
-  if (searchFilters.ageRange !== null) {
-    numberOfFiltersApplied += searchFilters.ageRange.length;
+  if (searchFilters.ageRangeMin !== null) {
+    numberOfFiltersApplied += 1;
   }
 
   if (searchFilters.subject != null) {
