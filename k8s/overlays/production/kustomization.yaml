@@ -11,6 +11,7 @@ patches:
   target:
     group: extensions
     kind: Ingress
+    name: teachers
     version: v1beta1
 - path: jaeger-service-name.yaml
   target:

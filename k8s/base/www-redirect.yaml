@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: teachers-www-redirect
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-regex: ^https?://www.$(DOMAIN)/(.*)
+    traefik.ingress.kubernetes.io/redirect-replacement: https://$(DOMAIN)/$1
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+spec:
+  rules:
+  - host: www.$(DOMAIN)
+    http:
+      paths:
+      - path: /
+        backend:
+          servicePort: http
+          serviceName: teachers

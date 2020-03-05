@@ -4,6 +4,7 @@ resources:
 - deployment.yaml
 - ingress.yaml
 - service.yaml
+- www-redirect.yaml
 commonLabels:
   app: teachers
 commonAnnotations:
@@ -40,4 +41,11 @@ vars:
   objref:
     apiVersion: apps/v1
     kind: Deployment
+    name: teachers
+- fieldref:
+    fieldPath: spec.rules[0].host
+  name: DOMAIN
+  objref:
+    apiVersion: extensions/v1beta1
+    kind: Ingress
     name: teachers
