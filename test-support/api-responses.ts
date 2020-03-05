@@ -73,6 +73,10 @@ export const video177 = Object.freeze({
     { id: 'maths-subject-id', name: 'Maths', links: {} },
     { id: 'physics-subject-id', name: 'Physics', links: {} },
   ],
+  ageRange: {
+    min: 4,
+    max: 5,
+  },
   rating: 3,
   yourRating: 5,
   playback: {

@@ -4,9 +4,9 @@ import {
   videoWithoutTemplatedThumbnail,
   videoWithTemplatedThumbnail,
   youtubeVideo1,
-} from '../../../test-support/api-responses';
-import { SubjectFactory } from '../../../test-support/factories';
-import { StreamPlayback, YoutubePlayback } from '../../types/Video';
+} from 'test-support/api-responses';
+import { SubjectFactory } from 'test-support/factories';
+import { StreamPlayback, YoutubePlayback } from 'src/types/Video';
 import convertVideoResource from './convertVideoResource';
 
 test('converts a video with stream playback', () => {
@@ -24,6 +24,8 @@ test('converts a video with stream playback', () => {
   expect(video.title).toEqual('KS3/4 Science: Demonstrating Chemistry');
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
   expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
+  expect(video.ageRange.resolveMin()).toEqual(4);
+  expect(video.ageRange.resolveMax()).toEqual(5);
   expect(video.releasedOn).toEqual(new Date('2018-02-11T10:12:33Z'));
   expect(video.rating).toEqual(3);
   expect(video.yourRating).toEqual(5);

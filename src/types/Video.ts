@@ -1,4 +1,5 @@
 import { Duration } from 'moment';
+import { AgeRange } from 'src/types/AgeRange';
 import { Link } from './Link';
 import { Subject } from './Subject';
 
@@ -20,6 +21,7 @@ export interface Video {
   title: string;
   description: string;
   duration: Duration;
+  ageRange: AgeRange;
   releasedOn: Date;
   createdBy: string;
   subjects: Subject[];

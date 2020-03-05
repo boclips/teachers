@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { AgeRange } from 'src/types/AgeRange';
 import { Link } from '../../types/Link';
 import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
 
@@ -37,6 +38,9 @@ export default function convertVideoResource(resource: any): Video {
     playback: getPlaybackProperties(resource),
     subjects: resource.subjects,
     badges: resource.badges,
+    ageRange:
+      resource.ageRange &&
+      new AgeRange(resource.ageRange.min, resource.ageRange.max),
     rating: resource.rating,
     yourRating: resource.yourRating,
     bestFor:
