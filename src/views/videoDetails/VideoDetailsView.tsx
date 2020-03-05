@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import querystring from 'query-string';
 import { replace } from 'connected-react-router';
 import { useLocation } from 'react-router';
+import { isAuthenticated } from 'src/app/redux/authentication/selectors';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
@@ -20,9 +21,7 @@ export const VideoDetailsView = (props: Props) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const authenticated = useSelector(
-    (state: State) => state.authentication.status === 'authenticated',
-  );
+  const authenticated = useSelector(isAuthenticated);
   const userId = useSelector((state: State) => state.user && state.user.id);
   const video = useSelector((state: State) =>
     getVideoById(state, props.videoId),
