@@ -4,11 +4,9 @@ import { renderWithCreatedStore } from 'test-support/renderWithStore';
 import { createBoclipsStore } from 'src/app/redux/store';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import FakeBoclipsAnalytics from '../../../services/analytics/boclips/FakeBoclipsAnalytics';
-import {
-  MockStoreFactory,
-  VideoFactory,
-} from '../../../../test-support/factories';
+import { AgeRange } from 'src/types/AgeRange';
+import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
+import { MockStoreFactory, VideoFactory } from 'test-support/factories';
 import { VideoCard } from './VideoCard';
 
 describe('when outside video collection', () => {
@@ -19,6 +17,7 @@ describe('when outside video collection', () => {
 
   beforeEach(() => {
     video = VideoFactory.sample({
+      ageRange: new AgeRange(3, 9),
       links: {
         self: new Link({ href: `/v1/videos/123` }),
         transcript: new Link({ href: `/v1/videos/123` }),
@@ -35,6 +34,10 @@ describe('when outside video collection', () => {
 
   it('renders video buttons', () => {
     expect(component.getByText('Transcript')).toBeInTheDocument();
+  });
+
+  it('renders age range tag', () => {
+    expect(component.getByText('3-9')).toBeInTheDocument();
   });
 
   it('Renders a ClickableCard, with the video details href', async () => {

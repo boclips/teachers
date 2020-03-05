@@ -1,5 +1,6 @@
 import React from 'react';
-import { Video } from '../../../types/Video';
+import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
+import { Video } from 'src/types/Video';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import { Tag } from '../../common/tags/Tag';
 import './VideoCardTagList.less';
@@ -10,6 +11,12 @@ interface Props {
 
 const VideoCardTagList = React.memo((props: Props) => (
   <div className="tag-list">
+    {props.video.ageRange && (
+      <div className="tag-list__age-container">
+        <AgeRangeTag ageRange={props.video.ageRange.getLabel()} />
+      </div>
+    )}
+
     {props.video.subjects.length !== 0 && (
       <div className="tag-list__subjects-container">
         {props.video.subjects.map(subject => (
