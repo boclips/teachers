@@ -1,4 +1,5 @@
 import { AgeRange } from './AgeRange';
+
 describe('generating a label', () => {
   test('returns a hyphenated label when ageRange has min and max', () => {
     const ageRange = new AgeRange(5, 11);
@@ -131,5 +132,22 @@ describe(`removing duplicates`, () => {
     expect(deduplicatedList[0]).toEqual(new AgeRange(4, 7));
     expect(deduplicatedList[1]).toEqual(new AgeRange(3, 4));
     expect(deduplicatedList[2]).toEqual(new AgeRange(7, 10));
+  });
+});
+
+describe('creating an age range from strings', () => {
+  it('creates an age range from a string', () => {
+    expect(AgeRange.fromStrings('3-5')).toEqual([new AgeRange(3, 5)]);
+  });
+
+  it('creates an age range from an string', () => {
+    expect(AgeRange.fromStrings(['3-5', '5-7'])).toEqual([
+      new AgeRange(3, 5),
+      new AgeRange(5, 7),
+    ]);
+  });
+
+  it('does not fail when undefined string is passed', () => {
+    expect(AgeRange.fromStrings(undefined)).toEqual([]);
   });
 });

@@ -1,7 +1,8 @@
 import { DurationRange } from 'src/types/DurationRange';
+import { AgeRange } from 'src/types/AgeRange';
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
-interface SearchPathname {
+export interface SearchPathname {
   pathname?: string;
 }
 
@@ -9,20 +10,21 @@ export interface UpdateDurationFilter {
   duration: DurationRange[];
 }
 
-interface UpdateAgeRangeFilter {
+export interface UpdateAgeRangeFilter {
   age_range_min: number;
   age_range_max?: number;
+  age_range: AgeRange[];
 }
 
-interface UpdateSearchQuery {
+export interface UpdateSearchQuery {
   q: string;
 }
 
-interface UpdateSearchPage {
+export interface UpdateSearchPage {
   page: number;
 }
 
-interface UpdateSubjectFilter {
+export interface UpdateSubjectFilter {
   subject?: string[];
 }
 
@@ -31,7 +33,7 @@ export type UpdateAllFilters =
   | UpdateAgeRangeFilter
   | UpdateSubjectFilter;
 
-export type UpdateSearchParamsRequest =
+export type SearchRequest =
   | UpdateDurationFilter
   | UpdateAgeRangeFilter
   | UpdateSubjectFilter
@@ -39,15 +41,10 @@ export type UpdateSearchParamsRequest =
   | UpdateSearchPage
   | SearchPathname;
 
-export const updateSearchParamsAction = actionCreatorFactory<
-  UpdateSearchParamsRequest
->('UPDATE_SEARCH_PARAMS');
+export const updateSearchParamsAction = actionCreatorFactory<SearchRequest>(
+  'UPDATE_SEARCH_PARAMS',
+);
 
 export const bulkUpdateSearchParamsAction = actionCreatorFactory<
-  UpdateSearchParamsRequest[]
+  SearchRequest[]
 >('BULK_UPDATE_SEARCH_PARAMS');
-
-export const isUpdateDurationFilterRequest = (
-  request: UpdateSearchParamsRequest,
-): request is UpdateDurationFilter =>
-  !!(request as UpdateDurationFilter).duration;

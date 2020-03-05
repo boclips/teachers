@@ -1,44 +1,38 @@
 import { push } from 'connected-react-router';
 import queryString from 'query-string';
 import { MiddlewareAPI } from 'redux';
-import { requestToQueryParameters } from 'src/services/searchParameters/searchParametersConverter';
 import { generateUri } from 'src/utils';
 import { sideEffect } from 'src/app/redux/actions';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import State from 'src/types/State';
+import { generateVideoSearchQuery } from 'src/services/searchParameters/generateVideoSearchQuery';
+import { VideoSearchQuery } from 'src/services/searchParameters/VideoSearchQuery';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
   bulkUpdateSearchParamsAction,
   UpdateAllFilters,
   updateSearchParamsAction,
-  UpdateSearchParamsRequest,
+  SearchRequest,
 } from '../actions/updateSearchParametersActions';
 
 export function onBulkUpdateSearchParameter(
   store: MiddlewareAPI<any, State>,
-  request: UpdateSearchParamsRequest[],
+  updateRequests: SearchRequest[],
 ) {
   const { pathname, search } = store.getState().router.location;
-
-  const parsedQuery =
+  const existingQueryParams: VideoSearchQuery =
     pathname === '/discover-collections' ? {} : queryString.parse(search);
 
-  const newQuery = {
-    ...parsedQuery,
-    ...request
-      .map(requestToQueryParameters)
-      .reduce((acc, param) => ({ ...acc, ...param })),
-    page: 1,
-  };
-
-  AnalyticsFactory.externalAnalytics().trackSearchFiltersApplied(request);
-
-  store.dispatch(push(generateUri(getSearchPathname(pathname), newQuery)));
+  const updatedQueryParams = generateVideoSearchQuery(
+    existingQueryParams,
+    updateRequests,
+  );
+  const newUri = generateUri(getSearchPathname(pathname), updatedQueryParams);
+  store.dispatch(push(newUri));
 }
 
 export function onUpdateSearchParameter(
   store: MiddlewareAPI<any, State>,
-  request: UpdateSearchParamsRequest,
+  request: SearchRequest,
 ) {
   onBulkUpdateSearchParameter(store, [request]);
 }
@@ -46,9 +40,10 @@ export function onUpdateSearchParameter(
 export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
   const clearRequest: UpdateAllFilters = {
     duration: undefined,
-    age_range_min: undefined,
-    age_range_max: undefined,
+    age_range: undefined,
     subject: undefined,
+    age_range_max: undefined,
+    age_range_min: undefined,
   };
 
   onBulkUpdateSearchParameter(store, [clearRequest]);

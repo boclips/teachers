@@ -6,11 +6,13 @@ import {
 } from 'src/services/searchParameters/searchParametersConverter';
 import { DurationRange } from 'src/types/DurationRange';
 import { getSearch } from 'connected-react-router';
+import { AgeRange } from 'src/types/AgeRange';
 
 export interface WithAppliedSearchParametersProps {
   query: string | undefined;
   numberOfFiltersApplied: number | undefined;
   duration: DurationRange[];
+  ageRange: AgeRange[];
   ageRangeMax: number | undefined;
   ageRangeMin: number | undefined;
   subjectIds: string[] | undefined;
@@ -29,6 +31,7 @@ export const withAppliedSearchParameters = <
   const appliedFiltersProps: WithAppliedSearchParametersProps = {
     query: searchParameters.query,
     duration: searchParameters.duration,
+    ageRange: searchParameters.ageRange,
     ageRangeMax: searchParameters.ageRangeMax,
     ageRangeMin: searchParameters.ageRangeMin,
     subjectIds: searchParameters.subject,

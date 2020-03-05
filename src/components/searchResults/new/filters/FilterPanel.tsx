@@ -6,6 +6,8 @@ import { DurationRange } from 'src/types/DurationRange';
 import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
+// eslint-disable-next-line import/order
+import { AgeRange } from 'src/types/AgeRange';
 
 export const FilterPanel = () => {
   const dispatch = useDispatch();
@@ -17,9 +19,9 @@ export const FilterPanel = () => {
           duration: DurationRange.fromStrings(filterOptions.duration),
         },
         {
-          age_range_min: filterOptions.ageRange && filterOptions.ageRange.min,
-          age_range_max:
-            (filterOptions.ageRange && filterOptions.ageRange.max) || undefined,
+          age_range: AgeRange.fromStrings(filterOptions.ageRange),
+          age_range_min: undefined,
+          age_range_max: undefined,
         },
         {
           subject: filterOptions.subjects,

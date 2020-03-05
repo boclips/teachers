@@ -2,6 +2,7 @@ import { push } from 'connected-react-router';
 import { DurationRange } from 'src/types/DurationRange';
 import eventually from 'test-support/eventually';
 import { setupStore } from 'test-support/setupStore';
+import { AgeRange } from 'src/types/AgeRange';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
   bulkUpdateSearchParamsAction,
@@ -41,6 +42,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     store.dispatch(
       updateSearchParamsAction({
+        age_range: [new AgeRange(5, 11)],
         age_range_min: 5,
         age_range_max: 11,
       }),
@@ -48,7 +50,9 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?age_range_max=11&age_range_min=5&page=1&q=hi'),
+        push(
+          '/videos?age_range=5-11&age_range_max=11&age_range_min=5&page=1&q=hi',
+        ),
       );
     });
   });
@@ -86,7 +90,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   });
 
   it('updates multiple url parameters in one dispatch', async () => {
-    const store = setupStore('q=hi&page=1&subject=6');
+    const store = setupStore('q=hi&page=1&subject=6', '/new-filters');
 
     const durationUpdate = {
       duration: [new DurationRange({ min: 1, max: 2 })],
@@ -100,7 +104,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?duration=1-2&page=1&q=hi&subject=new'),
+        push('/new-filters?duration=1-2&page=1&q=hi&subject=new'),
       );
     });
   });

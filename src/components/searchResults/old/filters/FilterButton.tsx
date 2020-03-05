@@ -3,13 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { DurationRange } from 'src/types/DurationRange';
-import { Range } from 'src/types/Range';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
 import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
+import { Range } from 'src/types/Range';
 import Bodal from '../../../common/Bodal';
 import {
   withMediaBreakPoint,
@@ -71,6 +71,7 @@ class FilterButton extends React.Component<Props, State> {
 
       filterRequest.duration =
         values.duration.min && new DurationRange(values.duration);
+
       filterRequest.ageRange = values.ageRange;
       filterRequest.subjects = values.subjects;
 
@@ -131,6 +132,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
           duration: filterRequest.duration && [filterRequest.duration],
         },
         {
+          age_range: undefined,
           age_range_min: filterRequest.ageRange && filterRequest.ageRange.min,
           age_range_max:
             (filterRequest.ageRange && filterRequest.ageRange.max) || undefined,

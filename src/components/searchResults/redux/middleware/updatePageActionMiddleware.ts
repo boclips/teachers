@@ -13,9 +13,7 @@ export function onUpdatePage(
   request: PageChangeRequest,
 ) {
   const query = store.getState().router.location.search;
-
   const parsedQuery = queryString.parse(query);
-
   const newQuery = {
     ...parsedQuery,
     page: request.page ? request.page : 1,

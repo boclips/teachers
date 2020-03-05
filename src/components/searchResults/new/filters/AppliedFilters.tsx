@@ -28,10 +28,14 @@ export const AppliedFilters = withAppliedSearchParameters(
             props.duration.map((durationRange, index) => (
               <DurationFilterTag key={index} range={durationRange} />
             ))}
-          <AgeRangeFilterTag
-            ageRangeMin={props.ageRangeMin}
-            ageRangeMax={props.ageRangeMax}
-          />
+          {props.ageRange &&
+            props.ageRange.map(ageRange => (
+              <AgeRangeFilterTag
+                key={ageRange.getLabel()}
+                ageRangeMin={ageRange.resolveMin()}
+                ageRangeMax={ageRange.resolveMax()}
+              />
+            ))}
           {props.subjectIds &&
             props.subjectIds.map(subjectId => (
               <SubjectFilterTag

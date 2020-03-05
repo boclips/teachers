@@ -63,6 +63,7 @@ it('removes age range from url on close', () => {
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
+      age_range: undefined,
       age_range_min: undefined,
       age_range_max: undefined,
     }),

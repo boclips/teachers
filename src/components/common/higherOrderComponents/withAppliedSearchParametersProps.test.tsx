@@ -66,35 +66,28 @@ describe('duration filters', () => {
 
 describe('age range filters', () => {
   it('provides age range with both values', () => {
-    const props = getProps(`?q=hi&age_range_min=5&age_range_max=11`);
+    const props = getProps(
+      `?q=hi&age_range_min=5&age_range_max=11&age_range=5-11`,
+    );
 
     expect(props.query).toEqual('hi');
     expect(props.duration).toEqual(null);
     expect(props.subjectIds).toEqual([]);
     expect(props.ageRangeMin).toEqual(5);
     expect(props.ageRangeMax).toEqual(11);
-    expect(props.numberOfFiltersApplied).toEqual(1);
-  });
-
-  it('provides valid age range with no min', () => {
-    const props = getProps(`?q=hi&age_range_max=11`);
-
-    expect(props.query).toEqual('hi');
-    expect(props.duration).toEqual(null);
-    expect(props.subjectIds).toEqual([]);
-    expect(props.ageRangeMin).toEqual(null);
-    expect(props.ageRangeMax).toEqual(11);
+    expect(props.ageRange[0].getLabel()).toEqual('5-11');
     expect(props.numberOfFiltersApplied).toEqual(1);
   });
 
   it('provides valid age range with no max', () => {
-    const props = getProps(`?q=hi&age_range_min=5`);
+    const props = getProps(`?q=hi&age_range_min=5&age_range=5+`);
 
     expect(props.query).toEqual('hi');
     expect(props.duration).toEqual(null);
     expect(props.subjectIds).toEqual([]);
     expect(props.ageRangeMin).toEqual(5);
     expect(props.ageRangeMax).toEqual(null);
+    expect(props.ageRange[0].getLabel()).toEqual('5+');
     expect(props.numberOfFiltersApplied).toEqual(1);
   });
 });
@@ -126,13 +119,14 @@ describe('subject filters', () => {
 describe('number of filters applied', () => {
   it('calculates correctly for multiple filters', () => {
     const props = getProps(
-      `?q=hi&age_range_min=5&age_range_max=11&duration=60-180`,
+      `?q=hi&age_range_min=5&age_range_max=11&age_range=5-11&duration=60-180`,
     );
     expect(props.query).toEqual('hi');
     expect(props.duration[0].serialise()).toEqual('60-180');
     expect(props.subjectIds).toEqual([]);
     expect(props.ageRangeMin).toEqual(5);
     expect(props.ageRangeMax).toEqual(11);
+    expect(props.ageRange[0].getLabel()).toEqual('5-11');
     expect(props.numberOfFiltersApplied).toEqual(2);
   });
 });

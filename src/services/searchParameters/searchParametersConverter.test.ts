@@ -1,3 +1,6 @@
+import { DurationRange } from 'src/types/DurationRange';
+import { AgeRange } from 'src/types/AgeRange';
+import { requestToQueryParameters } from 'src/services/searchParameters/generateVideoSearchQuery';
 import { convertQueryToSearchParameters } from './searchParametersConverter';
 
 describe('convertQueryToSearchParameters', () => {
@@ -49,5 +52,44 @@ describe('convertQueryToSearchParameters', () => {
     expect(searchParameters.ageRangeMin).toEqual(null);
     expect(searchParameters.ageRangeMax).toEqual(null);
     expect(searchParameters.subject).toEqual(['1', '2', '3']);
+  });
+
+  it('converts a combination of filters to SearchFilterParameters', () => {
+    const searchParameters = convertQueryToSearchParameters(
+      '?q=hello&age_range=3-5&subject=1,2&duration=0-120',
+    );
+
+    expect(searchParameters.query).toEqual('hello');
+    expect(searchParameters.duration[0].min).toEqual(0);
+    expect(searchParameters.duration[0].max).toEqual(120);
+    expect(searchParameters.ageRangeMin).toEqual(null);
+    expect(searchParameters.ageRangeMax).toEqual(null);
+    expect(searchParameters.ageRange[0].resolveMin()).toEqual(3);
+    expect(searchParameters.ageRange[0].resolveMax()).toEqual(5);
+    expect(searchParameters.subject).toEqual(['1', '2']);
+  });
+});
+
+describe('requestToQueryParameters', () => {
+  it('converts filters to a query string', () => {
+    const request = {
+      subject: ['1'],
+      age_range: [new AgeRange(3, 5)],
+      duration: [new DurationRange({ min: 0, max: 120 })],
+      pathname: 'new-filters',
+      q: 'hello',
+      page: 1,
+    };
+
+    const queryParams = requestToQueryParameters(request);
+
+    expect(queryParams).toEqual({
+      age_range: ['3-5'],
+      duration: ['0-120'],
+      page: 1,
+      pathname: 'new-filters',
+      q: 'hello',
+      subject: ['1'],
+    });
   });
 });

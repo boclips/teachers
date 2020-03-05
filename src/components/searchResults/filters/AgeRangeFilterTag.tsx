@@ -37,6 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onClose: () => {
     dispatch(
       updateSearchParamsAction({
+        age_range: undefined,
         age_range_min: undefined,
         age_range_max: undefined,
       }),

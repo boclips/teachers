@@ -23,6 +23,45 @@ export class AgeRange {
     ];
   }
 
+  public static decodeJSON(json: string): AgeRange {
+    const decoded = JSON.parse(json);
+    return new AgeRange(decoded.min, decoded.max);
+  }
+
+  public static removeDuplicates(ageRanges: AgeRange[]): AgeRange[] {
+    const deduplicated = [];
+    ageRanges.forEach(it => {
+      if (!deduplicated.find(range => isEqualTo(it, range))) {
+        deduplicated.push(it);
+      }
+    });
+    return deduplicated;
+  }
+
+  public static fromStrings(ageRangeStrings: string | string[]): AgeRange[] {
+    if (!ageRangeStrings) {
+      return [];
+    }
+
+    const ageRangeArray = !Array.isArray(ageRangeStrings)
+      ? [ageRangeStrings]
+      : ageRangeStrings;
+
+    return ageRangeArray.map(ageRange => {
+      const minAndMax = ageRange.split('-');
+      return new AgeRange(
+        parseInt(minAndMax[0], 10),
+        parseInt(minAndMax[1], 10),
+      );
+    });
+  }
+
+  public static extractContainedAges(ages: AgeRange[]): number[] {
+    const rangeArrays = ages.map(it => it.generateRangeArray());
+    const flattenedAgeRanges: number[] = [].concat.apply([], rangeArrays);
+    return Array.from(new Set(flattenedAgeRanges));
+  }
+
   public getLabel() {
     if (this.max) {
       return `${this.resolveMin()}-${this.max}`;
@@ -87,27 +126,6 @@ export class AgeRange {
             max: this.resolveMax(),
           },
     );
-  }
-
-  public static decodeJSON(json: string): AgeRange {
-    const decoded = JSON.parse(json);
-    return new AgeRange(decoded.min, decoded.max);
-  }
-
-  public static removeDuplicates(ageRanges: AgeRange[]): AgeRange[] {
-    const deduplicated = [];
-    ageRanges.forEach(it => {
-      if (!deduplicated.find(range => isEqualTo(it, range))) {
-        deduplicated.push(it);
-      }
-    });
-    return deduplicated;
-  }
-
-  public static extractContainedAges(ages: AgeRange[]): number[] {
-    const rangeArrays = ages.map(it => it.generateRangeArray());
-    const flattenedAgeRanges: number[] = [].concat.apply([], rangeArrays);
-    return Array.from(new Set(flattenedAgeRanges));
   }
 }
 

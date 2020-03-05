@@ -8,13 +8,10 @@ import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
-import { AgeRange } from 'src/types/AgeRange';
-import { Range } from 'src/types/Range';
 import { Subject } from 'src/types/Subject';
 import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
 import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
 import State from '../../../../types/State';
-import { AgeRangeSlider } from '../../../common/AgeRangeSlider';
 
 const FilterKey = {
   AGE: 'age',
@@ -24,13 +21,13 @@ const FilterKey = {
 
 interface FilterFormEditableFields {
   duration?: string[];
-  ageRange?: Range;
+  ageRange?: string[];
   subjects?: string[];
 }
 
 export interface FilterOptions {
   duration?: string[];
-  ageRange?: Range;
+  ageRange?: string[];
   subjects?: string[];
 }
 
@@ -44,7 +41,7 @@ interface StateProps {
 
 const Filters = React.forwardRef(
   (props: FormComponentProps & Props, ref: Ref<any>) => {
-    const { ageRangeMin, ageRangeMax, subjectIds, duration } = props;
+    const { ageRange, subjectIds, duration } = props;
     const { getFieldDecorator, resetFields } = props.form;
     const subjects = useSelector((state: State) => state.subjects);
     const subjectOptions = subjects.map(subject => ({
@@ -59,7 +56,7 @@ const Filters = React.forwardRef(
 
     useEffect(() => {
       resetFields();
-    }, [resetFields, ageRangeMin, ageRangeMax, subjectIds, duration]);
+    }, [resetFields, ageRange, subjectIds, duration]);
 
     const onOpenChange = useCallback((openKeys: string[]) => {
       setOpenFilters(openKeys);
@@ -91,14 +88,20 @@ const Filters = React.forwardRef(
               <React.Fragment>
                 <Form.Item>
                   {getFieldDecorator('ageRange', {
-                    initialValue: {
-                      min: ageRangeMin,
-                      max: ageRangeMax,
-                    },
+                    initialValue: ageRange
+                      ? ageRange.map(range => range.getLabel())
+                      : [],
                   })(
-                    <AgeRangeSlider
-                      ageRange={new AgeRange(ageRangeMin, ageRangeMax)}
-                      data-qa="age-range-slider"
+                    <CheckboxGroup
+                      className="filter-form__checkbox-group"
+                      options={[
+                        { label: '3 - 5 Early Years', value: '3-5' },
+                        { label: '5 - 9 Lower Elementary', value: '5-9' },
+                        { label: '9 - 11 Higher Elementary', value: '9-11' },
+                        { label: '11 - 14 Middle School', value: '11-14' },
+                        { label: '14 + High School', value: '14-99' },
+                        { label: '16 + Higher Education', value: '16-99' },
+                      ]}
                     />,
                   )}
                 </Form.Item>
