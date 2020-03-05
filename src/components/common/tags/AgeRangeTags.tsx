@@ -14,7 +14,7 @@ export default class AgeRangeTags extends React.Component<Props> {
     ).map((range, index) => (
       <AgeRangeTag
         key={index}
-        ageRange={range.getLabel()}
+        ageRange={range}
         hideLabel={this.props.hideLabel}
       />
     ));

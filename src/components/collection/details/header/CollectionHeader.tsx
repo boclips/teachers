@@ -50,7 +50,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
           <ConnectedSubjectTag key={subjectId} id={subjectId} />
         ))}
         {this.hasAgeRange() && (
-          <AgeRangeTag ageRange={this.props.collection.ageRange.getLabel()} />
+          <AgeRangeTag ageRange={this.props.collection.ageRange} />
         )}
       </div>
     );

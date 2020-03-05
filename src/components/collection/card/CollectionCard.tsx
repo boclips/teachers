@@ -146,9 +146,7 @@ export const CollectionCard = withMediaBreakPoint(
                   <ConnectedSubjectTag key={subjectId} id={subjectId} />
                 ))}
                 {props.collection.ageRange.isBounded() && (
-                  <AgeRangeTag
-                    ageRange={props.collection.ageRange.getLabel()}
-                  />
+                  <AgeRangeTag ageRange={props.collection.ageRange} />
                 )}
               </div>
             )}

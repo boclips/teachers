@@ -1,8 +1,9 @@
 import React from 'react';
+import { AgeRange } from 'src/types/AgeRange';
 import { Tag } from './Tag';
 
 interface AgeRangeProps {
-  ageRange: string;
+  ageRange: AgeRange;
   hideLabel?: boolean;
 }
 
@@ -11,7 +12,7 @@ export class AgeRangeTag extends React.Component<AgeRangeProps> {
     return (
       <span data-qa="age-range">
         <Tag
-          value={this.props.ageRange}
+          value={this.props.ageRange.getLabel()}
           label={this.props.hideLabel ? null : 'Ages'}
         />
       </span>

@@ -13,7 +13,7 @@ const VideoCardTagList = React.memo((props: Props) => (
   <div className="tag-list">
     {props.video.ageRange && (
       <div className="tag-list__age-container">
-        <AgeRangeTag ageRange={props.video.ageRange.getLabel()} />
+        <AgeRangeTag ageRange={props.video.ageRange} />
       </div>
     )}
 
