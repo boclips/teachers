@@ -1,5 +1,6 @@
 import { Icon, Skeleton } from 'antd';
 import React from 'react';
+import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -58,9 +59,11 @@ class VideoDetailsContent extends React.PureComponent<Props> {
         <section className="video-details">
           <section className="badges-row">
             <div className="subjects-container">
-              {this.props.video.subjects.map(subject => (
-                <SubjectTag subjectName={subject.name} key={subject.name} />
-              ))}
+              <Authenticated>
+                {this.props.video.subjects.map(subject => (
+                  <SubjectTag subjectName={subject.name} key={subject.name} />
+                ))}
+              </Authenticated>
             </div>
             <section className="badge-container">
               <p data-qa="video-duration" className={'subtitle duration'}>
