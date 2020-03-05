@@ -95,7 +95,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
         {lessonPlanToRender && (
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
             <LessonPlan
-              collectionId={this.props.collection.id}
+              collection={this.props.collection}
               attachment={lessonPlanToRender}
             />
           </Col>

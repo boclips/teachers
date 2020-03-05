@@ -1,3 +1,4 @@
+import { BoclipsAnalytics } from 'src/services/analytics/boclips/BoclipsAnalytics';
 import AnalyticsService from '../src/services/analytics/AnalyticsService';
 
 export const analyticsMock = ({
@@ -14,3 +15,13 @@ export const analyticsMock = ({
   trackCollectionAttachmentLinkVisited: jest.fn(),
   trackAccountRegistration: jest.fn(),
 } as any) as AnalyticsService;
+
+export const internalAnalyticsMock = ({
+  trackVideoSharedInGoogle: jest.fn(),
+  trackVideoLinkCopied: jest.fn(),
+  trackVideoLinkClicked: jest.fn(),
+  trackPageRendered: jest.fn(),
+  trackCollectionInteractedWith: jest.fn(),
+  trackUserExpired: jest.fn(),
+  trackAccountRegistration: jest.fn(),
+} as any) as BoclipsAnalytics;

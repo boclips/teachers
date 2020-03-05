@@ -9,7 +9,7 @@ import './LessonPlan.less';
 
 interface Props {
   attachment: Attachment;
-  collectionId?: VideoCollection['id'];
+  collection?: VideoCollection;
 }
 
 export class LessonPlan extends React.PureComponent<Props> {
@@ -35,8 +35,13 @@ export class LessonPlan extends React.PureComponent<Props> {
 
   private emitLessonPlanClickEvent = () => {
     AnalyticsFactory.externalAnalytics().trackCollectionAttachmentLinkVisited(
-      this.props.collectionId,
+      this.props.collection.id,
       this.props.attachment,
+    );
+
+    AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+      this.props.collection,
+      'VISIT_LESSON_GUIDE',
     );
   };
 }
