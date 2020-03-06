@@ -6,7 +6,7 @@ import EmptyCollectionSVG from '../../../resources/images/empty-collection.svg';
 import collectionsSVG from '../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import PageLayout from '../../components/layout/PageLayout';
-import './MyCollectionListView.less';
+import './MyResourcesListView.less';
 
 export default class MyResourcesListView extends PureComponent {
   public render() {

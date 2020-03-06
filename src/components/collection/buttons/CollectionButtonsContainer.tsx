@@ -34,8 +34,8 @@ export const CollectionButtonsContainer = ({
     return (
       <ButtonMenu
         buttons={[
-          <CollectionShareButton key="share" collection={collection} />,
           <BookmarkCollectionButton key="bookmark" collection={collection} />,
+          <CollectionShareButton key="share" collection={collection} />,
           <EditCollectionButton key="edit" collection={collection} />,
         ]}
       />
@@ -46,8 +46,8 @@ export const CollectionButtonsContainer = ({
     return (
       <ButtonRow
         leftButtons={[
-          <CollectionShareButton key="share" collection={collection} />,
           <BookmarkCollectionButton key="bookmark" collection={collection} />,
+          <CollectionShareButton key="share" collection={collection} />,
         ]}
         rightButtons={[
           <EditCollectionButton key="edit" collection={collection} />,

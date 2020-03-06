@@ -108,6 +108,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       <SavingButton
         saving={this.state.isSaving}
         data-qa={'video-collection-menu'}
+        className={'video-collection-menu'}
         size={'large'}
         onClick={onClick}
       >

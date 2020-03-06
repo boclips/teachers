@@ -6,6 +6,7 @@ import {
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import PageLayout from '../../components/layout/PageLayout';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
+import './SubjectsView.less';
 
 class SubjectsViewComponent extends PureComponent<WithMediaBreakPointProps> {
   public render() {
@@ -19,7 +20,7 @@ class SubjectsViewComponent extends PureComponent<WithMediaBreakPointProps> {
         showFooter={true}
         showNavigation={true}
       >
-        <section data-qa="subjects-view-page">
+        <section data-qa="subjects-view-page" className={'subjects-view-page'}>
           <DisciplineCardList columns={screenIsDesktop ? 3 : 2} />
         </section>
       </PageLayout>
