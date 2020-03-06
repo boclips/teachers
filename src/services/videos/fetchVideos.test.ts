@@ -17,7 +17,7 @@ beforeEach(async () => {
   const links = LinksFactory.sample({
     videos: new Link({
       href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration,duration_min,duration_max,age_range_min,age_range_max,subject,type,is_classroom}',
+        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration,duration_min,duration_max,age_range_min,age_range_max,age_range,subject,type,is_classroom}',
       templated: true,
     }),
   });

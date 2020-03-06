@@ -17,7 +17,7 @@ describe('searchCollections', () => {
     links = LinksFactory.sample({
       searchPublicCollections: new Link({
         href:
-          '/v1/collections?public=true{&query,subject,projection,page,size,age_range_min,age_range_max}',
+          '/v1/collections?public=true{&query,subject,projection,page,size,age_range_min,age_range_max,age_range}',
         templated: true,
       }),
     });
