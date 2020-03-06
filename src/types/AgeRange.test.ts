@@ -1,5 +1,19 @@
 import { AgeRange } from './AgeRange';
 
+describe('generating an id', () => {
+  test('returns a hyphenated id when ageRange has min and max', () => {
+    const ageRange = new AgeRange(5, 11);
+
+    expect(ageRange.getId()).toEqual('5-11');
+  });
+
+  test('returns an n+ id when ageRange has min only', () => {
+    const ageRange = new AgeRange(7);
+
+    expect(ageRange.getId()).toEqual('7+');
+  });
+});
+
 describe('generating a label', () => {
   test('returns a hyphenated label when ageRange has min and max', () => {
     const ageRange = new AgeRange(5, 11);
@@ -7,8 +21,8 @@ describe('generating a label', () => {
     expect(ageRange.getLabel()).toEqual('5-11');
   });
 
-  test('returns an n+ label when ageRange has min only', () => {
-    const ageRange = new AgeRange(7);
+  test('returns an n+ id when ageRange has a max of 99', () => {
+    const ageRange = new AgeRange(7, 99);
 
     expect(ageRange.getLabel()).toEqual('7+');
   });

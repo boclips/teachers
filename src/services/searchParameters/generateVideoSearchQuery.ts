@@ -39,9 +39,7 @@ const convertAgeRangeRequest = (
 ): { age_range: string[] } =>
   updateAgeRangeFilter.age_range
     ? {
-        age_range: updateAgeRangeFilter.age_range.map(range =>
-          range.getLabel(),
-        ),
+        age_range: updateAgeRangeFilter.age_range.map(range => range.getId()),
       }
     : undefined;
 

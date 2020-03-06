@@ -62,11 +62,21 @@ export class AgeRange {
     return Array.from(new Set(flattenedAgeRanges));
   }
 
-  public getLabel() {
+  public getId() {
     if (this.max) {
       return `${this.resolveMin()}-${this.max}`;
     } else {
       return `${this.resolveMin()}+`;
+    }
+  }
+
+  public getLabel() {
+    const max = this.max == null ? 99 : this.max;
+
+    if (max === 99) {
+      return `${this.resolveMin()}+`;
+    } else {
+      return `${this.resolveMin()}-${this.max}`;
     }
   }
 

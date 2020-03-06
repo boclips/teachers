@@ -3,14 +3,20 @@
 .search-results-container {
   padding-bottom: 24px;
   padding-top: 42px;
-  @media (max-width: @screen-md) {
-    padding-top: 20px;
-    margin-top: 28px;
-  }
 
   &__results {
     padding-left: 45px;
   }
+
+  @media (max-width: @screen-md) {
+    padding-top: 20px;
+    margin-top: 28px;
+
+    &__results {
+      padding-left: 0;
+    }
+  }
+
 }
 
 .results-pagination {

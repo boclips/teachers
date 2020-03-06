@@ -50,12 +50,12 @@ export class SelectAgeRange extends React.PureComponent<Props> {
 
     return AgeRange.allRanges().map(ageRange => (
       <Option
-        key={ageRange.getLabel()}
-        title={ageRange.getLabel()}
-        data-qa={ageRange.getLabel()}
+        key={ageRange.getId()}
+        title={ageRange.getId()}
+        data-qa={ageRange.getId()}
         value={ageRange.encodeJSON()}
       >
-        {ageRange.getLabel()}
+        {ageRange.getId()}
       </Option>
     ));
   }

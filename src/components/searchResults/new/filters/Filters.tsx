@@ -91,7 +91,7 @@ const Filters = React.forwardRef(
                 <Form.Item>
                   {getFieldDecorator('ageRange', {
                     initialValue: ageRange
-                      ? ageRange.map(range => range.getLabel())
+                      ? ageRange.map(range => range.getId())
                       : [],
                   })(
                     <CheckboxGroup
