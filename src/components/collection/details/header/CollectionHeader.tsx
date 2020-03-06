@@ -46,12 +46,12 @@ export class CollectionHeader extends React.PureComponent<Props> {
   private renderSubtitleRow = () => {
     const tags = this.shouldRenderTagContainer() && (
       <div className="tags-container" data-qa={'tags-container'}>
-        {this.props.collection.subjects.map(subjectId => (
-          <ConnectedSubjectTag key={subjectId} id={subjectId} />
-        ))}
         {this.hasAgeRange() && (
           <AgeRangeTag ageRange={this.props.collection.ageRange} />
         )}
+        {this.props.collection.subjects.map(subjectId => (
+          <ConnectedSubjectTag key={subjectId} id={subjectId} />
+        ))}
       </div>
     );
 
