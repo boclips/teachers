@@ -20,6 +20,10 @@ export default abstract class AbstractBoclipsAnalytics
     return this.logInteraction(video, 'RATE_LINK_CLICKED');
   }
 
+  public trackVideoTranscriptDownloaded(video: Video): Promise<void> {
+    return this.logInteraction(video, 'TRANSCRIPT_DOWNLOADED');
+  }
+
   public abstract trackPageRendered(url: string): Promise<void>;
 
   abstract trackCollectionInteractedWith(

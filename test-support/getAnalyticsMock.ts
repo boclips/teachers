@@ -22,6 +22,7 @@ export const internalAnalyticsMock = ({
   trackVideoLinkCopied: jest.fn(),
   trackVideoLinkClicked: jest.fn(),
   trackRateThisVideoLinkClicked: jest.fn(),
+  trackVideoTranscriptDownloaded: jest.fn(),
   trackPageRendered: jest.fn(),
   trackCollectionInteractedWith: jest.fn(),
   trackUserExpired: jest.fn(),

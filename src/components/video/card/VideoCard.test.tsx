@@ -7,7 +7,13 @@ import { createMemoryHistory } from 'history';
 import { AgeRange } from 'src/types/AgeRange';
 import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
 import { MockStoreFactory, VideoFactory } from 'test-support/factories';
+
+import eventually from 'test-support/eventually';
+import { fetchVideoTranscript } from 'src/services/videos/fetchVideoTranscript';
 import { VideoCard } from './VideoCard';
+import Mock = jest.Mock;
+
+jest.mock('../../../services/videos/fetchVideoTranscript');
 
 describe('when outside video collection', () => {
   let history;
@@ -34,6 +40,20 @@ describe('when outside video collection', () => {
 
   it('renders video buttons', () => {
     expect(component.getByText('Transcript')).toBeInTheDocument();
+  });
+
+  it('clicking on Transcript button emits an event', () => {
+    const mockFetchVideoTranscript = fetchVideoTranscript as Mock;
+    mockFetchVideoTranscript.mockReturnValue(Promise.resolve());
+
+    fireEvent.click(component.getByText('Transcript'));
+
+    eventually(() => {
+      expect(FakeBoclipsAnalytics.videoInteractedWithEvents).toContainEqual({
+        video,
+        interactionType: 'TRANSCRIPT_DOWNLOADED',
+      });
+    });
   });
 
   it('renders age range tag', () => {

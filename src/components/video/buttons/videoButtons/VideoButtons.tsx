@@ -3,7 +3,7 @@ import React from 'react';
 import MoreSVG from '../../../../../resources/images/more.svg';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import DownloadTranscriptButton from '../downloadTranscriptButton/DownloadTranscriptButton';
+import { DownloadTranscriptButton } from '../downloadTranscriptButton/DownloadTranscriptButton';
 import RateButton from '../rate/RateButton';
 import { VideoShareButton } from '../../sharing/VideoShareButton/VideoShareButton';
 import VideoCollectionButton from '../videoCollection/VideoCollectionButton';
