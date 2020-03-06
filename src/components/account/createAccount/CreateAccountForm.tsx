@@ -227,7 +227,7 @@ class CreateAccountForm extends React.Component<
                 password: 'redacted',
               };
 
-              if (error && error.response.status === 409) {
+              if (error && error.status === 409) {
                 handleUserExists(formDetailsRedacted);
               } else {
                 handleError(formDetailsRedacted);
