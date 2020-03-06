@@ -24,10 +24,6 @@ export const AppliedFilters = withAppliedSearchParameters(
           <ClearAllButton />
         </div>
         <Row className="applied-filters-bar__tags" align="middle" type="flex">
-          {props.duration &&
-            props.duration.map((durationRange, index) => (
-              <DurationFilterTag key={index} range={durationRange} />
-            ))}
           {props.ageRange &&
             props.ageRange.map(ageRange => (
               <AgeRangeFilterTag
@@ -49,6 +45,10 @@ export const AppliedFilters = withAppliedSearchParameters(
                 key={subjectId}
                 subjectId={subjectId}
               />
+            ))}
+          {props.duration &&
+            props.duration.map((durationRange, index) => (
+              <DurationFilterTag key={index} range={durationRange} />
             ))}
         </Row>
       </div>

@@ -44,10 +44,12 @@ const Filters = React.forwardRef(
     const { ageRange, subjectIds, duration } = props;
     const { getFieldDecorator, resetFields } = props.form;
     const subjects = useSelector((state: State) => state.subjects);
-    const subjectOptions = subjects.map(subject => ({
-      value: subject.id,
-      label: subject.name,
-    }));
+    const subjectOptions = subjects
+      .map(subject => ({
+        value: subject.id,
+        label: subject.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
     const [openFilters, setOpenFilters] = useState(() => [
       FilterKey.AGE,
       FilterKey.SUBJECTS,
@@ -95,13 +97,32 @@ const Filters = React.forwardRef(
                     <CheckboxGroup
                       className="filter-form__checkbox-group"
                       options={[
-                        { label: '3 - 5 Early Years', value: '3-5' },
-                        { label: '5 - 9 Lower Elementary', value: '5-9' },
-                        { label: '9 - 11 Higher Elementary', value: '9-11' },
-                        { label: '11 - 14 Middle School', value: '11-14' },
-                        { label: '14 + High School', value: '14-99' },
-                        { label: '16 + Higher Education', value: '16-99' },
+                        { label: '3 - 5', value: '3-5' },
+                        { label: '5 - 9', value: '5-9' },
+                        { label: '9 - 11', value: '9-11' },
+                        { label: '11 - 14', value: '11-14' },
+                        { label: '14 + ', value: '14-99' },
+                        { label: '16 + ', value: '16-99' },
                       ]}
+                    />,
+                  )}
+                </Form.Item>
+              </React.Fragment>
+            </SubMenu>
+            <SubMenu
+              title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
+              key={FilterKey.SUBJECTS}
+              className={'filter-form__section'}
+            >
+              <React.Fragment>
+                <Form.Item colon={false}>
+                  {getFieldDecorator('subjects', {
+                    rules: [{ type: 'array' }],
+                    initialValue: subjectIds,
+                  })(
+                    <CheckboxGroup
+                      className="filter-form__checkbox-group filter-form__subjects-group"
+                      options={subjectOptions}
                     />,
                   )}
                 </Form.Item>
@@ -128,25 +149,6 @@ const Filters = React.forwardRef(
                         { label: '10m - 20m', value: '600-1200' },
                         { label: '20m +', value: '1200' },
                       ]}
-                    />,
-                  )}
-                </Form.Item>
-              </React.Fragment>
-            </SubMenu>
-            <SubMenu
-              title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
-              key={FilterKey.SUBJECTS}
-              className={'filter-form__section'}
-            >
-              <React.Fragment>
-                <Form.Item colon={false}>
-                  {getFieldDecorator('subjects', {
-                    rules: [{ type: 'array' }],
-                    initialValue: subjectIds,
-                  })(
-                    <CheckboxGroup
-                      className="filter-form__checkbox-group filter-form__subjects-group"
-                      options={subjectOptions}
                     />,
                   )}
                 </Form.Item>

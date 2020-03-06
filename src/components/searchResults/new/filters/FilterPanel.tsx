@@ -33,7 +33,7 @@ export const FilterPanel = () => {
   const debouncedSearch = useRef(
     debounce(
       (filterOptions: FilterOptions) => applySearchFilters(filterOptions),
-      1500,
+      1000,
     ),
   ).current;
 
