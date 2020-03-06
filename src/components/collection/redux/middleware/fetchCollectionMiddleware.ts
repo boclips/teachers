@@ -19,7 +19,7 @@ export function onFetchCollection(
     })
     .catch(e => {
       if (
-        (e && e.response && e.response.status === 404) ||
+        (e?.response && e.response.status === 404) ||
         e.response.status === 403
       ) {
         store.dispatch(storeCollectionAction(null));

@@ -65,6 +65,7 @@ module.exports = {
     '@typescript-eslint/prefer-for-of': 'error',
     '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/prefer-namespace-keyword': 'error',
+    '@typescript-eslint/prefer-optional-chain': 'error',
     '@typescript-eslint/quotes': 'off',
     '@typescript-eslint/semi': ['off', null],
     '@typescript-eslint/space-within-parens': ['off', 'never'],

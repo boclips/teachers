@@ -13,24 +13,16 @@ export const parseScrollableCollectionsListResponse = (
 ): Pageable<VideoCollection> => ({
   items: parseCollectionsListResponse(response),
   links: {
-    next:
-      response &&
-      response.data &&
-      response.data._links &&
-      response.data._links.next
-        ? new Link(response.data._links.next)
-        : undefined,
+    next: response?.data?._links?.next
+      ? new Link(response.data._links.next)
+      : undefined,
   },
 });
 
 export const parseCollectionsListResponse = (
   response: any,
 ): VideoCollection[] =>
-  (response &&
-    response.data &&
-    response.data._embedded &&
-    response.data._embedded.collections &&
-    response.data._embedded.collections.map(parseCollectionListResponse)) ||
+  response?.data?._embedded?.collections?.map(parseCollectionListResponse) ||
   [];
 
 const parseCollectionListResponse = (data: any): VideoCollection => {

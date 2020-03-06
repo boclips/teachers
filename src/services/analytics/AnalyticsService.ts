@@ -248,8 +248,8 @@ export default class AnalyticsService {
   public trackVideoLinkCopied(video: Video, segment: Segment): void {
     const payload = {
       ...toMixpanelVideo(video),
-      share_segment_start: segment && segment.start,
-      share_segment_end: segment && segment.end,
+      share_segment_start: segment?.start,
+      share_segment_end: segment?.end,
     };
 
     this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, payload);
@@ -259,8 +259,8 @@ export default class AnalyticsService {
   public trackVideoSharedInGoogle(video: Video, segment: Segment): void {
     const payload = {
       ...toMixpanelVideo(video),
-      share_segment_start: segment && segment.start,
-      share_segment_end: segment && segment.end,
+      share_segment_start: segment?.start,
+      share_segment_end: segment?.end,
     };
 
     this.mixpanelInstance.track(

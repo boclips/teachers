@@ -184,7 +184,7 @@ function getSubjectIfOneDefined(discipline: Discipline, subjectIds: string[]) {
 }
 
 function getDisciplineSubjects(discipline) {
-  return discipline && discipline.subjects;
+  return discipline?.subjects;
 }
 
 function mapStateToProps(

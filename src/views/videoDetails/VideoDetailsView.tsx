@@ -54,7 +54,7 @@ export const VideoDetailsView = (props: Props) => {
 
   return (
     <PageLayout
-      title={video && video.title}
+      title={video?.title}
       showNavigation={true}
       showFooter={true}
       showSearchBar={true}

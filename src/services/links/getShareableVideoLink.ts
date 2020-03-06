@@ -12,11 +12,11 @@ export const getShareableVideoLink = (
     referer: userId,
   };
 
-  if (segment && segment.start) {
+  if (segment?.start) {
     params.segmentStart = segment.start;
   }
 
-  if (segment && segment.end) {
+  if (segment?.end) {
     params.segmentEnd = segment.end;
   }
 

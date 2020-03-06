@@ -433,9 +433,8 @@ class OnboardingForm extends React.Component<
             schoolId:
               values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
             hasOptedIntoMarketing: values.hasOptedIntoMarketing,
-            referralCode:
-              registrationContext && registrationContext.referralCode,
-            utm: registrationContext && registrationContext.utm,
+            referralCode: registrationContext?.referralCode,
+            utm: registrationContext?.utm,
           },
           this.props.userProfile.email,
         )
