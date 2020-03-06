@@ -27,6 +27,7 @@ describe('searchCollections', () => {
     await searchCollections(
       {
         query: 'foo',
+        filters: {},
       },
       links,
     );

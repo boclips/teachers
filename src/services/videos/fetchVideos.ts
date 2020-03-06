@@ -29,6 +29,10 @@ export default function fetchVideos(
       return durationString;
     });
 
+  const age_range =
+    searchRequest.filters.age_range &&
+    searchRequest.filters.age_range.map(ageRange => ageRange.getId());
+
   const url = links.videos.getTemplatedLink({
     query: searchRequest.query,
     size: searchRequest.size || 10,
@@ -37,7 +41,7 @@ export default function fetchVideos(
     sort_by: searchRequest.sortBy,
     type: searchRequest.filters.type,
     duration,
-    age_range: searchRequest.filters.age_range,
+    age_range,
     age_range_min: searchRequest.filters.age_range_min,
     age_range_max: searchRequest.filters.age_range_max,
     subject: searchRequest.filters.subject,
