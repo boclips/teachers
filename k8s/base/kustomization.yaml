@@ -8,11 +8,11 @@ resources:
 commonLabels:
   app: teachers
 commonAnnotations:
-  boclips-version: "124"
+  boclips-version: "125"
 images:
 - name: app
   newName: eu.gcr.io/boclips-prod/boclips/teachers
-  newTag: "124"
+  newTag: "125"
 patches:
 - path: pre-stop-nginx-spa.yaml
   target:
