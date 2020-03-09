@@ -30,6 +30,7 @@ export const AppliedFilters = withAppliedSearchParameters(
                 key={ageRange.getId()}
                 ageRangeMin={ageRange.resolveMin()}
                 ageRangeMax={ageRange.resolveMax()}
+                ageRange={props.ageRange}
               />
             ))}
           {props.ageRangeMin && (

@@ -8,10 +8,11 @@ import { updateSearchParamsAction } from '../redux/actions/updateSearchParameter
 interface Props {
   ageRangeMin?: number;
   ageRangeMax?: number;
+  ageRange?: AgeRange[];
 }
 
 interface DispatchProps {
-  onClose: () => void;
+  onClose: (ageRanges: AgeRange[]) => void;
 }
 
 class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
@@ -20,24 +21,35 @@ class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
       this.props.ageRangeMin,
       this.props.ageRangeMax,
     );
+
     return this.props.ageRangeMin == null &&
       this.props.ageRangeMax == null ? null : (
       <span data-qa="age-range-filter-tag">
         <ClosableTag
           label="Age"
           value={ageRange.getLabel()}
-          onClose={this.props.onClose}
+          onClose={() => this.props.onClose(this.updateAgeRanges(ageRange))}
         />
       </span>
+    );
+  }
+
+  private updateAgeRanges(ageRange: AgeRange) {
+    if (!this.props.ageRange) {
+      return;
+    }
+
+    return this.props.ageRange.filter(
+      item => !(item.getId() === ageRange.getId()),
     );
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  onClose: () => {
+  onClose: (ageRanges: AgeRange[]) => {
     dispatch(
       updateSearchParamsAction({
-        age_range: undefined,
+        age_range: ageRanges,
         age_range_min: undefined,
         age_range_max: undefined,
       }),

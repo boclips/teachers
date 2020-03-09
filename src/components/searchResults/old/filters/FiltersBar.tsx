@@ -35,6 +35,7 @@ export const FiltersBar = withAppliedSearchParameters(
           <AgeRangeFilterTag
             ageRangeMin={props.ageRangeMin}
             ageRangeMax={props.ageRangeMax}
+            ageRange={props.ageRange}
           />
           {props.subjectIds &&
             props.subjectIds.map(subjectId => (

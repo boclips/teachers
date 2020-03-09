@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
+import { AgeRange } from 'src/types/AgeRange';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -17,7 +18,11 @@ const getWrapper = (
 ) =>
   mount(
     <Provider store={store || MockStoreFactory.sample()}>
-      <AgeRangeFilterTag ageRangeMin={ageRangeMin} ageRangeMax={ageRangeMax} />
+      <AgeRangeFilterTag
+        ageRangeMin={ageRangeMin}
+        ageRangeMax={ageRangeMax}
+        ageRange={[new AgeRange(ageRangeMin, ageRangeMax)]}
+      />
     </Provider>,
   );
 
@@ -41,7 +46,7 @@ it('does not render anything if no age range', () => {
   expect(wrapper).toBeEmptyRender();
 });
 
-it('removes age range from url on close', () => {
+it('removes age range min from url on close', () => {
   const store = MockStoreFactory.sample({
     router: RouterFactory.sample({
       location: {
@@ -63,7 +68,7 @@ it('removes age range from url on close', () => {
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
-      age_range: undefined,
+      age_range: [],
       age_range_min: undefined,
       age_range_max: undefined,
     }),
