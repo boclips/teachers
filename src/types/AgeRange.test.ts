@@ -18,7 +18,7 @@ describe('generating a label', () => {
   test('returns a hyphenated label when ageRange has min and max', () => {
     const ageRange = new AgeRange(5, 11);
 
-    expect(ageRange.getLabel()).toEqual('5-11');
+    expect(ageRange.getLabel()).toEqual('5 - 11');
   });
 
   test('returns an n+ id when ageRange has a max of 99', () => {

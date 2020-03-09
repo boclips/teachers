@@ -76,7 +76,7 @@ export class AgeRange {
     if (max === 99) {
       return `${this.resolveMin()}+`;
     } else {
-      return `${this.resolveMin()}-${this.max}`;
+      return `${this.resolveMin()} - ${this.max}`;
     }
   }
 

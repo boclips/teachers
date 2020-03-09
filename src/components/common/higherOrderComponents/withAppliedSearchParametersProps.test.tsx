@@ -75,7 +75,7 @@ describe('age range filters', () => {
     expect(props.subjectIds).toEqual([]);
     expect(props.ageRangeMin).toEqual(5);
     expect(props.ageRangeMax).toEqual(11);
-    expect(props.ageRange[0].getLabel()).toEqual('5-11');
+    expect(props.ageRange[0].getLabel()).toEqual('5 - 11');
     expect(props.numberOfFiltersApplied).toEqual(1);
   });
 
@@ -126,7 +126,7 @@ describe('number of filters applied', () => {
     expect(props.subjectIds).toEqual([]);
     expect(props.ageRangeMin).toEqual(5);
     expect(props.ageRangeMax).toEqual(11);
-    expect(props.ageRange[0].getLabel()).toEqual('5-11');
+    expect(props.ageRange[0].getLabel()).toEqual('5 - 11');
     expect(props.numberOfFiltersApplied).toEqual(2);
   });
 });
