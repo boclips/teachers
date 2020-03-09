@@ -24,7 +24,16 @@ interface StateProps {
   segment?: Segment;
 }
 
-class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
+class VideoPlayer extends React.PureComponent<
+  OwnProps & StateProps,
+  {
+    hasError: boolean;
+  }
+> {
+  public state = {
+    hasError: false,
+  };
+
   public static defaultProps: Partial<OwnProps> = {
     mode: 'default',
   };
@@ -32,6 +41,10 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
   private player: Player;
 
   public render() {
+    if (this.state.hasError) {
+      return null;
+    }
+
     return (
       <div className="video-player">
         <LazyLoad
@@ -46,6 +59,10 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
         </LazyLoad>
       </div>
     );
+  }
+
+  public static getDerivedStateFromError() {
+    return { hasError: true };
   }
 
   private getPlayerRef = player => {
