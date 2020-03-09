@@ -15,8 +15,14 @@
     justify-content: flex-end;
   }
 
+  button:last-child {
+    border-right: none !important;
+  }
+
   button {
     .ant-btn--borderless();
+    border-right: 2px solid @shade-2 !important;
+
 
     &.video-collection-menu {
       border-right: 2px solid @shade-2 !important;
