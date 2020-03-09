@@ -1,6 +1,7 @@
 import BoclipsSecurity from 'boclips-js-security';
 import { Player, PlayerOptions } from 'boclips-player';
 import { Player as PlayerComponent } from 'boclips-player-react';
+import LazyLoad from 'react-lazy-load';
 import querystring from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -32,26 +33,24 @@ class VideoPlayer extends React.PureComponent<OwnProps & StateProps> {
 
   public render() {
     return (
-      <PlayerComponent
-        playerRef={this.getPlayerRef}
-        options={this.getPlayerOptions()}
-      />
+      <div className="video-player">
+        <LazyLoad
+          key={this.props.video.id}
+          offsetVertical={200}
+          onContentVisible={this.loadVideo}
+        >
+          <PlayerComponent
+            playerRef={this.getPlayerRef}
+            options={this.getPlayerOptions()}
+          />
+        </LazyLoad>
+      </div>
     );
   }
 
   private getPlayerRef = player => {
     this.player = player;
   };
-
-  public componentDidMount(): void {
-    this.loadVideo();
-  }
-
-  public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>): void {
-    if (prevProps.video.id !== this.props.video.id) {
-      this.loadVideo();
-    }
-  }
 
   private loadVideo = () => {
     if (this.props.segment.start || this.props.segment.end) {
