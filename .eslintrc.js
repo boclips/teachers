@@ -85,7 +85,6 @@ module.exports = {
     'guard-for-in': 'error',
     'id-match': 'error',
     'import/order': 'error',
-    'import/no-default-export': 'warn',
     'linebreak-style': 'off',
     'max-classes-per-file': 'off',
     'max-len': 'off',
