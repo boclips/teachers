@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
 import {
   MockStoreFactory,
   UserProfileFactory,
@@ -14,7 +15,6 @@ import { CollectionDetailsView } from '../collection/CollectionDetailsView';
 import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
-import SearchResultsView from '../searchResults/SearchResultsView';
 import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import MyResourcesListView from '../collection/MyResourcesListView';
 import BoclipsRouter from './BoclipsRouter';
@@ -65,7 +65,7 @@ describe('BoclipsRouter', () => {
         </Provider>,
       );
 
-      const videoDetailsView = wrapper.find(SearchResultsView);
+      const videoDetailsView = wrapper.find(ConnectedNewSearchResultsView);
       expect(videoDetailsView).toExist();
     });
 
@@ -223,7 +223,7 @@ describe('BoclipsRouter', () => {
         </Provider>,
       );
 
-      const videoDetailsView = wrapper.find(SearchResultsView);
+      const videoDetailsView = wrapper.find(ConnectedNewSearchResultsView);
       expect(videoDetailsView).not.toExist();
     });
 

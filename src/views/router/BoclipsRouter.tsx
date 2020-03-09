@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
+import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
 import { Constants } from '../../app/AppConstants';
 import PrivateRoute from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
@@ -16,11 +17,9 @@ import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
-import SearchResultsView from '../searchResults/SearchResultsView';
 import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import { TrialExpiredView } from '../trial/TrialExpiredView';
 import { ErrorView } from '../error/ErrorView';
-import { ConnectedNewSearchResultsView } from '../searchResults/NewSearchResultsView';
 import MyResourcesListView from '../collection/MyResourcesListView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
@@ -64,7 +63,6 @@ interface Props {
 }
 
 class BoclipsRouter extends Component<Props & StateProps> {
-  // TODO(AG/EV) REMOVE /new-filters PATH AFTER NEW FILTERS ARE RELEASED!
   public render() {
     return (
       <ConnectedRouter history={this.props.history}>
@@ -77,13 +75,12 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <Route path="/videos">
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
-                <PrivateRoute path="/videos" component={SearchResultsView} />
+                <PrivateRoute
+                  path="/videos"
+                  component={ConnectedNewSearchResultsView}
+                />
               </Switch>
             </Route>
-            <PrivateRoute
-              path="/new-filters"
-              component={ConnectedNewSearchResultsView}
-            />
             <PrivateRoute
               path="/onboarding"
               component={OnboardingView}

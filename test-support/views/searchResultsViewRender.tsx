@@ -13,8 +13,8 @@ import {
 } from 'test-support/api-responses';
 import { renderWithConnectedRoutes } from 'test-support/renderWithStore';
 import { Route } from 'react-router';
-import { ConnectedNewSearchResultsView } from 'src/views/searchResults/NewSearchResultsView';
 import React from 'react';
+import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
 
 export const renderSearchResultsView = (initialQuery: string) => {
   const history = createMemoryHistory({
