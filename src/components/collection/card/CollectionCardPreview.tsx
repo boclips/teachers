@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row } from 'antd';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Video } from '../../../types/Video';
 import './CollectionCardPreview.less';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -14,16 +15,19 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
     const totalVideoCount = this.props.collection.videoIds.length;
 
     const gridSize = 4;
-    const previewImages = this.props.videos
-      .slice(0, gridSize)
-      .map(video => (
-        <div
-          className="thumbnail-container"
-          data-qa="thumbnail"
-          style={{ backgroundImage: `url(${video.thumbnailUrl})` }}
-          key={video.id}
-        />
-      ));
+    const previewImages = this.props.videos.slice(0, gridSize).map(video => (
+      <LazyLoadImage
+        className="thumbnail-container"
+        data-qa="thumbnail"
+        key={video.id}
+        height="100%"
+        width="100%"
+        style={{
+          background: `url(${video.thumbnailUrl}) center center`,
+          backgroundSize: 'cover',
+        }}
+      />
+    ));
 
     if (totalVideoCount > gridSize) {
       previewImages.pop();
@@ -37,7 +41,7 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
         previewImages.push(
           <div
             key={count}
-            className="thumbnail-container"
+            className="thumbnail-container thumbnail-container--placeholder"
             data-qa="placeholder"
           >
             {count === numberOfThumbnailsRequired - 1 &&

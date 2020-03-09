@@ -44,7 +44,7 @@ describe('Rendering a full grid of video previews', () => {
         videos={videos.slice(0, 1)}
       />,
     );
-    expect(previews.find(By.dataQa('thumbnail')).length).toEqual(1);
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(1);
     expect(previews.find(By.dataQa('placeholder')).length).toEqual(3);
   });
 
@@ -55,7 +55,7 @@ describe('Rendering a full grid of video previews', () => {
         videos={videos.slice(0, 2)}
       />,
     );
-    expect(previews.find(By.dataQa('thumbnail')).length).toEqual(2);
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(2);
     expect(previews.find(By.dataQa('placeholder')).length).toEqual(2);
   });
 
@@ -66,7 +66,7 @@ describe('Rendering a full grid of video previews', () => {
         videos={videos.slice(0, 4)}
       />,
     );
-    expect(previews.find(By.dataQa('thumbnail')).length).toEqual(4);
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(4);
     expect(previews.find(By.dataQa('placeholder')).length).toEqual(0);
   });
 
@@ -77,7 +77,7 @@ describe('Rendering a full grid of video previews', () => {
         videos={videos.slice(0, 5)}
       />,
     );
-    expect(previews.find(By.dataQa('thumbnail')).length).toEqual(3);
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(3);
     const placeholders = previews.find(By.dataQa('placeholder'));
     expect(placeholders).toHaveLength(1);
     expect(placeholders.at(0).text()).toEqual('+2videos');
@@ -90,7 +90,7 @@ describe('Rendering a full grid of video previews', () => {
         videos={videos.slice(0, 6)}
       />,
     );
-    expect(previews.find(By.dataQa('thumbnail')).length).toEqual(3);
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(3);
     const placeholders = previews.find(By.dataQa('placeholder'));
     expect(placeholders).toHaveLength(1);
     expect(placeholders.at(0).text()).toEqual('+3videos');
