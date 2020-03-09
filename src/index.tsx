@@ -4,6 +4,7 @@ import './index.less';
 import * as Sentry from '@sentry/browser';
 import React from 'react';
 import ReactDom from 'react-dom';
+import { ExtraErrorData } from '@sentry/integrations';
 import App from './app/App';
 import { Constants } from './app/AppConstants';
 
@@ -27,6 +28,12 @@ if (environment === 'production') {
     dsn: 'https://0da84012df0643bd8876a2336cbe5d92@sentry.io/1402914',
     release: sentryRelease,
     environment,
+    integrations: [new ExtraErrorData()],
+    blacklistUrls: [
+      // Chrome extensions
+      /extensions\//i,
+      /^chrome:\/\//i,
+    ],
   });
 
   addHubspotScript();
