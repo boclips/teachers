@@ -16,7 +16,6 @@ export const appendDiscoverCollectionsAction = actionCreatorFactory<
   AppendCollectionRequest
 >('APPEND_DISCOVER_COLLECTIONS');
 
-// TODO: Remove?
 export const appendBookmarkedCollectionsAction = actionCreatorFactory<
   AppendCollectionRequest
 >('APPEND_BOOKMARKED_COLLECTIONS');

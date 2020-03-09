@@ -76,7 +76,7 @@ describe('requestToQueryParameters', () => {
       subject: ['1'],
       age_range: [new AgeRange(3, 5)],
       duration: [new DurationRange({ min: 0, max: 120 })],
-      pathname: 'new-filters',
+      pathname: 'videos',
       q: 'hello',
       page: 1,
     };
@@ -87,7 +87,7 @@ describe('requestToQueryParameters', () => {
       age_range: ['3-5'],
       duration: ['0-120'],
       page: 1,
-      pathname: 'new-filters',
+      pathname: 'videos',
       q: 'hello',
       subject: ['1'],
     });

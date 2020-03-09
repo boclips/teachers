@@ -18,7 +18,7 @@ import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchRes
 
 export const renderSearchResultsView = (initialQuery: string) => {
   const history = createMemoryHistory({
-    initialEntries: [`/new-filters?q=${initialQuery}`],
+    initialEntries: [`/videos?q=${initialQuery}`],
   });
 
   const store = createBoclipsStore(
@@ -33,7 +33,7 @@ export const renderSearchResultsView = (initialQuery: string) => {
   );
 
   return renderWithConnectedRoutes(
-    <Route path={'/new-filters'} component={ConnectedNewSearchResultsView} />,
+    <Route path={'/videos'} component={ConnectedNewSearchResultsView} />,
     store,
     history,
   );

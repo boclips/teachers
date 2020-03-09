@@ -37,7 +37,7 @@ export class DiscoverCollectionsView extends PureComponent<
 > {
   public render() {
     if (!this.props.discipline) {
-      return null; // TODO loading vs not found kind of business
+      return null;
     }
 
     let pageTitle = this.props.discipline.name;

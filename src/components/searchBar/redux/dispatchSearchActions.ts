@@ -32,11 +32,7 @@ const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
 export const dispatchSearchActions = (store: Store<RouterState>) => {
   const location = store.getState().router.location;
 
-  // TODO(AG/EV) REMOVE /new-filters AFTER NEW FILTERS ARE RELEASED!
-  if (
-    (location.pathname === '/videos' || location.pathname === '/new-filters') &&
-    location.search.indexOf('q')
-  ) {
+  if (location.pathname === '/videos' && location.search.indexOf('q')) {
     const queryParams = queryString.parse(location.search);
     const query = queryParams.q as string;
 

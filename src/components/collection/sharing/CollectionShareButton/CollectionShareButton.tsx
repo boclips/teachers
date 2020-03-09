@@ -27,31 +27,18 @@ export const CollectionShareButton = React.memo<Props>(
 
     const shareLink = getShareableCollectionLink(collection.id, user.id);
 
-    const handleCopyLink = () => {
-      // TODO(AO): Is this necessary?
-      // AnalyticsFactory.internalAnalytics()
-      //   .trackCollectionLinkCopied(collection)
-      //   .catch(console.error);
-    };
-    const handleGoogleShare = () => {
-      // TODO(AO): Is this necessary?
-      // AnalyticsFactory.internalAnalytics()
-      //   .trackCollectionSharedInGoogle(collection)
-      //   .catch(console.error);
-    };
-
     return (
       <ShareButton
         title={`Share ${mobileView ? 'collection' : collection.title}`}
         shareCode={user.shareCode}
       >
         <div className="share-buttons">
-          <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
+          <CopyLinkButton link={shareLink} onClick={() => {}} />
           <GoogleClassroomShareButton
             link={shareLink}
             postTitle={collection.title}
             postBody={`Use code ${user.shareCode} to view this.`}
-            onClick={handleGoogleShare}
+            onClick={() => {}}
           />
         </div>
       </ShareButton>

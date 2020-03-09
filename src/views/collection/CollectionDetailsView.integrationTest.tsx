@@ -155,7 +155,6 @@ describe('CollectionDetailsView', () => {
         <CollectionDetailsView collectionId="new-collection" />,
         createBoclipsStore(
           MockStoreFactory.sampleState({
-            // TODO - use useLocation in component
             router: { location: { search: '?referer=user1123' } } as any,
           }),
           history,

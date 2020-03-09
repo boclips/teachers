@@ -26,7 +26,7 @@ export function onBulkUpdateSearchParameter(
     existingQueryParams,
     updateRequests,
   );
-  const newUri = generateUri(getSearchPathname(pathname), updatedQueryParams);
+  const newUri = generateUri('/videos', updatedQueryParams);
   store.dispatch(push(newUri));
 }
 
@@ -48,9 +48,6 @@ export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
 
   onBulkUpdateSearchParameter(store, [clearRequest]);
 }
-
-const getSearchPathname = pathname =>
-  pathname === '/new-filters' ? '/new-filters' : '/videos';
 
 export const updateSearchParametersMiddleware = [
   sideEffect(updateSearchParamsAction, onUpdateSearchParameter),

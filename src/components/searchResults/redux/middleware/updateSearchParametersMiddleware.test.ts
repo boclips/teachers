@@ -11,7 +11,7 @@ import {
 
 describe(`updateSearchParametersMiddleware`, () => {
   it('updates query in url parameters', async () => {
-    const store = setupStore('q=test&duration=0-1');
+    const store = setupStore('q=test&duration=0-1', '/videos');
     store.dispatch(updateSearchParamsAction({ q: '123' }));
 
     await eventually(() => {
@@ -22,7 +22,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   });
 
   it('updates duration filter in url parameters', async () => {
-    const store = setupStore('q=hi&page=10');
+    const store = setupStore('q=hi&page=10', '/videos');
 
     store.dispatch(
       updateSearchParamsAction({
@@ -38,7 +38,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   });
 
   it('updates age range filter in url parameters', async () => {
-    const store = setupStore('q=hi&page=10');
+    const store = setupStore('q=hi&page=10', '/videos');
 
     store.dispatch(
       updateSearchParamsAction({
@@ -58,7 +58,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   });
 
   it('updates subject filter in url parameters', async () => {
-    const store = setupStore('q=hi');
+    const store = setupStore('q=hi', '/videos');
 
     store.dispatch(
       updateSearchParamsAction({
@@ -74,7 +74,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   });
 
   it('does not include null values in url parameters', async () => {
-    const store = setupStore('');
+    const store = setupStore('', '/videos');
 
     store.dispatch(
       updateSearchParamsAction({
@@ -90,7 +90,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   });
 
   it('updates multiple url parameters in one dispatch', async () => {
-    const store = setupStore('q=hi&page=1&subject=6', '/new-filters');
+    const store = setupStore('q=hi&page=1&subject=6', '/videos');
 
     const durationUpdate = {
       duration: [new DurationRange({ min: 1, max: 2 })],
@@ -104,13 +104,13 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/new-filters?duration=1-2&page=1&q=hi&subject=new'),
+        push('/videos?duration=1-2&page=1&q=hi&subject=new'),
       );
     });
   });
 
   it('removes parameters if they are undefined', async () => {
-    const store = setupStore('subject=5&q=hi');
+    const store = setupStore('subject=5&q=hi', '/videos');
 
     store.dispatch(updateSearchParamsAction({ subject: undefined }));
 
@@ -122,6 +122,7 @@ describe(`updateSearchParametersMiddleware`, () => {
   it('clears filter on clear search filters action', async () => {
     const store = setupStore(
       'mode=hello&q=hi&duration=123&age_range_min=5&age_range_max=11&subject=1&page=10',
+      '/videos',
     );
 
     store.dispatch(clearSearchFilterParametersAction());

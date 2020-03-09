@@ -240,7 +240,7 @@ export class LinksStateValueFactory {
   public static sampleAnonymous(prefix: string = ''): Links {
     return Object.freeze({
       video: new Link({ href: `${prefix}/videos/{id}`, templated: true }),
-      createNoSearchResultsEvent: new Link({ href: `` }), // TODO this field should be optional so we do not use it in anonymous user setup
+      createNoSearchResultsEvent: new Link({ href: `` }),
       publicCollections: new Link({
         href: `${prefix}/collections?projection=list&public=true&page=0&size=30`,
         templated: false,
