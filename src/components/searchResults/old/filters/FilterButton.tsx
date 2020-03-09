@@ -1,4 +1,5 @@
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';

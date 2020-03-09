@@ -34,7 +34,7 @@ interface InternalState {
   screenReaderErrors: ScreenReaderError[];
 }
 
-class ProfileFormFields extends React.Component<
+class ProfileForm extends React.Component<
   Props & FormComponentProps & DispatchProps,
   InternalState
 > {
@@ -145,4 +145,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export const EditProfileForm = connect<Props, DispatchProps>(
   null,
   mapDispatchToProps,
-)(Form.create<DispatchProps & Props & FormComponentProps>()(ProfileFormFields));
+)(ProfileForm);

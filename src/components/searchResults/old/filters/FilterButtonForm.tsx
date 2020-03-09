@@ -1,5 +1,4 @@
 import { Form } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { AgeRange } from 'src/types/AgeRange';
@@ -28,7 +27,7 @@ interface StateProps {
   subjects?: Subject[];
 }
 
-interface Props extends FormComponentProps, FilterProps, StateProps {}
+interface Props extends FilterProps, StateProps {}
 
 class FilterButtonForm extends React.Component<Props> {
   public render() {
@@ -69,7 +68,7 @@ class FilterButtonForm extends React.Component<Props> {
           placeholder="Choose from our list.."
           label="Subject"
           initialValue={this.props.subjectIds}
-          form={this.props.form}
+          // form={this.props.form}
           data-qa="subject-filter-form"
         />
       </Form>
@@ -84,5 +83,5 @@ function mapStateToProps(state: SubjectState): StateProps {
 }
 
 export default connect(mapStateToProps)(
-  Form.create<Props & FilterFormEditableFields>()(FilterButtonForm),
+  Form.create<>()(FilterButtonForm),
 );

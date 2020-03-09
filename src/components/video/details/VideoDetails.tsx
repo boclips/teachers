@@ -1,4 +1,5 @@
-import { Icon, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
+import ClockCircle from '@ant-design/icons';
 import React from 'react';
 import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
 import { Video } from '../../../types/Video';
@@ -67,7 +68,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
             </div>
             <section className="badge-container">
               <p data-qa="video-duration" className={'subtitle duration'}>
-                <Icon type="clock-circle" />{' '}
+                <ClockCircle />{' '}
                 <DurationFormatter duration={this.props.video.duration} />
               </p>
               <VideoPreviewBadge video={this.props.video} />

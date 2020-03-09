@@ -60,11 +60,11 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           defaultActiveFirstOption={false}
           backfill={true}
           dropdownClassName="search-completions"
-          dataSource={this.renderOptions()}
+          // dataSource={this.renderOptions()}
           defaultValue={this.props.value}
           onSearch={setDataSource}
           onSelect={this.submit}
-          optionLabelProp="text"
+          // optionLabelProp="text"
           size="large"
           style={{ width: '100%' }}
         >

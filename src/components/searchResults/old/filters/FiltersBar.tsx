@@ -28,7 +28,9 @@ export const FiltersBar = withAppliedSearchParameters(
             Filters applied:
           </span>
         </Row>
-        <Row className="filters-bar__tags" align="middle" type="flex">
+        <Row className="filters-bar__tags" align="middle"
+             // type="flex"
+        >
           {props.duration && props.duration.length && (
             <DurationFilterTag range={props.duration[0]} />
           )}

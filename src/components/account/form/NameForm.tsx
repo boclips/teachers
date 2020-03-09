@@ -11,16 +11,8 @@ export class NameForm extends React.Component<FormComponentProps & Props> {
   public render() {
     return (
       <section>
-        <Form.Item label="First name" required={true} colon={false}>
-          {this.props.form.getFieldDecorator('firstName', {
-            rules: [
-              {
-                required: true,
-                message: 'Please enter your first name',
-              },
-            ],
-            initialValue: this.props.initialFirstName,
-          })(
+        <Form.Item label="First name" required={true} colon={false} message={'Please enter your first name'}
+            initialValue={this.props.initialFirstName} />
             <Input
               data-qa="first-name"
               size="large"

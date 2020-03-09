@@ -115,7 +115,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^5.12.1",
-    "antd": "^3.26.9",
+    "antd": "^4.0.1",
     "axios": "^0.19.2",
     "boclips-api-client": "^4.0.2",
     "boclips-js-security": "^3.2.1",

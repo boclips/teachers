@@ -13,7 +13,7 @@ class SearchResultsHeader extends React.Component<Props> {
     return (
       <Row
         justify="space-between"
-        type="flex"
+        // type="flex"
         className="search-results-header"
       >
         <Col>

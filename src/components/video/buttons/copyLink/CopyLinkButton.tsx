@@ -1,4 +1,5 @@
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import NotificationFactory from 'src/components/common/NotificationFactory';

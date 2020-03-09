@@ -1,4 +1,6 @@
-import { Form, Icon, Input } from 'antd';
+import { Form, Input } from 'antd';
+import Eye from '@ant-design/icons';
+import EyeInvisible from '@ant-design/icons';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import ErrorSvg from '../../../../resources/images/validation-error.svg';
@@ -69,7 +71,7 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
                   data-qa="hide-password"
                   onClick={this.toggleShow}
                 >
-                  <Icon type="eye-invisible" />
+                  <EyeInvisible />
                   &nbsp;Hide
                 </a>
               ) : (
@@ -79,7 +81,7 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
                   data-qa="show-password"
                   onClick={this.toggleShow}
                 >
-                  <Icon type="eye" theme="filled" />
+                  <Eye />
                   &nbsp;Show
                 </a>
               )

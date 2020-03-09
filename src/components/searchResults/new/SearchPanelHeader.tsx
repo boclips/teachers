@@ -1,4 +1,5 @@
-import { Button, Col, Icon, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import SearchResultsCount from '../SearchResultsCount';
 import '../old/SearchResultsHeader.less';
@@ -14,7 +15,7 @@ export class SearchPanelHeader extends React.Component<Props> {
     return (
       <Row
         justify="space-between"
-        type="flex"
+        // type="flex"
         className="search-results-header"
       >
         <Col>

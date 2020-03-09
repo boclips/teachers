@@ -1,7 +1,7 @@
-import { Icon } from 'antd';
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React, { PureComponent } from 'react';
+import Icon from '@ant-design/icons';
 import EmptyCollectionSVG from '../../../resources/images/empty-collection.svg';
 import collectionsSVG from '../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';

@@ -162,14 +162,5 @@ const Filters = React.forwardRef(
 );
 
 export const FiltersWithForm = withAppliedSearchParameters(
-  Form.create<FormComponentProps & Props>({
-    onValuesChange: (props, _, allValues: FilterFormEditableFields) => {
-      const filterRequest: FilterOptions = {};
-      filterRequest.duration = allValues.duration;
-      filterRequest.ageRange = allValues.ageRange;
-      filterRequest.subjects = allValues.subjects;
-
-      props.onApplyFilters(filterRequest);
-    },
-  })(Filters),
+  Form.create<>()(Filters),
 );

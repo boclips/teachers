@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { ButtonProps } from 'antd/lib/button';
-import Icon from 'antd/lib/icon';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import EditSVG from '../../../../resources/images/edit-collection.svg';
 import './EditButton.less';
@@ -19,7 +19,7 @@ export default class EditButton extends React.PureComponent<
         className={'boclips__edit-button'}
         data-qa={this.props['data-qa']}
       >
-        <Icon theme="filled" aria-label="Edit" component={EditSVG} />
+        <Icon aria-label="Edit" component={EditSVG} />
         Edit
       </Button>
     );
