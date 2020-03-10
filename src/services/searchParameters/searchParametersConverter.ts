@@ -12,8 +12,6 @@ export const convertQueryToSearchParameters = (
     query: parseQuery(parsedUrl.q),
     duration: DurationRange.fromStrings(parsedUrl.duration) || null,
     ageRange: AgeRange.fromStrings(parsedUrl.age_range) || null,
-    ageRangeMin: +parsedUrl.age_range_min || null,
-    ageRangeMax: +parsedUrl.age_range_max || null,
     subject: parseSubjects(parsedUrl.subject),
   };
 };
@@ -25,10 +23,7 @@ export const countSearchFilters = (searchFilters: SearchParameters): number => {
     numberOfFiltersApplied += searchFilters.duration.length;
   }
 
-  if (
-    searchFilters.ageRangeMin !== null ||
-    (searchFilters.ageRange !== null && searchFilters.ageRange.length !== 0)
-  ) {
+  if (searchFilters.ageRange !== null && searchFilters.ageRange.length !== 0) {
     numberOfFiltersApplied += 1;
   }
 

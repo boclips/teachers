@@ -13,8 +13,6 @@ export interface WithAppliedSearchParametersProps {
   numberOfFiltersApplied: number | undefined;
   duration: DurationRange[];
   ageRange: AgeRange[];
-  ageRangeMax: number | undefined;
-  ageRangeMin: number | undefined;
   subjectIds: string[] | undefined;
 }
 
@@ -32,8 +30,6 @@ export const withAppliedSearchParameters = <
     query: searchParameters.query,
     duration: searchParameters.duration,
     ageRange: searchParameters.ageRange,
-    ageRangeMax: searchParameters.ageRangeMax,
-    ageRangeMin: searchParameters.ageRangeMin,
     subjectIds: searchParameters.subject,
     numberOfFiltersApplied,
   };

@@ -1,7 +1,7 @@
 import { Button, Col, Icon, Row } from 'antd';
 import React from 'react';
 import SearchResultsCount from '../SearchResultsCount';
-import '../old/SearchResultsHeader.less';
+import './SearchResultsHeader.less';
 import FilterIconSVG from '../../../../resources/images/filter-icon.svg';
 
 interface Props {

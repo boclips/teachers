@@ -2,7 +2,7 @@ import { Row, Pagination } from 'antd';
 import React from 'react';
 import { SearchResultsCardList } from '../SeachResultsCardList';
 
-import '../old/SearchResultsWithHeader.less';
+import './SearchResultsWithHeader.less';
 import {
   CollectionSearchResult,
   VideoSearchResult,

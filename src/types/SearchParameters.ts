@@ -5,7 +5,5 @@ export interface SearchParameters {
   query?: string;
   duration?: DurationRange[];
   ageRange?: AgeRange[];
-  ageRangeMin?: number;
-  ageRangeMax?: number;
   subject?: string[];
 }

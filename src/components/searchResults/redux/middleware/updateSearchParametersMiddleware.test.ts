@@ -43,16 +43,12 @@ describe(`updateSearchParametersMiddleware`, () => {
     store.dispatch(
       updateSearchParamsAction({
         age_range: [new AgeRange(5, 11)],
-        age_range_min: 5,
-        age_range_max: 11,
       }),
     );
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push(
-          '/videos?age_range=5-11&age_range_max=11&age_range_min=5&page=1&q=hi',
-        ),
+        push('/videos?age_range=5-11&page=1&q=hi'),
       );
     });
   });
@@ -121,7 +117,7 @@ describe(`updateSearchParametersMiddleware`, () => {
 
   it('clears filter on clear search filters action', async () => {
     const store = setupStore(
-      'mode=hello&q=hi&duration=123&age_range_min=5&age_range_max=11&subject=1&page=10',
+      'mode=hello&q=hi&duration=123&age_range=5-11&subject=1&page=10',
       '/videos',
     );
 

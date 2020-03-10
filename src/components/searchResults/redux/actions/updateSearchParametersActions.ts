@@ -11,8 +11,6 @@ export interface UpdateDurationFilter {
 }
 
 export interface UpdateAgeRangeFilter {
-  age_range_min: number;
-  age_range_max?: number;
   age_range: AgeRange[];
 }
 

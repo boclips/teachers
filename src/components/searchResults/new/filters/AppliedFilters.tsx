@@ -25,20 +25,13 @@ export const AppliedFilters = withAppliedSearchParameters(
         </div>
         <Row className="applied-filters-bar__tags" align="middle" type="flex">
           {props.ageRange &&
-            props.ageRange.map(ageRange => (
+            props.ageRange.map((ageRange, index) => (
               <AgeRangeFilterTag
-                key={ageRange.getId()}
-                ageRangeMin={ageRange.resolveMin()}
-                ageRangeMax={ageRange.resolveMax()}
-                ageRange={props.ageRange}
+                key={index}
+                activeAgeRanges={props.ageRange}
+                ageRange={ageRange}
               />
             ))}
-          {props.ageRangeMin && (
-            <AgeRangeFilterTag
-              ageRangeMin={props.ageRangeMin}
-              ageRangeMax={props.ageRangeMax}
-            />
-          )}
           {props.subjectIds &&
             props.subjectIds.map(subjectId => (
               <SubjectFilterTag

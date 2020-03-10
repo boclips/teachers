@@ -6,9 +6,8 @@ import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 
 interface Props {
-  ageRangeMin?: number;
-  ageRangeMax?: number;
-  ageRange?: AgeRange[];
+  activeAgeRanges: AgeRange[];
+  ageRange: AgeRange;
 }
 
 interface DispatchProps {
@@ -17,29 +16,21 @@ interface DispatchProps {
 
 class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
   public render() {
-    const ageRange = new AgeRange(
-      this.props.ageRangeMin,
-      this.props.ageRangeMax,
-    );
-
-    return this.props.ageRangeMin == null &&
-      this.props.ageRangeMax == null ? null : (
+    return (
       <span data-qa="age-range-filter-tag">
         <ClosableTag
           label="Age"
-          value={ageRange.getLabel()}
-          onClose={() => this.props.onClose(this.updateAgeRanges(ageRange))}
+          value={this.props.ageRange.getLabel()}
+          onClose={() =>
+            this.props.onClose(this.updateAgeRanges(this.props.ageRange))
+          }
         />
       </span>
     );
   }
 
   private updateAgeRanges(ageRange: AgeRange) {
-    if (!this.props.ageRange) {
-      return;
-    }
-
-    return this.props.ageRange.filter(
+    return this.props.activeAgeRanges.filter(
       item => !(item.getId() === ageRange.getId()),
     );
   }
@@ -50,8 +41,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     dispatch(
       updateSearchParamsAction({
         age_range: ageRanges,
-        age_range_min: undefined,
-        age_range_max: undefined,
       }),
     );
   },

@@ -20,8 +20,6 @@ export const FilterPanel = () => {
         },
         {
           age_range: AgeRange.fromStrings(filterOptions.ageRange),
-          age_range_min: undefined,
-          age_range_max: undefined,
         },
         {
           subject: filterOptions.subjects,

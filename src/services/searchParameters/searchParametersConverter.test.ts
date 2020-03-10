@@ -8,8 +8,6 @@ describe('convertQueryToSearchParameters', () => {
     const searchParameters = convertQueryToSearchParameters('?duration=1-11');
     expect(searchParameters.query).toEqual(null);
     expect(searchParameters.duration[0].serialise()).toEqual('1-11');
-    expect(searchParameters.ageRangeMin).toEqual(null);
-    expect(searchParameters.ageRangeMax).toEqual(null);
     expect(searchParameters.subject).toEqual([]);
   });
 
@@ -20,8 +18,6 @@ describe('convertQueryToSearchParameters', () => {
     expect(searchParameters.query).toEqual(null);
     expect(searchParameters.duration[0].serialise()).toEqual('1-11');
     expect(searchParameters.duration[1].serialise()).toEqual('14-19');
-    expect(searchParameters.ageRangeMin).toEqual(null);
-    expect(searchParameters.ageRangeMax).toEqual(null);
     expect(searchParameters.subject).toEqual([]);
   });
 
@@ -31,8 +27,6 @@ describe('convertQueryToSearchParameters', () => {
     );
     expect(searchParameters.query).toEqual(null);
     expect(searchParameters.duration).toEqual(null);
-    expect(searchParameters.ageRangeMin).toEqual(1);
-    expect(searchParameters.ageRangeMax).toEqual(11);
     expect(searchParameters.subject).toEqual([]);
   });
 
@@ -40,8 +34,6 @@ describe('convertQueryToSearchParameters', () => {
     const searchParameters = convertQueryToSearchParameters('?subject=1');
     expect(searchParameters.query).toEqual(null);
     expect(searchParameters.duration).toEqual(null);
-    expect(searchParameters.ageRangeMin).toEqual(null);
-    expect(searchParameters.ageRangeMax).toEqual(null);
     expect(searchParameters.subject).toEqual(['1']);
   });
 
@@ -49,8 +41,6 @@ describe('convertQueryToSearchParameters', () => {
     const searchParameters = convertQueryToSearchParameters('?subject=1,2,3');
     expect(searchParameters.query).toEqual(null);
     expect(searchParameters.duration).toEqual(null);
-    expect(searchParameters.ageRangeMin).toEqual(null);
-    expect(searchParameters.ageRangeMax).toEqual(null);
     expect(searchParameters.subject).toEqual(['1', '2', '3']);
   });
 
@@ -62,8 +52,6 @@ describe('convertQueryToSearchParameters', () => {
     expect(searchParameters.query).toEqual('hello');
     expect(searchParameters.duration[0].min).toEqual(0);
     expect(searchParameters.duration[0].max).toEqual(120);
-    expect(searchParameters.ageRangeMin).toEqual(null);
-    expect(searchParameters.ageRangeMax).toEqual(null);
     expect(searchParameters.ageRange[0].resolveMin()).toEqual(3);
     expect(searchParameters.ageRange[0].resolveMax()).toEqual(5);
     expect(searchParameters.subject).toEqual(['1', '2']);

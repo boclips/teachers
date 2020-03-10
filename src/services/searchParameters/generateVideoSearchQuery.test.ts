@@ -36,8 +36,6 @@ describe('generateNewUri', () => {
         { q: 'london' },
         {
           age_range: AgeRange.fromStrings(['3-5']),
-          age_range_max: undefined,
-          age_range_min: undefined,
         },
       ],
     );

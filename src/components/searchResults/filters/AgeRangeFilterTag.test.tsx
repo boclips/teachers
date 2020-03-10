@@ -11,39 +11,26 @@ import { ClosableTag } from '../../common/tags/Tag';
 import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
 import AgeRangeFilterTag from './AgeRangeFilterTag';
 
-const getWrapper = (
-  ageRangeMin?: number,
-  ageRangeMax?: number,
-  store?: Store,
-) =>
+const getWrapper = (ageRange: AgeRange, store?: Store) =>
   mount(
     <Provider store={store || MockStoreFactory.sample()}>
-      <AgeRangeFilterTag
-        ageRangeMin={ageRangeMin}
-        ageRangeMax={ageRangeMax}
-        ageRange={[new AgeRange(ageRangeMin, ageRangeMax)]}
-      />
+      <AgeRangeFilterTag activeAgeRanges={[]} ageRange={ageRange} />
     </Provider>,
   );
 
 it('renders age range with normal range', () => {
-  const wrapper = getWrapper(5, 11);
+  const wrapper = getWrapper(new AgeRange(5, 11));
   expect(wrapper.find(ClosableTag).props().value).toEqual('5 - 11');
 });
 
 it('renders age range with no max', () => {
-  const wrapper = getWrapper(5, null);
+  const wrapper = getWrapper(new AgeRange(5, null));
   expect(wrapper.find(ClosableTag).props().value).toEqual('5+');
 });
 
 it('renders age range with no min', () => {
-  const wrapper = getWrapper(null, 7);
+  const wrapper = getWrapper(new AgeRange(null, 7));
   expect(wrapper.find(ClosableTag).props().value).toEqual('3 - 7');
-});
-
-it('does not render anything if no age range', () => {
-  const wrapper = getWrapper(null, null);
-  expect(wrapper).toBeEmptyRender();
 });
 
 it('removes age range min from url on close', () => {
@@ -58,7 +45,7 @@ it('removes age range min from url on close', () => {
     }),
   });
 
-  const wrapper = getWrapper(5, null, store);
+  const wrapper = getWrapper(new AgeRange(5, null), store);
 
   wrapper
     .find(ClosableTag)
@@ -69,8 +56,6 @@ it('removes age range min from url on close', () => {
   expect(store.getActions()).toContainEqual(
     updateSearchParamsAction({
       age_range: [],
-      age_range_min: undefined,
-      age_range_max: undefined,
     }),
   );
 });
