@@ -1,4 +1,5 @@
 import React from 'react';
+import './ScreenReaderErrors.less';
 
 interface Props {
   errors: ScreenReaderError[];
@@ -7,7 +8,11 @@ interface Props {
 export class ScreenReaderErrors extends React.Component<Props> {
   public render() {
     return (
-      <section role="alert" aria-live="assertive" className="visually-hidden">
+      <section
+        role="alert"
+        aria-live="assertive"
+        className="screen-reader-errors"
+      >
         <p>
           There are {Object.keys(this.props.errors).length} errors in the form.
         </p>
