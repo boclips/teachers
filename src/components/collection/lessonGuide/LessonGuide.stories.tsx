@@ -1,12 +1,12 @@
 import { storiesOf } from '@storybook/react';
 import * as React from 'react';
 import { AttachmentFactory } from '../../../../test-support/factories';
-import { LessonPlan } from './LessonPlan';
+import { LessonGuide } from './LessonGuide';
 
-storiesOf('LessonPlan', module).add('A lesson plan with markdown', () => (
+storiesOf('LessonGuide', module).add('A lesson guide with markdown', () => (
   <div>
     <br />
     <br />
-    <LessonPlan attachment={AttachmentFactory.sample()} />
+    <LessonGuide attachment={AttachmentFactory.sample()} />
   </div>
 ));

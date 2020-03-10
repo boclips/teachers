@@ -1,7 +1,7 @@
 @import '../../../../resources/styles/_colours';
 @import '../../../../resources/styles/_antd-theme';
 
-.lesson-plan {
+.lesson-guide {
   font-family: @font-family;
   background-color: @mid-blue;
   padding: 35px 25px 25px 25px;
@@ -28,14 +28,14 @@
 
     & > ol {
       list-style: none;
-      counter-reset: lesson-plan-counter;
+      counter-reset: lesson-guide-counter;
       padding: 0;
 
       & > li {
-        counter-increment: lesson-plan-counter;
+        counter-increment: lesson-guide-counter;
 
         &::before {
-          content: counter(lesson-plan-counter) ". ";
+          content: counter(lesson-guide-counter) ". ";
           font-weight: bold;
         }
       }

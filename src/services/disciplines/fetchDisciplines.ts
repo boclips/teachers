@@ -19,7 +19,7 @@ function convertDisciplinesResource(data: any): Discipline[] {
       rawDiscipline.subjects.map(rawSubject => ({
         id: rawSubject.id,
         name: rawSubject.name,
-        lessonPlan: rawSubject.lessonPlan,
+        lessonGuide: rawSubject.lessonGuide,
       })),
   }));
 }

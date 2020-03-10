@@ -8,7 +8,7 @@ import { AgeRangeTag } from '../../../common/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../common/tags/SubjectTag';
 import { CollectionTitle } from '../../title/CollectionTitle';
 import { CollectionSubtitle } from '../../CollectionSubtitle';
-import { LessonPlan } from '../../lessonPlan/LessonPlan';
+import { LessonGuide } from '../../lessonGuide/LessonGuide';
 import './CollectionHeader.less';
 
 export interface Props {
@@ -71,7 +71,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
   };
 
   private renderDescriptionRow = () => {
-    const lessonPlanToRender = this.getLessonPlan();
+    const lessonGuideToRender = this.getLessonGuide();
 
     return (
       <Row
@@ -79,7 +79,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
         data-qa={'collection-description-row'}
       >
         <Col
-          {...(lessonPlanToRender && {
+          {...(lessonGuideToRender && {
             sm: { span: 24 },
             md: { span: 12 },
             lg: { span: 16 },
@@ -92,11 +92,11 @@ export class CollectionHeader extends React.PureComponent<Props> {
             {this.props.collection.description}
           </div>
         </Col>
-        {lessonPlanToRender && (
+        {lessonGuideToRender && (
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
-            <LessonPlan
+            <LessonGuide
               collection={this.props.collection}
-              attachment={lessonPlanToRender}
+              attachment={lessonGuideToRender}
             />
           </Col>
         )}
@@ -121,7 +121,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
   private shouldRenderTagContainer = () =>
     this.hasAgeRange() || this.hasSubjects();
 
-  private getLessonPlan = () =>
+  private getLessonGuide = () =>
     this.props.collection.attachments.find(
       attachment => attachment.type === 'LESSON_PLAN',
     );

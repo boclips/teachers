@@ -100,7 +100,7 @@ const bookmarkedCollection = VideoCollectionFactory.sample({
   },
 });
 
-const collectionWithLessonPlan: VideoCollection = {
+const collectionWithLessonGuide: VideoCollection = {
   ...bookmarkableCollection,
   attachments: [AttachmentFactory.sample()],
 };
@@ -152,10 +152,10 @@ storiesOf('CollectionCardContainer', module)
   .add('Card with collection which is bookmarked', () => (
     <CollectionCardContainer grid={false} collection={bookmarkedCollection} />
   ))
-  .add('Card with Lesson Plan', () => (
+  .add('Card with Lesson Guide', () => (
     <CollectionCardContainer
       grid={false}
-      collection={collectionWithLessonPlan}
+      collection={collectionWithLessonGuide}
     />
   ))
   .add('Card without tags', () => (

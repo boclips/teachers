@@ -11,7 +11,7 @@ import './CollectionCard.less';
 import { CollectionTitle } from '../title/CollectionTitle';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import LessonPlanSVG from '../../../../resources/images/lesson-plan-icon.svg';
+import LessonGuideSVG from '../../../../resources/images/lesson-guide-icon.svg';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import MyCollectionSVG from '../../../../resources/images/my-account.svg';
@@ -125,9 +125,9 @@ export const CollectionCard = withMediaBreakPoint(
             videos
             {props.collection.attachments &&
               props.collection.attachments.length > 0 && (
-                <span className="collection-card__lesson-plan">
+                <span className="collection-card__lesson-guide">
                   {' '}
-                  + <LessonPlanSVG /> Lesson Plan
+                  + <LessonGuideSVG /> Lesson Guide
                 </span>
               )}
           </span>

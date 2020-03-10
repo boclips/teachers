@@ -477,12 +477,12 @@ export function disciplinesResponse() {
             {
               id: 'arts-subject-1',
               name: 'Performing Arts',
-              lessonPlan: true,
+              lessonGuide: true,
             },
             {
               id: 'arts-subject-2',
               name: 'Art History',
-              lessonPlan: false,
+              lessonGuide: false,
             },
           ],
         },

@@ -5,35 +5,35 @@ import LessonClip from '../../../../resources/images/lesson-clip.svg';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Attachment } from '../../../types/Attachment';
 import { VideoCollection } from '../../../types/VideoCollection';
-import './LessonPlan.less';
+import './LessonGuide.less';
 
 interface Props {
   attachment: Attachment;
   collection?: VideoCollection;
 }
 
-export class LessonPlan extends React.PureComponent<Props> {
+export class LessonGuide extends React.PureComponent<Props> {
   public render() {
     return (
-      <section className="lesson-plan">
-        <LessonClip aria-hidden={true} className="lesson-plan__clip" />
-        <h1 className="lesson-plan__header">Lesson plan outline</h1>
-        <ReactMarkdown className="lesson-plan__description">
+      <section className="lesson-guide">
+        <LessonClip aria-hidden={true} className="lesson-guide__clip" />
+        <h1 className="lesson-guide__header">Lesson guide outline</h1>
+        <ReactMarkdown className="lesson-guide__description">
           {this.props.attachment.description}
         </ReactMarkdown>
         <Button
-          className="lesson-plan__link"
+          className="lesson-guide__link"
           href={this.props.attachment.links.download.getOriginalLink()}
           target="_blank"
-          onClick={this.emitLessonPlanClickEvent}
+          onClick={this.emitLessonGuideClickEvent}
         >
-          Visit plan
+          Visit guide
         </Button>
       </section>
     );
   }
 
-  private emitLessonPlanClickEvent = () => {
+  private emitLessonGuideClickEvent = () => {
     AnalyticsFactory.externalAnalytics().trackCollectionAttachmentLinkVisited(
       this.props.collection.id,
       this.props.attachment,

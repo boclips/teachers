@@ -161,13 +161,13 @@ describe('CollectionHeader', () => {
     expect(component.getByText('My description')).toBeInTheDocument();
   });
 
-  it('renders a lesson plan when present and restricts the description', () => {
+  it('renders a lesson guide when present and restricts the description', () => {
     const collection = VideoCollectionFactory.sample({
       id: 'collection-id',
       description: 'My description',
       attachments: [
         AttachmentFactory.sample({
-          description: '1. Point one of my lesson plan',
+          description: '1. Point one of my lesson guide',
         }),
       ],
     });
@@ -187,13 +187,13 @@ describe('CollectionHeader', () => {
     expect(descriptionColumn.className).toBe(
       'ant-col ant-col-sm-24 ant-col-md-12 ant-col-lg-16',
     );
-    expect(component.getByText('Lesson plan outline')).toBeInTheDocument();
+    expect(component.getByText('Lesson guide outline')).toBeInTheDocument();
     expect(
-      component.getByText('Point one of my lesson plan'),
+      component.getByText('Point one of my lesson guide'),
     ).toBeInTheDocument();
   });
 
-  it('does not restrict the description when no lesson plan is present', () => {
+  it('does not restrict the description when no lesson guide is present', () => {
     const collection = VideoCollectionFactory.sample({
       id: 'collection-id',
       description: 'My description',
