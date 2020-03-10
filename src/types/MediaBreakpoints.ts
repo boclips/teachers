@@ -1,4 +1,4 @@
-import { Breakpoint as AntBreakpoint } from 'antd/es/_util/responsiveObserve';
+import { Breakpoint as AntBreakpoint } from 'antd/lib/_util/responsiveObserve';
 
 export interface Breakpoint {
   width: number;

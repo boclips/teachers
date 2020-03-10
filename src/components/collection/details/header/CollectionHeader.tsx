@@ -28,7 +28,6 @@ export class CollectionHeader extends React.PureComponent<Props> {
 
   private renderTitleRow = () => (
     <Row
-      type="flex"
       justify="space-between"
       className="collection-header__title-row"
     >

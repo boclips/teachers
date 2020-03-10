@@ -27,7 +27,7 @@ class AccountMenuComponent extends React.Component<Props, State> {
     this.setState({ visible });
   };
 
-  private renderMenu = (): React.ReactFragment => (
+  private renderMenu = () => (
     <Menu className="account-menu account-menu--desktop">
       <Menu.Item key="1">
         <UserCollectionsLink />

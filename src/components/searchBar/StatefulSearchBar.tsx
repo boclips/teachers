@@ -2,12 +2,10 @@ import { AutoComplete } from 'antd';
 import Search from 'antd/lib/input/Search';
 import React from 'react';
 import logo from '../../../resources/images/search-icon.png';
-import { Completion, CompletionChunk, completionsFor } from './completions';
+import { Completion, completionsFor } from './completions';
 import completionsCratedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';
 import './StatefulSearchBar.less';
-
-const { Option } = AutoComplete;
 
 const getCompletions = completionsFor([
   ...completionsTopics,
@@ -23,17 +21,17 @@ interface State {
   completions: Completion[];
 }
 
-class AutocompleteOption extends React.Component<{
-  children: CompletionChunk[];
-}> {
-  public render() {
-    return this.props.children.map((chunk, i) => (
-      <span className={chunk.matches ? '' : 'completion-affix'} key={i + ''}>
-        {chunk.text}
-      </span>
-    ));
-  }
-}
+// class AutocompleteOption extends React.Component<{
+//   children: CompletionChunk[];
+// }> {
+//   public render() {
+//     return this.props.children.map((chunk, i) => (
+//       <span className={chunk.matches ? '' : 'completion-affix'} key={i + ''}>
+//         {chunk.text}
+//       </span>
+//     ));
+//   }
+// }
 
 class FreshSearchOnValueChange extends React.Component<Props, State> {
   private submittedText = '';
@@ -60,11 +58,13 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           defaultActiveFirstOption={false}
           backfill={true}
           dropdownClassName="search-completions"
-          dataSource={this.renderOptions()}
           defaultValue={this.props.value}
+          options={this.state.completions.map(completion => ({
+            value: completion.text,
+          }))}
           onSearch={setDataSource}
           onSelect={this.submit}
-          optionLabelProp="text"
+          // optionLabelProp="text"
           size="large"
           style={{ width: '100%' }}
         >
@@ -83,13 +83,13 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     );
   }
 
-  private renderOptions() {
-    return this.state.completions.map(completion => (
-      <Option key={completion.text} value={completion.text}>
-        <AutocompleteOption>{completion.textWithHighlights}</AutocompleteOption>
-      </Option>
-    ));
-  }
+  // private renderOptions() {
+  //   return this.state.completions.map(completion => (
+  //     <AutoComplete.Option key={completion.text} value={completion.text}>
+  //       <AutocompleteOption>{completion.textWithHighlights}</AutocompleteOption>
+  //     </AutoComplete.Option>
+  //   ));
+  // }
 
   private submit(value: string) {
     if (this.submittedText === value) {

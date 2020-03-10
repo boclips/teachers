@@ -1,4 +1,6 @@
-import { Button, Checkbox, Drawer, Icon, Input, Menu, Popover } from 'antd';
+import { Button, Checkbox, Drawer, Input, Menu, Popover } from 'antd';
+import Loading from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { connect } from 'react-redux';
@@ -147,7 +149,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
           data-qa="loading-collections"
           className="manage-video-collection-button__loading-collections"
         >
-          <Icon type="loading" />
+          <Loading />
         </section>
       );
     }

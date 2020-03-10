@@ -1,5 +1,6 @@
-import { Form, Icon, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form, Input } from 'antd';
+import Eye from '@ant-design/icons';
+import EyeInvisible from '@ant-design/icons';
 import React from 'react';
 import ErrorSvg from '../../../../resources/images/validation-error.svg';
 import SuccessSvg from '../../../../resources/images/validation-success.svg';
@@ -14,8 +15,8 @@ interface Constraint {
   label: React.ReactNode;
 }
 
-export class PasswordForm extends React.Component<FormComponentProps, State> {
-  public constructor(props: FormComponentProps, context: any) {
+export class PasswordForm extends React.Component<{}, State> {
+  public constructor(props, context: any) {
     super(props, context);
     this.state = { show: false };
   }
@@ -45,47 +46,45 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
   public render() {
     return (
       <Form.Item
+        name="password"
         label="Password"
         required={false}
         className="password-form__container"
+        rules={[
+          {
+            validator: this.validatePassword,
+          },
+        ]}
       >
-        {this.props.form.getFieldDecorator('password', {
-          rules: [
-            {
-              validator: this.validatePassword,
-            },
-          ],
-        })(
-          <Input
-            data-qa="password"
-            size="large"
-            type={this.state.show ? 'text' : 'password'}
-            placeholder="Enter your password"
-            suffix={
-              this.state.show ? (
-                <a
-                  href="#"
-                  className="password-form__show"
-                  data-qa="hide-password"
-                  onClick={this.toggleShow}
-                >
-                  <Icon type="eye-invisible" />
-                  &nbsp;Hide
-                </a>
-              ) : (
-                <a
-                  href="#"
-                  className="password-form__show"
-                  data-qa="show-password"
-                  onClick={this.toggleShow}
-                >
-                  <Icon type="eye" theme="filled" />
-                  &nbsp;Show
-                </a>
-              )
-            }
-          />,
-        )}
+        <Input
+          data-qa="password"
+          size="large"
+          type={this.state.show ? 'text' : 'password'}
+          placeholder="Enter your password"
+          suffix={
+            this.state.show ? (
+              <a
+                href="#"
+                className="password-form__show"
+                data-qa="hide-password"
+                onClick={this.toggleShow}
+              >
+                <EyeInvisible />
+                &nbsp;Hide
+              </a>
+            ) : (
+              <a
+                href="#"
+                className="password-form__show"
+                data-qa="show-password"
+                onClick={this.toggleShow}
+              >
+                <Eye />
+                &nbsp;Show
+              </a>
+            )
+          }
+        />
       </Form.Item>
     );
   }

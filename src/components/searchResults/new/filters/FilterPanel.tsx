@@ -3,11 +3,10 @@ import { bulkUpdateSearchParamsAction } from 'src/components/searchResults/redux
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
 import { DurationRange } from 'src/types/DurationRange';
+import { AgeRange } from 'src/types/AgeRange';
 import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
-// eslint-disable-next-line import/order
-import { AgeRange } from 'src/types/AgeRange';
 
 export const FilterPanel = () => {
   const dispatch = useDispatch();

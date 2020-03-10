@@ -52,7 +52,7 @@
     "@types/jest": "24.0.25",
     "@types/mixpanel": "^2.14.2",
     "@types/moment-duration-format": "^2.2.2",
-    "@types/react": "^16.9.17",
+    "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.4",
     "@types/react-helmet": "^5.0.15",
     "@types/react-infinite-scroll-component": "^4.2.5",
@@ -116,7 +116,7 @@
   "dependencies": {
     "@sentry/browser": "^5.13.2",
     "@sentry/integrations": "^5.13.2",
-    "antd": "^3.26.9",
+    "antd": "^4.0.1",
     "axios": "^0.19.2",
     "boclips-api-client": "^4.0.2",
     "boclips-js-security": "^3.2.2",

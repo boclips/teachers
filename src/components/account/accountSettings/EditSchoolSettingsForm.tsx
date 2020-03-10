@@ -1,8 +1,8 @@
 import { Button, Form, Row } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import {FormInstance} from 'antd/lib/form';
 import { editUser } from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { Country } from '../../../types/Country';
@@ -35,10 +35,13 @@ interface InternalState {
 }
 
 export class EditSchoolSettingsFields extends React.Component<
-  Props & FormComponentProps & DispatchProps,
+  Props & DispatchProps,
   InternalState
 > {
-  public constructor(props: Props & FormComponentProps & DispatchProps) {
+
+  private formRef = React.createRef<FormInstance>();
+
+  public constructor(props: Props & DispatchProps) {
     super(props);
     this.state = {
       latestState: this.props.userProfile.state.id,
@@ -48,13 +51,19 @@ export class EditSchoolSettingsFields extends React.Component<
 
   public render() {
     return (
-      <Form data-qa="school-settings-form" className="account-settings__form">
+      <Form
+        ref={this.formRef}
+        onFinish={this.handleFormFinish}
+        onFinishFailed={this.handleFormFinishFailed}
+        data-qa="school-settings-form"
+        className="account-settings__form"
+      >
         {this.state.screenReaderErrors && (
           <ScreenReaderErrors errors={this.state.screenReaderErrors} />
         )}
         <Row>
           <StatesForm
-            form={this.props.form}
+            formRef={this.formRef}
             states={this.props.country.states}
             initialValue={this.props.userProfile.state.id}
             label={'State'}
@@ -63,7 +72,7 @@ export class EditSchoolSettingsFields extends React.Component<
         </Row>
         <Row>
           <SchoolForm
-            form={this.props.form}
+            formRef={this.formRef}
             country={this.props.country}
             state={this.props.userProfile.state}
             label={'School'}
@@ -85,7 +94,6 @@ export class EditSchoolSettingsFields extends React.Component<
             htmlType={'submit'}
             type={'primary'}
             data-qa={'save-button'}
-            onClick={this.submit}
             size="large"
           >
             Save changes
@@ -97,38 +105,35 @@ export class EditSchoolSettingsFields extends React.Component<
 
   private stateChange = (value: UsaState) => {
     if (this.state.latestState !== value.id) {
-      this.props.form.setFieldsValue({ schoolId: undefined });
+      this.formRef.current.setFieldsValue({ schoolId: undefined });
     }
 
     this.setState({ latestState: value.id });
   };
 
-  private submit = () => {
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        editUser(this.props.links, {
-          state: values.state,
-          schoolName: values.schoolName,
-          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-        })
-          .then(() => {
-            this.props.updateUser();
-            this.props.toggleForm();
-          })
-          .catch(ex => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
-          });
-      } else {
-        this.setState({
-          ...this.state,
-          screenReaderErrors: transformErrors(err),
-        });
-      }
+  private handleFormFinishFailed = errors => {
+    this.setState({
+      screenReaderErrors: transformErrors(errors),
     });
+  };
+
+  private handleFormFinish = values => {
+    editUser(this.props.links, {
+      state: values.state,
+      schoolName: values.schoolName,
+      schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+    })
+      .then(() => {
+        this.props.updateUser();
+        this.props.toggleForm();
+      })
+      .catch(ex => {
+        console.error(ex);
+        NotificationFactory.error({
+          message: 'Ooops! Something went wrong...',
+          description: 'Please try again or contact our support team.',
+        });
+      });
   };
 }
 
@@ -141,4 +146,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export const EditSchoolSettingsForm = connect<Props, DispatchProps>(
   null,
   mapDispatchToProps,
-)(Form.create<Props & FormComponentProps>()(EditSchoolSettingsFields));
+)(EditSchoolSettingsFields);

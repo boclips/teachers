@@ -39,6 +39,20 @@ window.Appcues = {
 
 window.open = jest.fn();
 
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 export async function waitForElement(selector: string) {
   await eventually(() => {
     expect(findElement(selector)).toBeTruthy();

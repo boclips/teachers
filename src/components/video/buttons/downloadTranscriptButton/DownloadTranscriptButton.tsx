@@ -1,4 +1,5 @@
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
+import Icon from '@ant-design/icons';
 import React, { useCallback } from 'react';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { fetchVideoTranscript } from 'src/services/videos/fetchVideoTranscript';

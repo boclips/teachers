@@ -1,19 +1,18 @@
-import { Form } from 'antd';
 import { mount } from 'enzyme';
 import * as React from 'react';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import { PasswordForm } from './PasswordForm';
+import Form from "antd/lib/form/Form";
 
 const validPassword = 'Aa123456';
 
 describe('PasswordForm', () => {
-  const Password = Form.create({ name: 'register' })(PasswordForm);
   let events: EventSimulator;
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Password />);
+    wrapper = mount(<Form><PasswordForm /></Form>);
     events = new EventSimulator(wrapper);
   });
 

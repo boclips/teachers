@@ -1,9 +1,9 @@
 import { Button, Carousel, Col, Form, Row } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
 import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { FormInstance } from 'antd/lib/form';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
@@ -74,9 +74,11 @@ interface DispatchProps {
 }
 
 class OnboardingForm extends React.Component<
-  OnboardingProps & FormComponentProps & DispatchProps,
+  OnboardingProps & DispatchProps,
   InternalState
 > {
+  private formRef = React.createRef<FormInstance>();
+
   private formCarousel: Carousel;
   private imageCarousel: Carousel;
 
@@ -180,7 +182,8 @@ class OnboardingForm extends React.Component<
               {this.state.currentIndex + 1} of {this.state.numberOfSlides}
             </span>
             <Form
-              onSubmit={this.handleSubmit}
+              onFinish={this.handleFormFinish}
+              onFinishFailed={this.handleFormFinishFailed}
               layout="vertical"
               data-qa="onboarding-form"
               className="onboarding-form__form"
@@ -215,7 +218,7 @@ class OnboardingForm extends React.Component<
                         errors={this.state.screenReaderErrors}
                       />
                     )}
-                    <NameForm form={this.props.form} />
+                    <NameForm />
                     <p className="onboarding-form__notes">
                       <span className={'onboarding-form__asterisk'}>*</span>{' '}
                       Required field
@@ -237,15 +240,10 @@ class OnboardingForm extends React.Component<
                     </p>
                     <SubjectsForm
                       label="Your subjects"
-                      form={this.props.form}
                       subjects={this.props.subjects}
                       placeholder="Choose subjects"
-                      initialValue={[]}
                     />
-                    <AgeRangeForm
-                      label="Your age groups"
-                      form={this.props.form}
-                    />
+                    <AgeRangeForm label="Your age groups" />
                   </section>
                   <section
                     className={
@@ -268,23 +266,23 @@ class OnboardingForm extends React.Component<
                     )}
                     <CountriesForm
                       label="Country"
-                      form={this.props.form}
                       countries={this.props.countries}
                       placeholder="Choose country"
                       onCountryChange={this.onCountryChange}
+                      formRef={this.formRef}
                     />
                     {this.state.country &&
                       (this.state.country.id === 'USA' ? (
                         <section data-qa="usa-school-details">
                           <StatesForm
+                            formRef={this.formRef}
                             label="State"
-                            form={this.props.form}
                             states={this.state.country.states}
                             placeholder="Choose state"
                             onStateChange={this.onStateChange}
                           />
                           <SchoolForm
-                            form={this.props.form}
+                            formRef={this.formRef}
                             country={this.state.country}
                             placeholder="Enter the name of your school"
                             label="School"
@@ -295,7 +293,7 @@ class OnboardingForm extends React.Component<
                       ) : (
                         <section data-qa="non-usa-school-details">
                           <SchoolForm
-                            form={this.props.form}
+                            formRef={this.formRef}
                             country={this.state.country}
                             placeholder="Enter the name of your school"
                             label="School"
@@ -326,8 +324,8 @@ class OnboardingForm extends React.Component<
                         errors={this.state.screenReaderErrors}
                       />
                     )}
-                    <MarketingAgreementForm form={this.props.form} />
-                    <PrivacyPolicyAgreementForm form={this.props.form} />
+                    <MarketingAgreementForm />
+                    <PrivacyPolicyAgreementForm />
                   </section>
                 </Carousel>
                 <OnboardingProgressDots
@@ -352,7 +350,7 @@ class OnboardingForm extends React.Component<
                   className="onboarding-form__submit"
                   size="large"
                   type="primary"
-                  onClick={this.handleSubmit}
+                  htmlType="submit"
                 >
                   Finish
                 </Button>
@@ -386,23 +384,19 @@ class OnboardingForm extends React.Component<
   private next = () => {
     const currentIndex = this.state.currentIndex;
 
-    this.props.form.validateFieldsAndScroll(
-      validationFields[currentIndex],
-      validationErrors => {
-        if (!validationErrors) {
-          this.state.formCarousel.next();
-          this.setState({
-            ...this.state,
-            screenReaderErrors: null,
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            screenReaderErrors: transformErrors(validationErrors),
-          });
-        }
-      },
-    );
+    this.formRef.current
+      .validateFields(validationFields[currentIndex])
+      .then(() => {
+        this.state.formCarousel.next();
+        this.setState({
+          screenReaderErrors: null,
+        });
+      })
+      .catch(errors => {
+        this.setState({
+          screenReaderErrors: transformErrors(errors),
+        });
+      });
   };
 
   private onCountryChange = country =>
@@ -410,57 +404,53 @@ class OnboardingForm extends React.Component<
 
   private onStateChange = state => this.setState({ ...this.state, state });
 
-  private handleSubmit = () => {
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
-        const ageRanges = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it),
-        );
-        const ages = AgeRange.extractContainedAges(ageRanges);
+  private handleFormFinishFailed = errors => {
+    this.setState({
+      screenReaderErrors: transformErrors(errors),
+    });
+  };
 
-        this.setState({ ...this.state, updating: true });
-        onboardUser(
-          this.props.links,
-          {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            ages,
-            subjects: values.subjects,
-            country: values.country,
-            state: values.state,
-            schoolName: values.schoolName,
-            schoolId:
-              values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-            hasOptedIntoMarketing: values.hasOptedIntoMarketing,
-            referralCode: registrationContext?.referralCode,
-            utm: registrationContext?.utm,
-          },
-          this.props.userProfile.email,
-        )
-          .then(() => {
-            this.props.goToHomepage();
-            this.props.updateUser();
-          })
-          .catch(ex => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
+  private handleFormFinish = values => {
+    const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
+    const ageRanges = (values.ageRange as string[]).map(it =>
+      AgeRange.decodeJSON(it),
+    );
+    const ages = AgeRange.extractContainedAges(ageRanges);
 
-            this.setState({
-              ...this.state,
-              updating: false,
-            });
-          });
-      } else {
+    this.setState({ ...this.state, updating: true });
+    onboardUser(
+      this.props.links,
+      {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        ages,
+        subjects: values.subjects,
+        country: values.country,
+        state: values.state,
+        schoolName: values.schoolName,
+        schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+        hasOptedIntoMarketing: values.hasOptedIntoMarketing,
+        referralCode: registrationContext?.referralCode,
+        utm: registrationContext?.utm,
+      },
+      this.props.userProfile.email,
+    )
+      .then(() => {
+        this.props.goToHomepage();
+        this.props.updateUser();
+      })
+      .catch(ex => {
+        console.error(ex);
+        NotificationFactory.error({
+          message: 'Ooops! Something went wrong...',
+          description: 'Please try again or contact our support team.',
+        });
+
         this.setState({
           ...this.state,
-          screenReaderErrors: transformErrors(err),
+          updating: false,
         });
-      }
-    });
+      });
   };
 }
 
@@ -485,4 +475,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export default connect<OnboardingProps, DispatchProps, {}>(
   mapStateToProps,
   mapDispatchToProps,
-)(Form.create<OnboardingProps & FormComponentProps>()(OnboardingForm));
+)(OnboardingForm);

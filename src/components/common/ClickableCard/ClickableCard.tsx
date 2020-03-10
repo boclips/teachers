@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import { CardProps } from 'antd/es/card';
+import { CardProps } from 'antd/lib/card';
 import classnames from 'classnames';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';

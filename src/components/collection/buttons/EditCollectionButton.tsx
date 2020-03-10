@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import Icon from 'antd/lib/icon';
+import Icon from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import State from '../../../types/State';
 import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
@@ -32,7 +32,6 @@ export const EditCollectionButton = React.memo(({ collection }: Props) => {
           disabled={disableButton || visible}
         >
           <Icon
-            theme="filled"
             aria-label="Edit collection"
             component={EditCollectionSVG}
           />

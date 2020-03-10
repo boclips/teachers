@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Icon } from 'antd';
+import Icon from '@ant-design/icons';
+import { Button } from 'antd';
 import ShareSVG from 'resources/images/share.svg';
 import Bodal from 'src/components/common/Bodal';
 import './ShareButton.less';

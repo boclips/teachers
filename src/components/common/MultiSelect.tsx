@@ -1,8 +1,8 @@
-import Select, { SelectProps } from 'antd/lib/select';
+import Select, {SelectProps, SelectValue} from 'antd/lib/select';
 import React from 'react';
 import './MultiSelect.less';
 
-class MultiSelect extends React.PureComponent<SelectProps> {
+class MultiSelect extends React.PureComponent<SelectProps<SelectValue>> {
   public static Option = Select.Option;
   public render() {
     return (

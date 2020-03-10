@@ -1,4 +1,6 @@
-import { Button, Icon } from 'antd';
+import {FormInstance} from "antd/lib/form";
+import { Button } from 'antd';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -17,7 +19,7 @@ import {
 } from '../../../common/higherOrderComponents/withMediaBreakPoint';
 import { bulkUpdateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 import './FilterButton.less';
-import FilterButtonForm, { FilterFormEditableFields } from './FilterButtonForm';
+import FilterButtonForm from './FilterButtonForm';
 
 interface FilterRequest {
   duration?: DurationRange;
@@ -38,7 +40,7 @@ type Props = WithAppliedSearchParametersProps &
   WithMediaBreakPointProps;
 
 class FilterButton extends React.Component<Props, State> {
-  private formRef: any;
+  private formRef = React.createRef<FormInstance>();
 
   public constructor(props: Props) {
     super(props);
@@ -65,8 +67,8 @@ class FilterButton extends React.Component<Props, State> {
       visible: false,
     });
 
-    const form = this.formRef.props.form;
-    form.validateFields((_, values: FilterFormEditableFields) => {
+    const form = this.formRef.current;
+    form.validateFields().then(values => {
       const filterRequest: FilterRequest = {};
 
       filterRequest.duration =
@@ -79,10 +81,6 @@ class FilterButton extends React.Component<Props, State> {
         this.props.onSubmit(filterRequest);
       }
     });
-  };
-
-  private saveFormRef = formRef => {
-    this.formRef = formRef;
   };
 
   private getFiltersAppliedText = () =>
@@ -112,11 +110,11 @@ class FilterButton extends React.Component<Props, State> {
           visible={this.state.visible}
         >
           <FilterButtonForm
+            formRef={this.formRef}
             duration={this.props.duration && this.props.duration[0]}
             ageRangeMin={this.props.ageRangeMin}
             ageRangeMax={this.props.ageRangeMax}
             subjectIds={this.props.subjectIds}
-            wrappedComponentRef={this.saveFormRef}
           />
         </Bodal>
       </React.Fragment>

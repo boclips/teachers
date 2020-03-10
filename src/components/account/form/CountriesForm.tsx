@@ -1,6 +1,6 @@
 import { Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import React from 'react';
+import { FormInstance } from 'antd/lib/form';
+import React, { RefObject } from 'react';
 import { Country } from '../../../types/Country';
 import MultiSelect from '../../common/MultiSelect';
 import '../../common/MultiSelect.less';
@@ -11,37 +11,38 @@ interface CountriesFormProps {
   label?: string;
   initialValue?: string;
   onCountryChange?: (value: Country) => void;
+  formRef: RefObject<FormInstance>;
 }
 
-export class CountriesForm extends React.Component<
-  FormComponentProps & CountriesFormProps
-> {
+export class CountriesForm extends React.Component<CountriesFormProps> {
   public onUpdateCountry = (value: string) => {
-    this.props.form.setFieldsValue({ country: value });
+    this.props.formRef.current.setFieldsValue({ country: value });
     this.props.onCountryChange(this.props.countries.find(c => c.id === value));
   };
 
   public render() {
+    const {onCountryChange,formRef, ...selectProps} = this.props;
     return (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('country', {
-          rules: [{ required: true, message: 'Please enter your country' }],
-          initialValue: this.props.initialValue,
-        })(
-          <Select
-            filterOption={this.filterResults()}
-            placeholder={this.props.placeholder}
-            showSearch={true}
-            size={'large'}
-            onChange={this.onUpdateCountry}
-            data-qa="countries-filter-select"
-            dropdownClassName={'dropdown'}
-            className={'boclips-multi-select-selection'}
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
+      <Form.Item
+        className="form__item"
+        label={this.props.label}
+        colon={false}
+        name="country"
+        rules={[{ required: true, message: 'Please enter your country' }]}
+      >
+        <Select
+          filterOption={this.filterResults()}
+          placeholder={this.props.placeholder}
+          showSearch={true}
+          size={'large'}
+          onChange={this.onUpdateCountry}
+          data-qa="countries-filter-select"
+          dropdownClassName={'dropdown'}
+          className={'boclips-multi-select-selection'}
+          {...selectProps}
+        >
+          {this.generateOptions()}
+        </Select>
       </Form.Item>
     );
   }

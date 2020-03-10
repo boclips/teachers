@@ -1,4 +1,4 @@
-import { RowProps } from 'antd/es/row';
+import { RowProps } from 'antd/lib/row';
 import classnames from 'classnames';
 import React from 'react';
 import { Row } from 'antd';
@@ -19,7 +19,6 @@ export class FiniteGrid extends React.PureComponent<Props> {
     return (
       <Row
         className={classnames('boclips-grid', this.props.className)}
-        type="flex"
         gutter={this.props.gutter}
       >
         {this.props.children}

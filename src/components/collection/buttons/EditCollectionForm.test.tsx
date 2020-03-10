@@ -14,6 +14,7 @@ import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import MockFetchVerify, { axiosMock } from 'test-support/MockFetchVerify';
 import { VideoCollection } from 'src/types/VideoCollection';
 import eventually from 'test-support/eventually';
+import {SelectValue} from "antd/lib/select";
 import { EditCollectionForm } from './EditCollectionForm';
 
 jest.mock('antd/lib/slider', () =>
@@ -33,7 +34,7 @@ jest.mock('antd/lib/slider', () =>
 );
 
 jest.mock('antd/lib/select', () => {
-  const Select = React.forwardRef((props: SelectProps, ref: Ref<any>) => (
+  const Select = React.forwardRef((props: SelectProps<SelectValue>, ref: Ref<any>) => (
     <input
       ref={ref}
       type="text"

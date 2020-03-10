@@ -1,7 +1,8 @@
 import { storiesOf } from '@storybook/react';
+import Icon from '@ant-design/icons';
 import React from 'react';
 
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import BookmarkEmptySVG from '../../../../resources/images/save.svg';
 import BookmarkFilledSVG from '../../../../resources/images/remove-video.svg';
 import ShareSVG from '../../../../resources/images/share.svg';

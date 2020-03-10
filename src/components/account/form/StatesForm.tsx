@@ -1,46 +1,51 @@
 import { Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import React from 'react';
+import {FormInstance} from "antd/lib/form";
+import React, {RefObject} from 'react';
 import { UsaState } from '../../../types/UsaState';
 import '../../common/MultiSelect.less';
 
 interface StatesFormProps {
+  formRef: RefObject<FormInstance>,
   states: UsaState[];
   placeholder?: string;
   label?: string;
+  // todo(AO): remove
   initialValue?: string;
+  // todo(AO): remove
   onStateChange?: (value: UsaState) => void;
 }
 
 export class StatesForm extends React.Component<
-  FormComponentProps & StatesFormProps
+   StatesFormProps
 > {
   public onUpdateState = (value: string) => {
-    this.props.form.setFieldsValue({ state: value });
+    this.props.formRef.current.setFieldsValue({ state: value });
     this.props.onStateChange(this.props.states.find(c => c.id === value));
   };
 
   public render() {
+    const {formRef, initialValue, onStateChange, ...selectProps} = this.props;
     return (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('state', {
-          rules: [{ required: true, message: 'Please enter your state' }],
-          initialValue: this.props.initialValue,
-        })(
-          <Select
-            filterOption={this.filterResults()}
-            placeholder={this.props.placeholder}
-            showSearch={true}
-            className={'boclips-multi-select-selection'}
-            size={'large'}
-            onChange={this.onUpdateState}
-            data-qa="states-filter-select"
-            dropdownClassName={'dropdown'}
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
+      <Form.Item
+        className="form__item"
+        label={this.props.label}
+        colon={false}
+        name="state"
+        rules={[{ required: true, message: 'Please enter your state' }]}
+      >
+        <Select
+          filterOption={this.filterResults()}
+          placeholder={this.props.placeholder}
+          showSearch={true}
+          className={'boclips-multi-select-selection'}
+          size={'large'}
+          onChange={this.onUpdateState}
+          data-qa="states-filter-select"
+          dropdownClassName={'dropdown'}
+          {...selectProps}
+        >
+          {this.generateOptions()}
+        </Select>
       </Form.Item>
     );
   }

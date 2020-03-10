@@ -1,16 +1,13 @@
 import { Button, Col, Form, Input, Row } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { FormInstance } from 'antd/lib/form';
 import GoogleSVG from '../../../../resources/images/google.svg';
 import MicrosoftSVG from '../../../../resources/images/office-365.svg';
 import RegistrationLogoSVG from '../../../../resources/images/registration-logo.svg';
 import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
-import {
-  createAccount,
-  CreateAccountRequest,
-} from '../../../services/account/createAccount';
+import { createAccount } from '../../../services/account/createAccount';
 import Utm from '../../../services/account/Utm';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
@@ -51,9 +48,11 @@ interface DispatchProps {
 }
 
 class CreateAccountForm extends React.Component<
-  CreateAccountProps & FormComponentProps & DispatchProps,
+  CreateAccountProps & DispatchProps,
   InternalState
 > {
+  private formRef = React.createRef<FormInstance>();
+
   public state = {
     showConfirmation: false,
     confirmDirty: false,
@@ -82,8 +81,6 @@ class CreateAccountForm extends React.Component<
   }
 
   public renderForm() {
-    const { getFieldDecorator } = this.props.form;
-
     return (
       <section
         className="create-account-form__container"
@@ -97,27 +94,28 @@ class CreateAccountForm extends React.Component<
             <ScreenReaderErrors errors={this.state.screenReaderErrors} />
           )}
 
-          <Form onSubmit={this.handleSubmit}>
+          <Form
+            ref={this.formRef}
+            onFinish={this.handleFinish}
+            onFinishFailed={this.handleFinishFailed}
+            initialValues={{
+              analyticsId: AnalyticsFactory.externalAnalytics().getId(),
+              recaptchaToken: '',
+            }}
+          >
             <h1 className="alt create-account-form__title">Create account</h1>
 
             <section className="create-account-form__form">
-              <EmailForm form={this.props.form} />
-
-              <PasswordForm form={this.props.form} />
+              <EmailForm />
+              <PasswordForm />
             </section>
 
             <div style={{ display: 'none' }}>
-              <Form.Item>
-                {getFieldDecorator('analyticsId', {
-                  rules: [],
-                  initialValue: AnalyticsFactory.externalAnalytics().getId(),
-                })(<Input type="text" />)}
+              <Form.Item name="analyticsId">
+                <Input type="text" />
               </Form.Item>
-              <Form.Item>
-                {getFieldDecorator('recaptchaToken', {
-                  rules: [],
-                  initialValue: '',
-                })(<Input type="text" />)}
+              <Form.Item name="recaptchaToken">
+                <Input type="text" />
               </Form.Item>
               {this.state.renderRecaptcha && (
                 <Recaptcha verifyCallback={this.updateRecaptchaToken} />
@@ -197,7 +195,7 @@ class CreateAccountForm extends React.Component<
   }
 
   private updateRecaptchaToken = recaptchaToken => {
-    this.props.form.setFieldsValue({ recaptchaToken });
+    this.formRef.current.setFieldsValue({ recaptchaToken });
     this.setState({ renderRecaptcha: false });
   };
 
@@ -209,44 +207,36 @@ class CreateAccountForm extends React.Component<
     this.props.onSsoLogin('microsoft');
   };
 
-  private handleSubmit = event => {
-    event.preventDefault();
-    event.stopPropagation();
+  private handleFinish = values => {
+    this.setState({ creating: true });
+    createAccount(this.props.links, values)
+      .then(() => {
+        this.setState({ ...this.state, showConfirmation: true });
+      })
+      .catch(error => {
+        const formDetailsRedacted = {
+          ...values,
+          password: 'redacted',
+        };
 
-    this.props.form.validateFieldsAndScroll(
-      (err, values: CreateAccountRequest) => {
-        if (!err) {
-          this.setState({ ...this.state, creating: true });
-          createAccount(this.props.links, values)
-            .then(() => {
-              this.setState({ ...this.state, showConfirmation: true });
-            })
-            .catch(error => {
-              const formDetailsRedacted = {
-                ...values,
-                password: 'redacted',
-              };
-
-              if (error && error.status === 409) {
-                handleUserExists(formDetailsRedacted);
-              } else {
-                handleError(formDetailsRedacted);
-              }
-
-              this.setState({
-                ...this.state,
-                creating: false,
-                renderRecaptcha: true,
-              });
-            });
+        if (error && error.status === 409) {
+          handleUserExists(formDetailsRedacted);
         } else {
-          this.setState({
-            ...this.state,
-            screenReaderErrors: transformErrors(err),
-          });
+          handleError(formDetailsRedacted);
         }
-      },
-    );
+
+        this.setState({
+          ...this.state,
+          creating: false,
+          renderRecaptcha: true,
+        });
+      });
+  };
+
+  private handleFinishFailed = errors => {
+    this.setState({
+      screenReaderErrors: transformErrors(errors),
+    });
   };
 }
 
@@ -289,7 +279,7 @@ const extractUtmParams = queryParam => {
   }
 };
 
-export default connect<CreateAccountProps, {}, {}>(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Form.create<CreateAccountProps & FormComponentProps>()(CreateAccountForm));
+)(CreateAccountForm);

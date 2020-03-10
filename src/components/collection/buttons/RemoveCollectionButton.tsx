@@ -1,4 +1,5 @@
-import { Icon, Modal } from 'antd';
+import { Modal } from 'antd';
+import Icon from '@ant-design/icons';
 import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch } from 'react-redux';

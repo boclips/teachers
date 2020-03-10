@@ -1,16 +1,17 @@
 import { AutoComplete, Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
-import React from 'react';
+import React, {RefObject} from 'react';
 import { searchSchools } from '../../../services/schools/searchSchools';
 import { Country } from '../../../types/Country';
 import { School } from '../../../types/School';
 import { UsaState } from '../../../types/UsaState';
 import MultiSelect from '../../common/MultiSelect';
 import '../../common/MultiSelect.less';
+import {FormInstance} from "antd/lib/form";
 
 export const UNKNOWN_SCHOOL = '-1';
 
 interface SchoolFormProps {
+  formRef: RefObject<FormInstance>,
   country: Country;
   state?: UsaState;
   placeholder?: string;
@@ -25,10 +26,10 @@ interface SchoolFormState {
 }
 
 export class SchoolForm extends React.Component<
-  FormComponentProps & SchoolFormProps,
+  SchoolFormProps,
   SchoolFormState
 > {
-  public constructor(props: Readonly<FormComponentProps & SchoolFormProps>) {
+  public constructor(props: Readonly<SchoolFormProps>) {
     super(props);
     this.state = {
       schools: [],
@@ -38,9 +39,9 @@ export class SchoolForm extends React.Component<
 
   public onUpdateSchool = (value: string) => {
     if (this.props.allowUnknownSchools) {
-      this.props.form.setFieldsValue({ schoolName: value });
+      this.props.formRef.current.setFieldsValue({ schoolName: value });
     } else {
-      this.props.form.setFieldsValue({ schoolId: value });
+      this.props.formRef.current.setFieldsValue({ schoolId: value });
     }
   };
 
@@ -49,7 +50,6 @@ export class SchoolForm extends React.Component<
       searchSchools(searchValue, this.props.country, this.props.state).then(
         schools => {
           this.setState({
-            ...this.state,
             schools,
             searchValue,
           });
@@ -58,58 +58,49 @@ export class SchoolForm extends React.Component<
     }
   };
 
-  public componentDidUpdate(prevProps: FormComponentProps) {
-    if (
-      this.props.form.getFieldValue('schoolId') !==
-        prevProps.form.getFieldValue('schoolId') &&
-      this.props.form.getFieldValue('schoolId') === undefined
-    ) {
-      this.setState({ ...this.state, schools: [] });
-    }
-  }
-
   public render() {
+    const {allowUnknownSchools, ...autoCompleteProps} = this.props;
     return this.props.allowUnknownSchools ? (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('schoolName', {
-          rules: [{ required: true, message: 'Please enter your school' }],
-          initialValue: this.props.initialValue,
-        })(
-          // @ts-ignore
-          <AutoComplete
-            dataSource={this.state.schools.map(s => s.name)}
-            placeholder={this.props.placeholder}
-            size={'large'}
-            onSearch={this.onSearchSchool}
-            onChange={this.onUpdateSchool}
-            data-qa="school"
-            dropdownClassName={'dropdown'}
-            {...this.props}
-          />,
-        )}
+      <Form.Item
+        className="form__item"
+        label={this.props.label}
+        colon={false}
+        name="schoolName"
+        rules={[{ required: true, message: 'Please enter your school' }]}
+      >
+        <AutoComplete
+          dataSource={this.state.schools.map(s => s.name)}
+          placeholder={this.props.placeholder}
+          size={'large'}
+          onSearch={this.onSearchSchool}
+          onChange={this.onUpdateSchool}
+          data-qa="school"
+          dropdownClassName={'dropdown'}
+          {...autoCompleteProps}
+        />
       </Form.Item>
     ) : (
-      <Form.Item className="form__item" label={this.props.label}>
-        {this.props.form.getFieldDecorator('schoolId', {
-          rules: [{ required: true, message: 'Please enter your school' }],
-          initialValue: this.props.initialValue && this.props.initialValue.name,
-        })(
-          <Select
-            filterOption={false}
-            placeholder={this.props.placeholder}
-            onSearch={this.onSearchSchool}
-            disabled={!this.props.state}
-            showSearch={true}
-            data-qa="school-filter-select"
-            size={'large'}
-            className={'boclips-multi-select-selection'}
-            dropdownClassName={'dropdown'}
-            notFoundContent={'Please type to search your school'}
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
+      <Form.Item
+        className="form__item"
+        label={this.props.label}
+        name="schoolId"
+        rules={[{ required: true, message: 'Please enter your school' }]}
+      >
+        <Select
+          filterOption={false}
+          placeholder={this.props.placeholder}
+          onSearch={this.onSearchSchool}
+          disabled={!this.props.state}
+          showSearch={true}
+          data-qa="school-filter-select"
+          size={'large'}
+          className={'boclips-multi-select-selection'}
+          dropdownClassName={'dropdown'}
+          notFoundContent={'Please type to search your school'}
+          {...autoCompleteProps}
+        >
+          {this.generateOptions()}
+        </Select>
       </Form.Item>
     );
   }

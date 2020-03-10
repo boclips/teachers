@@ -56,7 +56,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     );
   }
 
-  private renderMenu = (): React.ReactFragment => (
+  private renderMenu = () => (
     <Menu className="subject-menu__list subject-menu--desktop">
       {this.props.disciplines.map(discipline => (
         <Menu.ItemGroup

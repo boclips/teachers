@@ -1,5 +1,4 @@
 import { Button, Form, Row } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -34,11 +33,11 @@ interface InternalState {
   screenReaderErrors: ScreenReaderError[];
 }
 
-class ProfileFormFields extends React.Component<
-  Props & FormComponentProps & DispatchProps,
+class ProfileForm extends React.Component<
+  Props & DispatchProps,
   InternalState
 > {
-  public constructor(props: Props & FormComponentProps & DispatchProps) {
+  public constructor(props: Props & DispatchProps) {
     super(props);
 
     this.state = {
@@ -48,32 +47,33 @@ class ProfileFormFields extends React.Component<
 
   public render() {
     return (
-      <Form data-qa="profile-form" className="account-settings__form">
+      <Form
+        onFinish={this.handleFormFinish}
+        onFinishFailed={this.handleFormFinishFailed}
+        data-qa="profile-form"
+        className="account-settings__form"
+        initialValues={{
+          firstName: this.props.userProfile.firstName,
+          lastName: this.props.userProfile.lastName,
+          subjects: this.props.userProfile.subjects,
+          ageRange: this.props.userProfile.ages,
+        }}
+      >
         {this.state.screenReaderErrors && (
           <ScreenReaderErrors errors={this.state.screenReaderErrors} />
         )}
         <Row>
-          <NameForm
-            form={this.props.form}
-            initialFirstName={this.props.userProfile.firstName}
-            initialLastName={this.props.userProfile.lastName}
-          />
+          <NameForm />
         </Row>
         <Row>
           <SubjectsForm
-            form={this.props.form}
             subjects={this.props.subjects}
             placeholder={'Choose subjects'}
-            initialValue={this.props.userProfile.subjects}
             label={'Subjects'}
           />
         </Row>
         <Row>
-          <AgeRangeForm
-            form={this.props.form}
-            initialValue={this.props.userProfile.ages}
-            label={'Age groups'}
-          />
+          <AgeRangeForm label={'Age groups'} />
         </Row>
         <section className="buttons">
           <Button
@@ -88,7 +88,6 @@ class ProfileFormFields extends React.Component<
             htmlType={'submit'}
             type={'primary'}
             data-qa={'submit-update-user'}
-            onClick={this.submit}
             size="large"
           >
             Save changes
@@ -98,41 +97,34 @@ class ProfileFormFields extends React.Component<
     );
   }
 
-  private submit = () => {
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        const ageRanges = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it),
-        );
-        const ages = AgeRange.extractContainedAges(ageRanges);
-        editUser(this.props.links, {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          ages,
-          subjects: values.subjects,
-        })
-          .then(() => {
-            this.props.updateUser();
-            this.props.toggleForm();
-          })
-          .catch(ex => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
-
-            this.setState({
-              ...this.state,
-            });
-          });
-      } else {
-        this.setState({
-          ...this.state,
-          screenReaderErrors: transformErrors(err),
-        });
-      }
+  private handleFormFinishFailed = errors => {
+    this.setState({
+      screenReaderErrors: transformErrors(errors),
     });
+  };
+
+  private handleFormFinish = values => {
+    const ageRanges = (values.ageRange as string[]).map(it =>
+      AgeRange.decodeJSON(it),
+    );
+    const ages = AgeRange.extractContainedAges(ageRanges);
+    editUser(this.props.links, {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      ages,
+      subjects: values.subjects,
+    })
+      .then(() => {
+        this.props.updateUser();
+        this.props.toggleForm();
+      })
+      .catch(ex => {
+        console.error(ex);
+        NotificationFactory.error({
+          message: 'Ooops! Something went wrong...',
+          description: 'Please try again or contact our support team.',
+        });
+      });
   };
 }
 
@@ -145,4 +137,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
 export const EditProfileForm = connect<Props, DispatchProps>(
   null,
   mapDispatchToProps,
-)(Form.create<DispatchProps & Props & FormComponentProps>()(ProfileFormFields));
+)(ProfileForm);
