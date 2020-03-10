@@ -1,8 +1,8 @@
 import { Button, Col, Icon, Row } from 'antd';
 import React from 'react';
-import SearchResultsCount from '../SearchResultsCount';
+import FilterIconSVG from '../../../resources/images/filter-icon.svg';
+import SearchResultsCount from './SearchResultsCount';
 import './SearchResultsHeader.less';
-import FilterIconSVG from '../../../../resources/images/filter-icon.svg';
 
 interface Props {
   totalElements: number;

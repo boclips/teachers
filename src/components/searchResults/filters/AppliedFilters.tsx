@@ -4,11 +4,12 @@ import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
-import AgeRangeFilterTag from '../../filters/AgeRangeFilterTag';
-import ClearAllButton from '../../filters/ClearAllButton';
-import DurationFilterTag from '../../filters/DurationFilterTag';
+import AgeRangeFilterTag from './AgeRangeFilterTag';
+import ClearAllButton from './ClearAllButton';
+import DurationFilterTag from './DurationFilterTag';
 import './AppliedFilters.less';
-import SubjectFilterTag from '../../filters/SubjectFilterTag';
+// eslint-disable-next-line import/order
+import SubjectFilterTag from 'src/components/searchResults/filters/SubjectFilterTag';
 
 export const AppliedFilters = withAppliedSearchParameters(
   (props: WithAppliedSearchParametersProps) =>

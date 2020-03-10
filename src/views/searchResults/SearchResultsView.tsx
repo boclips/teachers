@@ -20,8 +20,8 @@ import {
   CollectionSearchResult,
   VideoSearchResult,
 } from 'src/types/SearchResults';
-import { FilterPanel } from 'src/components/searchResults/new/filters/FilterPanel';
-import { SearchPanel } from 'src/components/searchResults/new/SearchPanel';
+import { FilterPanel } from 'src/components/searchResults/filters/FilterPanel';
+import { SearchPanel } from 'src/components/searchResults/SearchPanel';
 import State from '../../types/State';
 import PageLayout from '../../components/layout/PageLayout';
 import './SearchResultsView.less';

@@ -5,7 +5,7 @@ import {
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import { Col, Row } from 'antd';
-import { SearchPanelHeader } from 'src/components/searchResults/new/SearchPanelHeader';
+import { SearchPanelHeader } from 'src/components/searchResults/SearchPanelHeader';
 import { Link } from 'react-router-dom';
 import noResultsIllustration from 'resources/images/no-results-illustration.png';
 import BulletDiscSVG from '../../../../resources/images/bullet-disc.svg';

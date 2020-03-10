@@ -1,12 +1,12 @@
 import { Row, Pagination } from 'antd';
 import React from 'react';
-import { SearchResultsCardList } from '../SeachResultsCardList';
-
-import './SearchResultsWithHeader.less';
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from '../../../types/SearchResults';
+} from 'src/types/SearchResults';
+
+import { SearchResultsCardList } from './SeachResultsCardList';
+import './SearchResultsWithHeader.less';
 import { SearchPanelHeader } from './SearchPanelHeader';
 
 interface DrawerFilterProps {

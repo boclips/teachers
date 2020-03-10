@@ -11,7 +11,7 @@ import {
 import { Subject } from 'src/types/Subject';
 import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
 import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
-import State from '../../../../types/State';
+import State from '../../../types/State';
 
 const FilterKey = {
   AGE: 'age',

@@ -9,7 +9,7 @@ import CollectionCardContainer from '../collection/card/CollectionCardContainer'
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
 import { VideoCard } from '../video/card/VideoCard';
 import './SearchResultsCardList.less';
-import './new/FiltersBar.less';
+import './FiltersBar.less';
 
 interface Props {
   videos: Video[];
