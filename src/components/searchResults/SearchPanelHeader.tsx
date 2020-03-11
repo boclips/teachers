@@ -2,6 +2,7 @@ import { Button, Col, Icon, Row } from 'antd';
 import React from 'react';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
 import './SearchResultsHeader.less';
+import { MaxElementCount } from 'src/services/videos/parseVideosResponse';
 
 interface Props {
   totalElements: number;
@@ -10,8 +11,7 @@ interface Props {
 
 export class SearchPanelHeader extends React.Component<Props> {
   private createResultString = resultCount => {
-    const MAX_COUNT = 500;
-    const count = Math.min(resultCount, MAX_COUNT);
+    const count = Math.min(resultCount, MaxElementCount);
 
     const plural = count > 1 ? 's' : '';
 

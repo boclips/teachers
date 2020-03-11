@@ -1,5 +1,18 @@
+import PageSpec from 'src/types/PageSpec';
 import { VideoSearchResult } from '../../types/SearchResults';
 import convertVideoResource from './convertVideoResource';
+
+export const MaxElementCount = 500;
+
+function limitPageResponse(page: any): PageSpec {
+  const totalElements = Math.min(page.totalElements, MaxElementCount);
+  const totalPages = totalElements / page.size;
+  return {
+    ...page,
+    totalElements,
+    totalPages,
+  };
+}
 
 export function parseVideosResponse(
   response: any,
@@ -10,6 +23,6 @@ export function parseVideosResponse(
   return {
     videos,
     query,
-    paging: response.data.page,
+    paging: limitPageResponse(response.data.page),
   };
 }
