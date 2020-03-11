@@ -1,39 +1,47 @@
-import { shallow } from 'enzyme';
 import React from 'react';
-import { VideoFactory } from '../../../../test-support/factories';
-import { Video } from '../../../types/Video';
+import { SubjectFactory, VideoFactory } from 'test-support/factories';
+import { Video } from 'src/types/Video';
+import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import VideoCardTagList from './VideoCardTagList';
-
-const getWrapper = (givenProps: Partial<{ video: Video }> = {}) => {
-  const props = {
-    video: VideoFactory.sample(),
-    ...givenProps,
+describe(`VideoCardTagList`, () => {
+  const getWrapper = (givenProps: Partial<{ video: Video }> = {}) => {
+    const props = {
+      video: VideoFactory.sample(),
+      ...givenProps,
+    };
+    return renderWithBoclipsStore(<VideoCardTagList {...props} />, {
+      authentication: { status: 'authenticated' },
+    });
   };
-  return shallow(<VideoCardTagList {...props} />);
-};
 
-test('it does not render subject tags container if there are none on the video', () => {
-  const video = VideoFactory.sample({ subjects: [] });
-  const wrapper = getWrapper({ video });
+  test('renders subject tags if there are some on the video', async () => {
+    const wrapper = getWrapper({
+      video: VideoFactory.sample({
+        subjects: [
+          SubjectFactory.sample({ id: 'maths-subject-id', name: 'Maths' }),
+        ],
+      }),
+    });
 
-  expect(wrapper.find('.tag-list__subjects-container')).toHaveLength(0);
-});
+    expect(await wrapper.findByText('Maths')).toBeInTheDocument();
+  });
 
-test('renders subject tags container if there are some on the video', () => {
-  const wrapper = getWrapper();
-  expect(wrapper.find('.tag-list__subjects-container')).toHaveLength(1);
-});
+  test('renders best for tags if there are some on the video', async () => {
+    const wrapper = getWrapper({
+      video: VideoFactory.sample({ bestFor: 'Hook' }),
+    });
 
-test('it does not render best for tags container if there is none on the video', () => {
-  const video = VideoFactory.sample({ bestFor: null });
-  const wrapper = getWrapper({ video });
+    expect(await wrapper.findByText('Hook')).toBeInTheDocument();
+  });
 
-  expect(wrapper.find('.tag-list__best-for-container')).toHaveLength(0);
-});
+  test('does not render tags if unauthenticated', async () => {
+    const wrapper = renderWithBoclipsStore(
+      <VideoCardTagList video={VideoFactory.sample({ bestFor: 'Hook' })} />,
+      {
+        authentication: { status: 'anonymous' },
+      },
+    );
 
-test('renders best for tags container if there are some on the video', () => {
-  const video = VideoFactory.sample({ bestFor: 'Hook' });
-  const wrapper = getWrapper({ video });
-
-  expect(wrapper.find('.tag-list__best-for-container')).toHaveLength(1);
+    expect(await wrapper.queryByText('Hook')).toBeNull();
+  });
 });

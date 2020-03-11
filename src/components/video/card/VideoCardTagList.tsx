@@ -13,24 +13,12 @@ interface Props {
 const VideoCardTagList = React.memo((props: Props) => (
   <Authenticated>
     <div className="tag-list">
-      {props.video.ageRange && (
-        <div className="tag-list__age-container">
-          <AgeRangeTag ageRange={props.video.ageRange} />
-        </div>
-      )}
-
-      {props.video.subjects.length !== 0 && (
-        <div className="tag-list__subjects-container">
-          {props.video.subjects.map(subject => (
-            <SubjectTag subjectName={subject.name} key={subject.id} />
-          ))}
-        </div>
-      )}
-
+      {props.video.ageRange && <AgeRangeTag ageRange={props.video.ageRange} />}
+      {props.video.subjects.map(subject => (
+        <SubjectTag subjectName={subject.name} key={subject.id} />
+      ))}
       {props.video.bestFor && (
-        <div data-qa="best-for-tags" className="tag-list__best-for-container">
-          <Tag label="Best for" value={props.video.bestFor} />
-        </div>
+        <Tag label="Best for" value={props.video.bestFor} />
       )}
     </div>
   </Authenticated>

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { AgeRange } from 'src/types/AgeRange';
 import { bulkUpdateSearchParamsAction } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
@@ -6,8 +7,6 @@ import { DurationRange } from 'src/types/DurationRange';
 import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
-// eslint-disable-next-line import/order
-import { AgeRange } from 'src/types/AgeRange';
 
 export const FilterPanel = () => {
   const dispatch = useDispatch();
