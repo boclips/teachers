@@ -1,7 +1,6 @@
 import { Button, Col, Icon, Row } from 'antd';
 import React from 'react';
-import FilterIconSVG from '../../../resources/images/filter-icon.svg';
-import SearchResultsCount from './SearchResultsCount';
+import FilterIconSVG from 'resources/images/filter-icon.svg';
 import './SearchResultsHeader.less';
 
 interface Props {
@@ -10,6 +9,15 @@ interface Props {
 }
 
 export class SearchPanelHeader extends React.Component<Props> {
+  private createResultString = resultCount => {
+    const MAX_COUNT = 500;
+    const count = Math.min(resultCount, MAX_COUNT);
+
+    const plural = count > 1 ? 's' : '';
+
+    return `${count} result${plural} found`;
+  };
+
   public render() {
     return (
       <Row
@@ -18,7 +26,11 @@ export class SearchPanelHeader extends React.Component<Props> {
         className="search-results-header"
       >
         <Col>
-          <SearchResultsCount count={this.props.totalElements} />
+          {this.props.totalElements && (
+            <div className="results-count" data-qa="search-count">
+              {this.createResultString(this.props.totalElements)}
+            </div>
+          )}
         </Col>
         <Col lg={{ span: 0 }}>
           <Button

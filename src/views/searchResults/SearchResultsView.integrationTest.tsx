@@ -47,7 +47,7 @@ describe('SearchResultsView', () => {
     it(`renders helper message and filter bar if any filters selected`, async () => {
       const initialQuery = 'hello';
       const view = renderSearchResultsViewWithSampleData(initialQuery);
-      await waitForElement(() => view.getByText('result(s) found'));
+      await waitForElement(() => view.getByTestId('search-count'));
 
       new ApiStub()
         .defaultUser()
