@@ -34,5 +34,4 @@ describe('SearchPanelHeader', () => {
 
     expect(wrapper.queryByTestId('search-count')).toBeNull();
   });
-  it('Renders a filter button', () => {});
 });

@@ -26,7 +26,7 @@ export class SearchPanelHeader extends React.Component<Props> {
         className="search-results-header"
       >
         <Col>
-          {this.props.totalElements && (
+          {!!this.props.totalElements && (
             <div className="results-count" data-qa="search-count">
               {this.createResultString(this.props.totalElements)}
             </div>
