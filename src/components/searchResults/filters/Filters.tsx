@@ -101,7 +101,7 @@ const Filters = React.forwardRef(
                         { label: '5 - 9', value: '5-9' },
                         { label: '9 - 11', value: '9-11' },
                         { label: '11 - 14', value: '11-14' },
-                        { label: '14 + ', value: '14-99' },
+                        { label: '14 - 16', value: '14-16' },
                         { label: '16 + ', value: '16-99' },
                       ]}
                     />,
