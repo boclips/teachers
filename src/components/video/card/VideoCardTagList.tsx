@@ -1,9 +1,9 @@
 import React from 'react';
 import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
+import { BestForTag } from 'src/components/common/tags/BestForTag';
+import { SubjectTag } from 'src/components/common/tags/SubjectTag';
 import { Video } from 'src/types/Video';
 import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
-import { SubjectTag } from '../../common/tags/SubjectTag';
-import { Tag } from '../../common/tags/Tag';
 import './VideoCardTagList.less';
 
 interface Props {
@@ -17,9 +17,7 @@ const VideoCardTagList = React.memo((props: Props) => (
       {props.video.subjects.map(subject => (
         <SubjectTag subjectName={subject.name} key={subject.id} />
       ))}
-      {props.video.bestFor && (
-        <Tag label="Best for" value={props.video.bestFor} />
-      )}
+      {props.video.bestFor && <BestForTag value={props.video.bestFor} />}
     </div>
   </Authenticated>
 ));
