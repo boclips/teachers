@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Tag } from '../../types/Tag';
 import { Video } from '../../types/Video';
-import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import convertVideoResource from '../videos/convertVideoResource';
 
 export default function tagVideo(video: Video, tag: Tag): Promise<Video> {
@@ -14,9 +13,5 @@ export default function tagVideo(video: Video, tag: Tag): Promise<Video> {
       },
     )
     .then(response => response.data)
-    .then(convertVideoResource)
-    .then(resource => {
-      AnalyticsFactory.externalAnalytics().trackVideoTagging(video, tag);
-      return resource;
-    });
+    .then(convertVideoResource);
 }

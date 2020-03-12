@@ -20,7 +20,6 @@ export interface UpdateUserRequest {
 export function onboardUser(
   links: Links,
   request: UpdateUserRequest,
-  email: string,
 ): Promise<void> {
   if (userCannotActivate(links) || userCannotUpdate(links)) {
     return Promise.reject();
@@ -28,7 +27,6 @@ export function onboardUser(
 
   return updateUser(links, request, () => {
     AnalyticsFactory.externalAnalytics().trackOnboardingCompleted();
-    AnalyticsFactory.externalAnalytics().createUserProfile(request, email);
   });
 }
 

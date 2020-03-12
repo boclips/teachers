@@ -4,7 +4,6 @@ import { Links } from '../../types/Links';
 export interface CreateAccountRequest {
   email: string;
   password: string;
-  analyticsId: string;
   utmSource: string;
   utmContent: string;
   utmTerm: string;

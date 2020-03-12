@@ -1,7 +1,6 @@
 import { MiddlewareAPI } from 'redux';
 import { CollectionKey } from 'src/types/CollectionKey';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { fetchPageableCollections } from '../../../../services/collections/fetchCollections';
 import { LinksState } from '../../../../types/State';
 import { fetchCollectionsAction } from '../actions/fetchCollectionsAction';
@@ -16,7 +15,6 @@ export function onFetchCollections(
   fetchPageableCollections(links, { key })
     .then(collections => {
       store.dispatch(storeCollectionsAction({ collections, key }));
-      AnalyticsFactory.externalAnalytics().trackMyCollectionsVisited();
     })
     .catch(console.error);
 }

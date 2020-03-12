@@ -9,7 +9,6 @@ export default function convertUserResource(resource: any): UserProfile {
     email: resource.email,
     subjects: resource.subjects.map(subject => subject.id),
     ages: resource.ages,
-    analyticsId: resource.analyticsId,
     country: resource.organisation ? resource.organisation.country : null,
     state: resource.organisation ? resource.organisation.state : null,
     school: {

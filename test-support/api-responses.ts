@@ -508,7 +508,6 @@ export function userResponse(id: string = 'my-user-id') {
     firstName: 'Bob',
     lastName: 'Someone',
     email: 'bob@someone.com',
-    analyticsId: '123',
     subjects: [{ id: '1' }],
     ages: [1, 2, 3, 4],
     organisation: {

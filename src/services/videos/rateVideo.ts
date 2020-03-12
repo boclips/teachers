@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Video } from '../../types/Video';
-import AnalyticsFactory from '../analytics/AnalyticsFactory';
 import convertVideoResource from './convertVideoResource';
 
 export default function rateVideo(
@@ -10,9 +9,5 @@ export default function rateVideo(
   return axios
     .patch(video.links.rate.getTemplatedLink({ rating }))
     .then(response => response.data)
-    .then(convertVideoResource)
-    .then(resource => {
-      AnalyticsFactory.externalAnalytics().trackVideoRating(video, rating);
-      return resource;
-    });
+    .then(convertVideoResource);
 }

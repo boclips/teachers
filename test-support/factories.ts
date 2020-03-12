@@ -257,7 +257,6 @@ export class UserProfileFactory {
       email: arg.email || 'joe@boclips.com',
       firstName: arg.firstName || 'joe',
       lastName: arg.lastName || 'boclips',
-      analyticsId: arg.analyticsId || 'mixpanel-123',
       id: arg.id || '1',
       links: arg.links || UserProfileLinksFactory.sample(),
       subjects: arg.subjects || ['subject-one-id', 'subject-two-id'],

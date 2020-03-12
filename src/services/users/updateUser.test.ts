@@ -1,8 +1,5 @@
 import eventually from '../../../test-support/eventually';
-import {
-  LinksFactory,
-  UserProfileFactory,
-} from '../../../test-support/factories';
+import { LinksFactory } from '../../../test-support/factories';
 import { analyticsMock } from '../../../test-support/getAnalyticsMock';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
@@ -14,12 +11,6 @@ jest.mock('../analytics/AnalyticsFactory');
 const links = LinksFactory.sample({
   profile: new Link({ href: '/profile' }),
   activate: new Link({ href: '/activate' }),
-});
-
-const userProfile = UserProfileFactory.sample({
-  email: 'joe@boclips.com',
-  firstName: 'joe',
-  lastName: 'boclips',
 });
 
 const request: UpdateUserRequest = {
@@ -36,19 +27,9 @@ describe('when activate link present', () => {
     });
 
     it('registers activation complete event', async () => {
-      onboardUser(links, request, userProfile.email);
+      onboardUser(links, request);
       await eventually(() => {
         expect(analyticsMock.trackOnboardingCompleted).toHaveBeenCalled();
-      });
-    });
-
-    it('creates user profile in analytics', async () => {
-      onboardUser(links, request, userProfile.email);
-      await eventually(() => {
-        expect(analyticsMock.createUserProfile).toHaveBeenCalledWith(
-          { firstName: 'joe', lastName: 'boclips' },
-          'joe@boclips.com',
-        );
       });
     });
   });
@@ -60,15 +41,13 @@ describe('when user cannot be activated', () => {
   });
 
   it('does not publish event to web analytics', () => {
-    onboardUser(links, request, userProfile.email);
+    onboardUser(links, request);
     expect(analyticsMock.trackOnboardingCompleted).not.toHaveBeenCalled();
   });
 });
 
 describe('when no activate link', () => {
   it('does not throw', () => {
-    expect(
-      onboardUser(LinksFactory.sample(), request, userProfile.email),
-    ).rejects.toBeUndefined();
+    expect(onboardUser(LinksFactory.sample(), request)).rejects.toBeUndefined();
   });
 });

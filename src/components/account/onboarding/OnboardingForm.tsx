@@ -94,8 +94,6 @@ class OnboardingForm extends React.Component<
   };
 
   public componentDidMount() {
-    AnalyticsFactory.externalAnalytics().trackAccountRegistration();
-
     this.props.fetchSubjects();
     this.props.fetchCountries();
     this.setState({
@@ -420,24 +418,19 @@ class OnboardingForm extends React.Component<
         const ages = AgeRange.extractContainedAges(ageRanges);
 
         this.setState({ ...this.state, updating: true });
-        onboardUser(
-          this.props.links,
-          {
-            firstName: values.firstName,
-            lastName: values.lastName,
-            ages,
-            subjects: values.subjects,
-            country: values.country,
-            state: values.state,
-            schoolName: values.schoolName,
-            schoolId:
-              values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-            hasOptedIntoMarketing: values.hasOptedIntoMarketing,
-            referralCode: registrationContext?.referralCode,
-            utm: registrationContext?.utm,
-          },
-          this.props.userProfile.email,
-        )
+        onboardUser(this.props.links, {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          ages,
+          subjects: values.subjects,
+          country: values.country,
+          state: values.state,
+          schoolName: values.schoolName,
+          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+          hasOptedIntoMarketing: values.hasOptedIntoMarketing,
+          referralCode: registrationContext?.referralCode,
+          utm: registrationContext?.utm,
+        })
           .then(() => {
             this.props.goToHomepage();
             this.props.updateUser();

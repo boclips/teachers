@@ -83,19 +83,15 @@ describe('onboarding form', () => {
 
       OnboardingFormHelper.save(wrapper);
 
-      expect(mockOnboardUser).toHaveBeenCalledWith(
-        links,
-        {
-          firstName: 'Rebecca',
-          lastName: 'Sanchez',
-          subjects: ['1'],
-          ages: [3, 4, 5],
-          country: 'ES',
-          hasOptedIntoMarketing: true,
-          schoolName: 'school',
-        },
-        'joe@boclips.com',
-      );
+      expect(mockOnboardUser).toHaveBeenCalledWith(links, {
+        firstName: 'Rebecca',
+        lastName: 'Sanchez',
+        subjects: ['1'],
+        ages: [3, 4, 5],
+        country: 'ES',
+        hasOptedIntoMarketing: true,
+        schoolName: 'school',
+      });
     });
   });
 
@@ -115,28 +111,24 @@ describe('onboarding form', () => {
     fillValidForm(wrapper);
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockOnboardUser).toHaveBeenCalledWith(
-      links,
-      {
-        firstName: 'Rebecca',
-        lastName: 'Sanchez',
-        subjects: ['1'],
-        ages: [3, 4, 5],
-        country: 'ES',
-        schoolName: 'school',
-        schoolId: undefined,
-        hasOptedIntoMarketing: true,
-        referralCode: 'REFERRALCODE',
-        utm: {
-          source: 'some-source-value',
-          term: 'some-term-value',
-          medium: 'some-medium-value',
-          campaign: 'some-campaign-value',
-          content: 'some-content-value',
-        },
+    expect(mockOnboardUser).toHaveBeenCalledWith(links, {
+      firstName: 'Rebecca',
+      lastName: 'Sanchez',
+      subjects: ['1'],
+      ages: [3, 4, 5],
+      country: 'ES',
+      schoolName: 'school',
+      schoolId: undefined,
+      hasOptedIntoMarketing: true,
+      referralCode: 'REFERRALCODE',
+      utm: {
+        source: 'some-source-value',
+        term: 'some-term-value',
+        medium: 'some-medium-value',
+        campaign: 'some-campaign-value',
+        content: 'some-content-value',
       },
-      'joe@boclips.com',
-    );
+    });
   });
 
   it('sends partial marketing information from the cookie', () => {
@@ -149,20 +141,16 @@ describe('onboarding form', () => {
     fillValidForm(wrapper);
     OnboardingFormHelper.save(wrapper);
 
-    expect(mockOnboardUser).toHaveBeenCalledWith(
-      links,
-      {
-        firstName: 'Rebecca',
-        lastName: 'Sanchez',
-        subjects: ['1'],
-        ages: [3, 4, 5],
-        country: 'ES',
-        schoolName: 'school',
-        hasOptedIntoMarketing: true,
-        referralCode: 'REFERRALCODE',
-      },
-      'joe@boclips.com',
-    );
+    expect(mockOnboardUser).toHaveBeenCalledWith(links, {
+      firstName: 'Rebecca',
+      lastName: 'Sanchez',
+      subjects: ['1'],
+      ages: [3, 4, 5],
+      country: 'ES',
+      schoolName: 'school',
+      hasOptedIntoMarketing: true,
+      referralCode: 'REFERRALCODE',
+    });
   });
 
   it('does not send information if no firstName', () => {

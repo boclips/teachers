@@ -6,7 +6,6 @@ import Utm from '../account/Utm';
 
 export interface UserProfile {
   id: string;
-  analyticsId: string;
   email: string;
   firstName: string;
   lastName: string;

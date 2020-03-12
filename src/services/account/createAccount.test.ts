@@ -19,7 +19,6 @@ test('create account', async () => {
     {
       email: 'jane@doe.com',
       password: 'Champagn3',
-      analyticsId: 'mixpanel-123',
       referralCode: 'SCAM-123',
       utmSource: 'some-source',
       utmContent: 'some-content',
@@ -32,7 +31,6 @@ test('create account', async () => {
   const success = await createAccount(links, {
     email: 'jane@doe.com',
     password: 'Champagn3',
-    analyticsId: 'mixpanel-123',
     referralCode: 'SCAM-123',
     utmSource: 'some-source',
     utmContent: 'some-content',

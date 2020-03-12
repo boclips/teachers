@@ -5,30 +5,22 @@ import {
   CollectionSearchResult,
   VideoSearchResult,
 } from '../../types/SearchResults';
-import { Tag } from '../../types/Tag';
 import { Segment, Video } from '../../types/Video';
 import { VideoCollection } from '../../types/VideoCollection';
 import { CreateCollectionRequest } from '../collections/createCollection';
-import { UpdateUserRequest } from '../users/updateUser';
 import { UserProfile } from '../users/UserProfile';
 import EventTypes from './external/EventTypes';
-import { toMixpanelSegment } from './external/toMixpanelSegment';
-import { toMixpanelVideo } from './external/toMixpanelVideo';
+import { toAppcuesSegment } from './external/toAppcuesSegment';
+import { toAppcuesVideo } from './external/toAppcuesVideo';
 
 export default class AnalyticsService {
-  private mixpanelInstance: Mixpanel;
   private appcuesInstance?: Appcues;
 
-  public constructor(mixpanel: Mixpanel, appcues?: Appcues) {
-    if (mixpanel === undefined) {
-      throw Error('Mixpanel is undefined');
-    }
-
+  public constructor(appcues?: Appcues) {
     if (!appcues) {
       console.error('Appcues is not defined');
     }
 
-    this.mixpanelInstance = mixpanel;
     this.appcuesInstance = appcues;
   }
 
@@ -50,29 +42,6 @@ export default class AnalyticsService {
 
   public identify(userProfile: UserProfile) {
     this.identifyAppcues(userProfile);
-    this.mixpanelInstance.identify(userProfile.analyticsId);
-  }
-
-  public reset() {
-    this.mixpanelInstance.reset();
-  }
-
-  public createUserProfile(request: UpdateUserRequest, email: string) {
-    this.mixpanelInstance.people.set({
-      $email: email,
-      $last_login: new Date(),
-      $first_name: request.firstName,
-      $last_name: request.lastName,
-      $created: new Date(),
-    });
-  }
-
-  public getId(): string {
-    return this.mixpanelInstance.get_distinct_id();
-  }
-
-  public trackAccountRegistration(): any {
-    this.mixpanelInstance.track(EventTypes.REGISTRATION_INITIATED);
   }
 
   public trackVideoSearch(searchResults: VideoSearchResult) {
@@ -88,7 +57,6 @@ export default class AnalyticsService {
     };
 
     this.trackAppcues(EventTypes.VIDEO_SEARCH, eventPayload);
-    this.mixpanelInstance.track(EventTypes.VIDEO_SEARCH, eventPayload);
   }
 
   public trackCollectionSearch(searchResults: CollectionSearchResult) {
@@ -98,7 +66,6 @@ export default class AnalyticsService {
         searchResults.collections && searchResults.collections.length,
     };
 
-    this.mixpanelInstance.track(EventTypes.COLLECTION_SEARCH, payload);
     this.trackAppcues(EventTypes.COLLECTION_SEARCH, payload);
   }
 
@@ -108,7 +75,6 @@ export default class AnalyticsService {
       discipline_id: disciplineId ? disciplineId : null,
     };
 
-    this.mixpanelInstance.track(EventTypes.DISCOVER_COLLECTIONS, payload);
     this.trackAppcues(EventTypes.DISCOVER_COLLECTIONS, payload);
   }
 
@@ -120,12 +86,7 @@ export default class AnalyticsService {
       video_collection_is_public: collection.isPublic,
     };
 
-    this.mixpanelInstance.track(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
     this.trackAppcues(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
-  }
-
-  public trackMyCollectionsVisited(): void {
-    this.mixpanelInstance.track(EventTypes.MY_COLLECTIONS_VISITED);
   }
 
   public trackCollectionAttachmentLinkVisited(
@@ -137,11 +98,6 @@ export default class AnalyticsService {
       attachment_id: attachment.id,
       attachment_type: attachment.type,
     };
-
-    this.mixpanelInstance.track(
-      EventTypes.COLLECTION_ATTACHMENT_VISITED,
-      payload,
-    );
 
     this.trackAppcues(EventTypes.COLLECTION_ATTACHMENT_VISITED, payload);
   }
@@ -156,7 +112,6 @@ export default class AnalyticsService {
       video_title: video.title,
     };
 
-    this.mixpanelInstance.track(EventTypes.VIDEO_ADDED_TO_COLLECTION, payload);
     this.trackAppcues(EventTypes.VIDEO_ADDED_TO_COLLECTION, payload);
   }
 
@@ -165,7 +120,6 @@ export default class AnalyticsService {
       collection_title: request.title,
     };
 
-    this.mixpanelInstance.track(EventTypes.COLLECTION_CREATED, payload);
     this.trackAppcues(EventTypes.COLLECTION_CREATED, payload);
   }
 
@@ -175,7 +129,6 @@ export default class AnalyticsService {
       collection_id: request.collection.id,
     };
 
-    this.mixpanelInstance.track(EventTypes.COLLECTION_RENAMED, payload);
     this.trackAppcues(EventTypes.COLLECTION_RENAMED, payload);
   }
 
@@ -185,7 +138,6 @@ export default class AnalyticsService {
       collection_id: request.collection.id,
     };
 
-    this.mixpanelInstance.track(EventTypes.VISIBILITY_CHANGED, payload);
     this.trackAppcues(EventTypes.VISIBILITY_CHANGED, payload);
   }
 
@@ -196,7 +148,6 @@ export default class AnalyticsService {
     };
 
     this.trackAppcues(EventTypes.COLLECTION_REMOVED, payload);
-    this.mixpanelInstance.track(EventTypes.COLLECTION_REMOVED, payload);
   }
 
   public trackCollectionBookmarked(collection: VideoCollection): void {
@@ -205,7 +156,6 @@ export default class AnalyticsService {
       collection_id: collection.id,
     };
 
-    this.mixpanelInstance.track(EventTypes.COLLECTION_BOOKMARKED, payload);
     this.trackAppcues(EventTypes.COLLECTION_BOOKMARKED, payload);
   }
 
@@ -215,7 +165,6 @@ export default class AnalyticsService {
       collection_id: collection.id,
     };
 
-    this.mixpanelInstance.track(EventTypes.COLLECTION_UNBOOKMARKED, payload);
     this.trackAppcues(EventTypes.COLLECTION_UNBOOKMARKED, payload);
   }
 
@@ -229,44 +178,34 @@ export default class AnalyticsService {
       video_title: video.title,
     };
 
-    this.mixpanelInstance.track(
-      EventTypes.VIDEO_REMOVED_FROM_COLLECTION,
-      payload,
-    );
     this.trackAppcues(EventTypes.VIDEO_REMOVED_FROM_COLLECTION, payload);
   }
 
   public trackVideoVisited(video: Video): void {
     const payload = {
-      ...toMixpanelVideo(video),
+      ...toAppcuesVideo(video),
     };
 
-    this.mixpanelInstance.track(EventTypes.VIDEO_VISITED, payload);
     this.trackAppcues(EventTypes.VIDEO_VISITED, payload);
   }
 
   public trackVideoLinkCopied(video: Video, segment: Segment): void {
     const payload = {
-      ...toMixpanelVideo(video),
+      ...toAppcuesVideo(video),
       share_segment_start: segment?.start,
       share_segment_end: segment?.end,
     };
 
-    this.mixpanelInstance.track(EventTypes.VIDEO_LINK_COPIED, payload);
     this.trackAppcues(EventTypes.VIDEO_LINK_COPIED, payload);
   }
 
   public trackVideoSharedInGoogle(video: Video, segment: Segment): void {
     const payload = {
-      ...toMixpanelVideo(video),
+      ...toAppcuesVideo(video),
       share_segment_start: segment?.start,
       share_segment_end: segment?.end,
     };
 
-    this.mixpanelInstance.track(
-      EventTypes.VIDEO_SHARED_GOOGLE_CLASSROOM,
-      payload,
-    );
     this.trackAppcues(EventTypes.VIDEO_SHARED_GOOGLE_CLASSROOM, payload);
   }
 
@@ -276,54 +215,14 @@ export default class AnalyticsService {
     endSeconds: number,
   ): void {
     const payload = {
-      ...toMixpanelVideo(video),
-      ...toMixpanelSegment(video, startSeconds, endSeconds),
+      ...toAppcuesVideo(video),
+      ...toAppcuesSegment(video, startSeconds, endSeconds),
     };
-    this.mixpanelInstance.track(EventTypes.VIDEO_PLAYBACK, payload);
     this.trackAppcues(EventTypes.VIDEO_PLAYBACK, payload);
   }
 
-  public trackFailedAccountCreation(formData: any) {
-    this.mixpanelInstance.track(
-      EventTypes.REGISTRATION_ATTEMPT_FAILED,
-      formData,
-    );
-  }
-
-  public trackAccountAlreadyExists(formData: any) {
-    this.mixpanelInstance.track(
-      EventTypes.REGISTRATION_ACCOUNT_EXISTS,
-      formData,
-    );
-  }
-
   public trackVideoRatingModalOpened() {
-    this.mixpanelInstance.track(EventTypes.VIDEO_RATING_MODAL_OPENED);
     this.trackAppcues(EventTypes.VIDEO_RATING_MODAL_OPENED, undefined);
-  }
-
-  public trackVideoRating(video: Video, rating: number) {
-    this.mixpanelInstance.track(EventTypes.VIDEO_RATING, {
-      video_id: video.id,
-      video_title: video.title,
-      rating,
-    });
-  }
-
-  public trackVideoTagging(video: Video, tag: Tag) {
-    this.mixpanelInstance.track(EventTypes.VIDEO_TAGGING, {
-      video_id: video.id,
-      video_title: video.title,
-      tag: tag.id,
-    });
-  }
-
-  public trackReferAFriendModalOpened() {
-    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_OPENED);
-  }
-
-  public trackReferAFriendModalClosed() {
-    this.mixpanelInstance.track(EventTypes.REFER_A_FRIEND_MODAL_CLOSED);
   }
 
   public trackMoreCollectionsLoaded(typeOfCollections: any) {
@@ -331,19 +230,14 @@ export default class AnalyticsService {
       type: typeOfCollections,
     };
 
-    this.mixpanelInstance.track(EventTypes.MORE_COLLECTIONS_LOADED, payload);
     this.trackAppcues(EventTypes.MORE_COLLECTIONS_LOADED, payload);
   }
 
   public trackSearchFiltersApplied(formData: any) {
-    this.mixpanelInstance.track(EventTypes.SEARCH_FILTERS_APPLIED, formData);
     this.trackAppcues(EventTypes.SEARCH_FILTERS_APPLIED, formData);
   }
 
   public trackMyCollectionsNavbarButtonClicked() {
-    this.mixpanelInstance.track(
-      EventTypes.MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED,
-    );
     this.trackAppcues(
       EventTypes.MY_COLLECTIONS_NAVBAR_BUTTON_CLICKED,
       undefined,
@@ -351,19 +245,14 @@ export default class AnalyticsService {
   }
 
   public trackCollectionsNavbarButtonClicked() {
-    this.mixpanelInstance.track(EventTypes.COLLECTIONS_NAVBAR_BUTTON_CLICKED);
     this.trackAppcues(EventTypes.COLLECTIONS_NAVBAR_BUTTON_CLICKED, undefined);
   }
 
   public trackOnboardingStarted() {
-    this.mixpanelInstance.track(EventTypes.ONBOARDING_STARTED);
     this.trackAppcues(EventTypes.ONBOARDING_STARTED, undefined);
   }
 
   public trackOnboardingCompleted() {
-    this.mixpanelInstance.track(EventTypes.ACTIVATION_COMPLETE);
-    this.mixpanelInstance.track(EventTypes.ONBOARDING_COMPLETED);
-
     this.trackAppcues(EventTypes.ACTIVATION_COMPLETE, undefined);
     this.trackAppcues(EventTypes.ONBOARDING_COMPLETED, undefined);
   }
@@ -373,7 +262,6 @@ export default class AnalyticsService {
       page_index: pageIndex,
     };
 
-    this.mixpanelInstance.track(EventTypes.ONBOARDING_PAGE_CHANGED, payload);
     this.trackAppcues(EventTypes.ONBOARDING_PAGE_CHANGED, payload);
   }
 

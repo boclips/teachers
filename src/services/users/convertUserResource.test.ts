@@ -9,7 +9,6 @@ describe('convertUserResource', () => {
       ages: [7, 8, 9],
       subjects: [{ id: 'subject-id-1' }],
       email: 'tester@boclips.com',
-      analyticsId: 'analytics-id',
       organisationAccountId: 'org-id',
       organisation: {
         name: 'School Name',
@@ -34,7 +33,6 @@ describe('convertUserResource', () => {
     const userProfile = convertUserResource(userResource);
 
     expect(userProfile.id).toEqual('user-id');
-    expect(userProfile.analyticsId).toEqual('analytics-id');
     expect(userProfile.email).toEqual('tester@boclips.com');
     expect(userProfile.firstName).toEqual('Fred');
     expect(userProfile.lastName).toEqual('Jones');

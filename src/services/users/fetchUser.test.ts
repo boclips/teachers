@@ -18,7 +18,6 @@ describe('fetch user ', () => {
     );
 
     expect(userProfile.id).toBeDefined();
-    expect(userProfile.analyticsId).toBeDefined();
     expect(userProfile.firstName).toBeDefined();
     expect(userProfile.lastName).toBeDefined();
     expect(userProfile.subjects).toBeDefined();

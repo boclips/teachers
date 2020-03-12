@@ -12,7 +12,6 @@ import {
   CreateAccountRequest,
 } from '../../../services/account/createAccount';
 import Utm from '../../../services/account/Utm';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
 import { Links } from '../../../types/Links';
@@ -63,8 +62,6 @@ class CreateAccountForm extends React.Component<
   };
 
   public componentDidMount() {
-    AnalyticsFactory.externalAnalytics().trackAccountRegistration();
-
     const registrationContext: RegistrationContext = {
       referralCode: this.props.referralCode,
       utm: this.props.utm,
@@ -107,12 +104,6 @@ class CreateAccountForm extends React.Component<
             </section>
 
             <div style={{ display: 'none' }}>
-              <Form.Item>
-                {getFieldDecorator('analyticsId', {
-                  rules: [],
-                  initialValue: AnalyticsFactory.externalAnalytics().getId(),
-                })(<Input type="text" />)}
-              </Form.Item>
               <Form.Item>
                 {getFieldDecorator('recaptchaToken', {
                   rules: [],
@@ -222,15 +213,10 @@ class CreateAccountForm extends React.Component<
               this.setState({ ...this.state, showConfirmation: true });
             })
             .catch(error => {
-              const formDetailsRedacted = {
-                ...values,
-                password: 'redacted',
-              };
-
-              if (error && error.status === 409) {
-                handleUserExists(formDetailsRedacted);
+              if (error && error.response.status === 409) {
+                handleUserExists();
               } else {
-                handleError(formDetailsRedacted);
+                handleError();
               }
 
               this.setState({

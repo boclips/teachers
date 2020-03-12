@@ -1,6 +1,6 @@
 import { Video } from '../../../types/Video';
 
-export const toMixpanelSegment = (
+export const toAppcuesSegment = (
   video: Video,
   segmentStartSeconds: number,
   segmentEndSeconds: number,

@@ -1,6 +1,6 @@
 import { Video } from '../../../types/Video';
 
-export const toMixpanelVideo = (video: Video) => ({
+export const toAppcuesVideo = (video: Video) => ({
   video_id: video.id,
   video_title: video.title,
   video_description: video.description,
