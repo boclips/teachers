@@ -129,6 +129,7 @@ class VideoPlayer extends React.PureComponent<
         addons: {
           hoverPreview: true,
         },
+        ratio: '16:9',
       };
     } else {
       options.interface = {
@@ -144,6 +145,7 @@ class VideoPlayer extends React.PureComponent<
           'settings',
           'fullscreen',
         ],
+        ratio: '16:9',
       };
     }
 
