@@ -4,17 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AutoComplete } from 'antd';
 import Search from 'antd/lib/input/Search';
 import SearchIconImg from 'resources/images/search-icon.png';
-import { completionsFor } from 'src/components/searchBar/completions';
+import {
+  Completion,
+  completionsFor,
+} from 'src/components/searchBar/completions';
 import completionsTopics from 'src/components/searchBar/completionsTopics.json';
 import completionsCreatedBy from 'src/components/searchBar/completionsCreatedBy.json';
 import { updateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import State from '../../types/State';
 import './SearchBar.less';
 
-const getCompletions = completionsFor([
-  ...completionsTopics,
-  ...completionsCreatedBy,
-]);
+const getCompletions = completionsFor({
+  topics: completionsTopics,
+  channels: completionsCreatedBy,
+});
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -22,7 +25,7 @@ const SearchBar = () => {
     (state: State) =>
       queryString.parse(state.router.location.search).q as string,
   );
-  const [completions, setCompletions] = useState([]);
+  const [completions, setCompletions] = useState<Completion[]>([]);
   const [value, setValue] = useState<string>(query || '');
 
   const handleSubmit = (search: string) => {
@@ -37,6 +40,9 @@ const SearchBar = () => {
 
   const options = completions.map(completion => (
     <AutoComplete.Option key={completion.text} value={completion.text}>
+      {completion.list === 'channels' && (
+        <span className="autocomplete--channel">Channel:&nbsp;</span>
+      )}
       {completion.textWithHighlights.map((chunk, i) => (
         <span className={chunk.matches ? '' : 'completion-affix'} key={i + ''}>
           {chunk.text}
