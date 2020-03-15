@@ -26,7 +26,31 @@ describe('SearchBar', () => {
     expect(wrapper.getByText('Search')).toBeVisible();
   });
 
-  it.todo('clears the search query when the clear icon is pressed');
+  it('clears the search query when the clear icon is pressed', async () => {
+    const wrapper = getWrapper('');
+
+    const input = wrapper.getByTestId('search-input');
+
+    fireEvent.change(input, { target: { value: 'history' } });
+
+    const clearButton = wrapper.getByTestId('clear-search-button');
+
+    expect(clearButton).toBeInTheDocument();
+    fireEvent.click(clearButton);
+    expect(await wrapper.queryByText('history')).toBeNull();
+  });
+
+  it('only renders the clear icon when the input is non empty', async () => {
+    const wrapper = getWrapper('');
+
+    expect(await wrapper.queryByTestId('clear-search-button')).toBeNull();
+
+    const input = wrapper.getByTestId('search-input');
+
+    fireEvent.change(input, { target: { value: 'history' } });
+
+    expect(wrapper.getByTestId('clear-search-button')).toBeInTheDocument();
+  });
 
   it('shows auto complete entries when there are matching completions', () => {
     const wrapper = getWrapper('');

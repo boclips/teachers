@@ -13,6 +13,7 @@ import completionsCreatedBy from 'src/components/searchBar/completionsCreatedBy.
 import { updateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import State from '../../types/State';
 import './SearchBar.less';
+import CloseSVG from '../../../resources/images/close.svg';
 
 const getCompletions = completionsFor({
   topics: completionsTopics,
@@ -37,6 +38,19 @@ const SearchBar = () => {
   const setDataSource = (txt: string) => {
     setCompletions(getCompletions(txt));
   };
+
+  const ClearIcon = () =>
+    value && (
+      <span
+        data-qa="clear-search-button"
+        onClick={() => {
+          setValue('');
+          setDataSource('');
+        }}
+      >
+        <CloseSVG />
+      </span>
+    );
 
   const options = completions.map(completion => (
     <AutoComplete.Option key={completion.text} value={completion.text}>
@@ -77,6 +91,7 @@ const SearchBar = () => {
           onSearch={handleSubmit}
           enterButton="Search"
           size="large"
+          suffix={ClearIcon()}
         />
       </AutoComplete>
     </form>
