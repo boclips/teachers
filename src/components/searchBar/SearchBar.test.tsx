@@ -1,70 +1,50 @@
+import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
-import { createMemoryHistory } from 'history';
-import { fireEvent } from '@testing-library/react';
-import { MockStoreFactory } from 'test-support/factories';
-import { renderWithBoclipsStore } from 'test-support/renderWithStore';
-import eventually from 'test-support/eventually';
+import { Provider } from 'react-redux';
+import { MockStore } from 'redux-mock-store';
+import {
+  MockStoreFactory,
+  RouterFactory,
+} from '../../../test-support/factories';
+import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import SearchBar from './SearchBar';
+import StatefulSearchBar from './StatefulSearchBar';
 
-describe('SearchBar', () => {
-  const getWrapper = (initialQuery: string = '') => {
-    const history = createMemoryHistory({
-      initialEntries: [`/?q=${initialQuery}`],
-    });
+let store: MockStore;
 
-    return renderWithBoclipsStore(
-      <SearchBar />,
-      MockStoreFactory.sampleState({ router: undefined }),
-      history,
-    );
-  };
+let statefulSearchBar: ReactWrapper<any>;
 
-  it('has an initial value from the location', () => {
-    const wrapper = getWrapper('Test%20Query');
-    expect(wrapper.getByDisplayValue('Test Query')).toBeVisible();
-    expect(wrapper.getByTestId('search-input')).toBeVisible();
-    expect(wrapper.getByText('Search')).toBeVisible();
+beforeEach(() => {
+  store = MockStoreFactory.sample({
+    router: {
+      ...RouterFactory.sample(),
+      location: {
+        pathname: '',
+        search: '?q=eggs',
+        hash: '',
+        state: null,
+      },
+    },
   });
 
-  it.todo('clears the search query when the clear icon is pressed');
+  const wrapper = mount(
+    <Provider store={store}>
+      <SearchBar />
+    </Provider>,
+  );
 
-  it('shows auto complete entries when there are matching completions', () => {
-    const wrapper = getWrapper('');
+  statefulSearchBar = wrapper.find(StatefulSearchBar);
+});
 
-    const input = wrapper.getByTestId('search-input');
+test('Extracts query string from the path', () => {
+  expect(statefulSearchBar).toHaveProp('value', 'eggs');
+});
 
-    fireEvent.change(input, { target: { value: 'history' } });
+test('dispatches a navigation action when query submitted callback invoked', () => {
+  const query = 'the meaning of life';
+  statefulSearchBar.prop('onSubmit')(query);
 
-    const options = wrapper.getAllByRole('option');
-
-    expect(
-      options.filter(option => option.textContent.match(/history europe/)),
-    ).toHaveLength(1);
-
-    expect(
-      options.filter(option => option.textContent.match(/history USA/)),
-    ).toHaveLength(1);
-
-    expect(
-      options.filter(option => option.textContent.match(/Hip Hughes History/)),
-    ).toHaveLength(1);
-  });
-
-  it.todo('decorates content partner auto complete options');
-
-  it('sets the query in the location on submit', () => {
-    const wrapper = getWrapper('');
-
-    const input = wrapper.getByTestId('search-input');
-
-    fireEvent.change(input, { target: { value: 'history' } });
-
-    const searchButton = wrapper.getByText('Search');
-
-    fireEvent.click(searchButton);
-
-    return eventually(() => {
-      expect(wrapper.history.location.search).toMatch(/q=history/);
-    });
-  });
+  expect(store.getActions()).toContainEqual(
+    bulkUpdateSearchParamsAction([{ page: 1 }, { q: 'the meaning of life' }]),
+  );
 });
