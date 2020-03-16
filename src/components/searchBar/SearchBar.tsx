@@ -98,4 +98,22 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+const FreshSearchBar = () => {
+  /**
+   * We believe that ant-d Autocomplete renders the child with props that have
+   * been mutated. It seems that when you select an autocompleted value that the
+   * value passed to the input field is set to an empty string. Despite several
+   * attempts we have been unable to correctly set the value on that input field.
+   *
+   * In order to mitigate this, we instead render a brand new SearchBar each
+   * time the query changes in the URL. We do this by assigning a key to the
+   * component which forces react to destroy the old and create a new.
+   */
+  const urlParams = useSelector((state: State) => state.router.location.search);
+
+  const searchQuery = queryString.parse(urlParams).q as string;
+
+  return <React.Fragment>{[<SearchBar key={searchQuery} />]}</React.Fragment>;
+};
+
+export default FreshSearchBar;
