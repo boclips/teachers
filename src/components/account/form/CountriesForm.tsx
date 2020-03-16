@@ -4,14 +4,17 @@ import React from 'react';
 import { Country } from '../../../types/Country';
 import MultiSelect from '../../common/MultiSelect';
 import '../../common/MultiSelect.less';
+import './CountriesForm.less';
 
-interface CountriesFormProps {
+export interface CountriesFormProps {
   countries: Country[];
   placeholder: string;
   label?: string;
   initialValue?: string;
   onCountryChange?: (value: Country) => void;
 }
+
+export const HIGHLIGHTED_COUNTRY_IDS = ['USA', 'GBR', 'AUS', 'CAN', 'IND'];
 
 export class CountriesForm extends React.Component<
   FormComponentProps & CountriesFormProps
@@ -58,16 +61,47 @@ export class CountriesForm extends React.Component<
 
   private generateOptions() {
     const Option = MultiSelect.Option;
+    const orderedCountries: Country[] = [];
+    const lastHighlightedCountryId =
+      HIGHLIGHTED_COUNTRY_IDS[HIGHLIGHTED_COUNTRY_IDS.length - 1];
 
-    return (
-      this.props.countries &&
-      this.props.countries
-        .sort((a, b) => a.name.localeCompare(b.name))
-        .map(country => (
-          <Option key={country.name} value={country.id} title={country.name}>
-            {country.name}
-          </Option>
-        ))
-    );
+    if (this.props.countries) {
+      const sortedCountries = this.props.countries.sort((a, b) =>
+        a.name.localeCompare(b.name),
+      );
+
+      const countriesWithoutHighlights: Country[] = [];
+      const countriesHighlighted: Country[] = [];
+
+      sortedCountries.forEach(country => {
+        if (HIGHLIGHTED_COUNTRY_IDS.indexOf(country.id) > -1) {
+          countriesHighlighted.push(country);
+        } else {
+          countriesWithoutHighlights.push(country);
+        }
+      });
+
+      const countriesHighlightedOrdered = countriesHighlighted.sort((a, b) =>
+        HIGHLIGHTED_COUNTRY_IDS.indexOf(a.id) >
+        HIGHLIGHTED_COUNTRY_IDS.indexOf(b.id)
+          ? 1
+          : -1,
+      );
+
+      orderedCountries.push(...countriesHighlightedOrdered);
+      orderedCountries.push(...countriesWithoutHighlights);
+    }
+    return orderedCountries?.map(country => (
+      <Option
+        key={country.name}
+        value={country.id}
+        title={country.name}
+        className={
+          country.id === lastHighlightedCountryId ? 'highlight-border' : ''
+        }
+      >
+        {country.name}
+      </Option>
+    ));
   }
 }
