@@ -50,25 +50,7 @@ describe('SearchBar', () => {
     ).toHaveLength(1);
   });
 
-  it('decorates content partner auto complete options', () => {
-    const wrapper = getWrapper('');
-
-    const input = wrapper.getByTestId('search-input');
-
-    fireEvent.change(input, { target: { value: 'history' } });
-
-    const options = wrapper.getAllByRole('option');
-
-    expect(
-      options.filter(option => option.textContent.match(/history europe/)),
-    ).toHaveLength(1);
-
-    expect(
-      options.filter(option =>
-        option.textContent.match(/Channel: Hip Hughes History/),
-      ),
-    ).toHaveLength(1);
-  });
+  it.todo('decorates content partner auto complete options');
 
   it('sets the query in the location on submit', () => {
     const wrapper = getWrapper('');

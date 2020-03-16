@@ -40,21 +40,19 @@ const prefixes = (txt: string): Prefix[] => {
 
 interface Match {
   text: string;
-  list: string;
   matches: boolean;
   weight: number;
   offset: number;
 }
 
-const getMatch = (record: EnrichedEntry, txt: string): Match => {
-  const matchingPrefix = prefixes(record.entry).find(
+const getMatch = (dbEntry: string, txt: string): Match => {
+  const matchingPrefix = prefixes(dbEntry).find(
     prefix => prefix.text.toLowerCase().indexOf(txt.trim().toLowerCase()) === 0,
   );
   const matches = !!matchingPrefix;
   return {
     matches,
-    list: record.list,
-    text: record.entry,
+    text: dbEntry,
     weight: matches ? matchingPrefix.weight : 0,
     offset: matches ? matchingPrefix.offset : 0,
   };
@@ -68,7 +66,6 @@ export interface CompletionChunk {
 export interface Completion {
   text: string;
   textWithHighlights: CompletionChunk[];
-  list: string;
 }
 
 const getHighlights = (match: Match, text: string): CompletionChunk[] => {
@@ -83,31 +80,16 @@ const getHighlights = (match: Match, text: string): CompletionChunk[] => {
   ].filter(chunk => chunk.text.length > 0);
 };
 
-const completions = (lists: Lists, txt: string): Completion[] =>
-  Object.keys(lists)
-    .reduce((acc: EnrichedEntry[], listName) => {
-      for (const entry of lists[listName]) {
-        acc.push({ list: listName, entry: entry.trim() });
-      }
-      return acc;
-    }, [])
+const completions = (db: string[], txt: string): Completion[] =>
+  db
+    .map(entry => entry.trim())
     .map(entry => getMatch(entry, txt))
     .filter(matchResult => matchResult.matches)
     .sort((m1, m2) => m2.weight - m1.weight)
     .map(matchResult => ({
       text: matchResult.text,
       textWithHighlights: getHighlights(matchResult, txt),
-      list: matchResult.list,
     }));
 
-interface Lists {
-  [name: string]: string[];
-}
-
-interface EnrichedEntry {
-  list: string;
-  entry: string;
-}
-
-export const completionsFor = (lists: Lists) => (txt: string): Completion[] =>
-  txt.length >= 3 ? completions(lists, txt) : [];
+export const completionsFor = (db: string[]) => (txt: string): Completion[] =>
+  txt.length >= 3 ? completions(db, txt) : [];
