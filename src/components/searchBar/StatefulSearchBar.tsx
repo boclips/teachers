@@ -3,16 +3,16 @@ import Search from 'antd/lib/input/Search';
 import React from 'react';
 import logo from '../../../resources/images/search-icon.png';
 import { Completion, CompletionChunk, completionsFor } from './completions';
-import completionsCratedBy from './completionsCreatedBy.json';
+import completionsCreatedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';
 import './StatefulSearchBar.less';
 
 const { Option } = AutoComplete;
 
-const getCompletions = completionsFor([
-  ...completionsTopics,
-  ...completionsCratedBy,
-]);
+const getCompletions = completionsFor({
+  topics: completionsTopics,
+  channels: completionsCreatedBy,
+});
 
 interface Props {
   onSubmit: (query: string) => void;
@@ -86,6 +86,9 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   private renderOptions() {
     return this.state.completions.map(completion => (
       <Option key={completion.text} value={completion.text}>
+        {completion.list === 'channels' && (
+          <span className="autocomplete--channel">Channel:&nbsp;</span>
+        )}
         <AutocompleteOption>{completion.textWithHighlights}</AutocompleteOption>
       </Option>
     ));
