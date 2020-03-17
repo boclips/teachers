@@ -10,7 +10,7 @@ test('AgeRangeTags can render multiple tags', () => {
   const wrapper = mount(
     <BrowserRouter>
       <Provider store={MockStoreFactory.sample()}>
-        <AgeRangeTags ageRanges={[3, 4, 5, 6, 7]} hideLabel={true} />
+        <AgeRangeTags ageRanges={[3, 4, 5, 6, 7, 8, 9]} hideLabel={true} />
       </Provider>
     </BrowserRouter>,
   );
@@ -29,5 +29,5 @@ test('AgeRangeTags can render multiple tags', () => {
       .children()
       .last()
       .text(),
-  ).toEqual('5-7');
+  ).toEqual('5-9');
 });

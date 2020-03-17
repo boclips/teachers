@@ -34,7 +34,7 @@ describe('SelectAgeRange', () => {
     menuItems.at(1).simulate('click');
     expect(callback).toHaveBeenCalledWith([
       new AgeRange(3, 5).encodeJSON(),
-      new AgeRange(5, 7).encodeJSON(),
+      new AgeRange(5, 9).encodeJSON(),
     ]);
     expect(callback).toHaveBeenCalledTimes(2);
   });
