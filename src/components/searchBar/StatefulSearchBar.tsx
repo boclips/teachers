@@ -106,7 +106,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
 }
 
 const MySearch = React.forwardRef((props: SearchProps, ref: Ref<any>) => {
-  const Clear = (
+  const Clear = props.value !== '' && (
     <CloseSVG
       data-qa="clear-search-button"
       onClick={() => {
