@@ -1,7 +1,9 @@
 import { AutoComplete } from 'antd';
 import Search from 'antd/lib/input/Search';
-import React from 'react';
-import logo from '../../../resources/images/search-icon.png';
+import { SearchProps } from 'antd/es/input';
+import React, { Ref } from 'react';
+import SearchIcon from 'resources/images/search-icon.png';
+import CloseSVG from 'resources/images/close.svg';
 import { Completion, CompletionChunk, completionsFor } from './completions';
 import completionsCreatedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';
@@ -68,8 +70,8 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           size="large"
           style={{ width: '100%' }}
         >
-          <Search
-            prefix={<img src={logo} alt="" />}
+          <MySearch
+            prefix={<img src={SearchIcon} alt="" />}
             placeholder="Enter your search term"
             type="search"
             data-qa="search-input"
@@ -102,6 +104,19 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     this.props.onSubmit(value);
   }
 }
+
+const MySearch = React.forwardRef((props: SearchProps, ref: Ref<any>) => {
+  const Clear = (
+    <CloseSVG
+      data-qa="clear-search-button"
+      onClick={() => {
+        props.onChange({ target: { value: '' } as any } as any);
+      }}
+    />
+  );
+
+  return <Search ref={ref} {...props} suffix={Clear} />;
+});
 
 export default class StatefulSearchBar extends React.Component<Props> {
   public render() {
