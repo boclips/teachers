@@ -1,10 +1,7 @@
 import { completionsFor } from './completions';
-import objectContaining = jasmine.objectContaining;
 
 const getCompletions = (allCompletions: string[]) => (text: string) =>
-  completionsFor({ test: allCompletions })(text).map(
-    completion => completion.text,
-  );
+  completionsFor(allCompletions)(text).map(completion => completion.text);
 
 test('returns an empty list given an empty input', () => {
   expect(getCompletions(['one'])('')).toEqual([]);
@@ -37,21 +34,6 @@ test('matches in the middle of a sentence', () => {
   ]);
 });
 
-test('distinguishes between matches from different lists', () => {
-  expect(
-    completionsFor({ listA: ['three'], listB: ['two three'] })('thr'),
-  ).toEqual([
-    objectContaining({
-      text: 'three',
-      list: 'listA',
-    }),
-    objectContaining({
-      text: 'two three',
-      list: 'listB',
-    }),
-  ]);
-});
-
 test('matches with whitespace present', () => {
   expect(getCompletions(['andrew', 'jacek'])('   and')).toEqual(['andrew']);
   expect(getCompletions([' andrew ', 'jacek'])('and')).toEqual(['andrew']);
@@ -69,7 +51,7 @@ test('prioritises shorter matches over longer ones', () => {
 });
 
 test('highlight matching chunks in the beginning', () => {
-  const highlights = completionsFor({ listA: ['bbb ccc'] })('bbb').map(
+  const highlights = completionsFor(['bbb ccc'])('bbb').map(
     completion => completion.textWithHighlights,
   );
 
@@ -82,7 +64,7 @@ test('highlight matching chunks in the beginning', () => {
 });
 
 test('highlight matching chunks in the middle', () => {
-  const highlights = completionsFor({ listA: ['aaa bbb ccc'] })('bbb').map(
+  const highlights = completionsFor(['aaa bbb ccc'])('bbb').map(
     completion => completion.textWithHighlights,
   );
 
@@ -96,7 +78,7 @@ test('highlight matching chunks in the middle', () => {
 });
 
 test('highlight matching chunks in the end', () => {
-  const highlights = completionsFor({ listA: ['aaa bbb'] })('bbb').map(
+  const highlights = completionsFor(['aaa bbb'])('bbb').map(
     completion => completion.textWithHighlights,
   );
 

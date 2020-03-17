@@ -2,7 +2,6 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link, MemoryRouter } from 'react-router-dom';
-import SearchBar from 'src/components/searchBar/SearchBar';
 import {
   MockStoreFactory,
   UserProfileFactory,
@@ -17,7 +16,7 @@ const user = UserProfileFactory.sample({});
 test('renders search bar', () => {
   const wrapper = mountTopNavBarWithSearchBar();
 
-  expect(wrapper.find(SearchBar)).toExist();
+  expect(wrapper.find('Connect(SearchBar)')).toExist();
 });
 
 test('renders account menu', () => {
@@ -30,7 +29,7 @@ test('renders navbar with account menu and search bar', () => {
   const wrapper = mountTopNavBarWithAccountMenuAndSearchBar();
 
   expect(wrapper.find(NavbarButtonsContainer)).toExist();
-  expect(wrapper.find(SearchBar)).toExist();
+  expect(wrapper.find('Connect(SearchBar)')).toExist();
 });
 
 test('renders top navbar with navigation', () => {
