@@ -7,7 +7,7 @@ export class EmailForm extends React.Component<FormComponentProps> {
     return (
       <Row>
         <Col xs={{ span: 24 }} md={{ span: 16 }} xl={{ span: 16 }}>
-          <Form.Item label="Email" required={false}>
+          <Form.Item label="Work Email" required={false}>
             {this.props.form.getFieldDecorator('email', {
               rules: [
                 {
