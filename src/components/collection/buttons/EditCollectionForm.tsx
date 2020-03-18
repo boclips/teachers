@@ -110,7 +110,11 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
             initialValue: props.collection.isPublic,
           })(
             <Checkbox data-qa="visibility-edit">
-              Public (anyone can see it)
+              Public{' '}
+              <span className="form__item--extra">
+                (all users can see your collection in search results and subject
+                pages)
+              </span>
             </Checkbox>,
           )}
         </Form.Item>
