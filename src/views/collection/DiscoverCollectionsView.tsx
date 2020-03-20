@@ -3,20 +3,21 @@ import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import collectionsImg from '../../../resources/images/collections.png';
-import SubjectsSVG from '../../../resources/images/subjects.svg';
-import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
+import sortBy from 'lodash/sortBy';
+import { Subject } from 'src/types/Subject';
+import { Discipline } from 'src/types/Discipline';
+import { DisciplineState } from 'src/types/State';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
-} from '../../components/common/higherOrderComponents/withMediaBreakPoint';
+} from 'src/components/common/higherOrderComponents/withMediaBreakPoint';
+import collectionsImg from '../../../resources/images/collections.png';
+import SubjectsSVG from '../../../resources/images/subjects.svg';
+import PageableCollectionCardList from '../../components/collection/card/list/PageableCollectionCardList';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import { Discipline } from '../../types/Discipline';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
-import { DisciplineState } from '../../types/State';
-import { Subject } from '../../types/Subject';
 import './DiscoverCollectionsView.less';
 
 interface OwnProps {
@@ -93,18 +94,20 @@ export class DiscoverCollectionsView extends PureComponent<
                 type="flex"
                 gutter={[12, 12]}
               >
-                {this.props.discipline.subjects.map(subject => (
-                  <Col md={6} key={subject.id}>
-                    <Link
-                      className={this.subjectClassName()}
-                      to={`/discover-collections?subject=${subject.id}`}
-                    >
-                      <span data-qa="discipline-subject-link">
-                        {subject.name}
-                      </span>
-                    </Link>
-                  </Col>
-                ))}
+                {sortBy(this.props.discipline.subjects, ['name']).map(
+                  subject => (
+                    <Col md={6} key={subject.id}>
+                      <Link
+                        className={this.subjectClassName()}
+                        to={`/discover-collections?subject=${subject.id}`}
+                      >
+                        <span data-qa="discipline-subject-link">
+                          {subject.name}
+                        </span>
+                      </Link>
+                    </Col>
+                  ),
+                )}
               </Row>
             </section>
           ) : null}

@@ -36,8 +36,8 @@ test('displays arts discipline', async () => {
 
   expect(collectionPage.getCollections()).toHaveLength(1);
   expect(collectionPage.getDisciplineSubjects()).toMatchObject([
-    'Performing Arts',
     'Art History',
+    'Performing Arts',
   ]);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',

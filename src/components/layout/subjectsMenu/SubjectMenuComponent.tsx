@@ -1,10 +1,11 @@
 import { Dropdown, Menu } from 'antd';
+import sortBy from 'lodash/sortBy';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Discipline } from 'src/types/Discipline';
+import { DisciplineState } from 'src/types/State';
 import { Link } from 'react-router-dom';
 import MySubjectSVG from '../../../../resources/images/subjects.svg';
-import { Discipline } from '../../../types/Discipline';
-import { DisciplineState } from '../../../types/State';
 import DropdownMenuIconComponent from '../navigation/DropdownMenuIconComponent';
 import './SubjectMenuComponent.less';
 
@@ -77,7 +78,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
             </Menu.Item>
           }
           {discipline.subjects &&
-            discipline.subjects.map(subject => (
+            sortBy(discipline.subjects, ['name']).map(subject => (
               <Menu.Item className="subject-menu__list-item" key={subject.id}>
                 <Link
                   to={`/discover-collections?subject=${subject.id}`}
