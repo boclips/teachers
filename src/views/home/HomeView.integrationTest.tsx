@@ -39,7 +39,7 @@ describe('Home page', () => {
 
     expect(homePage.getDisciplines()).toContainEqual({
       name: 'Arts',
-      subjects: ['Art History', 'Performing Arts'],
+      subjects: ['Performing Arts', 'Art History'],
     });
   });
 

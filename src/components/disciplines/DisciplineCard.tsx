@@ -3,7 +3,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import { Discipline } from '../../types/Discipline';
-import { Subject } from '../../types/Subject';
 import DisciplineLogo from './DisciplineLogo';
 
 import './DisciplineCard.less';
@@ -41,9 +40,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
         {this.props.discipline.subjects && (
           <div className="discipline-card__body display-tablet-and-desktop">
             <ul className="discipline-card__subjects">
-              {this.sortSubjects(
-                this.props.discipline.subjects.slice(0, 4),
-              ).map(subject => (
+              {this.props.discipline.subjects.slice(0, 4).map(subject => (
                 <li
                   className={'discipline-card__subject-item'}
                   data-qa="discipline-subject"
@@ -93,15 +90,4 @@ export class DisciplineCard extends React.PureComponent<Props> {
       </section>
     </section>
   );
-
-  private sortSubjects = (subjects: Subject[]) =>
-    [...subjects].sort((a, b) => {
-      if (a.name > b.name) {
-        return 1;
-      }
-      if (a.name < b.name) {
-        return -1;
-      }
-      return 0;
-    });
 }
