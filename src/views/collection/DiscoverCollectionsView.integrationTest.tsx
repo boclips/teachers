@@ -1,10 +1,10 @@
-import ApiStub from '../../../test-support/ApiStub';
-import { DiscoverCollectionListPage } from '../../../test-support/page-objects/DiscoverCollectionListPage';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import { createMemoryHistory } from 'history';
 import DiscoverCollectionsView from 'src/views/collection/DiscoverCollectionsView';
 import eventually from 'test-support/eventually';
 import React from 'react';
+import { DiscoverCollectionListPage } from '../../../test-support/page-objects/DiscoverCollectionListPage';
+import ApiStub from '../../../test-support/ApiStub';
 
 it('redirects if discipline is not found', () => {
   const history = createMemoryHistory();
