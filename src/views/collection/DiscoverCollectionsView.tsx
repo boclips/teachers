@@ -1,6 +1,8 @@
 import { Col, Icon, Row } from 'antd';
 import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
+import { replace } from 'connected-react-router';
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
@@ -29,15 +31,19 @@ interface StateProps {
   subjects: Subject[];
   discipline: Discipline;
 }
+interface DispatchProps {
+  redirectToHomepage: () => void;
+}
 
 const { Content } = Layout;
 const refresh = () => true;
 
 export class DiscoverCollectionsView extends PureComponent<
-  OwnProps & StateProps & WithMediaBreakPointProps
+  OwnProps & StateProps & DispatchProps & WithMediaBreakPointProps
 > {
   public render() {
     if (!this.props.discipline) {
+      this.props.redirectToHomepage();
       return null;
     }
 
@@ -206,6 +212,15 @@ function mapStateToProps(
   };
 }
 
-export default connect(mapStateToProps)(
-  withMediaBreakPoint(DiscoverCollectionsView),
-);
+function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
+  return {
+    redirectToHomepage: () => {
+      dispatch(replace('/'));
+    },
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withMediaBreakPoint(DiscoverCollectionsView));

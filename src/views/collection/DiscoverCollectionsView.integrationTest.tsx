@@ -1,5 +1,24 @@
 import ApiStub from '../../../test-support/ApiStub';
 import { DiscoverCollectionListPage } from '../../../test-support/page-objects/DiscoverCollectionListPage';
+import { renderWithBoclipsStore } from 'test-support/renderWithStore';
+import { createMemoryHistory } from 'history';
+import DiscoverCollectionsView from 'src/views/collection/DiscoverCollectionsView';
+import eventually from 'test-support/eventually';
+import React from 'react';
+
+it('redirects if discipline is not found', () => {
+  const history = createMemoryHistory();
+
+  renderWithBoclipsStore(
+    <DiscoverCollectionsView disciplineId={'223'} />,
+    {},
+    history,
+  );
+
+  return eventually(() => {
+    expect(history.location.pathname).toEqual('/');
+  });
+});
 
 test('displays maths collections', async () => {
   new ApiStub()
