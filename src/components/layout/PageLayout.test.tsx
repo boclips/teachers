@@ -1,4 +1,5 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react';
 import {
   renderWithStore,
   ResultingContext,
@@ -34,9 +35,34 @@ describe('Header when authenticated', () => {
     expect(buttons).toHaveLength(4);
   });
 
-  it('Renders a desktop and mobile Tutorials button', () => {
-    const buttons = context.getAllByText('Tutorials');
+  describe('Help menu', () => {
+    it('Renders a desktop Help button', () => {
+      const buttons = context.getAllByText('Help');
 
-    expect(buttons).toHaveLength(2);
+      expect(buttons).toHaveLength(2);
+    });
+
+    describe('Submenu', () => {
+      beforeEach(() => {
+        const helpMenu = context.getAllByText('Help')[0];
+        fireEvent.click(helpMenu);
+      });
+      it('Renders a Tutorials link', () => {
+        const buttons = context.getAllByText('Tutorials');
+
+        expect(buttons).toHaveLength(1);
+      });
+
+      it('Renders a Remote Learning link', () => {
+        const buttons = context.getAllByText('Remote learning');
+
+        expect(buttons).toHaveLength(1);
+      });
+      it('Renders a Teacher Training link', () => {
+        const buttons = context.getAllByText('Teacher training');
+
+        expect(buttons).toHaveLength(1);
+      });
+    });
   });
 });

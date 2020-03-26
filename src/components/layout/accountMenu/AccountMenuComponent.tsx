@@ -28,14 +28,14 @@ class AccountMenuComponent extends React.Component<Props, State> {
   };
 
   private renderMenu = (): React.ReactFragment => (
-    <Menu className="account-menu account-menu--desktop">
-      <Menu.Item key="1">
+    <Menu className="button-menu button-menu--desktop">
+      <Menu.Item>
         <UserCollectionsLink />
       </Menu.Item>
-      <Menu.Item key="2">
+      <Menu.Item>
         <AccountSettingsLink />
       </Menu.Item>
-      <Menu.Item key="3">
+      <Menu.Item>
         <LogoutLink onClick={this.props.onLogout} />
       </Menu.Item>
     </Menu>

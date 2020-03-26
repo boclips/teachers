@@ -1,10 +1,7 @@
 import React from 'react';
+import { HelpMenu } from 'src/components/layout/navigation/HelpMenu';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
-import {
-  HomeLink,
-  SubjectsLink,
-  TutorialLink,
-} from '../navigation/NavbarButtons';
+import { HomeLink, SubjectsLink } from '../navigation/NavbarButtons';
 import SubjectMenuComponent from '../subjectsMenu/SubjectMenuComponent';
 import './NavbarButtons.less';
 
@@ -20,7 +17,7 @@ export const NavbarButtonsContainer = React.memo(() => (
       <SubjectMenuComponent />
     </li>
     <li className={'navbar-buttons__list-item display-desktop'}>
-      <TutorialLink />
+      <HelpMenu />
     </li>
     <li className={'navbar-buttons__list-item display-mobile-and-tablet'}>
       <SubjectsLink />
