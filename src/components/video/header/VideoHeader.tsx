@@ -1,11 +1,11 @@
 import { Icon } from 'antd';
 import React from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Video } from '../../../types/Video';
+import badgeYoutube from 'resources/images/badge-youtube.png';
+import { Video } from 'src/types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import VideoPreviewBadge from '../card/VideoBadge';
 import Rating from '../rating/Rating';
 import './VideoHeader.less';
 
@@ -22,7 +22,14 @@ export const VideoHeader = withRouter(
         </Link>
       </h1>
       <section className="badge-container">
-        <VideoPreviewBadge video={props.video} />
+        {props.video.badges && props.video.badges.indexOf('youtube') !== -1 && (
+          <img
+            src={badgeYoutube}
+            data-qa={'youtube-badge'}
+            className={`video-badge youtube`}
+            alt={'YouTube'}
+          />
+        )}
         <p data-qa="video-duration" className={'subtitle duration'}>
           <Icon type="clock-circle" />{' '}
           <DurationFormatter duration={props.video.duration} />

@@ -3,12 +3,12 @@ import React from 'react';
 import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
 import { BestForTag } from 'src/components/common/tags/BestForTag';
 import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
+import badgeYoutube from 'resources/images/badge-youtube.png';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';
-import VideoPreviewBadge from '../card/VideoBadge';
 import VideoPlayer from '../player/VideoPlayer';
 import Rating from '../rating/Rating';
 import './VideoDetails.less';
@@ -78,7 +78,15 @@ class VideoDetailsContent extends React.PureComponent<Props> {
                 <Icon type="clock-circle" />{' '}
                 <DurationFormatter duration={this.props.video.duration} />
               </p>
-              <VideoPreviewBadge video={this.props.video} />
+              {this.props.video.badges &&
+                this.props.video.badges.indexOf('youtube') !== -1 && (
+                  <img
+                    src={badgeYoutube}
+                    data-qa={'youtube-badge'}
+                    className={`video-badge youtube`}
+                    alt={'YouTube'}
+                  />
+                )}
             </section>
           </section>
           <p

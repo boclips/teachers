@@ -56,7 +56,6 @@ describe('CollectionDetailsView', () => {
         createdBy: 'cp1',
         duration: ' 1m 2s',
         releasedOn: 'Feb 11, 2018',
-        badgeAlt: 'Ad free',
         subjects: ['Maths', 'Physics'],
         playerVideoId: '177',
       });

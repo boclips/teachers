@@ -38,7 +38,6 @@ export class CollectionPage {
         createdBy: findOne(el, 'video-created-by').text(),
         duration: findOne(el, 'video-duration').text(),
         releasedOn: findOne(el, 'video-released-on').text(),
-        badgeAlt: el.find('.video-badge').prop('alt'),
         isSaved: el.find(By.dataQa('remove-from-collection')).length === 1,
         subjects: el
           .find(By.dataQa('subject-tag'))

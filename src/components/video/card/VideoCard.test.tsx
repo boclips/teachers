@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'src/types/Link';
-import { renderWithCreatedStore } from 'test-support/renderWithStore';
+import {
+  renderWithBoclipsStore,
+  renderWithCreatedStore,
+} from 'test-support/renderWithStore';
 import { createBoclipsStore } from 'src/app/redux/store';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
@@ -137,5 +140,12 @@ describe(`when unauthenticated`, () => {
     expect(component.queryByText('Transcript')).toBeInTheDocument();
     expect(component.queryByText('Share')).not.toBeInTheDocument();
     expect(component.queryByText('Save')).not.toBeInTheDocument();
+  });
+
+  it(`renders the youtube badge when youtube video`, () => {
+    const youtubeVideo = VideoFactory.sample({ badges: ['youtube'] });
+    const wrapper = renderWithBoclipsStore(<VideoCard video={youtubeVideo} />);
+
+    expect(wrapper.getByTestId('youtube-badge')).toBeInTheDocument();
   });
 });
