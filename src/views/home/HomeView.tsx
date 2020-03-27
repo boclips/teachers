@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import RemoteTeacherSVG from 'resources/images/remote-teacher.svg';
-import PublicCollectionsGrid from '../../components/collection/grid/PublicCollectionsGrid';
+import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import SearchBar from '../../components/searchBar/SearchBar';
@@ -13,6 +13,9 @@ import { VideosAndDisciplinesSection } from './VideosAndDisciplinesSection';
 import './HomeView.less';
 
 const { Content } = Layout;
+
+export const COLLECTIONS_COUNT = 9;
+
 export default class HomeView extends PureComponent {
   public render() {
     return (
@@ -74,8 +77,8 @@ export default class HomeView extends PureComponent {
               <Row>
                 <Col>
                   <section className="home-collections">
-                    <PublicCollectionsGrid
-                      maxNumberOfCollections={6}
+                    <PromotedCollectionsGrid
+                      maxNumberOfCollections={COLLECTIONS_COUNT}
                       description="Explore our curated collections made to engage students of all ages and enrich learning opportunities in the classroom."
                     />
                   </section>

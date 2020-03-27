@@ -212,6 +212,7 @@ const createMockStore = (collection: VideoCollection, videos: Video[]) =>
       }),
       discoverCollections: undefined,
       publicCollections: undefined,
+      promotedCollections: undefined,
       loading: false,
       updating: false,
     },

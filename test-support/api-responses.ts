@@ -21,6 +21,9 @@ export const links = {
     publicCollections: {
       href: `${prefix}/v1/collections?public=true`,
     },
+    promotedCollections: {
+      href: `${prefix}/v1/collections?promoted=true`,
+    },
     mySavedCollections: {
       href: `${prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
     },
@@ -270,6 +273,7 @@ export function collectionResponse(
     videos: videosWithin,
     updatedAt: '2019-01-16T12:00:00.870Z',
     public: true,
+    promoted: false,
     subjects: [],
     createdBy: 'AI',
     ageRange: {
@@ -313,6 +317,18 @@ export function collectionResponse(
   };
 }
 
+export function collectionResponseAsPromoted(
+  videosWithin: any[] = [video177Slim],
+  id: string = 'id',
+  editable: boolean = true,
+) {
+  return {
+    ...collectionResponse(videosWithin, id, editable),
+    title: 'Promoted collection',
+    promoted: true,
+  };
+}
+
 export function collectionResponseWithSubject(
   videosWithin: any[] = [video177Slim],
   id: string = 'id',
@@ -339,6 +355,20 @@ export function collectionResponseWithAttachment(
 }
 
 export function collectionsResponse(data: any[] = [collectionResponse()]) {
+  return {
+    _embedded: {
+      collections: data,
+    },
+    _links: {
+      self: { href: 'http://localhost/v1/collections/' },
+      next: { href: 'http://localhost/v1/collections/next' },
+    },
+  };
+}
+
+export function promotedCollectionsResponse(
+  data: any[] = [collectionResponseAsPromoted()],
+) {
   return {
     _embedded: {
       collections: data,

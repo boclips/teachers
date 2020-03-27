@@ -29,7 +29,7 @@ export class HomePage {
     });
   }
 
-  public getPublicCollections(): Collection[] {
+  public getPromotedCollections(): Collection[] {
     return this.wrapper
       .find(By.dataQa('collection-card'))
       .map(collectionCard => {

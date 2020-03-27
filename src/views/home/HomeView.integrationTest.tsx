@@ -13,14 +13,12 @@ describe('Home page', () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
-      .fetchPromoted()
-      .fetchPublicCollections()
-      .fetchCollections();
+      .fetchPromoted();
 
     const homePage = await HomePage.load();
 
-    expect(homePage.getPublicCollections()).toContainEqual({
-      title: 'funky collection',
+    expect(homePage.getPromotedCollections()).toContainEqual({
+      title: 'Promoted collection',
       numberOfVideos: 1,
       subject: null,
     });
@@ -43,12 +41,12 @@ describe('Home page', () => {
     });
   });
 
-  test('loads public collection and renders a single subject', async () => {
+  test('loads promoted collection and renders a single subject', async () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
       .fetchPromoted()
-      .fetchPublicCollections(
+      .fetchPromotedCollections(
         collectionsResponse([collectionResponseWithSubject()]),
       )
       .fetchCollections();
@@ -57,7 +55,7 @@ describe('Home page', () => {
 
     const homePage = await HomePage.load();
 
-    expect(homePage.getPublicCollections()).toContainEqual({
+    expect(homePage.getPromotedCollections()).toContainEqual({
       title: 'funky collection',
       numberOfVideos: 1,
       subject: 'Maths',
@@ -68,11 +66,13 @@ describe('Home page', () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
-      .fetchPublicCollections()
-      .fetchCollections()
       .fetchPromoted(
         buildVideoSearchResponse([
-          VideoResourceFactory.sample({ title: 'hello', promoted: true }),
+          VideoResourceFactory.sample({
+            id: 'some-other-id',
+            title: 'hello',
+            promoted: true,
+          }),
         ]),
       );
 

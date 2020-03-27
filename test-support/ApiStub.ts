@@ -4,6 +4,7 @@ import {
   countriesResponse,
   disciplinesResponse,
   links,
+  promotedCollectionsResponse,
   promotedResponse,
   schoolsResponse,
   tagsResponse,
@@ -45,6 +46,7 @@ export default class ApiStub {
     MockFetchVerify.get(`${this.prefix}/v1/`, JSON.stringify(linksDefault));
     this.fetchCountries()
       .fetchCollections()
+      .fetchPromotedCollections()
       .fetchDisciplines()
       .fetchTags();
   }
@@ -86,7 +88,7 @@ export default class ApiStub {
 
   public fetchPromoted(result = promotedResponse()) {
     MockFetchVerify.get(
-      new RegExp(`/v1/videos?.*&promoted=true`),
+      new RegExp(`/v1/videos.*&promoted=true`),
       JSON.stringify(result),
     );
     return this;
@@ -173,6 +175,14 @@ export default class ApiStub {
         collections,
       );
     }
+    return this;
+  }
+
+  public fetchPromotedCollections(collections = promotedCollectionsResponse()) {
+    MockFetchVerify.get(
+      `${this.prefix}/v1/collections?promoted=true`,
+      collections,
+    );
     return this;
   }
 

@@ -15,6 +15,7 @@ test('parses all links', async () => {
       createCollection: { href: '/collections' },
       myCollections: { href: '/collections?owner=123' },
       publicCollections: { href: '/collections?list=yes&public=true' },
+      promotedCollections: { href: '/collections?public=true&promoted=true' },
       subjects: { href: '/subjects' },
       countries: { href: '/countries' },
       tags: { href: '/tags' },
@@ -39,6 +40,9 @@ test('parses all links', async () => {
     createCollection: new Link({ href: '/collections' }),
     publicCollections: new Link({
       href: '/collections?list=yes&public=true',
+    }),
+    promotedCollections: new Link({
+      href: '/collections?public=true&promoted=true',
     }),
     subjects: new Link({
       href: '/subjects',

@@ -1,5 +1,6 @@
 import { push } from 'connected-react-router';
 import { Store } from 'redux';
+import { CollectionKey } from 'src/types/CollectionKey';
 import { sideEffect } from '../../../../app/redux/actions';
 import { storeLinksAction } from '../../../../app/redux/links/actions/storeLinksAction';
 import { fetchPageableCollections } from '../../../../services/collections/fetchCollections';
@@ -28,13 +29,9 @@ const onLoggedIn = (store: Store) => {
       if (links.activate) {
         store.dispatch(push('/onboarding'));
       }
-      fetchPageableCollections(links, { key: 'myCollections' })
-        .then(collections => {
-          store.dispatch(
-            storeCollectionsAction({ collections, key: 'myCollections' }),
-          );
-        })
-        .catch(e => console.error('Cannot fetch collections', e));
+      fetchAndStorePageableCollections(store, links, 'myCollections');
+      fetchAndStorePageableCollections(store, links, 'promotedCollections');
+
       return fetchUser(links);
     })
     .then((user: UserProfile) => {
@@ -45,5 +42,16 @@ const onLoggedIn = (store: Store) => {
       console.error(error);
     });
 };
+
+const fetchAndStorePageableCollections = (
+  store: Store,
+  links: Links,
+  key: CollectionKey,
+) =>
+  fetchPageableCollections(links, { key })
+    .then(collections => {
+      store.dispatch(storeCollectionsAction({ collections, key }));
+    })
+    .catch(e => console.error('Cannot fetch collections', e));
 
 export default sideEffect(userLoggedIn, onLoggedIn);

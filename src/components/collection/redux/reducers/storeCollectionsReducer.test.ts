@@ -100,6 +100,7 @@ describe('appending pageable collections to different keys', () => {
         loading: false,
         myCollections: undefined,
         discoverCollections: undefined,
+        promotedCollections: undefined,
         publicCollections: PageableCollectionsFactory.sample(),
       },
     });
@@ -132,6 +133,7 @@ describe('appending pageable collections to different keys', () => {
         updating: false,
         loading: false,
         myCollections: undefined,
+        promotedCollections: undefined,
         discoverCollections: PageableCollectionsFactory.sample(),
         publicCollections: undefined,
       },
@@ -165,6 +167,7 @@ describe('appending pageable collections to different keys', () => {
         updating: false,
         loading: false,
         myCollections: undefined,
+        promotedCollections: undefined,
         myResources: PageableCollectionsFactory.sample(),
         discoverCollections: undefined,
         publicCollections: undefined,

@@ -8,7 +8,7 @@ interface Props {
   description?: string;
 }
 
-class PublicCollectionsGrid extends React.PureComponent<Props> {
+export class PromotedCollectionsGrid extends React.PureComponent<Props> {
   public render() {
     return (
       <PageableCollectionCardList
@@ -20,10 +20,8 @@ class PublicCollectionsGrid extends React.PureComponent<Props> {
         description={this.props.description}
         grid={true}
         maxNumberOfCollections={this.props.maxNumberOfCollections}
-        collectionKey="publicCollections"
+        collectionKey="promotedCollections"
       />
     );
   }
 }
-
-export default PublicCollectionsGrid;

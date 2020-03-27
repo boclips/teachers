@@ -51,6 +51,11 @@ export default function fetchLinks(prefix: string) {
         if (body._links.publicCollections) {
           links.publicCollections = new Link(body._links.publicCollections);
         }
+
+        if (body._links.promotedCollections) {
+          links.promotedCollections = new Link(body._links.promotedCollections);
+        }
+
         if (body._links.activate) {
           links.activate = new Link(body._links.activate);
         }

@@ -114,6 +114,7 @@ export interface CollectionsStateValue {
   myCollections: Pageable<string>;
   myResources?: Pageable<string>;
   publicCollections: Pageable<string>;
+  promotedCollections: Pageable<string>;
   discoverCollections: Pageable<string>;
   collectionIdBeingViewed?: string;
 }

@@ -46,6 +46,7 @@ import {
 export const initialCollectionsState: CollectionsStateValue = {
   myCollections: undefined,
   publicCollections: undefined,
+  promotedCollections: undefined,
   discoverCollections: undefined,
   collectionIdBeingViewed: undefined,
   loading: true,

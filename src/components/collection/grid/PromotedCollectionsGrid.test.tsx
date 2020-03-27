@@ -3,23 +3,23 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MockStoreFactory } from '../../../../test-support/factories';
 import { fetchPageableCollectionsAction } from '../redux/actions/fetchPageableCollectionsAction';
-import PublicCollectionsGrid from './PublicCollectionsGrid';
+import { PromotedCollectionsGrid } from './PromotedCollectionsGrid';
 
-describe('public collections', () => {
-  test('dispatches fetch public collection if none when mounted', () => {
+describe('promoted collections', () => {
+  test('dispatches fetch promoted collection if none when mounted', () => {
     const store = MockStoreFactory.sample({
       collections: {} as any,
     });
 
     mount(
       <Provider store={store}>
-        <PublicCollectionsGrid maxNumberOfCollections={1} />
+        <PromotedCollectionsGrid maxNumberOfCollections={1} />
       </Provider>,
     );
 
     expect(store.getActions()).toHaveLength(1);
     expect(store.getActions()).toContainEqual(
-      fetchPageableCollectionsAction({ key: 'publicCollections' }),
+      fetchPageableCollectionsAction({ key: 'promotedCollections' }),
     );
   });
 });

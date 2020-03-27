@@ -207,6 +207,9 @@ export class LinksFactory {
       publicCollections:
         arg.publicCollections ||
         new Link({ href: `${prefix}/collections?public` }),
+      promotedCollections:
+        arg.promotedCollections ||
+        new Link({ href: `${prefix}/collections?promoted` }),
       collection:
         arg.collection ||
         new Link({ href: `${prefix}/collections/{id}{?referer,shareCode}` }),
@@ -346,6 +349,10 @@ export class CollectionsFactory {
       updating: false,
       myCollections: { items: [collection.id], links: {} },
       publicCollections: {
+        items: [],
+        links: {},
+      },
+      promotedCollections: {
         items: [],
         links: {},
       },

@@ -10,6 +10,7 @@ export interface Links {
   searchPublicCollections?: Link;
   myCollections?: Link;
   publicCollections?: Link;
+  promotedCollections?: Link;
   activate?: Link;
   profile?: Link;
   createAccount?: Link;
