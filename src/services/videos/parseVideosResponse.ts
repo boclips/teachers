@@ -19,9 +19,11 @@ export function parseVideosResponse(
   query: string,
 ): VideoSearchResult {
   const videos = response.data._embedded.videos.map(convertVideoResource);
+  const facets = response.data._embedded.facets;
 
   return {
     videos,
+    facets,
     query,
     paging: limitPageResponse(response.data.page),
   };

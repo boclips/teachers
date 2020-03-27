@@ -1,5 +1,6 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { Store } from 'redux';
+import { VideoSearchResult } from 'src/types/SearchResults';
 import {
   actionCreatorFactory,
   sideEffect,
@@ -26,8 +27,10 @@ const searchVideosAndCollections = (store: Store<State>) => {
 
 const onFetchVideos = (store: Store<State>, request: VideoSearchRequest) => {
   const links: Links = store.getState().links.entries;
-  fetchVideos(request, links).then(result => {
-    store.dispatch(storeVideosAction({ videos: result.videos }));
+  fetchVideos(request, links).then((result: VideoSearchResult) => {
+    store.dispatch(
+      storeVideosAction({ videos: result.videos, facets: result.facets }),
+    );
   });
 };
 

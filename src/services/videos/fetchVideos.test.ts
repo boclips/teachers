@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import queryString from 'query-string';
 import { DurationRange } from 'src/types/DurationRange';
-import { videos } from '../../../test-support/api-responses';
+import { videosSearchResponse } from '../../../test-support/api-responses';
 import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
 import { VideoType } from '../../types/Video';
@@ -12,7 +12,7 @@ let queryParams = null;
 
 beforeEach(async () => {
   const axiosMock = new MockAdapter(axios);
-  axiosMock.onGet().reply(200, JSON.stringify(videos), {});
+  axiosMock.onGet().reply(200, JSON.stringify(videosSearchResponse), {});
 
   const links = LinksFactory.sample({
     videos: new Link({

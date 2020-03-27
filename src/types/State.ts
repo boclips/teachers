@@ -1,4 +1,5 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
+import { VideoFacets } from 'src/types/VideoFacets';
 import { UserProfile } from '../services/users/UserProfile';
 import { Country } from './Country';
 import { Discipline } from './Discipline';
@@ -24,6 +25,7 @@ export interface VideoSearchStateValue {
   query: string;
   videoIds: string[];
   paging: PageSpec;
+  facets?: VideoFacets;
 }
 
 export interface CollectionSearchStateValue {
@@ -130,18 +132,6 @@ export interface CollectionMap {
 
 export interface VideoMap {
   [videoId: string]: Video;
-}
-
-export function getIndexOfCollection(
-  collections: string[],
-  collectionId: string,
-) {
-  return collections.findIndex(id => id === collectionId);
-}
-
-export function isMyCollection(myCollections: string[], collectionId: string) {
-  const indexOfCollection = getIndexOfCollection(myCollections, collectionId);
-  return indexOfCollection >= 0;
 }
 
 export default interface State

@@ -234,12 +234,16 @@ export const sampleAttachmentResponse = {
   _links: { download: { href: 'https://example.com/download' } },
 };
 
-export const videos = videosResponse([video177, video147]);
+export const videosSearchResponse = buildVideoSearchResponse(
+  [video177, video147],
+  undefined,
+);
 
-export function videosResponse(data: any[]) {
+export function buildVideoSearchResponse(videos: any[], facets: any = {}) {
   return {
     _embedded: {
-      videos: data,
+      videos,
+      facets,
     },
     page: {
       size: 10,
@@ -251,7 +255,7 @@ export function videosResponse(data: any[]) {
 }
 
 export function promotedResponse() {
-  return this.videosResponse([video177, video147]);
+  return buildVideoSearchResponse([video177, video147]);
 }
 
 export function collectionResponse(

@@ -27,10 +27,10 @@ describe('SearchResultsView - mocked debounce', () => {
 
     axiosMock.resetHistory();
 
-    const artsOption = await view.findByLabelText('Arts');
+    const artsOption = await view.findByLabelText(/Arts.*/);
     await fireEvent.click(artsOption);
 
-    const otherSubjectOption = await view.findByLabelText('Other subject');
+    const otherSubjectOption = await view.findByLabelText(/Other subject.*/);
     await fireEvent.click(otherSubjectOption);
 
     debounce.triggerLastCallback();

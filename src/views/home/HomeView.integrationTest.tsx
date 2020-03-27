@@ -1,7 +1,7 @@
 import {
   collectionResponseWithSubject,
   collectionsResponse,
-  videosResponse,
+  buildVideoSearchResponse,
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { VideoResourceFactory } from '../../../test-support/factories';
@@ -64,14 +64,14 @@ describe('Home page', () => {
     });
   });
 
-  test('loads promoted videos', async () => {
+  test('loads promoted videosSearchResponse', async () => {
     new ApiStub()
       .defaultUser()
       .fetchVideo()
       .fetchPublicCollections()
       .fetchCollections()
       .fetchPromoted(
-        videosResponse([
+        buildVideoSearchResponse([
           VideoResourceFactory.sample({ title: 'hello', promoted: true }),
         ]),
       );

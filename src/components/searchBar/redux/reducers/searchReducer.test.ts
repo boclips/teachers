@@ -107,6 +107,28 @@ describe('searching videos', () => {
     expect(newState.search.videoSearch).toEqual(expectedState);
     expect(newState.entities.videos.byId[video.id]).toEqual(video);
   });
+
+  it('can store search facets', () => {
+    const stateBefore = MockStoreFactory.sampleState({});
+
+    const facets = {
+      subjects: {},
+      ageRanges: {},
+    };
+
+    const newState = searchReducer(
+      stateBefore,
+      storeVideoSearchResultsAction({
+        videos: [],
+        facets,
+        query: 'dogs',
+        paging: defaultPaging,
+      }),
+    );
+
+    expect(newState.search.videoSearch.facets.subjects).toBeDefined();
+    expect(newState.search.videoSearch.facets.subjects).toBeDefined();
+  });
 });
 
 describe('searching collections', () => {

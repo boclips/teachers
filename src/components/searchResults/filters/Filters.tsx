@@ -1,4 +1,4 @@
-import { Form, Menu } from 'antd';
+import { Checkbox, Form, Menu } from 'antd';
 import CheckboxGroup from 'antd/lib/checkbox/Group';
 import { FormComponentProps } from 'antd/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -11,6 +11,7 @@ import {
 import { Subject } from 'src/types/Subject';
 import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
 import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
+import { extractFacetHits } from 'src/components/searchResults/filters/extractFacetHits';
 import State from '../../../types/State';
 
 const FilterKey = {
@@ -43,13 +44,53 @@ const Filters = React.forwardRef(
   (props: FormComponentProps & Props, ref: Ref<any>) => {
     const { ageRange, subjectIds, duration } = props;
     const { getFieldDecorator, resetFields } = props.form;
+    const facets = useSelector(
+      (state: State) =>
+        state.search.videoSearch.facets || { ageRanges: {}, subjects: {} },
+    );
+
+    const ageRangeFilters = [
+      {
+        label: `3 - 5`,
+        value: '3-5',
+        count: extractFacetHits('3-5', facets.ageRanges),
+      },
+      {
+        label: '5 - 9',
+        value: '5-9',
+        count: extractFacetHits('5-9', facets.ageRanges),
+      },
+      {
+        label: '9 - 11',
+        value: '9-11',
+        count: extractFacetHits('9-11', facets.ageRanges),
+      },
+      {
+        label: '11 - 14',
+        value: '11-14',
+        count: extractFacetHits('11-14', facets.ageRanges),
+      },
+      {
+        label: '14 - 16',
+        value: '14-16',
+        count: extractFacetHits('14-16', facets.ageRanges),
+      },
+      {
+        label: '16 + ',
+        value: '16-99',
+        count: extractFacetHits('16-99', facets.ageRanges),
+      },
+    ];
+
     const subjects = useSelector((state: State) => state.subjects);
-    const subjectOptions = subjects
+    const subjectFilters = subjects
       .map(subject => ({
         value: subject.id,
         label: subject.name,
+        count: extractFacetHits(subject.id, facets.subjects),
       }))
       .sort((a, b) => a.label.localeCompare(b.label));
+
     const [openFilters, setOpenFilters] = useState(() => [
       FilterKey.AGE,
       FilterKey.SUBJECTS,
@@ -93,18 +134,18 @@ const Filters = React.forwardRef(
                     initialValue: ageRange
                       ? ageRange.map(range => range.getId())
                       : [],
+                    valuePropName: 'value',
                   })(
-                    <CheckboxGroup
-                      className="filter-form__checkbox-group"
-                      options={[
-                        { label: '3 - 5', value: '3-5' },
-                        { label: '5 - 9', value: '5-9' },
-                        { label: '9 - 11', value: '9-11' },
-                        { label: '11 - 14', value: '11-14' },
-                        { label: '14 - 16', value: '14-16' },
-                        { label: '16 + ', value: '16-99' },
-                      ]}
-                    />,
+                    <CheckboxGroup className="filter-form__checkbox-group">
+                      {ageRangeFilters.map(item => (
+                        <Checkbox key={item.label} value={item.value}>
+                          {item.label}{' '}
+                          <span className="filter-form__checkbox-count">
+                            ({item.count})
+                          </span>
+                        </Checkbox>
+                      ))}
+                    </CheckboxGroup>,
                   )}
                 </Form.Item>
               </React.Fragment>
@@ -120,10 +161,16 @@ const Filters = React.forwardRef(
                     rules: [{ type: 'array' }],
                     initialValue: subjectIds,
                   })(
-                    <CheckboxGroup
-                      className="filter-form__checkbox-group filter-form__subjects-group"
-                      options={subjectOptions}
-                    />,
+                    <CheckboxGroup className="filter-form__checkbox-group filter-form__subjects-group">
+                      {subjectFilters.map(item => (
+                        <Checkbox key={item.label} value={item.value}>
+                          {item.label}{' '}
+                          <span className="filter-form__checkbox-count">
+                            ({item.count})
+                          </span>
+                        </Checkbox>
+                      ))}
+                    </CheckboxGroup>,
                   )}
                 </Form.Item>
               </React.Fragment>
@@ -168,6 +215,8 @@ export const FiltersWithForm = withAppliedSearchParameters(
       filterRequest.duration = allValues.duration;
       filterRequest.ageRange = allValues.ageRange;
       filterRequest.subjects = allValues.subjects;
+
+      console.log(filterRequest.ageRange, allValues.ageRange);
 
       props.onApplyFilters(filterRequest);
     },

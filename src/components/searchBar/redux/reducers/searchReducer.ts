@@ -79,6 +79,8 @@ function onStoreVideoSearchResultsAction(
       query: results.query,
       paging: results.paging,
     };
+
+    draftState.search.videoSearch.facets = results.facets;
   });
 }
 
@@ -124,15 +126,6 @@ function onStoreCollectionSearchResultsAction(
       },
     },
   };
-}
-
-export function replaceVideo(originalVideos: Video[], video: Video): Video[] {
-  const videos = [...originalVideos];
-  const index = videos.findIndex(v => v.id === video.id);
-  if (index > -1) {
-    videos[index] = video;
-  }
-  return videos;
 }
 
 export const videoSearchHandlers: Array<ActionHandler<State, any>> = [

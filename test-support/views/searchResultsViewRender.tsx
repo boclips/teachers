@@ -9,7 +9,7 @@ import ApiStub from 'test-support/ApiStub';
 import {
   collectionResponse,
   collectionsResponse,
-  videos as videoResults,
+  videosSearchResponse,
 } from 'test-support/api-responses';
 import { renderWithConnectedRoutes } from 'test-support/renderWithStore';
 import { Route } from 'react-router';
@@ -44,7 +44,7 @@ export const renderSearchResultsViewWithSampleData = (
 ) => {
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query: initialQuery, results: videoResults })
+    .queryVideos({ query: initialQuery, results: videosSearchResponse })
     .queryCollections({
       query: initialQuery,
       results: collectionsResponse([collectionResponse()]),

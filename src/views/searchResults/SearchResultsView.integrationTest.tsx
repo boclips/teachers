@@ -6,7 +6,8 @@ import {
 import ApiStub from 'test-support/ApiStub';
 import {
   collectionsResponse,
-  videosResponse,
+  buildVideoSearchResponse,
+  video177,
 } from 'test-support/api-responses';
 import { waitForElement } from '@testing-library/react';
 
@@ -24,7 +25,7 @@ describe('SearchResultsView', () => {
   it(`can change subject filters`, async () => {
     const { findByLabelText } = renderSearchResultsViewWithSampleData();
 
-    const artsCheckbox = await findByLabelText('Arts');
+    const artsCheckbox = await findByLabelText(/Arts.*/);
 
     expect(artsCheckbox.closest('input').checked).toEqual(false);
     await fireEvent.click(artsCheckbox);
@@ -54,14 +55,14 @@ describe('SearchResultsView', () => {
         .queryVideos({
           query: initialQuery,
           subject: ['art-id'],
-          results: videosResponse([]),
+          results: buildVideoSearchResponse([]),
         })
         .queryCollections({
           query: initialQuery,
           results: collectionsResponse([]),
         });
 
-      const artsOption = await view.findByLabelText('Arts');
+      const artsOption = await view.findByLabelText(/Arts.*/);
       fireEvent.click(artsOption);
 
       await waitForElement(() => view.getByText(helperMessageTitle));
@@ -78,7 +79,10 @@ describe('SearchResultsView', () => {
 
       new ApiStub()
         .defaultUser()
-        .queryVideos({ query: initialQuery, results: videosResponse([]) })
+        .queryVideos({
+          query: initialQuery,
+          results: buildVideoSearchResponse([]),
+        })
         .queryCollections({
           query: initialQuery,
           results: collectionsResponse([]),
@@ -93,6 +97,37 @@ describe('SearchResultsView', () => {
 
       expect(view.queryByText(helperMessageFiltersTip)).not.toBeInTheDocument();
       expect(view.queryByText('Filter results')).not.toBeInTheDocument();
+    });
+
+    it(`provides the correct counts for age range and subject filter`, async () => {
+      const initialQuery = 'hello';
+
+      new ApiStub()
+        .defaultUser()
+        .queryVideos({
+          query: initialQuery,
+          results: buildVideoSearchResponse([video177], {
+            subjects: {
+              'art-id': {
+                hits: 1,
+              },
+            },
+            ageRanges: {
+              '3-5': {
+                hits: 100,
+              },
+            },
+          }),
+        })
+        .queryCollections({
+          query: initialQuery,
+          results: collectionsResponse([]),
+        });
+
+      const view = renderSearchResultsView(initialQuery);
+
+      expect(await view.findByLabelText('Arts (1)')).toBeInTheDocument();
+      expect(await view.findByLabelText('3 - 5 (100)')).toBeInTheDocument();
     });
   });
 });
