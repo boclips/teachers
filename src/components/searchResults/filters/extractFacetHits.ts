@@ -1,4 +1,5 @@
 import { Facet } from 'src/types/VideoFacets';
+import { MaxElementCount } from 'src/services/videos/parseVideosResponse';
 
 export const extractFacetHits = (
   id: string,
@@ -12,5 +13,5 @@ export const extractFacetHits = (
     return 0;
   }
 
-  return facet[id].hits;
+  return facet[id].hits > MaxElementCount ? MaxElementCount : facet[id].hits;
 };

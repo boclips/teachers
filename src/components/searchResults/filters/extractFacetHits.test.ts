@@ -11,3 +11,9 @@ it('can handle undefined', () => {
 it('can handle legit data', () => {
   expect(extractFacetHits('real-id', { 'real-id': { hits: 10 } })).toEqual(10);
 });
+
+it('defaults hits greater 500 to 500', () => {
+  expect(extractFacetHits('real-id', { 'real-id': { hits: 1000 } })).toEqual(
+    500,
+  );
+});
