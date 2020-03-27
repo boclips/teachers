@@ -1,7 +1,9 @@
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
+import { Button } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
+import RemoteTeacherSVG from 'resources/images/remote-teacher.svg';
 import PublicCollectionsGrid from '../../components/collection/grid/PublicCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
@@ -33,6 +35,36 @@ export default class HomeView extends PureComponent {
                 </Col>
               </Row>
             </PageLayout>
+          </section>
+
+          <section>
+            <Content>
+              <Row>
+                <Col>
+                  <a
+                    href="https://www.boclips.com/remote-learning-with-video-resources-for-teachers"
+                    target="_blank"
+                    className="remote-teaching"
+                  >
+                    <Row type="flex">
+                      <Col xs={0} lg={10}>
+                        <div className="remote-teaching__illustration">
+                          <RemoteTeacherSVG />
+                        </div>
+                      </Col>
+                      <Col sm={24} lg={14} className="copy-col">
+                        <h1 className="alt">FREE remote learning toolkit</h1>
+                        <p>
+                          Tools, ideas and inspiration to use in virtual
+                          classrooms
+                        </p>
+                        <Button className="display-desktop">Explore kit</Button>
+                      </Col>
+                    </Row>
+                  </a>
+                </Col>
+              </Row>
+            </Content>
           </section>
 
           <VideosAndDisciplinesSection />
