@@ -588,6 +588,7 @@ export class MockStoreFactory {
       collections,
       router: RouterFactory.sample(),
       subjects: SubjectsFactory.sample(),
+      ageRanges: AgeRangeFactory.sample(),
       countries: CountriesFactory.sample(),
       disciplines: DisciplinesFactory.sample(),
       tags: TagsFactory.sample(),

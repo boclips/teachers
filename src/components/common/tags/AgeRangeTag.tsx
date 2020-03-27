@@ -12,7 +12,7 @@ export class AgeRangeTag extends React.Component<AgeRangeProps> {
     return (
       <span data-qa="age-range">
         <Tag
-          value={this.props.ageRange.getId()}
+          value={this.props.ageRange.getShortLabel()}
           label={this.props.hideLabel ? null : 'Ages'}
         />
       </span>

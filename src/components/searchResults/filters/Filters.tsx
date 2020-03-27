@@ -49,38 +49,12 @@ const Filters = React.forwardRef(
         state.search.videoSearch.facets || { ageRanges: {}, subjects: {} },
     );
 
-    const ageRangeFilters = [
-      {
-        label: `3 - 5`,
-        value: '3-5',
-        count: extractFacetHits('3-5', facets.ageRanges),
-      },
-      {
-        label: '5 - 9',
-        value: '5-9',
-        count: extractFacetHits('5-9', facets.ageRanges),
-      },
-      {
-        label: '9 - 11',
-        value: '9-11',
-        count: extractFacetHits('9-11', facets.ageRanges),
-      },
-      {
-        label: '11 - 14',
-        value: '11-14',
-        count: extractFacetHits('11-14', facets.ageRanges),
-      },
-      {
-        label: '14 - 16',
-        value: '14-16',
-        count: extractFacetHits('14-16', facets.ageRanges),
-      },
-      {
-        label: '16 + ',
-        value: '16-99',
-        count: extractFacetHits('16-99', facets.ageRanges),
-      },
-    ];
+    const allAgeRanges = useSelector((state: State) => state.ageRanges);
+    const ageRangeFilters = allAgeRanges.map(a => ({
+      label: a.getLabel(),
+      value: a.getId(),
+      count: extractFacetHits(a.getId(), facets.ageRanges),
+    }));
 
     const subjects = useSelector((state: State) => state.subjects);
     const subjectFilters = subjects

@@ -2,6 +2,7 @@ import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
 import reduceReducers from 'reduce-reducers';
 import { combineReducers, Reducer } from 'redux';
+import { ageRangeReducer } from 'src/components/ageRanges/redux/ageRangeReducer';
 import { countriesReducer } from '../../components/account/onboarding/redux/reducers/countriesReducer';
 import {
   collectionHandlers,
@@ -48,6 +49,7 @@ export const createReducers = (history: History<any>): Reducer<State> =>
       authentication: authenticationReducer,
       collections: noReducer(initialCollectionsState),
       subjects: subjectsReducer,
+      ageRanges: ageRangeReducer,
       countries: countriesReducer,
       tags: tagsReducer,
       disciplines: disciplinesReducer,

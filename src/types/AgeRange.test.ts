@@ -5,13 +5,15 @@ describe('AgeRange', () => {
     test('returns a hyphenated id when ageRange has min and max', () => {
       const ageRange = new AgeRange(5, 11);
 
-      expect(ageRange.getId()).toEqual('5-11');
+      expect(ageRange.getLabel()).toEqual('5 - 11');
+      expect(ageRange.getShortLabel()).toEqual('5-11');
     });
 
     test('returns an n+ id when ageRange has min only', () => {
       const ageRange = new AgeRange(7);
 
-      expect(ageRange.getId()).toEqual('7+');
+      expect(ageRange.getLabel()).toEqual('7+');
+      expect(ageRange.getShortLabel()).toEqual('7+');
     });
   });
 
@@ -20,12 +22,14 @@ describe('AgeRange', () => {
       const ageRange = new AgeRange(5, 11);
 
       expect(ageRange.getLabel()).toEqual('5 - 11');
+      expect(ageRange.getShortLabel()).toEqual('5-11');
     });
 
     test('returns an n+ id when ageRange has a max of 99', () => {
       const ageRange = new AgeRange(7, 99);
 
       expect(ageRange.getLabel()).toEqual('7+');
+      expect(ageRange.getShortLabel()).toEqual('7+');
     });
   });
 

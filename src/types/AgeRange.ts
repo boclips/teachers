@@ -10,7 +10,7 @@ export class AgeRange {
     this.max = max;
   }
 
-  public static allRanges() {
+  public static allRanges(): AgeRange[] {
     return [
       new AgeRange(3, 5),
       new AgeRange(5, 9),
@@ -49,7 +49,7 @@ export class AgeRange {
       const minAndMax = ageRange.split('-');
       return new AgeRange(
         parseInt(minAndMax[0], 10),
-        parseInt(minAndMax[1], 10),
+        minAndMax[1] ? parseInt(minAndMax[1], 10) : undefined,
       );
     });
   }
@@ -60,12 +60,21 @@ export class AgeRange {
     return Array.from(new Set(flattenedAgeRanges));
   }
 
+  public static generateAgeRanges(numberArray: number[]): AgeRange[] {
+    const foundRanges = [];
+    this.allRanges().forEach(range => {
+      const containedAges = range.generateRangeArray();
+      if (containedAges.every(it => numberArray.includes(it))) {
+        foundRanges.push(range);
+      }
+    });
+
+    return foundRanges;
+  }
+
   public getId() {
-    if (this.max) {
-      return `${this.resolveMin()}-${this.max}`;
-    } else {
-      return `${this.resolveMin()}+`;
-    }
+    const max = this.max == null ? 99 : this.max;
+    return `${this.resolveMin()}-${max}`;
   }
 
   public getLabel() {
@@ -75,6 +84,16 @@ export class AgeRange {
       return `${this.resolveMin()}+`;
     } else {
       return `${this.resolveMin()} - ${this.max}`;
+    }
+  }
+
+  public getShortLabel() {
+    const max = this.max == null ? 99 : this.max;
+
+    if (max === 99) {
+      return `${this.resolveMin()}+`;
+    } else {
+      return `${this.resolveMin()}-${this.max}`;
     }
   }
 
@@ -89,18 +108,6 @@ export class AgeRange {
     }
 
     return arr;
-  }
-
-  public static generateAgeRanges(numberArray: number[]): AgeRange[] {
-    const foundRanges = [];
-    this.allRanges().forEach(range => {
-      const containedAges = range.generateRangeArray();
-      if (containedAges.every(it => numberArray.includes(it))) {
-        foundRanges.push(range);
-      }
-    });
-
-    return foundRanges;
   }
 
   public resolveMin() {
