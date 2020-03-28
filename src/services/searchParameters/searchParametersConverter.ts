@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import { DurationRange } from 'src/types/DurationRange';
-import { SearchParameters } from '../../types/SearchParameters';
 import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
+import { SearchParameters } from '../../types/SearchParameters';
 
 export const convertQueryToSearchParameters = (
   url: string,

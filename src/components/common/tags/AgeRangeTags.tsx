@@ -1,8 +1,8 @@
 import React from 'react';
-import { AgeRangeTag } from './AgeRangeTag';
 import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
+import { AgeRangeTag } from './AgeRangeTag';
 
 interface Props {
   ageRanges: number[];
@@ -13,7 +13,7 @@ export const AgeRangeTags = (props: Props) => {
   const allAgeRanges = useSelector((state: State) => state.ageRanges);
 
   return (
-    <>
+    <React.Fragment>
       {convertAgeRangesFromNumbers(allAgeRanges, props.ageRanges).map(
         (range, index) => (
           <AgeRangeTag
@@ -23,6 +23,6 @@ export const AgeRangeTags = (props: Props) => {
           />
         ),
       )}
-    </>
+    </React.Fragment>
   );
 };

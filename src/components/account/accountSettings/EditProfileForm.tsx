@@ -3,6 +3,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 import { editUser } from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { AgeRange } from '../../../types/AgeRange';
@@ -18,7 +19,6 @@ import { transformErrors } from '../form/FormHelper';
 import { NameForm } from '../form/NameForm';
 import { SubjectsForm } from '../form/SubjectsForm';
 import { updateUserAction } from './redux/actions/updateUserAction';
-import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 
 interface Props {
   userProfile: UserProfile;

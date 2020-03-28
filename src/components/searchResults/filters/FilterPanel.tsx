@@ -3,10 +3,10 @@ import { bulkUpdateSearchParamsAction } from 'src/components/searchResults/redux
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
 import { DurationRange } from 'src/types/DurationRange';
+import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
-import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 
 export const FilterPanel = () => {
   const dispatch = useDispatch();

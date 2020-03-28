@@ -1,6 +1,6 @@
 import { DurationRange } from 'src/types/DurationRange';
-import { generateVideoSearchQuery } from './generateVideoSearchQuery';
 import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
+import { generateVideoSearchQuery } from './generateVideoSearchQuery';
 
 describe('generateNewUri', () => {
   it('empty request', () => {

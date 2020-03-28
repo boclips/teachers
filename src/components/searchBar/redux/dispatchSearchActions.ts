@@ -8,9 +8,9 @@ import {
   CollectionRequestFilters,
   CollectionSearchRequest,
 } from 'src/types/CollectionSearchRequest';
+import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
-import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 
 const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,

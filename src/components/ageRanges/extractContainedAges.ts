@@ -1,4 +1,4 @@
-import {AgeRange} from "src/types/AgeRange";
+import { AgeRange } from 'src/types/AgeRange';
 
 export const extractContainedAges = (ages: AgeRange[]): number[] => {
   const rangeArrays = ages.map(it => it.getNumbers());

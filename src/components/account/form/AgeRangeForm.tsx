@@ -1,10 +1,10 @@
 import { Form } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
-import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
+import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 
 interface Props {
   label?: string;

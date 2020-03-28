@@ -4,6 +4,7 @@ import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
@@ -38,7 +39,6 @@ import { fetchCountriesAction } from './redux/actions/fetchCountriesAction';
 import SvgStep3 from './teacher-micromanaging.svg';
 import SvgStep4 from './teacher-presenting.svg';
 import SvgStep1 from './teachers-waving.svg';
-import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 
 const validationFields = [
   ['firstName', 'lastName'],

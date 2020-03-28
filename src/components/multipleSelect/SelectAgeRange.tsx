@@ -1,10 +1,10 @@
 import { SelectValue } from 'antd/lib/select';
 import React from 'react';
-import { AgeRange } from '../../types/AgeRange';
-import MultiSelect from '../common/MultiSelect';
 import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
+import MultiSelect from '../common/MultiSelect';
+import { AgeRange } from '../../types/AgeRange';
 
 interface Props {
   onChange?: (value: string[]) => void;
@@ -49,9 +49,8 @@ export const SelectAgeRange = (props: Props) => {
     ));
   };
 
-  const filter = (inputValue, option) => {
-    return option.key.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
-  };
+  const filter = (inputValue, option) =>
+    option.key.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
 
   return (
     <MultiSelect

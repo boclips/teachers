@@ -1,9 +1,9 @@
 import { Col, Row } from 'antd';
 import React from 'react';
+import { AgeRangeTags } from 'src/components/common/tags/AgeRangeTags';
 import EditButton from '../../common/buttons/EditButton';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import AccountSettingsItem from './AccountSettingsItem';
-import { AgeRangeTags } from 'src/components/common/tags/AgeRangeTags';
 
 interface Props {
   firstName: string;

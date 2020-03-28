@@ -402,7 +402,7 @@ export class AgeRangeFactory {
       new AgeRange(9, 11),
       new AgeRange(11, 14),
       new AgeRange(14, 16),
-      new AgeRange(16)
+      new AgeRange(16),
     ]) as AgeRange[];
   }
 }

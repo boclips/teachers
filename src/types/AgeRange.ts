@@ -51,12 +51,10 @@ export class AgeRange {
   }
 
   public getNumbers(): number[] {
-    if (!this.max) {
-      return [this.min];
-    }
-    const arr = [];
+    const max = !this.max ? AgeRange.AGE_RANGE_MAX : this.max;
 
-    for (let i = this.min; i <= this.max; i++) {
+    const arr = [];
+    for (let i = this.min; i <= max; i++) {
       arr.push(i);
     }
 

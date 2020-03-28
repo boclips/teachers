@@ -1,6 +1,6 @@
 import { AgeRange } from 'src/types/AgeRange';
 import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
-import {convertAgeRangesFromNumbers} from "./convertAgeRangesFromNumbers";
+import { convertAgeRangesFromNumbers } from './convertAgeRangesFromNumbers';
 
 describe('generating a list of ageranges from an array', () => {
   const allAgeRanges = [
@@ -24,9 +24,9 @@ describe('generating a list of ageranges from an array', () => {
   });
 
   test('returns an empty array from an age range with no max', () => {
-    const ageRange = new AgeRange(11);
+    const ageRange = new AgeRange(15);
 
-    expect(ageRange.getNumbers()).toEqual([11]);
+    expect(ageRange.getNumbers()).toEqual([15, 16, 17, 18, 19]);
   });
 
   test('returns an array of all included ages from a list of sequential AgeRanges', () => {
@@ -43,10 +43,28 @@ describe('generating a list of ageranges from an array', () => {
     expect(contained).toEqual(ages);
   });
 
-  test('returns a single age from a lower-bound-only AgeRange', () => {
-    const ages = [16];
+  test('omits 16+', () => {
+    const ages = [3, 4, 5, 11, 12, 13, 14, 15, 16];
+
     const ageRanges = convertAgeRangesFromNumbers(allAgeRanges, ages);
-    const contained = extractContainedAges(ageRanges);
-    expect(contained).toEqual(ages);
+
+    expect(ageRanges).toEqual([
+      { max: 5, min: 3 },
+      { max: 14, min: 11 },
+      { max: 16, min: 14 },
+    ]);
+  });
+
+  test('includes 16+', () => {
+    const ages = [3, 4, 5, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+
+    const ageRanges = convertAgeRangesFromNumbers(allAgeRanges, ages);
+
+    expect(ageRanges).toEqual([
+      { max: 5, min: 3 },
+      { max: 14, min: 11 },
+      { max: 16, min: 14 },
+      { max: null, min: 16 },
+    ]);
   });
 });

@@ -1,5 +1,5 @@
-import { AgeRange } from './AgeRange';
 import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
+import { AgeRange } from './AgeRange';
 
 describe('AgeRange', () => {
   describe('generating an id', () => {
@@ -42,9 +42,9 @@ describe('AgeRange', () => {
     });
 
     test('returns an empty array from an age range with no max', () => {
-      const ageRange = new AgeRange(11);
+      const ageRange = new AgeRange(16);
 
-      expect(ageRange.getNumbers()).toEqual([11]);
+      expect(ageRange.getNumbers()).toEqual([16, 17, 18, 19]);
     });
   });
 
