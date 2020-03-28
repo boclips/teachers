@@ -10,18 +10,7 @@ export class AgeRange {
     this.max = max;
   }
 
-  public static allRanges(): AgeRange[] {
-    return [
-      new AgeRange(3, 5),
-      new AgeRange(5, 9),
-      new AgeRange(9, 11),
-      new AgeRange(11, 14),
-      new AgeRange(14, 16),
-      new AgeRange(16),
-    ];
-  }
-
-  public static decodeJSON(json: string): AgeRange {
+  public static fromJson(json: string): AgeRange {
     const decoded = JSON.parse(json);
     return new AgeRange(decoded.min, decoded.max);
   }
@@ -34,42 +23,6 @@ export class AgeRange {
       }
     });
     return deduplicated;
-  }
-
-  public static fromStrings(ageRangeStrings: string | string[]): AgeRange[] {
-    if (!ageRangeStrings) {
-      return [];
-    }
-
-    const ageRangeArray = !Array.isArray(ageRangeStrings)
-      ? [ageRangeStrings]
-      : ageRangeStrings;
-
-    return ageRangeArray.map(ageRange => {
-      const minAndMax = ageRange.split('-');
-      return new AgeRange(
-        parseInt(minAndMax[0], 10),
-        minAndMax[1] ? parseInt(minAndMax[1], 10) : undefined,
-      );
-    });
-  }
-
-  public static extractContainedAges(ages: AgeRange[]): number[] {
-    const rangeArrays = ages.map(it => it.generateRangeArray());
-    const flattenedAgeRanges: number[] = [].concat.apply([], rangeArrays);
-    return Array.from(new Set(flattenedAgeRanges));
-  }
-
-  public static generateAgeRanges(numberArray: number[]): AgeRange[] {
-    const foundRanges = [];
-    this.allRanges().forEach(range => {
-      const containedAges = range.generateRangeArray();
-      if (containedAges.every(it => numberArray.includes(it))) {
-        foundRanges.push(range);
-      }
-    });
-
-    return foundRanges;
   }
 
   public getId() {
@@ -97,7 +50,7 @@ export class AgeRange {
     }
   }
 
-  public generateRangeArray() {
+  public getNumbers(): number[] {
     if (!this.max) {
       return [this.min];
     }

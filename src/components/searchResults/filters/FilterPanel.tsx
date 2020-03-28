@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { AgeRange } from 'src/types/AgeRange';
 import { bulkUpdateSearchParamsAction } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
 import { useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
@@ -7,6 +6,7 @@ import { DurationRange } from 'src/types/DurationRange';
 import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
+import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 
 export const FilterPanel = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const FilterPanel = () => {
           duration: DurationRange.fromStrings(filterOptions.duration),
         },
         {
-          age_range: AgeRange.fromStrings(filterOptions.ageRange),
+          age_range: convertAgeRangesFromString(filterOptions.ageRange),
         },
         {
           subject: filterOptions.subjects,

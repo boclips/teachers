@@ -18,6 +18,7 @@ import { transformErrors } from '../form/FormHelper';
 import { NameForm } from '../form/NameForm';
 import { SubjectsForm } from '../form/SubjectsForm';
 import { updateUserAction } from './redux/actions/updateUserAction';
+import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 
 interface Props {
   userProfile: UserProfile;
@@ -102,9 +103,9 @@ class ProfileFormFields extends React.Component<
     this.props.form.validateFields((err, values) => {
       if (!err) {
         const ageRanges = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it),
+          AgeRange.fromJson(it),
         );
-        const ages = AgeRange.extractContainedAges(ageRanges);
+        const ages = extractContainedAges(ageRanges);
         editUser(this.props.links, {
           firstName: values.firstName,
           lastName: values.lastName,

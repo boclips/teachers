@@ -1,6 +1,6 @@
 import { DurationRange } from 'src/types/DurationRange';
-import { AgeRange } from 'src/types/AgeRange';
 import { generateVideoSearchQuery } from './generateVideoSearchQuery';
+import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 
 describe('generateNewUri', () => {
   it('empty request', () => {
@@ -35,7 +35,7 @@ describe('generateNewUri', () => {
       [
         { q: 'london' },
         {
-          age_range: AgeRange.fromStrings(['3-5']),
+          age_range: convertAgeRangesFromString(['3-5']),
         },
       ],
     );

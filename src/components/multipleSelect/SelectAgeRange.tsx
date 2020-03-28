@@ -2,53 +2,42 @@ import { SelectValue } from 'antd/lib/select';
 import React from 'react';
 import { AgeRange } from '../../types/AgeRange';
 import MultiSelect from '../common/MultiSelect';
+import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
+import { useSelector } from 'react-redux';
+import State from 'src/types/State';
 
 interface Props {
   onChange?: (value: string[]) => void;
   initialValue?: number[];
 }
 
-export class SelectAgeRange extends React.PureComponent<Props> {
-  public render() {
-    return (
-      <MultiSelect
-        filterOption={this.filter}
-        mode="multiple"
-        placeholder="Choose ages"
-        onChange={this.onChange}
-        aria-label="Ages I teach"
-        data-qa="age-select"
-        defaultValue={this.generateInitialValues()}
-      >
-        {this.generateOptions()}
-      </MultiSelect>
-    );
-  }
+export const SelectAgeRange = (props: Props) => {
+  const allAgeRanges = useSelector((state: State) => state.ageRanges);
 
-  private generateInitialValues() {
-    const { initialValue } = this.props;
+  const generateInitialValues = () => {
+    const { initialValue } = props;
     if (initialValue) {
-      return AgeRange.generateAgeRanges(initialValue).map(age =>
+      return convertAgeRangesFromNumbers(allAgeRanges, initialValue).map(age =>
         age.encodeJSON(),
       );
     } else {
       return [];
     }
-  }
+  };
 
-  private onChange = (value: SelectValue) => {
+  const onChange = (value: SelectValue) => {
     const split = value as string[];
-    const parsed = split.map(it => AgeRange.decodeJSON(it));
+    const parsed = split.map(it => AgeRange.fromJson(it));
     const sorted = AgeRange.removeDuplicates(parsed);
     const stringified = sorted.map(it => it.encodeJSON());
 
-    this.props.onChange(stringified);
+    props.onChange(stringified);
   };
 
-  private generateOptions() {
+  const generateOptions = () => {
     const Option = MultiSelect.Option;
 
-    return AgeRange.allRanges().map(ageRange => (
+    return allAgeRanges.map(ageRange => (
       <Option
         key={ageRange.getLabel()}
         title={ageRange.getLabel()}
@@ -58,9 +47,23 @@ export class SelectAgeRange extends React.PureComponent<Props> {
         {ageRange.getShortLabel()}
       </Option>
     ));
-  }
+  };
 
-  private filter(inputValue, option) {
+  const filter = (inputValue, option) => {
     return option.key.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1;
-  }
-}
+  };
+
+  return (
+    <MultiSelect
+      filterOption={filter}
+      mode="multiple"
+      placeholder="Choose ages"
+      onChange={onChange}
+      aria-label="Ages I teach"
+      data-qa="age-select"
+      defaultValue={generateInitialValues()}
+    >
+      {generateOptions()}
+    </MultiSelect>
+  );
+};

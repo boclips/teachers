@@ -395,11 +395,14 @@ export class SubjectsFactory {
 }
 
 export class AgeRangeFactory {
-  public static sample(arg: AgeRange[] = []): AgeRange[] {
+  public static sample(): AgeRange[] {
     return Object.freeze([
       new AgeRange(3, 5),
-      new AgeRange(10, 15),
-      ...arg,
+      new AgeRange(5, 9),
+      new AgeRange(9, 11),
+      new AgeRange(11, 14),
+      new AgeRange(14, 16),
+      new AgeRange(16)
     ]) as AgeRange[];
   }
 }

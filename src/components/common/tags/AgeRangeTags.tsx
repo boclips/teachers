@@ -1,22 +1,28 @@
 import React from 'react';
-import { AgeRange } from '../../../types/AgeRange';
 import { AgeRangeTag } from './AgeRangeTag';
+import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
+import { useSelector } from 'react-redux';
+import State from 'src/types/State';
 
 interface Props {
   ageRanges: number[];
   hideLabel: boolean;
 }
 
-export default class AgeRangeTags extends React.Component<Props> {
-  public render(): React.ReactNode {
-    return AgeRange.generateAgeRanges(
-      this.props.ageRanges,
-    ).map((range, index) => (
-      <AgeRangeTag
-        key={index}
-        ageRange={range}
-        hideLabel={this.props.hideLabel}
-      />
-    ));
-  }
-}
+export const AgeRangeTags = (props: Props) => {
+  const allAgeRanges = useSelector((state: State) => state.ageRanges);
+
+  return (
+    <>
+      {convertAgeRangesFromNumbers(allAgeRanges, props.ageRanges).map(
+        (range, index) => (
+          <AgeRangeTag
+            key={index}
+            ageRange={range}
+            hideLabel={props.hideLabel}
+          />
+        ),
+      )}
+    </>
+  );
+};

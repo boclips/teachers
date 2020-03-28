@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 import { DurationRange } from 'src/types/DurationRange';
-import { AgeRange } from 'src/types/AgeRange';
 import { SearchParameters } from '../../types/SearchParameters';
+import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 
 export const convertQueryToSearchParameters = (
   url: string,
@@ -11,7 +11,7 @@ export const convertQueryToSearchParameters = (
   return {
     query: parseQuery(parsedUrl.q),
     duration: DurationRange.fromStrings(parsedUrl.duration) || null,
-    ageRange: AgeRange.fromStrings(parsedUrl.age_range) || null,
+    ageRange: convertAgeRangesFromString(parsedUrl.age_range) || null,
     subject: parseSubjects(parsedUrl.subject),
   };
 };

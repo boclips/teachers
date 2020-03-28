@@ -38,6 +38,7 @@ import { fetchCountriesAction } from './redux/actions/fetchCountriesAction';
 import SvgStep3 from './teacher-micromanaging.svg';
 import SvgStep4 from './teacher-presenting.svg';
 import SvgStep1 from './teachers-waving.svg';
+import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 
 const validationFields = [
   ['firstName', 'lastName'],
@@ -413,9 +414,9 @@ class OnboardingForm extends React.Component<
       if (!err) {
         const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
         const ageRanges = (values.ageRange as string[]).map(it =>
-          AgeRange.decodeJSON(it),
+          AgeRange.fromJson(it),
         );
-        const ages = AgeRange.extractContainedAges(ageRanges);
+        const ages = extractContainedAges(ageRanges);
 
         this.setState({ ...this.state, updating: true });
         onboardUser(this.props.links, {

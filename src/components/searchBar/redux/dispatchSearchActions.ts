@@ -8,9 +8,9 @@ import {
   CollectionRequestFilters,
   CollectionSearchRequest,
 } from 'src/types/CollectionSearchRequest';
-import { AgeRange } from 'src/types/AgeRange';
 import { searchCollectionsAction } from './actions/searchCollectionsActions';
 import { searchVideosAction } from './actions/searchVideosActions';
+import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 
 const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,
@@ -19,14 +19,14 @@ const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   duration: DurationRange.fromStrings(queryParams.duration),
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
-  age_range: AgeRange.fromStrings(queryParams.age_range) || undefined,
+  age_range: convertAgeRangesFromString(queryParams.age_range) || undefined,
 });
 
 const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
   subject: queryParams.subject || undefined,
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
-  age_range: AgeRange.fromStrings(queryParams.age_range) || undefined,
+  age_range: convertAgeRangesFromString(queryParams.age_range) || undefined,
 });
 
 export const dispatchSearchActions = (store: Store<RouterState>) => {

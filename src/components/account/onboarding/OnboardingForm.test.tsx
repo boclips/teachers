@@ -40,7 +40,6 @@ describe('onboarding form', () => {
       <Provider
         store={MockStoreFactory.sample({
           subjects: [
-            // TODO(AO): Make this use the (non-existent) SubjectFactory from api client
             SubjectFactory.sample({ id: '1', name: 's1' }),
             SubjectFactory.sample({ id: '2', name: 's2' }),
           ],

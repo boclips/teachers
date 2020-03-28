@@ -36,7 +36,6 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   }, [dispatch, props]);
 
   if (!collection) {
-    // TODO: referer anonymous and user not logged in, or 404
     const isAnonymous = !referer || referer === 'anonymous';
     if (isAnonymous) {
       return <CollectionDetailsNotFound />;
