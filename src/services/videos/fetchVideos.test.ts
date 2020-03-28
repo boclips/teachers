@@ -36,6 +36,9 @@ beforeEach(async () => {
       },
       sortBy: 'RELEASE_DATE',
     },
+    {
+      ageRanges: [],
+    },
     links,
   );
 

@@ -32,6 +32,8 @@ import {
   VideoCollectionLinks,
 } from 'src/types/VideoCollection';
 import PageSpec from 'src/types/PageSpec';
+import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
+import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import { video177 } from './api-responses';
 
 export class VideoFactory {
@@ -174,7 +176,7 @@ export class LinksFactory {
       videos:
         arg.videos ||
         new Link({
-          href: `${prefix}/videos/{?query,sort_by,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom}`,
+          href: `${prefix}/videos/{?query,sort_by,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,age_range,age_range_facets,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom}`,
           templated: true,
         }),
       searchPublicCollections:
@@ -639,5 +641,31 @@ export interface VideoResource {
 export class VideoResourceFactory {
   public static sample(resource: Partial<VideoResource>): VideoResource {
     return { ...video177, ...resource };
+  }
+}
+
+export class VideoSearchRequestFactory {
+  public static sample(
+    resource?: Partial<VideoSearchRequest>,
+  ): VideoSearchRequest {
+    return {
+      page: undefined,
+      filters: {
+        duration: [],
+      },
+      sortBy: undefined,
+      ...resource,
+    };
+  }
+}
+
+export class VideoSearchFacetsFactory {
+  public static sample(
+    resource?: Partial<VideoSearchFacets>,
+  ): VideoSearchFacets {
+    return {
+      ageRanges: [new AgeRange(3, 7)],
+      ...resource,
+    };
   }
 }

@@ -1,6 +1,7 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { Store } from 'redux';
 import { VideoSearchResult } from 'src/types/SearchResults';
+import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import {
   actionCreatorFactory,
   sideEffect,
@@ -27,7 +28,11 @@ const searchVideosAndCollections = (store: Store<State>) => {
 
 const onFetchVideos = (store: Store<State>, request: VideoSearchRequest) => {
   const links: Links = store.getState().links.entries;
-  fetchVideos(request, links).then((result: VideoSearchResult) => {
+  const facets: VideoSearchFacets = {
+    ageRanges: store.getState().ageRanges,
+  };
+
+  fetchVideos(request, facets, links).then((result: VideoSearchResult) => {
     store.dispatch(
       storeVideosAction({ videos: result.videos, facets: result.facets }),
     );
@@ -39,7 +44,11 @@ const onFetchPromotedVideos = (
   request: VideoSearchRequest,
 ) => {
   const links: Links = store.getState().links.entries;
-  fetchVideos(request, links).then(result => {
+  const facets: VideoSearchFacets = {
+    ageRanges: store.getState().ageRanges,
+  };
+
+  fetchVideos(request, facets, links).then(result => {
     store.dispatch(
       storePromotedVideosAction({ promotedVideos: result.videos }),
     );
