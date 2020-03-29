@@ -5,8 +5,7 @@ import {
 } from 'connected-react-router';
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { UserProfile } from 'src/services/users/UserProfile';
-import { UserProfileLinks } from 'src/services/users/UserProfile';
+import { UserProfile, UserProfileLinks } from 'src/services/users/UserProfile';
 import { AgeRange } from 'src/types/AgeRange';
 import { Attachment } from 'src/types/Attachment';
 import { Country } from 'src/types/Country';
@@ -270,6 +269,7 @@ export class UserProfileFactory {
       state: arg.state || { name: 'New York', id: 'NY' },
       school: arg.school || SchoolFactory.sample(),
       shareCode: arg.shareCode || 'SH4R',
+      role: arg.role || 'TEACHER',
     });
   }
 }

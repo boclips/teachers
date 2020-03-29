@@ -19,6 +19,7 @@ export interface UserProfile {
   utm?: Utm;
   school?: School;
   links: UserProfileLinks;
+  role: 'TEACHER' | 'PARENT' | 'SCHOOLADMIN' | 'OTHER';
 }
 
 export interface UserProfileLinks {

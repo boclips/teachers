@@ -40,6 +40,7 @@ describe('When user is not activated', () => {
     const onboardingPage = await OnboardingPage.navigateToOnboarding();
 
     onboardingPage.setName('Rebecca', 'Sanchez');
+    onboardingPage.setRole('TEACHER');
     onboardingPage.setSubjects(['1', '3']);
     onboardingPage.setCountry('ES');
     onboardingPage.enterSchool('school');
@@ -57,6 +58,7 @@ describe('When user is not activated', () => {
         lastName: 'Sanchez',
         subjects: ['1', '3'],
         country: 'ES',
+        role: 'TEACHER',
         ages: [3, 4, 5],
         hasOptedIntoMarketing: true,
         schoolName: 'school',

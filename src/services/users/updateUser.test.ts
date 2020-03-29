@@ -16,6 +16,7 @@ const links = LinksFactory.sample({
 const request: UpdateUserRequest = {
   firstName: 'joe',
   lastName: 'boclips',
+  role: 'TEACHER',
 };
 
 AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);

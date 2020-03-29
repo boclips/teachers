@@ -15,6 +15,7 @@ export interface UpdateUserRequest {
   utm?: Utm;
   schoolName?: string;
   schoolId?: string;
+  role?: string;
 }
 
 export function onboardUser(

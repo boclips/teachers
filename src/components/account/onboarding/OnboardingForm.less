@@ -2,9 +2,8 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
 .onboarding-form__ {
-
   &slide__invisible {
-      visibility: hidden;
+    visibility: hidden;
   }
   &title {
     animation: slide-in 0.5s 0s both;
@@ -91,8 +90,6 @@
     border-top: 1px solid @shade-2;
   }
 
-
-
   &inline-item.ant-row.ant-form-item {
     margin-bottom: 0;
   }
@@ -118,15 +115,22 @@
 .name-form__ {
   &first-name {
     width: 290px;
-    
+
     @media (max-width: @screen-sm-max) {
-    width:100%
+      width: 100%;
     }
   }
 
   &last-name {
     width: 290px;
 
+    @media (max-width: @screen-sm-max) {
+      width: 100%;
+    }
+  }
+
+  &role {
+    width: 290px;
     @media (max-width: @screen-sm-max) {
       width: 100%;
     }

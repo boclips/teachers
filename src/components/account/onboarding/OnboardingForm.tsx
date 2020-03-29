@@ -1,4 +1,4 @@
-import { Button, Carousel, Col, Form, Row } from 'antd';
+import { Button, Carousel, Col, Form, Row, Select } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import { push } from 'connected-react-router';
 import React from 'react';
@@ -16,6 +16,7 @@ import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import { Subject } from '../../../types/Subject';
 import { UsaState } from '../../../types/UsaState';
+import '../../common/MultiSelect.less';
 import {
   ScreenReaderError,
   ScreenReaderErrors,
@@ -41,7 +42,7 @@ import SvgStep4 from './teacher-presenting.svg';
 import SvgStep1 from './teachers-waving.svg';
 
 const validationFields = [
-  ['firstName', 'lastName'],
+  ['firstName', 'lastName', 'role'],
   ['ageRange', 'subjects'],
   ['country', 'state', 'schoolName', 'schoolId'],
   ['hasOptedIntoMarketing', 'privacyPolicy'],
@@ -62,6 +63,7 @@ interface InternalState {
   numberOfSlides: number;
   visitedIndices: Set<number>;
   invisibleSlides: boolean[];
+  userRole?: string;
   country?: Country;
   state?: UsaState;
   screenReaderErrors: ScreenReaderError[];
@@ -92,6 +94,7 @@ class OnboardingForm extends React.Component<
     country: null,
     state: null,
     screenReaderErrors: null,
+    userRole: null,
   };
 
   public componentDidMount() {
@@ -215,6 +218,42 @@ class OnboardingForm extends React.Component<
                       />
                     )}
                     <NameForm form={this.props.form} />
+                    <Form.Item
+                      label={"I'm a"}
+                      colon={false}
+                      className="name-form__role form__item"
+                    >
+                      {this.props.form.getFieldDecorator('role', {
+                        rules: [
+                          {
+                            required: true,
+                            message: 'Please select your role',
+                          },
+                        ],
+                      })(
+                        <Select
+                          mode={'default'}
+                          data-qa="select-role"
+                          size="large"
+                          className={'boclips-multi-select-selection'}
+                          onChange={(value: string) =>
+                            this.setState({ userRole: value })
+                          }
+                          placeholder="Select your role"
+                        >
+                          <Select.Option value="TEACHER">
+                            {'Teacher'}
+                          </Select.Option>
+                          <Select.Option value="PARENT">
+                            {'Parent'}
+                          </Select.Option>
+                          <Select.Option value="SCHOOLADMIN">
+                            {'School admin'}
+                          </Select.Option>
+                          <Select.Option value="OTHER">{'Other'}</Select.Option>
+                        </Select>,
+                      )}
+                    </Form.Item>
                     <p className="onboarding-form__notes">
                       <span className={'onboarding-form__asterisk'}>*</span>{' '}
                       Required field
@@ -272,7 +311,8 @@ class OnboardingForm extends React.Component<
                       placeholder="Choose country"
                       onCountryChange={this.onCountryChange}
                     />
-                    {this.state.country &&
+                    {this.state.userRole !== 'PARENT' &&
+                      this.state.country &&
                       (this.state.country.id === 'USA' ? (
                         <section data-qa="usa-school-details">
                           <StatesForm
@@ -430,6 +470,7 @@ class OnboardingForm extends React.Component<
           schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
           hasOptedIntoMarketing: values.hasOptedIntoMarketing,
           referralCode: registrationContext?.referralCode,
+          role: values.role,
           utm: registrationContext?.utm,
         })
           .then(() => {

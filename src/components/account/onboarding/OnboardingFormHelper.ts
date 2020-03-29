@@ -12,6 +12,21 @@ export class OnboardingFormHelper {
     events.setText(lastName, wrapper.find(By.dataQa('last-name', 'input')));
   }
 
+  public static editRole(wrapper, value: string) {
+    wrapper
+      .find(By.dataQa('select-role'))
+      .first()
+      .simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
+
+    menuItems.find(`[value="${value}"]`).simulate('click');
+    wrapper
+      .find(By.dataQa('select-role'))
+      .first()
+      .simulate('click');
+  }
+
   public static setMarketingOptIn(wrapper: ReactWrapper, optIn: boolean) {
     wrapper
       .find(By.dataQa('marketing-optin'))

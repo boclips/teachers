@@ -86,6 +86,7 @@ describe('onboarding form', () => {
         firstName: 'Rebecca',
         lastName: 'Sanchez',
         subjects: ['1'],
+        role: 'TEACHER',
         ages: [3, 4, 5],
         country: 'ES',
         hasOptedIntoMarketing: true,
@@ -119,6 +120,7 @@ describe('onboarding form', () => {
       schoolName: 'school',
       schoolId: undefined,
       hasOptedIntoMarketing: true,
+      role: 'TEACHER',
       referralCode: 'REFERRALCODE',
       utm: {
         source: 'some-source-value',
@@ -143,6 +145,7 @@ describe('onboarding form', () => {
     expect(mockOnboardUser).toHaveBeenCalledWith(links, {
       firstName: 'Rebecca',
       lastName: 'Sanchez',
+      role: 'TEACHER',
       subjects: ['1'],
       ages: [3, 4, 5],
       country: 'ES',
@@ -203,6 +206,7 @@ describe('onboarding form', () => {
 
 function fillValidForm(wrapper: ReactWrapper) {
   OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
+  OnboardingFormHelper.editRole(wrapper, 'TEACHER');
   OnboardingFormHelper.moveCarousel(wrapper, 1);
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);

@@ -52,6 +52,10 @@ export class OnboardingPage {
     OnboardingFormHelper.editName(this.wrapper, firstName, lastName);
   }
 
+  public setRole(value: string) {
+    OnboardingFormHelper.editRole(this.wrapper, value);
+  }
+
   public setSubjects(subjectIds: string[]) {
     OnboardingFormHelper.editSubjects(this.wrapper, subjectIds);
   }
