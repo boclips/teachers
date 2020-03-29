@@ -241,13 +241,16 @@ class OnboardingForm extends React.Component<
                           }
                           placeholder="Select your role"
                         >
-                          <Select.Option value="TEACHER">
+                          <Select.Option value="TEACHER" data-state="TEACHER">
                             {'Teacher'}
                           </Select.Option>
-                          <Select.Option value="PARENT">
+                          <Select.Option value="PARENT" data-state="PARENT">
                             {'Parent'}
                           </Select.Option>
-                          <Select.Option value="SCHOOLADMIN">
+                          <Select.Option
+                            value="SCHOOLADMIN"
+                            data-state="SCHOOLADMIN"
+                          >
                             {'School admin'}
                           </Select.Option>
                           <Select.Option value="OTHER">{'Other'}</Select.Option>
