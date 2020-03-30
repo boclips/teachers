@@ -38,7 +38,6 @@ export function generateVideoSearchUri(
     query: searchRequest.query,
     size: searchRequest.size || 10,
     page: searchRequest.page - 1,
-    is_classroom: searchRequest.filters.isClassroom,
     sort_by: searchRequest.sortBy,
     type: searchRequest.filters.type,
     duration,

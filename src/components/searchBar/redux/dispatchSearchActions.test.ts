@@ -59,11 +59,6 @@ describe('when on the videos page', () => {
     expect(action.payload.page).toEqual(3);
   });
 
-  it('filters the results by is classroom', () => {
-    expect(action).toBeTruthy();
-    expect(action.payload.filters.isClassroom).toEqual(true);
-  });
-
   it('filters the results by non-NEWS types', () => {
     expect(action).toBeTruthy();
     expect(action.payload.filters.type).toHaveLength(2);

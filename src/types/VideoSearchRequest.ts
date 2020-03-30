@@ -10,7 +10,6 @@ export interface VideoSearchRequest {
 }
 
 export interface VideoRequestFilters {
-  isClassroom?: boolean;
   type?: string[];
   duration?: DurationRange[];
   age_range?: AgeRange[];

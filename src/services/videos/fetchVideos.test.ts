@@ -27,7 +27,6 @@ beforeEach(async () => {
       query: 'foo',
       page: 1,
       filters: {
-        isClassroom: true,
         duration: [new DurationRange({ min: 100, max: 200 })],
         age_range_min: 5,
         age_range_max: 11,
@@ -59,10 +58,6 @@ test('includes video type in a search request', () => {
 test('includes page and size params in the request', () => {
   expect(queryParams.page).toEqual('0');
   expect(queryParams.size).not.toHaveLength(0);
-});
-
-test('only requests content for the classroom', () => {
-  expect(queryParams.is_classroom).toEqual('true');
 });
 
 test('includes sort_by when provided', () => {

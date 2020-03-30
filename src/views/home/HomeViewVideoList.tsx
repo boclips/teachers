@@ -51,7 +51,6 @@ export const linkFetchPromotedVideosToDispatch = (dispatch: Dispatch) => () => {
     fetchPromotedVideosAction({
       filters: {
         promoted: true,
-        isClassroom: true,
         type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
       },
       page: 1,

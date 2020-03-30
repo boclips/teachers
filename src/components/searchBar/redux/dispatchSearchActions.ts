@@ -14,7 +14,6 @@ import { searchVideosAction } from './actions/searchVideosActions';
 
 const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,
-  isClassroom: true,
   type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
   duration: DurationRange.fromStrings(queryParams.duration),
   age_range_min: +queryParams.age_range_min || undefined,
