@@ -2,8 +2,10 @@ import moment from 'moment';
 
 export default class DurationConverter {
   public secondsToIso(seconds: number): string {
-    return seconds == null
-      ? null
-      : moment.duration(seconds, 'seconds').toISOString();
+    if (seconds === 0) {
+      return 'PT0S';
+    }
+
+    return moment.duration(seconds, 'seconds').toISOString();
   }
 }

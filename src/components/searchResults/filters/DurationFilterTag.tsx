@@ -39,7 +39,7 @@ const mapDispatchToProps = (
     dispatch(
       updateSearchParamsAction({
         duration: ownProps.duration.filter(
-          range => range.serialise() !== ownProps.range.serialise(),
+          range => range.toString() !== ownProps.range.toString(),
         ),
       }),
     );

@@ -1,4 +1,3 @@
-import { DurationRange } from 'src/types/DurationRange';
 import { convertAgeRangesFromString } from 'src/components/ageRanges/convertAgeRangesFromString';
 import { generateVideoSearchQuery } from './generateVideoSearchQuery';
 
@@ -13,19 +12,6 @@ describe('generateNewUri', () => {
     const queryParams = generateVideoSearchQuery({}, [{ q: 'london' }]);
 
     expect(queryParams.q).toEqual('london');
-    expect(queryParams.page).toEqual(1);
-  });
-
-  it('multiple updates', () => {
-    const queryParams = generateVideoSearchQuery({}, [
-      { duration: [DurationRange.fromString('3-5')] },
-      { q: 'london' },
-      { subject: ['123'] },
-    ]);
-
-    expect(queryParams.duration).toEqual(['3-5']);
-    expect(queryParams.q).toEqual('london');
-    expect(queryParams.subject).toEqual(['123']);
     expect(queryParams.page).toEqual(1);
   });
 

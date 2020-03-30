@@ -1,38 +1,22 @@
 import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import { Links } from 'src/types/Links';
-import DurationConverter from 'src/components/searchResults/filters/DurationConverter';
 
 export function generateVideoSearchUri(
   searchRequest: VideoSearchRequest,
   facets: VideoSearchFacets,
   links: Links,
 ) {
-  const durationConverter = new DurationConverter();
-
-  const duration =
+  const durationParams =
     searchRequest.filters.duration &&
-    searchRequest.filters.duration.map(({ min, max }) => {
-      let durationString = '';
+    searchRequest.filters.duration.map(duration => duration.toIso());
 
-      if (min) {
-        durationString += durationConverter.secondsToIso(min);
-      } else {
-        durationString += 'PT0M';
-      }
-
-      if (max) {
-        durationString += '-' + durationConverter.secondsToIso(max);
-      }
-
-      return durationString;
-    });
-
-  const age_range =
+  const ageRangeParams =
     searchRequest.filters.age_range &&
     searchRequest.filters.age_range.map(ageRange => ageRange.getId());
 
-  const age_range_facets = facets.ageRanges.map(ageRange => ageRange.getId());
+  const ageRangeFacets = facets.ageRanges.map(ageRange => ageRange.getId());
+  const durationFacets = facets.durations.map(duration => duration.toIso());
 
   return links.videos.getTemplatedLink({
     query: searchRequest.query,
@@ -40,9 +24,10 @@ export function generateVideoSearchUri(
     page: searchRequest.page - 1,
     sort_by: searchRequest.sortBy,
     type: searchRequest.filters.type,
-    duration,
-    age_range,
-    age_range_facets,
+    duration: durationParams,
+    duration_facets: durationFacets,
+    age_range: ageRangeParams,
+    age_range_facets: ageRangeFacets,
     age_range_min: searchRequest.filters.age_range_min,
     age_range_max: searchRequest.filters.age_range_max,
     subject: searchRequest.filters.subject,

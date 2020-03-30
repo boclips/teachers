@@ -10,7 +10,7 @@ export const convertQueryToSearchParameters = (
 
   return {
     query: parseQuery(parsedUrl.q),
-    duration: DurationRange.fromStrings(parsedUrl.duration) || null,
+    duration: DurationRange.newFromStrings(parsedUrl.duration) || null,
     ageRange: convertAgeRangesFromString(parsedUrl.age_range) || null,
     subject: parseSubjects(parsedUrl.subject),
   };

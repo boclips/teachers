@@ -7,7 +7,7 @@ describe('convertQueryToSearchParameters', () => {
   it('converts duration search url string to SearchFilterParameters', () => {
     const searchParameters = convertQueryToSearchParameters('?duration=1-11');
     expect(searchParameters.query).toEqual(null);
-    expect(searchParameters.duration[0].serialise()).toEqual('1-11');
+    expect(searchParameters.duration[0].toString()).toEqual('1-11');
     expect(searchParameters.subject).toEqual([]);
   });
 
@@ -16,8 +16,8 @@ describe('convertQueryToSearchParameters', () => {
       '?duration=1-11&duration=14-19',
     );
     expect(searchParameters.query).toEqual(null);
-    expect(searchParameters.duration[0].serialise()).toEqual('1-11');
-    expect(searchParameters.duration[1].serialise()).toEqual('14-19');
+    expect(searchParameters.duration[0].toString()).toEqual('1-11');
+    expect(searchParameters.duration[1].toString()).toEqual('14-19');
     expect(searchParameters.subject).toEqual([]);
   });
 

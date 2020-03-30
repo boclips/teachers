@@ -114,6 +114,7 @@ describe('searching videos', () => {
     const facets = {
       subjects: {},
       ageRanges: {},
+      durations: {},
     };
 
     const newState = searchReducer(

@@ -15,7 +15,7 @@ import { searchVideosAction } from './actions/searchVideosActions';
 const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   subject: queryParams.subject || undefined,
   type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
-  duration: DurationRange.fromStrings(queryParams.duration),
+  duration: DurationRange.newFromStrings(queryParams.duration),
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
   age_range: convertAgeRangesFromString(queryParams.age_range) || undefined,

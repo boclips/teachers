@@ -79,15 +79,7 @@ describe('when on the videos page', () => {
     dispatchSearchActions(store);
     action = store.getActions()[0];
 
-    expect(action.payload.filters.duration[0].serialise()).toEqual('60-190');
-  });
-
-  it('filters by duration lower', () => {
-    store = getStore(`duration=60`);
-    dispatchSearchActions(store);
-    action = store.getActions()[0];
-
-    expect(action.payload.filters.duration[0].serialise()).toEqual('60');
+    expect(action.payload.filters.duration[0].toString()).toEqual('60-190');
   });
 
   it('defaults duration to undefined if non-existent', () => {

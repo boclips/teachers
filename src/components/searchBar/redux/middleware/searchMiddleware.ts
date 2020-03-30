@@ -5,11 +5,7 @@ import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { searchCollections } from '../../../../services/collections/searchCollections';
 import fetchVideos from '../../../../services/videos/fetchVideos';
 import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
-import {
-  AgeRangeState,
-  CollectionState,
-  LinksState,
-} from '../../../../types/State';
+import State, { CollectionState, LinksState } from '../../../../types/State';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
@@ -18,12 +14,13 @@ import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResult
 import { Links } from '../../../../types/Links';
 
 export function onSearchVideos(
-  store: MiddlewareAPI<any, LinksState & CollectionState & AgeRangeState>,
+  store: MiddlewareAPI<any, State>,
   searchRequest: VideoSearchRequest,
 ) {
   const links: Links = store.getState().links.entries;
   const facets: VideoSearchFacets = {
     ageRanges: store.getState().ageRanges,
+    durations: store.getState().durations,
   };
 
   fetchVideos(searchRequest, facets, links).then(results => {

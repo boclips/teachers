@@ -5,6 +5,9 @@ export interface VideoFacets {
   ageRanges: {
     [id: string]: Facet;
   };
+  durations: {
+    [id: string]: Facet;
+  };
 }
 
 export interface Facet {

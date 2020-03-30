@@ -46,8 +46,19 @@ const Filters = React.forwardRef(
     const { getFieldDecorator, resetFields } = props.form;
     const facets = useSelector(
       (state: State) =>
-        state.search.videoSearch.facets || { ageRanges: {}, subjects: {} },
+        state.search.videoSearch.facets || {
+          ageRanges: {},
+          subjects: {},
+          durations: {},
+        },
     );
+
+    const durations = useSelector((state: State) => state.durations);
+    const durationFilters = durations.map(d => ({
+      value: d.toString(),
+      label: d.getLabel(),
+      count: extractFacetHits(d.toIso(), facets.durations),
+    }));
 
     const allAgeRanges = useSelector((state: State) => state.ageRanges);
     const ageRangeFilters = allAgeRanges.map(a => ({
@@ -158,19 +169,19 @@ const Filters = React.forwardRef(
                 <Form.Item>
                   {getFieldDecorator('duration', {
                     initialValue: duration
-                      ? duration.map(range => range.serialise())
+                      ? duration.map(range => range.toString())
                       : [],
                   })(
-                    <CheckboxGroup
-                      className="filter-form__checkbox-group"
-                      options={[
-                        { label: '0m - 2m', value: '0-120' },
-                        { label: '2m - 5m', value: '120-300' },
-                        { label: '5m - 10m', value: '300-600' },
-                        { label: '10m - 20m', value: '600-1200' },
-                        { label: '20m +', value: '1200' },
-                      ]}
-                    />,
+                    <CheckboxGroup className="filter-form__checkbox-group">
+                      {durationFilters.map(item => (
+                        <Checkbox key={item.label} value={item.value}>
+                          {item.label}{' '}
+                          <span className="filter-form__checkbox-count">
+                            ({item.count})
+                          </span>
+                        </Checkbox>
+                      ))}
+                    </CheckboxGroup>,
                   )}
                 </Form.Item>
               </React.Fragment>
@@ -189,8 +200,6 @@ export const FiltersWithForm = withAppliedSearchParameters(
       filterRequest.duration = allValues.duration;
       filterRequest.ageRange = allValues.ageRange;
       filterRequest.subjects = allValues.subjects;
-
-      console.log(filterRequest.ageRange, allValues.ageRange);
 
       props.onApplyFilters(filterRequest);
     },

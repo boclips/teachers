@@ -54,5 +54,5 @@ it('removes duration from url on close', () => {
 
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()[0].type).toEqual(updateSearchParamsAction.type);
-  expect(store.getActions()[0].payload.duration[0].serialise()).toEqual('2-3');
+  expect(store.getActions()[0].payload.duration[0].toString()).toEqual('2-3');
 });

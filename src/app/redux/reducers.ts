@@ -3,6 +3,7 @@ import { History } from 'history';
 import reduceReducers from 'reduce-reducers';
 import { combineReducers, Reducer } from 'redux';
 import { ageRangeReducer } from 'src/components/ageRanges/redux/ageRangeReducer';
+import { durationsReducer } from 'src/components/durations/redux/durationReducer';
 import { countriesReducer } from '../../components/account/onboarding/redux/reducers/countriesReducer';
 import {
   collectionHandlers,
@@ -50,6 +51,7 @@ export const createReducers = (history: History<any>): Reducer<State> =>
       collections: noReducer(initialCollectionsState),
       subjects: subjectsReducer,
       ageRanges: ageRangeReducer,
+      durations: durationsReducer,
       countries: countriesReducer,
       tags: tagsReducer,
       disciplines: disciplinesReducer,

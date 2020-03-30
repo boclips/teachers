@@ -15,7 +15,7 @@ export const FilterPanel = () => {
     dispatch(
       bulkUpdateSearchParamsAction([
         {
-          duration: DurationRange.fromStrings(filterOptions.duration),
+          duration: DurationRange.newFromStrings(filterOptions.duration),
         },
         {
           age_range: convertAgeRangesFromString(filterOptions.ageRange),

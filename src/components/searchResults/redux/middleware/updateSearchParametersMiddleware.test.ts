@@ -74,13 +74,13 @@ describe(`updateSearchParametersMiddleware`, () => {
 
     store.dispatch(
       updateSearchParamsAction({
-        duration: [new DurationRange({ min: 123 })],
+        duration: [new DurationRange({ min: 123, max: 123 })],
       }),
     );
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?duration=123&page=1'),
+        push('/videos?duration=123-123&page=1'),
       );
     });
   });

@@ -34,15 +34,7 @@ describe('duration filters', () => {
     const props = getProps(`?q=hi&duration=60-180`);
 
     expect(props.query).toEqual('hi');
-    expect(props.duration[0].serialise()).toEqual('60-180');
-    expect(props.subjectIds).toEqual([]);
-    expect(props.numberOfFiltersApplied).toEqual(1);
-  });
-
-  it('provides valid duration with no max', () => {
-    const props = getProps(`?q=hi&duration=180`);
-    expect(props.query).toEqual('hi');
-    expect(props.duration[0].serialise()).toEqual('180');
+    expect(props.duration[0].toString()).toEqual('60-180');
     expect(props.subjectIds).toEqual([]);
     expect(props.numberOfFiltersApplied).toEqual(1);
   });
@@ -50,7 +42,7 @@ describe('duration filters', () => {
   it('provides valid duration with no min', () => {
     const props = getProps(`?q=hi&duration=0-180`);
     expect(props.query).toEqual('hi');
-    expect(props.duration[0].serialise()).toEqual('0-180');
+    expect(props.duration[0].toString()).toEqual('0-180');
     expect(props.subjectIds).toEqual([]);
     expect(props.numberOfFiltersApplied).toEqual(1);
   });
@@ -107,7 +99,7 @@ describe('number of filters applied', () => {
       `?q=hi&age_range_min=5&age_range_max=11&age_range=5-11&duration=60-180`,
     );
     expect(props.query).toEqual('hi');
-    expect(props.duration[0].serialise()).toEqual('60-180');
+    expect(props.duration[0].toString()).toEqual('60-180');
     expect(props.subjectIds).toEqual([]);
     expect(props.ageRange[0].getLabel()).toEqual('5 - 11');
     expect(props.numberOfFiltersApplied).toEqual(2);

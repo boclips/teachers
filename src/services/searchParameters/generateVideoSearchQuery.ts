@@ -47,5 +47,5 @@ const convertDurationRequest = (
   updateDurationFilter: UpdateDurationFilter,
 ): { duration: string[] } | undefined =>
   updateDurationFilter.duration
-    ? { duration: updateDurationFilter.duration.map(d => d.serialise()) }
+    ? { duration: updateDurationFilter.duration.map(d => d.toString()) }
     : undefined;

@@ -1,4 +1,9 @@
-import { Range } from 'src/types/Range';
+import DurationConverter from 'src/components/searchResults/filters/DurationConverter';
+
+interface Range {
+  min: number;
+  max: number;
+}
 
 export class DurationRange {
   private readonly range: Range;
@@ -10,22 +15,46 @@ export class DurationRange {
   public get min() {
     return this.range.min;
   }
+
   public get max() {
     return this.range.max;
   }
 
-  public static fromString = (serialised: string): DurationRange => {
-    const [min, max] = serialised.split('-');
+  public getLabel = () => {
+    const formatter = seconds => `${seconds / 60}m`;
 
-    return new DurationRange({
-      min: parseInt(min, 10),
-      max: max && parseInt(max, 10),
-    });
+    if (this.range.max !== 86400) {
+      return `${formatter(this.range.min)} - ${formatter(this.range.max)}`;
+    }
+
+    return `${formatter(this.range.min)} +`;
   };
 
-  public static fromStrings = (
+  public toString() {
+    return `${this.range.min}-${this.range.max}`;
+  }
+
+  public toIso() {
+    const durationConverter = new DurationConverter();
+    return (
+      durationConverter.secondsToIso(this.min) +
+      '-' +
+      durationConverter.secondsToIso(this.max)
+    );
+  }
+
+  public static newFromStrings = (
     serialised: string | string[],
   ): DurationRange[] => {
+    const fromString = (str: string): DurationRange => {
+      const [min, max] = str.split('-');
+
+      return new DurationRange({
+        min: parseInt(min, 10),
+        max: max && parseInt(max, 10),
+      });
+    };
+
     if (!serialised) {
       return null;
     }
@@ -34,23 +63,6 @@ export class DurationRange {
       serialised = [serialised];
     }
 
-    return serialised.map(rangeString => DurationRange.fromString(rangeString));
-  };
-
-  public getLabel = () => {
-    const formatter = seconds => `${seconds / 60}m`;
-
-    if (this.range.max) {
-      return `${formatter(this.range.min)} - ${formatter(this.range.max)}`;
-    }
-
-    return `${formatter(this.range.min)} +`;
-  };
-
-  public serialise = (): string => {
-    if (this.range.max) {
-      return `${this.range.min}-${this.range.max}`;
-    }
-    return this.range.min.toString();
+    return serialised.map(rangeString => fromString(rangeString));
   };
 }

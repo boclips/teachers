@@ -33,6 +33,7 @@ import {
 import PageSpec from 'src/types/PageSpec';
 import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
+import { defaultDurations } from 'src/components/durations/redux/durationReducer';
 import { video177 } from './api-responses';
 
 export class VideoFactory {
@@ -175,7 +176,7 @@ export class LinksFactory {
       videos:
         arg.videos ||
         new Link({
-          href: `${prefix}/videos/{?query,sort_by,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,age_range,age_range_facets,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom}`,
+          href: `${prefix}/videos/{?query,sort_by,duration,duration_facets,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,age_range,age_range_facets,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom}`,
           templated: true,
         }),
       searchPublicCollections:
@@ -601,6 +602,7 @@ export class MockStoreFactory {
       router: RouterFactory.sample(),
       subjects: SubjectsFactory.sample(),
       ageRanges: AgeRangeFactory.sample(),
+      durations: defaultDurations,
       countries: CountriesFactory.sample(),
       disciplines: DisciplinesFactory.sample(),
       tags: TagsFactory.sample(),
@@ -668,6 +670,7 @@ export class VideoSearchFacetsFactory {
   ): VideoSearchFacets {
     return {
       ageRanges: [new AgeRange(3, 7)],
+      durations: defaultDurations,
       ...resource,
     };
   }

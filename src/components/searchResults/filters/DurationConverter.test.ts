@@ -7,5 +7,5 @@ it('converts from seconds to ISO time string', () => {
 
 it('does not try to convert a null value', () => {
   const converter = new DurationConverter();
-  expect(converter.secondsToIso(null)).toEqual(null);
+  expect(converter.secondsToIso(0)).toEqual('PT0S');
 });
