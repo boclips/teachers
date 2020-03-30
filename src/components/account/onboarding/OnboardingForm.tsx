@@ -1,10 +1,11 @@
-import { Button, Carousel, Col, Form, Row, Select } from 'antd';
+import { Button, Carousel, Col, Form, Row } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
+import { RoleForm } from 'src/components/account/form/RoleForm';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
@@ -63,7 +64,7 @@ interface InternalState {
   numberOfSlides: number;
   visitedIndices: Set<number>;
   invisibleSlides: boolean[];
-  userRole?: string;
+  role?: string;
   country?: Country;
   state?: UsaState;
   screenReaderErrors: ScreenReaderError[];
@@ -94,7 +95,7 @@ class OnboardingForm extends React.Component<
     country: null,
     state: null,
     screenReaderErrors: null,
-    userRole: null,
+    role: null,
   };
 
   public componentDidMount() {
@@ -218,45 +219,10 @@ class OnboardingForm extends React.Component<
                       />
                     )}
                     <NameForm form={this.props.form} />
-                    <Form.Item
-                      label={"I'm a"}
-                      colon={false}
-                      className="name-form__role form__item"
-                    >
-                      {this.props.form.getFieldDecorator('role', {
-                        rules: [
-                          {
-                            required: true,
-                            message: 'Please select your role',
-                          },
-                        ],
-                      })(
-                        <Select
-                          mode={'default'}
-                          data-qa="select-role"
-                          size="large"
-                          className={'boclips-multi-select-selection'}
-                          onChange={(value: string) =>
-                            this.setState({ userRole: value })
-                          }
-                          placeholder="Select your role"
-                        >
-                          <Select.Option value="TEACHER" data-state="TEACHER">
-                            {'Teacher'}
-                          </Select.Option>
-                          <Select.Option value="PARENT" data-state="PARENT">
-                            {'Parent'}
-                          </Select.Option>
-                          <Select.Option
-                            value="SCHOOLADMIN"
-                            data-state="SCHOOLADMIN"
-                          >
-                            {'School admin'}
-                          </Select.Option>
-                          <Select.Option value="OTHER">{'Other'}</Select.Option>
-                        </Select>,
-                      )}
-                    </Form.Item>
+                    <RoleForm
+                      form={this.props.form}
+                      onRoleChange={this.onRoleChange}
+                    />
                     <p className="onboarding-form__notes">
                       <span className={'onboarding-form__asterisk'}>*</span>{' '}
                       Required field
@@ -314,7 +280,7 @@ class OnboardingForm extends React.Component<
                       placeholder="Choose country"
                       onCountryChange={this.onCountryChange}
                     />
-                    {this.state.userRole !== 'PARENT' &&
+                    {this.state.role !== 'PARENT' &&
                       this.state.country &&
                       (this.state.country.id === 'USA' ? (
                         <section data-qa="usa-school-details">
@@ -449,6 +415,8 @@ class OnboardingForm extends React.Component<
 
   private onCountryChange = country =>
     this.setState({ ...this.state, country });
+
+  private onRoleChange = role => this.setState({ ...this.state, role });
 
   private onStateChange = state => this.setState({ ...this.state, state });
 
