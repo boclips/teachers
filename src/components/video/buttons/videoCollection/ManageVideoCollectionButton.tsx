@@ -19,7 +19,7 @@ import { removeVideoFromMyCollectionAction } from 'src/components/collection/red
 import { createCollectionAction } from 'src/components/collection/redux/actions/createCollectionAction';
 
 interface StateProps {
-  updating: boolean;
+  updatingCollections: boolean;
   canFetchMyCollections: boolean;
 }
 
@@ -38,6 +38,7 @@ interface InternalState {
   collectionPopoverVisible: boolean;
   createCollectionVisible: boolean;
   newCollectionTitle?: string;
+  isUpdatingCollections: boolean;
   isSaving: boolean;
 }
 
@@ -51,10 +52,11 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     super(props);
 
     this.state = {
-      isSaving: false,
       collectionDrawerVisible: false,
       collectionPopoverVisible: false,
       createCollectionVisible: false,
+      isSaving: false,
+      isUpdatingCollections: false,
     };
   }
 
@@ -62,7 +64,14 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     props: StateProps,
     state: InternalState,
   ): InternalState {
-    return { ...state, isSaving: !props.updating ? false : state.isSaving };
+    const collectionsHaveBeenUpdated =
+      state.isUpdatingCollections && !props.updatingCollections;
+
+    return {
+      ...state,
+      isUpdatingCollections: props.updatingCollections,
+      isSaving: collectionsHaveBeenUpdated ? false : state.isSaving,
+    };
   }
 
   public render() {
@@ -93,7 +102,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             title="Save to:"
             placement={'bottom'}
             closable={true}
-            onClose={this.onClose()}
+            onClose={this.closeManager()}
             visible={this.state.collectionDrawerVisible}
           >
             {this.menu()}
@@ -125,7 +134,10 @@ class ManageVideoCollectionsButton extends React.PureComponent<
         defaultChecked={alreadyInCollection}
         data-qa={this.dataQa(alreadyInCollection)}
         data-state={videoCollection.title}
-        onChange={this.onClick(alreadyInCollection, videoCollection)}
+        onChange={this.onSelectingCollection(
+          alreadyInCollection,
+          videoCollection,
+        )}
       >
         <span className="manage-video-collection-button__collection-entry">
           {videoCollection.title}
@@ -247,11 +259,11 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     }
   }
 
-  private onClick = (
+  private onSelectingCollection = (
     alreadyInCollection: boolean,
     collection: VideoCollection,
   ) => () => {
-    this.onClose({ isSaving: true })();
+    this.closeManager({ isSaving: true })();
 
     if (alreadyInCollection) {
       this.props.onRemoveFromCollection(collection);
@@ -275,7 +287,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   };
 
   private createCollection = () => {
-    this.onClose({ isSaving: true })();
+    this.closeManager({ isSaving: true })();
     this.props.onCreateCollection({
       title: this.state.newCollectionTitle,
       videos: [this.props.video],
@@ -290,7 +302,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     });
   };
 
-  private onClose = (newState?: Partial<InternalState>) => () => {
+  private closeManager = (newState?: Partial<InternalState>) => () => {
     this.setState({
       ...this.state,
       ...newState,
@@ -322,7 +334,7 @@ function mapDispatchToProps(
 
 function mapStateToProps({ collections, links }: State): StateProps {
   return {
-    updating: collections.updating,
+    updatingCollections: collections.updating,
     canFetchMyCollections: links.entries.myCollections && true,
   };
 }
