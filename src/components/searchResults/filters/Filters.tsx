@@ -104,6 +104,14 @@ const Filters = React.forwardRef(
       </span>
     );
 
+    function formatCount(count: number) {
+      if (count >= 500) {
+        return `${count}+`;
+      } else {
+        return `${count}`;
+      }
+    }
+
     return (
       <section ref={ref}>
         <Form className="filter-form">
@@ -131,7 +139,7 @@ const Filters = React.forwardRef(
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
-                            ({item.count})
+                            ({formatCount(item.count)})
                           </span>
                         </Checkbox>
                       ))}
@@ -156,7 +164,7 @@ const Filters = React.forwardRef(
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
-                            ({item.count})
+                            ({formatCount(item.count)})
                           </span>
                         </Checkbox>
                       ))}
@@ -182,7 +190,7 @@ const Filters = React.forwardRef(
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
-                            ({item.count})
+                            ({formatCount(item.count)})
                           </span>
                         </Checkbox>
                       ))}

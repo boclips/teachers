@@ -19,12 +19,12 @@ describe('SearchPanelHeader', () => {
     expect(wrapper.getByText('10 results found')).toBeVisible();
   });
 
-  it('Says "500 results found" when count is greater than 500', () => {
+  it('Says "500+ results found" when count is greater than 500', () => {
     const wrapper = render(
       <SearchPanelHeader totalElements={510} onOpenFilterDrawer={noOp} />,
     );
 
-    expect(wrapper.getByText('500 results found')).toBeVisible();
+    expect(wrapper.getByText('500+ results found')).toBeVisible();
   });
 
   it('Does not display search count when count is 0', () => {

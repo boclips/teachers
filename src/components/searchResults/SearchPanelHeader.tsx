@@ -14,8 +14,9 @@ export class SearchPanelHeader extends React.Component<Props> {
     const count = Math.min(resultCount, MaxElementCount);
 
     const plural = count > 1 ? 's' : '';
+    const plusSuffix = resultCount > MaxElementCount ? '+' : '';
 
-    return `${count} result${plural} found`;
+    return `${count}${plusSuffix} result${plural} found`;
   };
 
   public render() {
