@@ -242,6 +242,20 @@ export const videosSearchResponse = buildVideoSearchResponse(
   undefined,
 );
 
+export const videosSearchResponseWithFacets = buildVideoSearchResponse(
+  [video177, video147],
+  {
+    subjects: {
+      'art-id': {
+        hits: 10,
+      },
+      'other-id': {
+        hits: 12,
+      },
+    },
+  },
+);
+
 export function buildVideoSearchResponse(videos: any[], facets: any = {}) {
   return {
     _embedded: {

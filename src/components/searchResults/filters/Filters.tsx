@@ -54,18 +54,22 @@ const Filters = React.forwardRef(
     );
 
     const durations = useSelector((state: State) => state.durations);
-    const durationFilters = durations.map(d => ({
-      value: d.toString(),
-      label: d.getLabel(),
-      count: extractFacetHits(d.toIso(), facets.durations),
-    }));
+    const durationFilters = durations
+      .map(d => ({
+        value: d.toString(),
+        label: d.getLabel(),
+        count: extractFacetHits(d.toIso(), facets.durations),
+      }))
+      .filter(filter => filter.count > 0);
 
     const allAgeRanges = useSelector((state: State) => state.ageRanges);
-    const ageRangeFilters = allAgeRanges.map(a => ({
-      label: a.getLabel(),
-      value: a.getId(),
-      count: extractFacetHits(a.getId(), facets.ageRanges),
-    }));
+    const ageRangeFilters = allAgeRanges
+      .map(a => ({
+        label: a.getLabel(),
+        value: a.getId(),
+        count: extractFacetHits(a.getId(), facets.ageRanges),
+      }))
+      .filter(filter => filter.count > 0);
 
     const subjects = useSelector((state: State) => state.subjects);
     const subjectFilters = subjects
@@ -74,6 +78,7 @@ const Filters = React.forwardRef(
         label: subject.name,
         count: extractFacetHits(subject.id, facets.subjects),
       }))
+      .filter(filter => filter.count > 0)
       .sort((a, b) => a.label.localeCompare(b.label));
 
     const [openFilters, setOpenFilters] = useState(() => [

@@ -9,12 +9,13 @@ import ApiStub from 'test-support/ApiStub';
 import {
   collectionResponse,
   collectionsResponse,
-  videosSearchResponse,
+  videosSearchResponseWithFacets,
 } from 'test-support/api-responses';
 import { renderWithConnectedRoutes } from 'test-support/renderWithStore';
 import { Route } from 'react-router';
 import React from 'react';
 import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
+import { defaultDurations } from 'src/components/durations/redux/durationReducer';
 
 export const renderSearchResultsView = (initialQuery: string) => {
   const history = createMemoryHistory({
@@ -27,6 +28,7 @@ export const renderSearchResultsView = (initialQuery: string) => {
         SubjectFactory.sample({ name: 'Arts', id: 'art-id' }),
         SubjectFactory.sample({ name: 'Other subject', id: 'other-id' }),
       ]),
+      durations: defaultDurations,
       links: LinksStateValueFactory.sample({}, '/v1'),
     },
     history,
@@ -44,7 +46,10 @@ export const renderSearchResultsViewWithSampleData = (
 ) => {
   new ApiStub()
     .defaultUser()
-    .queryVideos({ query: initialQuery, results: videosSearchResponse })
+    .queryVideos({
+      query: initialQuery,
+      results: videosSearchResponseWithFacets,
+    })
     .queryCollections({
       query: initialQuery,
       results: collectionsResponse([collectionResponse()]),

@@ -117,6 +117,11 @@ describe('SearchResultsView', () => {
                 hits: 100,
               },
             },
+            durations: {
+              'PT0S-PT2M': {
+                hits: 101,
+              },
+            },
           }),
         })
         .queryCollections({
@@ -128,6 +133,42 @@ describe('SearchResultsView', () => {
 
       expect(await view.findByLabelText('Arts (1)')).toBeInTheDocument();
       expect(await view.findByLabelText('3 - 5 (100)')).toBeInTheDocument();
+      expect(await view.findByLabelText('0m - 2m (101)')).toBeInTheDocument();
+    });
+
+    it('renders only filters with a filter count greater 0', async () => {
+      new ApiStub()
+        .defaultUser()
+        .queryVideos({
+          query: 'climate',
+          results: buildVideoSearchResponse([video177], {
+            subjects: {
+              'art-id': {
+                hits: 0,
+              },
+            },
+            ageRanges: {
+              '3-5': {
+                hits: 0,
+              },
+            },
+            durations: {
+              'PT0S-PT2M': {
+                hits: 0,
+              },
+            },
+          }),
+        })
+        .queryCollections({
+          query: 'climate',
+          results: collectionsResponse([]),
+        });
+
+      const view = renderSearchResultsView('climate');
+
+      expect(await view.queryByLabelText('Arts (1)')).toBeNull();
+      expect(await view.queryByLabelText('3 - 5 (100)')).toBeNull();
+      expect(await view.queryByLabelText('0m - 2m (101)')).toBeNull();
     });
   });
 });
