@@ -64,7 +64,7 @@ interface InternalState {
   numberOfSlides: number;
   visitedIndices: Set<number>;
   invisibleSlides: boolean[];
-  role?: string;
+  role?: 'TEACHER' | 'PARENT' | 'SCHOOLADMIN' | 'OTHER';
   country?: Country;
   state?: UsaState;
   screenReaderErrors: ScreenReaderError[];
@@ -280,37 +280,7 @@ class OnboardingForm extends React.Component<
                       placeholder="Choose country"
                       onCountryChange={this.onCountryChange}
                     />
-                    {this.state.role !== 'PARENT' &&
-                      this.state.country &&
-                      (this.state.country.id === 'USA' ? (
-                        <section data-qa="usa-school-details">
-                          <StatesForm
-                            label="State"
-                            form={this.props.form}
-                            states={this.state.country.states}
-                            placeholder="Choose state"
-                            onStateChange={this.onStateChange}
-                          />
-                          <SchoolForm
-                            form={this.props.form}
-                            country={this.state.country}
-                            placeholder="Enter the name of your school"
-                            label="School"
-                            state={this.state.state}
-                            allowUnknownSchools={false}
-                          />
-                        </section>
-                      ) : (
-                        <section data-qa="non-usa-school-details">
-                          <SchoolForm
-                            form={this.props.form}
-                            country={this.state.country}
-                            placeholder="Enter the name of your school"
-                            label="School"
-                            allowUnknownSchools={true}
-                          />
-                        </section>
-                      ))}
+                    {this.getSchoolForm()}
                   </section>
                   <section
                     className={
@@ -382,6 +352,46 @@ class OnboardingForm extends React.Component<
     );
   }
 
+  private getSchoolForm = () => {
+    if (this.state.role === 'PARENT' || this.state.country === null) {
+      return <React.Fragment></React.Fragment>;
+    }
+
+    if (this.state.country && this.state.country.id === 'USA') {
+      return (
+        <section data-qa="usa-school-details">
+          <StatesForm
+            label="State"
+            form={this.props.form}
+            states={this.state.country.states}
+            placeholder="Choose state"
+            onStateChange={this.onStateChange}
+          />
+          <SchoolForm
+            form={this.props.form}
+            country={this.state.country}
+            placeholder="Enter the name of your school"
+            label="School"
+            state={this.state.state}
+            allowUnknownSchools={false}
+          />
+        </section>
+      );
+    }
+
+    return (
+      <section data-qa="non-usa-school-details">
+        <SchoolForm
+          form={this.props.form}
+          country={this.state.country}
+          placeholder="Enter the name of your school"
+          label="School"
+          allowUnknownSchools={true}
+        />
+      </section>
+    );
+  };
+
   private isLastSlide = () =>
     this.state.currentIndex === this.state.numberOfSlides - 1;
 
@@ -416,7 +426,8 @@ class OnboardingForm extends React.Component<
   private onCountryChange = country =>
     this.setState({ ...this.state, country });
 
-  private onRoleChange = role => this.setState({ ...this.state, role });
+  private onRoleChange = value =>
+    this.setState({ ...this.state, role: value.role });
 
   private onStateChange = state => this.setState({ ...this.state, state });
 
