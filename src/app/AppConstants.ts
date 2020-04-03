@@ -10,13 +10,15 @@ export class AppConstants {
       ? '.' + process.env.ENVIRONMENT_DOMAIN
       : this.window.location.hostname;
 
-    return "https://api." +
+    return (
+      'https://api.' +
       domain
-      .split(".", 3)
-      .reverse()
-      .slice(0, 2)
-      .reverse()
-      .join(".");
+        .split('.', 3)
+        .reverse()
+        .slice(0, 2)
+        .reverse()
+        .join('.')
+    );
   }
 
   public get HOST(): string {
