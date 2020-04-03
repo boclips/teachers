@@ -6,14 +6,17 @@ export class AppConstants {
   }
 
   public get API_PREFIX(): string {
-    switch (this.ENVIRONMENT) {
-      case 'TESTING':
-        return 'https://api.testing-boclips.com';
-      case 'STAGING':
-        return 'https://api.staging-boclips.com';
-      case 'PRODUCTION':
-        return 'https://api.boclips.com';
-    }
+    const domain = process.env.ENVIRONMENT_DOMAIN
+      ? '.' + process.env.ENVIRONMENT_DOMAIN
+      : this.window.location.hostname;
+
+    return "https://api." +
+      domain
+      .split(".", 3)
+      .reverse()
+      .slice(0, 2)
+      .reverse()
+      .join(".");
   }
 
   public get HOST(): string {
