@@ -2,7 +2,8 @@
 
 set -x -e
 
-export SENTRY_RELEASE="teachers-$(cat ../version/version)"
+SENTRY_RELEASE="teachers-$(cat ../version/tag)"
+export SENTRY_RELEASE
 
 npm -v
 npm ci
