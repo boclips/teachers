@@ -1,5 +1,6 @@
 import { Duration } from 'moment';
 import { AgeRange } from 'src/types/AgeRange';
+import { Playback } from 'boclips-api-client/dist/sub-clients/common/model/Playback';
 import { Link } from './Link';
 import { Subject } from './Subject';
 
@@ -25,7 +26,7 @@ export interface Video {
   releasedOn: Date;
   createdBy: string;
   subjects: Subject[];
-  playback: StreamPlayback | YoutubePlayback;
+  playback: Playback;
   thumbnailUrl: string;
   badges: string[];
   rating: number;
@@ -39,22 +40,6 @@ export enum VideoType {
   NEWS = 'NEWS',
   STOCK = 'STOCK',
   INSTRUCTIONAL = 'INSTRUCTIONAL',
-}
-
-export class StreamPlayback {
-  public constructor(private streamUrl: string) {}
-
-  public getUrl(): string {
-    return this.streamUrl;
-  }
-}
-
-export class YoutubePlayback {
-  public constructor(private youtubeId: string) {}
-
-  public getId(): string {
-    return this.youtubeId;
-  }
 }
 
 export interface Segment {

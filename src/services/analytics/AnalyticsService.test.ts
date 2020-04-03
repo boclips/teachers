@@ -1,5 +1,7 @@
 import { SubjectFactory } from 'boclips-api-client/dist/test-support';
 import * as moment from 'moment';
+import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
+import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import {
   AttachmentFactory,
   UserProfileFactory,
@@ -8,7 +10,6 @@ import {
 } from '../../../test-support/factories';
 import { Constants } from '../../app/AppConstants';
 import { VideoSearchResult } from '../../types/SearchResults';
-import { StreamPlayback } from '../../types/Video';
 import AnalyticsService from './AnalyticsService';
 
 let analyticsService: AnalyticsService;
@@ -139,8 +140,8 @@ describe('AnalyticsService', () => {
         createdBy: 'Bodevs Productions',
         description: 'my video description',
         duration: moment.duration(2, 'minutes'),
+        playback: PlaybackFactory.sample({ id: 'playbackid' }),
         id: '123',
-        playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
         releasedOn: new Date('2018-06-20T10:12:33Z'),
         subjects: [
           SubjectFactory.sample({
@@ -150,6 +151,11 @@ describe('AnalyticsService', () => {
         ],
         title: 'my video title',
       });
+
+      video.playback.links = {
+        ...video.playback.links,
+        hlsStream: new Link({ href: 'http://cdn.kaltura.com/stream.mdp' }),
+      };
 
       const segment = {
         start: 0,
@@ -164,7 +170,10 @@ describe('AnalyticsService', () => {
         video_description: 'my video description',
         video_duration: 'PT2M',
         video_id: '123',
-        video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
+        video_playback: {
+          id: 'playbackid',
+          streamUrl: 'http://cdn.kaltura.com/stream.mdp',
+        },
         video_releasedOn: '2018-06-20T10:12:33.000Z',
         video_subjects: [
           {
@@ -190,14 +199,19 @@ describe('AnalyticsService', () => {
         createdBy: 'Bodevs Productions',
         description: 'my video description',
         duration: moment.duration(2, 'minutes'),
+        playback: PlaybackFactory.sample({ id: 'playbackid' }),
         id: '123',
-        playback: new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
         releasedOn: new Date('2018-06-20T10:12:33Z'),
         subjects: [
           SubjectFactory.sample({ id: 'maths-subject-id', name: 'Maths' }),
         ],
         title: 'my video title',
       });
+
+      video.playback.links = {
+        ...video.playback.links,
+        hlsStream: new Link({ href: 'http://cdn.kaltura.com/stream.mdp' }),
+      };
 
       analyticsService.trackVideoPlayback(video, 50, 60);
 
@@ -210,7 +224,10 @@ describe('AnalyticsService', () => {
         video_description: 'my video description',
         video_duration: 'PT2M',
         video_id: '123',
-        video_playback: { streamUrl: 'http://cdn.kaltura.com/stream.mdp' },
+        video_playback: {
+          id: 'playbackid',
+          streamUrl: 'http://cdn.kaltura.com/stream.mdp',
+        },
         video_releasedOn: '2018-06-20T10:12:33.000Z',
         video_subjects: [
           {

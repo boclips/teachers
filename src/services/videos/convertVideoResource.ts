@@ -1,24 +1,12 @@
 import moment from 'moment';
 import { AgeRange } from 'src/types/AgeRange';
+import { PlaybackConverter } from 'boclips-api-client/dist/sub-clients/common/model/PlaybackConverter';
 import { Link } from '../../types/Link';
-import { StreamPlayback, Video, YoutubePlayback } from '../../types/Video';
+import { Video } from '../../types/Video';
 
 const DEFAULT_THUMBNAIL_WIDTH = 500;
 
-function getPlaybackProperties(
-  resource: any,
-): StreamPlayback | YoutubePlayback {
-  if (resource.playback.type === 'STREAM') {
-    return new StreamPlayback(resource.playback._links.hlsStream.href);
-  } else if (resource.playback.type === 'YOUTUBE') {
-    return new YoutubePlayback(resource.playback.id);
-  } else {
-    throw Error(`No valid playback object found on resource: ${resource}`);
-  }
-}
-
-function getEffectiveThumbnailUrl(resource: any) {
-  const thumbnailLink = new Link(resource.playback._links.thumbnail);
+export function getEffectiveThumbnailUrl(thumbnailLink: Link) {
   return thumbnailLink.isTemplated
     ? thumbnailLink.getTemplatedLink({
         thumbnailWidth: DEFAULT_THUMBNAIL_WIDTH,
@@ -34,8 +22,10 @@ export default function convertVideoResource(resource: any): Video {
     duration: moment.duration(resource.playback.duration),
     releasedOn: new Date(resource.releasedOn),
     createdBy: resource.createdBy,
-    thumbnailUrl: getEffectiveThumbnailUrl(resource),
-    playback: getPlaybackProperties(resource),
+    thumbnailUrl: getEffectiveThumbnailUrl(
+      new Link(resource.playback._links.thumbnail),
+    ),
+    playback: PlaybackConverter.convert(resource.playback),
     subjects: resource.subjects,
     badges: resource.badges,
     ageRange:

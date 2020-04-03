@@ -1,14 +1,14 @@
 import configureStore from 'redux-mock-store';
+import { fetchVideo } from 'src/services/videos/fetchVideo';
 import eventually from '../../../../../test-support/eventually';
 import { VideoFactory } from '../../../../../test-support/factories';
-import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
 import { fetchVideosByIdsAction } from '../../../video/redux/actions/fetchVideosByIdsAction';
 import Mock = jest.Mock;
 import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
 
 jest.mock('../../../../services/videos/fetchVideo');
-const fetchVideoMock = fetchVideoFromSelfLink as Mock;
+const fetchVideoMock = fetchVideo as Mock;
 const mockStore = configureStore<{}>([fetchVideosForCollectionMiddleware]);
 
 test('dispatches a store action per successfully fetched video', async () => {

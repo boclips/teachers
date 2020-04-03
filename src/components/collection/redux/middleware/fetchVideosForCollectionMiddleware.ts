@@ -1,6 +1,6 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
-import { fetchVideoFromSelfLink } from '../../../../services/videos/fetchVideo';
+import { fetchVideo } from '../../../../services/videos/fetchVideo';
 import { LinksState } from '../../../../types/State';
 import {
   fetchVideosByIdsAction,
@@ -12,9 +12,7 @@ export function onFetchVideosForCollection(
   store: MiddlewareAPI<Dispatch, LinksState>,
   request: VideosForCollectionRequest,
 ) {
-  Promise.all(
-    request.videos.map(videoId => fetchVideoFromSelfLink(videoId.links.self)),
-  )
+  Promise.all(request.videos.map(videoId => fetchVideo(videoId.value)))
     .then(videos =>
       store.dispatch(
         storeVideosAction({

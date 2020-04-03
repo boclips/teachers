@@ -10,7 +10,6 @@ import { AgeRange } from 'src/types/AgeRange';
 import { Attachment } from 'src/types/Attachment';
 import { Country } from 'src/types/Country';
 import { Discipline } from 'src/types/Discipline';
-import { Link } from 'src/types/Link';
 import { Links } from 'src/types/Links';
 import { School } from 'src/types/School';
 import State, {
@@ -25,7 +24,7 @@ import State, {
 } from 'src/types/State';
 import { Subject } from 'src/types/Subject';
 import { Tag } from 'src/types/Tag';
-import { StreamPlayback, Video, VideoId } from 'src/types/Video';
+import { Video, VideoId } from 'src/types/Video';
 import {
   VideoCollection,
   VideoCollectionLinks,
@@ -34,6 +33,8 @@ import PageSpec from 'src/types/PageSpec';
 import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import { defaultDurations } from 'src/components/durations/redux/durationReducer';
+import { Link as ApiClientLink } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
+import { Link } from 'src/types/Link';
 import { video177 } from './api-responses';
 
 export class VideoFactory {
@@ -52,9 +53,20 @@ export class VideoFactory {
         SubjectFactory.sample({ id: 'maths-subject-id', name: 'Maths' }),
       ],
       rating: arg.rating || null,
-      playback:
-        (arg.playback as StreamPlayback) ||
-        new StreamPlayback('http://cdn.kaltura.com/stream.mdp'),
+      playback: arg.playback || {
+        id: 'playbackid',
+        type: 'STREAM',
+        duration: undefined,
+        links: {
+          createPlayerInteractedWithEvent: new ApiClientLink({
+            href: 'https://events',
+          }),
+          thumbnail: new ApiClientLink({
+            href: "'http://cdn.kaltura.com/thumbnail.jpg'",
+          }),
+          hlsStream: new ApiClientLink({ href: 'https://streamurl' }),
+        },
+      },
       badges: arg.badges || ['ad-free'],
       bestFor: arg.bestFor || null,
       links: arg.links || {

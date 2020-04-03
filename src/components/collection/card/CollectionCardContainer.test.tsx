@@ -3,6 +3,11 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+import {
+  fakeVideoSetup,
+  fakeVideosSetup,
+} from 'test-support/fakeApiClientSetup';
 import { video177 } from '../../../../test-support/api-responses';
 import ApiStub from '../../../../test-support/ApiStub';
 import {
@@ -16,7 +21,6 @@ import {
   VideoIdFactory,
   VideoResourceFactory,
 } from '../../../../test-support/factories';
-import MockFetchVerify from '../../../../test-support/MockFetchVerify';
 import { renderWithStore } from '../../../../test-support/renderWithStore';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -28,7 +32,7 @@ import { Link } from '../../../types/Link';
 import CollectionCardContainer from './CollectionCardContainer';
 
 describe('need to fetch videos scenarios', () => {
-  test('fetches videos when no videos are loaded', () => {
+  test('fetches videos when no videos are loaded', async () => {
     const video = VideoResourceFactory.sample({ id: '123' });
 
     const collection = VideoCollectionFactory.sample({
@@ -45,7 +49,8 @@ describe('need to fetch videos scenarios', () => {
 
     const store = createMockStore(collection, []);
 
-    new ApiStub().fetchVideo({ video });
+    new ApiStub();
+    await fakeVideoSetup(video);
 
     mount(
       <Provider store={store}>
@@ -88,14 +93,8 @@ describe('need to fetch videos scenarios', () => {
     });
 
     const store = createMockStore(collection, []);
-
-    new ApiStub()
-      .fetchVideo({ video: videoResources[0] })
-      .fetchVideo({ video: videoResources[1] })
-      .fetchVideo({ video: videoResources[2] })
-      .fetchVideo({ video: videoResources[3] })
-      .fetchVideo({ video: videoResources[4] })
-      .fetchVideo({ video: videoResources[5] });
+    new ApiStub();
+    fakeVideosSetup(videoResources);
 
     mount(
       <Provider store={store}>
@@ -167,6 +166,8 @@ describe('showing correct video previews', () => {
       videoIds: generateVideoIds(6),
     });
 
+    await fakeVideoSetup({ ...video177, id: '123' });
+
     const initialState = {
       router: RouterFactory.sample(),
       entities: {
@@ -175,11 +176,6 @@ describe('showing correct video previews', () => {
       },
       collections: CollectionsFactory.sample(),
     };
-
-    MockFetchVerify.get(
-      `v1/videos/123`,
-      JSON.stringify({ ...video177, id: '123' }),
-    );
 
     const { getByText, getByTestId } = await renderWithStore(
       <CollectionCardContainer grid={false} collection={collection} />,

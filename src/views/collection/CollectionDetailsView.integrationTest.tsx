@@ -1,5 +1,6 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
+import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import {
   collectionResponse,
   video177,
@@ -25,8 +26,9 @@ describe('CollectionDetailsView', () => {
       new ApiStub()
         .defaultUser()
         .fetchCollections()
-        .fetchCollection(collectionResponse([], 'id'))
-        .fetchVideo();
+        .fetchCollection(collectionResponse([], 'id'));
+
+      await fakeVideoSetup(video177);
 
       const collectionPage = await CollectionPage.load();
 
@@ -40,11 +42,12 @@ describe('CollectionDetailsView', () => {
     });
 
     test('displays video collection with videos', async () => {
-      new ApiStub()
+      await new ApiStub()
         .defaultUser()
         .fetchCollections()
-        .fetchCollection(collectionResponse([video177], 'id'))
-        .fetchVideo();
+        .fetchCollection(collectionResponse([video177], 'id'));
+
+      await fakeVideoSetup(video177);
 
       const collectionPage = await CollectionPage.load();
 
@@ -194,8 +197,9 @@ describe('CollectionDetailsView', () => {
         .defaultUser()
         .fetchCollections()
         .fetchCollection(collectionResponse([video177Slim], '789'))
-        .fetchVideo()
         .removeFromCollection();
+
+      await fakeVideoSetup(video177);
 
       const collectionPage = await CollectionPage.load('789');
       expect(collectionPage.getVideos()).toHaveLength(1);
@@ -215,9 +219,9 @@ describe('CollectionDetailsView', () => {
         .fetchCollections()
         .fetchCollection(
           collectionResponse([video177Slim], 'non-editable', false),
-        )
-        .fetchVideo();
+        );
 
+      await fakeVideoSetup(video177);
       const collectionPage = await CollectionPage.load('non-editable');
 
       return eventually(() => {

@@ -6,7 +6,6 @@ import {
   youtubeVideo1,
 } from 'test-support/api-responses';
 import { SubjectFactory } from 'test-support/factories';
-import { StreamPlayback, YoutubePlayback } from 'src/types/Video';
 import convertVideoResource from './convertVideoResource';
 
 test('converts a video with stream playback', () => {
@@ -31,8 +30,7 @@ test('converts a video with stream playback', () => {
   expect(video.yourRating).toEqual(5);
   expect(video.createdBy).toEqual('cp1');
   expect(video.subjects).toEqual([mathsSubject, physicsSubject]);
-  expect(video.playback instanceof StreamPlayback).toBeTruthy();
-  expect((video.playback as StreamPlayback).getUrl()).toEqual(
+  expect(video.playback.links.hlsStream.getOriginalLink()).toEqual(
     'https://cdn.kaltura.com/stream/147.mpd',
   );
   expect(video.badges).toEqual(['ad-free']);
@@ -68,7 +66,6 @@ test('converts a video with youtube playback', () => {
   expect(video.releasedOn).toEqual(new Date('2018-02-11T10:12:33Z'));
   expect(video.createdBy).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');
-  expect(video.playback instanceof YoutubePlayback).toBeTruthy();
-  expect((video.playback as YoutubePlayback).getId()).toEqual('youtubeId');
+  expect(video.playback.id).toEqual('youtubeId');
   expect(video.badges).toEqual(['youtube']);
 });

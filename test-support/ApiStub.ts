@@ -1,3 +1,4 @@
+import MockFetchVerify from './MockFetchVerify';
 import {
   collectionResponse,
   collectionsResponse,
@@ -9,10 +10,7 @@ import {
   schoolsResponse,
   tagsResponse,
   userResponse,
-  video177,
 } from './api-responses';
-import MockFetchVerify from './MockFetchVerify';
-import { VideoResource } from './factories';
 
 interface VideoQueryOptions {
   query?: string;
@@ -31,10 +29,6 @@ interface CollectionQueryOptions {
 
 interface CollectionOptions {
   collectionId: string;
-}
-
-interface SingleVideoOptions {
-  video: VideoResource;
 }
 
 export default class ApiStub {
@@ -75,14 +69,6 @@ export default class ApiStub {
     const url = `/v1/collections?.*query=${escapedQuery}`;
 
     MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
-    return this;
-  }
-
-  public fetchVideo(options: SingleVideoOptions = { video: video177 }) {
-    MockFetchVerify.get(
-      `${this.prefix}/v1/videos/${options.video.id}`,
-      JSON.stringify(options.video),
-    );
     return this;
   }
 

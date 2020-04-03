@@ -1,6 +1,7 @@
 import { createMemoryHistory } from 'history';
 import { waitForElement } from '@testing-library/react';
 import React from 'react';
+import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
 import {
   LinksStateValueFactory,
@@ -46,11 +47,10 @@ describe('VideoDetailsView', () => {
     );
   };
 
-  beforeEach(() => {
-    new ApiStub()
-      .defaultUser()
-      .fetchVideo({ video })
-      .fetchCollections();
+  beforeEach(async () => {
+    new ApiStub().defaultUser().fetchCollections();
+
+    await fakeVideoSetup(video);
   });
 
   it('fetches video details from the API & renders the result', async () => {
