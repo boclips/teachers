@@ -37,7 +37,7 @@ describe('AnalyticsService', () => {
       expect(mockAppcues.identify).toHaveBeenCalledWith('testId', {
         name: 'test first name',
         email: 'test@test.com',
-        planType: Constants.ENVIRONMENT,
+        planType: Constants.APPCUES_PLAN_TYPE,
       });
     });
 

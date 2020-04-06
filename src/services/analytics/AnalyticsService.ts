@@ -35,7 +35,7 @@ export default class AnalyticsService {
       this.appcuesInstance.identify(userProfile.id, {
         name: userProfile.firstName,
         email: userProfile.email,
-        planType: Constants.ENVIRONMENT,
+        planType: Constants.APPCUES_PLAN_TYPE,
       });
     }
   }

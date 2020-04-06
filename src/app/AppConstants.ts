@@ -17,6 +17,10 @@ export class AppConstants {
     return this.window.Environment.API_PREFIX;
   }
 
+  public get APPCUES_PLAN_TYPE(): string {
+    return this.window.Environment.APPCUES_PLAN_TYPE;
+  }
+
   public get HOST(): string {
     return (
       this.window.location.protocol +
