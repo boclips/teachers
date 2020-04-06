@@ -15,7 +15,7 @@ describe('Recaptcha', () => {
     const childRecaptcha = component.find(ReCaptcha);
 
     expect(childRecaptcha.prop('sitekey')).toBe(
-      '6Ldi6JwUAAAAACMgLoshiwBEZNDmnllXrAEIMN_y',
+      'awesome-key-set-in-test-setup',
     );
     expect(childRecaptcha.prop('action')).toBe('registration');
     expect(childRecaptcha.prop('verifyCallback')).toBe(verifyCallback);

@@ -39,6 +39,8 @@ window.Appcues = {
 
 window.open = jest.fn();
 
+window.Environment.RECAPTCHA_SITE_KEY = 'awesome-key-set-in-test-setup';
+
 export async function waitForElement(selector: string) {
   await eventually(() => {
     expect(findElement(selector)).toBeTruthy();

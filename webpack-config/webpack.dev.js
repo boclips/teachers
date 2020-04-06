@@ -27,7 +27,6 @@ module.exports = merge(common, {
       template: path.resolve(srcPath, 'index-dev.html'),
       ga: googleAnalyticsId,
     }),
-    new webpack.EnvironmentPlugin(['ENVIRONMENT_DOMAIN']),
     new DynamicCdnWebpackPlugin({
       exclude: ['react-router', 'react-router-dom'],
     }),

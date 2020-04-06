@@ -6,10 +6,6 @@ import { authenticationResolved } from '../actions/authenticationResolved';
 import { requestAuthentication } from '../actions/requestAuthentication';
 import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 
-const defaultAuthEndpoint =
-  process.env.ENVIRONMENT_DOMAIN &&
-  `https://login.${process.env.ENVIRONMENT_DOMAIN}/auth`;
-
 const onAuthenticationRequested = (
   store: Store,
   { authenticationRequired },
@@ -51,7 +47,7 @@ const getDefaultSecurityOptions = (store: Store) => ({
   },
   realm: 'boclips',
   clientId: 'teachers',
-  authEndpoint: defaultAuthEndpoint,
+  authEndpoint: Constants.AUTH_ENDPOINT,
 });
 
 export default [

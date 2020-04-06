@@ -12,7 +12,7 @@ export class Recaptcha extends React.Component<Props> {
 
   public constructor(props) {
     super(props);
-    this.siteKey = this.getSiteKey();
+    this.siteKey = Constants.RECAPTCHA_SITE_KEY;
   }
 
   public componentDidMount() {
@@ -28,20 +28,4 @@ export class Recaptcha extends React.Component<Props> {
       />
     );
   }
-
-  private getSiteKey = (): string => {
-    const environment = Constants.ENVIRONMENT;
-    switch (environment) {
-      case 'STAGING':
-        return '6LdK45wUAAAAAAPmd_2CIZnj1mYLd2mPIHMoeZ7j';
-      case 'PRODUCTION':
-        return '6Lf64pwUAAAAAH1oPu0zEJB79M4KJSU0q2VQkp3v';
-      case 'TESTING':
-        return '6Ldi6JwUAAAAACMgLoshiwBEZNDmnllXrAEIMN_y';
-      default:
-        throw Error(
-          `No reCaptcha site token found for environment ${environment}`,
-        );
-    }
-  };
 }

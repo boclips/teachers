@@ -21,6 +21,14 @@ export class AppConstants {
     return this.window.Environment.APPCUES_PLAN_TYPE;
   }
 
+  public get RECAPTCHA_SITE_KEY(): string {
+    return this.window.Environment.RECAPTCHA_SITE_KEY;
+  }
+
+  public get AUTH_ENDPOINT(): string {
+    return this.window.Environment.AUTH_ENDPOINT;
+  }
+
   public get HOST(): string {
     return (
       this.window.location.protocol +
@@ -28,37 +36,6 @@ export class AppConstants {
       this.window.location.hostname +
       (this.window.location.port ? ':' + this.window.location.port : '')
     );
-  }
-
-  public get ENVIRONMENT(): 'STAGING' | 'TESTING' | 'PRODUCTION' {
-    const localHost = 'localhost';
-    const localBoclips = '.local-boclips.com';
-    const testingHost = '.testing-boclips.com';
-    const stagingHost = '.staging-boclips.com';
-    const productionHost = '.boclips.com';
-
-    /**
-     * When running locally, we should return the environment that has been
-     * configured in .env.dev rather than the hostname.
-     */
-
-    const domain = process.env.ENVIRONMENT_DOMAIN
-      ? '.' + process.env.ENVIRONMENT_DOMAIN
-      : this.window.location.hostname;
-
-    if (domain.indexOf(stagingHost) !== -1) {
-      return 'STAGING';
-    } else if (domain.indexOf(productionHost) !== -1) {
-      return 'PRODUCTION';
-    } else if (domain.indexOf(testingHost) !== -1) {
-      return 'TESTING';
-    } else if (domain.indexOf(localBoclips) !== -1) {
-      return 'TESTING';
-    } else if (domain.indexOf(localHost) !== -1) {
-      return 'TESTING';
-    } else {
-      throw Error('Environment could not be detected');
-    }
   }
 
   public get NEWS(): string {
