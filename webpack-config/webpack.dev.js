@@ -24,7 +24,7 @@ module.exports = merge(common, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(srcPath, 'index.html'),
+      template: path.resolve(srcPath, 'index-dev.html'),
       ga: googleAnalyticsId,
     }),
     new webpack.EnvironmentPlugin(['ENVIRONMENT_DOMAIN']),

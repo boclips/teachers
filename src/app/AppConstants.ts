@@ -1,3 +1,11 @@
+declare global {
+  interface Window {
+    Environment: any;
+  }
+}
+
+window.Environment = window.Environment || {};
+
 export class AppConstants {
   private window: Window;
 
@@ -6,19 +14,7 @@ export class AppConstants {
   }
 
   public get API_PREFIX(): string {
-    const domain = process.env.ENVIRONMENT_DOMAIN
-      ? '.' + process.env.ENVIRONMENT_DOMAIN
-      : this.window.location.hostname;
-
-    return (
-      'https://api.' +
-      domain
-        .split('.', 3)
-        .reverse()
-        .slice(0, 2)
-        .reverse()
-        .join('.')
-    );
+    return this.window.Environment.API_PREFIX;
   }
 
   public get HOST(): string {
