@@ -31,9 +31,9 @@ export class AgeRange {
   }
 
   public getLabel() {
-    const max = this.max == null ? 99 : this.max;
+    const max = this.max == null ? 19 : this.max;
 
-    if (max === 99) {
+    if (max === 19) {
       return `${this.resolveMin()}+`;
     } else {
       return `${this.resolveMin()} - ${this.max}`;
@@ -41,9 +41,9 @@ export class AgeRange {
   }
 
   public getShortLabel() {
-    const max = this.max == null ? 99 : this.max;
+    const max = this.max == null ? 19 : this.max;
 
-    if (max === 99) {
+    if (max === 19) {
       return `${this.resolveMin()}+`;
     } else {
       return `${this.resolveMin()}-${this.max}`;

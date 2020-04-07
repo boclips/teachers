@@ -3,11 +3,12 @@ import { FormComponentProps } from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
 import Checkbox from 'antd/lib/checkbox';
 import Button from 'antd/lib/button';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AgeRangeSelect } from 'src/components/ageRanges/AgeRangeSelect';
+import { AgeRange } from 'src/types/AgeRange';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
-import { AgeRangeSlider } from '../../common/AgeRangeSlider';
 import './EditCollectionForm.less';
 import Bodal from '../../common/Bodal';
 import {
@@ -50,6 +51,16 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
           shouldSubmitChanges = true;
         }
       }
+      if (
+        ageRange.min !== props.collection.ageRange.resolveMin() ||
+        ageRange.max !== props.collection.ageRange.resolveMax()
+      ) {
+        changeRequest.changes.ageRange = new AgeRange(
+          ageRange.min,
+          ageRange.max,
+        );
+        shouldSubmitChanges = true;
+      }
 
       if (shouldSubmitChanges) {
         props.form.resetFields();
@@ -57,6 +68,18 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
       }
 
       props.setVisible(false);
+    });
+  };
+
+  const [ageRange, setAgeRange] = useState({
+    min: props.collection.ageRange && props.collection.ageRange.resolveMin(),
+    max: props.collection.ageRange && props.collection.ageRange.resolveMax(),
+  });
+
+  const onAgeRangeChange = (evt: Partial<AgeRange>) => {
+    setAgeRange({
+      ...ageRange,
+      ...evt,
     });
   };
 
@@ -119,9 +142,11 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
           )}
         </Form.Item>
         <Form.Item className="form__item" label="Age">
-          {getFieldDecorator('ageRange', {
-            initialValue: props.collection.ageRange,
-          })(<AgeRangeSlider ageRange={props.collection.ageRange} />)}
+          <AgeRangeSelect
+            onChange={onAgeRangeChange}
+            minValue={ageRange.min}
+            maxValue={ageRange.max}
+          />
         </Form.Item>
         <SubjectsForm
           form={props.form}

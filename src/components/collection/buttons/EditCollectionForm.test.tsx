@@ -104,11 +104,14 @@ describe('EditCollectionForm', () => {
     expect(getInputByTestId('description-edit').value).toEqual(
       'Test description',
     );
-    expect(getInputByTestId('select').value).toContain('maths,arts');
 
-    expect(
-      component.getByTestId('slider').getAttribute('data-default-value-json'),
-    ).toEqual('[5,14]');
+    const selectBoxes = component.getAllByTestId(
+      'select',
+    ) as HTMLInputElement[];
+
+    expect(selectBoxes[0].value).toContain(5);
+    expect(selectBoxes[1].value).toContain(14);
+    expect(selectBoxes[2].value).toContain('maths,arts');
   });
 
   describe('Submitting the form', () => {
@@ -159,7 +162,7 @@ describe('EditCollectionForm', () => {
 
       const component = renderEditForm(collection);
 
-      fireEvent.change(component.getByTestId('select'), {
+      fireEvent.change(component.getAllByTestId('select')[2], {
         target: { value: JSON.stringify(['subject-one-id', 'subject-two-id']) },
       });
 
@@ -223,9 +226,14 @@ describe('EditCollectionForm', () => {
           });
           const component = renderEditForm(collection);
 
-          fireEvent.change(component.getByTestId('slider'), {
+          fireEvent.change(component.getAllByTestId('select')[0], {
             target: {
-              value: JSON.stringify([newAgeRange.min, newAgeRange.max]),
+              value: JSON.stringify(newAgeRange.min),
+            },
+          });
+          fireEvent.change(component.getAllByTestId('select')[1], {
+            target: {
+              value: JSON.stringify(newAgeRange.max),
             },
           });
 
