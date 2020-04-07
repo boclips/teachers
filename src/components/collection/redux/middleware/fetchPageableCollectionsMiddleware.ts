@@ -1,4 +1,5 @@
 import { MiddlewareAPI } from 'redux';
+import { clearDiscoverCollectionsAction } from 'src/components/collection/redux/actions/clearDiscoverCollectionsAction';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import {
@@ -21,6 +22,10 @@ export function onFetchCollections(
   request: FetchPageableCollectionRequest,
 ) {
   const links: Links = store.getState().links.entries;
+  if (request.key === 'discoverCollections') {
+    store.dispatch(clearDiscoverCollectionsAction());
+  }
+
   fetchPageableCollections(links, request)
     .then(collections => {
       store.dispatch(

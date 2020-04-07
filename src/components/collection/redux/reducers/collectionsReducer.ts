@@ -3,6 +3,17 @@ import State, { CollectionMap } from '../../../../types/State';
 import { Video, VideoId } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 
+export const onClearDiscoverCollections = (state: State, _: any): State => ({
+  ...state,
+  collections: {
+    ...state.collections,
+    discoverCollections: {
+      items: [],
+      links: undefined,
+    },
+  },
+});
+
 export const onAddVideoToMyCollectionAction = (
   state: State,
   request: { video: Video; collection: VideoCollection },

@@ -12,7 +12,7 @@ import { getCollectionsByIds } from '../../collection/redux/reducers/collectionE
 
 interface Props {
   collectionKey: CollectionKey;
-  collectionFiler?: CollectionSearchRequest;
+  collectionFilter?: CollectionSearchRequest;
 }
 
 interface StateProps {
@@ -42,7 +42,7 @@ const mapDispatchToProps = (
     dispatch(
       fetchPageableCollectionsAction({
         key: props.collectionKey,
-        request: props.collectionFiler,
+        request: props.collectionFilter,
       }),
     ),
   fetchNextPage: () =>

@@ -1,3 +1,4 @@
+import { clearDiscoverCollectionsAction } from 'src/components/collection/redux/actions/clearDiscoverCollectionsAction';
 import {
   actionHandler,
   ActionHandler,
@@ -30,11 +31,12 @@ import { storeCollectionsAction } from '../actions/storeCollectionsAction';
 import { UpdateCollectionResult } from '../middleware/addToCollectionResultMiddleware';
 import {
   onAddVideoToMyCollectionAction,
+  onClearDiscoverCollections,
+  onCollectionBookmarked,
   onCollectionEdited,
+  onCollectionUnbookmarked,
   onMyCollectionRemoved,
   onRemoveVideoFromMyCollectionAction,
-  onCollectionBookmarked,
-  onCollectionUnbookmarked,
 } from './collectionsReducer';
 import {
   onAppendPageableCollectionsAction,
@@ -79,6 +81,7 @@ const collectionUpdating = (state: State): State => ({
 
 export const collectionHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(addVideoToMyCollectionAction, onAddVideoToMyCollectionAction),
+  actionHandler(clearDiscoverCollectionsAction, onClearDiscoverCollections),
   actionHandler(
     removeVideoFromMyCollectionAction,
     onRemoveVideoFromMyCollectionAction,

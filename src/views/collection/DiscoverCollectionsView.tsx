@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import sortBy from 'lodash/sortBy';
 import { Subject } from 'src/types/Subject';
 import { Discipline } from 'src/types/Discipline';
-import { DisciplineState } from 'src/types/State';
+import { CollectionState, DisciplineState } from 'src/types/State';
 import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
@@ -126,7 +126,7 @@ export class DiscoverCollectionsView extends PureComponent<
               }
               grid={true}
               collectionKey="discoverCollections"
-              collectionFiler={{
+              collectionFilter={{
                 filters: { subject: this.props.subjects.map(s => s.id) },
               }}
               shouldRefresh={refresh}
@@ -191,7 +191,7 @@ function getDisciplineSubjects(discipline) {
 }
 
 function mapStateToProps(
-  state: DisciplineState,
+  state: DisciplineState & CollectionState,
   ownProps: OwnProps,
 ): StateProps {
   const discipline =
