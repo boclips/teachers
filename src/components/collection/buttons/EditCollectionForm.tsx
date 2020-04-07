@@ -72,15 +72,35 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
   };
 
   const [ageRange, setAgeRange] = useState({
-    min: props.collection.ageRange && props.collection.ageRange.resolveMin(),
-    max: props.collection.ageRange && props.collection.ageRange.resolveMax(),
+    min: props.collection.ageRange.isBounded()
+      ? props.collection.ageRange.resolveMin()
+      : null,
+    max: props.collection.ageRange.isBounded()
+      ? props.collection.ageRange.resolveMax()
+      : null,
+    validateStatus: null,
+    errorMsg: null,
   });
 
-  const onAgeRangeChange = (evt: Partial<AgeRange>) => {
+  const onAgeRangeChange = (value: Partial<AgeRange>) => {
     setAgeRange({
       ...ageRange,
-      ...evt,
+      ...value,
+      ...validateAgeRange(value),
     });
+  };
+
+  const validateAgeRange = value => {
+    if (!ageRange.min && value.max) {
+      return {
+        validateStatus: 'error',
+        errorMsg: 'Cannot set a maximum without a minimum!',
+      };
+    }
+    return {
+      validateStatus: 'success',
+      errorMsg: null,
+    };
   };
 
   return (
@@ -141,11 +161,16 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
             </Checkbox>,
           )}
         </Form.Item>
-        <Form.Item className="form__item" label="Age">
+        <Form.Item
+          className="form__item"
+          label="Age"
+          validateStatus={ageRange.validateStatus}
+          help={ageRange.errorMsg}
+        >
           <AgeRangeSelect
             onChange={onAgeRangeChange}
-            minValue={ageRange.min}
-            maxValue={ageRange.max}
+            minValue={ageRange?.min}
+            maxValue={ageRange?.max}
           />
         </Form.Item>
         <SubjectsForm
