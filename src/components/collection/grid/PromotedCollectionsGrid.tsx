@@ -14,7 +14,7 @@ export class PromotedCollectionsGrid extends React.PureComponent<Props> {
       <PageableCollectionCardList
         title={
           <span>
-            <Icon component={collectionsSvg} /> Most recent video collections
+            <Icon component={collectionsSvg} /> Trending collections
           </span>
         }
         description={this.props.description}
