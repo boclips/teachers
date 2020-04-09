@@ -5,6 +5,7 @@ import { BestForTag } from 'src/components/common/tags/BestForTag';
 import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
 import badgeYoutube from 'resources/images/badge-youtube.png';
 import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -62,7 +63,14 @@ class VideoDetailsContent extends React.PureComponent<Props> {
           />
           {this.props.video.attachments &&
             this.props.video.attachments.map(it => (
-              <AttachmentDetails resource={it} />
+              <AttachmentDetails
+                resource={it}
+                onClick={() =>
+                  AnalyticsFactory.internalAnalytics().trackVideoActivityClicked(
+                    this.props.video,
+                  )
+                }
+              />
             ))}
         </span>
         <section className="video-details">

@@ -14,6 +14,8 @@ export interface BoclipsAnalytics {
 
   trackVideoTranscriptDownloaded(video: Video): Promise<void>;
 
+  trackVideoActivityClicked(video: Video): Promise<void>;
+
   trackPageRendered(url: string): Promise<void>;
 
   trackCollectionInteractedWith(

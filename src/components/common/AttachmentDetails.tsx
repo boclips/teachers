@@ -7,6 +7,7 @@ import LessonClip from '../../../resources/images/activity-action.svg';
 
 export interface Props {
   resource: Attachment;
+  onClick: () => {};
 }
 
 export const AttachmentDetails = (props: Props) => (
@@ -16,7 +17,12 @@ export const AttachmentDetails = (props: Props) => (
       <ReactMarkdown className="attachment-details__description">
         {props.resource.description}
       </ReactMarkdown>
-      <Link to="#" href={props.resource.linkToResource} target="_blank">
+      <Link
+        to="#"
+        href={props.resource.linkToResource}
+        target="_blank"
+        onClick={props.onClick}
+      >
         <div className="attachment-details__link">
           <LessonClip aria-hidden={true} />
           Visit activity doc
