@@ -68,6 +68,15 @@ class VideoPlayer extends React.PureComponent<
     this.loadSegment();
   };
 
+  public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>) {
+    const prevVideoUri = prevProps.video.links.self.getOriginalLink();
+    const currentVideoUri = this.props.video.links.self.getOriginalLink();
+
+    if (this.player && prevVideoUri !== currentVideoUri) {
+      this.player.loadVideo(currentVideoUri);
+    }
+  }
+
   private loadSegment = () => {
     if (!this.player) {
       return;
