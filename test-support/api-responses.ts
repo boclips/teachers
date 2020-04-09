@@ -102,6 +102,19 @@ export const video177 = Object.freeze({
     name: 'educational',
     id: 1,
   },
+  attachments: [
+    {
+      id: 'attachment-id-123',
+      type: 'LESSON_PLAN',
+      description: 'Lesson plan description',
+      _links: {
+        download: {
+          href: 'www.boclips.com',
+          templated: false,
+        },
+      },
+    },
+  ],
 });
 
 export const videoWithTemplatedThumbnail = Object.freeze({

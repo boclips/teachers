@@ -4,6 +4,7 @@ import moment from 'moment';
 import { convertApiClientVideo } from 'src/services/videos/convertApiClientVideo';
 import { Video } from 'src/types/Video';
 import { AgeRange } from 'src/types/AgeRange';
+import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
 
 describe('ApiClientVideo', () => {
   it('can convert to a Teachers Video', () => {
@@ -33,6 +34,13 @@ describe('ApiClientVideo', () => {
           thumbnail: new Link({ href: 'https://thumbnail' }),
         },
       },
+      attachments: [
+        {
+          linkToResource: 'www.boclips.com',
+          description: 'My attachment description',
+          type: AttachmentType.ACTIVITY,
+        },
+      ],
       promoted: false,
       rating: 4.66,
       releasedOn: date,
@@ -64,6 +72,12 @@ describe('ApiClientVideo', () => {
     expect(video.rating).toEqual(4.66);
     expect(video.yourRating).toEqual(4);
     expect(video.releasedOn).toEqual(date);
+    expect(video.attachments.length).toEqual(1);
+    expect(video.attachments[0].description).toEqual(
+      'My attachment description',
+    );
+    expect(video.attachments[0].type).toEqual(AttachmentType.ACTIVITY);
+    expect(video.attachments[0].linkToResource).toEqual('www.boclips.com');
     expect(video.duration).toEqual(duration);
     expect(video.links.self.getOriginalLink()).toEqual('https://self');
     expect(video.links.logInteraction.getOriginalLink()).toEqual('https://log');

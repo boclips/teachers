@@ -4,6 +4,7 @@ import { Authenticated } from 'src/components/common/Authenticated/Authenticated
 import { BestForTag } from 'src/components/common/tags/BestForTag';
 import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
 import badgeYoutube from 'resources/images/badge-youtube.png';
+import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -52,12 +53,18 @@ class VideoDetailsContent extends React.PureComponent<Props> {
         <section className="buttons-row">
           <VideoButtons video={this.props.video} />
         </section>
-        <VideoPlayer video={this.props.video} />
-        <img
-          src={this.props.video.thumbnailUrl}
-          style={{ display: 'none' }}
-          itemProp="image"
-        />
+        <span className={'video-player-container'}>
+          <VideoPlayer video={this.props.video} />
+          <img
+            src={this.props.video.thumbnailUrl}
+            style={{ display: 'none' }}
+            itemProp="image"
+          />
+          {this.props.video.attachments &&
+            this.props.video.attachments.map(it => (
+              <AttachmentDetails resource={it} />
+            ))}
+        </span>
         <section className="video-details">
           <section className="badges-row">
             <div className="subjects-container">

@@ -1,11 +1,9 @@
 import { Link } from './Link';
 
-export type AttachmentType = 'LESSON_PLAN';
-
 export interface Attachment {
   id: string;
   description: string;
-  type: AttachmentType;
+  type: 'LESSON_PLAN' | 'ACTIVITY';
   links: {
     download: Link;
   };

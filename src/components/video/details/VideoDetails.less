@@ -52,8 +52,17 @@
     }
   }
 
+  .video-player-container {
+    width: 100%;
+    display: flex;
+
+    > * {
+      margin: 0 10px;
+    }
+  }
+
   .video-player {
-    width: 100% !important;
+    flex: 1;
   }
 
   .video-details {
@@ -97,7 +106,6 @@
         font-weight: bold;
         line-height: 24px;
         margin-bottom: 0px;
-
 
         .anticon:hover {
           color: inherit;
