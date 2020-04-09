@@ -47,14 +47,11 @@ class VideoPlayer extends React.PureComponent<
 
     return (
       <div className="video-player">
-        <LazyLoad
-          key={this.props.video.id}
-          offsetVertical={200}
-          onContentVisible={this.loadVideo}
-        >
+        <LazyLoad key={this.props.video.id} offsetVertical={200}>
           <PlayerComponent
-            playerRef={this.getPlayerRef}
+            playerRef={this.setPlayerRef}
             options={this.getPlayerOptions()}
+            videoUri={this.props.video.links.self.getOriginalLink()}
           />
         </LazyLoad>
       </div>
@@ -65,18 +62,22 @@ class VideoPlayer extends React.PureComponent<
     return { hasError: true };
   }
 
-  private getPlayerRef = player => {
+  private setPlayerRef = player => {
     this.player = player;
+
+    this.loadSegment();
   };
 
-  private loadVideo = () => {
+  private loadSegment = () => {
+    if (!this.player) {
+      return;
+    }
+
     if (this.props.segment.start || this.props.segment.end) {
       this.player.loadVideo(
         this.props.video.links.self.getOriginalLink(),
         this.props.segment,
       );
-    } else {
-      this.player.loadVideo(this.props.video.links.self.getOriginalLink());
     }
   };
 
