@@ -8,9 +8,7 @@ export interface WithMediaBreakPointProps {
 
 export const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
   Component: React.ComponentType<P>,
-) => (
-  props: Partial<Pick<P, Exclude<keyof P, keyof WithMediaBreakPointProps>>>,
-) => {
+) => (props: Omit<P, keyof WithMediaBreakPointProps>) => {
   const breakpoint = useMediaBreakPoint();
 
   return <Component {...(props as P)} mediaBreakpoint={breakpoint} />;
