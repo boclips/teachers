@@ -24,6 +24,21 @@
     font-size: 16px;
     letter-spacing: 0;
     line-height: 24px;
+
+    & > ol {
+      list-style: none;
+      counter-reset: lesson-guide-counter;
+      padding: 0;
+
+      & > li {
+        counter-increment: lesson-guide-counter;
+
+        &::before {
+          content: counter(lesson-guide-counter) ". ";
+          font-weight: bold;
+        }
+      }
+    }
   }
 
   &__link {
