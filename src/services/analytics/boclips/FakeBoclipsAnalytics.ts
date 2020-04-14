@@ -1,5 +1,6 @@
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -53,6 +54,14 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
     const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
     return client.eventsClient.trackUserExpired();
+  }
+
+  public async trackPlatformInteraction(
+    subtype: PlatformInteractionType,
+  ): Promise<void> {
+    const client = (await getBoclipsClient()) as FakeBoclipsClient;
+
+    return client.eventsClient.trackPlatformInteraction(subtype);
   }
 }
 

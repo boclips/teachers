@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -51,5 +52,13 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
     const client = await getBoclipsClient();
 
     return client.eventsClient.trackUserExpired();
+  }
+
+  public async trackPlatformInteraction(
+    subtype: PlatformInteractionType,
+  ): Promise<void> {
+    const client = await getBoclipsClient();
+
+    return client.eventsClient.trackPlatformInteraction(subtype);
   }
 }

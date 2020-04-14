@@ -4,6 +4,8 @@ import { Button } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import RemoteTeacherSVG from 'resources/images/remote-teacher.svg';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
@@ -48,6 +50,11 @@ export default class HomeView extends PureComponent {
                     href="https://www.boclips.com/remote-learning-with-video-resources-for-teachers"
                     target="_blank"
                     className="remote-teaching"
+                    onClick={() =>
+                      AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+                        PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
+                      )
+                    }
                   >
                     <Row type="flex">
                       <Col xs={0} lg={10}>

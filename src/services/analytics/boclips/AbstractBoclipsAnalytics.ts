@@ -1,3 +1,4 @@
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { BoclipsAnalytics } from './BoclipsAnalytics';
@@ -40,5 +41,9 @@ export default abstract class AbstractBoclipsAnalytics
   public abstract logInteraction(
     video: Video,
     interactionType: string,
+  ): Promise<void>;
+
+  public abstract trackPlatformInteraction(
+    subtype: PlatformInteractionType,
   ): Promise<void>;
 }

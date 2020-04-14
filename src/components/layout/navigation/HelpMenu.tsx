@@ -1,14 +1,23 @@
 import { Dropdown, Menu } from 'antd';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import DropdownMenuIconComponent from 'src/components/layout/navigation/DropdownMenuIconComponent';
 import HelpIcon from 'resources/images/help-rollover.svg';
 import TeacherTrainingIcon from 'resources/images/teacher-training.svg';
 import RemoteLearningIcon from 'resources/images/remote-learning.svg';
 import TutorialsIcon from 'resources/images/tutorials.svg';
 import { Link } from 'react-router-dom';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 
 export const HelpMenu = () => {
   const [visible, setVisible] = useState(false);
+  const trackHelpOpened = useCallback(
+    () =>
+      AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+        PlatformInteractionType.HELP_MENU_CLICKED,
+      ),
+    [],
+  );
 
   const menuContent = () => (
     <Menu className="button-menu button-menu--desktop">
@@ -55,6 +64,7 @@ export const HelpMenu = () => {
           active={visible}
           icon={<HelpIcon />}
           label="Help"
+          onClick={trackHelpOpened}
         />
       </Dropdown>
     </div>

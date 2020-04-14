@@ -2,6 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { PageRenderedRequest } from 'boclips-api-client/dist/sub-clients/events/model/PageRenderedRequest';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { VideoFactory } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { getBoclipsClient } from '../../apiClient';
@@ -52,6 +53,7 @@ test('logInteraction rejects when link is missing', async () => {
 
 test('trackPageRendered calls ApiClient with url', async () => {
   const client = (await getBoclipsClient()) as FakeBoclipsClient;
+  client.eventsClient.clear();
 
   const analytics = new HttpBoclipsAnalytics();
 
@@ -61,4 +63,21 @@ test('trackPageRendered calls ApiClient with url', async () => {
   expect(
     (client.eventsClient.getEvents()[0] as PageRenderedRequest).url,
   ).toEqual('http://test.com/test?id=123');
+});
+
+test('trackPlatformInteraction calls ApiClient with subtype', async () => {
+  const client = (await getBoclipsClient()) as FakeBoclipsClient;
+  client.eventsClient.clear();
+
+  const analytics = new HttpBoclipsAnalytics();
+
+  await analytics.trackPlatformInteraction(
+    PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
+  );
+
+  expect(client.eventsClient.getEvents().length).toEqual(1);
+  expect(client.eventsClient.getEvents()[0]).toEqual({
+    type: 'PLATFORM_INTERACTED_WITH',
+    subtype: PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
+  });
 });
