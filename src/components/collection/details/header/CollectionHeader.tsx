@@ -3,12 +3,14 @@ import { Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from 'src/types/VideoCollection';
 import { CollectionButtonsContainer } from 'src/components/collection/buttons/CollectionButtonsContainer';
+import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { getAttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
 import StopClickPropagation from '../../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../../common/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../common/tags/SubjectTag';
 import { CollectionTitle } from '../../title/CollectionTitle';
 import { CollectionSubtitle } from '../../CollectionSubtitle';
-import { LessonGuide } from '../../lessonGuide/LessonGuide';
 import './CollectionHeader.less';
 
 export interface Props {
@@ -94,9 +96,21 @@ export class CollectionHeader extends React.PureComponent<Props> {
         </Col>
         {lessonGuideToRender && (
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
-            <LessonGuide
-              collection={this.props.collection}
-              attachment={lessonGuideToRender}
+            <AttachmentDetails
+              description={lessonGuideToRender.description}
+              type={getAttachmentType(lessonGuideToRender.type)}
+              link={lessonGuideToRender.links.download.getOriginalLink()}
+              onClick={() => {
+                AnalyticsFactory.externalAnalytics().trackCollectionAttachmentLinkVisited(
+                  this.props.collection.id,
+                  lessonGuideToRender,
+                );
+
+                AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+                  this.props.collection,
+                  'VISIT_LESSON_GUIDE',
+                );
+              }}
             />
           </Col>
         )}

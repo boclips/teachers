@@ -64,12 +64,14 @@ class VideoDetailsContent extends React.PureComponent<Props> {
           {this.props.video.attachments &&
             this.props.video.attachments.map(it => (
               <AttachmentDetails
-                resource={it}
-                onClick={() =>
+                link={it.linkToResource}
+                description={it.description}
+                type={it.type}
+                onClick={() => {
                   AnalyticsFactory.internalAnalytics().trackVideoActivityClicked(
                     this.props.video,
-                  )
-                }
+                  );
+                }}
               />
             ))}
         </span>
