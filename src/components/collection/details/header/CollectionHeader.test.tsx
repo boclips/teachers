@@ -161,13 +161,16 @@ describe('CollectionHeader', () => {
     expect(component.getByText('My description')).toBeInTheDocument();
   });
 
-  it('renders a lesson guide when present and restricts the description', () => {
+  it('renders a lesson guide with correct link and restricts the description', () => {
     const collection = VideoCollectionFactory.sample({
       id: 'collection-id',
       description: 'My description',
       attachments: [
         AttachmentFactory.sample({
           description: '1. Point one of my lesson guide',
+          links: {
+            download: new Link({ href: 'http://www.my-lesson-guide.com' }),
+          },
         }),
       ],
     });
@@ -191,6 +194,9 @@ describe('CollectionHeader', () => {
     expect(
       component.getByText('Point one of my lesson guide'),
     ).toBeInTheDocument();
+    expect(
+      component.getByText('Visit lesson guide').closest('a'),
+    ).toHaveAttribute('href', 'http://www.my-lesson-guide.com');
   });
 
   it('does not restrict the description when no lesson guide is present', () => {
