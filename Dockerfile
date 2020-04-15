@@ -1,2 +1,2 @@
-FROM boclipsconcourse/nginx-spa:0.8.0
+FROM boclipsconcourse/nginx-spa:0.9.0
 COPY dist /usr/share/nginx/html
