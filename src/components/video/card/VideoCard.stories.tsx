@@ -9,6 +9,8 @@ import {
   storyWithProvider,
   storyWithRouter,
 } from 'src/utils/index.stories';
+import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
+import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 
 storiesOf('VideoCard', module)
   .addDecorator(storyWithAuthentication())
@@ -21,6 +23,33 @@ storiesOf('VideoCard', module)
         number('Age Min', 0, { min: 0, max: 19 }),
         number('Age Max', 5, { min: 0, max: 19 }),
       ),
+    });
+
+    return <VideoCard video={video} />;
+  })
+  .add('Video with activity', () => {
+    const video = VideoFactory.sample({
+      attachments: [
+        {
+          type: AttachmentType.ACTIVITY,
+          linkToResource: 'http://www.activity.com',
+          description: 'My Activity',
+        },
+      ],
+    });
+
+    return <VideoCard video={video} />;
+  })
+  .add('youtube video', () => {
+    const video = VideoFactory.sample({
+      playback: PlaybackFactory.sample({ type: 'YOUTUBE' }),
+      attachments: [
+        {
+          type: AttachmentType.ACTIVITY,
+          linkToResource: 'http://www.activity.com',
+          description: 'My Activity',
+        },
+      ],
     });
 
     return <VideoCard video={video} />;

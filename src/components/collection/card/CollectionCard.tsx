@@ -2,6 +2,7 @@ import { Card } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton/CollectionShareButton';
+import { AttachmentTag } from 'src/components/common/tags/AttachmentTag';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -11,7 +12,6 @@ import './CollectionCard.less';
 import { CollectionTitle } from '../title/CollectionTitle';
 import BookmarkCollectionButton from '../buttons/bookmark/BookmarkCollectionButton';
 import StopClickPropagation from '../../common/StopClickPropagation';
-import LessonGuideSVG from '../../../../resources/images/lesson-guide-icon.svg';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import MyCollectionSVG from '../../../../resources/images/my-account.svg';
@@ -123,15 +123,24 @@ export const CollectionCard = withMediaBreakPoint(
               {props.collection.videoIds.length}
             </span>{' '}
             videos
-            {props.collection.attachments &&
-              props.collection.attachments.length > 0 && (
-                <span className="collection-card__lesson-guide">
-                  {' '}
-                  + <LessonGuideSVG /> Lesson Guide
-                </span>
-              )}
           </span>
         </section>
+        {displayTags && (
+          <div className="tags-container" data-qa={'tags-container'}>
+            <span>
+              {props.collection.ageRange.isBounded() && (
+                <AgeRangeTag ageRange={props.collection.ageRange} />
+              )}
+              {props.collection.subjects.slice(0, 1).map(subjectId => (
+                <ConnectedSubjectTag key={subjectId} id={subjectId} />
+              ))}
+            </span>
+            {props.collection.attachments &&
+              props.collection.attachments.length > 0 && (
+                <AttachmentTag label={'Lesson guide'} />
+              )}
+          </div>
+        )}
         <div className="collection-card__detail-row">
           <section className="collection-card__column-preview">
             <CollectionCardPreview
@@ -140,16 +149,6 @@ export const CollectionCard = withMediaBreakPoint(
             />
           </section>
           <section className="collection-card__column-detail">
-            {displayTags && (
-              <div className="tags-container" data-qa={'tags-container'}>
-                {props.collection.ageRange.isBounded() && (
-                  <AgeRangeTag ageRange={props.collection.ageRange} />
-                )}
-                {props.collection.subjects.slice(0, 1).map(subjectId => (
-                  <ConnectedSubjectTag key={subjectId} id={subjectId} />
-                ))}
-              </div>
-            )}
             <div
               className="collection-card__description-preview"
               data-qa="collection-description"

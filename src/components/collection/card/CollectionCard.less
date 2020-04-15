@@ -33,10 +33,15 @@
   }
 
   .tags-container {
-    display: inline-block;
-
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     min-height: 38px;
     margin-bottom: 15px;
+
+    @media (min-width: @screen-md) {
+      justify-content: space-between;
+    }
 
     .tag {
       background-color: @shade-1;
@@ -75,7 +80,6 @@
         fill: @shade-6;
       }
     }
-
   }
 
   &__description-preview {
@@ -181,6 +185,7 @@
 
     .tags-container {
       margin: 0;
+      justify-content: left;
     }
 
     .collection-card__owner-label {

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import badgeYoutube from 'resources/images/badge-youtube.png';
 import { Video } from 'src/types/Video';
+import { VideoCardTagList } from 'src/components/video/card/VideoCardTagList';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import StopClickPropagation from '../../common/StopClickPropagation';
@@ -35,6 +36,7 @@ export const VideoHeader = withRouter(
           <DurationFormatter duration={props.video.duration} />
         </p>
       </section>
+      <VideoCardTagList video={props.video} />
       <section className="subtitle">
         <StopClickPropagation wrapper={'span'}>
           <Rating video={props.video} />

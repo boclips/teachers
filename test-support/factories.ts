@@ -53,6 +53,7 @@ export class VideoFactory {
         SubjectFactory.sample({ id: 'maths-subject-id', name: 'Maths' }),
       ],
       rating: arg.rating || null,
+      attachments: arg.attachments || [],
       playback: arg.playback || {
         id: 'playbackid',
         type: 'STREAM',

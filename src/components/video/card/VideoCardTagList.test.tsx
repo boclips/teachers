@@ -2,7 +2,7 @@ import React from 'react';
 import { SubjectFactory, VideoFactory } from 'test-support/factories';
 import { Video } from 'src/types/Video';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
-import VideoCardTagList from './VideoCardTagList';
+import { VideoCardTagList } from './VideoCardTagList';
 describe(`VideoCardTagList`, () => {
   const getWrapper = (givenProps: Partial<{ video: Video }> = {}) => {
     const props = {

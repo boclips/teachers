@@ -11,7 +11,6 @@ import VideoButtons from '../buttons/videoButtons/VideoButtons';
 import { VideoHeader } from '../header/VideoHeader';
 import VideoPlayer from '../player/VideoPlayer';
 import './VideoCard.less';
-import VideoCardTagList from './VideoCardTagList';
 
 export interface Props {
   video: Video | null;
@@ -54,7 +53,6 @@ export const VideoCard = React.memo<Props>(props => {
         data-qa="video-card"
       >
         <VideoHeader video={props.video} />
-
         <StopClickPropagation
           wrapper="section"
           wrapperProps={{ className: 'video-preview' }}
@@ -69,7 +67,6 @@ export const VideoCard = React.memo<Props>(props => {
         </StopClickPropagation>
 
         <section className="video-details">
-          <VideoCardTagList video={props.video} />
           <p data-qa="video-description" className="description clamp-3-lines">
             {props.video.description}
           </p>
