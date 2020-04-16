@@ -117,7 +117,7 @@
     "@sentry/integrations": "^5.15.4",
     "antd": "^3.26.15",
     "axios": "^0.19.2",
-    "boclips-api-client": "^8.9.1",
+    "boclips-api-client": "^9.0.0",
     "boclips-js-security": "^3.3.1",
     "boclips-player": "^2.6.9",
     "boclips-player-react": "1.1.0",
