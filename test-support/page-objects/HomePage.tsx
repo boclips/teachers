@@ -39,9 +39,6 @@ export class HomePage {
 
         return {
           title: findOne(collectionCard, 'collection-title').text(),
-          numberOfVideos: Number(
-            findOne(collectionCard, 'collection-number-of-videos').text(),
-          ),
           subject: subjectWrapper.length ? subjectWrapper.text() : null,
         };
       });
@@ -73,7 +70,6 @@ interface Video {
 
 interface Collection {
   title: string;
-  numberOfVideos: number;
   subject: string | null;
 }
 

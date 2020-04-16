@@ -11,9 +11,6 @@ export abstract class AbstractCollectionListPage {
       .hostNodes()
       .map((el) => ({
         title: findOne(el, 'collection-title').text(),
-        numberOfVideos: Number(
-          findOne(el, 'collection-number-of-videos').text(),
-        ),
       }));
   }
 
@@ -26,5 +23,4 @@ export abstract class AbstractCollectionListPage {
 
 export interface Collection {
   title: string;
-  numberOfVideos: number;
 }

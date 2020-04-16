@@ -22,7 +22,6 @@ describe('Home page', () => {
 
     expect(homePage.getPromotedCollections()).toContainEqual({
       title: 'Promoted collection',
-      numberOfVideos: 1,
       subject: null,
     });
   });
@@ -60,7 +59,6 @@ describe('Home page', () => {
 
     expect(homePage.getPromotedCollections()).toContainEqual({
       title: 'funky collection',
-      numberOfVideos: 1,
       subject: 'Maths',
     });
   });

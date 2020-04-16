@@ -39,7 +39,6 @@ test('displays maths collections', async () => {
   expect(collectionPage.getDisciplineSubjects()).toHaveLength(0);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
-    numberOfVideos: 1,
   });
 });
 
@@ -64,6 +63,5 @@ test('displays arts discipline', async () => {
   ]);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
-    numberOfVideos: 1,
   });
 });

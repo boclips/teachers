@@ -13,6 +13,5 @@ test('displays collections list', async () => {
   expect(collectionPage.getCollections()).toHaveLength(1);
   expect(collectionPage.getCollections()[0]).toMatchObject({
     title: 'funky collection',
-    numberOfVideos: 1,
   });
 });
