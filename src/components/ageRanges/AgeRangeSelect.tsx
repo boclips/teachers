@@ -22,7 +22,7 @@ export const AgeRangeSelect = (props: Props) => {
   };
 
   const getMinOptions = () =>
-    ageRanges?.map(it => (
+    ageRanges?.map((it) => (
       <Select.Option
         key={it.resolveMin()}
         value={it.resolveMin()}
@@ -33,7 +33,7 @@ export const AgeRangeSelect = (props: Props) => {
     ));
 
   const getMaxOptions = () =>
-    ageRanges?.map(it => (
+    ageRanges?.map((it) => (
       <Select.Option
         key={it.resolveMax()}
         value={it.resolveMax()}

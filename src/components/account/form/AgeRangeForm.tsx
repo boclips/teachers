@@ -22,7 +22,7 @@ export const AgeRangeForm = (props: FormComponentProps & Props) => {
           ? convertAgeRangesFromNumbers(
               allAgeRanges,
               props.initialValue,
-            ).map(age => age.encodeJSON())
+            ).map((age) => age.encodeJSON())
           : [],
       })(
         <SelectAgeRange

@@ -51,4 +51,4 @@ export const VideoHeader = withRouter(
   )),
 );
 
-const onClick = event => event.preventDefault();
+const onClick = (event) => event.preventDefault();

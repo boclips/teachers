@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { useMediaBreakPoint } from './useMediaBreakPoint';
 
-const setWidth = width => {
+const setWidth = (width) => {
   // @ts-ignore
   window.innerWidth = width;
   window.dispatchEvent(new Event('resize'));

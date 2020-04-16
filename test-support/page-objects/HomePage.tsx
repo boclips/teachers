@@ -32,7 +32,7 @@ export class HomePage {
   public getPromotedCollections(): Collection[] {
     return this.wrapper
       .find(By.dataQa('collection-card'))
-      .map(collectionCard => {
+      .map((collectionCard) => {
         const subjectWrapper = collectionCard
           .find(By.dataQa('subject-tag'))
           .find(By.dataQa('filter-tag'));
@@ -50,18 +50,18 @@ export class HomePage {
   public getVideos(): Video[] {
     return this.wrapper
       .find(By.dataQa('recommended-video'))
-      .map(videoPreview => ({
+      .map((videoPreview) => ({
         title: videoPreview.find(By.dataQa('recommended-video-title')).text(),
       }));
   }
 
   public getDisciplines(): Discipline[] {
-    return this.wrapper.find(By.dataQa('discipline-card')).map(card => {
+    return this.wrapper.find(By.dataQa('discipline-card')).map((card) => {
       const subjectWrapper = card.find(By.dataQa('discipline-subject'));
 
       return {
         name: findOne(card, 'discipline-title').text(),
-        subjects: subjectWrapper.map(el => el.text()),
+        subjects: subjectWrapper.map((el) => el.text()),
       };
     });
   }

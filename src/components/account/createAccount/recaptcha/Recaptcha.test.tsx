@@ -7,7 +7,7 @@ describe('Recaptcha', () => {
   const getComponent = (props: Props) => mount(<Recaptcha {...props} />);
 
   it('Configures the Recaptcha component', () => {
-    const verifyCallback = token => console.log(token);
+    const verifyCallback = (token) => console.log(token);
     const component = getComponent({
       verifyCallback,
     });

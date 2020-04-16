@@ -56,11 +56,7 @@ describe('School settings form', () => {
   });
 
   it('returns to the account settings page when cancel is clicked', () => {
-    wrapper
-      .find(By.dataQa('cancel-edit-button'))
-      .hostNodes()
-      .props()
-      .onClick();
+    wrapper.find(By.dataQa('cancel-edit-button')).hostNodes().props().onClick();
 
     wrapper.update();
 

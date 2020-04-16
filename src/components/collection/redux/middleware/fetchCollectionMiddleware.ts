@@ -13,11 +13,11 @@ export function onFetchCollection(
 ) {
   const links: Links = store.getState().links.entries;
   fetchCollection(links, id, referer, shareCode)
-    .then(collection => {
+    .then((collection) => {
       store.dispatch(storeCollectionAction(collection));
       AnalyticsFactory.externalAnalytics().trackCollectionVisited(collection);
     })
-    .catch(e => {
+    .catch((e) => {
       if (
         (e?.response && e.response.status === 404) ||
         e.response.status === 403

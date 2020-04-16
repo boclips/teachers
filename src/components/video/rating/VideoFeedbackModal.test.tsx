@@ -59,10 +59,7 @@ describe('rendering', () => {
 describe('tagging', () => {
   test('it tags video when tag selected and saved', async () => {
     const wrapper = mountTagVideo(taggableRateableVideo);
-    wrapper
-      .find(By.dataQa('tag-radio'))
-      .first()
-      .simulate('click');
+    wrapper.find(By.dataQa('tag-radio')).first().simulate('click');
     wrapper.find(By.dataQa('rate-button', 'Button')).simulate('click');
 
     await eventually(() => {

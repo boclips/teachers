@@ -30,7 +30,7 @@ export interface WithPageableCollectionProps
   extends StateProps,
     DispatchProps {}
 
-const withPageableCollection = Component => (
+const withPageableCollection = (Component) => (
   props: Props & DispatchProps & StateProps,
 ) => <Component {...props} />;
 
@@ -57,7 +57,7 @@ function mapStateToProps(state: State, props: Props): StateProps {
   const foundCollections =
     pageOfCollectionIds.items() &&
     getCollectionsByIds(state, pageOfCollectionIds.items()).filter(
-      collection => collection !== undefined,
+      (collection) => collection !== undefined,
     );
 
   return {
@@ -67,7 +67,7 @@ function mapStateToProps(state: State, props: Props): StateProps {
   };
 }
 
-export default function<T>(args: any) {
+export default function <T>(args: any) {
   return compose<React.ComponentType<T & Props>>(
     connect<StateProps, DispatchProps, Props>(
       mapStateToProps,

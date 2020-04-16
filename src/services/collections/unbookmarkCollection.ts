@@ -11,5 +11,5 @@ export const unbookmarkCollection = (
 
   return axios
     .patch(collection.links.unbookmark.getOriginalLink())
-    .then(response => parseCollectionResponse(response));
+    .then((response) => parseCollectionResponse(response));
 };

@@ -90,7 +90,7 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
     });
   };
 
-  const validateAgeRange = value => {
+  const validateAgeRange = (value) => {
     if (!ageRange.min && value.max) {
       return {
         validateStatus: 'error',

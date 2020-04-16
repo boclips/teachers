@@ -12,7 +12,7 @@ const handleLocationChangeAction = ({ payload }: LocationChangeAction) => {
 };
 
 // Noinspection JSUnusedLocalSymbols
-export const sentryBreadcrumbMiddleware = _ => next => (action: Action) => {
+export const sentryBreadcrumbMiddleware = (_) => (next) => (action: Action) => {
   if (process.env.NODE_ENV === 'production') {
     if (action.type === LOCATION_CHANGE) {
       handleLocationChangeAction(action as LocationChangeAction);

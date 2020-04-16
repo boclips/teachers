@@ -11,10 +11,10 @@ export function onBookmarkCollection(
   request: VideoCollection,
 ) {
   bookmarkCollection(request)
-    .then(response => {
+    .then((response) => {
       store.dispatch(onCollectionBookmarkedAction(response));
     })
-    .catch(ex => {
+    .catch((ex) => {
       console.log('error:', ex);
       NotificationFactory.error({
         message: 'Error bookmarking collection.',

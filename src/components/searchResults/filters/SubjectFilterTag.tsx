@@ -38,7 +38,7 @@ class SubjectFilterTag extends React.Component<
 function mapStateToProps(state: State, ownProps: Props): StateProps {
   return {
     subject: state.subjects.filter(
-      subject => subject.id === ownProps.subjectId,
+      (subject) => subject.id === ownProps.subjectId,
     )[0],
   };
 }
@@ -51,7 +51,7 @@ const mapDispatchToProps = (
     dispatch(
       updateSearchParamsAction({
         subject: ownProps.subjectIds.filter(
-          item => item !== ownProps.subjectId,
+          (item) => item !== ownProps.subjectId,
         ),
       }),
     );

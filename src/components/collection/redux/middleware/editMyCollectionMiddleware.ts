@@ -22,7 +22,7 @@ export function onEditCollection(
 
       store.dispatch(onCollectionEditedAction(updatedCollection));
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       NotificationFactory.error({ message: 'Error renaming collection.' });
     });

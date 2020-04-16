@@ -41,10 +41,7 @@ it('removes subject from url on close', () => {
 
   const wrapper = getWrapper(['subject-one-id'], subjectId, store);
 
-  wrapper
-    .find(ClosableTag)
-    .props()
-    .onClose();
+  wrapper.find(ClosableTag).props().onClose();
 
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(
@@ -73,10 +70,7 @@ it('removes only one subject from url on close', () => {
     store,
   );
 
-  wrapper
-    .find(ClosableTag)
-    .props()
-    .onClose();
+  wrapper.find(ClosableTag).props().onClose();
 
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(

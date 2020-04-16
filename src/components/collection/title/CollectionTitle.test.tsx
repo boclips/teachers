@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import { VideoCollectionFactory } from '../../../../test-support/factories';
 import { CollectionTitle } from './CollectionTitle';
 
-const renderCollectionTitle = collection =>
+const renderCollectionTitle = (collection) =>
   render(
     <Router history={createMemoryHistory()}>
       <CollectionTitle collection={collection} />

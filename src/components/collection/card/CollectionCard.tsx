@@ -60,7 +60,7 @@ export const CollectionCard = withMediaBreakPoint(
     ];
 
     const filteredButtons = [...leftButtons, ...rightButtons].filter(
-      button => button !== undefined,
+      (button) => button !== undefined,
     );
 
     const collectionHasNoDescription =
@@ -71,7 +71,7 @@ export const CollectionCard = withMediaBreakPoint(
       if (collectionHasNoDescription) {
         return (
           <ul>
-            {props.videos.map(video => (
+            {props.videos.map((video) => (
               <li key={video.id}>
                 <BulletSVG className="collection-card__description-preview__icon" />
                 <span>{`"${video.title}" by ${video.createdBy}`}</span>
@@ -131,7 +131,7 @@ export const CollectionCard = withMediaBreakPoint(
               {props.collection.ageRange.isBounded() && (
                 <AgeRangeTag ageRange={props.collection.ageRange} />
               )}
-              {props.collection.subjects.slice(0, 1).map(subjectId => (
+              {props.collection.subjects.slice(0, 1).map((subjectId) => (
                 <ConnectedSubjectTag key={subjectId} id={subjectId} />
               ))}
             </span>

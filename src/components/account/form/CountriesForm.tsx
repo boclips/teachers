@@ -21,7 +21,9 @@ export class CountriesForm extends React.Component<
 > {
   public onUpdateCountry = (value: string) => {
     this.props.form.setFieldsValue({ country: value });
-    this.props.onCountryChange(this.props.countries.find(c => c.id === value));
+    this.props.onCountryChange(
+      this.props.countries.find((c) => c.id === value),
+    );
   };
 
   public render() {
@@ -73,7 +75,7 @@ export class CountriesForm extends React.Component<
       const countriesWithoutHighlights: Country[] = [];
       const countriesHighlighted: Country[] = [];
 
-      sortedCountries.forEach(country => {
+      sortedCountries.forEach((country) => {
         if (HIGHLIGHTED_COUNTRY_IDS.indexOf(country.id) > -1) {
           countriesHighlighted.push(country);
         } else {
@@ -91,7 +93,7 @@ export class CountriesForm extends React.Component<
       orderedCountries.push(...countriesHighlightedOrdered);
       orderedCountries.push(...countriesWithoutHighlights);
     }
-    return orderedCountries?.map(country => (
+    return orderedCountries?.map((country) => (
       <Option
         key={country.name}
         value={country.id}

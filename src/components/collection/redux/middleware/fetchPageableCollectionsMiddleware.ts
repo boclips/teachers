@@ -27,7 +27,7 @@ export function onFetchCollections(
   }
 
   fetchPageableCollections(links, request)
-    .then(collections => {
+    .then((collections) => {
       store.dispatch(
         storeCollectionsAction({
           key: request.key,
@@ -45,7 +45,7 @@ export function onFetchNextCollections(
 ) {
   const collectionsToFetch = store.getState().collections[request];
   fetchNextCollectionsPage(collectionsToFetch)
-    .then(collections => {
+    .then((collections) => {
       AnalyticsFactory.externalAnalytics().trackMoreCollectionsLoaded(request);
       store.dispatch(
         appendPageableCollectionsAction({

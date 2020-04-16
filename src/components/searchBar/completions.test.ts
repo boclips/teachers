@@ -3,7 +3,7 @@ import objectContaining = jasmine.objectContaining;
 
 const getCompletions = (allCompletions: string[]) => (text: string) =>
   completionsFor({ test: allCompletions })(text).map(
-    completion => completion.text,
+    (completion) => completion.text,
   );
 
 test('returns an empty list given an empty input', () => {
@@ -70,7 +70,7 @@ test('prioritises shorter matches over longer ones', () => {
 
 test('highlight matching chunks in the beginning', () => {
   const highlights = completionsFor({ listA: ['bbb ccc'] })('bbb').map(
-    completion => completion.textWithHighlights,
+    (completion) => completion.textWithHighlights,
   );
 
   expect(highlights).toEqual([
@@ -83,7 +83,7 @@ test('highlight matching chunks in the beginning', () => {
 
 test('highlight matching chunks in the middle', () => {
   const highlights = completionsFor({ listA: ['aaa bbb ccc'] })('bbb').map(
-    completion => completion.textWithHighlights,
+    (completion) => completion.textWithHighlights,
   );
 
   expect(highlights).toEqual([
@@ -97,7 +97,7 @@ test('highlight matching chunks in the middle', () => {
 
 test('highlight matching chunks in the end', () => {
   const highlights = completionsFor({ listA: ['aaa bbb'] })('bbb').map(
-    completion => completion.textWithHighlights,
+    (completion) => completion.textWithHighlights,
   );
 
   expect(highlights).toEqual([

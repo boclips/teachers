@@ -12,7 +12,7 @@ export function onAddToCollection(
   request: { video: Video; collection: VideoCollection },
 ) {
   addToCollection(request.video, request.collection)
-    .then(success => {
+    .then((success) => {
       store.dispatch(
         onAddToCollectionAction({
           collection: request.collection,

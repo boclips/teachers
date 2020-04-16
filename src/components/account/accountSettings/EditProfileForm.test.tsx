@@ -41,46 +41,28 @@ describe(`Profile form`, () => {
   });
 
   it(`renders initial name values correctly`, () => {
+    expect(wrapper.find(By.dataQa('first-name')).first().props().value).toBe(
+      'joe',
+    );
+    expect(wrapper.find(By.dataQa('last-name')).first().props().value).toBe(
+      'boclips',
+    );
     expect(
-      wrapper
-        .find(By.dataQa('first-name'))
-        .first()
-        .props().value,
-    ).toBe('joe');
-    expect(
-      wrapper
-        .find(By.dataQa('last-name'))
-        .first()
-        .props().value,
-    ).toBe('boclips');
-    expect(
-      wrapper
-        .find(By.dataQa('subject-select'))
-        .first()
-        .props().value,
+      wrapper.find(By.dataQa('subject-select')).first().props().value,
     ).toContainEqual('subject-one-id');
     expect(
-      wrapper
-        .find(By.dataQa('age-select-input'))
-        .first()
-        .props().value,
+      wrapper.find(By.dataQa('age-select-input')).first().props().value,
     ).toContainEqual(new AgeRange(3, 5).encodeJSON());
   });
 
   it(`returns to current account settings when cancel button is clicked`, () => {
-    wrapper
-      .find(By.dataQa('cancel-edit-button'))
-      .first()
-      .simulate('click');
+    wrapper.find(By.dataQa('cancel-edit-button')).first().simulate('click');
     wrapper.update();
     expect(cancelCallback).toHaveBeenCalled();
   });
 
   it(`sends an updateuser request with the correct values`, () => {
-    wrapper
-      .find(SelectAgeRange)
-      .find('.ant-select')
-      .simulate('click');
+    wrapper.find(SelectAgeRange).find('.ant-select').simulate('click');
 
     const events = new EventSimulator(wrapper);
     events.setText(
@@ -93,19 +75,13 @@ describe(`Profile form`, () => {
     );
 
     const ageRangeOptions = wrapper.find('Trigger').find('MenuItem');
-    ageRangeOptions
-      .find(`[data-qa="11-14"]`)
-      .first()
-      .simulate('click');
+    ageRangeOptions.find(`[data-qa="11-14"]`).first().simulate('click');
 
     wrapper.find(SelectSubjects).simulate('click');
 
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 
-    menuItems
-      .find(`[data-qa="subject-two-id"]`)
-      .first()
-      .simulate('click');
+    menuItems.find(`[data-qa="subject-two-id"]`).first().simulate('click');
     wrapper.update();
 
     wrapper.find(By.dataQa('submit-update-user', 'button')).simulate('click');

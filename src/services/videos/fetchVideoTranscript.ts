@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const fetchVideoTranscript = (video: Video): Promise<void> => {
   const uri = video.links.transcript;
-  return axios.get(uri.getOriginalLink()).then(response => {
+  return axios.get(uri.getOriginalLink()).then((response) => {
     const disposition: string = response.headers['Content-Disposition'];
     const regex = /filename="(.*?)"/;
     const matches = regex.exec(disposition);

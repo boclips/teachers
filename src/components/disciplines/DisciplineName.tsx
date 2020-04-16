@@ -26,9 +26,9 @@ function mapStateToProps(state: DisciplineState, ownProps: Props): StateProps {
     currentDiscipline:
       state.disciplines &&
       state.disciplines.find(
-        d =>
+        (d) =>
           d.subjects &&
-          d.subjects.find(s => s.id === ownProps.subjectId) !== undefined,
+          d.subjects.find((s) => s.id === ownProps.subjectId) !== undefined,
       ),
   };
 }

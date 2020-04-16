@@ -44,7 +44,7 @@ describe('Border radius classnames can be generated for a grid', () => {
     },
   ];
 
-  testData.forEach(data => {
+  testData.forEach((data) => {
     it(`with ${data.elements.length} elements, and ${data.columnCount}`, () => {
       data.elements.forEach((element, index) => {
         const expectedClassnames = [];

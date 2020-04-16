@@ -188,7 +188,7 @@ const mountWith = (
         items:
           collections == null
             ? []
-            : collections.map(collection => collection.id),
+            : collections.map((collection) => collection.id),
       }),
       discoverCollections: undefined,
       publicCollections: undefined,

@@ -25,7 +25,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     };
   }
 
-  private setActive = visible => {
+  private setActive = (visible) => {
     this.setState({ dropdownVisible: visible });
   };
 
@@ -59,7 +59,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
 
   private renderMenu = (): React.ReactFragment => (
     <Menu className="subject-menu__list subject-menu--desktop">
-      {this.props.disciplines.map(discipline => (
+      {this.props.disciplines.map((discipline) => (
         <Menu.ItemGroup
           className="subject-menu__list-item-group"
           key={discipline.id}
@@ -78,7 +78,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
             </Menu.Item>
           }
           {discipline.subjects &&
-            sortBy(discipline.subjects, ['name']).map(subject => (
+            sortBy(discipline.subjects, ['name']).map((subject) => (
               <Menu.Item className="subject-menu__list-item" key={subject.id}>
                 <Link
                   to={`/discover-collections?subject=${subject.id}`}

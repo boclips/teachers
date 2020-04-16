@@ -12,6 +12,6 @@ export default function tagVideo(video: Video, tag: Tag): Promise<Video> {
         headers: { 'content-type': 'text/uri-list' },
       },
     )
-    .then(response => response.data)
+    .then((response) => response.data)
     .then(convertVideoResource);
 }

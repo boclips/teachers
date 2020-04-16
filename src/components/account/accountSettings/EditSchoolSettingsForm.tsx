@@ -115,7 +115,7 @@ export class EditSchoolSettingsFields extends React.Component<
             this.props.updateUser();
             this.props.toggleForm();
           })
-          .catch(ex => {
+          .catch((ex) => {
             console.error(ex);
             NotificationFactory.error({
               message: 'Ooops! Something went wrong...',

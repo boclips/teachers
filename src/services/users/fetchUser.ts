@@ -8,6 +8,6 @@ export const fetchUser = (links: Links): Promise<UserProfile> => {
 
   return axios
     .get(userLink)
-    .then(response => response.data)
+    .then((response) => response.data)
     .then(convertUserResource);
 };

@@ -22,6 +22,6 @@ export const createCollection = (
 function toResource(request: CreateCollectionRequest) {
   return {
     title: request.title,
-    videos: request.videos.map(video => video.links.self.getOriginalLink()),
+    videos: request.videos.map((video) => video.links.self.getOriginalLink()),
   };
 }

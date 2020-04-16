@@ -55,30 +55,30 @@ const Filters = React.forwardRef(
 
     const durations = useSelector((state: State) => state.durations);
     const durationFilters = durations
-      .map(d => ({
+      .map((d) => ({
         value: d.toString(),
         label: d.getLabel(),
         count: extractFacetHits(d.toIso(), facets.durations),
       }))
-      .filter(filter => filter.count > 0);
+      .filter((filter) => filter.count > 0);
 
     const allAgeRanges = useSelector((state: State) => state.ageRanges);
     const ageRangeFilters = allAgeRanges
-      .map(a => ({
+      .map((a) => ({
         label: a.getLabel(),
         value: a.getId(),
         count: extractFacetHits(a.getId(), facets.ageRanges),
       }))
-      .filter(filter => filter.count > 0);
+      .filter((filter) => filter.count > 0);
 
     const subjects = useSelector((state: State) => state.subjects);
     const subjectFilters = subjects
-      .map(subject => ({
+      .map((subject) => ({
         value: subject.id,
         label: subject.name,
         count: extractFacetHits(subject.id, facets.subjects),
       }))
-      .filter(filter => filter.count > 0)
+      .filter((filter) => filter.count > 0)
       .sort((a, b) => a.label.localeCompare(b.label));
 
     const [openFilters, setOpenFilters] = useState(() => [
@@ -130,12 +130,12 @@ const Filters = React.forwardRef(
                 <Form.Item>
                   {getFieldDecorator('ageRange', {
                     initialValue: ageRange
-                      ? ageRange.map(range => range.getId())
+                      ? ageRange.map((range) => range.getId())
                       : [],
                     valuePropName: 'value',
                   })(
                     <CheckboxGroup className="filter-form__checkbox-group">
-                      {ageRangeFilters.map(item => (
+                      {ageRangeFilters.map((item) => (
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
@@ -160,7 +160,7 @@ const Filters = React.forwardRef(
                     initialValue: subjectIds,
                   })(
                     <CheckboxGroup className="filter-form__checkbox-group filter-form__subjects-group">
-                      {subjectFilters.map(item => (
+                      {subjectFilters.map((item) => (
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
@@ -182,11 +182,11 @@ const Filters = React.forwardRef(
                 <Form.Item>
                   {getFieldDecorator('duration', {
                     initialValue: duration
-                      ? duration.map(range => range.toString())
+                      ? duration.map((range) => range.toString())
                       : [],
                   })(
                     <CheckboxGroup className="filter-form__checkbox-group">
-                      {durationFilters.map(item => (
+                      {durationFilters.map((item) => (
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">

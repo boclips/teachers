@@ -123,7 +123,7 @@ describe('loading the video', () => {
     },
   ];
 
-  testData.forEach(data => {
+  testData.forEach((data) => {
     it(`will load the video in the player with ${data.message}`, () => {
       const store = {
         router: {
@@ -285,7 +285,7 @@ describe('controls are specific to the context', () => {
     },
   ];
 
-  testData.forEach(data => {
+  testData.forEach((data) => {
     it(`displays the correct controls when in ${data.message}`, () => {
       Object.defineProperty(window, 'innerWidth', {
         value: data.innerWidth,

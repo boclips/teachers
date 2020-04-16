@@ -25,7 +25,7 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
       ),
     );
     const collectionCards: React.ReactElement[] = this.props.collections.map(
-      collection => (
+      (collection) => (
         <CollectionCardContainer
           grid={false}
           collection={collection}
@@ -36,7 +36,7 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
 
     const videosAndCollectionElements: React.ReactElement[] = flattenDeep(
       zip(videoCards, collectionCards),
-    ).filter(element => typeof element !== 'undefined');
+    ).filter((element) => typeof element !== 'undefined');
 
     return (
       <FiniteGrid gutter={[32, 32]}>

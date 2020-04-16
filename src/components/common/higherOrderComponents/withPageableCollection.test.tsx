@@ -66,7 +66,7 @@ it('renders child component with correct props', () => {
   const store = MockStoreFactory.sample();
 
   const WithPageableCollectionComponent = withPageableCollection<ButtonProps>(
-    props => <Button {...props} />,
+    (props) => <Button {...props} />,
   );
 
   const wrapper = mount(

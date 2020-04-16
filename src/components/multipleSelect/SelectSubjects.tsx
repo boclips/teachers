@@ -31,7 +31,7 @@ export const SelectSubjects = React.forwardRef(
       aria-label={props.placeholder}
       value={props.value}
     >
-      {sortBy(props.subjects, ['name']).map(subject => (
+      {sortBy(props.subjects, ['name']).map((subject) => (
         <MultiSelect.Option
           key={subject.id}
           value={subject.id}

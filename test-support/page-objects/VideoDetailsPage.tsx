@@ -31,7 +31,7 @@ export class VideoDetailsPage {
   }
 
   public getVideoDetails() {
-    return findOne(this.wrapper, 'video-details').map(el => ({
+    return findOne(this.wrapper, 'video-details').map((el) => ({
       title: findOne(el, 'video-title').text(),
       description: findOne(el, 'video-description').text(),
       createdBy: findOne(el, 'video-created-by').text(),
@@ -39,7 +39,7 @@ export class VideoDetailsPage {
       releasedOn: findOne(el, 'video-released-on').text(),
       subjects: findAll(el, 'subject-tag')
         .find(By.dataQa('filter-tag'))
-        .map(tag => tag.text()),
+        .map((tag) => tag.text()),
       playerVideoId: el.find(VideoPlayer).prop('video').id,
     }))[0];
   }

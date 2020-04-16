@@ -10,7 +10,7 @@ export const searchCollections = (
 ): Promise<CollectionSearchResult> => {
   const age_range =
     searchRequest.filters.age_range &&
-    searchRequest.filters.age_range.map(ageRange => ageRange.getId());
+    searchRequest.filters.age_range.map((ageRange) => ageRange.getId());
 
   const url = links.searchPublicCollections.getTemplatedLink({
     query: searchRequest.query,
@@ -20,7 +20,7 @@ export const searchCollections = (
     age_range_max: searchRequest.filters.age_range_max,
     age_range,
   });
-  return axios.get(url).then(response => ({
+  return axios.get(url).then((response) => ({
     collections: parseCollectionsListResponse(response).slice(0, 5),
     query: searchRequest.query,
   }));

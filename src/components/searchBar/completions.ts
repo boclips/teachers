@@ -28,9 +28,9 @@ const prefixes = (txt: string): Prefix[] => {
   const words = getWords(txt);
   return words
     .map((_, i) => i)
-    .map(i => ({
+    .map((i) => ({
       text: words
-        .map(word => word.text)
+        .map((word) => word.text)
         .slice(i)
         .join(' '),
       weight: -i + 1 / (txt.length + 1.0),
@@ -48,7 +48,8 @@ interface Match {
 
 const getMatch = (record: EnrichedEntry, txt: string): Match => {
   const matchingPrefix = prefixes(record.entry).find(
-    prefix => prefix.text.toLowerCase().indexOf(txt.trim().toLowerCase()) === 0,
+    (prefix) =>
+      prefix.text.toLowerCase().indexOf(txt.trim().toLowerCase()) === 0,
   );
   const matches = !!matchingPrefix;
   return {
@@ -80,7 +81,7 @@ const getHighlights = (match: Match, text: string): CompletionChunk[] => {
     { text: textBeforeMatch, matches: false },
     { text: textMatching, matches: true },
     { text: textAfterMatch, matches: false },
-  ].filter(chunk => chunk.text.length > 0);
+  ].filter((chunk) => chunk.text.length > 0);
 };
 
 const completions = (lists: Lists, txt: string): Completion[] =>
@@ -91,10 +92,10 @@ const completions = (lists: Lists, txt: string): Completion[] =>
       }
       return acc;
     }, [])
-    .map(entry => getMatch(entry, txt))
-    .filter(matchResult => matchResult.matches)
+    .map((entry) => getMatch(entry, txt))
+    .filter((matchResult) => matchResult.matches)
     .sort((m1, m2) => m2.weight - m1.weight)
-    .map(matchResult => ({
+    .map((matchResult) => ({
       text: matchResult.text,
       textWithHighlights: getHighlights(matchResult, txt),
       list: matchResult.list,

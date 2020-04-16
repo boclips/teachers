@@ -14,7 +14,7 @@ export class PrivacyPolicyAgreementForm extends React.Component<
           rules: [
             {
               required: true,
-              transform: value => value || undefined,
+              transform: (value) => value || undefined,
               type: 'boolean',
               message:
                 'In order to use our services, you need to agree with the T&C and privacy policy.',

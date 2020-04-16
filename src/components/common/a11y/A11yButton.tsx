@@ -38,7 +38,7 @@ export const A11yButton = ({ callback, children, disableClick }: Props) => {
 
       callback(event);
 
-      childComponents.forEach(child => {
+      childComponents.forEach((child) => {
         if (child.props.onKeyDown) {
           child.props.onKeyDown(event);
         }
@@ -53,7 +53,7 @@ export const A11yButton = ({ callback, children, disableClick }: Props) => {
       callback(event);
     }
 
-    childComponents.forEach(child => {
+    childComponents.forEach((child) => {
       if (child.props.onClick) {
         child.props.onClick(event);
       }

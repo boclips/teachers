@@ -47,10 +47,7 @@ it('removes age range min from url on close', () => {
 
   const wrapper = getWrapper(new AgeRange(5, null), store);
 
-  wrapper
-    .find(ClosableTag)
-    .props()
-    .onClose();
+  wrapper.find(ClosableTag).props().onClose();
 
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()).toContainEqual(

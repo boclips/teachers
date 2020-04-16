@@ -18,9 +18,6 @@ describe('displaying errors', () => {
   });
 
   function getError(index: number) {
-    return wrapper
-      .find(By.dataQa('error'))
-      .at(index)
-      .text();
+    return wrapper.find(By.dataQa('error')).at(index).text();
   }
 });

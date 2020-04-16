@@ -6,12 +6,12 @@ import { Links } from '../../types/Links';
 export function fetchCountries(links: Links): Promise<Country[]> {
   return axios
     .get(links.countries.getOriginalLink())
-    .then(response => response.data)
+    .then((response) => response.data)
     .then(convertCountriesResource);
 }
 
 function convertCountriesResource(data: any): Country[] {
-  return data._embedded.countries.map(rawCountry => ({
+  return data._embedded.countries.map((rawCountry) => ({
     id: rawCountry.id,
     name: rawCountry.name,
     states: rawCountry.states,

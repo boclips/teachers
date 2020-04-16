@@ -62,7 +62,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
             itemProp="image"
           />
           {this.props.video.attachments &&
-            this.props.video.attachments.map(it => (
+            this.props.video.attachments.map((it) => (
               <AttachmentDetails
                 link={it.linkToResource}
                 description={it.description}
@@ -82,7 +82,7 @@ class VideoDetailsContent extends React.PureComponent<Props> {
                 {this.props.video.ageRange && (
                   <AgeRangeTag ageRange={this.props.video.ageRange} />
                 )}
-                {this.props.video.subjects.map(subject => (
+                {this.props.video.subjects.map((subject) => (
                   <SubjectTag subjectName={subject.name} key={subject.name} />
                 ))}
                 {this.props.video.bestFor && (

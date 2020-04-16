@@ -100,7 +100,7 @@ describe('upper bound restriction', () => {
     },
   ];
 
-  testData.forEach(data => {
+  testData.forEach((data) => {
     it(`restricts the input selection for ${data.message}`, () => {
       const component = shallow(
         <RestrictiveTimePicker

@@ -21,7 +21,7 @@ beforeEach(() => {
 
 jest.mock('react', () => {
   const r = jest.requireActual('react');
-  return { ...r, memo: x => x };
+  return { ...r, memo: (x) => x };
 });
 
 // create window object

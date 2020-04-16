@@ -11,10 +11,10 @@ export function onUnbookmarkCollection(
   request: VideoCollection,
 ) {
   unbookmarkCollection(request)
-    .then(response => {
+    .then((response) => {
       store.dispatch(onCollectionUnbookmarkedAction(response));
     })
-    .catch(e => {
+    .catch((e) => {
       console.log(e);
       NotificationFactory.error({
         message: 'Error unbookmarking collection.',

@@ -31,7 +31,7 @@ class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
 
   private updateAgeRanges(ageRange: AgeRange) {
     return this.props.activeAgeRanges.filter(
-      item => !(item.getLabel() === ageRange.getLabel()),
+      (item) => !(item.getLabel() === ageRange.getLabel()),
     );
   }
 }

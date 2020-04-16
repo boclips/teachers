@@ -39,7 +39,7 @@ const convertAgeRangeRequest = (
 ): { age_range: string[] } =>
   updateAgeRangeFilter.age_range
     ? {
-        age_range: updateAgeRangeFilter.age_range.map(range => range.getId()),
+        age_range: updateAgeRangeFilter.age_range.map((range) => range.getId()),
       }
     : undefined;
 
@@ -47,5 +47,5 @@ const convertDurationRequest = (
   updateDurationFilter: UpdateDurationFilter,
 ): { duration: string[] } | undefined =>
   updateDurationFilter.duration
-    ? { duration: updateDurationFilter.duration.map(d => d.toString()) }
+    ? { duration: updateDurationFilter.duration.map((d) => d.toString()) }
     : undefined;

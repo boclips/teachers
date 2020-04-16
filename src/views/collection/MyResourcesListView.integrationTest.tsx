@@ -162,7 +162,7 @@ function createStateWithMyResources(myResources: VideoCollection[]) {
     }),
     collections: CollectionsFactory.sample({
       myResources: {
-        items: myResources.map(it => it.id),
+        items: myResources.map((it) => it.id),
         links: {},
       },
       myCollections: {

@@ -17,9 +17,10 @@ export const SelectAgeRange = (props: Props) => {
   const generateInitialValues = () => {
     const { initialValue } = props;
     if (initialValue) {
-      return convertAgeRangesFromNumbers(allAgeRanges, initialValue).map(age =>
-        age.encodeJSON(),
-      );
+      return convertAgeRangesFromNumbers(
+        allAgeRanges,
+        initialValue,
+      ).map((age) => age.encodeJSON());
     } else {
       return [];
     }
@@ -27,9 +28,9 @@ export const SelectAgeRange = (props: Props) => {
 
   const onChange = (value: SelectValue) => {
     const split = value as string[];
-    const parsed = split.map(it => AgeRange.fromJson(it));
+    const parsed = split.map((it) => AgeRange.fromJson(it));
     const sorted = AgeRange.removeDuplicates(parsed);
-    const stringified = sorted.map(it => it.encodeJSON());
+    const stringified = sorted.map((it) => it.encodeJSON());
 
     props.onChange(stringified);
   };
@@ -37,7 +38,7 @@ export const SelectAgeRange = (props: Props) => {
   const generateOptions = () => {
     const Option = MultiSelect.Option;
 
-    return allAgeRanges.map(ageRange => (
+    return allAgeRanges.map((ageRange) => (
       <Option
         key={ageRange.getLabel()}
         title={ageRange.getLabel()}

@@ -4,6 +4,6 @@ import { Video } from '../../types/Video';
 
 export function fetchVideo(id: string): Promise<Video> {
   return getBoclipsClient()
-    .then(client => client.videosClient.get(id))
+    .then((client) => client.videosClient.get(id))
     .then(convertApiClientVideo);
 }

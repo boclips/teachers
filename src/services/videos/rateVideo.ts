@@ -8,6 +8,6 @@ export default function rateVideo(
 ): Promise<Video> {
   return axios
     .patch(video.links.rate.getTemplatedLink({ rating }))
-    .then(response => response.data)
+    .then((response) => response.data)
     .then(convertVideoResource);
 }

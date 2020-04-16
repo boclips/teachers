@@ -15,7 +15,7 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
     const totalVideoCount = this.props.collection.videoIds.length;
 
     const gridSize = 4;
-    const previewImages = this.props.videos.slice(0, gridSize).map(video => (
+    const previewImages = this.props.videos.slice(0, gridSize).map((video) => (
       <LazyLoadImage
         className="thumbnail-container"
         data-qa="thumbnail"

@@ -8,14 +8,14 @@ export const onStoreCollectionsAction = (
   state: State,
   request: StoreCollectionsRequest,
 ): State =>
-  produce(state, draftState => {
+  produce(state, (draftState) => {
     draftState.collections[request.key] = {
-      items: request.collections.items.map(c => c.id),
+      items: request.collections.items.map((c) => c.id),
       links: request.collections.links,
     };
 
     request.collections.items.map(
-      c => (draftState.entities.collections.byId[c.id] = c),
+      (c) => (draftState.entities.collections.byId[c.id] = c),
     );
 
     draftState.collections.updating = false;
@@ -38,7 +38,7 @@ export const onStoreCollectionAction = (
     };
   }
 
-  return produce(state, draftState => {
+  return produce(state, (draftState) => {
     draftState.collections.collectionIdBeingViewed = collection.id;
     draftState.entities.collections.byId[collection.id] = collection;
     draftState.collections.loading = false;
@@ -69,15 +69,15 @@ export const onAppendPageableCollectionsAction = (
     ...state.collections[collectionKey],
     items: [
       ...state.collections[collectionKey].items,
-      ...collectionRequestItems.map(collection => collection.id),
+      ...collectionRequestItems.map((collection) => collection.id),
     ],
     links: request.collections.links,
   };
 
-  return produce(state, draftState => {
+  return produce(state, (draftState) => {
     draftState.collections[collectionKey] = collectionPage;
     request.collections.items.map(
-      c => (draftState.entities.collections.byId[c.id] = c),
+      (c) => (draftState.entities.collections.byId[c.id] = c),
     );
 
     draftState.collections.updating = false;

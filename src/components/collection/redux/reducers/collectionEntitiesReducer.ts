@@ -123,7 +123,7 @@ export const getCollectionsByIds = (
   state: State,
   collectionIds: string[],
 ): VideoCollection[] =>
-  collectionIds.map(id => state.entities.collections.byId[id]);
+  collectionIds.map((id) => state.entities.collections.byId[id]);
 
 export const getCollectionById = (
   state: State,

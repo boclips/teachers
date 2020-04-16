@@ -25,7 +25,7 @@ export const onAddVideoToMyCollectionAction = (
   }
 
   const alreadyHaveVideoId =
-    collection.videoIds.find(id => id.value === request.video.id) != null;
+    collection.videoIds.find((id) => id.value === request.video.id) != null;
 
   if (alreadyHaveVideoId) {
     return state;
@@ -36,7 +36,7 @@ export const onAddVideoToMyCollectionAction = (
     links: request.video.links,
   };
 
-  return produce(state, draftState => {
+  return produce(state, (draftState) => {
     draftState.entities.collections.byId[collection.id].videoIds.push(videoId);
     draftState.collections.updating = true;
   });
@@ -52,10 +52,10 @@ export const onRemoveVideoFromMyCollectionAction = (
     return state;
   }
 
-  return produce(state, draftState => {
+  return produce(state, (draftState) => {
     const draftCollection = draftState.entities.collections.byId[collection.id];
     draftCollection.videoIds = draftCollection.videoIds.filter(
-      id => id.value !== request.video.id,
+      (id) => id.value !== request.video.id,
     );
 
     draftState.collections.updating = true;
@@ -66,16 +66,16 @@ export const onMyCollectionRemoved = (
   state: State,
   removedCollection: VideoCollection,
 ): State =>
-  produce(state, draftState => {
+  produce(state, (draftState) => {
     const myCollections = draftState.collections.myCollections.items;
     myCollections.splice(
-      myCollections.findIndex(id => id === removedCollection.id),
+      myCollections.findIndex((id) => id === removedCollection.id),
       1,
     );
 
     const myResources = draftState.collections.myResources.items;
     myResources.splice(
-      myResources.findIndex(id => id === removedCollection.id),
+      myResources.findIndex((id) => id === removedCollection.id),
       1,
     );
 
@@ -101,7 +101,7 @@ const onUpdateCollection = (
   state: State,
   updatedCollection: VideoCollection,
 ): State =>
-  produce(state, draftState => {
+  produce(state, (draftState) => {
     draftState.entities.collections.byId[
       updatedCollection.id
     ] = updatedCollection;
@@ -111,7 +111,7 @@ export const onCollectionUnbookmarked = (
   state: State,
   unbookmarkedCollection: VideoCollection,
 ): State =>
-  produce(state, draftState => {
+  produce(state, (draftState) => {
     draftState.entities.collections.byId = updateCollections(
       state.entities.collections,
       unbookmarkedCollection,
@@ -121,7 +121,7 @@ export const onCollectionUnbookmarked = (
     if (myResources) {
       const collections = myResources.items || [];
       collections.splice(
-        collections.findIndex(id => id === unbookmarkedCollection.id),
+        collections.findIndex((id) => id === unbookmarkedCollection.id),
         1,
       );
     }
@@ -131,7 +131,7 @@ export const onCollectionBookmarked = (
   state: State,
   bookmarkedCollection: VideoCollection,
 ): State =>
-  produce(state, draftState => {
+  produce(state, (draftState) => {
     draftState.entities.collections.byId = updateCollections(
       state.entities.collections,
       bookmarkedCollection,

@@ -10,6 +10,6 @@ export const defaultDurations = [
   new DurationRange({ min: 1200, max: 86400 }),
 ];
 
-export const durationsReducer: Reducer<DurationRange[]> = createReducerWithInitialState<
+export const durationsReducer: Reducer<
   DurationRange[]
->(defaultDurations);
+> = createReducerWithInitialState<DurationRange[]>(defaultDurations);

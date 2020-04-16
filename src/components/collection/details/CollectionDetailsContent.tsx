@@ -28,7 +28,9 @@ export const CollectionDetailsContent = (props: {
 
   useEffect(() => {
     setVideos(
-      props.collection.videoIds.map(videoId => videosState.byId[videoId.value]),
+      props.collection.videoIds.map(
+        (videoId) => videosState.byId[videoId.value],
+      ),
     );
   }, [props.collection.videoIds, videosState.byId]);
 

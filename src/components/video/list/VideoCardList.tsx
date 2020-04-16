@@ -22,7 +22,7 @@ interface CollectionProps extends Props {
   currentCollection: VideoCollection;
 }
 
-const GenericVideoCardList = React.memo<GenericProps>(props => {
+const GenericVideoCardList = React.memo<GenericProps>((props) => {
   const isAuthenticated: boolean = useSelector((state: State) => !!state.user);
   const referer = useRefererIdInjector();
 

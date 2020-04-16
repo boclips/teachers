@@ -37,7 +37,7 @@ export class SearchPage {
   public getVideoResults() {
     return findAll(this.wrapper, 'video-card')
       .hostNodes()
-      .map(el => ({
+      .map((el) => ({
         title: findOne(el, 'video-title').text(),
         description: findOne(el, 'video-description').text(),
         createdBy: findOne(el, 'video-created-by').text(),
@@ -48,7 +48,7 @@ export class SearchPage {
           .find('ManageVideoCollectionsButton')
           .first()
           .prop('isInDefaultCollection'),
-        subjects: el.find(By.dataQa('subject')).map(tag => tag.text()),
+        subjects: el.find(By.dataQa('subject')).map((tag) => tag.text()),
         playerVideoId: el.find(VideoPlayer).prop('video').id,
       }));
   }
@@ -56,7 +56,7 @@ export class SearchPage {
   public getCollectionResults() {
     return findAll(this.wrapper, 'collection-card')
       .hostNodes()
-      .map(el => ({
+      .map((el) => ({
         title: findOne(el, 'collection-title').text(),
         numberOfVideos: +findOne(el, 'collection-number-of-videos').text(),
       }));

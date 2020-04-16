@@ -21,7 +21,7 @@ export class DurationRange {
   }
 
   public getLabel = () => {
-    const formatter = seconds => `${seconds / 60}m`;
+    const formatter = (seconds) => `${seconds / 60}m`;
 
     if (this.range.max !== 86400) {
       return `${formatter(this.range.min)} - ${formatter(this.range.max)}`;
@@ -63,6 +63,6 @@ export class DurationRange {
       serialised = [serialised];
     }
 
-    return serialised.map(rangeString => fromString(rangeString));
+    return serialised.map((rangeString) => fromString(rangeString));
   };
 }

@@ -34,7 +34,7 @@ export const CollectionShareCodeDialog = React.memo((props: Props) => {
     }
   }, [collectionHasLoaded, collectionsLoading, setVisible, submitted]);
 
-  const handleSubmit = shareCode => {
+  const handleSubmit = (shareCode) => {
     dispatch(
       fetchCollectionAction({
         id: props.collectionId,

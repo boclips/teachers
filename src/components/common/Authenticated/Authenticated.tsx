@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { isAuthenticated } from 'src/app/redux/authentication/selectors';
 
-export const Authenticated = props => {
+export const Authenticated = (props) => {
   const authenticated = useSelector(isAuthenticated);
 
   if (authenticated) {

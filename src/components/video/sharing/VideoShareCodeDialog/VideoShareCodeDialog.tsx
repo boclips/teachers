@@ -15,8 +15,8 @@ export const VideoShareCodeDialog = React.memo((props: Props) => {
   const [visible, setVisible] = useState(true);
   const [codeInvalid, setCodeInvalid] = useState(false);
 
-  const handleSubmit = shareCode => {
-    validateShareCode(validationLink, props.userId, shareCode).then(valid => {
+  const handleSubmit = (shareCode) => {
+    validateShareCode(validationLink, props.userId, shareCode).then((valid) => {
       if (valid) {
         setVisible(false);
       } else {

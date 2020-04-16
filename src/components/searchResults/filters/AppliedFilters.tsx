@@ -34,7 +34,7 @@ export const AppliedFilters = withAppliedSearchParameters(
               />
             ))}
           {props.subjectIds &&
-            props.subjectIds.map(subjectId => (
+            props.subjectIds.map((subjectId) => (
               <SubjectFilterTag
                 subjectIds={props.subjectIds}
                 key={subjectId}

@@ -23,7 +23,7 @@ class AccountMenuComponent extends React.Component<Props, State> {
     };
   }
 
-  private setVisible = visible => {
+  private setVisible = (visible) => {
     this.setState({ visible });
   };
 

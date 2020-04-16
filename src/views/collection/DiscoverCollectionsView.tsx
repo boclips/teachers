@@ -95,7 +95,7 @@ export class DiscoverCollectionsView extends PureComponent<
                 gutter={[12, 12]}
               >
                 {sortBy(this.props.discipline.subjects, ['name']).map(
-                  subject => (
+                  (subject) => (
                     <Col md={6} key={subject.id}>
                       <Link
                         className={this.subjectClassName()}
@@ -115,10 +115,10 @@ export class DiscoverCollectionsView extends PureComponent<
           <section
             className="discover-collections__container collection-list"
             data-qa="discover-collections-list-page"
-            key={`container-${this.props.subjects.map(s => s.id).join()}`}
+            key={`container-${this.props.subjects.map((s) => s.id).join()}`}
           >
             <PageableCollectionCardList
-              key={this.props.subjects.map(s => s.id).join()}
+              key={this.props.subjects.map((s) => s.id).join()}
               title={
                 <span>
                   <img src={collectionsImg} alt="" /> Video collections
@@ -127,7 +127,7 @@ export class DiscoverCollectionsView extends PureComponent<
               grid={true}
               collectionKey="discoverCollections"
               collectionFilter={{
-                filters: { subject: this.props.subjects.map(s => s.id) },
+                filters: { subject: this.props.subjects.map((s) => s.id) },
               }}
               shouldRefresh={refresh}
             />
@@ -164,15 +164,15 @@ function getDisciplineBySubject(
     subjectIds.length === 1 &&
     disciplines &&
     disciplines.find(
-      d =>
+      (d) =>
         d.subjects &&
-        d.subjects.find(s => s.id === subjectIds[0]) !== undefined,
+        d.subjects.find((s) => s.id === subjectIds[0]) !== undefined,
     )
   );
 }
 
 function getDisciplineById(disciplines: Discipline[], disciplineId: string) {
-  return disciplineId && disciplines.find(d => d.id === disciplineId);
+  return disciplineId && disciplines.find((d) => d.id === disciplineId);
 }
 
 function getSubjectIfOneDefined(discipline: Discipline, subjectIds: string[]) {
@@ -181,7 +181,7 @@ function getSubjectIfOneDefined(discipline: Discipline, subjectIds: string[]) {
     subjectIds.length === 1 &&
     discipline &&
     discipline.subjects &&
-    discipline.subjects.find(s => s.id === subjectIds[0]);
+    discipline.subjects.find((s) => s.id === subjectIds[0]);
 
   return subject && [subject];
 }

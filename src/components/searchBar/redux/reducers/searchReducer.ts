@@ -65,7 +65,7 @@ function onStoreVideoSearchResultsAction(
   state: State,
   results: VideoSearchResult,
 ): State {
-  return produce(state, draftState => {
+  return produce(state, (draftState) => {
     const newVideos: VideoMap = organizeById(results.videos);
 
     draftState.entities.videos.byId = {
@@ -74,7 +74,7 @@ function onStoreVideoSearchResultsAction(
     };
 
     draftState.search.videoSearch = {
-      videoIds: results.videos.map(it => it.id),
+      videoIds: results.videos.map((it) => it.id),
       loading: false,
       query: results.query,
       paging: results.paging,
@@ -110,7 +110,7 @@ function onStoreCollectionSearchResultsAction(
     search: {
       ...state.search,
       collectionSearch: {
-        collectionIds: results.collections.map(it => it.id),
+        collectionIds: results.collections.map((it) => it.id),
         query: results.query,
         loading: false,
       },

@@ -50,7 +50,7 @@ const onFetchPromotedVideos = (
     durations: store.getState().durations,
   };
 
-  fetchVideos(request, facets, links).then(result => {
+  fetchVideos(request, facets, links).then((result) => {
     store.dispatch(
       storePromotedVideosAction({ promotedVideos: result.videos }),
     );

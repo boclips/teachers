@@ -33,7 +33,7 @@ const getCollection = (numberOfVideos: number) =>
   VideoCollectionFactory.sample({
     videoIds: videos
       .slice(0, numberOfVideos)
-      .map(video => VideoIdFactory.sample({ value: video.id })),
+      .map((video) => VideoIdFactory.sample({ value: video.id })),
   });
 
 storiesOf('CollectionCardSearchPreview', module)

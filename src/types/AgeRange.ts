@@ -17,8 +17,8 @@ export class AgeRange {
 
   public static removeDuplicates(ageRanges: AgeRange[]): AgeRange[] {
     const deduplicated = [];
-    ageRanges.forEach(it => {
-      if (!deduplicated.find(range => isEqualTo(it, range))) {
+    ageRanges.forEach((it) => {
+      if (!deduplicated.find((range) => isEqualTo(it, range))) {
         deduplicated.push(it);
       }
     });

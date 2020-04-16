@@ -5,7 +5,7 @@ import { Links } from '../../types/Links';
 export default function fetchLinks(prefix: string) {
   return axios
     .get(`${prefix}/v1/`)
-    .then(response => response.data)
+    .then((response) => response.data)
     .then(
       (body): Links => {
         const links: Links = {

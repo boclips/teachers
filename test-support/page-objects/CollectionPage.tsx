@@ -32,7 +32,7 @@ export class CollectionPage {
     return this.wrapper
       .find(By.dataQa('video-card'))
       .hostNodes()
-      .map(el => ({
+      .map((el) => ({
         title: findOne(el, 'video-title').text(),
         description: findOne(el, 'video-description').text(),
         createdBy: findOne(el, 'video-created-by').text(),
@@ -42,16 +42,16 @@ export class CollectionPage {
         subjects: el
           .find(By.dataQa('subject-tag'))
           .find(By.dataQa('filter-tag'))
-          .map(tag => tag.text()),
+          .map((tag) => tag.text()),
         playerVideoId: el.find(VideoPlayer).prop('video').id,
       }));
   }
 
   public getCollectionDetails() {
-    return this.wrapper.find(CollectionHeader).map(el => ({
+    return this.wrapper.find(CollectionHeader).map((el) => ({
       title: findOne(el, 'collection-title').text(),
       isPublic: el.find(CollectionTitle).props().collection.isPublic,
-      subjects: el.find(By.dataQa('subject-tag')).map(s => s.text()),
+      subjects: el.find(By.dataQa('subject-tag')).map((s) => s.text()),
       lastUpdated: findOne(el, 'collection-updated-at').text(),
       ageRange: el
         .find(By.dataQa('age-range'))

@@ -122,7 +122,7 @@ class OnboardingForm extends React.Component<
     this.setState({ ...this.state, invisibleSlides });
   };
 
-  private afterSlideChange = currentIndex => {
+  private afterSlideChange = (currentIndex) => {
     const invisibleSlides = [true, true, true, true];
     invisibleSlides[currentIndex] = false;
 
@@ -153,7 +153,7 @@ class OnboardingForm extends React.Component<
         <Row>
           <Col xs={{ span: 0 }} lg={{ span: 12 }}>
             <Carousel
-              ref={imageCarousel => (this.imageCarousel = imageCarousel)}
+              ref={(imageCarousel) => (this.imageCarousel = imageCarousel)}
               effect={'fade'}
               dots={false}
             >
@@ -190,7 +190,7 @@ class OnboardingForm extends React.Component<
             >
               <section className="onboarding-form__form-body">
                 <Carousel
-                  ref={formCarousel => (this.formCarousel = formCarousel)}
+                  ref={(formCarousel) => (this.formCarousel = formCarousel)}
                   infinite={false}
                   asNavFor={this.state.imageCarousel}
                   dots={false}
@@ -406,7 +406,7 @@ class OnboardingForm extends React.Component<
 
     this.props.form.validateFieldsAndScroll(
       validationFields[currentIndex],
-      validationErrors => {
+      (validationErrors) => {
         if (!validationErrors) {
           this.state.formCarousel.next();
           this.setState({
@@ -423,19 +423,19 @@ class OnboardingForm extends React.Component<
     );
   };
 
-  private onCountryChange = country =>
+  private onCountryChange = (country) =>
     this.setState({ ...this.state, country });
 
-  private onRoleChange = value =>
+  private onRoleChange = (value) =>
     this.setState({ ...this.state, role: value.role });
 
-  private onStateChange = state => this.setState({ ...this.state, state });
+  private onStateChange = (state) => this.setState({ ...this.state, state });
 
   private handleSubmit = () => {
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
-        const ageRanges = (values.ageRange as string[]).map(it =>
+        const ageRanges = (values.ageRange as string[]).map((it) =>
           AgeRange.fromJson(it),
         );
         const ages = extractContainedAges(ageRanges);
@@ -459,7 +459,7 @@ class OnboardingForm extends React.Component<
             this.props.goToHomepage();
             this.props.updateUser();
           })
-          .catch(ex => {
+          .catch((ex) => {
             console.error(ex);
             NotificationFactory.error({
               message: 'Ooops! Something went wrong...',

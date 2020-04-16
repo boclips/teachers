@@ -62,7 +62,7 @@ class VideoPlayer extends React.PureComponent<
     return { hasError: true };
   }
 
-  private setPlayerRef = player => {
+  private setPlayerRef = (player) => {
     this.player = player;
 
     this.loadSegment();

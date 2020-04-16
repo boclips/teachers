@@ -12,7 +12,7 @@ export function onRemoveFromCollection(
   request: { video: Video; collection: VideoCollection },
 ) {
   removeFromCollection(request.video, request.collection)
-    .then(success => {
+    .then((success) => {
       store.dispatch(
         onRemoveFromCollectionAction({
           collection: request.collection,

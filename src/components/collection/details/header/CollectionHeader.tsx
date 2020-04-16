@@ -51,7 +51,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
         {this.hasAgeRange() && (
           <AgeRangeTag ageRange={this.props.collection.ageRange} />
         )}
-        {this.props.collection.subjects.map(subjectId => (
+        {this.props.collection.subjects.map((subjectId) => (
           <ConnectedSubjectTag key={subjectId} id={subjectId} />
         ))}
       </div>
@@ -137,7 +137,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
 
   private getLessonGuide = () =>
     this.props.collection.attachments.find(
-      attachment => attachment.type === 'LESSON_PLAN',
+      (attachment) => attachment.type === 'LESSON_PLAN',
     );
 
   private hasAgeRange = () => this.props.collection.ageRange.isBounded();

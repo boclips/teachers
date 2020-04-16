@@ -27,7 +27,7 @@ class TagVideo extends React.PureComponent<Props & StateProps> {
         <h2>How would you use it in class?</h2>
         <Radio.Group value={this.props.selectedTag}>
           <Row>
-            {this.props.tags.map(t => (
+            {this.props.tags.map((t) => (
               <Col md={8} xs={24} key={t.id}>
                 <span
                   data-state={t.label}

@@ -36,5 +36,5 @@ export class CollectionTitle extends React.PureComponent<Props> {
     );
   }
 
-  private handleOnClick = event => event.preventDefault();
+  private handleOnClick = (event) => event.preventDefault();
 }

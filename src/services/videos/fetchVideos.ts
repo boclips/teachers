@@ -13,5 +13,5 @@ export default function fetchVideos(
 ): Promise<VideoSearchResult> {
   return axios
     .get(generateVideoSearchUri(searchRequest, facets, links))
-    .then(response => parseVideosResponse(response, searchRequest.query));
+    .then((response) => parseVideosResponse(response, searchRequest.query));
 }

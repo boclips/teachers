@@ -8,14 +8,14 @@ import {
   WithMediaBreakPointProps,
 } from './withMediaBreakPoint';
 
-const setWidth = x => {
+const setWidth = (x) => {
   // @ts-ignore
   window.innerWidth = x;
   window.dispatchEvent(new Event('resize'));
 };
 
 const renderComponent = () => {
-  const WithWidthBreakpointComponent = withMediaBreakPoint(props => (
+  const WithWidthBreakpointComponent = withMediaBreakPoint((props) => (
     <Button {...props} />
   ));
 

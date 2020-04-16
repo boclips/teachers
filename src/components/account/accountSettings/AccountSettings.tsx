@@ -103,7 +103,7 @@ class AccountSettings extends React.Component<
     this.props.userProfile.country.id === 'USA';
 
   private findUSA = (): Country =>
-    this.props.countries.find(country => country.id === 'USA');
+    this.props.countries.find((country) => country.id === 'USA');
 
   private toggleEditProfileForm = () => {
     this.setState({

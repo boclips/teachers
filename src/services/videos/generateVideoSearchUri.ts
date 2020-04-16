@@ -9,14 +9,14 @@ export function generateVideoSearchUri(
 ) {
   const durationParams =
     searchRequest.filters.duration &&
-    searchRequest.filters.duration.map(duration => duration.toIso());
+    searchRequest.filters.duration.map((duration) => duration.toIso());
 
   const ageRangeParams =
     searchRequest.filters.age_range &&
-    searchRequest.filters.age_range.map(ageRange => ageRange.getId());
+    searchRequest.filters.age_range.map((ageRange) => ageRange.getId());
 
-  const ageRangeFacets = facets.ageRanges.map(ageRange => ageRange.getId());
-  const durationFacets = facets.durations.map(duration => duration.toIso());
+  const ageRangeFacets = facets.ageRanges.map((ageRange) => ageRange.getId());
+  const durationFacets = facets.durations.map((duration) => duration.toIso());
 
   return links.videos.getTemplatedLink({
     query: searchRequest.query,

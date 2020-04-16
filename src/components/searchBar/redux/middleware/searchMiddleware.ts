@@ -23,7 +23,7 @@ export function onSearchVideos(
     durations: store.getState().durations,
   };
 
-  fetchVideos(searchRequest, facets, links).then(results => {
+  fetchVideos(searchRequest, facets, links).then((results) => {
     store.dispatch(storeVideoSearchResultsAction(results));
 
     AnalyticsFactory.externalAnalytics().trackVideoSearch(results);
@@ -36,7 +36,7 @@ export function onSearchCollections(
 ) {
   const links: Links = store.getState().links.entries;
 
-  searchCollections(searchRequest, links).then(results => {
+  searchCollections(searchRequest, links).then((results) => {
     store.dispatch(storeCollectionSearchResultsAction(results));
 
     AnalyticsFactory.externalAnalytics().trackCollectionSearch(results);

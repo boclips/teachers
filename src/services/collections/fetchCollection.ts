@@ -11,4 +11,4 @@ export const fetchCollection = (
 ): Promise<VideoCollection> =>
   axios
     .get(links.collection.getTemplatedLink({ id, referer, shareCode }))
-    .then(response => parseCollectionResponse(response));
+    .then((response) => parseCollectionResponse(response));

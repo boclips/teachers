@@ -13,7 +13,7 @@ export function onFetchCollections(
 ) {
   const links: Links = store.getState().links.entries;
   fetchPageableCollections(links, { key })
-    .then(collections => {
+    .then((collections) => {
       store.dispatch(storeCollectionsAction({ collections, key }));
     })
     .catch(console.error);

@@ -72,7 +72,7 @@ export class RestrictiveTimePicker extends React.Component<Props, State> {
           '.ant-time-picker-panel-select',
         );
         if (selectContainers.length) {
-          selectContainers.forEach(selectContainer => {
+          selectContainers.forEach((selectContainer) => {
             const selected = selectContainer.querySelector(
               '.ant-time-picker-panel-select-option-selected',
             ) as HTMLDivElement;
@@ -98,10 +98,10 @@ export class RestrictiveTimePicker extends React.Component<Props, State> {
   });
 
   private getDisabledHours = () =>
-    range(24).filter(hour => hour > this.upperBound.hours);
+    range(24).filter((hour) => hour > this.upperBound.hours);
 
-  private getDisabledMinutes = selectedHour =>
-    range(60).filter(minute => {
+  private getDisabledMinutes = (selectedHour) =>
+    range(60).filter((minute) => {
       if (selectedHour < this.upperBound.hours) {
         return false;
       }
@@ -110,7 +110,7 @@ export class RestrictiveTimePicker extends React.Component<Props, State> {
     });
 
   private getDisabledSeconds = (selectedHour, selectedMinute) =>
-    range(60).filter(second =>
+    range(60).filter((second) =>
       selectedMinute < this.upperBound.minutes ||
       selectedHour < this.upperBound.hours
         ? false

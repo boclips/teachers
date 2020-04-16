@@ -21,7 +21,7 @@ jest.mock('antd/lib/slider', () =>
     <input
       ref={ref}
       role="slider"
-      onChange={event => {
+      onChange={(event) => {
         props.onChange(JSON.parse(event.target.value));
       }}
       data-value-json={JSON.stringify(props.value)}
@@ -38,7 +38,7 @@ jest.mock('antd/lib/select', () => {
       ref={ref}
       type="text"
       role="select"
-      onChange={event => {
+      onChange={(event) => {
         props.onChange(JSON.parse(event.target.value), null);
       }}
       data-value-json={JSON.stringify(props.value)}
@@ -96,7 +96,7 @@ describe('EditCollectionForm', () => {
 
     expect(component.getByText('Edit collection')).toBeVisible();
 
-    const getInputByTestId = testId =>
+    const getInputByTestId = (testId) =>
       component.getByTestId(testId) as HTMLInputElement;
 
     expect(getInputByTestId('title-edit').value).toEqual('My test collection');

@@ -93,22 +93,22 @@ class VideoFeedbackModal extends React.Component<
     ) : null;
   }
 
-  private changeRating = rating => this.setState({ rating });
-  private changeSelectedTag = selectedTag => this.setState({ selectedTag });
+  private changeRating = (rating) => this.setState({ rating });
+  private changeSelectedTag = (selectedTag) => this.setState({ selectedTag });
 
   private save = () => {
     Promise.resolve()
-      .then(_ =>
+      .then((_) =>
         this.state.rating && this.props.video.links.rate
           ? rateVideo(this.props.video, this.state.rating)
           : this.props.video,
       )
-      .then(video =>
+      .then((video) =>
         this.state.selectedTag && this.props.video.links.tag
           ? tagVideo(video, this.state.selectedTag)
           : video,
       )
-      .then(video => this.props.videoUpdated(video))
+      .then((video) => this.props.videoUpdated(video))
       .then(() => this.props.onSaved());
   };
 }

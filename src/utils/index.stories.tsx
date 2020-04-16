@@ -7,15 +7,15 @@ import BoclipsSecurity from 'boclips-js-security';
 import State from '../types/State';
 import { noOp } from './index';
 
-export const storyWithProvider = (store: Store<State>) => story => (
+export const storyWithProvider = (store: Store<State>) => (story) => (
   <Provider store={store}>{story()}</Provider>
 );
 
-export const storyWithRouter = () => story => (
+export const storyWithRouter = () => (story) => (
   <Router history={createMemoryHistory()}>{story()}</Router>
 );
 
-export const storyWithAuthentication = () => story => {
+export const storyWithAuthentication = () => (story) => {
   BoclipsSecurity.createInstance({
     clientId: 'testing-storybook',
     realm: 'testing-storybook',

@@ -5,9 +5,9 @@ export const convertAgeRangesFromNumbers = (
   numberArray: number[],
 ): AgeRange[] => {
   const foundRanges = [];
-  allAgeRanges.forEach(range => {
+  allAgeRanges.forEach((range) => {
     const containedAges = range.getNumbers();
-    if (containedAges.every(it => numberArray.includes(it))) {
+    if (containedAges.every((it) => numberArray.includes(it))) {
       foundRanges.push(range);
     }
   });

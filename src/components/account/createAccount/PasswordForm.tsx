@@ -90,7 +90,7 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
     );
   }
   private validatePassword = (_, value, callback) => {
-    if (this.constraints.find(c => !value.match(c.regex))) {
+    if (this.constraints.find((c) => !value.match(c.regex))) {
       callback(
         <section className="password-form__rules-container">
           Your password must have at least:

@@ -49,7 +49,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   }
 
   public render() {
-    const onsubmit = e => e.preventDefault();
+    const onsubmit = (e) => e.preventDefault();
     const setDataSource = (txt: string) => {
       this.setState({
         completions: getCompletions(txt),
@@ -86,7 +86,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   }
 
   private renderOptions() {
-    return this.state.completions.map(completion => (
+    return this.state.completions.map((completion) => (
       <Option key={completion.text} value={completion.text}>
         {completion.list === 'channels' && (
           <span className="autocomplete--channel">Channel:&nbsp;</span>

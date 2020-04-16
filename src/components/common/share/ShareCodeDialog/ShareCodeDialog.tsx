@@ -27,7 +27,7 @@ export const ShareCodeDialog = (props: Props) => {
     >
       <form
         action="#"
-        onSubmit={event => {
+        onSubmit={(event) => {
           props.onSubmit(shareCode);
 
           event.preventDefault();
@@ -43,7 +43,7 @@ export const ShareCodeDialog = (props: Props) => {
           placeholder="Enter code"
           data-qa="share-code-input"
           value={shareCode}
-          onChange={event => {
+          onChange={(event) => {
             setShareCode(event.currentTarget.value);
           }}
         />

@@ -85,7 +85,7 @@ export class CollectionCardList extends React.PureComponent<
         {this.props.collections &&
           this.props.collections
             .slice(0, this.props.maxNumberOfCollections)
-            .map(collection => (
+            .map((collection) => (
               <CSSTransition
                 classNames="card-list"
                 timeout={500}
@@ -114,7 +114,7 @@ export class CollectionCardList extends React.PureComponent<
   }
 
   public renderLoading() {
-    return [0, 1, 2, 3, 4, 5].map(count => (
+    return [0, 1, 2, 3, 4, 5].map((count) => (
       <Col
         key={`sk-${count}`}
         xs={{ span: 24 }}

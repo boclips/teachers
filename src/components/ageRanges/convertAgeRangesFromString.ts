@@ -11,7 +11,7 @@ export const convertAgeRangesFromString = (
     ? [ageRangeStrings]
     : ageRangeStrings;
 
-  return ageRangeArray.map(ageRange => {
+  return ageRangeArray.map((ageRange) => {
     const minAndMax = ageRange.split('-');
     return new AgeRange(
       parseInt(minAndMax[0], 10),

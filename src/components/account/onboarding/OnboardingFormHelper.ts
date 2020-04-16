@@ -13,18 +13,12 @@ export class OnboardingFormHelper {
   }
 
   public static editRole(wrapper, value: string) {
-    wrapper
-      .find(By.dataQa('select-role'))
-      .first()
-      .simulate('click');
+    wrapper.find(By.dataQa('select-role')).first().simulate('click');
 
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 
     menuItems.find(`[value="${value}"]`).simulate('click');
-    wrapper
-      .find(By.dataQa('select-role'))
-      .first()
-      .simulate('click');
+    wrapper.find(By.dataQa('select-role')).first().simulate('click');
   }
 
   public static setMarketingOptIn(wrapper: ReactWrapper, optIn: boolean) {
@@ -48,7 +42,7 @@ export class OnboardingFormHelper {
 
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 
-    subjectIds.forEach(subjectId => {
+    subjectIds.forEach((subjectId) => {
       menuItems.find(`[value="${subjectId}"]`).simulate('click');
     });
 
@@ -73,18 +67,12 @@ export class OnboardingFormHelper {
   }
 
   public static editAgeRange(wrapper: ReactWrapper, ageRanges: string[]) {
-    wrapper
-      .find(SelectAgeRange)
-      .find('.ant-select')
-      .simulate('click');
+    wrapper.find(SelectAgeRange).find('.ant-select').simulate('click');
 
     const menuItems = wrapper.find('Trigger').find('MenuItem');
 
-    ageRanges.forEach(ageRange => {
-      menuItems
-        .find(`[data-qa="${ageRange}"]`)
-        .first()
-        .simulate('click');
+    ageRanges.forEach((ageRange) => {
+      menuItems.find(`[data-qa="${ageRange}"]`).first().simulate('click');
     });
   }
 

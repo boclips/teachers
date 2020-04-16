@@ -7,7 +7,7 @@ import { fetchLinksFailureAction } from '../actions/fetchLinksFailureAction';
 
 export default sideEffect(fetchLinksAction, (store: Store) => {
   fetchLinks(store.getState().apiPrefix).then(
-    links => store.dispatch(storeLinksAction(links)),
-    _error => store.dispatch(fetchLinksFailureAction()),
+    (links) => store.dispatch(storeLinksAction(links)),
+    (_error) => store.dispatch(fetchLinksFailureAction()),
   );
 });

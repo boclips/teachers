@@ -47,10 +47,7 @@ it('removes duration from url on close', () => {
 
   const wrapper = getWrapper(1, 2, store);
 
-  wrapper
-    .find(ClosableTag)
-    .props()
-    .onClose();
+  wrapper.find(ClosableTag).props().onClose();
 
   expect(store.getActions().length).toEqual(1);
   expect(store.getActions()[0].type).toEqual(updateSearchParamsAction.type);

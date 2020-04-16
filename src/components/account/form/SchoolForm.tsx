@@ -44,10 +44,10 @@ export class SchoolForm extends React.Component<
     }
   };
 
-  public onSearchSchool = searchValue => {
+  public onSearchSchool = (searchValue) => {
     if (searchValue) {
       searchSchools(searchValue, this.props.country, this.props.state).then(
-        schools => {
+        (schools) => {
           this.setState({
             ...this.state,
             schools,
@@ -77,7 +77,7 @@ export class SchoolForm extends React.Component<
         })(
           // @ts-ignore
           <AutoComplete
-            dataSource={this.state.schools.map(s => s.name)}
+            dataSource={this.state.schools.map((s) => s.name)}
             placeholder={this.props.placeholder}
             size={'large'}
             onSearch={this.onSearchSchool}
@@ -126,7 +126,7 @@ export class SchoolForm extends React.Component<
       schools.unshift({ id: UNKNOWN_SCHOOL, name: "My school isn't listed" });
     }
 
-    return schools.map(school => (
+    return schools.map((school) => (
       <Option key={school.id} value={school.id} title={school.name}>
         {school.name}
       </Option>

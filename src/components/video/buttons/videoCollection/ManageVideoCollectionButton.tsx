@@ -128,7 +128,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
 
   private collectionItem(videoCollection: VideoCollection, video: Video) {
     const alreadyInCollection =
-      videoCollection.videoIds.find(v => v.value === video.id) !== undefined;
+      videoCollection.videoIds.find((v) => v.value === video.id) !== undefined;
     return (
       <Checkbox
         defaultChecked={alreadyInCollection}
@@ -164,7 +164,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
       );
     }
 
-    const menuEntries = (this.props.collections || []).map(collection => (
+    const menuEntries = (this.props.collections || []).map((collection) => (
       <Menu.Item
         key={collection.id}
         className="manage-video-collection-button__menu-item"
@@ -247,7 +247,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     });
   };
 
-  private setTitle = e => {
+  private setTitle = (e) => {
     this.setState({ ...this.state, newCollectionTitle: e.target.value });
   };
 
@@ -294,7 +294,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
     });
   };
 
-  private showCreateCollection = e => {
+  private showCreateCollection = (e) => {
     e.preventDefault();
     this.setState({
       ...this.state,

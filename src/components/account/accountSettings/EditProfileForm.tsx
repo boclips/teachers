@@ -102,7 +102,7 @@ class ProfileFormFields extends React.Component<
   private submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const ageRanges = (values.ageRange as string[]).map(it =>
+        const ageRanges = (values.ageRange as string[]).map((it) =>
           AgeRange.fromJson(it),
         );
         const ages = extractContainedAges(ageRanges);
@@ -116,7 +116,7 @@ class ProfileFormFields extends React.Component<
             this.props.updateUser();
             this.props.toggleForm();
           })
-          .catch(ex => {
+          .catch((ex) => {
             console.error(ex);
             NotificationFactory.error({
               message: 'Ooops! Something went wrong...',

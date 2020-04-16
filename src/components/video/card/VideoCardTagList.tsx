@@ -20,7 +20,7 @@ export const VideoCardTagList = (props: Props) => {
           {props.video.ageRange && (
             <AgeRangeTag ageRange={props.video.ageRange} />
           )}
-          {props.video.subjects.map(subject => (
+          {props.video.subjects.map((subject) => (
             <SubjectTag subjectName={subject.name} key={subject.id} />
           ))}
           {props.video.bestFor && <BestForTag value={props.video.bestFor} />}

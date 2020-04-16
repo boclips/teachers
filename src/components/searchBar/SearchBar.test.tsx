@@ -94,15 +94,17 @@ describe('SearchBar', () => {
     const options = wrapper.getAllByRole('option');
 
     expect(
-      options.filter(option => option.textContent.match(/history europe/)),
+      options.filter((option) => option.textContent.match(/history europe/)),
     ).toHaveLength(1);
 
     expect(
-      options.filter(option => option.textContent.match(/history USA/)),
+      options.filter((option) => option.textContent.match(/history USA/)),
     ).toHaveLength(1);
 
     expect(
-      options.filter(option => option.textContent.match(/Hip Hughes History/)),
+      options.filter((option) =>
+        option.textContent.match(/Hip Hughes History/),
+      ),
     ).toHaveLength(1);
   });
 
@@ -116,11 +118,11 @@ describe('SearchBar', () => {
     const options = wrapper.getAllByRole('option');
 
     expect(
-      options.filter(option => option.textContent.match(/history europe/)),
+      options.filter((option) => option.textContent.match(/history europe/)),
     ).toHaveLength(1);
 
     expect(
-      options.filter(option =>
+      options.filter((option) =>
         option.textContent.match(/Channel: Hip Hughes History/),
       ),
     ).toHaveLength(1);

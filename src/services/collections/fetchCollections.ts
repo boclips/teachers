@@ -15,7 +15,7 @@ export const fetchPageableCollections = (
         ? links[request.key].getTemplatedLink(request.request.filters)
         : links[request.key].getOriginalLink(),
     )
-    .then(response => parseScrollableCollectionsListResponse(response));
+    .then((response) => parseScrollableCollectionsListResponse(response));
 
 export const fetchNextCollectionsPage = (
   collections: Pageable<string>,
@@ -25,5 +25,5 @@ export const fetchNextCollectionsPage = (
   }
   return axios
     .get(collections.links.next.getOriginalLink())
-    .then(response => parseScrollableCollectionsListResponse(response));
+    .then((response) => parseScrollableCollectionsListResponse(response));
 };

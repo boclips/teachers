@@ -24,7 +24,7 @@ export class ScreenReaderErrors extends React.Component<Props> {
   private renderErrors() {
     return (
       <ul data-qa="errors-list" className="screen-reader-errors__list">
-        {this.props.errors.map(error => (
+        {this.props.errors.map((error) => (
           <li data-qa="error" key={error.field}>
             {error.field}: {error.message}
           </li>

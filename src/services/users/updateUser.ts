@@ -58,7 +58,7 @@ function updateUser(
   return axios
     .put(links.profile.getOriginalLink(), request)
     .then(callback)
-    .catch(error => {
+    .catch((error) => {
       console.error('An error occurred while updating the user', error);
     });
 }

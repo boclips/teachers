@@ -187,7 +187,7 @@ class CreateAccountForm extends React.Component<
     );
   }
 
-  private updateRecaptchaToken = recaptchaToken => {
+  private updateRecaptchaToken = (recaptchaToken) => {
     this.props.form.setFieldsValue({ recaptchaToken });
     this.setState({ renderRecaptcha: false });
   };
@@ -200,7 +200,7 @@ class CreateAccountForm extends React.Component<
     this.props.onSsoLogin('microsoft');
   };
 
-  private handleSubmit = event => {
+  private handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -212,7 +212,7 @@ class CreateAccountForm extends React.Component<
             .then(() => {
               this.setState({ ...this.state, showConfirmation: true });
             })
-            .catch(error => {
+            .catch((error) => {
               if (error && error.response.status === 409) {
                 handleUserExists();
               } else {
@@ -255,7 +255,7 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-const extractUtmParams = queryParam => {
+const extractUtmParams = (queryParam) => {
   const source = extractQueryParam(queryParam, 'utm_source');
   const term = extractQueryParam(queryParam, 'utm_term');
   const medium = extractQueryParam(queryParam, 'utm_medium');

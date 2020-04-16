@@ -17,7 +17,7 @@ export class StatesForm extends React.Component<
 > {
   public onUpdateState = (value: string) => {
     this.props.form.setFieldsValue({ state: value });
-    this.props.onStateChange(this.props.states.find(c => c.id === value));
+    this.props.onStateChange(this.props.states.find((c) => c.id === value));
   };
 
   public render() {
@@ -57,7 +57,7 @@ export class StatesForm extends React.Component<
       this.props.states &&
       this.props.states
         .sort((a, b) => a.name.localeCompare(b.name))
-        .map(state => (
+        .map((state) => (
           <Option
             data-qa="state-option"
             key={state.id}

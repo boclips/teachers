@@ -30,7 +30,7 @@ interface StateProps {
 
 class CollectionCardContainer extends React.PureComponent<Props> {
   public render() {
-    const videos = this.props.videos.filter(video => video !== undefined);
+    const videos = this.props.videos.filter((video) => video !== undefined);
 
     return (
       <CollectionCard
@@ -58,7 +58,7 @@ class CollectionCardContainer extends React.PureComponent<Props> {
 
     const { videos } = this.props;
 
-    const numberOfVideosLoaded = videos.filter(it => it !== undefined).length;
+    const numberOfVideosLoaded = videos.filter((it) => it !== undefined).length;
 
     return (
       numberOfVideosLoaded !== videoIds.length &&
@@ -71,7 +71,7 @@ function mapStateToProps(state: State, props: OwnProps): StateProps {
   return {
     videos: getVideosByIds(
       state,
-      props.collection.videoIds.map(id => id.value),
+      props.collection.videoIds.map((id) => id.value),
     ),
   };
 }

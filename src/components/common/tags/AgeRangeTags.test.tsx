@@ -18,16 +18,6 @@ test('AgeRangeTags can render multiple tags', () => {
   const ageRangeTags = wrapper.find(AgeRangeTag);
 
   expect(ageRangeTags.children().length).toEqual(2);
-  expect(
-    ageRangeTags
-      .children()
-      .first()
-      .text(),
-  ).toEqual('3-5');
-  expect(
-    ageRangeTags
-      .children()
-      .last()
-      .text(),
-  ).toEqual('5-9');
+  expect(ageRangeTags.children().first().text()).toEqual('3-5');
+  expect(ageRangeTags.children().last().text()).toEqual('5-9');
 });

@@ -11,5 +11,5 @@ export const bookmarkCollection = (
 
   return axios
     .patch(collection.links.bookmark.getOriginalLink())
-    .then(response => parseCollectionResponse(response));
+    .then((response) => parseCollectionResponse(response));
 };

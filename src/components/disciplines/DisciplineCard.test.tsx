@@ -44,10 +44,7 @@ test('renders at most 4 first subjects', () => {
   expect(getSubjectNumber(3)).toBe('subject 4');
 
   function getSubjectNumber(index: number) {
-    return wrapper
-      .find(By.dataQa('discipline-subject'))
-      .at(index)
-      .text();
+    return wrapper.find(By.dataQa('discipline-subject')).at(index).text();
   }
 });
 
@@ -67,10 +64,7 @@ test('renders at subjects when less than 4', () => {
   expect(getSubjectNumber(0)).toBe('subject 1');
 
   function getSubjectNumber(index: number) {
-    return wrapper
-      .find(By.dataQa('discipline-subject'))
-      .at(index)
-      .text();
+    return wrapper.find(By.dataQa('discipline-subject')).at(index).text();
   }
 });
 

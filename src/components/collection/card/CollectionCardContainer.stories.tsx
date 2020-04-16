@@ -58,7 +58,7 @@ const bookmarkableCollection = VideoCollectionFactory.sample({
   updatedAt: '2018-12-12T12:12:12',
   isMine: false,
   isPublic: true,
-  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  videoIds: videos.map((video) => VideoIdFactory.sample({ value: video.id })),
   links: {
     self: new Link({ href: '' }),
     bookmark: new Link({ href: '' }),
@@ -75,7 +75,7 @@ const myCollection = VideoCollectionFactory.sample({
   updatedAt: '2018-12-12T12:12:12',
   isMine: true,
   isPublic: true,
-  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  videoIds: videos.map((video) => VideoIdFactory.sample({ value: video.id })),
   links: {
     self: new Link({ href: '' }),
     edit: new Link({ href: '' }),
@@ -93,7 +93,7 @@ const bookmarkedCollection = VideoCollectionFactory.sample({
   updatedAt: '2018-12-12T12:12:12',
   isMine: false,
   isPublic: true,
-  videoIds: videos.map(video => VideoIdFactory.sample({ value: video.id })),
+  videoIds: videos.map((video) => VideoIdFactory.sample({ value: video.id })),
   links: {
     self: new Link({ href: '' }),
     unbookmark: new Link({ href: '' }),

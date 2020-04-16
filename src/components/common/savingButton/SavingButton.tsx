@@ -27,7 +27,7 @@ export default class SavingButton extends React.PureComponent<Props, State> {
 
     if (isJustSaved && !this.state.timeoutId) {
       timeoutId = setTimeout(
-        function() {
+        function () {
           this.setState({
             ...this.state,
             justSaved: false,

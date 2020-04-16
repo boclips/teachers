@@ -23,14 +23,16 @@ export class ShareForm extends React.Component<ShareFormProps, ShareFormState> {
 
   private handleStartChange = (segmentStart: number) => {
     this.setState(
-      prevState => ({ segment: { ...prevState.segment, start: segmentStart } }),
+      (prevState) => ({
+        segment: { ...prevState.segment, start: segmentStart },
+      }),
       () => this.props.onSegmentChange(this.state.segment),
     );
   };
 
   private handleEndChange = (segmentEnd: number) => {
     this.setState(
-      prevState => ({ segment: { ...prevState.segment, end: segmentEnd } }),
+      (prevState) => ({ segment: { ...prevState.segment, end: segmentEnd } }),
       () => this.props.onSegmentChange(this.state.segment),
     );
   };

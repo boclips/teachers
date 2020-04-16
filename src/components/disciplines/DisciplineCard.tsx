@@ -40,7 +40,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
         {this.props.discipline.subjects && (
           <div className="discipline-card__body display-tablet-and-desktop">
             <ul className="discipline-card__subjects">
-              {this.props.discipline.subjects.slice(0, 4).map(subject => (
+              {this.props.discipline.subjects.slice(0, 4).map((subject) => (
                 <li
                   className={'discipline-card__subject-item'}
                   data-qa="discipline-subject"

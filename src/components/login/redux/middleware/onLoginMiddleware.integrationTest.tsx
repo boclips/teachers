@@ -71,7 +71,7 @@ describe('on store login', () => {
 
     it('fetches my collections', async () => {
       await eventually(() => {
-        expect(store.getActions().map(action => action.type)).toContain(
+        expect(store.getActions().map((action) => action.type)).toContain(
           storeCollectionsAction({
             collections: undefined,
             key: 'myCollections',
@@ -82,7 +82,7 @@ describe('on store login', () => {
 
     it('fetches disciplines', async () => {
       await eventually(() => {
-        expect(store.getActions().map(action => action.type)).toContain(
+        expect(store.getActions().map((action) => action.type)).toContain(
           fetchDisciplinesAction().type,
         );
       });
@@ -90,7 +90,7 @@ describe('on store login', () => {
 
     it('fetches tags', async () => {
       await eventually(() => {
-        expect(store.getActions().map(action => action.type)).toContain(
+        expect(store.getActions().map((action) => action.type)).toContain(
           fetchTagsAction().type,
         );
       });

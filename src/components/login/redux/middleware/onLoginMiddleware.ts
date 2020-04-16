@@ -38,7 +38,7 @@ const onLoggedIn = (store: Store) => {
       store.dispatch(userDetailsFetched(user));
       store.dispatch(registerUserForAnalytics(user));
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
     });
 };
@@ -49,9 +49,9 @@ const fetchAndStorePageableCollections = (
   key: CollectionKey,
 ) =>
   fetchPageableCollections(links, { key })
-    .then(collections => {
+    .then((collections) => {
       store.dispatch(storeCollectionsAction({ collections, key }));
     })
-    .catch(e => console.error('Cannot fetch collections', e));
+    .catch((e) => console.error('Cannot fetch collections', e));
 
 export default sideEffect(userLoggedIn, onLoggedIn);

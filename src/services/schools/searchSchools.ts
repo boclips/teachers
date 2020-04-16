@@ -15,7 +15,7 @@ export function searchSchools(
         state: state ? state.id : undefined,
       }),
     )
-    .then(response => response.data)
+    .then((response) => response.data)
     .then(convertSchoolsResource);
 }
 
@@ -23,7 +23,7 @@ function convertSchoolsResource(data: any): School[] {
   return (
     (data._embedded &&
       data._embedded.schools &&
-      data._embedded.schools.map(rawSchool => ({
+      data._embedded.schools.map((rawSchool) => ({
         id: rawSchool.id,
         name: rawSchool.name,
       }))) ||

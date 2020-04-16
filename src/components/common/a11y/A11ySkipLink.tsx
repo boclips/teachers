@@ -11,7 +11,7 @@ export const A11ySkipLink = (props: Props) => (
   <Link
     className="a11y-skip-link"
     tabIndex={0}
-    to={location => ({ ...location, hash: props.hash })}
+    to={(location) => ({ ...location, hash: props.hash })}
   >
     {props.children}
   </Link>

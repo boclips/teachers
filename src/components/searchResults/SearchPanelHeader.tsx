@@ -10,7 +10,7 @@ interface Props {
 }
 
 export class SearchPanelHeader extends React.Component<Props> {
-  private createResultString = resultCount => {
+  private createResultString = (resultCount) => {
     const count = Math.min(resultCount, MaxElementCount);
 
     const plural = count > 1 ? 's' : '';

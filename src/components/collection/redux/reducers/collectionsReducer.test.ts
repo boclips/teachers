@@ -200,7 +200,7 @@ describe(`collectionsReducer`, () => {
         stateAfter.entities.collections.byId[targetCollection.id];
 
       expect(updatedCollection.videoIds).toHaveLength(2);
-      expect(updatedCollection.videoIds.map(id => id.value)).toContain('124');
+      expect(updatedCollection.videoIds.map((id) => id.value)).toContain('124');
     });
 
     test('adding a duplicate video to a collection does not re-add it', () => {
@@ -236,7 +236,7 @@ describe(`collectionsReducer`, () => {
       const secondVideo = VideoFactory.sample({ id: '124' });
       const collection = VideoCollectionFactory.sample({
         id: 'target',
-        videoIds: [firstVideo, secondVideo].map(it =>
+        videoIds: [firstVideo, secondVideo].map((it) =>
           VideoIdFactory.sample({ value: it.id }),
         ),
       });

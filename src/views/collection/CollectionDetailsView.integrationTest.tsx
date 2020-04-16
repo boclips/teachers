@@ -116,14 +116,11 @@ describe('CollectionDetailsView', () => {
 
   describe('CollectionsDetailsView before collection loaded', () => {
     beforeEach(() => {
-      new ApiStub()
-        .defaultUser()
-        .fetchCollections()
-        .fetchCollection();
+      new ApiStub().defaultUser().fetchCollections().fetchCollection();
 
       axiosMock.onGet('/collections/slow-loading-collection').reply(
         () =>
-          new Promise(resolve => {
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve([200, collectionResponse([], 'slow-loading-collection')]);
             }, 300);

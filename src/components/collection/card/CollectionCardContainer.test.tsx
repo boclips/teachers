@@ -86,7 +86,7 @@ describe('need to fetch videos scenarios', () => {
 
     const collection = VideoCollectionFactory.sample({
       id: 'target',
-      videoIds: videoResources.map(v => ({
+      videoIds: videoResources.map((v) => ({
         value: v.id,
         links: { self: new Link(v._links.self) },
       })),
@@ -138,7 +138,7 @@ describe('does not fetch videos scenarios', () => {
     ];
 
     const collection = VideoCollectionFactory.sample({
-      videoIds: videos.map(it => VideoIdFactory.sample({ value: it.id })),
+      videoIds: videos.map((it) => VideoIdFactory.sample({ value: it.id })),
     });
 
     collection.videoIds.push({
