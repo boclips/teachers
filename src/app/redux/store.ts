@@ -5,7 +5,7 @@ import { createMiddleware } from '../middleware';
 import { createReducers } from './reducers';
 
 export const createBoclipsStore = (
-  initialState: Partial<State>,
+  initialState: State,
   history: History = createMemoryHistory(),
 ) =>
   createStore<State, any, any, any>(

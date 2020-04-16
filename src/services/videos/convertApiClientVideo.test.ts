@@ -36,6 +36,8 @@ describe('ApiClientVideo', () => {
       },
       attachments: [
         {
+          id: '',
+          links: undefined,
           linkToResource: 'www.boclips.com',
           description: 'My attachment description',
           type: AttachmentType.ACTIVITY,
