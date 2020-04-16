@@ -25,7 +25,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   public async trackPageRendered(url: string): Promise<void> {
     const client = await getBoclipsClient();
 
-    return client.eventsClient.trackPageRendered({ url });
+    return client.events.trackPageRendered({ url });
   }
 
   public async trackCollectionInteractedWith(
@@ -34,7 +34,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   ): Promise<void> {
     const client = await getBoclipsClient();
 
-    return client.eventsClient.trackCollectionInteraction(
+    return client.events.trackCollectionInteraction(
       {
         id: collection.id,
         links: {
@@ -51,7 +51,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   public async trackUserExpired(): Promise<void> {
     const client = await getBoclipsClient();
 
-    return client.eventsClient.trackUserExpired();
+    return client.events.trackUserExpired();
   }
 
   public async trackPlatformInteraction(
@@ -59,6 +59,6 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   ): Promise<void> {
     const client = await getBoclipsClient();
 
-    return client.eventsClient.trackPlatformInteraction(subtype);
+    return client.events.trackPlatformInteraction(subtype);
   }
 }

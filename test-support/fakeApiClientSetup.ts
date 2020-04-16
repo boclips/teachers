@@ -10,7 +10,7 @@ import { getBoclipsClient } from '../src/services/apiClient';
 
 export const fakeSubjectsSetup = async () => {
   const subjectsClient: FakeSubjectsClient = ((await getBoclipsClient()) as FakeBoclipsClient)
-    .subjectsClient;
+    .subjects;
 
   subjectsClient.insertSubject(
     SubjectFactory.sample({
@@ -36,7 +36,7 @@ export const fakeSubjectsSetup = async () => {
 
 export const fakeVideoSetup = async (videoResource: VideoResource) => {
   const videosClient: FakeVideosClient = ((await getBoclipsClient()) as FakeBoclipsClient)
-    .videosClient;
+    .videos;
 
   videosClient.insertVideo(VideosConverter.convert(videoResource));
 };

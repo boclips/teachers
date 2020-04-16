@@ -6,7 +6,7 @@ import { fetchVideo } from './fetchVideo';
 test('resolves with a video object when successfuly fetched', async () => {
   const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
-  client.videosClient.insertVideo(
+  client.videos.insertVideo(
     VideoFactory.sample({
       id: '177',
       title: 'KS3/4 Science: Demonstrating Chemistry',

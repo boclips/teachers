@@ -4,6 +4,6 @@ const mockClient = jest.genMockFromModule('boclips-api-client') as any;
 
 const fakeClient = new TestSupport.FakeBoclipsClient();
 
-mockClient.ApiBoclipsClient.initialize = () => Promise.resolve(fakeClient);
+mockClient.ApiBoclipsClient.create = () => Promise.resolve(fakeClient);
 
 module.exports = mockClient;

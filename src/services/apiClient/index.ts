@@ -3,4 +3,4 @@ import { ApiBoclipsClient, BoclipsClient } from 'boclips-api-client';
 import { Constants } from '../../app/AppConstants';
 
 export const getBoclipsClient = (): Promise<BoclipsClient> =>
-  ApiBoclipsClient.initialize(axios, Constants.API_PREFIX);
+  ApiBoclipsClient.create(axios, Constants.API_PREFIX);

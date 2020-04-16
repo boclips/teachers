@@ -53,21 +53,21 @@ test('logInteraction rejects when link is missing', async () => {
 
 test('trackPageRendered calls ApiClient with url', async () => {
   const client = (await getBoclipsClient()) as FakeBoclipsClient;
-  client.eventsClient.clear();
+  client.events.clear();
 
   const analytics = new HttpBoclipsAnalytics();
 
   await analytics.trackPageRendered('http://test.com/test?id=123');
 
-  expect(client.eventsClient.getEvents().length).toEqual(1);
-  expect(
-    (client.eventsClient.getEvents()[0] as PageRenderedRequest).url,
-  ).toEqual('http://test.com/test?id=123');
+  expect(client.events.getEvents().length).toEqual(1);
+  expect((client.events.getEvents()[0] as PageRenderedRequest).url).toEqual(
+    'http://test.com/test?id=123',
+  );
 });
 
 test('trackPlatformInteraction calls ApiClient with subtype', async () => {
   const client = (await getBoclipsClient()) as FakeBoclipsClient;
-  client.eventsClient.clear();
+  client.events.clear();
 
   const analytics = new HttpBoclipsAnalytics();
 
@@ -75,8 +75,8 @@ test('trackPlatformInteraction calls ApiClient with subtype', async () => {
     PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
   );
 
-  expect(client.eventsClient.getEvents().length).toEqual(1);
-  expect(client.eventsClient.getEvents()[0]).toEqual({
+  expect(client.events.getEvents().length).toEqual(1);
+  expect(client.events.getEvents()[0]).toEqual({
     type: 'PLATFORM_INTERACTED_WITH',
     subtype: PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
   });

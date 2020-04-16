@@ -27,7 +27,7 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
   public async trackPageRendered(url: string): Promise<void> {
     const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
-    return client.eventsClient.trackPageRendered({ url });
+    return client.events.trackPageRendered({ url });
   }
 
   public async trackCollectionInteractedWith(
@@ -36,7 +36,7 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
   ) {
     const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
-    return client.eventsClient.trackCollectionInteraction(
+    return client.events.trackCollectionInteraction(
       {
         id: collection.id,
         links: {
@@ -53,7 +53,7 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
   public async trackUserExpired(): Promise<void> {
     const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
-    return client.eventsClient.trackUserExpired();
+    return client.events.trackUserExpired();
   }
 
   public async trackPlatformInteraction(
@@ -61,7 +61,7 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
   ): Promise<void> {
     const client = (await getBoclipsClient()) as FakeBoclipsClient;
 
-    return client.eventsClient.trackPlatformInteraction(subtype);
+    return client.events.trackPlatformInteraction(subtype);
   }
 }
 

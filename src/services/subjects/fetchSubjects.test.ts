@@ -11,7 +11,7 @@ const getFakeBoclipsClient: () => Promise<FakeBoclipsClient> = async () => {
 
 test('fetch all subjects', async () => {
   const subjectClient: FakeSubjectsClient = (await getFakeBoclipsClient())
-    .subjectsClient;
+    .subjects;
 
   subjectClient.insertSubject({ id: '1', name: 'Maths' });
   subjectClient.insertSubject({ id: '2', name: 'German' });
