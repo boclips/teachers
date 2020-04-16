@@ -8,7 +8,7 @@ npm i
 npm run build:ci
 
 EXIT_CODE=0
-npm-check-updates --error-level 2 || EXIT_CODE=$?
+./node_modules/npm-check-updates/bin/npm-check-updates --error-level 2 || EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 1 ]
 then
