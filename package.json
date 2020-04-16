@@ -86,7 +86,7 @@
     "hoist-non-react-statics": "^3.3.2",
     "html-webpack-plugin": "^4.2.0",
     "image-webpack-loader": "^6.0.0",
-    "immer": "^5.3.6",
+    "immer": "^6.0.3",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
     "jest-simple-dot-reporter": "^1.0.5",
