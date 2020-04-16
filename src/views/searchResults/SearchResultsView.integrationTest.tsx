@@ -9,7 +9,6 @@ import {
   buildVideoSearchResponse,
   video177,
 } from 'test-support/api-responses';
-import { waitForElement } from '@testing-library/react';
 
 describe('SearchResultsView', () => {
   it('panel contains filters for age, subjects and duration', () => {
@@ -44,35 +43,6 @@ describe('SearchResultsView', () => {
 
     const helperMessageOtherTip =
       'Check the spelling of your search term for any typos.';
-
-    it(`renders helper message and filter bar if any filters selected`, async () => {
-      const initialQuery = 'hello';
-      const view = renderSearchResultsViewWithSampleData(initialQuery);
-      await waitForElement(() => view.getByTestId('search-count'));
-
-      new ApiStub()
-        .defaultUser()
-        .queryVideos({
-          query: initialQuery,
-          subject: ['art-id'],
-          results: buildVideoSearchResponse([]),
-        })
-        .queryCollections({
-          query: initialQuery,
-          results: collectionsResponse([]),
-        });
-
-      const artsOption = await view.findByLabelText(/Arts.*/);
-      fireEvent.click(artsOption);
-
-      await waitForElement(() => view.getByText(helperMessageTitle));
-      expect(view.getByText(helperMessageTitle)).toBeInTheDocument();
-      expect(view.getByText(helperMessageDetails)).toBeInTheDocument();
-      expect(view.getByText(helperMessageFiltersTip)).toBeInTheDocument();
-      expect(view.getByText(helperMessageOtherTip)).toBeInTheDocument();
-      expect(view.getByText('Filter results')).toBeInTheDocument();
-      expect(view.queryByTestId('no-results-image')).not.toBeInTheDocument();
-    }, 10000);
 
     it('renders helper message with image and no filters bar', async () => {
       const initialQuery = 'hello';
