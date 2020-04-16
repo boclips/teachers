@@ -31,6 +31,8 @@ storiesOf('VideoCard', module)
     const video = VideoFactory.sample({
       attachments: [
         {
+          id: '',
+          links: undefined,
           type: AttachmentType.ACTIVITY,
           linkToResource: 'http://www.activity.com',
           description: 'My Activity',
@@ -45,6 +47,8 @@ storiesOf('VideoCard', module)
       playback: PlaybackFactory.sample({ type: 'YOUTUBE' }),
       attachments: [
         {
+          id: '',
+          links: undefined,
           type: AttachmentType.ACTIVITY,
           linkToResource: 'http://www.activity.com',
           description: 'My Activity',

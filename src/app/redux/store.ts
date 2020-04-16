@@ -8,7 +8,7 @@ export const createBoclipsStore = (
   initialState: Partial<State>,
   history: History = createMemoryHistory(),
 ) =>
-  createStore<State, any, any, any>(
+  createStore<Partial<State>, any, any, any>(
     createReducers(history),
     initialState,
     createMiddleware(history),
