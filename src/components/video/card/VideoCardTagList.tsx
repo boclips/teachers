@@ -12,7 +12,6 @@ interface Props {
 }
 
 export const VideoCardTagList = (props: Props) => {
-  console.log(props.video);
   return (
     <Authenticated>
       <div className="tag-list">
