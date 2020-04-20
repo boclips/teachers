@@ -119,12 +119,6 @@ export const CollectionCard = withMediaBreakPoint(
                 <MyCollectionSVG /> Your collection
               </span>
             )}
-            <span>
-              <span data-qa="collection-number-of-videos">
-                {props.collection.videoIds.length}
-              </span>{' '}
-              videos
-            </span>
           </section>
         )}
         {displayTags && (
