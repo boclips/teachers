@@ -1,7 +1,8 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
-.card-video-header {
+.video-card-header {
   @badge-container-width: 190px;
+  @button-container-width: 30px;
 
   display: flex;
   justify-content: space-between;
@@ -12,18 +13,30 @@
   &.clickable {
     cursor: pointer;
   }
+  .video-buttons {
+    display: none;
+  }
 
   @media (max-width: @screen-md) {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     padding: 12px;
-    padding-bottom: 0px;
+
+    .badge-container {
+      display: none;
+    }
+    .subtitle {
+      display: none;
+    }
+    .video-buttons {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+    }
   }
 
   .title {
-    @media (min-width: @screen-md) {
       width: calc(100% - @badge-container-width);
+    @media (max-width: @screen-md) {
+      width: calc(100% - @button-container-width);
     }
     color: @shade-7;
     font-size: 18px;

@@ -2,6 +2,11 @@ import { Card, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import State from 'src/types/State';
 import { useSelector } from 'react-redux';
+import {
+  withMediaBreakPoint,
+  WithMediaBreakPointProps,
+} from 'src/components/common/higherOrderComponents/withMediaBreakPoint';
+import MediaBreakpoints from 'src/types/MediaBreakpoints';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -31,57 +36,65 @@ export const VideoCardSkeleton = () => (
   </Card>
 );
 
-export const VideoCard = React.memo<Props>((props) => {
-  const isAuthenticated = useSelector((state: State) => !!state.user);
-  const renderVideoButtons =
-    (props.video && props.video.links.transcript) || isAuthenticated;
-  const emitVideoLinkClickEvent = () => {
-    AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(props.video);
-  };
+export const VideoCard = withMediaBreakPoint(
+  React.memo<Props & WithMediaBreakPointProps>((props) => {
+    const isAuthenticated = useSelector((state: State) => !!state.user);
+    const smallCard = props.mediaBreakpoint.width < MediaBreakpoints.md.width;
 
-  const refererParam = props.referer ? `?referer=${props.referer}` : '';
+    const renderVideoButtons =
+      ((props.video && props.video.links.transcript) || isAuthenticated) &&
+      !smallCard;
 
-  if (!props.video) {
-    return <VideoCardSkeleton />;
-  } else {
-    return (
-      <ClickableCard
-        className="video-card"
-        bordered={false}
-        href={`/videos/${props.video.id}${refererParam}`}
-        onMouseDown={emitVideoLinkClickEvent}
-        data-qa="video-card"
-      >
-        <VideoHeader video={props.video} />
-        <StopClickPropagation
-          wrapper="section"
-          wrapperProps={{ className: 'video-preview' }}
+    const emitVideoLinkClickEvent = () => {
+      AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(props.video);
+    };
+    const refererParam = props.referer ? `?referer=${props.referer}` : '';
+
+    if (!props.video) {
+      return <VideoCardSkeleton />;
+    } else {
+      return (
+        <ClickableCard
+          className="video-card"
+          bordered={false}
+          href={`/videos/${props.video.id}${refererParam}`}
+          onMouseDown={emitVideoLinkClickEvent}
+          data-qa="video-card"
         >
-          <div aria-label={'video player'} tabIndex={0}>
-            <VideoPlayer
-              video={props.video}
-              videoIndex={props.videoIndex}
-              mode="card"
-            />
-          </div>
-        </StopClickPropagation>
+          <VideoHeader video={props.video} />
+          <StopClickPropagation
+            wrapper="section"
+            wrapperProps={{ className: 'video-preview' }}
+          >
+            <div aria-label={'video player'} tabIndex={0}>
+              <VideoPlayer
+                video={props.video}
+                videoIndex={props.videoIndex}
+                mode="card"
+              />
+            </div>
+          </StopClickPropagation>
 
-        <section className="video-details">
-          <p data-qa="video-description" className="description clamp-3-lines">
-            {props.video.description}
-          </p>
-          <Row className="buttons-row">
-            <StopClickPropagation>
-              {renderVideoButtons && (
-                <VideoButtons
-                  video={props.video}
-                  collection={props.currentCollection}
-                />
-              )}
-            </StopClickPropagation>
-          </Row>
-        </section>
-      </ClickableCard>
-    );
-  }
-});
+          <section className="video-details">
+            <p
+              data-qa="video-description"
+              className="description clamp-3-lines"
+            >
+              {props.video.description}
+            </p>
+            <Row className="buttons-row">
+              <StopClickPropagation>
+                {renderVideoButtons && (
+                  <VideoButtons
+                    video={props.video}
+                    collection={props.currentCollection}
+                  />
+                )}
+              </StopClickPropagation>
+            </Row>
+          </section>
+        </ClickableCard>
+      );
+    }
+  }),
+);

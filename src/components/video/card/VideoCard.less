@@ -20,16 +20,12 @@
     animation: fade-in 0.4s ease;
 
     @media (max-width: @screen-md) {
-      padding: 0px;
+      padding: 0;
 
       flex-direction: column;
 
-      .card-video-header {
-        order: 2;
-      }
-
       .buttons-row {
-        order: 3;
+        display: none;
       }
 
       .video-preview {
@@ -45,8 +41,8 @@
       }
 
       @media (max-width: @screen-md) {
-        border-radius: @video-border-radius @video-border-radius 0px 0px;
         width: 100%;
+        padding: 0 12px;
         order: 1;
       }
 
