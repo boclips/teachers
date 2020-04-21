@@ -138,6 +138,7 @@ class VideoPlayer extends React.PureComponent<
         ],
         addons: {
           hoverPreview: true,
+          rewatchButton: true,
         },
         ratio: '16:9',
       };
@@ -155,6 +156,9 @@ class VideoPlayer extends React.PureComponent<
           'settings',
           'fullscreen',
         ],
+        addons: {
+          rewatchButton: true,
+        },
         ratio: '16:9',
       };
     }
