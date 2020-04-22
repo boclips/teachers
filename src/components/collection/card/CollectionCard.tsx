@@ -123,14 +123,12 @@ export const CollectionCard = withMediaBreakPoint(
         )}
         {displayTags && (
           <div className="tags-container" data-qa={'tags-container'}>
-            <span>
-              {props.collection.ageRange.isBounded() && (
-                <AgeRangeTag ageRange={props.collection.ageRange} />
-              )}
-              {props.collection.subjects.slice(0, 1).map((subjectId) => (
-                <ConnectedSubjectTag key={subjectId} id={subjectId} />
-              ))}
-            </span>
+            {props.collection.ageRange.isBounded() && (
+              <AgeRangeTag ageRange={props.collection.ageRange} />
+            )}
+            {props.collection.subjects.slice(0, 1).map((subjectId) => (
+              <ConnectedSubjectTag key={subjectId} id={subjectId} />
+            ))}
             {props.collection.attachments &&
               props.collection.attachments.length > 0 && (
                 <AttachmentTag label={'Lesson guide'} />

@@ -39,8 +39,10 @@
     width: 100%;
     min-height: 38px;
 
-    @media (min-width: @screen-md) {
-      justify-content: space-between;
+    @media (min-width: @screen-md-min) {
+      .attachment-tag {
+        margin-left: auto;
+      }
     }
 
     .tag {
@@ -188,6 +190,9 @@
     .tags-container {
       margin: 0;
       justify-content: left;
+      .attachment-tag {
+        margin-left: 0;
+      }
     }
 
     .collection-card__owner-label {

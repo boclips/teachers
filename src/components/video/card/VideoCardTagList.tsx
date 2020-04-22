@@ -14,15 +14,11 @@ interface Props {
 export const VideoCardTagList = (props: Props) => (
   <Authenticated>
     <div className="tag-list">
-      <span>
-        {props.video.ageRange && (
-          <AgeRangeTag ageRange={props.video.ageRange} />
-        )}
-        {props.video.subjects.map((subject) => (
-          <SubjectTag subjectName={subject.name} key={subject.id} />
-        ))}
-        {props.video.bestFor && <BestForTag value={props.video.bestFor} />}
-      </span>
+      {props.video.ageRange && <AgeRangeTag ageRange={props.video.ageRange} />}
+      {props.video.subjects.map((subject) => (
+        <SubjectTag subjectName={subject.name} key={subject.id} />
+      ))}
+      {props.video.bestFor && <BestForTag value={props.video.bestFor} />}
       {props.video.attachments && props.video.attachments.length > 0 && (
         <AttachmentTag label={'Activity'} />
       )}
