@@ -104,14 +104,6 @@ const Filters = React.forwardRef(
       </span>
     );
 
-    function formatCount(count: number) {
-      if (count >= 500) {
-        return `${count}+`;
-      } else {
-        return `${count}`;
-      }
-    }
-
     return (
       <section ref={ref}>
         <Form className="filter-form">
@@ -218,3 +210,11 @@ export const FiltersWithForm = withAppliedSearchParameters(
     },
   })(Filters),
 );
+
+export function formatCount(count: number): string {
+  if (count >= 500) {
+    return `${count}+`;
+  } else {
+    return `${count}`;
+  }
+}

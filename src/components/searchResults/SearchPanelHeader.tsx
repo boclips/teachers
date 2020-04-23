@@ -3,6 +3,7 @@ import React from 'react';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
 import './SearchResultsHeader.less';
 import { MaxElementCount } from 'src/services/videos/parseVideosResponse';
+import { formatCount } from 'src/components/searchResults/filters/Filters';
 
 interface Props {
   totalElements: number;
@@ -14,9 +15,8 @@ export class SearchPanelHeader extends React.Component<Props> {
     const count = Math.min(resultCount, MaxElementCount);
 
     const plural = count > 1 ? 's' : '';
-    const plusSuffix = resultCount > MaxElementCount ? '+' : '';
 
-    return `${count}${plusSuffix} result${plural} found`;
+    return `${formatCount(count)} result${plural} found`;
   };
 
   public render() {
