@@ -118,7 +118,7 @@
     "antd": "^3.26.15",
     "axios": "^0.19.2",
     "boclips-api-client": "^10.0.0",
-    "boclips-js-security": "^3.3.1",
+    "boclips-js-security": "^3.4.0",
     "boclips-player": "2.8.2",
     "boclips-player-react": "1.1.0",
     "js-cookie": "^2.2.1",
