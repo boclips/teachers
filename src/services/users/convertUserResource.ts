@@ -12,8 +12,8 @@ export default function convertUserResource(resource: any): UserProfile {
     country: resource.organisation ? resource.organisation.country : null,
     state: resource.organisation ? resource.organisation.state : null,
     school: {
-      id: resource.organisationAccountId,
-      name: resource.organisation ? resource.organisation.name : null,
+      id: resource.organisation?.id,
+      name: resource.organisation?.name || null,
     },
     shareCode: resource.teacherPlatformAttributes.shareCode,
     links: { self: new Link(resource._links.self) },
