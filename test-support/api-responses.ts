@@ -571,7 +571,8 @@ export function userResponse(id: string = 'my-user-id') {
     email: 'bob@someone.com',
     subjects: [{ id: '1' }],
     ages: [1, 2, 3, 4],
-    organisation: {
+    school: {
+      id: 'school-id',
       country: { name: 'United States', id: 'USA' },
       state: { name: 'California', id: 'CA' },
       name: 'My school',

@@ -9,7 +9,7 @@ describe('convertUserResource', () => {
       ages: [7, 8, 9],
       subjects: [{ id: 'subject-id-1' }],
       email: 'tester@boclips.com',
-      organisation: {
+      school: {
         id: 'org-id',
         name: 'School Name',
         type: 'SCHOOL',
