@@ -6,6 +6,7 @@ import React, { PureComponent } from 'react';
 import RemoteTeacherSVG from 'resources/images/remote-teacher.svg';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import { InteractionTracker } from 'src/components/common/InteractionTracker';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
@@ -46,32 +47,37 @@ export default class HomeView extends PureComponent {
             <Content>
               <Row>
                 <Col>
-                  <a
-                    href="https://www.boclips.com/remote-learning-with-video-resources-for-teachers"
-                    target="_blank"
-                    className="remote-teaching"
-                    onClick={() =>
+                  <InteractionTracker
+                    onInteraction={() =>
                       AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
                         PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
                       )
                     }
                   >
-                    <Row type="flex">
-                      <Col xs={0} lg={10}>
-                        <div className="remote-teaching__illustration">
-                          <RemoteTeacherSVG />
-                        </div>
-                      </Col>
-                      <Col sm={24} lg={14} className="copy-col">
-                        <h1 className="alt">FREE remote learning toolkit</h1>
-                        <p>
-                          Tools, ideas and inspiration to use in virtual
-                          classrooms
-                        </p>
-                        <Button className="display-desktop">Explore kit</Button>
-                      </Col>
-                    </Row>
-                  </a>
+                    <a
+                      href="https://www.boclips.com/remote-learning-with-video-resources-for-teachers"
+                      target={'_blank'}
+                      className="remote-teaching"
+                    >
+                      <Row type="flex">
+                        <Col xs={0} lg={10}>
+                          <div className="remote-teaching__illustration">
+                            <RemoteTeacherSVG />
+                          </div>
+                        </Col>
+                        <Col sm={24} lg={14} className="copy-col">
+                          <h1 className="alt">FREE remote learning toolkit</h1>
+                          <p>
+                            Tools, ideas and inspiration to use in virtual
+                            classrooms
+                          </p>
+                          <Button className="display-desktop">
+                            Explore kit
+                          </Button>
+                        </Col>
+                      </Row>
+                    </a>
+                  </InteractionTracker>
                 </Col>
               </Row>
             </Content>

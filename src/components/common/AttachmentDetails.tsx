@@ -3,6 +3,7 @@ import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model
 import ReactMarkdown from 'react-markdown';
 import './AttachmentDetails.less';
 import LessonClip from '../../../resources/images/activity-action.svg';
+import { InteractionTracker } from './InteractionTracker';
 
 export interface Props {
   description: string;
@@ -21,6 +22,7 @@ export const AttachmentDetails = (props: Props) => {
     title = 'Lesson guide outline';
     linkLabel = 'Visit lesson guide';
   }
+
   return (
     <section>
       <div className="attachment-details">
@@ -28,12 +30,14 @@ export const AttachmentDetails = (props: Props) => {
         <ReactMarkdown className="attachment-details__description">
           {props.description}
         </ReactMarkdown>
-        <a href={props.link} target="_blank" onClick={props.onClick}>
-          <div className="attachment-details__link">
-            <LessonClip aria-hidden={true} />
-            {linkLabel}
-          </div>
-        </a>
+        <InteractionTracker onInteraction={props.onClick}>
+          <a href={props.link} target="_blank">
+            <div className="attachment-details__link">
+              <LessonClip aria-hidden={true} />
+              {linkLabel}
+            </div>
+          </a>
+        </InteractionTracker>
       </div>
     </section>
   );
