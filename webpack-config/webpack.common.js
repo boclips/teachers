@@ -96,6 +96,12 @@ module.exports = {
       template: path.resolve(srcPath, 'index.html'),
       ga: 'replaced-by-profile',
     }),
-    new CopyWebpackPlugin([{ from: staticPath, to: distPath }]),
+    new CopyWebpackPlugin([
+      { from: staticPath, to: distPath },
+      {
+        from: './static/youtube-sprite.svg',
+        to: './static/assets',
+      },
+    ]),
   ],
 };
