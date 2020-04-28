@@ -99,7 +99,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: staticPath, to: distPath },
       {
-        from: './static/youtube-sprite.svg',
+        from: './static/assets/youtube-sprite.svg',
         to: '../dist/assets',
       },
     ]),
