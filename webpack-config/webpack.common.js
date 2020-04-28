@@ -100,7 +100,7 @@ module.exports = {
       { from: staticPath, to: distPath },
       {
         from: './static/youtube-sprite.svg',
-        to: './static/assets',
+        to: '../dist/assets',
       },
     ]),
   ],
