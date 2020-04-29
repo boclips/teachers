@@ -22,7 +22,7 @@ describe('ErrorView', () => {
 
     await fireEvent.click(homePageLink);
 
-    expect(view.findByText("I'm looking for a video about:"));
+    expect(view.findByText("Let's plan your next lesson:"));
   });
 
   it('does not render searchbar and navigation menu when non-recoverable', () => {
