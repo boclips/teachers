@@ -7,9 +7,9 @@ import {
   WithMediaBreakPointProps,
 } from 'src/components/common/higherOrderComponents/withMediaBreakPoint';
 import MediaBreakpoints from 'src/types/MediaBreakpoints';
+import { Video } from 'src/types/Video';
+import { VideoCollection } from 'src/types/VideoCollection';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { Video } from '../../../types/Video';
-import { VideoCollection } from '../../../types/VideoCollection';
 import { ClickableCard } from '../../common/ClickableCard/ClickableCard';
 import StopClickPropagation from '../../common/StopClickPropagation';
 import VideoButtons from '../buttons/videoButtons/VideoButtons';

@@ -5,10 +5,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
 import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
-import { Constants } from '../../app/AppConstants';
+import { Constants } from 'src/app/AppConstants';
+import { RouterState } from 'src/types/State';
+import { Bit } from 'src/views/bit';
 import PrivateRoute from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
-import { RouterState } from '../../types/State';
 import { AccountSettingsView } from '../account/AccountSettingsView';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
@@ -72,6 +73,7 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <Route path="/error" component={ErrorView} />
             <Route path="/trial-expired" component={TrialExpiredView} />
             <Route path="/create-account" component={CreateAccountView} />
+            <Route path="/bit" component={Bit} />
             <Route path="/videos">
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />

@@ -21,6 +21,7 @@ module.exports = merge(common, {
     port: localPort,
     host: '0.0.0.0',
     disableHostCheck: true,
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

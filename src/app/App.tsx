@@ -1,4 +1,5 @@
 import { History, createBrowserHistory } from 'history';
+import { hot } from 'react-hot-loader/root';
 import React, { PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
@@ -23,7 +24,7 @@ interface Props {
   history?: History;
 }
 
-export default class App extends PureComponent<Props> {
+class App extends PureComponent<Props> {
   public static defaultProps = {
     history: createBrowserHistory(),
   };
@@ -51,3 +52,5 @@ export default class App extends PureComponent<Props> {
     );
   }
 }
+
+export default hot(App);

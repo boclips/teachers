@@ -8,8 +8,8 @@ import {
 } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { push } from 'connected-react-router';
-import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
-import { AuthenticationState, LinksState, UserState } from '../../types/State';
+import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
+import { AuthenticationState, LinksState, UserState } from 'src/types/State';
 import { LoadingComponent } from '../common/LoadingComponent';
 
 export interface PrivateRouteComponentParams<TParams>

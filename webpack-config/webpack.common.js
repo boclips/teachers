@@ -12,7 +12,7 @@ module.exports = {
   entry: path.resolve(srcPath, 'index.tsx'),
   output: {
     path: distPath,
-    filename: '[name]-[contenthash:20].js',
+    filename: '[name]-[hash:20].js',
     publicPath: '/',
   },
   // Allows ts(x) and js files to be imported without extension
@@ -26,6 +26,7 @@ module.exports = {
       src: path.resolve(__dirname, '../src'),
       resources: path.resolve(__dirname, '../resources'),
       'test-support': path.resolve(__dirname, '../test-support'),
+      'react-dom': '@hot-loader/react-dom',
     },
   },
   module: {
@@ -33,20 +34,25 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            transpileOnly: true,
-            getCustomTransformers: () => ({
-              before: [
-                tsImportPluginFactory({
-                  libraryName: 'antd',
-                  libraryDirectory: 'lib',
-                }),
-              ],
-            }),
+        use: [
+          {
+            loader: 'babel-loader',
           },
-        },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              getCustomTransformers: () => ({
+                before: [
+                  tsImportPluginFactory({
+                    libraryName: 'antd',
+                    libraryDirectory: 'lib',
+                  }),
+                ],
+              }),
+            },
+          },
+        ],
       },
       {
         test: /^((?!\.module).)*less$/,
@@ -65,19 +71,19 @@ module.exports = {
         test: /\.module.less$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader',
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true,
               modules: true,
-            }
+            },
           },
           {
-            loader: "less-loader"
-          }
-        ]
+            loader: 'less-loader',
+          },
+        ],
       },
       {
         test: /.svg$/i,
@@ -109,7 +115,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: '[name]-[contenthash:20].css' }),
+    new MiniCssExtractPlugin({ filename: '[name]-[hash:20].css' }),
     new HtmlWebpackPlugin({
       template: path.resolve(srcPath, 'index.html'),
       ga: 'replaced-by-profile',
