@@ -20,7 +20,7 @@ class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
       <span data-qa="age-range-filter-tag">
         <ClosableTag
           label="Age"
-          value={this.props.ageRange.getLabel()}
+          value={this.props.ageRange.getShortLabel()}
           onClose={() =>
             this.props.onClose(this.updateAgeRanges(this.props.ageRange))
           }

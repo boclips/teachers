@@ -32,6 +32,13 @@ describe('AgeRange', () => {
       expect(ageRange.getLabel()).toEqual('7+');
       expect(ageRange.getShortLabel()).toEqual('7+');
     });
+
+    test('returns an n+ id when ageRange max of 99', () => {
+      const ageRange = new AgeRange(16, 99);
+
+      expect(ageRange.getLabel()).toEqual('16 - 99');
+      expect(ageRange.getShortLabel()).toEqual('16+');
+    });
   });
 
   describe('generating an array', () => {
