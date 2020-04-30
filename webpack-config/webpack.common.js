@@ -23,8 +23,8 @@ module.exports = {
         __dirname,
         '../resources/icons.ts',
       ),
-      'src': path.resolve(__dirname, '../src'),
-      'resources': path.resolve(__dirname, '../resources'),
+      src: path.resolve(__dirname, '../src'),
+      resources: path.resolve(__dirname, '../resources'),
       'test-support': path.resolve(__dirname, '../test-support'),
     },
   },
@@ -49,7 +49,7 @@ module.exports = {
         },
       },
       {
-        test: /\.less$/,
+        test: /^((?!\.module).)*less$/,
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
@@ -60,6 +60,24 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.module.less$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              modules: true,
+            }
+          },
+          {
+            loader: "less-loader"
+          }
+        ]
       },
       {
         test: /.svg$/i,
