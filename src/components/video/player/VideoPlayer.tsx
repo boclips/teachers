@@ -147,6 +147,7 @@ class VideoPlayer extends React.PureComponent<
         controls: [
           'rewind',
           'play',
+          'play-large',
           'fast-forward',
           'progress',
           'current-time',
