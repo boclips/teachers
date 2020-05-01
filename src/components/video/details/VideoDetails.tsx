@@ -1,11 +1,11 @@
-import { Icon, Skeleton } from 'antd';
+import { Col, Icon, Row, Skeleton } from 'antd';
 import React from 'react';
 import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
 import { BestForTag } from 'src/components/common/tags/BestForTag';
 import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
-import badgeYoutube from 'resources/images/badge-youtube.png';
 import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { DownloadTranscriptButton } from 'src/components/video/buttons/downloadTranscriptButton/DownloadTranscriptButton';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -17,133 +17,134 @@ import './VideoDetails.less';
 
 interface Props {
   video: Video | null;
+  children?: React.ReactNode;
 }
 
-class VideoDetailsContent extends React.PureComponent<Props> {
-  public render() {
-    const video = this.props.video;
+const VideoDetailsContent = ({ video }: Props) => {
+  if (!video) {
+    return null;
+  }
 
-    if (!video) {
-      return null;
-    }
+  const hasAttachments = video.attachments && video.attachments.length > 0;
 
-    return (
-      <section
-        className="video-details-container video-content"
-        itemScope={true}
-        itemType="http://schema.org/Article"
-      >
-        <section className={'video-header'}>
+  return (
+    <section
+      className="video-details-container video-content"
+      itemScope={true}
+      itemType="http://schema.org/Article"
+    >
+      <Row type="flex" justify="space-between" className={'video-header'}>
+        <Col>
           <h1
             className="title clamp-2-lines big-title"
             data-qa="video-title"
             itemProp="name"
           >
-            {this.props.video.title}
+            {video.title}
           </h1>
-          <section className="subtitle">
-            <Rating video={this.props.video} />
-            Released on{' '}
-            <span data-qa="video-released-on">
-              <DateFormatter date={this.props.video.releasedOn} />
-            </span>{' '}
-            by{' '}
-            <span data-qa="video-created-by">{this.props.video.createdBy}</span>
+        </Col>
+        <Authenticated>
+          <Col>
+            <section className="buttons-row">
+              <VideoButtons video={video} mode={'default'} />
+            </section>
+          </Col>
+        </Authenticated>
+      </Row>
+      <Row>
+        <section className="badges-row">
+          <div className="subjects-container">
+            <Authenticated>
+              {video.ageRange && <AgeRangeTag ageRange={video.ageRange} />}
+              {video.subjects.map((subject) => (
+                <SubjectTag subjectName={subject.name} key={subject.name} />
+              ))}
+              {video.bestFor && <BestForTag value={video.bestFor} />}
+            </Authenticated>
+          </div>
+          <section className="badge-container">
+            <p data-qa="video-duration" className={'duration'}>
+              <Icon type="clock-circle" />{' '}
+              <DurationFormatter duration={video.duration} />
+            </p>
           </section>
         </section>
-        <section className="buttons-row">
-          <VideoButtons video={this.props.video} />
-        </section>
-        <span className={'video-player-container'}>
-          <VideoPlayer video={this.props.video} />
+      </Row>
+      <Row className="subtitle">
+        <Rating video={video} />
+        Released on{' '}
+        <span data-qa="video-released-on">
+          <DateFormatter date={video.releasedOn} />
+        </span>{' '}
+        by <span data-qa="video-created-by">{video.createdBy}</span>
+      </Row>
+      <Row className={'video-player-container'}>
+        <Col
+          className={'player'}
+          {...(hasAttachments && {
+            sm: { span: 24 },
+            md: { span: 24 },
+            lg: { span: 18 },
+          })}
+        >
+          <VideoPlayer video={video} />
           <img
-            src={this.props.video.thumbnailUrl}
+            src={video.thumbnailUrl}
             style={{ display: 'none' }}
             itemProp="image"
           />
-          {this.props.video.attachments &&
-            this.props.video.attachments.map((it) => (
+          <div className="transcript-button">
+            <DownloadTranscriptButton video={video} />
+          </div>
+        </Col>
+        {hasAttachments && (
+          <Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }}>
+            {video.attachments?.map((it) => (
               <AttachmentDetails
                 link={it.linkToResource}
                 description={it.description}
                 type={it.type}
                 onClick={() => {
                   AnalyticsFactory.internalAnalytics().trackVideoActivityClicked(
-                    this.props.video,
+                    video,
                   );
                 }}
               />
             ))}
-        </span>
-        <section className="video-details">
-          <section className="badges-row">
-            <div className="subjects-container">
-              <Authenticated>
-                {this.props.video.ageRange && (
-                  <AgeRangeTag ageRange={this.props.video.ageRange} />
-                )}
-                {this.props.video.subjects.map((subject) => (
-                  <SubjectTag subjectName={subject.name} key={subject.name} />
-                ))}
-                {this.props.video.bestFor && (
-                  <BestForTag value={this.props.video.bestFor} />
-                )}
-              </Authenticated>
-            </div>
-            <section className="badge-container">
-              <p data-qa="video-duration" className={'subtitle duration'}>
-                <Icon type="clock-circle" />{' '}
-                <DurationFormatter duration={this.props.video.duration} />
-              </p>
-              {this.props.video.badges &&
-                this.props.video.badges.indexOf('youtube') !== -1 && (
-                  <img
-                    src={badgeYoutube}
-                    data-qa={'youtube-badge'}
-                    className={`video-badge youtube`}
-                    alt={'YouTube'}
-                  />
-                )}
-            </section>
-          </section>
-          <p
-            data-qa="video-description"
-            className="description"
-            itemProp="description"
-          >
-            {this.props.video.description}
-          </p>
-        </section>
-      </section>
-    );
-  }
-}
-
-class VideoDetailsSkeleton extends React.PureComponent<Props> {
-  public render() {
-    return (
+          </Col>
+        )}
+      </Row>
       <section className="video-details">
-        <Skeleton
-          loading={!this.props.video}
-          active={true}
-          title={{ width: '150px' }}
-          paragraph={{ rows: 5 }}
-          avatar={{ shape: 'square', size: 'large' }}
+        <p
+          data-qa="video-description"
+          className="description"
+          itemProp="description"
         >
-          {this.props.children}
-        </Skeleton>
+          {video.description}
+        </p>
       </section>
-    );
-  }
-}
+    </section>
+  );
+};
 
-export default class VideoDetails extends React.PureComponent<Props> {
-  public render() {
-    const { video } = this.props;
-    return (
-      <VideoDetailsSkeleton video={video}>
-        <VideoDetailsContent video={video} />
-      </VideoDetailsSkeleton>
-    );
-  }
-}
+const VideoDetailsSkeleton = (props: Props) => (
+  <section className="video-details">
+    <Skeleton
+      loading={!props.video}
+      active={true}
+      title={{ width: '150px' }}
+      paragraph={{ rows: 5 }}
+      avatar={{ shape: 'square', size: 'large' }}
+    >
+      {props.children}
+    </Skeleton>
+  </section>
+);
+
+const VideoDetails = (props: Props) => (
+  <VideoDetailsSkeleton video={props.video}>
+    <VideoDetailsContent video={props.video} />
+  </VideoDetailsSkeleton>
+);
+
+export default VideoDetails;

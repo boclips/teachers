@@ -88,6 +88,7 @@ export const VideoCard = withMediaBreakPoint(
                   <VideoButtons
                     video={props.video}
                     collection={props.currentCollection}
+                    mode={'card'}
                   />
                 )}
               </StopClickPropagation>

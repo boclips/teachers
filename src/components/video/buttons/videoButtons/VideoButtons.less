@@ -2,9 +2,6 @@
 @import '../../../../../resources/styles/_antd-theme';
 
 .video-buttons__container {
-  @media (min-width: @screen-md) {
-    border-top: 2px solid @shade-2;
-  }
   margin-bottom: -8px;
   align-items: baseline;
 
@@ -13,6 +10,10 @@
   }
   @media (max-width: @screen-md) {
     justify-content: flex-end;
+  }
+
+  .ant-btn-group {
+    display: flex;
   }
 
   button:last-child {
@@ -32,7 +33,6 @@
     min-width: 0;
 
     height: 24px;
-    margin-top: 8px;
     margin-bottom: 0;
 
     @media (min-width: @screen-lg) {
