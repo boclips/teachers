@@ -43,6 +43,7 @@ export const VideoHeader = withRouter(
       </section>
 
       <VideoCardTagList video={props.video} />
+
       <section className="subtitle">
         <StopClickPropagation wrapper={'span'}>
           <Rating video={props.video} />

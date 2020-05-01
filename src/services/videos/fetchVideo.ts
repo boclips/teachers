@@ -1,6 +1,6 @@
 import { getBoclipsClient } from 'src/services/apiClient';
 import { convertApiClientVideo } from 'src/services/videos/convertApiClientVideo';
-import { Video } from '../../types/Video';
+import { Video } from 'src/types/Video';
 
 export function fetchVideo(id: string): Promise<Video> {
   return getBoclipsClient()
