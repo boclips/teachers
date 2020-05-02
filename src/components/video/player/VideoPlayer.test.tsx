@@ -273,6 +273,7 @@ describe('controls are specific to the context', () => {
       controls: [
         'rewind',
         'play',
+        'play-large',
         'fast-forward',
         'progress',
         'current-time',

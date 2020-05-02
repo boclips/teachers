@@ -123,8 +123,8 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: staticPath, to: distPath },
       {
-        from: './static/assets/youtube-sprite.svg',
-        to: '../dist/assets',
+        from: './resources/youtube-play.svg',
+        to: 'resources',
       },
     ]),
   ],

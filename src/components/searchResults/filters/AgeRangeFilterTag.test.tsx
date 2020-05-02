@@ -20,7 +20,7 @@ const getWrapper = (ageRange: AgeRange, store?: Store) =>
 
 it('renders age range with normal range', () => {
   const wrapper = getWrapper(new AgeRange(5, 11));
-  expect(wrapper.find(ClosableTag).props().value).toEqual('5 - 11');
+  expect(wrapper.find(ClosableTag).props().value).toEqual('5-11');
 });
 
 it('renders age range with no max', () => {
@@ -30,7 +30,7 @@ it('renders age range with no max', () => {
 
 it('renders age range with no min', () => {
   const wrapper = getWrapper(new AgeRange(null, 7));
-  expect(wrapper.find(ClosableTag).props().value).toEqual('3 - 7');
+  expect(wrapper.find(ClosableTag).props().value).toEqual('3-7');
 });
 
 it('removes age range min from url on close', () => {
