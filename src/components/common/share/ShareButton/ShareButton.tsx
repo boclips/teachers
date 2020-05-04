@@ -1,42 +1,36 @@
 import React, { useState } from 'react';
 import { Button, Icon } from 'antd';
 import ShareSVG from 'resources/images/share.svg';
-import Bodal from 'src/components/common/Bodal';
-import './ShareButton.less';
+import './ShareButton';
+import { ShareModal } from '../ShareModal';
 
-interface Props {
-  title: string;
-  children: React.ReactNode;
+export interface ShareModelProps {
+  title?: string;
+  children?: React.ReactNode;
   shareCode?: string;
+  extra?: boolean;
 }
 
-export const ShareButton = (props: Props) => {
+export const ShareButton = (props: ShareModelProps) => {
   const [visible, setVisible] = useState(false);
-
   return (
     <React.Fragment>
-      <Button onClick={() => setVisible(true)} data-qa={'share-button'}>
+      <Button
+        onClick={() => setVisible(true)}
+        data-qa={'share-button'}
+        id="help"
+      >
         <Icon component={ShareSVG} />
         <span>Share</span>
       </Button>
-      <Bodal
+      <ShareModal
         title={props.title}
+        children={props.children}
+        shareCode={props.shareCode}
+        extra={props.extra}
         visible={visible}
-        onCancel={() => {
-          setVisible(false);
-        }}
-        footer={
-          <section className="share-code">
-            <p className="share-code__explainer">
-              Share this code with the link for access:
-            </p>
-            <span className="share-code__code">{props.shareCode}</span>
-          </section>
-        }
-        wrapClassName="share-modal"
-      >
-        {props.children}
-      </Bodal>
+        onCancel={() => setVisible(false)}
+      />
     </React.Fragment>
   );
 };
