@@ -48,6 +48,7 @@ export const VideoCard = withMediaBreakPoint(
     const emitVideoLinkClickEvent = () => {
       AnalyticsFactory.internalAnalytics().trackVideoLinkClicked(props.video);
     };
+
     const refererParam = props.referer ? `?referer=${props.referer}` : '';
 
     if (!props.video) {

@@ -6,6 +6,7 @@ import { getEffectiveThumbnailUrl } from 'src/services/videos/convertVideoResour
 
 export function convertApiClientVideo(clientVideo: ClientVideo): Video {
   const { ageRange, bestFor, links } = clientVideo;
+  console.log(links)
 
   const convertedProperties: Partial<Video> = {
     thumbnailUrl: clientVideo.playback?.links?.thumbnail

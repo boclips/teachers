@@ -24,7 +24,6 @@ export default class Rating extends React.Component<RatingProps, State> {
 
   public render() {
     const rating = this.props.video.rating;
-
     return (
       <React.Fragment>
         {rating !== null && rating !== undefined ? (

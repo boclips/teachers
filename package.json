@@ -147,5 +147,10 @@
     "react-transition-group": "^4.3.0",
     "redux": "^4.0.5",
     "urijs": "^1.19.2"
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
