@@ -1,7 +1,20 @@
-import axios from 'axios';
-import { ApiBoclipsClient, BoclipsClient } from 'boclips-api-client';
-import { Constants } from '../../app/AppConstants';
+import { BoclipsClient } from 'boclips-api-client';
 
-const client = ApiBoclipsClient.create(axios, Constants.API_PREFIX);
+class ApiClient {
+  private client;
 
-export const getBoclipsClient = (): Promise<BoclipsClient> => client;
+  public set(client: Promise<BoclipsClient>) {
+    this.client = client;
+  }
+
+  public get = (): Promise<BoclipsClient> => {
+    if (!this.client) {
+      throw new Error('ApiClient not set yet');
+    }
+    return this.client;
+  };
+}
+
+export const ApiClientWrapper = new ApiClient();
+export const getBoclipsClient = (): Promise<BoclipsClient> =>
+  ApiClientWrapper.get();

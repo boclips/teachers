@@ -6,6 +6,9 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
 import { cleanup } from '@testing-library/react';
+import { ApiClientWrapper } from 'src/services/apiClient';
+import { ApiBoclipsClient } from 'boclips-api-client';
+import { Constants } from 'src/app/AppConstants';
 import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
 import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
@@ -39,7 +42,10 @@ window.Appcues = {
 
 window.open = jest.fn();
 
+window.Environment = {};
 window.Environment.RECAPTCHA_SITE_KEY = 'awesome-key-set-in-test-setup';
+
+ApiClientWrapper.set(ApiBoclipsClient.create(axios, Constants.API_PREFIX));
 
 export async function waitForElement(selector: string) {
   await eventually(() => {
