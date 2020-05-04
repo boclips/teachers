@@ -16,5 +16,3 @@ class ApiClient {
 }
 
 export const ApiClientWrapper = new ApiClient();
-export const getBoclipsClient = (): Promise<BoclipsClient> =>
-  ApiClientWrapper.get();

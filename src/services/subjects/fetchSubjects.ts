@@ -1,8 +1,8 @@
+import { ApiClientWrapper } from 'src/services/apiClient';
 import { Subject } from '../../types/Subject';
-import { getBoclipsClient } from '../apiClient';
 
 export async function fetchSubjects(): Promise<Subject[]> {
-  const client = await getBoclipsClient();
+  const client = await ApiClientWrapper.get();
 
   return await client.subjects.getAll();
 }

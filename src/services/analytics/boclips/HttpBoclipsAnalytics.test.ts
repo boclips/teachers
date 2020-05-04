@@ -3,9 +3,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { PageRenderedRequest } from 'boclips-api-client/dist/sub-clients/events/model/PageRenderedRequest';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import { ApiClientWrapper } from 'src/services/apiClient';
 import { VideoFactory } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
-import { getBoclipsClient } from '../../apiClient';
 import HttpBoclipsAnalytics from './HttpBoclipsAnalytics';
 
 test('logInteraction', async () => {
@@ -52,7 +52,7 @@ test('logInteraction rejects when link is missing', async () => {
 });
 
 test('trackPageRendered calls ApiClient with url', async () => {
-  const client = (await getBoclipsClient()) as FakeBoclipsClient;
+  const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
   client.events.clear();
 
   const analytics = new HttpBoclipsAnalytics();
@@ -66,7 +66,7 @@ test('trackPageRendered calls ApiClient with url', async () => {
 });
 
 test('trackPlatformInteraction calls ApiClient with subtype', async () => {
-  const client = (await getBoclipsClient()) as FakeBoclipsClient;
+  const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
   client.events.clear();
 
   const analytics = new HttpBoclipsAnalytics();

@@ -1,8 +1,8 @@
 import React from 'react';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { ApiClientWrapper } from 'src/services/apiClient';
 import { renderWithStore } from '../../../test-support/renderWithStore';
 import { Link } from '../../types/Link';
-import { getBoclipsClient } from '../../services/apiClient';
 import {
   LinksFactory,
   LinksStateValueFactory,
@@ -41,7 +41,7 @@ describe('TrialExpiryView', () => {
       },
     });
 
-    const client = (await getBoclipsClient()) as FakeBoclipsClient;
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
     expect(client.events.getEvents()).toContain('USER_EXPIRED');
   });

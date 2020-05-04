@@ -1,10 +1,10 @@
 import { FakeSubjectsClient } from 'boclips-api-client/dist/sub-clients/subjects/client/FakeSubjectsClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { getBoclipsClient } from '../apiClient';
+import { ApiClientWrapper } from 'src/services/apiClient';
 import { fetchSubjects } from './fetchSubjects';
 
 const getFakeBoclipsClient: () => Promise<FakeBoclipsClient> = async () => {
-  const client = await getBoclipsClient();
+  const client = await ApiClientWrapper.get();
 
   return client as FakeBoclipsClient;
 };

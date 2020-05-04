@@ -6,10 +6,10 @@ import {
 import { VideoResource } from 'test-support/factories';
 import { FakeVideosClient } from 'boclips-api-client/dist/sub-clients/videos/client/FakeVideosClient';
 import { VideosConverter } from 'boclips-api-client/dist/sub-clients/videos/model/VideosConverter';
-import { getBoclipsClient } from '../src/services/apiClient';
+import { ApiClientWrapper } from 'src/services/apiClient';
 
 export const fakeSubjectsSetup = async () => {
-  const subjectsClient: FakeSubjectsClient = ((await getBoclipsClient()) as FakeBoclipsClient)
+  const subjectsClient: FakeSubjectsClient = ((await ApiClientWrapper.get()) as FakeBoclipsClient)
     .subjects;
 
   subjectsClient.insertSubject(
@@ -35,7 +35,7 @@ export const fakeSubjectsSetup = async () => {
 };
 
 export const fakeVideoSetup = async (videoResource: VideoResource) => {
-  const videosClient: FakeVideosClient = ((await getBoclipsClient()) as FakeBoclipsClient)
+  const videosClient: FakeVideosClient = ((await ApiClientWrapper.get()) as FakeBoclipsClient)
     .videos;
 
   videosClient.insertVideo(VideosConverter.convert(videoResource));

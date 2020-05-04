@@ -1,10 +1,10 @@
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { getBoclipsClient } from 'src/services/apiClient';
+import { ApiClientWrapper } from 'src/services/apiClient';
 import { fetchVideo } from './fetchVideo';
 
 test('resolves with a video object when successfuly fetched', async () => {
-  const client = (await getBoclipsClient()) as FakeBoclipsClient;
+  const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
   client.videos.insertVideo(
     VideoFactory.sample({

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import { ApiClientWrapper } from 'src/services/apiClient';
 import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
-import { getBoclipsClient } from '../../apiClient';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 
 export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
@@ -23,7 +23,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   }
 
   public async trackPageRendered(url: string): Promise<void> {
-    const client = await getBoclipsClient();
+    const client = await ApiClientWrapper.get();
 
     return client.events.trackPageRendered({ url });
   }
@@ -32,7 +32,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
     collection: VideoCollection,
     subtype: keyof typeof CollectionInteractionType,
   ): Promise<void> {
-    const client = await getBoclipsClient();
+    const client = await ApiClientWrapper.get();
 
     return client.events.trackCollectionInteraction(
       {
@@ -49,7 +49,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   }
 
   public async trackUserExpired(): Promise<void> {
-    const client = await getBoclipsClient();
+    const client = await ApiClientWrapper.get();
 
     return client.events.trackUserExpired();
   }
@@ -57,7 +57,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
   public async trackPlatformInteraction(
     subtype: PlatformInteractionType,
   ): Promise<void> {
-    const client = await getBoclipsClient();
+    const client = await ApiClientWrapper.get();
 
     return client.events.trackPlatformInteraction(subtype);
   }
