@@ -5,6 +5,8 @@ import LazyLoad from 'react-lazy-load';
 import querystring from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
+import ReactDOMServer from 'react-dom/server';
+import { ShareModal } from 'src/components/common/share/ShareModal';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
@@ -13,6 +15,10 @@ import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../common/higherOrderComponents/withMediaBreakPoint';
+import Share from '../../../../resources/images/share_white.svg';
+import { VideoShareButtonForm } from '../sharing/VideoShareButton/VideoShareButton';
+
+const share = ReactDOMServer.renderToStaticMarkup(<Share />);
 
 export interface OwnProps extends WithMediaBreakPointProps {
   video: Video;
@@ -22,16 +28,20 @@ export interface OwnProps extends WithMediaBreakPointProps {
 
 interface StateProps {
   segment?: Segment;
+  shareCode?: string;
+  isAuthenticated: boolean;
 }
 
 class VideoPlayer extends React.PureComponent<
   OwnProps & StateProps,
   {
     hasError: boolean;
+    modalVisible: boolean;
   }
 > {
   public state = {
     hasError: false,
+    modalVisible: false,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -48,11 +58,23 @@ class VideoPlayer extends React.PureComponent<
     return (
       <div className="video-player">
         <LazyLoad key={this.props.video.id} offsetVertical={200}>
-          <PlayerComponent
-            playerRef={this.setPlayerRef}
-            options={this.getPlayerOptions()}
-            videoUri={this.props.video.links.self.getOriginalLink()}
-          />
+          <div>
+            <PlayerComponent
+              playerRef={this.setPlayerRef}
+              options={this.getPlayerOptions()}
+              videoUri={this.props.video.links.self.getOriginalLink()}
+            />
+            <ShareModal
+              visible={this.state.modalVisible}
+              onCancel={() => {
+                this.setState({ modalVisible: false });
+              }}
+              title={'Share Video'}
+              shareCode={this.props.shareCode}
+            >
+              <VideoShareButtonForm video={this.props.video} />
+            </ShareModal>
+          </div>
         </LazyLoad>
       </div>
     );
@@ -159,6 +181,7 @@ class VideoPlayer extends React.PureComponent<
         ],
         addons: {
           rewatchButton: true,
+          generalButtons: this.generateGeneralButtons(),
         },
         ratio: '16:9',
       };
@@ -166,6 +189,16 @@ class VideoPlayer extends React.PureComponent<
 
     return options;
   }
+
+  private generateGeneralButtons = () =>
+    this.props.isAuthenticated && [
+      {
+        child: share,
+        onClick: () => {
+          this.setState({ modalVisible: true });
+        },
+      },
+    ];
 }
 
 const mapStateToProps = (state: State): StateProps => {
@@ -182,6 +215,8 @@ const mapStateToProps = (state: State): StateProps => {
 
   return {
     segment,
+    shareCode: state.user?.shareCode,
+    isAuthenticated: !!state.user,
   };
 };
 export default connect(mapStateToProps)(withMediaBreakPoint(VideoPlayer));
