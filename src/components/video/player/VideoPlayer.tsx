@@ -7,6 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOMServer from 'react-dom/server';
 import { ShareModal } from 'src/components/common/share/ShareModal';
+import { CollectionKey } from 'src/types/CollectionKey';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
@@ -17,6 +18,7 @@ import {
 } from '../../common/higherOrderComponents/withMediaBreakPoint';
 import Share from '../../../../resources/images/share_white.svg';
 import { VideoShareButtonForm } from '../sharing/VideoShareButton/VideoShareButton';
+import ManageVideCollectionMenuContainer from '../buttons/videoCollection/ManageVideoCollectionMenuContainer';
 
 const share = ReactDOMServer.renderToStaticMarkup(<Share />);
 
@@ -24,6 +26,7 @@ export interface OwnProps extends WithMediaBreakPointProps {
   video: Video;
   videoIndex?: number;
   mode?: 'default' | 'card';
+  collectionKey: CollectionKey;
 }
 
 interface StateProps {
@@ -37,11 +40,13 @@ class VideoPlayer extends React.PureComponent<
   {
     hasError: boolean;
     modalVisible: boolean;
+    menuVisible: boolean;
   }
 > {
   public state = {
     hasError: false,
     modalVisible: false,
+    menuVisible: false,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -74,6 +79,15 @@ class VideoPlayer extends React.PureComponent<
             >
               <VideoShareButtonForm video={this.props.video} />
             </ShareModal>
+            <ManageVideCollectionMenuContainer
+              video={this.props.video}
+              collectionKey={this.props.collectionKey}
+              isMenuVisible={this.state.menuVisible}
+              onVisibleChange={() => {
+                this.setState({ menuVisible: !this.state.menuVisible });
+              }}
+              loading={false}
+            />
           </div>
         </LazyLoad>
       </div>
@@ -196,6 +210,13 @@ class VideoPlayer extends React.PureComponent<
         child: share,
         onClick: () => {
           this.setState({ modalVisible: true });
+        },
+      },
+      {
+        child: ReactDOMServer.renderToStaticMarkup(<div>Hello</div>),
+        onClick: () => {
+          console.log('true');
+          this.setState({ menuVisible: true });
         },
       },
     ];

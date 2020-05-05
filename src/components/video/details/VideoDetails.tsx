@@ -87,7 +87,7 @@ const VideoDetailsContent = ({ video }: Props) => {
             lg: { span: 18 },
           })}
         >
-          <VideoPlayer video={video} />
+          <VideoPlayer collectionKey="myCollections" video={video} />
           <img
             src={video.thumbnailUrl}
             style={{ display: 'none' }}
