@@ -3,7 +3,7 @@ import { Player, PlayerOptions } from 'boclips-player';
 import { Player as PlayerComponent } from 'boclips-player-react';
 import LazyLoad from 'react-lazy-load';
 import querystring from 'query-string';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import ReactDOMServer from 'react-dom/server';
 import { ShareModal } from 'src/components/common/share/ShareModal';
@@ -17,10 +17,9 @@ import {
   WithMediaBreakPointProps,
 } from '../../common/higherOrderComponents/withMediaBreakPoint';
 import Share from '../../../../resources/images/share_white.svg';
+import Save from '../../../../resources/images/save_white.svg';
 import { VideoShareButtonForm } from '../sharing/VideoShareButton/VideoShareButton';
 import ManageVideCollectionMenuContainer from '../buttons/videoCollection/ManageVideoCollectionMenuContainer';
-
-const share = ReactDOMServer.renderToStaticMarkup(<Share />);
 
 export interface OwnProps extends WithMediaBreakPointProps {
   video: Video;
@@ -35,6 +34,18 @@ interface StateProps {
   isAuthenticated: boolean;
 }
 
+const InvisibleButton = () => {
+  const inputRef = useRef(null);
+  useEffect(() => {
+    if (inputRef.current !== null) {
+      inputRef.current.classList.add('invisibleButton');
+    } else {
+      return;
+    }
+  }, [inputRef]);
+
+  return <button ref={inputRef}></button>;
+};
 class VideoPlayer extends React.PureComponent<
   OwnProps & StateProps,
   {
@@ -59,7 +70,6 @@ class VideoPlayer extends React.PureComponent<
     if (this.state.hasError) {
       return null;
     }
-
     return (
       <div className="video-player">
         <LazyLoad key={this.props.video.id} offsetVertical={200}>
@@ -87,7 +97,9 @@ class VideoPlayer extends React.PureComponent<
                 this.setState({ menuVisible: !this.state.menuVisible });
               }}
               loading={false}
-            />
+            >
+              <InvisibleButton />
+            </ManageVideCollectionMenuContainer>
           </div>
         </LazyLoad>
       </div>
@@ -207,13 +219,13 @@ class VideoPlayer extends React.PureComponent<
   private generateGeneralButtons = () =>
     this.props.isAuthenticated && [
       {
-        child: share,
+        child: ReactDOMServer.renderToStaticMarkup(<Share />),
         onClick: () => {
           this.setState({ modalVisible: true });
         },
       },
       {
-        child: ReactDOMServer.renderToStaticMarkup(<div>Hello</div>),
+        child: ReactDOMServer.renderToStaticMarkup(<Save />),
         onClick: () => {
           console.log('true');
           this.setState({ menuVisible: true });

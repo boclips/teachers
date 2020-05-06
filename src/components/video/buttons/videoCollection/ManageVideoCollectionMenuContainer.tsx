@@ -10,7 +10,9 @@ import { removeVideoFromMyCollectionAction } from 'src/components/collection/red
 import { createCollectionAction } from 'src/components/collection/redux/actions/createCollectionAction';
 import { CreateCollectionRequest } from 'src/services/collections/createCollection';
 import { Video } from 'src/types/Video';
+
 import ManageVideoCollectionMenu from './ManageVideoCollectionMenu';
+import './ManageVideoCollectionMenuContainer.less';
 
 interface Props {
   children?: React.ReactNode;

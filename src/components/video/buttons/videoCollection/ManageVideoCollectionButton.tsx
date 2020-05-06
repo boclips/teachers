@@ -2,10 +2,8 @@ import { Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import SaveSVG from 'resources/images/save.svg';
-import { CreateCollectionRequest } from 'src/services/collections/createCollection';
 import State from 'src/types/State';
 import { Video } from 'src/types/Video';
-import { VideoCollection } from 'src/types/VideoCollection';
 import SavingButton from 'src/components/common/savingButton/SavingButton';
 import withPageableCollection, {
   WithPageableCollectionProps,
