@@ -68,6 +68,7 @@ export const VideoCard = withMediaBreakPoint(
           >
             <div aria-label={'video player'} tabIndex={0}>
               <VideoPlayer
+                collectionKey="myCollections"
                 video={props.video}
                 videoIndex={props.videoIndex}
                 mode="card"
