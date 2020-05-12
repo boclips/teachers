@@ -48,6 +48,7 @@ const InvisibleButton = () => {
           height: boundingRectangle.height + 'px',
           width: boundingRectangle.width + -30 + 'px',
           position: 'fixed',
+          display: 'inline-block',
         }
       }
       className="invisibleButton"
