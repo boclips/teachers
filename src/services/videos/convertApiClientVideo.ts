@@ -1,7 +1,7 @@
 import { Video as ClientVideo } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { convertFromApiClientLink } from 'src/types/Link';
 import { Video } from 'src/types/Video';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { getEffectiveThumbnailUrl } from 'src/services/videos/convertVideoResource';
 
 export function convertApiClientVideo(clientVideo: ClientVideo): Video {

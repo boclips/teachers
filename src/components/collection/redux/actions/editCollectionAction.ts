@@ -1,5 +1,6 @@
+import { AgeRange } from '@bit/boclips._ui.badge';
 import { actionCreatorFactory } from '../../../../app/redux/actions';
-import { AgeRange } from '../../../../types/AgeRange';
+;
 import { VideoCollection } from './../../../../types/VideoCollection';
 
 export interface EditCollectionRequest {

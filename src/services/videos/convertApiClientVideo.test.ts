@@ -3,7 +3,7 @@ import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntit
 import moment from 'moment';
 import { convertApiClientVideo } from 'src/services/videos/convertApiClientVideo';
 import { Video } from 'src/types/Video';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
 
 describe('ApiClientVideo', () => {

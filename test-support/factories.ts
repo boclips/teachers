@@ -6,7 +6,7 @@ import {
 import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfile, UserProfileLinks } from 'src/services/users/UserProfile';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';;
 import { Attachment } from 'src/types/Attachment';
 import { Country } from 'src/types/Country';
 import { Discipline } from 'src/types/Discipline';

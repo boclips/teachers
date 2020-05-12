@@ -1,4 +1,4 @@
-import { AgeRange } from './AgeRange';
+import { AgeRange } from '@bit/boclips._ui.badge';
 import { Attachment } from './Attachment';
 import { Link } from './Link';
 import { VideoId } from './Video';

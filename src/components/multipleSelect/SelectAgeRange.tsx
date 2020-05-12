@@ -3,8 +3,8 @@ import React from 'react';
 import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
+import { AgeRange } from '@bit/boclips._ui.badge';
 import MultiSelect from '../common/MultiSelect';
-import { AgeRange } from '../../types/AgeRange';
 
 interface Props {
   onChange?: (value: string[]) => void;

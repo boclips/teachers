@@ -1,5 +1,5 @@
 import { DurationRange } from 'src/types/DurationRange';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 export interface SearchPathname {

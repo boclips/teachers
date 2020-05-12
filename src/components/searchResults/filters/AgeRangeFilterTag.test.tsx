@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import {
   MockStoreFactory,
   RouterFactory,

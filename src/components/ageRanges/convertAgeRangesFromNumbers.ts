@@ -1,4 +1,4 @@
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 
 export const convertAgeRangesFromNumbers = (
   allAgeRanges: AgeRange[],

@@ -6,7 +6,7 @@ import {
 } from 'src/services/searchParameters/searchParametersConverter';
 import { DurationRange } from 'src/types/DurationRange';
 import { getSearch } from 'connected-react-router';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 
 export interface WithAppliedSearchParametersProps {
   query: string | undefined;

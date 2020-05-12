@@ -1,4 +1,4 @@
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 import { convertAgeRangesFromNumbers } from './convertAgeRangesFromNumbers';
 

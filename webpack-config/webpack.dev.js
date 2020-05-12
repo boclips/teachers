@@ -23,6 +23,11 @@ module.exports = merge(common, {
     disableHostCheck: true,
     hot: true,
   },
+  watch: true,
+  watchOptions: {
+    poll: true,
+    ignored: /node_modules/,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(srcPath, 'index-dev.html'),

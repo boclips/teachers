@@ -6,7 +6,7 @@ import Button from 'antd/lib/button';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AgeRangeSelect } from 'src/components/ageRanges/AgeRangeSelect';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
 import './EditCollectionForm.less';

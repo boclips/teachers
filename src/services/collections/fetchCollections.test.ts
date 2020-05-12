@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { AgeRange } from '@bit/boclips._ui.badge';
 import {
   collectionResponseWithSubject,
   collectionsResponse,
@@ -8,7 +9,6 @@ import {
   LinksFactory,
   PageableCollectionsFactory,
 } from '../../../test-support/factories';
-import { AgeRange } from '../../types/AgeRange';
 import { Link } from '../../types/Link';
 import {
   fetchNextCollectionsPage,

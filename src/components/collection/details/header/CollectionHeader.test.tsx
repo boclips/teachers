@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
+import { AgeRange } from '@bit/boclips._ui.badge';
 import {
   AttachmentFactory,
   CollectionsFactory,
@@ -10,7 +11,7 @@ import {
 } from '../../../../../test-support/factories';
 import { Link } from '../../../../types/Link';
 import { renderWithStore } from '../../../../../test-support/renderWithStore';
-import { AgeRange } from '../../../../types/AgeRange';
+;
 import { CollectionHeader } from './CollectionHeader';
 
 describe('CollectionHeader', () => {

@@ -1,4 +1,4 @@
-import { AgeRange } from '../../types/AgeRange';
+import AgeRange from "@bit/boclips.types.age-range";
 import { Attachment } from '../../types/Attachment';
 import { Link, RawLink } from '../../types/Link';
 import { Pageable } from '../../types/State';

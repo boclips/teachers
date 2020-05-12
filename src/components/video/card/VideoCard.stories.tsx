@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import { VideoCard } from 'src/components/video/card/VideoCard';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { MockStoreFactory, VideoFactory } from 'test-support/factories';
 import React from 'react';
 import { number, withKnobs } from '@storybook/addon-knobs';

@@ -1,8 +1,8 @@
 import { Duration } from 'moment';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { Playback } from 'boclips-api-client/dist/sub-clients/common/model/Playback';
 import { Attachment } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
-import { Link } from './Link';
+import { Link } from '@bit/remo1.boclips-ui.types.link';
 import { Subject } from './Subject';
 
 export interface VideoLinks {

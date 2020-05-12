@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';;
 import { PlaybackConverter } from 'boclips-api-client/dist/sub-clients/common/model/PlaybackConverter';
 import { Link } from '../../types/Link';
 import { Video } from '../../types/Video';

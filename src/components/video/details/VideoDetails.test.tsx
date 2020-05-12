@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { By } from '../../../../test-support/By';
 import {
   MockStoreFactory,

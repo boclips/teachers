@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import {
@@ -10,7 +11,6 @@ import {
   UserProfileFactory,
 } from '../../../../test-support/factories';
 import { editUser } from '../../../services/users/updateUser';
-import { AgeRange } from '../../../types/AgeRange';
 import { Link } from '../../../types/Link';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';

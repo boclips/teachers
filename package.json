@@ -113,6 +113,17 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@bit/boclips._ui.age-range-badge": "1.0.0",
+    "@bit/boclips._ui.attachment-badge": "1.0.0",
+    "@bit/boclips._ui.best-for-badge": "1.0.0",
+    "@bit/boclips._ui.duration": "1.0.2",
+    "@bit/boclips._ui.released-on": "1.0.0",
+    "@bit/boclips._ui.subject-badge": "1.0.0",
+    "@bit/boclips._ui.video-card": "1.0.2",
+    "@bit/boclips.hooks.use-media-break-points": "1.0.0",
+    "@bit/boclips.styles.styles": "1.0.0",
+    "@bit/boclips.types.media-break-points": "1.0.0",
+    "@bit/boclips.types.video": "1.0.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/browser": "^5.15.4",
     "@sentry/integrations": "^5.15.4",
@@ -149,8 +160,10 @@
     "urijs": "^1.19.2"
   },
   "bit": {
-    "env": {},
-    "componentsDefaultDirectory": "components/{name}",
+    "env": {
+      "compiler": "boclips.compilers/compiler"
+    },
+    "componentsDefaultDirectory": "src/bits/{name}",
     "packageManager": "npm"
   }
 }

@@ -4,7 +4,7 @@ import { renderWithCreatedStore } from 'test-support/renderWithStore';
 import { createBoclipsStore } from 'src/app/redux/store';
 import { fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
 import { MockStoreFactory, VideoFactory } from 'test-support/factories';
 

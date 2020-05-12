@@ -2,7 +2,7 @@ import { push } from 'connected-react-router';
 import { DurationRange } from 'src/types/DurationRange';
 import eventually from 'test-support/eventually';
 import { setupStore } from 'test-support/setupStore';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
   bulkUpdateSearchParamsAction,

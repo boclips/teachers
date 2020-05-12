@@ -4,7 +4,7 @@ import {
   VideoSearchFacetsFactory,
   VideoSearchRequestFactory,
 } from 'test-support/factories';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { DurationRange } from 'src/types/DurationRange';
 
 describe('generate video search uri', () => {

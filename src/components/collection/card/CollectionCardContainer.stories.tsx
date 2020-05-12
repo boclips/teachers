@@ -1,5 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import React from 'react';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import {
   AttachmentFactory,
   MockStoreFactory,
@@ -8,7 +9,6 @@ import {
   VideoFactory,
   VideoIdFactory,
 } from '../../../../test-support/factories';
-import { AgeRange } from '../../../types/AgeRange';
 import {
   storyWithAuthentication,
   storyWithProvider,

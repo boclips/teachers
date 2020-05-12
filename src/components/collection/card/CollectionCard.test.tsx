@@ -6,7 +6,7 @@ import {
   VideoCollectionFactory,
   VideoFactory,
 } from 'test-support/factories';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { CollectionCard } from './CollectionCard';
 
 describe('CollectionCard', () => {

@@ -4,9 +4,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { editUser } from '../../../services/users/updateUser';
 import { UserProfile } from '../../../services/users/UserProfile';
-import { AgeRange } from '../../../types/AgeRange';
 import { Links } from '../../../types/Links';
 import { Subject } from '../../../types/Subject';
 import {

@@ -8,7 +8,7 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
 } from 'test-support/factories';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { Link } from 'src/types/Link';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import MockFetchVerify, { axiosMock } from 'test-support/MockFetchVerify';

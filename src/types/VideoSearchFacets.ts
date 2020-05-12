@@ -1,4 +1,4 @@
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';
 import { DurationRange } from 'src/types/DurationRange';
 
 export interface VideoSearchFacets {

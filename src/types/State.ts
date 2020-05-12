@@ -1,6 +1,6 @@
 import { RouterState as ReactRouterState } from 'connected-react-router';
 import { VideoFacets } from 'src/types/VideoFacets';
-import { AgeRange } from 'src/types/AgeRange';
+import { AgeRange } from '@bit/boclips.types.age-range';;
 import { DurationRange } from 'src/types/DurationRange';
 import { UserProfile } from '../services/users/UserProfile';
 import { Country } from './Country';
