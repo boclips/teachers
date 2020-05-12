@@ -42,7 +42,6 @@ const DesktopButtons = (props: OwnProps) => (
 );
 
 const MobileButtons = (props: OwnProps) => {
-  console.log('mobile buttonns');
   const menu = () => (
     <Menu className="video-buttons__container">
       <Menu.Item>

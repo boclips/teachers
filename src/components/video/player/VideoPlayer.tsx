@@ -3,7 +3,7 @@ import { Player, PlayerOptions } from 'boclips-player';
 import { Player as PlayerComponent } from 'boclips-player-react';
 import LazyLoad from 'react-lazy-load';
 import querystring from 'query-string';
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOMServer from 'react-dom/server';
 import { ShareModal } from 'src/components/common/share/ShareModal';
@@ -35,16 +35,24 @@ interface StateProps {
 }
 
 const InvisibleButton = () => {
-  const inputRef = useRef(null);
-  useEffect(() => {
-    if (inputRef.current !== null) {
-      inputRef.current.classList.add('invisibleButton');
-    } else {
-      return;
-    }
-  }, [inputRef]);
+  const element = document.getElementById('video-player-save-button');
+  const parentElement = element?.parentElement;
+  const boundingRectangle = parentElement?.getBoundingClientRect();
 
-  return <button ref={inputRef}></button>;
+  return (
+    <button
+      style={
+        boundingRectangle && {
+          top: boundingRectangle.top + 'px',
+          left: boundingRectangle.left + 'px',
+          height: boundingRectangle.height + 'px',
+          width: boundingRectangle.width + -30 + 'px',
+          position: 'fixed',
+        }
+      }
+      className="invisibleButton"
+    ></button>
+  );
 };
 class VideoPlayer extends React.PureComponent<
   OwnProps & StateProps,
@@ -225,9 +233,12 @@ class VideoPlayer extends React.PureComponent<
         },
       },
       {
-        child: ReactDOMServer.renderToStaticMarkup(<Save />),
+        child: ReactDOMServer.renderToStaticMarkup(
+          <div id="video-player-save-button">
+            <Save />
+          </div>,
+        ),
         onClick: () => {
-          console.log('true');
           this.setState({ menuVisible: true });
         },
       },
