@@ -21,6 +21,7 @@ interface Props {
   video: Video;
   onVisibleChange: (visible: boolean) => void;
   onChange?: () => void;
+  getPopupContainer?: () => HTMLElement | null;
 }
 
 const ManageVideCollectionMenuContainer = (props: Props) => {
@@ -78,6 +79,7 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
             trigger="click"
             onVisibleChange={props.onVisibleChange}
             visible={props.isMenuVisible}
+            getPopupContainer={props.getPopupContainer}
           >
             {props.children}
           </Popover>
@@ -92,6 +94,7 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
             closable={true}
             onClose={() => props.onVisibleChange(false)}
             visible={props.isMenuVisible}
+            getContainer={props.getPopupContainer}
           >
             {CollectionMenu}
           </Drawer>
