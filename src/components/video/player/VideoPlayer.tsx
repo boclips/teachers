@@ -93,6 +93,7 @@ class VideoPlayer extends React.PureComponent<
               onCancel={() => {
                 this.setState({ modalVisible: false });
               }}
+              getContainer={() => document.getElementById('overlay')}
               title={'Share Video'}
               shareCode={this.props.shareCode}
             >
@@ -105,6 +106,7 @@ class VideoPlayer extends React.PureComponent<
               onVisibleChange={() => {
                 this.setState({ menuVisible: !this.state.menuVisible });
               }}
+              getPopupContainer={() => document.getElementById('overlay')}
               loading={false}
             >
               <InvisibleButton />
@@ -264,4 +266,5 @@ const mapStateToProps = (state: State): StateProps => {
     isAuthenticated: !!state.user,
   };
 };
+
 export default connect(mapStateToProps)(withMediaBreakPoint(VideoPlayer));
