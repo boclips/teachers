@@ -26,15 +26,21 @@ export interface UpdateSubjectFilter {
   subject?: string[];
 }
 
+export interface UpdateResourceTypeFilter {
+  resource_types?: string[];
+}
+
 export type UpdateAllFilters =
   | UpdateDurationFilter
   | UpdateAgeRangeFilter
-  | UpdateSubjectFilter;
+  | UpdateSubjectFilter
+  | UpdateResourceTypeFilter;
 
 export type SearchRequest =
   | UpdateDurationFilter
   | UpdateAgeRangeFilter
   | UpdateSubjectFilter
+  | UpdateResourceTypeFilter
   | UpdateSearchQuery
   | UpdateSearchPage
   | SearchPathname;

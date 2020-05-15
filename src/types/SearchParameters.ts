@@ -6,4 +6,5 @@ export interface SearchParameters {
   duration?: DurationRange[];
   ageRange?: AgeRange[];
   subject?: string[];
+  resourceTypes?: string[];
 }

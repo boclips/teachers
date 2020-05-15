@@ -23,6 +23,9 @@ export const FilterPanel = () => {
         {
           subject: filterOptions.subjects,
         },
+        {
+          resource_types: filterOptions.resourceTypes,
+        },
       ]),
     );
   };

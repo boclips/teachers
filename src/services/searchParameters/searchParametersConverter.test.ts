@@ -46,7 +46,7 @@ describe('convertQueryToSearchParameters', () => {
 
   it('converts a combination of filters to SearchFilterParameters', () => {
     const searchParameters = convertQueryToSearchParameters(
-      '?q=hello&age_range=3-5&subject=1,2&duration=0-120',
+      '?q=hello&age_range=3-5&subject=1,2&duration=0-120&resource_types=ACTIVITY,LESSON_PLAN',
     );
 
     expect(searchParameters.query).toEqual('hello');
@@ -55,6 +55,7 @@ describe('convertQueryToSearchParameters', () => {
     expect(searchParameters.ageRange[0].resolveMin()).toEqual(3);
     expect(searchParameters.ageRange[0].resolveMax()).toEqual(5);
     expect(searchParameters.subject).toEqual(['1', '2']);
+    expect(searchParameters.resourceTypes).toEqual(['ACTIVITY', 'LESSON_PLAN']);
   });
 });
 
@@ -66,6 +67,7 @@ describe('requestToQueryParameters', () => {
       duration: [new DurationRange({ min: 0, max: 120 })],
       pathname: 'videos',
       q: 'hello',
+      resource_types: ['ACTIVITY', 'LESSON_PLAN'],
       page: 1,
     };
 
@@ -76,6 +78,7 @@ describe('requestToQueryParameters', () => {
       duration: ['0-120'],
       page: 1,
       pathname: 'videos',
+      resource_types: ['ACTIVITY', 'LESSON_PLAN'],
       q: 'hello',
       subject: ['1'],
     });

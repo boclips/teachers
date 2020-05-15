@@ -18,18 +18,21 @@ const FilterKey = {
   AGE: 'age',
   DURATION: 'duration',
   SUBJECTS: 'subjects',
+  RESOURCE: 'resource',
 };
 
 interface FilterFormEditableFields {
   duration?: string[];
   ageRange?: string[];
   subjects?: string[];
+  resourceTypes?: string[];
 }
 
 export interface FilterOptions {
   duration?: string[];
   ageRange?: string[];
   subjects?: string[];
+  resourceTypes?: string[];
 }
 
 interface Props extends StateProps, WithAppliedSearchParametersProps {
@@ -42,7 +45,7 @@ interface StateProps {
 
 const Filters = React.forwardRef(
   (props: FormComponentProps & Props, ref: Ref<any>) => {
-    const { ageRange, subjectIds, duration } = props;
+    const { ageRange, subjectIds, duration, resourceTypes } = props;
     const { getFieldDecorator, resetFields } = props.form;
     const facets = useSelector(
       (state: State) =>
@@ -50,6 +53,7 @@ const Filters = React.forwardRef(
           ageRanges: {},
           subjects: {},
           durations: {},
+          resourceTypes: {},
         },
     );
 
@@ -81,15 +85,22 @@ const Filters = React.forwardRef(
       .filter((filter) => filter.count > 0)
       .sort((a, b) => a.label.localeCompare(b.label));
 
+    const allResourceTypes = useSelector((state: State) => state.resourceTypes);
+    const resourceTypeFilters = allResourceTypes.map((type) => ({
+      value: type.value,
+      label: type.label,
+    }));
+
     const [openFilters, setOpenFilters] = useState(() => [
       FilterKey.AGE,
       FilterKey.SUBJECTS,
       FilterKey.DURATION,
+      FilterKey.RESOURCE,
     ]);
 
     useEffect(() => {
       resetFields();
-    }, [resetFields, ageRange, subjectIds, duration]);
+    }, [resetFields, ageRange, subjectIds, duration, resourceTypes]);
 
     const onOpenChange = useCallback((openKeys: string[]) => {
       setOpenFilters(openKeys);
@@ -191,6 +202,27 @@ const Filters = React.forwardRef(
                 </Form.Item>
               </React.Fragment>
             </SubMenu>
+            <SubMenu
+              title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
+              key={FilterKey.RESOURCE}
+              className={'filter-form__section'}
+            >
+              <React.Fragment>
+                <Form.Item>
+                  {getFieldDecorator('resourceTypes', {
+                    initialValue: resourceTypes,
+                  })(
+                    <CheckboxGroup className="filter-form__checkbox-group">
+                      {resourceTypeFilters.map((item) => (
+                        <Checkbox key={item.label} value={item.value}>
+                          {item.label}{' '}
+                        </Checkbox>
+                      ))}
+                    </CheckboxGroup>,
+                  )}
+                </Form.Item>
+              </React.Fragment>
+            </SubMenu>
           </Menu>
         </Form>
       </section>
@@ -205,6 +237,7 @@ export const FiltersWithForm = withAppliedSearchParameters(
       filterRequest.duration = allValues.duration;
       filterRequest.ageRange = allValues.ageRange;
       filterRequest.subjects = allValues.subjects;
+      filterRequest.resourceTypes = allValues.resourceTypes;
 
       props.onApplyFilters(filterRequest);
     },

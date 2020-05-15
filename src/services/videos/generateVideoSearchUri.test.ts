@@ -29,4 +29,20 @@ describe('generate video search uri', () => {
 
     expect(uri).toContain('duration_facets=PT0S-PT2M');
   });
+
+  it('includes resource type filters', () => {
+    const uri = generateVideoSearchUri(
+      {
+        page: undefined,
+        filters: {
+          resource_types: ['ACTIVITY'],
+        },
+        sortBy: undefined,
+      },
+      VideoSearchFacetsFactory.sample(),
+      LinksFactory.sample(),
+    );
+
+    expect(uri).toContain('resource_types=ACTIVITY');
+  });
 });

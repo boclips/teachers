@@ -4,6 +4,7 @@ import reduceReducers from 'reduce-reducers';
 import { combineReducers, Reducer } from 'redux';
 import { ageRangeReducer } from 'src/components/ageRanges/redux/ageRangeReducer';
 import { durationsReducer } from 'src/components/durations/redux/durationReducer';
+import { resourceTypesReducer } from 'src/components/searchResults/redux/resourceTypesReducer';
 import { countriesReducer } from '../../components/account/onboarding/redux/reducers/countriesReducer';
 import {
   collectionHandlers,
@@ -57,6 +58,7 @@ export const createReducers = (history: History<any>): Reducer<State> =>
       disciplines: disciplinesReducer,
       apiPrefix: dummyApiReducer,
       router: connectRouter(history),
+      resourceTypes: resourceTypesReducer,
     }),
     stateReducer,
   );

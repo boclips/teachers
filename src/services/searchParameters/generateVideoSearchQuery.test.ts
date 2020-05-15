@@ -17,11 +17,12 @@ describe('generateNewUri', () => {
 
   it('existing query params', () => {
     const queryParams = generateVideoSearchQuery(
-      { subject: ['345'], duration: ['0-120'] },
+      { subject: ['345'], duration: ['0-120'], resource_types: ['ACTIVITY'] },
       [
         { q: 'london' },
         {
           age_range: convertAgeRangesFromString(['3-5']),
+          resource_types: ['LESSON_PLAN'],
         },
       ],
     );
@@ -30,6 +31,7 @@ describe('generateNewUri', () => {
     expect(queryParams.q).toEqual('london');
     expect(queryParams.subject).toEqual(['345']);
     expect(queryParams.age_range).toEqual(['3-5']);
+    expect(queryParams.resource_types).toEqual(['LESSON_PLAN']);
     expect(queryParams.page).toEqual(1);
   });
 });

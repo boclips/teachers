@@ -35,6 +35,7 @@ import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import { defaultDurations } from 'src/components/durations/redux/durationReducer';
 import { Link as ApiClientLink } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import { Link } from 'src/types/Link';
+import { ResourceType } from 'src/types/ResourceType';
 import { video177 } from './api-responses';
 
 export class VideoFactory {
@@ -189,7 +190,7 @@ export class LinksFactory {
       videos:
         arg.videos ||
         new Link({
-          href: `${prefix}/videos/{?query,sort_by,duration,duration_facets,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,age_range,age_range_facets,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom}`,
+          href: `${prefix}/videos/{?query,sort_by,duration,duration_facets,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,age_range,age_range_facets,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom,resource_types,resource_type_facets}`,
           templated: true,
         }),
       searchPublicCollections:
@@ -421,6 +422,14 @@ export class AgeRangeFactory {
   }
 }
 
+export class ResourceTypesFactory {
+  public static sample(): ResourceType[] {
+    return Object.freeze([
+      { label: 'Activity', value: 'ACTIVITY' },
+    ]) as ResourceType[];
+  }
+}
+
 export class CountriesFactory {
   public static sample(arg: Country[] = []): Country[] {
     return [
@@ -620,6 +629,7 @@ export class MockStoreFactory {
       disciplines: DisciplinesFactory.sample(),
       tags: TagsFactory.sample(),
       videos: VideosStateFactory.sample(),
+      resourceTypes: ResourceTypesFactory.sample(),
       ...state,
     };
   };
@@ -670,6 +680,7 @@ export class VideoSearchRequestFactory {
       page: undefined,
       filters: {
         duration: [],
+        resource_types: [],
       },
       sortBy: undefined,
       ...resource,

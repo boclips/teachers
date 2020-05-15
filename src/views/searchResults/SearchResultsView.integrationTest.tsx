@@ -11,7 +11,7 @@ import {
 } from 'test-support/api-responses';
 
 describe('SearchResultsView', () => {
-  it('panel contains filters for age, subjects and duration', () => {
+  it('panel contains filters for age, subjects, duration, and resource type', () => {
     const view = renderSearchResultsViewWithSampleData();
     const sidebar = view.getByText('Filter results').closest('div');
 
@@ -19,6 +19,7 @@ describe('SearchResultsView', () => {
     expect(within(sidebar).getByText('Age')).toBeInTheDocument();
     expect(within(sidebar).getByText('Subjects')).toBeInTheDocument();
     expect(within(sidebar).getByText('Duration')).toBeInTheDocument();
+    expect(within(sidebar).getByText('Resources')).toBeInTheDocument();
   });
 
   it(`can change subject filters`, async () => {

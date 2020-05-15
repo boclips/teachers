@@ -42,6 +42,7 @@ export function onAllFilterReset(store: MiddlewareAPI<any, State>) {
     duration: undefined,
     age_range: undefined,
     subject: undefined,
+    resource_types: undefined,
   };
 
   onBulkUpdateSearchParameter(store, [clearRequest]);

@@ -12,7 +12,8 @@ export const convertQueryToSearchParameters = (
     query: parseQuery(parsedUrl.q),
     duration: DurationRange.newFromStrings(parsedUrl.duration) || null,
     ageRange: convertAgeRangesFromString(parsedUrl.age_range) || null,
-    subject: parseSubjects(parsedUrl.subject),
+    subject: parseList(parsedUrl.subject),
+    resourceTypes: parseList(parsedUrl.resource_types),
   };
 };
 
@@ -34,7 +35,7 @@ export const countSearchFilters = (searchFilters: SearchParameters): number => {
   return numberOfFiltersApplied;
 };
 
-const parseSubjects = (subject: string[] | string): string[] =>
+const parseList = (subject: string[] | string): string[] =>
   subject == null ? [] : subject.toString().split(',');
 
 const parseQuery = (query: string[] | string): string =>

@@ -32,5 +32,6 @@ export function generateVideoSearchUri(
     age_range_max: searchRequest.filters.age_range_max,
     subject: searchRequest.filters.subject,
     promoted: searchRequest.filters.promoted,
+    resource_types: searchRequest.filters.resource_types,
   });
 }

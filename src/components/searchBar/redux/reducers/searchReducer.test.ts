@@ -115,6 +115,7 @@ describe('searching videos', () => {
       subjects: {},
       ageRanges: {},
       durations: {},
+      resourceTypes: {},
     };
 
     const newState = searchReducer(

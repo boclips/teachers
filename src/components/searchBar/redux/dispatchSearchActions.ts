@@ -19,6 +19,7 @@ const getVideoFilters = (queryParams: any): VideoRequestFilters => ({
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
   age_range: convertAgeRangesFromString(queryParams.age_range) || undefined,
+  resource_types: queryParams.resource_types,
 });
 
 const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
@@ -26,6 +27,7 @@ const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
   age_range_min: +queryParams.age_range_min || undefined,
   age_range_max: +queryParams.age_range_max || undefined,
   age_range: convertAgeRangesFromString(queryParams.age_range) || undefined,
+  resource_types: queryParams.resource_types,
 });
 
 export const dispatchSearchActions = (store: Store<RouterState>) => {

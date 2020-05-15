@@ -13,6 +13,7 @@ export interface WithAppliedSearchParametersProps {
   numberOfFiltersApplied: number | undefined;
   duration: DurationRange[];
   ageRange: AgeRange[];
+  resourceTypes: string[];
   subjectIds: string[] | undefined;
 }
 
@@ -31,6 +32,7 @@ export const withAppliedSearchParameters = <
     duration: searchParameters.duration,
     ageRange: searchParameters.ageRange,
     subjectIds: searchParameters.subject,
+    resourceTypes: searchParameters.resourceTypes,
     numberOfFiltersApplied,
   };
 

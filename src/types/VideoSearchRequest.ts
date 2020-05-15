@@ -17,6 +17,7 @@ export interface VideoRequestFilters {
   age_range_max?: number;
   subject?: string[];
   promoted?: boolean;
+  resource_types?: string[];
 }
 
 export type SortBy = null | 'RELEASE_DATE' | 'RANDOM';

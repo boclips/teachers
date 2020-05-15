@@ -8,6 +8,9 @@ export interface VideoFacets {
   durations: {
     [id: string]: Facet;
   };
+  resourceTypes: {
+    [id: string]: Facet;
+  };
 }
 
 export interface Facet {

@@ -2,6 +2,7 @@ import { RouterState as ReactRouterState } from 'connected-react-router';
 import { VideoFacets } from 'src/types/VideoFacets';
 import { AgeRange } from 'src/types/AgeRange';
 import { DurationRange } from 'src/types/DurationRange';
+import { ResourceType } from 'src/types/ResourceType';
 import { UserProfile } from '../services/users/UserProfile';
 import { Country } from './Country';
 import { Discipline } from './Discipline';
@@ -102,6 +103,10 @@ export interface DisciplineState {
   disciplines: Discipline[];
 }
 
+export interface ResourceTypeState {
+  resourceTypes: ResourceType[];
+}
+
 export interface Environment {
   apiPrefix: string;
 }
@@ -160,6 +165,7 @@ export default interface State
     TagState,
     DisciplineState,
     EntitiesState,
+    ResourceTypeState,
     Environment,
     VideosState {
   apiPrefix: string;

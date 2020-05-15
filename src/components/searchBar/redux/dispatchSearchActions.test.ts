@@ -138,6 +138,20 @@ describe('when on the videos page', () => {
     expect(collectionAction.payload.filters.age_range_max).toEqual(12);
   });
 
+  it('filters by resource type', () => {
+    store = getStore('resource_types=ACTIVITY,LESSON_PLAN');
+    dispatchSearchActions(store);
+    const videoAction = store.getActions()[0];
+    const collectionAction = store.getActions()[1];
+
+    expect(videoAction.payload.filters.resource_types).toEqual(
+      'ACTIVITY,LESSON_PLAN',
+    );
+    expect(collectionAction.payload.filters.resource_types).toEqual(
+      'ACTIVITY,LESSON_PLAN',
+    );
+  });
+
   it('defaults subjects to undefined if not present', () => {
     expect(action.payload.filters.subject).toBeUndefined();
   });

@@ -5,6 +5,7 @@ export interface CollectionRequestFilters {
   age_range_min?: number;
   age_range_max?: number;
   age_range?: AgeRange[];
+  resource_types?: string[];
 }
 
 export interface CollectionSearchRequest {
