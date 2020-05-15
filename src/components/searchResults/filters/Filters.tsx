@@ -18,8 +18,8 @@ import State from '../../../types/State';
 const FilterKey = {
   AGE: 'age',
   DURATION: 'duration',
+  RESOURCE: 'resourceTypes',
   SUBJECTS: 'subjects',
-  RESOURCE: 'resource',
 };
 
 interface FilterFormEditableFields {
