@@ -21,6 +21,7 @@ export function onSearchVideos(
   const facets: VideoSearchFacets = {
     ageRanges: store.getState().ageRanges,
     durations: store.getState().durations,
+    resourceTypes: store.getState().resourceTypes,
   };
 
   fetchVideos(searchRequest, facets, links).then((results) => {

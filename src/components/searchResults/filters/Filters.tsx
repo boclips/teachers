@@ -12,6 +12,7 @@ import { Subject } from 'src/types/Subject';
 import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
 import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
 import { extractFacetHits } from 'src/components/searchResults/filters/extractFacetHits';
+import { getCollectionsFromSearchResult } from 'src/components/searchBar/redux/reducers/searchReducer';
 import State from '../../../types/State';
 
 const FilterKey = {
@@ -57,6 +58,20 @@ const Filters = React.forwardRef(
         },
     );
 
+    /*
+  This is a quick and dirty workaround to the fact that we don't have facets for
+  the collection search just now. When we add this, please remove this and forgive me
+   */
+    const lessonPlanFacet = useSelector(
+      (state: State) =>
+        getCollectionsFromSearchResult(state).filter(
+          (collection) =>
+            collection.attachments &&
+            collection.attachments.length > 0 &&
+            collection.attachments[0].type === 'LESSON_PLAN',
+        ).length,
+    );
+
     const durations = useSelector((state: State) => state.durations);
     const durationFilters = durations
       .map((d) => ({
@@ -86,10 +101,18 @@ const Filters = React.forwardRef(
       .sort((a, b) => a.label.localeCompare(b.label));
 
     const allResourceTypes = useSelector((state: State) => state.resourceTypes);
-    const resourceTypeFilters = allResourceTypes.map((type) => ({
-      value: type.value,
-      label: type.label,
-    }));
+
+    const resourceTypeFilters = allResourceTypes
+      .map((type) => ({
+        value: type.value,
+        label: type.label,
+        count:
+          type.value === 'LESSON_PLAN'
+            ? lessonPlanFacet
+            : extractFacetHits(type.label, facets.resourceTypes),
+      }))
+      .filter((filter) => filter.count > 0)
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     const [openFilters, setOpenFilters] = useState(() => [
       FilterKey.AGE,
@@ -216,6 +239,9 @@ const Filters = React.forwardRef(
                       {resourceTypeFilters.map((item) => (
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
+                          <span className="filter-form__checkbox-count">
+                            ({formatCount(item.count)})
+                          </span>
                         </Checkbox>
                       ))}
                     </CheckboxGroup>,

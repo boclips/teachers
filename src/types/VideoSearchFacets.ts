@@ -5,4 +5,5 @@ import { ResourceType } from 'src/types/ResourceType';
 export interface VideoSearchFacets {
   ageRanges: AgeRange[];
   durations: DurationRange[];
+  resourceTypes: ResourceType[];
 }
