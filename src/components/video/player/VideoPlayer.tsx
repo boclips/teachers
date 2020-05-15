@@ -52,7 +52,7 @@ const InvisibleButton = () => {
         }
       }
       className="invisibleButton"
-    ></button>
+    />
   );
 };
 class VideoPlayer extends React.PureComponent<

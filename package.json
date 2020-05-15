@@ -113,6 +113,8 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@bit/boclips._ui.video-card": "^1.0.5",
+    "@bit/boclips.types.video": "^1.0.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/browser": "^5.15.4",
     "@sentry/integrations": "^5.15.4",
@@ -147,5 +149,12 @@
     "react-transition-group": "^4.3.0",
     "redux": "^4.0.5",
     "urijs": "^1.19.2"
+  },
+  "bit": {
+    "env": {
+      "compiler": "boclips.compilers/compiler"
+    },
+    "componentsDefaultDirectory": "src/bits/{name}",
+    "packageManager": "npm"
   }
 }
