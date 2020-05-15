@@ -97,22 +97,24 @@ const VideoDetailsContent = ({ video }: Props) => {
             <DownloadTranscriptButton video={video} />
           </div>
         </Col>
-        {hasAttachments && (
-          <Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }}>
-            {video.attachments?.map((it) => (
-              <AttachmentDetails
-                link={it.linkToResource}
-                description={it.description}
-                type={it.type}
-                onClick={() => {
-                  AnalyticsFactory.internalAnalytics().trackVideoActivityClicked(
-                    video,
-                  );
-                }}
-              />
-            ))}
-          </Col>
-        )}
+        <Authenticated>
+          {hasAttachments && (
+            <Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }}>
+              {video.attachments?.map((it) => (
+                <AttachmentDetails
+                  link={it.linkToResource}
+                  description={it.description}
+                  type={it.type}
+                  onClick={() => {
+                    AnalyticsFactory.internalAnalytics().trackVideoActivityClicked(
+                      video,
+                    );
+                  }}
+                />
+              ))}
+            </Col>
+          )}
+        </Authenticated>
       </Row>
       <section className="video-details">
         <p
