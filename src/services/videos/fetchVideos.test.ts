@@ -38,6 +38,7 @@ beforeEach(async () => {
     {
       ageRanges: [],
       durations: [],
+      resourceTypes: [],
     },
     links,
   );

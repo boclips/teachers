@@ -695,6 +695,7 @@ export class VideoSearchFacetsFactory {
     return {
       ageRanges: [new AgeRange(3, 7)],
       durations: defaultDurations,
+      resourceTypes: [{ label: 'Activity', value: 'ACTIVITY' }],
       ...resource,
     };
   }

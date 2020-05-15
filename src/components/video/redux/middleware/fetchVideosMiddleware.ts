@@ -31,6 +31,7 @@ const onFetchVideos = (store: Store<State>, request: VideoSearchRequest) => {
   const facets: VideoSearchFacets = {
     ageRanges: store.getState().ageRanges,
     durations: store.getState().durations,
+    resourceTypes: store.getState().resourceTypes,
   };
 
   fetchVideos(request, facets, links).then((result: VideoSearchResult) => {
@@ -48,6 +49,7 @@ const onFetchPromotedVideos = (
   const facets: VideoSearchFacets = {
     ageRanges: store.getState().ageRanges,
     durations: store.getState().durations,
+    resourceTypes: store.getState().resourceTypes,
   };
 
   fetchVideos(request, facets, links).then((result) => {

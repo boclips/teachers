@@ -200,19 +200,17 @@ const Filters = React.forwardRef(
               </React.Fragment>
             </SubMenu>
             <SubMenu
-              title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
-              key={FilterKey.DURATION}
+              title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
+              key={FilterKey.RESOURCE}
               className={'filter-form__section'}
             >
               <React.Fragment>
                 <Form.Item>
-                  {getFieldDecorator('duration', {
-                    initialValue: duration
-                      ? duration.map((range) => range.toString())
-                      : [],
+                  {getFieldDecorator('resourceTypes', {
+                    initialValue: resourceTypes,
                   })(
                     <CheckboxGroup className="filter-form__checkbox-group">
-                      {durationFilters.map((item) => (
+                      {resourceTypeFilters.map((item) => (
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
@@ -226,17 +224,19 @@ const Filters = React.forwardRef(
               </React.Fragment>
             </SubMenu>
             <SubMenu
-              title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
-              key={FilterKey.RESOURCE}
+              title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
+              key={FilterKey.DURATION}
               className={'filter-form__section'}
             >
               <React.Fragment>
                 <Form.Item>
-                  {getFieldDecorator('resourceTypes', {
-                    initialValue: resourceTypes,
+                  {getFieldDecorator('duration', {
+                    initialValue: duration
+                      ? duration.map((range) => range.toString())
+                      : [],
                   })(
                     <CheckboxGroup className="filter-form__checkbox-group">
-                      {resourceTypeFilters.map((item) => (
+                      {durationFilters.map((item) => (
                         <Checkbox key={item.label} value={item.value}>
                           {item.label}{' '}
                           <span className="filter-form__checkbox-count">
