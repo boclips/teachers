@@ -52,7 +52,7 @@ const InvisibleButton = () => {
         }
       }
       className="invisibleButton"
-    />
+    ></button>
   );
 };
 class VideoPlayer extends React.PureComponent<
@@ -61,12 +61,14 @@ class VideoPlayer extends React.PureComponent<
     hasError: boolean;
     modalVisible: boolean;
     menuVisible: boolean;
+    fullScreen: HTMLElement;
   }
 > {
   public state = {
     hasError: false,
     modalVisible: false,
     menuVisible: false,
+    fullScreen: document.body,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -74,6 +76,20 @@ class VideoPlayer extends React.PureComponent<
   };
 
   private player: Player;
+
+  private checkFullScreen = () => {
+    if (
+      document.getElementsByClassName(
+        'boclips-player boclips-player-container plyr--fullscreen large-player',
+      ).length > 0
+    ) {
+      this.setState({
+        fullScreen: document.getElementById('overlay').parentElement,
+      });
+    } else {
+      this.setState({ fullScreen: document.body });
+    }
+  };
 
   public render() {
     if (this.state.hasError) {
@@ -93,9 +109,9 @@ class VideoPlayer extends React.PureComponent<
               onCancel={() => {
                 this.setState({ modalVisible: false });
               }}
-              getContainer={() => document.getElementById('overlay')}
               title={'Share Video'}
               shareCode={this.props.shareCode}
+              getContainer={this.state.fullScreen}
             >
               <VideoShareButtonForm video={this.props.video} />
             </ShareModal>
@@ -106,7 +122,7 @@ class VideoPlayer extends React.PureComponent<
               onVisibleChange={() => {
                 this.setState({ menuVisible: !this.state.menuVisible });
               }}
-              getPopupContainer={() => document.getElementById('overlay')}
+              getPopupContainer={() => this.state.fullScreen}
               loading={false}
             >
               <InvisibleButton />
@@ -232,6 +248,7 @@ class VideoPlayer extends React.PureComponent<
       {
         child: ReactDOMServer.renderToStaticMarkup(<Share />),
         onClick: () => {
+          this.checkFullScreen();
           this.setState({ modalVisible: true });
         },
       },
@@ -242,6 +259,7 @@ class VideoPlayer extends React.PureComponent<
           </div>,
         ),
         onClick: () => {
+          this.checkFullScreen();
           this.setState({ menuVisible: true });
         },
       },
