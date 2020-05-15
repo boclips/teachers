@@ -21,7 +21,7 @@ interface DispatchProps {
   fetchLinks: () => void;
 }
 
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & { children: any };
 
 export class UnconnectedLinkLoader extends React.PureComponent<Props> {
   public componentDidMount(): void {

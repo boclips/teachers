@@ -7,7 +7,7 @@
     "audit": "audit-ci --critical",
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev": "webpack-dev-server --config webpack-config/webpack.dev.js",
+    "dev": "webpack-dev-server --config webpack-config/webpack.dev.js --hot",
     "build": "webpack --config webpack-config/webpack.prod.js",
     "build:ci": "npm-run-all --parallel --print-label --aggregate-output lint compile test build",
     "analyse": "webpack --config webpack-config/webpack.analyse.js",
@@ -113,6 +113,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.0.0",
     "@bit/boclips._ui.video-card": "^1.0.5",
     "@bit/boclips.types.video": "^1.0.0",
     "@hot-loader/react-dom": "^16.13.0",
