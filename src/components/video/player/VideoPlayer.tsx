@@ -61,14 +61,14 @@ class VideoPlayer extends React.PureComponent<
     hasError: boolean;
     modalVisible: boolean;
     menuVisible: boolean;
-    fullScreen: HTMLElement;
+    superimposedContainer: HTMLElement;
   }
 > {
   public state = {
     hasError: false,
     modalVisible: false,
     menuVisible: false,
-    fullScreen: document.body,
+    superimposedContainer: document.body,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -84,10 +84,10 @@ class VideoPlayer extends React.PureComponent<
       ).length > 0
     ) {
       this.setState({
-        fullScreen: document.getElementById('overlay').parentElement,
+        superimposedContainer: document.getElementById('overlay').parentElement,
       });
     } else {
-      this.setState({ fullScreen: document.body });
+      this.setState({ superimposedContainer: document.body });
     }
   };
 
@@ -111,7 +111,7 @@ class VideoPlayer extends React.PureComponent<
               }}
               title={'Share Video'}
               shareCode={this.props.shareCode}
-              getContainer={this.state.fullScreen}
+              getContainer={this.state.superimposedContainer}
             >
               <VideoShareButtonForm video={this.props.video} />
             </ShareModal>
@@ -122,7 +122,7 @@ class VideoPlayer extends React.PureComponent<
               onVisibleChange={() => {
                 this.setState({ menuVisible: !this.state.menuVisible });
               }}
-              getPopupContainer={() => this.state.fullScreen}
+              getPopupContainer={() => this.state.superimposedContainer}
               loading={false}
             >
               <InvisibleButton />
