@@ -27,6 +27,7 @@ export const Bit = (): any => {
         page: 1,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const emitVideoLinkClickEvent = (video: Video) => {
