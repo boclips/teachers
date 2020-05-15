@@ -32,12 +32,24 @@ module.exports = merge(common, {
       new OptimizeCSSAssetsPlugin({}),
     ],
     splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      maxSize: 3 * oneMegaByte,
+      minSize: 0,
       cacheGroups: {
-        commons: {
+        vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+            )[1];
+
+            // npm package names are URL-safe, but some servers don't like @ symbols
+            return `npm.${packageName.replace('@', '')}`;
+          },
+        }
       },
     },
     runtimeChunk: {
@@ -46,8 +58,8 @@ module.exports = merge(common, {
   },
   performance: {
     hints: 'error',
-    maxAssetSize: 4 * oneMegaByte,
-    maxEntrypointSize: 4 * oneMegaByte,
+    maxAssetSize: 6 * oneMegaByte,
+    maxEntrypointSize: 6 * oneMegaByte,
   },
   plugins: [
     new HtmlWebpackPlugin({
