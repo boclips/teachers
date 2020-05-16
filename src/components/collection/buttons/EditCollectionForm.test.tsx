@@ -85,7 +85,6 @@ describe('EditCollectionForm', () => {
       title: 'My test collection',
       description: 'Test description',
       subjects: ['maths', 'arts'],
-      isPublic: true,
       ageRange: new AgeRange(5, 14),
       links: VideoCollectionLinksFactory.sample({
         edit: new Link({ href: '/collections/123' }),
@@ -100,7 +99,6 @@ describe('EditCollectionForm', () => {
       component.getByTestId(testId) as HTMLInputElement;
 
     expect(getInputByTestId('title-edit').value).toEqual('My test collection');
-    expect(getInputByTestId('visibility-edit').checked).toEqual(true);
     expect(getInputByTestId('description-edit').value).toEqual(
       'Test description',
     );
@@ -133,25 +131,6 @@ describe('EditCollectionForm', () => {
           .collections.byId[collection.id];
         expect(updatedCollection).toBeDefined();
         expect(updatedCollection.title).toEqual('New Title');
-      });
-    });
-
-    it('updates the visibility', async () => {
-      const collection = getCollection({
-        isPublic: true,
-      });
-
-      const component = renderEditForm(collection);
-
-      fireEvent.click(component.getByTestId('visibility-edit'));
-
-      await fireEvent.click(component.getByText('Save'));
-
-      await eventually(() => {
-        const updatedCollection = component.store.getState().entities
-          .collections.byId[collection.id];
-        expect(updatedCollection).toBeDefined();
-        expect(updatedCollection.isPublic).toEqual(false);
       });
     });
 

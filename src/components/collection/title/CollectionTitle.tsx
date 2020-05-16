@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PrivateLogoSVG from '../../../../resources/images/private.svg';
 import { VideoCollection } from '../../../types/VideoCollection';
 import './CollectionTitle.less';
 
@@ -25,12 +24,6 @@ export class CollectionTitle extends React.PureComponent<Props> {
           >
             {this.props.collection.title}
           </Link>
-          {this.props.collection.isMine && !this.props.collection.isPublic && (
-            <PrivateLogoSVG
-              className={'collection-title__logo'}
-              data-qa="collection-visibility"
-            />
-          )}
         </h1>
       </section>
     );

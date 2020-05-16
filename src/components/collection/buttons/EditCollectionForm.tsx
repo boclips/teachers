@@ -1,7 +1,6 @@
 import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
-import Checkbox from 'antd/lib/checkbox';
 import Button from 'antd/lib/button';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -145,20 +144,6 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
         <Form.Item className="form__item">
           {getFieldDecorator('title', { initialValue: props.collection.title })(
             <Input data-qa="title-edit" />,
-          )}
-        </Form.Item>
-        <Form.Item className="form__item">
-          {getFieldDecorator('isPublic', {
-            valuePropName: 'checked',
-            initialValue: props.collection.isPublic,
-          })(
-            <Checkbox data-qa="visibility-edit">
-              Public{' '}
-              <span className="form__item--extra">
-                (all users can see your collection in search results and subject
-                pages)
-              </span>
-            </Checkbox>,
           )}
         </Form.Item>
         <Form.Item

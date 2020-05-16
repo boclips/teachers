@@ -20,36 +20,3 @@ describe('displaying the title', () => {
     expect(collectionTitle.getByText('My collection')).toBeInTheDocument();
   });
 });
-
-describe('Visibility icon', () => {
-  it('show private icon when collection is not public and mine', () => {
-    const collectionTitle = renderCollectionTitle(
-      VideoCollectionFactory.sample({
-        isPublic: false,
-        isMine: true,
-      }),
-    );
-
-    const icon = collectionTitle.queryByTestId('collection-visibility');
-    expect(icon).toBeInTheDocument();
-  });
-
-  const noLogoCases = {
-    publicAndMine: [true, true],
-    publicAndNotMine: [true, false],
-    privateAndNotMine: [false, false],
-  };
-
-  it.each([
-    noLogoCases.publicAndMine,
-    noLogoCases.publicAndNotMine,
-    noLogoCases.privateAndNotMine,
-  ])('does not show any visibility icon', (isPublic, isMine) => {
-    const component = renderCollectionTitle(
-      VideoCollectionFactory.sample({ isPublic, isMine }),
-    );
-
-    const icon = component.queryByTestId('collection-visibility');
-    expect(icon).not.toBeInTheDocument();
-  });
-});
