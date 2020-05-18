@@ -259,13 +259,6 @@ class VideoPlayer extends React.PureComponent<
   private generateGeneralButtons = () =>
     this.props.isAuthenticated && [
       {
-        child: ReactDOMServer.renderToStaticMarkup(<Share />),
-        onClick: () => {
-          this.setSuperimposedContainer();
-          this.setState({ modalVisible: true });
-        },
-      },
-      {
         child: ReactDOMServer.renderToStaticMarkup(
           <div id="video-player-save-button">
             <Save />
@@ -274,6 +267,13 @@ class VideoPlayer extends React.PureComponent<
         onClick: () => {
           this.setSuperimposedContainer();
           this.setState({ menuVisible: true });
+        },
+      },
+      {
+        child: ReactDOMServer.renderToStaticMarkup(<Share />),
+        onClick: () => {
+          this.setSuperimposedContainer();
+          this.setState({ modalVisible: true });
         },
       },
     ];
