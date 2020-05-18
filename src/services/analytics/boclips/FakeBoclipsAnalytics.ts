@@ -47,6 +47,7 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
         },
       },
       { subtype: CollectionInteractionType[subtype] },
+      'www.test.com',
     );
   }
 
