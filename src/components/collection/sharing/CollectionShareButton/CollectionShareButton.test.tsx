@@ -55,7 +55,6 @@ describe('CollectionShareButton', () => {
   it(`does not render the share button on other peoples private collections`, () => {
     const notMyCollection = VideoCollectionFactory.sample({
       isMine: false,
-      isPublic: false,
     });
 
     const { queryByText } = renderWithStore(

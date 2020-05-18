@@ -34,7 +34,6 @@ describe('CollectionDetailsView', () => {
 
       expect(collectionPage.getCollectionDetails()).toMatchObject({
         title: 'funky collection',
-        isPublic: true,
         subjects: [],
         lastUpdated: 'Jan 16, 2019',
         ageRange: '3-9',

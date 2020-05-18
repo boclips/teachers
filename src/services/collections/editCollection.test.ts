@@ -9,7 +9,7 @@ describe('editCollection', () => {
   test('edits a collection', async () => {
     MockFetchVerify.patch(
       '/v1/collections/the-id',
-      { title: 'avideo', isPublic: false, ageRange: null },
+      { title: 'avideo', ageRange: null },
       204,
     );
 
@@ -21,7 +21,6 @@ describe('editCollection', () => {
       }),
       {
         title: 'avideo',
-        isPublic: false,
         ageRange: new AgeRange(),
       },
     );

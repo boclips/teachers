@@ -9,7 +9,6 @@ export interface EditCollectionRequest {
 
 export interface VideoCollectionChanges {
   title?: string;
-  isPublic?: boolean;
   subjects?: string[];
   ageRange?: AgeRange;
   description?: string;

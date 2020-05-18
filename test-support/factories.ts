@@ -107,7 +107,7 @@ export class VideoCollectionFactory {
       updatedAt: arg.updatedAt || '',
       videoIds: arg.videoIds || [],
       links: arg.links || VideoCollectionLinksFactory.sample(),
-      isPublic: arg.isPublic || false,
+      isCurated: arg.isCurated || false,
       isMine: typeof arg.isMine === 'undefined' ? true : arg.isMine,
       createdBy: 'Le Factory',
       subjects: arg.subjects || [],

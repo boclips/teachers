@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import App from '../../src/app/App';
 import { CollectionHeader } from '../../src/components/collection/details/header/CollectionHeader';
-import { CollectionTitle } from '../../src/components/collection/title/CollectionTitle';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
 import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
@@ -50,7 +49,6 @@ export class CollectionPage {
   public getCollectionDetails() {
     return this.wrapper.find(CollectionHeader).map((el) => ({
       title: findOne(el, 'collection-title').text(),
-      isPublic: el.find(CollectionTitle).props().collection.isPublic,
       subjects: el.find(By.dataQa('subject-tag')).map((s) => s.text()),
       lastUpdated: findOne(el, 'collection-updated-at').text(),
       ageRange: el
@@ -63,10 +61,6 @@ export class CollectionPage {
 
   public isEmptyCollection() {
     return this.wrapper.find(By.dataQa('collection-view-empty')).length > 0;
-  }
-
-  public isCollectionNotFound() {
-    return this.wrapper.find(By.dataQa('collection-not-found')).length > 0;
   }
 
   public isEditable() {

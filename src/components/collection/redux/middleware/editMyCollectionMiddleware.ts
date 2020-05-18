@@ -30,12 +30,6 @@ export function onEditCollection(
   if (request.changes.title != null) {
     AnalyticsFactory.externalAnalytics().trackCollectionRenamed(request);
   }
-
-  if (request.changes.isPublic != null) {
-    AnalyticsFactory.externalAnalytics().trackCollectionVisiblityChange(
-      request,
-    );
-  }
 }
 
 const createUpdatedCollection = ({

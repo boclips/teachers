@@ -54,7 +54,6 @@ describe('AnalyticsService', () => {
       const collection = VideoCollectionFactory.sample({
         title: 'style',
         id: 'cat',
-        isPublic: true,
         isMine: true,
       });
 
@@ -64,7 +63,7 @@ describe('AnalyticsService', () => {
         video_collection_id: 'cat',
         video_collection_title: 'style',
         video_collection_is_owner: true,
-        video_collection_is_public: true,
+        video_collection_is_public: false,
       };
 
       expect(mockAppcues.track).toHaveBeenCalledWith(

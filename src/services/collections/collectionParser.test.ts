@@ -24,7 +24,7 @@ describe('parsing a single collections API response', () => {
     expect(parsed.title).toEqual('funky collection');
     expect(parsed.updatedAt).toEqual('2019-01-16T12:00:00.870Z');
     expect(parsed.createdBy).toEqual('AI');
-    expect(parsed.isPublic).toEqual(true);
+    expect(parsed.isCurated).toEqual(true);
   });
 
   it('parses edit links', () => {

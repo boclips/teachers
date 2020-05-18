@@ -15,7 +15,6 @@ export const editCollection = (
   return axios
     .patch(endpoint, {
       title: changes.title,
-      isPublic: changes.isPublic,
       subjects: changes.subjects,
       ageRange:
         changes.ageRange && changes.ageRange.isBounded()

@@ -83,7 +83,7 @@ export default class AnalyticsService {
       video_collection_title: collection.title,
       video_collection_id: collection.id,
       video_collection_is_owner: collection.isMine,
-      video_collection_is_public: collection.isPublic,
+      video_collection_is_public: collection.isCurated,
     };
 
     this.trackAppcues(EventTypes.DEFAULT_COLLECTION_VISITED, payload);
@@ -130,15 +130,6 @@ export default class AnalyticsService {
     };
 
     this.trackAppcues(EventTypes.COLLECTION_RENAMED, payload);
-  }
-
-  public trackCollectionVisiblityChange(request: EditCollectionRequest): void {
-    const payload = {
-      collection_visibility: request.changes.isPublic,
-      collection_id: request.collection.id,
-    };
-
-    this.trackAppcues(EventTypes.VISIBILITY_CHANGED, payload);
   }
 
   public trackCollectionRemoved(collection: VideoCollection): void {
