@@ -62,13 +62,15 @@ class VideoPlayer extends React.PureComponent<
     modalVisible: boolean;
     menuVisible: boolean;
     superimposedContainer: HTMLElement;
+    playerFullscreen: boolean;
   }
 > {
   public state = {
     hasError: false,
     modalVisible: false,
     menuVisible: false,
-    superimposedContainer: document.body,
+    superimposedContainer: null,
+    playerFullscreen: false,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -78,16 +80,22 @@ class VideoPlayer extends React.PureComponent<
   private player: Player;
 
   private setSuperimposedContainer = () => {
+    const overlay = document.getElementById('overlay');
+    const parentOverlay = overlay?.parentElement;
     if (
       document.getElementsByClassName(
         'boclips-player boclips-player-container plyr--fullscreen large-player',
       ).length > 0
     ) {
       this.setState({
-        superimposedContainer: document.getElementById('overlay').parentElement,
+        superimposedContainer: parentOverlay,
+        playerFullscreen: true,
       });
     } else {
-      this.setState({ superimposedContainer: document.body });
+      this.setState({
+        superimposedContainer: document.body,
+        playerFullscreen: false,
+      });
     }
   };
 
@@ -117,6 +125,11 @@ class VideoPlayer extends React.PureComponent<
             </ShareModal>
             <ManageVideCollectionMenuContainer
               video={this.props.video}
+              key={
+                this.state.playerFullscreen
+                  ? 'superimposed-container-fullscreen'
+                  : 'superimposed-container-not-fullscreen'
+              }
               collectionKey={this.props.collectionKey}
               isMenuVisible={this.state.menuVisible}
               onVisibleChange={() => {
