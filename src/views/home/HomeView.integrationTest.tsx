@@ -30,7 +30,7 @@ describe('Home page', () => {
     new ApiStub()
       .defaultUser()
       .fetchPromoted()
-      .fetchPublicCollections()
+      .fetchCollections()
       .fetchDisciplines()
       .fetchCollections();
 

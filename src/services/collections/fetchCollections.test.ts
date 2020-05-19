@@ -19,8 +19,8 @@ const links = LinksFactory.sample({
   myCollections: new Link({
     href: '/v1/collections?projection=list',
   }),
-  publicCollections: new Link({
-    href: '/v1/collections?public',
+  discoverCollections: new Link({
+    href: '/v1/collections?discoverable=true',
   }),
 });
 
@@ -50,13 +50,14 @@ describe('user collections', () => {
   });
 });
 
-describe('public collections', () => {
+describe('discover collections', () => {
   test('returns available collections in skinny format for user collections list', async () => {
     new MockAdapter(axios)
-      .onGet('/v1/collections?public')
+      .onGet('/v1/collections?discoverable=true')
       .replyOnce(200, JSON.stringify(collectionsResponse()), {});
+
     const collections = await fetchPageableCollections(links, {
-      key: 'publicCollections',
+      key: 'discoverCollections',
     });
 
     expect(collections.items[0].id).toEqual('id');
@@ -75,12 +76,12 @@ describe('public collections', () => {
 
   test('returns next collections page', async () => {
     new MockAdapter(axios)
-      .onGet('/v1/collections?publicpage')
+      .onGet('/v1/collections?discoverablepage')
       .replyOnce(200, JSON.stringify(collectionsResponse()), {});
 
     const collections = await fetchNextCollectionsPage(
       PageableCollectionsFactory.sample({
-        links: { next: new Link({ href: '/v1/collections?publicpage' }) },
+        links: { next: new Link({ href: '/v1/collections?discoverablepage' }) },
       }),
     );
 

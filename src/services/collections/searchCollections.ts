@@ -12,7 +12,7 @@ export const searchCollections = (
     searchRequest.filters.age_range &&
     searchRequest.filters.age_range.map((ageRange) => ageRange.getId());
 
-  const url = links.searchPublicCollections.getTemplatedLink({
+  const url = links.searchCollections.getTemplatedLink({
     query: searchRequest.query,
     size: 5,
     subject: searchRequest.filters.subject,

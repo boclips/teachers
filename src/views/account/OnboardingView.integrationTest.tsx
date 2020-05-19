@@ -38,7 +38,7 @@ describe('When user is not activated', () => {
     })
       .fetchUser(userResponse('user-id'))
       .fetchSchools('ES', 'school')
-      .fetchPublicCollections()
+      .fetchCollections()
       .fetchPromoted();
 
     await fakeSubjectsSetup();

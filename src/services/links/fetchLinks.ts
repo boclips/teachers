@@ -15,21 +15,12 @@ export default function fetchLinks(prefix: string) {
           ),
         };
 
-        if (body._links.userCollection) {
-          links.collection = new Link(body._links.userCollection);
-        }
-
         if (body._links.searchVideos) {
           links.videos = new Link(body._links.searchVideos);
         }
 
-        if (body._links.searchPublicCollections) {
-          links.searchPublicCollections = new Link(
-            body._links.searchPublicCollections,
-          );
-          links.discoverCollections = new Link(
-            body._links.searchPublicCollections,
-          );
+        if (body._links.searchCollections) {
+          links.searchCollections = new Link(body._links.searchCollections);
         }
 
         if (body._links.createCollection) {
@@ -48,8 +39,8 @@ export default function fetchLinks(prefix: string) {
           links.myCollections = new Link(body._links.myCollections);
         }
 
-        if (body._links.publicCollections) {
-          links.publicCollections = new Link(body._links.publicCollections);
+        if (body._links.discoverCollections) {
+          links.discoverCollections = new Link(body._links.discoverCollections);
         }
 
         if (body._links.promotedCollections) {

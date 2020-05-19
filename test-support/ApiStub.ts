@@ -133,6 +133,10 @@ export default class ApiStub {
         `${this.prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
         collectionsList,
       );
+      MockFetchVerify.getOnce(
+        `${this.prefix}/v1/collections?discoverable=true`,
+        collectionsList,
+      );
     } else {
       MockFetchVerify.get(
         `${this.prefix}/v1/collections?projection=list&owner=me`,
@@ -142,25 +146,12 @@ export default class ApiStub {
         `${this.prefix}/v1/collections?projection=list&page=0&size=30&owner=me&bookmarked=true&sort_by=TITLE`,
         collectionsList,
       );
-    }
-    return this;
-  }
-
-  public fetchPublicCollections(
-    collections = collectionsResponse(),
-    once = false,
-  ) {
-    if (once) {
-      MockFetchVerify.getOnce(
-        `${this.prefix}/v1/collections?public=true`,
-        collections,
-      );
-    } else {
       MockFetchVerify.get(
-        `${this.prefix}/v1/collections?public=true`,
-        collections,
+        `${this.prefix}/v1/collections?discoverable=true`,
+        collectionsList,
       );
     }
+
     return this;
   }
 
@@ -180,14 +171,6 @@ export default class ApiStub {
     return this;
   }
 
-  public fetchBookmarkedCollections(collections = collectionsResponse()) {
-    MockFetchVerify.getOnce(
-      `${this.prefix}/v1/collections?bookmarked=true`,
-      collections,
-    );
-    return this;
-  }
-
   public fetchCollection(collection = collectionResponse(), once = false) {
     if (once) {
       MockFetchVerify.getOnce(
@@ -203,31 +186,11 @@ export default class ApiStub {
     return this;
   }
 
-  public addToCollection(options: CollectionOptions = { collectionId: 'id' }) {
-    MockFetchVerify.put(
-      new RegExp(`/v1/collections/${options.collectionId}/videos/.*`),
-      JSON.stringify({}),
-      204,
-    );
-    return this;
-  }
-
   public removeFromCollection(
     options: CollectionOptions = { collectionId: 'id' },
   ) {
     MockFetchVerify.delete(
       new RegExp(`/v1/collections/${options.collectionId}/videos/.*`),
-      JSON.stringify({}),
-      204,
-    );
-    return this;
-  }
-
-  public deleteCollection(
-    collectionOptions: CollectionOptions = { collectionId: 'id' },
-  ) {
-    MockFetchVerify.delete(
-      `${this.prefix}/v1/collections/${collectionOptions.collectionId}`,
       JSON.stringify({}),
       204,
     );

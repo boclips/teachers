@@ -15,9 +15,9 @@ describe('searchCollections', () => {
     axiosMock.onGet().reply(200, JSON.stringify(collectionsResponse), {});
 
     links = LinksFactory.sample({
-      searchPublicCollections: new Link({
+      searchCollections: new Link({
         href:
-          '/v1/collections?public=true{&query,subject,projection,page,size,age_range_min,age_range_max,age_range}',
+          '/v1/collections?discoverable=true{&query,subject,projection,page,size,age_range_min,age_range_max,age_range}',
         templated: true,
       }),
     });

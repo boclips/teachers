@@ -6,20 +6,20 @@ export const links = {
       href: `${prefix}/v1/videos{?query,sort_by,include_tag,exclude_tag,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,size,page,subject,promoted}`,
       templated: true,
     },
-    searchPublicCollections: {
-      href: `${prefix}/v1/collections{?query,subject,age_range_min,age_range_max}`,
-      templated: true,
-    },
     video: {
       href: `${prefix}/v1/videos/{id}`,
+      templated: true,
+    },
+    searchCollections: {
+      href: `${prefix}/v1/collections{?query,subject,age_range_min,age_range_max}`,
       templated: true,
     },
     collection: {
       href: `${prefix}/v1/collections/{id}`,
       templated: true,
     },
-    publicCollections: {
-      href: `${prefix}/v1/collections?public=true`,
+    discoverCollections: {
+      href: `${prefix}/v1/collections?discoverable=true`,
     },
     promotedCollections: {
       href: `${prefix}/v1/collections?promoted=true`,

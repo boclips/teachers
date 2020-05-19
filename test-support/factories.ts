@@ -193,8 +193,8 @@ export class LinksFactory {
           href: `${prefix}/videos/{?query,sort_by,duration,duration_facets,duration_min,duration_max,released_date_from,released_date_to,source,age_range_min,age_range_max,age_range,age_range_facets,size,page,subject,subjects_set_manually,promoted,content_partner,type,is_classroom,resource_types,resource_type_facets}`,
           templated: true,
         }),
-      searchPublicCollections:
-        arg.searchPublicCollections ||
+      searchCollections:
+        arg.searchCollections ||
         new Link({
           href: `${prefix}/collections?query={query}`,
           templated: true,
@@ -219,10 +219,7 @@ export class LinksFactory {
         arg.createCollection || new Link({ href: `${prefix}/collections` }),
       myCollections:
         arg.myCollections ||
-        new Link({ href: `${prefix}/collections?owner=abc` }),
-      publicCollections:
-        arg.publicCollections ||
-        new Link({ href: `${prefix}/collections?public` }),
+        new Link({ href: `${prefix}/users/userid/collections` }),
       promotedCollections:
         arg.promotedCollections ||
         new Link({ href: `${prefix}/collections?promoted` }),
@@ -260,8 +257,8 @@ export class LinksStateValueFactory {
     return Object.freeze({
       video: new Link({ href: `${prefix}/videos/{id}`, templated: true }),
       createNoSearchResultsEvent: new Link({ href: `` }),
-      publicCollections: new Link({
-        href: `${prefix}/collections?projection=list&public=true&page=0&size=30`,
+      discoverCollections: new Link({
+        href: `${prefix}/collections?projection=list&discoverable=true&page=0&size=30`,
         templated: false,
       }),
       createAccount: new Link({ href: `${prefix}/users`, templated: false }),
@@ -365,7 +362,7 @@ export class CollectionsFactory {
       loading: false,
       updating: false,
       myCollections: { items: [collection.id], links: {} },
-      publicCollections: {
+      discoverCollections: {
         items: [],
         links: {},
       },
@@ -373,7 +370,7 @@ export class CollectionsFactory {
         items: [],
         links: {},
       },
-      discoverCollections: {
+      publicCollections: {
         items: [],
         links: {},
       },
@@ -588,8 +585,8 @@ export class MockStoreFactory {
         ? collections.discoverCollections.items
         : []),
       ...(collections.myCollections ? collections.myCollections.items : []),
-      ...(collections.publicCollections
-        ? collections.publicCollections.items
+      ...(collections.discoverCollections
+        ? collections.discoverCollections.items
         : []),
     ];
 
