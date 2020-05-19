@@ -83,7 +83,7 @@ export default class AnalyticsService {
       video_collection_title: collection.title,
       video_collection_id: collection.id,
       video_collection_is_owner: collection.isMine,
-      video_collection_is_public: collection.isCurated,
+      video_collection_is_discoverable: collection.discoverable,
     };
 
     this.trackAppcues(EventTypes.DEFAULT_COLLECTION_VISITED, payload);

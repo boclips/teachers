@@ -20,7 +20,7 @@ export interface VideoCollection {
   updatedAt: string;
   videoIds: VideoId[];
   links: VideoCollectionLinks;
-  isCurated: boolean;
+  discoverable: boolean;
   subjects: string[];
   isMine: boolean;
   createdBy: string;

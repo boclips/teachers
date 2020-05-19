@@ -299,7 +299,7 @@ export function collectionResponse(
     title: 'funky collection',
     videos: videosWithin,
     updatedAt: '2019-01-16T12:00:00.870Z',
-    public: true,
+    discoverable: true,
     promoted: false,
     subjects: [],
     createdBy: 'AI',

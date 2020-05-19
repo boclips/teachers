@@ -63,7 +63,7 @@ describe('AnalyticsService', () => {
         video_collection_id: 'cat',
         video_collection_title: 'style',
         video_collection_is_owner: true,
-        video_collection_is_public: false,
+        video_collection_is_discoverable: false,
       };
 
       expect(mockAppcues.track).toHaveBeenCalledWith(

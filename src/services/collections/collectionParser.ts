@@ -45,7 +45,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     updatedAt: data.updatedAt,
     videoIds,
     links: getLinks(data),
-    isCurated: data.public,
+    discoverable: data.discoverable,
     isMine: data.mine,
     createdBy: data.createdBy,
     subjects: data.subjects.map((subject) => subject.id),
