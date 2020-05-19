@@ -10,7 +10,6 @@ import {
   appendBookmarkedCollectionsAction,
   appendDiscoverCollectionsAction,
   appendMyCollectionsAction,
-  appendPublicCollectionsAction,
 } from '../actions/appendReadOnlyCollectionsAction';
 import { createCollectionAction } from '../actions/createCollectionAction';
 import { editCollectionAction } from '../actions/editCollectionAction';
@@ -49,7 +48,6 @@ export const initialCollectionsState: CollectionsStateValue = {
   myCollections: undefined,
   discoverCollections: undefined,
   promotedCollections: undefined,
-  publicCollections: undefined,
   collectionIdBeingViewed: undefined,
   loading: true,
   updating: false,
@@ -98,10 +96,6 @@ export const collectionHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(onCreateCollectionAction, collectionUpdated),
   actionHandler(
     appendDiscoverCollectionsAction,
-    onAppendPageableCollectionsAction,
-  ),
-  actionHandler(
-    appendPublicCollectionsAction,
     onAppendPageableCollectionsAction,
   ),
   actionHandler(

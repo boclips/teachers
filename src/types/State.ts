@@ -123,7 +123,6 @@ export interface CollectionsStateValue {
   updating: boolean;
   myCollections: Pageable<string>;
   myResources?: Pageable<string>;
-  publicCollections: Pageable<string>;
   promotedCollections: Pageable<string>;
   discoverCollections: Pageable<string>;
   collectionIdBeingViewed?: string;
