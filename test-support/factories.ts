@@ -370,10 +370,6 @@ export class CollectionsFactory {
         items: [],
         links: {},
       },
-      publicCollections: {
-        items: [],
-        links: {},
-      },
       myResources: {
         items: [],
         links: {},

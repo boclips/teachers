@@ -7,11 +7,6 @@ export interface AppendCollectionRequest {
   collections: Pageable<VideoCollection>;
   key: CollectionKey;
 }
-
-export const appendPublicCollectionsAction = actionCreatorFactory<
-  AppendCollectionRequest
->('APPEND_PUBLIC_COLLECTIONS');
-
 export const appendDiscoverCollectionsAction = actionCreatorFactory<
   AppendCollectionRequest
 >('APPEND_DISCOVER_COLLECTIONS');
@@ -28,8 +23,6 @@ export const appendPageableCollectionsAction = (
   request: AppendCollectionRequest,
 ) => {
   switch (request.key) {
-    case 'publicCollections':
-      return appendPublicCollectionsAction(request);
     case 'myResources':
       return appendMyCollectionsAction(request);
     case 'myCollections':

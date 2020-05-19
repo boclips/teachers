@@ -53,7 +53,7 @@ export const Bit = (): any => {
                   video={video}
                   videoIndex={i}
                   mode="card"
-                  collectionKey="publicCollections"
+                  collectionKey="discoverCollections"
                 />
               }
               videoActionButtons={<VideoButtons video={video} mode={'card'} />}

@@ -93,40 +93,6 @@ test('can store a collection', () => {
 });
 
 describe('appending pageable collections to different keys', () => {
-  test('appending public collections', () => {
-    const stateBefore: State = MockStoreFactory.sampleState({
-      collections: {
-        updating: false,
-        loading: false,
-        myCollections: undefined,
-        discoverCollections: undefined,
-        promotedCollections: undefined,
-        publicCollections: PageableCollectionsFactory.sample(),
-      },
-    });
-
-    const nextCollectionLink = new Link({
-      href: 'next-arrow.svg',
-      templated: false,
-    });
-
-    const action = appendPageableCollectionsAction({
-      collections: {
-        items: [VideoCollectionFactory.sample()],
-        links: {
-          next: nextCollectionLink,
-        },
-      },
-      key: 'publicCollections',
-    });
-
-    const stateAfter = testReducer(stateBefore, action);
-
-    expect(stateAfter.collections.publicCollections.links.next).toEqual(
-      nextCollectionLink,
-    );
-  });
-
   test('appending discover collections', () => {
     const stateBefore: State = MockStoreFactory.sampleState({
       collections: {
@@ -135,7 +101,6 @@ describe('appending pageable collections to different keys', () => {
         myCollections: undefined,
         promotedCollections: undefined,
         discoverCollections: PageableCollectionsFactory.sample(),
-        publicCollections: undefined,
       },
     });
 
@@ -170,7 +135,6 @@ describe('appending pageable collections to different keys', () => {
         promotedCollections: undefined,
         myResources: PageableCollectionsFactory.sample(),
         discoverCollections: undefined,
-        publicCollections: undefined,
       },
     });
 

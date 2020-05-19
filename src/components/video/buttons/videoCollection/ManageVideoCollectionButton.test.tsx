@@ -191,7 +191,6 @@ const mountWith = (
             : collections.map((collection) => collection.id),
       }),
       discoverCollections: undefined,
-      publicCollections: undefined,
       promotedCollections: undefined,
       loading,
       updating,
