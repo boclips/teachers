@@ -9,6 +9,7 @@ export interface Links {
   discoverCollections?: Link;
   searchCollections?: Link;
   myCollections?: Link;
+  mySavedCollections?: Link;
   promotedCollections?: Link;
   activate?: Link;
   profile?: Link;
@@ -19,5 +20,4 @@ export interface Links {
   countries?: Link;
   reportAccessExpired?: Link;
   validateShareCode?: Link;
-  myResources?: Link;
 }

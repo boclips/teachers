@@ -8,14 +8,27 @@ import { parseScrollableCollectionsListResponse } from './collectionParser';
 export const fetchPageableCollections = (
   links: Links,
   request: FetchPageableCollectionRequest,
-): Promise<Pageable<VideoCollection>> =>
-  axios
-    .get(
-      request.request
-        ? links[request.key].getTemplatedLink(request.request.filters)
-        : links[request.key].getOriginalLink(),
-    )
+): Promise<Pageable<VideoCollection>> => {
+  let url = null;
+  switch (request.key) {
+    case 'myResources':
+      url = links.mySavedCollections.getTemplatedLink({});
+      break;
+    case 'discoverCollections':
+      url = links.discoverCollections.getTemplatedLink(request.request.filters);
+      break;
+    case 'myCollections':
+      url = links[request.key].getTemplatedLink({});
+      break;
+    case 'promotedCollections':
+      url = links[request.key].getOriginalLink();
+      break;
+  }
+
+  return axios
+    .get(url)
     .then((response) => parseScrollableCollectionsListResponse(response));
+};
 
 export const fetchNextCollectionsPage = (
   collections: Pageable<string>,

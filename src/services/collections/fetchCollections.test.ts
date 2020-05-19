@@ -58,6 +58,7 @@ describe('discover collections', () => {
 
     const collections = await fetchPageableCollections(links, {
       key: 'discoverCollections',
+      request: {},
     });
 
     expect(collections.items[0].id).toEqual('id');

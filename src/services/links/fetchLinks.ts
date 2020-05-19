@@ -32,7 +32,7 @@ export default function fetchLinks(prefix: string) {
         }
 
         if (body._links.mySavedCollections) {
-          links.myResources = new Link(body._links.mySavedCollections);
+          links.mySavedCollections = new Link(body._links.mySavedCollections);
         }
 
         if (body._links.myCollections) {
