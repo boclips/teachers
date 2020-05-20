@@ -4,12 +4,12 @@ import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
+import { ResourceTypeFilterTag } from 'src/components/searchResults/filters/ResourceFilterTag';
+import SubjectFilterTag from 'src/components/searchResults/filters/SubjectFilterTag';
 import AgeRangeFilterTag from './AgeRangeFilterTag';
 import ClearAllButton from './ClearAllButton';
 import DurationFilterTag from './DurationFilterTag';
 import './AppliedFilters.less';
-// eslint-disable-next-line import/order
-import SubjectFilterTag from 'src/components/searchResults/filters/SubjectFilterTag';
 
 export const AppliedFilters = withAppliedSearchParameters(
   (props: WithAppliedSearchParametersProps) =>
@@ -44,6 +44,14 @@ export const AppliedFilters = withAppliedSearchParameters(
           {props.duration &&
             props.duration.map((durationRange, index) => (
               <DurationFilterTag key={index} range={durationRange} />
+            ))}
+          {props.resourceTypes &&
+            props.resourceTypes.map((resorceType, index) => (
+              <ResourceTypeFilterTag
+                key={index}
+                resource={resorceType}
+                activeFilters={props.resourceTypes}
+              />
             ))}
         </Row>
       </div>

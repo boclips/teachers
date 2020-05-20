@@ -32,6 +32,10 @@ export const countSearchFilters = (searchFilters: SearchParameters): number => {
     numberOfFiltersApplied += searchFilters.subject.length;
   }
 
+  if (searchFilters.resourceTypes != null) {
+    numberOfFiltersApplied += searchFilters.resourceTypes.length;
+  }
+
   return numberOfFiltersApplied;
 };
 
