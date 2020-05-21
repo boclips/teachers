@@ -19,7 +19,10 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
     this.videoInteractedWithEvents.length = 0;
   }
 
-  public logInteraction(video: Video, interactionType: string): Promise<void> {
+  public trackVideoInteraction(
+    video: Video,
+    interactionType: string,
+  ): Promise<void> {
     this.videoInteractedWithEvents.push({ video, interactionType });
     return Promise.resolve();
   }

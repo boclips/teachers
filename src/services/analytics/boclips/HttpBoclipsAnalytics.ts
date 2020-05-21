@@ -8,7 +8,10 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 
 export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
-  public logInteraction(video: Video, interactionType: string): Promise<void> {
+  public trackVideoInteraction(
+    video: Video,
+    interactionType: string,
+  ): Promise<void> {
     const link = video.links.logInteraction;
 
     if (!link) {
@@ -19,6 +22,9 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
       link.getTemplatedLink({
         type: interactionType,
       }),
+      {
+        headers: { 'Boclips-Referer': window.location.href },
+      },
     );
   }
 

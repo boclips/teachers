@@ -22,7 +22,7 @@ test('logInteraction', async () => {
     },
   });
 
-  await new HttpBoclipsAnalytics().logInteraction(
+  await new HttpBoclipsAnalytics().trackVideoInteraction(
     video,
     'copied-to-google-classroom',
   );
@@ -43,7 +43,7 @@ test('logInteraction rejects when link is missing', async () => {
     },
   });
 
-  const result = new HttpBoclipsAnalytics().logInteraction(
+  const result = new HttpBoclipsAnalytics().trackVideoInteraction(
     video,
     'copied-to-google-classroom',
   );
