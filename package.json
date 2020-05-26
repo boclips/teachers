@@ -114,8 +114,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.0",
-    "@bit/boclips._ui.video-card": "^1.0.5",
-    "@bit/boclips.types.video": "^1.0.0",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/browser": "^5.15.4",
     "@sentry/integrations": "^5.15.4",
