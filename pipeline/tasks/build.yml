@@ -12,7 +12,7 @@ inputs:
 - name: version
 
 params:
-  BIT_TOKEN: ((bit.token))
+  BIT_TOKEN:
 
 outputs:
 - name: dist
