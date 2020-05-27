@@ -46,6 +46,7 @@ export function convertApiClientVideo(clientVideo: ClientVideo): Video {
     ageRange: convertedProperties.ageRange,
     bestFor: convertedProperties.bestFor,
     attachments: clientVideo.attachments,
+    contentWarnings: clientVideo.contentWarnings,
     links: convertedProperties.links,
   };
 

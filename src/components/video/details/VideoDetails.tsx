@@ -6,6 +6,7 @@ import { AgeRangeTag } from 'src/components/common/tags/AgeRangeTag';
 import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { DownloadTranscriptButton } from 'src/components/video/buttons/downloadTranscriptButton/DownloadTranscriptButton';
+import ContentWarningIcon from 'resources/images/warning.svg';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -124,6 +125,21 @@ const VideoDetailsContent = ({ video }: Props) => {
         >
           {video.description}
         </p>
+        <Authenticated>
+          {video.contentWarnings?.length > 0 && (
+            <p className={'content-warnings'}>
+              <span className={'content-warnings__icon'}>
+                <ContentWarningIcon />
+              </span>
+              <span>
+                <span className={'content-warnings__title'}>
+                  Content warning:
+                </span>{' '}
+                {video.contentWarnings.map((it) => it.label).join(', ')}
+              </span>
+            </p>
+          )}
+        </Authenticated>
       </section>
     </section>
   );

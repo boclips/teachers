@@ -83,6 +83,7 @@ export class VideoFactory {
         }),
       },
       promoted: arg.promoted || false,
+      contentWarnings: arg.contentWarnings || [],
     });
   }
 }

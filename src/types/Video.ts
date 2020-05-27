@@ -2,6 +2,7 @@ import { Duration } from 'moment';
 import { AgeRange } from 'src/types/AgeRange';
 import { Playback } from 'boclips-api-client/dist/sub-clients/common/model/Playback';
 import { Attachment } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
+import { ContentWarning } from 'boclips-api-client/dist/sub-clients/contentWarnings/model/ContentWarning';
 import { Link } from './Link';
 import { Subject } from './Subject';
 
@@ -36,6 +37,7 @@ export interface Video {
   bestFor?: string;
   promoted?: boolean;
   attachments?: Attachment[];
+  contentWarnings?: ContentWarning[];
 }
 
 export enum VideoType {
