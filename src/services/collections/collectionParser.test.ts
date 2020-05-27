@@ -2,7 +2,9 @@ import {
   collectionResponse,
   collectionResponseWithAttachment,
   collectionResponseWithSubject,
+  parentCollectionResponse,
   video177,
+  video177Slim,
   youtubeVideo1,
 } from '../../../test-support/api-responses';
 import { Link } from '../../types/Link';
@@ -101,6 +103,24 @@ describe('parsing a single collections API response', () => {
         },
       },
     ]);
+  });
+
+  it('parses a collection with subCollections', () => {
+    const data = parentCollectionResponse('Parent-collection', false, [
+      collectionResponse([video177Slim], 'child-1'),
+      collectionResponse([video177Slim], 'child-2'),
+    ]);
+
+    const parsed: VideoCollection = parseCollectionResponse({ data });
+
+    expect(parsed.id).toEqual('Parent-collection');
+    expect(parsed.title).toEqual('parent collection');
+    expect(parsed.updatedAt).toEqual('2019-01-16T12:00:00.870Z');
+    expect(parsed.createdBy).toEqual('AI');
+    expect(parsed.discoverable).toEqual(true);
+    expect(parsed.subCollections.length).toEqual(2);
+    expect(parsed.subCollections[0].id).toEqual('child-1');
+    expect(parsed.subCollections[1].id).toEqual('child-2');
   });
 });
 
