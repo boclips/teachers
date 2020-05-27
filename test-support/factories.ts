@@ -113,6 +113,7 @@ export class VideoCollectionFactory {
       createdBy: 'Le Factory',
       subjects: arg.subjects || [],
       ageRange: arg.ageRange || new AgeRange(),
+      subCollections: [],
       attachments: arg.attachments || [],
     });
   }

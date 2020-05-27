@@ -26,5 +26,6 @@ export interface VideoCollection {
   createdBy: string;
   ageRange?: AgeRange;
   description?: string;
+  subCollections: VideoCollection[];
   attachments: Attachment[];
 }

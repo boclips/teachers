@@ -303,6 +303,64 @@ export function collectionResponse(
     promoted: false,
     subjects: [],
     createdBy: 'AI',
+    subCollections: [],
+    ageRange: {
+      max: 9,
+      min: 3,
+    },
+    _links: {
+      self: {
+        href: `${prefix}/v1/collections/${id}`,
+        templated: false,
+      },
+      interactedWith: {
+        href: `${prefix}/v1/collections/${id}/events`,
+        templated: false,
+      },
+      edit: editable
+        ? {
+            href: `${prefix}/v1/collections/${id}`,
+            templated: false,
+          }
+        : undefined,
+      remove: editable
+        ? {
+            href: `${prefix}/v1/collections/${id}`,
+            templated: false,
+          }
+        : undefined,
+      addVideo: editable
+        ? {
+            href: `${prefix}/v1/collections/${id}/videos/{video_id}`,
+            templated: true,
+          }
+        : undefined,
+      removeVideo: editable
+        ? {
+            href: `${prefix}/v1/collections/${id}/videos/{video_id}`,
+            templated: true,
+          }
+        : undefined,
+    },
+  };
+}
+
+export function parentCollectionResponse(
+  id: string = 'id',
+  editable: boolean = true,
+  collectionsWithin: any[] = [collectionResponse()]
+) {
+  return {
+    id,
+    owner: 'teacher@gmail.com',
+    title: 'parent collection',
+    videos: [],
+    updatedAt: '2019-01-16T12:00:00.870Z',
+    discoverable: true,
+    promoted: false,
+    subjects: [],
+    createdBy: 'AI',
+    subCollections: collectionsWithin,
     ageRange: {
       max: 9,
       min: 3,
