@@ -3,6 +3,7 @@ import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import {
   collectionResponse,
+  parentCollectionResponse,
   video177,
   video177Slim,
 } from '../../../test-support/api-responses';
@@ -254,6 +255,33 @@ describe('CollectionDetailsView', () => {
       );
 
       expect(await wrapper.findByText('Oops!!')).toBeInTheDocument();
+    });
+  });
+
+  describe(`when collection of collections`, () => {
+    it(`Displays each collection card of sub collections`, async () => {
+      new ApiStub()
+        .defaultUser()
+        .fetchCollections()
+        .fetchCollection(
+          parentCollectionResponse('parent-id', false, [
+            collectionResponse([video177Slim], 'child-1'),
+            collectionResponse([video177Slim], 'child-2'),
+          ]),
+        );
+
+      await fakeVideoSetup(video177);
+
+      const collectionPage = await CollectionPage.load('parent-id');
+
+      expect(collectionPage.getCollectionDetails()).toMatchObject({
+        title: 'parent collection',
+        subjects: [],
+        lastUpdated: 'Jan 16, 2019',
+        ageRange: '3-9',
+      });
+
+      expect(collectionPage.getSubCollections()).toHaveLength(2);
     });
   });
 });

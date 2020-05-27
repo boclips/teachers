@@ -10,6 +10,7 @@ import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
 import { CollectionShareCodeDialog } from '../sharing/CollectionShareCodeDialog/CollectionShareCodeDialog';
 import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { CollectionHeader } from './header/CollectionHeader';
+import {ParentCollectionDetailsContent} from "src/components/collection/details/ParentCollectionDetailsContent";
 
 interface OwnProps {
   collectionId: string;
@@ -55,5 +56,9 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     );
   }
 
-  return <CollectionDetailsContent collection={collection} userId={userId} />;
+  if(collection.subCollections.length > 0) {
+    return <ParentCollectionDetailsContent collection={collection} userId={userId} />;
+  } else {
+    return <CollectionDetailsContent collection={collection} userId={userId} />;
+  }
 });

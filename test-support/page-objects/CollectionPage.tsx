@@ -46,6 +46,21 @@ export class CollectionPage {
       }));
   }
 
+  public getSubCollections() {
+    return this.wrapper
+      .find(By.dataQa('collection-card'))
+      .hostNodes()
+      .map((el) => ({
+        title: findOne(el, 'collection-title').text(),
+        description: findOne(el, 'collection-description').text(),
+        subjects: el
+          .find(By.dataQa('subject-tag'))
+          .find(By.dataQa('filter-tag'))
+          .map((tag) => tag.text()),
+        playerVideoId: el.find(VideoPlayer).prop('video').id,
+      }));
+  }
+
   public getCollectionDetails() {
     return this.wrapper.find(CollectionHeader).map((el) => ({
       title: findOne(el, 'collection-title').text(),
