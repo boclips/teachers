@@ -10,8 +10,8 @@ export const CollectionBanner = (props: Props) => (
   <div className="collection-banner">
     <div className="collection-banner__content">
       <div className="collection-banner__headings">
-        <div className="collection-banner__title">{props.title}</div>
-        <div className="collection-banner__subtitle">{'Social Media'}</div>
+        <div className="collection-banner__title">{"Digital Citizenship"}</div>
+        <div className="collection-banner__subtitle" data-qa="collection-title">{props.title}</div>
       </div>
       <div className="collection-banner__image">{props.image}</div>
     </div>
