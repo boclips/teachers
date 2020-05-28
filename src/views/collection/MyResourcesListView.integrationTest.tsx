@@ -10,6 +10,7 @@ import {
   EntitiesFactory,
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
+  VideoFactory,
 } from '../../../test-support/factories';
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { renderWithStore } from '../../../test-support/renderWithStore';
@@ -34,7 +35,12 @@ describe('MyResourcesListView', () => {
   });
 
   it('when a user has a collection display title, description and action buttons and link to the collection page ', () => {
-    const collection = getCollectionWithData('123');
+    const collection = {
+      ...getCollectionWithData('123'),
+      videoIds: [
+        { value: 'test', links: { self: new Link({ href: 'test' }) } },
+      ],
+    };
 
     const { getByText } = renderWithStore(<MyResourcesListView />, {
       initialState: {
@@ -42,6 +48,11 @@ describe('MyResourcesListView', () => {
           collections: {
             byId: {
               [collection.id]: collection,
+            },
+          },
+          videos: {
+            byId: {
+              test: VideoFactory.sample(),
             },
           },
         }),

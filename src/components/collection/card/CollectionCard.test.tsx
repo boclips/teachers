@@ -59,6 +59,22 @@ describe('CollectionCard', () => {
     expect(tagsContainer).not.toBeInTheDocument();
   });
 
+  it('display empty collection message when no videos added yet', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      title: 'My collection',
+    });
+    const store = createBoclipsStore(MockStoreFactory.sampleState());
+    const component = renderWithBoclipsStore(
+      <CollectionCard collection={collection} videos={[]} grid={false} />,
+      store,
+    );
+
+    expect(
+      component.getByText('This video collection is empty.'),
+    ).toBeInTheDocument();
+  });
+
   describe('displaying video titles when there is no description', () => {
     it('with tags and no extra videos', () => {
       const collection = VideoCollectionFactory.sample({

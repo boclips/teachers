@@ -8,6 +8,20 @@
   background: @shade-3;
 }
 
+.empty-collection {
+  text-align: center;
+  background-color: @shade-3;
+
+  @media (max-width: @screen-sm-max) {
+    display: none;
+  }
+
+  svg {
+    margin-top: 22px;
+    margin-bottom: 14px;
+  }
+}
+
 .video-counter {
   position: absolute;
   top: 0;

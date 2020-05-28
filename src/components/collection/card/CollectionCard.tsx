@@ -68,6 +68,14 @@ export const CollectionCard = withMediaBreakPoint(
       props.collection.description === '';
 
     const renderDescription = () => {
+      if (props.videos.length === 0) {
+        return (
+          <div className={'empty-collection-message'}>
+            This video collection is empty.
+          </div>
+        );
+      }
+
       if (collectionHasNoDescription) {
         return (
           <ul>
