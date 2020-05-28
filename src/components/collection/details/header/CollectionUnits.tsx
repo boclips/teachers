@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export const CollectionUnits = (props: Props) => (
-  <div className={'collection-unit-list'} data-qa={'collection-unit-list'}>
+  <div className={'collection-unit-list'} data-qa="collection-unit-list">
     <h1 className="collection-unit-list__heading">Units</h1>
     <ul>
       {props.units.map((collection) => (
@@ -17,7 +17,7 @@ export const CollectionUnits = (props: Props) => (
           <BulletSVG />{' '}
           <Link
             to={`/collections/${collection.id}`}
-            data-qa={'collection-unit-title'}
+            data-qa="collection-unit-title"
           >
             {collection.title}
           </Link>
