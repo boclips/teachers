@@ -3,10 +3,11 @@ import Row from 'antd/lib/grid/row';
 import { Button } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
-import RemoteTeacherSVG from 'resources/images/remote-teacher.svg';
+import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-homepage.svg';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { InteractionTracker } from 'src/components/common/InteractionTracker';
+import { Link } from 'react-router-dom';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
@@ -50,33 +51,33 @@ export default class HomeView extends PureComponent {
                   <InteractionTracker
                     onInteraction={() =>
                       AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
-                        PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
+                        PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
                       )
                     }
                   >
-                    <a
-                      href="https://www.boclips.com/remote-learning-with-video-resources-for-teachers"
-                      target={'_blank'}
-                      className="remote-teaching"
+                    <Link
+                      to={'/collections/5ecd3a5515f802372946d4dc'}
+                      className={'home-banner'}
                     >
                       <Row type="flex">
                         <Col xs={0} lg={10}>
-                          <div className="remote-teaching__illustration">
-                            <RemoteTeacherSVG />
+                          <div className="home-banner__illustration">
+                            <DigitalCitizenshipSVG />
                           </div>
                         </Col>
                         <Col sm={24} lg={14} className="copy-col">
-                          <h1 className="alt">FREE remote learning toolkit</h1>
+                          <h1 className="alt">
+                            Digital Citizenship - Social Media
+                          </h1>
                           <p>
-                            Tools, ideas and inspiration to use in virtual
-                            classrooms
+                            Help students understand how to keep safe online
                           </p>
                           <Button className="display-desktop">
-                            Explore kit
+                            Explore series
                           </Button>
                         </Col>
                       </Row>
-                    </a>
+                    </Link>
                   </InteractionTracker>
                 </Col>
               </Row>
