@@ -10,12 +10,18 @@ export interface Props {
   type: AttachmentType;
   link: string;
   onClick: () => void;
+  title?: string;
+  linkLabel?: string;
 }
 
 export const AttachmentDetails = (props: Props) => {
   let title;
   let linkLabel;
-  if (props.type === AttachmentType.ACTIVITY) {
+
+  if (props.title && props.linkLabel) {
+    title = props.title;
+    linkLabel = props.linkLabel;
+  } else if (props.type === AttachmentType.ACTIVITY) {
     title = 'Suggested activity';
     linkLabel = 'Visit activity doc';
   } else {

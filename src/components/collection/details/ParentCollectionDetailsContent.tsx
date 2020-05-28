@@ -19,8 +19,7 @@ export const ParentCollectionDetailsContent = (props: Props) => (
     <div className="parent-collection-view__header">
       <CollectionHeader
         collection={props.collection}
-        renderSubtitle={false}
-        renderTitle={false}
+        isParent={true}
         collectionUnits={
           <CollectionUnits units={props.collection.subCollections} />
         }

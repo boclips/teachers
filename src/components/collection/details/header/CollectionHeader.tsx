@@ -15,8 +15,7 @@ import './CollectionHeader.less';
 
 export interface Props {
   collection: VideoCollection;
-  renderTitle?: boolean;
-  renderSubtitle?: boolean;
+  isParent?: boolean;
   collectionUnits?: React.ReactNode;
 }
 
@@ -36,7 +35,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
   }
 
   private renderTitleRow = () =>
-    this.props.renderTitle && (
+    this.props.isParent ? null : (
       <Row
         type="flex"
         justify="space-between"
@@ -65,7 +64,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
       </div>
     );
 
-    const subtitle = this.props.renderSubtitle && (
+    const subtitle = this.props.isParent ? null : (
       <CollectionSubtitle
         classname={'highlight collection-subtitle header'}
         collection={this.props.collection}
@@ -79,6 +78,13 @@ export class CollectionHeader extends React.PureComponent<Props> {
       </Row>
     );
   };
+
+  private attachmentLabels = this.props.isParent
+    ? {
+        linkLabel: 'Visit project suggestion doc',
+        title: 'Final project',
+      }
+    : null;
 
   private renderDescriptionRow = () => {
     const lessonGuideToRender = this.getLessonGuide();
@@ -109,6 +115,10 @@ export class CollectionHeader extends React.PureComponent<Props> {
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
             <AttachmentDetails
               description={lessonGuideToRender.description}
+              title={this.attachmentLabels && this.attachmentLabels.title}
+              linkLabel={
+                this.attachmentLabels && this.attachmentLabels.linkLabel
+              }
               type={getAttachmentType(lessonGuideToRender.type)}
               link={lessonGuideToRender.links.download.getOriginalLink()}
               onClick={() => {
