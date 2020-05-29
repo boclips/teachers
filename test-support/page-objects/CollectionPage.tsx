@@ -57,7 +57,6 @@ export class CollectionPage {
           .find(By.dataQa('subject-tag'))
           .find(By.dataQa('filter-tag'))
           .map((tag) => tag.text()),
-        playerVideoId: el.find(VideoPlayer).prop('video').id,
       }));
   }
 

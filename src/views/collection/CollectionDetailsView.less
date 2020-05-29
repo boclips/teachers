@@ -16,48 +16,9 @@
 
 .collection-view__ {
   &collection-details {
-    padding-top: 50px;
 
     @media (max-width: @screen-md) {
       padding-top: 20px;
-    }
-
-    .collection-title {
-      height: 100%;
-      margin-bottom: 0.2em;
-      font-size: 24px;
-      color: @mid-blue;
-
-      &__edit {
-        color: @shade-5;
-        font-size: 24px;
-        padding-left: 12px;
-        cursor: pointer;
-        transition: color 300ms ease-in-out;
-      }
-
-      &__input-container {
-        display: flex;
-        justify-content: flex-start;
-
-        .ant-btn {
-          margin-left: 8px;
-          min-width: 80px;
-
-          @media (max-width: @screen-md) {
-            display: none;
-          }
-
-          &.empty {
-            border: 0;
-            font-weight: normal;
-          }
-        }
-      }
-
-      &__input {
-        font-weight: bold;
-      }
     }
 
     .tags-container {
