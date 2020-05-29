@@ -2,8 +2,8 @@ import { VideoCollection } from 'src/types/VideoCollection';
 import Helmet from 'react-helmet';
 import { CollectionHeader } from 'src/components/collection/details/header/CollectionHeader';
 import React from 'react';
-import { CollectionDetailsEmpty } from 'src/components/collection/details/CollectionDetailsEmpty';
 import CollectionCardContainer from 'src/components/collection/card/CollectionCardContainer';
+import './ParentCollectionDetailsContent.less';
 
 export interface Props {
   collection: VideoCollection;
@@ -17,10 +17,7 @@ export const ParentCollectionDetailsContent = (props: Props) => {
         <title>{props.collection.title}</title>
       </Helmet>
       <CollectionHeader collection={props.collection} />
-      {props.collection.subCollections.length === 0 ? (
-        <CollectionDetailsEmpty />
-      ) : (
-        props.collection.subCollections &&
+      {props.collection.subCollections &&
         props.collection.subCollections.map((collection) => {
           console.log(collection);
           return (
@@ -30,8 +27,7 @@ export const ParentCollectionDetailsContent = (props: Props) => {
               grid={false}
             />
           );
-        })
-      )}
+        })}
     </section>
   );
 };

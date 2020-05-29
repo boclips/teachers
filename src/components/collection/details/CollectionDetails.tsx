@@ -10,7 +10,10 @@ import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
 import { CollectionShareCodeDialog } from '../sharing/CollectionShareCodeDialog/CollectionShareCodeDialog';
 import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { CollectionHeader } from './header/CollectionHeader';
-import {ParentCollectionDetailsContent} from "src/components/collection/details/ParentCollectionDetailsContent";
+import { ParentCollectionDetailsContent } from 'src/components/collection/details/ParentCollectionDetailsContent';
+import { CollectionBanner } from 'src/components/collection/details/header/CollectionBanner';
+import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-image.svg';
+import PageLayout from 'src/components/layout/PageLayout';
 
 interface OwnProps {
   collectionId: string;
@@ -55,10 +58,31 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
       </React.Fragment>
     );
   }
-
-  if(collection.subCollections.length > 0) {
-    return <ParentCollectionDetailsContent collection={collection} userId={userId} />;
-  } else {
-    return <CollectionDetailsContent collection={collection} userId={userId} />;
-  }
+  const isParentCollection = () => collection.subCollections.length > 0;
+  console.log('rendering collection - ', collection);
+  return (
+    <PageLayout
+      showSearchBar={true}
+      showFooter={true}
+      showNavigation={true}
+      subheader={
+        isParentCollection() ? (
+          <CollectionBanner
+            title={collection.title}
+            subtitle={'Digital Citizenship'}
+            image={<DigitalCitizenshipSVG />}
+          />
+        ) : null
+      }
+    >
+      {isParentCollection() ? (
+        <ParentCollectionDetailsContent
+          collection={collection}
+          userId={userId}
+        />
+      ) : (
+        <CollectionDetailsContent collection={collection} userId={userId} />
+      )}
+    </PageLayout>
+  );
 });

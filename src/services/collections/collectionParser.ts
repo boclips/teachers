@@ -39,6 +39,10 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
     attachments = data.attachments.map(parseAttachment);
   }
 
+  let subCollections = [];
+  if (data.subCollections) {
+    subCollections = data.subCollections.map(parseCollectionListResponse);
+  }
   return {
     id: data.id,
     title: data.title,
@@ -53,7 +57,7 @@ const parseCollectionListResponse = (data: any): VideoCollection => {
       ? new AgeRange(data.ageRange.min, data.ageRange.max)
       : new AgeRange(),
     description: data.description,
-    subCollections: data.subCollections.map(parseCollectionListResponse),
+    subCollections,
     attachments,
   };
 };
