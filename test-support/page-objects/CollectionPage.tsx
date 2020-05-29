@@ -1,6 +1,7 @@
 import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
+import { CollectionBanner } from 'src/components/collection/details/header/CollectionBanner';
 import App from '../../src/app/App';
 import { CollectionHeader } from '../../src/components/collection/details/header/CollectionHeader';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
@@ -60,6 +61,15 @@ export class CollectionPage {
       }));
   }
 
+  public getCollectionUnits() {
+    return this.wrapper
+      .find(By.dataQa('collection-unit-list'))
+      .hostNodes()
+      .map((el) =>
+        el.find(By.dataQa('collection-unit-title')).map((s) => s.text()),
+      )[0];
+  }
+
   public getCollectionDetails() {
     return this.wrapper.find(CollectionHeader).map((el) => ({
       title: findOne(el, 'collection-title').text(),
@@ -71,6 +81,27 @@ export class CollectionPage {
         .text(),
       description: findOne(el, 'collection-description').text(),
     }))[0];
+  }
+
+  public getParentCollectionDetails() {
+    let collectionDetails = {};
+
+    collectionDetails = this.wrapper.find(CollectionBanner).map((el) => ({
+      title: findOne(el, 'collection-title').text(),
+      ...collectionDetails,
+    }))[0];
+
+    collectionDetails = this.wrapper.find(CollectionHeader).map((el) => ({
+      subjects: el.find(By.dataQa('subject-tag')).map((s) => s.text()),
+      ageRange: el
+        .find(By.dataQa('age-range'))
+        .find(By.dataQa('filter-tag'))
+        .text(),
+      description: findOne(el, 'collection-description').text(),
+      ...collectionDetails,
+    }))[0];
+
+    return collectionDetails;
   }
 
   public isEmptyCollection() {

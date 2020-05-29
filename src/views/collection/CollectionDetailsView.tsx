@@ -12,8 +12,8 @@ export const CollectionDetailsView = (props: Props) => {
   useRefererIdInjector();
 
   return (
-      <section data-qa="collection-page">
-        <CollectionDetails collectionId={props.collectionId} />
-      </section>
+    <section data-qa="collection-page">
+      <CollectionDetails collectionId={props.collectionId} />
+    </section>
   );
 };

@@ -2,6 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CollectionDetailsContent } from 'src/components/collection/details/CollectionDetailsContent';
 import { CollectionDetailsNotFound } from 'src/components/collection/details/CollectionDetailsNotFound';
+import { ParentCollectionDetailsContent } from 'src/components/collection/details/ParentCollectionDetailsContent';
+import { CollectionBanner } from 'src/components/collection/details/header/CollectionBanner';
+import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-image.svg';
+import PageLayout from 'src/components/layout/PageLayout';
 import State from '../../../types/State';
 import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
@@ -10,10 +14,6 @@ import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
 import { CollectionShareCodeDialog } from '../sharing/CollectionShareCodeDialog/CollectionShareCodeDialog';
 import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { CollectionHeader } from './header/CollectionHeader';
-import { ParentCollectionDetailsContent } from 'src/components/collection/details/ParentCollectionDetailsContent';
-import { CollectionBanner } from 'src/components/collection/details/header/CollectionBanner';
-import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-image.svg';
-import PageLayout from 'src/components/layout/PageLayout';
 
 interface OwnProps {
   collectionId: string;

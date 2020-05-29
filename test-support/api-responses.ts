@@ -292,11 +292,12 @@ export function collectionResponse(
   videosWithin: any[] = [video177Slim],
   id: string = 'id',
   editable: boolean = true,
+  title: string = 'funky collection',
 ) {
   return {
     id,
     owner: 'teacher@gmail.com',
-    title: 'funky collection',
+    title,
     videos: videosWithin,
     updatedAt: '2019-01-16T12:00:00.870Z',
     discoverable: true,
@@ -348,7 +349,7 @@ export function collectionResponse(
 export function parentCollectionResponse(
   id: string = 'id',
   editable: boolean = true,
-  collectionsWithin: any[] = [collectionResponse()]
+  collectionsWithin: any[] = [collectionResponse()],
 ) {
   return {
     id,

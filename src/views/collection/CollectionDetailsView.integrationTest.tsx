@@ -259,29 +259,58 @@ describe('CollectionDetailsView', () => {
   });
 
   describe(`when collection of collections`, () => {
-    it(`Displays each collection card of sub collections`, async () => {
+    let collectionPage;
+    beforeEach(async () => {
       new ApiStub()
         .defaultUser()
         .fetchCollections()
         .fetchCollection(
           parentCollectionResponse('parent-id', false, [
-            collectionResponse([video177Slim], 'child-1'),
-            collectionResponse([video177Slim], 'child-2'),
+            collectionResponse(
+              [video177Slim],
+              'child-1',
+              false,
+              'Child collection 1',
+            ),
+            collectionResponse(
+              [video177Slim],
+              'child-2',
+              false,
+              'Child collection 2',
+            ),
           ]),
         );
 
       await fakeVideoSetup(video177);
 
-      const collectionPage = await CollectionPage.load('parent-id');
+      collectionPage = await CollectionPage.load('parent-id');
+    });
 
-      expect(collectionPage.getCollectionDetails()).toMatchObject({
+    it(`Displays each collection card of sub collections`, async () => {
+      expect(collectionPage.getParentCollectionDetails()).toMatchObject({
         title: 'parent collection',
         subjects: [],
-        lastUpdated: 'Jan 16, 2019',
         ageRange: '3-9',
       });
 
       expect(collectionPage.getSubCollections()).toHaveLength(2);
+    });
+
+    it(`Displays collection titles of sub collections in cards and units`, async () => {
+      expect(collectionPage.getSubCollections()).toHaveLength(2);
+      expect(collectionPage.getSubCollections()[0].title).toEqual(
+        'Child collection 1',
+      );
+      expect(collectionPage.getSubCollections()[1].title).toEqual(
+        'Child collection 2',
+      );
+
+      expect(collectionPage.getCollectionUnits()).toContain(
+        'Child collection 1',
+      );
+      expect(collectionPage.getCollectionUnits()).toContain(
+        'Child collection 2',
+      );
     });
   });
 });
