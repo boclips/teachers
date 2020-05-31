@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
 import Mock = jest.Mock;
+import { ApiClientWrapper } from 'src/services/apiClient';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { By } from '../../../../test-support/By';
 import {
   CountryFactory,
@@ -35,7 +37,10 @@ const links = LinksFactory.sample({
 
 describe('onboarding form', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeEach(async () => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+
+    client.events.clear();
     wrapper = mount(
       <Provider
         store={MockStoreFactory.sample({
@@ -201,6 +206,38 @@ describe('onboarding form', () => {
     OnboardingFormHelper.moveCarousel(wrapper, 1);
 
     expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
+  });
+
+  it('sends a platform interaction event if page has not already been visited', async () => {
+    OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
+
+    OnboardingFormHelper.moveCarousel(wrapper, 1);
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+
+    expect(client.events.getEvents()).toEqual([
+      {
+        anonymous: true,
+        subtype: 'ONBOARDING_PAGE_2_STARTED',
+        type: 'PLATFORM_INTERACTED_WITH',
+      },
+    ]);
+  });
+
+  it('does not send platform interaction event if page has already been visited', async () => {
+    OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
+    OnboardingFormHelper.moveCarousel(wrapper, 1);
+    OnboardingFormHelper.moveCarousel(wrapper, 0);
+    OnboardingFormHelper.moveCarousel(wrapper, 1);
+
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+
+    expect(client.events.getEvents()).toEqual([
+      {
+        anonymous: true,
+        subtype: 'ONBOARDING_PAGE_2_STARTED',
+        type: 'PLATFORM_INTERACTED_WITH',
+      },
+    ]);
   });
 });
 

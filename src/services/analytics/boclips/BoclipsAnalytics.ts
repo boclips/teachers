@@ -26,7 +26,10 @@ export interface BoclipsAnalytics {
 
   trackUserExpired(): Promise<void>;
 
-  trackPlatformInteraction(subtype: PlatformInteractionType): Promise<void>;
+  trackPlatformInteraction(
+    subtype: PlatformInteractionType,
+    anonymous?: boolean,
+  ): Promise<void>;
 }
 
 export default new HttpBoclipsAnalytics();

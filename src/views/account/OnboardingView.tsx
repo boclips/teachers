@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { replace } from 'connected-react-router';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import OnboardingForm from '../../components/account/onboarding/OnboardingForm';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
@@ -39,6 +40,10 @@ export class OnboardingViewComponent extends PureComponent<
     if (!this.props.userCanActivate) {
       this.props.redirectToHomepage();
     } else {
+      AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+        PlatformInteractionType.ONBOARDING_PAGE_1_STARTED,
+        true,
+      );
       AnalyticsFactory.externalAnalytics().trackOnboardingStarted();
     }
   }

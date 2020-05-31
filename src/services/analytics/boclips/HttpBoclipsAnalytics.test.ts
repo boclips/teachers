@@ -73,11 +73,13 @@ test('trackPlatformInteraction calls ApiClient with subtype', async () => {
 
   await analytics.trackPlatformInteraction(
     PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+    true,
   );
 
   expect(client.events.getEvents().length).toEqual(1);
   expect(client.events.getEvents()[0]).toEqual({
     type: 'PLATFORM_INTERACTED_WITH',
     subtype: PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+    anonymous: true,
   });
 });

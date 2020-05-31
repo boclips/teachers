@@ -63,9 +63,10 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
 
   public async trackPlatformInteraction(
     subtype: PlatformInteractionType,
+    anonymous: boolean = false,
   ): Promise<void> {
     const client = await ApiClientWrapper.get();
 
-    return client.events.trackPlatformInteraction(subtype);
+    return client.events.trackPlatformInteraction(subtype, anonymous);
   }
 }

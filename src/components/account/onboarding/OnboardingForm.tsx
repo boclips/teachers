@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
 import { RoleForm } from 'src/components/account/form/RoleForm';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
@@ -135,6 +136,12 @@ class OnboardingForm extends React.Component<
       if (!this.state.visitedIndices.has(previousIndex)) {
         AnalyticsFactory.externalAnalytics().trackOnboardingPageChanged(
           previousIndex,
+        );
+        AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+          PlatformInteractionType[
+            `ONBOARDING_PAGE_${currentIndex + 1}_STARTED`
+          ],
+          true,
         );
       }
     }
