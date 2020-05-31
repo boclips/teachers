@@ -73,11 +73,13 @@ test('trackPlatformInteraction calls ApiClient with subtype', async () => {
 
   await analytics.trackPlatformInteraction(
     PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
+    true,
   );
 
   expect(client.events.getEvents().length).toEqual(1);
   expect(client.events.getEvents()[0]).toEqual({
     type: 'PLATFORM_INTERACTED_WITH',
     subtype: PlatformInteractionType.REMOTE_LEARNING_BANNER_CLICKED,
+    anonymous: true,
   });
 });

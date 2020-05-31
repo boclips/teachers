@@ -48,5 +48,6 @@ export default abstract class AbstractBoclipsAnalytics
 
   public abstract trackPlatformInteraction(
     subtype: PlatformInteractionType,
+    anonymous: boolean,
   ): Promise<void>;
 }
