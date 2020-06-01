@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { CollectionRequestFilters } from 'src/types/CollectionSearchRequest';
 import { FetchPageableCollectionRequest } from '../../components/collection/redux/actions/fetchPageableCollectionsAction';
 import { Links } from '../../types/Links';
 import { Pageable } from '../../types/State';
@@ -12,16 +13,23 @@ export const fetchPageableCollections = (
   let url = null;
   switch (request.key) {
     case 'myResources':
-      url = links.mySavedCollections.getTemplatedLink({});
+      url = links.mySavedCollections.getTemplatedLink({
+        sort_by: ['IS_DEFAULT', 'UPDATED_AT'],
+      } as CollectionRequestFilters);
       break;
     case 'discoverCollections':
-      url = links.discoverCollections.getTemplatedLink(request.request.filters);
+      url = links.discoverCollections.getTemplatedLink({
+        ...request.request.filters,
+        sort_by: ['HAS_ATTACHMENT'],
+      } as CollectionRequestFilters);
       break;
     case 'myCollections':
-      url = links[request.key].getTemplatedLink({});
+      url = links.myCollections.getTemplatedLink({
+        sort_by: ['UPDATED_AT'],
+      } as CollectionRequestFilters);
       break;
     case 'promotedCollections':
-      url = links[request.key].getOriginalLink();
+      url = links.promotedCollections.getOriginalLink();
       break;
   }
 
