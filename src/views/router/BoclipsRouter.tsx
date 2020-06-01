@@ -73,7 +73,7 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <Route path="/error" component={ErrorView} />
             <Route path="/trial-expired" component={TrialExpiredView} />
             <Route path="/create-account" component={CreateAccountView} />
-             <Route path="/bit" component={Bit} />
+            <Route path="/bit" component={Bit} />
             <Route path="/videos">
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />
