@@ -1,0 +1,109 @@
+#overlay-container {
+  background-color: #3d4564;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-buttons-container {
+  border-top: 2px solid #848fbb;
+  padding-top: 5%;
+  padding-bottom: 0px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.overlay-buttons-children > span > button,
+.overlay-buttons-children > button,
+.video-overlay-buttons {
+  border: none;
+}
+.overlay-buttons-children > span > button:hover,
+.overlay-buttons-children > button:hover,
+.video-overlay-buttons:hover {
+  border: none;
+}
+
+.overlay-buttons-children > span > button,
+.overlay-buttons-children > button,
+.video-overlay-buttons {
+  border-radius: 0px;
+  background-color: #3d4564;
+  padding: 0px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0px;
+  min-height: 0px;
+  justify-content: center;
+  cursor: pointer;
+  height: 24px;
+  width: 65px;
+}
+#overlay {
+  z-index: 3;
+}
+#overlay-container > div > span:nth-child(2) > button > i,
+#overlay-container
+  > div.overlay-buttons-container
+  > span:nth-child(3)
+  > button
+  > i {
+  line-height: 0px;
+}
+
+.overlay-buttons-text,
+.overlay-buttons-children span > button > section > span,
+.overlay-buttons-children > button > span {
+  color: #fafaff;
+  font-family: Heebo;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 18px;
+  text-align: center;
+  padding-left: 4px;
+}
+
+.overlay-buttons-children {
+  padding-right: 16px;
+  padding-left: 16px;
+  border-right: 2px solid #848fbb;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.overlay-buttons-children:last-child {
+  border-right: none;
+}
+
+#overlay-container > .video-overlay-replay-button {
+  height: 40px;
+  width: 146px;
+  border-radius: 8px;
+  background-color: #0e69ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0e69ff;
+  color: #ffffff;
+  font-family: Heebo;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: center;
+  border: none;
+}
+
+.overlay-buttons-children > span > button > section > i > svg,
+.overlay-buttons-children > button > i > svg,
+.overlay-buttons-icon {
+  width: 24px;
+  height: 24px;
+}

@@ -14,6 +14,8 @@ import State from '../../../../types/State';
 
 interface Props {
   video: Video;
+  getContainer?: HTMLElement;
+  icon?: React.ComponentType<any>;
 }
 
 export const VideoShareButton = (props: Props) => {
@@ -28,6 +30,8 @@ export const VideoShareButton = (props: Props) => {
       <ShareButton
         title={`Share ${mobileView ? 'video' : props.video.title}`}
         shareCode={user.shareCode}
+        getContainer={props.getContainer}
+        icon={props.icon}
       >
         <VideoShareButtonForm video={props.video} />
       </ShareButton>
