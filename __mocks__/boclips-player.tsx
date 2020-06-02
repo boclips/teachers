@@ -1,6 +1,7 @@
 import { Player } from 'boclips-player';
 
 const boclipsPlayer: Player = {
+  onEnd: jest.fn(),
   loadVideo: jest.fn(),
   pause: jest.fn(),
   play: jest.fn(),

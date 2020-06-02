@@ -18,8 +18,8 @@ interface StateProps {
 
 export interface OwnProps {
   video: Video;
-  icon: React.ComponentType<any>;
-  getPopupContainer: () => HTMLElement | null;
+  icon?: React.ComponentType<any>;
+  getPopupContainer?: () => HTMLElement | null;
 }
 
 interface InternalState {
