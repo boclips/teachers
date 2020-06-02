@@ -29,7 +29,7 @@ export const EndOfVideoOverlay = (props: Props) => {
   }, [props.getOverlayContainer, props.visible, props.superImposedContainer]);
 
   const child = () => (
-    <div id={'overlay-container'}>
+    <div className={'end-video-overlay-container'}>
       {!props.video.rating ? (
         <EndOverlayRatingStars video={props.video} />
       ) : (
@@ -73,7 +73,7 @@ export const EndOfVideoOverlay = (props: Props) => {
 
   return (
     <React.Fragment>
-      {visible === true && ReactDOM.createPortal(child(), container)}
+      {visible && ReactDOM.createPortal(child(), container)}
     </React.Fragment>
   );
 };

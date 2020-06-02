@@ -1,4 +1,4 @@
-#overlay-container {
+.end-video-overlay-container {
   background-color: #3d4564;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
 
 .overlay-buttons-container {
   border-top: 2px solid #848fbb;
-  padding-top: 5%;
+  padding-top: 15px;
   padding-bottom: 0px;
   margin-top: 24px;
   display: flex;
@@ -37,7 +37,6 @@
   flex-direction: row;
   align-items: center;
   min-width: 0px;
-  min-height: 0px;
   justify-content: center;
   cursor: pointer;
   height: 24px;
@@ -46,10 +45,10 @@
 #overlay {
   z-index: 3;
 }
-#overlay-container > div > span:nth-child(2) > button > i,
-#overlay-container
+.end-video-overlay-container > div > span > button > i,
+.end-video-overlay-container
   > div.overlay-buttons-container
-  > span:nth-child(3)
+  > span
   > button
   > i {
   line-height: 0px;
@@ -81,7 +80,7 @@
   border-right: none;
 }
 
-#overlay-container > .video-overlay-replay-button {
+.end-video-overlay-container > .video-overlay-replay-button {
   height: 40px;
   width: 146px;
   border-radius: 8px;
