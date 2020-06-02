@@ -5,8 +5,6 @@ import LazyLoad from 'react-lazy-load';
 import querystring from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
-import ReactDOMServer from 'react-dom/server';
-import { ShareModal } from 'src/components/common/share/ShareModal';
 import { CollectionKey } from 'src/types/CollectionKey';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
@@ -16,10 +14,8 @@ import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../common/higherOrderComponents/withMediaBreakPoint';
-import Share from '../../../../resources/images/share_white.svg';
-import Save from '../../../../resources/images/save_white.svg';
-import { VideoShareButtonForm } from '../sharing/VideoShareButton/VideoShareButton';
-import ManageVideCollectionMenuContainer from '../buttons/videoCollection/ManageVideoCollectionMenuContainer';
+import { EndOfVideoOverlay } from './EndVideoOverlay';
+import './EndVideoOverlay.less';
 
 export interface OwnProps extends WithMediaBreakPointProps {
   video: Video;
@@ -34,43 +30,22 @@ interface StateProps {
   isAuthenticated: boolean;
 }
 
-const InvisibleButton = () => {
-  const element = document.getElementById('video-player-save-button');
-  const parentElement = element?.parentElement;
-  const boundingRectangle = parentElement?.getBoundingClientRect();
-
-  return (
-    <button
-      style={
-        boundingRectangle && {
-          top: boundingRectangle.top + 'px',
-          left: boundingRectangle.left + 'px',
-          height: boundingRectangle.height + 'px',
-          width: boundingRectangle.width + -30 + 'px',
-          position: 'fixed',
-          display: 'inline-block',
-        }
-      }
-      className="invisibleButton"
-    ></button>
-  );
-};
 class VideoPlayer extends React.PureComponent<
   OwnProps & StateProps,
   {
     hasError: boolean;
-    modalVisible: boolean;
     menuVisible: boolean;
-    superimposedContainer: HTMLElement;
-    playerFullscreen: boolean;
+    overlayVisible: boolean;
+    overlayContainer: HTMLElement;
+    superImposedContainer: HTMLElement;
   }
 > {
   public state = {
     hasError: false,
-    modalVisible: false,
     menuVisible: false,
-    superimposedContainer: null,
-    playerFullscreen: false,
+    overlayContainer: null,
+    overlayVisible: false,
+    superImposedContainer: null,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -78,26 +53,6 @@ class VideoPlayer extends React.PureComponent<
   };
 
   private player: Player;
-
-  private setSuperimposedContainer = () => {
-    const overlay = document.getElementById('overlay');
-    const parentOverlay = overlay?.parentElement;
-    if (
-      document.getElementsByClassName(
-        'boclips-player boclips-player-container plyr--fullscreen large-player',
-      ).length > 0
-    ) {
-      this.setState({
-        superimposedContainer: parentOverlay,
-        playerFullscreen: true,
-      });
-    } else {
-      this.setState({
-        superimposedContainer: document.body,
-        playerFullscreen: false,
-      });
-    }
-  };
 
   public render() {
     if (this.state.hasError) {
@@ -107,39 +62,20 @@ class VideoPlayer extends React.PureComponent<
       <div className="video-player">
         <LazyLoad key={this.props.video.id} offsetVertical={200}>
           <div>
+            <EndOfVideoOverlay
+              visible={this.state.overlayVisible}
+              getOverlayContainer={this.state.overlayContainer}
+              shareCode={this.props.shareCode}
+              collectionKey={this.props.collectionKey}
+              video={this.props.video}
+              replayOnClick={() => this.replayOnClickDestroyOverlay()}
+              superImposedContainer={this.state.superImposedContainer}
+            />
             <PlayerComponent
               playerRef={this.setPlayerRef}
               options={this.getPlayerOptions()}
               videoUri={this.props.video.links.self.getOriginalLink()}
             />
-            <ShareModal
-              visible={this.state.modalVisible}
-              onCancel={() => {
-                this.setState({ modalVisible: false });
-              }}
-              title={'Share Video'}
-              shareCode={this.props.shareCode}
-              getContainer={this.state.superimposedContainer}
-            >
-              <VideoShareButtonForm video={this.props.video} />
-            </ShareModal>
-            <ManageVideCollectionMenuContainer
-              video={this.props.video}
-              key={
-                this.state.playerFullscreen
-                  ? 'superimposed-container-fullscreen'
-                  : 'superimposed-container-not-fullscreen'
-              }
-              collectionKey={this.props.collectionKey}
-              isMenuVisible={this.state.menuVisible}
-              onVisibleChange={() => {
-                this.setState({ menuVisible: !this.state.menuVisible });
-              }}
-              getPopupContainer={() => this.state.superimposedContainer}
-              loading={false}
-            >
-              <InvisibleButton />
-            </ManageVideCollectionMenuContainer>
           </div>
         </LazyLoad>
       </div>
@@ -152,8 +88,34 @@ class VideoPlayer extends React.PureComponent<
 
   private setPlayerRef = (player) => {
     this.player = player;
-
+    this.player.onEnd((overlayId: string) => this.handleVideoEnd(overlayId));
     this.loadSegment();
+  };
+
+  public handleVideoEnd = (endOverlayId) => {
+    if (
+      document.getElementsByClassName(
+        'boclips-player boclips-player-container plyr--fullscreen large-player',
+      ).length > 0 ||
+      document.getElementsByClassName(
+        'boclips-player boclips-player-container plyr--only-mute plyr--fullscreen medium-player',
+      ).length > 0
+    ) {
+      this.setState({
+        superImposedContainer: document.getElementById(endOverlayId),
+      });
+    } else {
+      this.setState({
+        superImposedContainer: document.body,
+      });
+    }
+    this.setState({ overlayContainer: document.getElementById(endOverlayId) });
+    this.setState({ overlayVisible: true });
+  };
+
+  public replayOnClickDestroyOverlay = () => {
+    this.setState({ overlayVisible: false });
+    this.player.play();
   };
 
   public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>) {
@@ -169,7 +131,6 @@ class VideoPlayer extends React.PureComponent<
     if (!this.player) {
       return;
     }
-
     if (this.props.segment.start || this.props.segment.end) {
       this.player.loadVideo(
         this.props.video.links.self.getOriginalLink(),
@@ -226,7 +187,6 @@ class VideoPlayer extends React.PureComponent<
         ],
         addons: {
           hoverPreview: true,
-          rewatchButton: true,
         },
         ratio: '16:9',
       };
@@ -245,38 +205,12 @@ class VideoPlayer extends React.PureComponent<
           'settings',
           'fullscreen',
         ],
-        addons: {
-          rewatchButton: true,
-          generalButtons: this.generateGeneralButtons(),
-        },
         ratio: '16:9',
       };
     }
 
     return options;
   }
-
-  private generateGeneralButtons = () =>
-    this.props.isAuthenticated && [
-      {
-        child: ReactDOMServer.renderToStaticMarkup(
-          <div id="video-player-save-button">
-            <Save />
-          </div>,
-        ),
-        onClick: () => {
-          this.setSuperimposedContainer();
-          this.setState({ menuVisible: true });
-        },
-      },
-      {
-        child: ReactDOMServer.renderToStaticMarkup(<Share />),
-        onClick: () => {
-          this.setSuperimposedContainer();
-          this.setState({ modalVisible: true });
-        },
-      },
-    ];
 }
 
 const mapStateToProps = (state: State): StateProps => {

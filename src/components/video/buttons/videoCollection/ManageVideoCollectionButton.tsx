@@ -18,6 +18,8 @@ interface StateProps {
 
 export interface OwnProps {
   video: Video;
+  icon: React.ComponentType<any>;
+  getPopupContainer: () => HTMLElement | null;
 }
 
 interface InternalState {
@@ -74,6 +76,7 @@ class ManageVideoCollectionsButton extends React.PureComponent<
           loading={this.props.loading}
           onChange={() => this.setState({ isSaving: true })}
           collectionKey="myCollections"
+          getPopupContainer={this.props.getPopupContainer}
         >
           <SavingButton
             saving={this.state.isSaving}
@@ -81,7 +84,8 @@ class ManageVideoCollectionsButton extends React.PureComponent<
             className={'video-collection-menu'}
             size={'large'}
           >
-            <Icon component={SaveSVG} /> <span>Save</span>
+            <Icon component={this.props.icon || SaveSVG} />
+            <span>Save</span>
           </SavingButton>
         </ManageVideCollectionMenuContainer>
       </React.Fragment>
