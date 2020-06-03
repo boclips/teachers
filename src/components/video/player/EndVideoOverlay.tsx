@@ -55,7 +55,6 @@ export const EndOfVideoOverlay = (props: Props) => {
                 props.replayOnClick();
                 if (videoHasBeenRated) {
                   setRatingsHidden(true);
-                  console.log('setting ratings');
                 }
               }}
             >
