@@ -15,12 +15,15 @@ export interface Props {
   video: any;
   replayOnClick: any;
   superImposedContainer: HTMLElement;
+  userIsAuthenticated: boolean;
 }
 
 export const EndOfVideoOverlay = (props: Props) => {
   const [container, setContainer] = useState(null);
   const [visible, setVisible] = useState(false);
   const [superImposedContainer, setSuperImposedContainer] = useState(null);
+  const [videoHasBeenRated, setVideoHasBeenRated] = useState(false);
+  const [ratingsHidden, setRatingsHidden] = useState(false);
 
   useEffect(() => {
     setSuperImposedContainer(props.superImposedContainer);
@@ -30,8 +33,11 @@ export const EndOfVideoOverlay = (props: Props) => {
 
   const child = () => (
     <div className={'end-video-overlay-container'}>
-      {!props.video.rating ? (
-        <EndOverlayRatingStars video={props.video} />
+      {!props.video.rating && !ratingsHidden && props.userIsAuthenticated ? (
+        <EndOverlayRatingStars
+          video={props.video}
+          ratingUpdated={() => setVideoHasBeenRated(true)}
+        />
       ) : (
         <button
           className={'video-overlay-replay-button'}
@@ -41,32 +47,42 @@ export const EndOfVideoOverlay = (props: Props) => {
         </button>
       )}
       <div className={'overlay-buttons-container'}>
-        {!props.video.rating && (
+        {!props.video.rating && !ratingsHidden && props.userIsAuthenticated && (
           <span className={'overlay-buttons-children'}>
             <button
               className={'video-overlay-buttons'}
-              onClick={() => props.replayOnClick()}
+              onClick={() => {
+                props.replayOnClick();
+                if (videoHasBeenRated) {
+                  setRatingsHidden(true);
+                  console.log('setting ratings');
+                }
+              }}
             >
               <Replay className={'overlay-buttons-icon'} />
               <div className={'overlay-buttons-text'}>Replay</div>
             </button>
           </span>
         )}
-        <span className={'overlay-buttons-children'}>
-          <ManageVideoCollectionButton
-            video={props.video}
-            icon={Save}
-            collectionKey={'myCollections'}
-            getPopupContainer={() => superImposedContainer}
-          ></ManageVideoCollectionButton>
-        </span>
-        <span className={'overlay-buttons-children'}>
-          <VideoShareButton
-            video={props.video}
-            getContainer={superImposedContainer}
-            icon={Share}
-          ></VideoShareButton>
-        </span>
+        {props.userIsAuthenticated && (
+          <React.Fragment>
+            <span className={'overlay-buttons-children'}>
+              <ManageVideoCollectionButton
+                video={props.video}
+                icon={Save}
+                collectionKey={'myCollections'}
+                getPopupContainer={() => superImposedContainer}
+              ></ManageVideoCollectionButton>
+            </span>
+            <span className={'overlay-buttons-children'}>
+              <VideoShareButton
+                video={props.video}
+                getContainer={superImposedContainer}
+                icon={Share}
+              ></VideoShareButton>
+            </span>
+          </React.Fragment>
+        )}
       </div>
     </div>
   );

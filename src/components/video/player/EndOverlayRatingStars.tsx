@@ -5,11 +5,13 @@ import rateVideo from 'src/services/videos/rateVideo';
 
 export interface OverlayRatingStars {
   video: any;
+  ratingUpdated: () => void;
 }
 
 export const EndOverlayRatingStars = (props: OverlayRatingStars) => {
   const save = (value) => {
     rateVideo(props.video, value);
+    props.ratingUpdated();
   };
 
   return (
@@ -19,7 +21,6 @@ export const EndOverlayRatingStars = (props: OverlayRatingStars) => {
       </div>
       <span data-qa="rating-score" data-state={props.video.rating}>
         <Rate
-          disabled={false}
           key={`rate-${props.video.id}-${props.video.rating}`}
           onChange={(value) => {
             save(value);

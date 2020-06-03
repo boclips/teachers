@@ -70,6 +70,7 @@ class VideoPlayer extends React.PureComponent<
               video={this.props.video}
               replayOnClick={() => this.replayOnClickDestroyOverlay()}
               superImposedContainer={this.state.superImposedContainer}
+              userIsAuthenticated={this.props.isAuthenticated}
             />
             <PlayerComponent
               playerRef={this.setPlayerRef}
