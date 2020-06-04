@@ -43,7 +43,7 @@ export const EndOfVideoOverlay = (props: Props) => {
           className={'video-overlay-replay-button'}
           onClick={() => props.replayOnClick()}
         >
-          Watch Again
+          Replay
         </button>
       )}
       <div className={'overlay-buttons-container'}>
