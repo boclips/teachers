@@ -94,6 +94,7 @@ class VideoPlayer extends React.PureComponent<
   };
 
   public handleVideoEnd = (endOverlayId) => {
+    const endOfVideoOverlay = document.getElementById(endOverlayId);
     if (
       document.getElementsByClassName(
         'boclips-player boclips-player-container plyr--fullscreen large-player',
@@ -103,12 +104,15 @@ class VideoPlayer extends React.PureComponent<
       ).length > 0
     ) {
       this.setState({
-        superImposedContainer: document.getElementById(endOverlayId),
+        superImposedContainer: endOfVideoOverlay,
       });
     } else {
       this.setState({
         superImposedContainer: document.body,
       });
+    }
+    if (endOfVideoOverlay.firstChild) {
+      endOfVideoOverlay.removeChild(endOfVideoOverlay.firstChild);
     }
     this.setState({ overlayContainer: document.getElementById(endOverlayId) });
     this.setState({ overlayVisible: true });
