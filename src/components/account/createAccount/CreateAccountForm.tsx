@@ -3,6 +3,7 @@ import { FormComponentProps } from 'antd/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
 import GoogleSVG from '../../../../resources/images/google.svg';
 import MicrosoftSVG from '../../../../resources/images/office-365.svg';
 import RegistrationLogoSVG from '../../../../resources/images/registration-logo.svg';
@@ -23,7 +24,6 @@ import {
 import { transformErrors } from '../form/FormHelper';
 import { extractQueryParam } from '../referral/extractQueryParam';
 import { CaptchaNotice } from './CaptchaNotice';
-import { CreateAccountConfirmation } from './CreateAccountConfirmation';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
 import { EmailForm } from './EmailForm';
@@ -38,7 +38,6 @@ interface CreateAccountProps {
 }
 
 interface InternalState {
-  showConfirmation: boolean;
   confirmDirty: boolean;
   creating: boolean;
   renderRecaptcha: boolean;
@@ -47,6 +46,7 @@ interface InternalState {
 
 interface DispatchProps {
   onSsoLogin: (idpHint: string) => void;
+  onSuccesfulRegistration: (username: string, password: string) => void;
 }
 
 class CreateAccountForm extends React.Component<
@@ -54,7 +54,6 @@ class CreateAccountForm extends React.Component<
   InternalState
 > {
   public state = {
-    showConfirmation: false,
     confirmDirty: false,
     creating: false,
     renderRecaptcha: true,
@@ -71,14 +70,6 @@ class CreateAccountForm extends React.Component<
   }
 
   public render() {
-    return this.state.showConfirmation ? (
-      <CreateAccountConfirmation />
-    ) : (
-      this.renderForm()
-    );
-  }
-
-  public renderForm() {
     const { getFieldDecorator } = this.props.form;
 
     return (
@@ -210,7 +201,7 @@ class CreateAccountForm extends React.Component<
           this.setState({ ...this.state, creating: true });
           createAccount(this.props.links, values)
             .then(() => {
-              this.setState({ ...this.state, showConfirmation: true });
+              this.props.onSuccesfulRegistration(values.email, values.password);
             })
             .catch((error) => {
               if (error && error.response.status === 409) {
@@ -252,6 +243,14 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     onSsoLogin: (idpHint: string) =>
       dispatch(requestSsoAuthentication(idpHint)),
+    onSuccesfulRegistration: (username: string, password: string) =>
+      dispatch(
+        requestAuthentication({
+          authenticationRequired: true,
+          username,
+          password,
+        }),
+      ),
   };
 }
 

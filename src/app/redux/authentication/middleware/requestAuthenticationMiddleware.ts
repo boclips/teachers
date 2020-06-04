@@ -6,13 +6,20 @@ import { authenticationResolved } from '../actions/authenticationResolved';
 import { requestAuthentication } from '../actions/requestAuthentication';
 import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 
+export interface AuthenticationOptions {
+  authenticationRequired: boolean;
+  username?: string;
+  password?: string;
+}
 const onAuthenticationRequested = (
   store: Store,
-  { authenticationRequired },
+  options: AuthenticationOptions,
 ) => {
   BoclipsSecurity.createInstance({
     ...getDefaultSecurityOptions(store),
-    mode: authenticationRequired ? 'login-required' : 'check-sso',
+    mode: options.authenticationRequired ? 'login-required' : 'check-sso',
+    username: options.username,
+    password: options.password,
   });
 };
 
