@@ -4,6 +4,7 @@ import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
 import { noOp } from 'src/utils';
 import { storyWithRouter } from 'src/utils/index.stories';
+import { getAttachmentLabels } from 'src/components/common/AttachmentConstants';
 
 storiesOf('AttachmentDetails', module)
   .addDecorator(storyWithRouter())
@@ -15,7 +16,7 @@ storiesOf('AttachmentDetails', module)
         onClick={noOp}
         link={'http://www.google.com'}
         description="my resource description"
-        type={AttachmentType.ACTIVITY}
+        labels={getAttachmentLabels(AttachmentType.ACTIVITY)}
       />
     </div>
   ))
@@ -27,7 +28,7 @@ storiesOf('AttachmentDetails', module)
         link={'http://www.google.com'}
         onClick={noOp}
         description="my resource description"
-        type={AttachmentType.LESSON_PLAN}
+        labels={getAttachmentLabels(AttachmentType.LESSON_PLAN)}
       />
     </div>
   ));

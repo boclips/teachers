@@ -7,6 +7,7 @@ import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { DownloadTranscriptButton } from 'src/components/video/buttons/downloadTranscriptButton/DownloadTranscriptButton';
 import ContentWarningIcon from 'resources/images/warning.svg';
+import { getAttachmentLabels } from 'src/components/common/AttachmentConstants';
 import { Video } from '../../../types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
@@ -105,7 +106,7 @@ const VideoDetailsContent = ({ video }: Props) => {
                 <AttachmentDetails
                   link={it.linkToResource}
                   description={it.description}
-                  type={it.type}
+                  labels={getAttachmentLabels(it.type)}
                   onClick={() => {
                     AnalyticsFactory.internalAnalytics().trackVideoActivityClicked(
                       video,

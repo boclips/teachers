@@ -26,15 +26,12 @@ export const ParentCollectionDetailsContent = (props: Props) => (
       />
     </div>
     {props.collection.subCollections &&
-      props.collection.subCollections.map((collection) => {
-        console.log(collection);
-        return (
-          <CollectionCardContainer
-            key={collection.id}
-            collection={collection}
-            grid={false}
-          />
-        );
-      })}
+      props.collection.subCollections.map((collection) => (
+        <CollectionCardContainer
+          key={collection.id}
+          collection={collection}
+          grid={false}
+        />
+      ))}
   </section>
 );

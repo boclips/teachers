@@ -6,6 +6,7 @@ import { CollectionButtonsContainer } from 'src/components/collection/buttons/Co
 import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { getAttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
+import { getAttachmentLabels } from 'src/components/common/AttachmentConstants';
 import StopClickPropagation from '../../../common/StopClickPropagation';
 import { AgeRangeTag } from '../../../common/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../common/tags/SubjectTag';
@@ -24,36 +25,54 @@ export class CollectionHeader extends React.PureComponent<Props> {
     renderTitle: true,
     renderSubtitle: true,
   };
+
   public render() {
+    return this.props.isParent
+      ? this.renderParentCollectionHeader()
+      : this.renderSimpleCollectionHeader();
+  }
+
+  public renderParentCollectionHeader() {
     return (
       <React.Fragment>
-        {this.renderTitleRow()}
-        {this.renderSubtitleRow()}
+        {this.renderTitleRow([<Col />, this.renderButtons()])}
+        {this.renderSubtitleRow([this.renderTags()])}
         {this.renderDescriptionRow()}
       </React.Fragment>
     );
   }
 
-  private renderTitleRow = () =>
-    this.props.isParent ? null : (
-      <Row
-        type="flex"
-        justify="space-between"
-        className="collection-header__title-row"
-      >
-        <Col>
-          <CollectionTitle collection={this.props.collection} />
-        </Col>
-        <Col>
-          <StopClickPropagation>
-            <CollectionButtonsContainer collection={this.props.collection} />
-          </StopClickPropagation>
-        </Col>
-      </Row>
+  public renderSimpleCollectionHeader() {
+    return (
+      <React.Fragment>
+        {this.renderTitleRow([this.renderTitle(), this.renderButtons()])}
+        {this.renderSubtitleRow([
+          this.renderTags(),
+          this.renderAdditionalInfo(),
+        ])}
+        {this.renderDescriptionRow()}
+      </React.Fragment>
     );
+  }
 
-  private renderSubtitleRow = () => {
-    const tags = this.shouldRenderTagContainer() && (
+  private renderTitleRow = (elements: React.ReactNode[]) => (
+    <Row
+      type="flex"
+      justify="space-between"
+      className="collection-header__title-row"
+    >
+      {elements.map((elem) => elem)}
+    </Row>
+  );
+
+  private renderSubtitleRow = (elements: React.ReactNode[]) => (
+    <Row className="collection-header__subtitle-row">
+      {elements.map((elem) => elem)}
+    </Row>
+  );
+
+  private renderTags = () =>
+    this.shouldRenderTagContainer() && (
       <div className="tags-container" data-qa={'tags-container'}>
         {this.hasAgeRange() && (
           <AgeRangeTag ageRange={this.props.collection.ageRange} />
@@ -64,27 +83,26 @@ export class CollectionHeader extends React.PureComponent<Props> {
       </div>
     );
 
-    const subtitle = this.props.isParent ? null : (
-      <CollectionSubtitle
-        classname={'highlight collection-subtitle header'}
-        collection={this.props.collection}
-      />
-    );
+  private renderAdditionalInfo = () => (
+    <CollectionSubtitle
+      classname={'highlight collection-subtitle header'}
+      collection={this.props.collection}
+    />
+  );
 
-    return (
-      <Row className="collection-header__subtitle-row">
-        {tags}
-        {subtitle}
-      </Row>
-    );
-  };
+  private renderTitle = () => (
+    <Col>
+      <CollectionTitle collection={this.props.collection} />
+    </Col>
+  );
 
-  private attachmentLabels = this.props.isParent
-    ? {
-        linkLabel: 'Visit project suggestion doc',
-        title: 'Final project',
-      }
-    : null;
+  private renderButtons = () => (
+    <Col>
+      <StopClickPropagation>
+        <CollectionButtonsContainer collection={this.props.collection} />
+      </StopClickPropagation>
+    </Col>
+  );
 
   private renderDescriptionRow = () => {
     const lessonGuideToRender = this.getLessonGuide();
@@ -115,11 +133,10 @@ export class CollectionHeader extends React.PureComponent<Props> {
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
             <AttachmentDetails
               description={lessonGuideToRender.description}
-              title={this.attachmentLabels && this.attachmentLabels.title}
-              linkLabel={
-                this.attachmentLabels && this.attachmentLabels.linkLabel
-              }
-              type={getAttachmentType(lessonGuideToRender.type)}
+              labels={getAttachmentLabels(
+                getAttachmentType(lessonGuideToRender.type),
+                this.props.isParent,
+              )}
               link={lessonGuideToRender.links.download.getOriginalLink()}
               onClick={() => {
                 AnalyticsFactory.externalAnalytics().trackCollectionAttachmentLinkVisited(

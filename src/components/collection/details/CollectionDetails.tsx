@@ -59,7 +59,6 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     );
   }
   const isParentCollection = () => collection.subCollections.length > 0;
-  console.log('rendering collection - ', collection);
   return (
     <PageLayout
       showSearchBar={true}
