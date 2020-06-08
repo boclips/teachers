@@ -14,7 +14,7 @@ export const fetchPageableCollections = (
   switch (request.key) {
     case 'myResources':
       url = links.mySavedCollections.getTemplatedLink({
-        sort_by: ['IS_DEFAULT', 'UPDATED_AT'],
+        sort_by: ['UPDATED_AT'],
       } as CollectionRequestFilters);
       break;
     case 'discoverCollections':
