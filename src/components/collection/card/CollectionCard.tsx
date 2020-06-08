@@ -15,6 +15,7 @@ import StopClickPropagation from '../../common/StopClickPropagation';
 import { ConnectedSubjectTag } from '../../common/tags/SubjectTag';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
 import MyCollectionSVG from '../../../../resources/images/my-account.svg';
+import CollectionSVG from '../../../../resources/images/our-collections.svg';
 import { EditCollectionButton } from '../buttons/EditCollectionButton';
 import {
   withMediaBreakPoint,
@@ -41,6 +42,7 @@ export const CollectionCard = withMediaBreakPoint(
       props.collection.ageRange.isBounded();
 
     const displayTags = props.grid || collectionHasTags;
+    const isParentCollection = props.collection.subCollections.length > 0;
 
     const leftButtons = [
       (props.collection.links.bookmark ||
@@ -68,25 +70,25 @@ export const CollectionCard = withMediaBreakPoint(
       props.collection.description === '';
 
     const renderDescription = () => {
-      if (props.videos.length === 0) {
-        return (
-          <div className={'empty-collection-message'}>
-            This video collection is empty.
-          </div>
-        );
-      }
-
       if (collectionHasNoDescription) {
-        return (
-          <ul>
-            {props.videos.map((video) => (
-              <li key={video.id}>
-                <BulletSVG className="collection-card__description-preview__icon" />
-                <span>{`"${video.title}" by ${video.createdBy}`}</span>
-              </li>
-            ))}
-          </ul>
-        );
+        if (props.videos.length === 0) {
+          return (
+            <div className={'empty-collection-message'}>
+              This video collection is empty.
+            </div>
+          );
+        } else {
+          return (
+            <ul>
+              {props.videos.map((video) => (
+                <li key={video.id}>
+                  <BulletSVG className="collection-card__description-preview__icon" />
+                  <span>{`"${video.title}" by ${video.createdBy}`}</span>
+                </li>
+              ))}
+            </ul>
+          );
+        }
       }
 
       return props.collection.description;
@@ -97,9 +99,11 @@ export const CollectionCard = withMediaBreakPoint(
         href={`/collections/${props.collection.id}`}
         bordered={false}
         key={`card-${props.collection.id}`}
-        className={classnames('collection-card collection-card--search', {
-          'collection-card--grid': isSmallCard,
-        })}
+        className={classnames(
+          'collection-card collection-card--search',
+          { 'collection-card--grid': isSmallCard },
+          { 'collection-parent': isParentCollection },
+        )}
         data-qa="collection-card"
         data-state={props.collection.title}
         onMouseDown={() => {
@@ -123,8 +127,24 @@ export const CollectionCard = withMediaBreakPoint(
         {!isSmallCard && (
           <section className="collection-card__subtitle">
             {props.collection.isMine && (
-              <span className="collection-card__owner-label">
+              <span
+                className={classnames(
+                  'collection-card__label',
+                  'collection-card__label-owner',
+                )}
+              >
                 <MyCollectionSVG /> Your collection
+              </span>
+            )}
+            {isParentCollection && (
+              <span
+                className={classnames(
+                  'collection-card__label',
+                  'collection-card__label-parent',
+                )}
+              >
+                <CollectionSVG /> {props.collection.subCollections.length}{' '}
+                collections
               </span>
             )}
           </section>
@@ -138,9 +158,8 @@ export const CollectionCard = withMediaBreakPoint(
               <ConnectedSubjectTag key={subjectId} id={subjectId} />
             ))}
             {props.collection.attachments &&
-              props.collection.attachments.length > 0 && (
-                <AttachmentTag label={'Lesson guide'} />
-              )}
+              props.collection.attachments.length > 0 &&
+              !isParentCollection && <AttachmentTag label={'Lesson guide'} />}
           </div>
         )}
         <div className="collection-card__detail-row">

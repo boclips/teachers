@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import EmptyCollectionImage from 'resources/images/empty-collection.svg';
+import ParentCollectionImage from 'resources/images/digital-citizenship-preview.svg';
 import { Video } from '../../../types/Video';
 import './CollectionCardPreview.less';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -13,6 +14,13 @@ interface Props {
 
 export class CollectionCardPreview extends React.PureComponent<Props> {
   public render() {
+    if (this.props.collection.subCollections.length > 0) {
+      return (
+        <Row className={'parent-collection'}>
+          <ParentCollectionImage />
+        </Row>
+      );
+    }
     const totalVideoCount = this.props.collection.videoIds.length;
     if (totalVideoCount === 0) {
       return (
