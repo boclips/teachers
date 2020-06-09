@@ -61,13 +61,30 @@ const loadingCollections = (state: State): State => ({
   },
 });
 
-const collectionUpdated = (state: State, _: UpdateCollectionResult): State => ({
-  ...state,
-  collections: {
-    ...state.collections,
-    updating: false,
-  },
-});
+export const collectionUpdated = (
+  state: State,
+  update: UpdateCollectionResult,
+): State => {
+  const orderedResources = state.collections.myResources
+    ? [...state.collections.myResources.items].sort((a: string, _: string) =>
+        a === update.collection.id ? -1 : 1,
+      )
+    : undefined;
+
+  const myResourcesOrdered = {
+    ...state.collections.myResources,
+    items: orderedResources,
+  };
+
+  return {
+    ...state,
+    collections: {
+      ...state.collections,
+      myResources: myResourcesOrdered,
+      updating: false,
+    },
+  };
+};
 
 const collectionUpdating = (state: State): State => ({
   ...state,

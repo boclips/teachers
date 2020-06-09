@@ -2,8 +2,12 @@ import {
   EntitiesFactory,
   MockStoreFactory,
   VideoCollectionFactory,
+  VideoFactory,
 } from './../../../../../test-support/factories';
-import { getCollectionsByIds } from './collectionEntitiesReducer';
+import {
+  collectionUpdated,
+  getCollectionsByIds,
+} from './collectionEntitiesReducer';
 
 describe('selectors', () => {
   it('can get collections by ids', () => {
@@ -23,5 +27,38 @@ describe('selectors', () => {
 
     const foundCollections = getCollectionsByIds(state, ['123', '456']);
     expect(foundCollections).toEqual([firstCollection, secondCollection]);
+  });
+
+  it('reorders my resources when video is added to collection', () => {
+    const state = MockStoreFactory.sampleState({
+      collections: {
+        myResources: {
+          items: ['1', '2'],
+          links: null,
+        },
+        myCollections: {
+          items: ['1'],
+          links: null,
+        },
+        promotedCollections: {
+          items: [],
+          links: null,
+        },
+        discoverCollections: {
+          items: [],
+          links: null,
+        },
+        updating: false,
+        loading: false,
+      },
+    });
+
+    const collectionState = collectionUpdated(state, {
+      collection: VideoCollectionFactory.sample({ id: '2' }),
+      video: VideoFactory.sample(),
+      success: true,
+    });
+
+    expect(collectionState.collections.myResources.items).toEqual(['2', '1']);
   });
 });
