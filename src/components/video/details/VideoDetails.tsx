@@ -104,6 +104,7 @@ const VideoDetailsContent = ({ video }: Props) => {
             <Col sm={{ span: 24 }} md={{ span: 24 }} lg={{ span: 6 }}>
               {video.attachments?.map((it) => (
                 <AttachmentDetails
+                  key={it.id}
                   link={it.linkToResource}
                   description={it.description}
                   labels={getAttachmentLabels(it.type)}

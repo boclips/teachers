@@ -73,7 +73,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
 
   private renderTags = () =>
     this.shouldRenderTagContainer() && (
-      <div className="tags-container" data-qa={'tags-container'}>
+      <div className="tags-container" data-qa={'tags-container'} key={'tags'}>
         {this.hasAgeRange() && (
           <AgeRangeTag ageRange={this.props.collection.ageRange} />
         )}
@@ -87,17 +87,18 @@ export class CollectionHeader extends React.PureComponent<Props> {
     <CollectionSubtitle
       classname={'highlight collection-subtitle header'}
       collection={this.props.collection}
+      key={'subtitle'}
     />
   );
 
   private renderTitle = () => (
-    <Col>
+    <Col key={'title'}>
       <CollectionTitle collection={this.props.collection} />
     </Col>
   );
 
   private renderButtons = () => (
-    <Col>
+    <Col key={'buttons'}>
       <StopClickPropagation>
         <CollectionButtonsContainer collection={this.props.collection} />
       </StopClickPropagation>
@@ -118,14 +119,16 @@ export class CollectionHeader extends React.PureComponent<Props> {
             md: { span: 12 },
             lg: { span: 16 },
           })}
+          key={'header'}
         >
           <div
+            key={'div-description'}
             className={'collection-header__description details'}
             data-qa="collection-description"
           >
             {this.props.collection.description}
           </div>
-          <div className={'collection-header__units'}>
+          <div key={'div-units'} className={'collection-header__units'}>
             {this.props.collectionUnits}
           </div>
         </Col>
