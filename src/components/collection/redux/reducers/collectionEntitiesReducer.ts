@@ -61,6 +61,17 @@ const loadingCollections = (state: State): State => ({
   },
 });
 
+export const collectionCreated = (
+  state: State,
+  _: UpdateCollectionResult,
+): State => ({
+  ...state,
+  collections: {
+    ...state.collections,
+    updating: false,
+  },
+});
+
 export const collectionUpdated = (
   state: State,
   update: UpdateCollectionResult,
@@ -110,7 +121,7 @@ export const collectionHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(fetchPageableCollectionsAction, loadingCollections),
   actionHandler(onRemoveFromCollectionAction, collectionUpdated),
   actionHandler(onAddToCollectionAction, collectionUpdated),
-  actionHandler(onCreateCollectionAction, collectionUpdated),
+  actionHandler(onCreateCollectionAction, collectionCreated),
   actionHandler(
     appendDiscoverCollectionsAction,
     onAppendPageableCollectionsAction,
