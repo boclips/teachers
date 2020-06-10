@@ -15,3 +15,10 @@ export const extractFacetHits = (
 
   return facet[id].hits > MaxElementCount ? MaxElementCount : facet[id].hits;
 };
+
+export const extractTotalHits = (facets?: { [id: string]: Facet }): number =>
+  facets
+    ? Object.keys(facets)
+        .map((key) => facets[key].hits)
+        .reduce((acc, value) => acc + value, 0)
+    : 0;

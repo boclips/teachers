@@ -1,5 +1,4 @@
-import { Checkbox, Form, Menu } from 'antd';
-import CheckboxGroup from 'antd/lib/checkbox/Group';
+import { Form, Menu } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { Ref, useCallback, useEffect, useState } from 'react';
@@ -11,23 +10,19 @@ import {
 import { Subject } from 'src/types/Subject';
 import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
 import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
-import { extractFacetHits } from 'src/components/searchResults/filters/extractFacetHits';
-import { getCollectionsFromSearchResult } from 'src/components/searchBar/redux/reducers/searchReducer';
+import { extractTotalHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
+import { AgeFilter } from 'src/components/searchResults/filters/age/AgeFilter';
+import { DurationFilter } from 'src/components/searchResults/filters/duration/DurationFilter';
+import { SubjectFilter } from 'src/components/searchResults/filters/subject/SubjectFilter';
+import { ResourcesFilter } from 'src/components/searchResults/filters/resources/ResourcesFilter';
 import State from '../../../types/State';
 
-const FilterKey = {
+export const FilterKey = {
   AGE: 'age',
   DURATION: 'duration',
   RESOURCE: 'resourceTypes',
   SUBJECTS: 'subjects',
 };
-
-interface FilterFormEditableFields {
-  duration?: string[];
-  ageRange?: string[];
-  subjects?: string[];
-  resourceTypes?: string[];
-}
 
 export interface FilterOptions {
   duration?: string[];
@@ -47,72 +42,10 @@ interface StateProps {
 const Filters = React.forwardRef(
   (props: FormComponentProps & Props, ref: Ref<any>) => {
     const { ageRange, subjectIds, duration, resourceTypes } = props;
-    const { getFieldDecorator, resetFields } = props.form;
+    const { resetFields } = props.form;
     const facets = useSelector(
-      (state: State) =>
-        state.search.videoSearch.facets || {
-          ageRanges: {},
-          subjects: {},
-          durations: {},
-          resourceTypes: {},
-        },
+      (state: State) => state.search.videoSearch.facets,
     );
-
-    /*
-  This is a quick and dirty workaround to the fact that we don't have facets for
-  the collection search just now. When we add this, please remove this and forgive me
-   */
-    const lessonPlanFacet = useSelector(
-      (state: State) =>
-        getCollectionsFromSearchResult(state).filter(
-          (collection) =>
-            collection.attachments &&
-            collection.attachments.length > 0 &&
-            collection.attachments[0].type === 'LESSON_PLAN',
-        ).length,
-    );
-
-    const durations = useSelector((state: State) => state.durations);
-    const durationFilters = durations
-      .map((d) => ({
-        value: d.toString(),
-        label: d.getLabel(),
-        count: extractFacetHits(d.toIso(), facets.durations),
-      }))
-      .filter((filter) => filter.count > 0);
-
-    const allAgeRanges = useSelector((state: State) => state.ageRanges);
-    const ageRangeFilters = allAgeRanges
-      .map((a) => ({
-        label: a.getLabel(),
-        value: a.getId(),
-        count: extractFacetHits(a.getId(), facets.ageRanges),
-      }))
-      .filter((filter) => filter.count > 0);
-
-    const subjects = useSelector((state: State) => state.subjects);
-    const subjectFilters = subjects
-      .map((subject) => ({
-        value: subject.id,
-        label: subject.name,
-        count: extractFacetHits(subject.id, facets.subjects),
-      }))
-      .filter((filter) => filter.count > 0)
-      .sort((a, b) => a.label.localeCompare(b.label));
-
-    const allResourceTypes = useSelector((state: State) => state.resourceTypes);
-
-    const resourceTypeFilters = allResourceTypes
-      .map((type) => ({
-        value: type.value,
-        label: type.label,
-        count:
-          type.value === 'LESSON_PLAN'
-            ? lessonPlanFacet
-            : extractFacetHits(type.label, facets.resourceTypes),
-      }))
-      .filter((filter) => filter.count > 0)
-      .sort((a, b) => a.label.localeCompare(b.label));
 
     const [openFilters, setOpenFilters] = useState(() => [
       FilterKey.AGE,
@@ -129,15 +62,12 @@ const Filters = React.forwardRef(
       setOpenFilters(openKeys);
     }, []);
 
-    const isFilterOpen = (key: string) => openFilters.indexOf(key) > -1;
-
     const renderSubMenuTitle = (title: string, key: string) => (
       <span className={'filter-form__submenu-title'}>
         {title}
-        {isFilterOpen(key) ? <ArrowUpSVG /> : <ArrowDownSVG />}
+        {openFilters.indexOf(key) > -1 ? <ArrowUpSVG /> : <ArrowDownSVG />}
       </span>
     );
-
     return (
       <section ref={ref}>
         <Form className="filter-form">
@@ -147,108 +77,58 @@ const Filters = React.forwardRef(
             inlineIndent={0}
             onOpenChange={onOpenChange}
           >
-            <SubMenu
-              title={renderSubMenuTitle('Age', FilterKey.AGE)}
-              key={FilterKey.AGE}
-              className={'filter-form__section'}
-            >
-              <React.Fragment>
-                <Form.Item>
-                  {getFieldDecorator('ageRange', {
-                    initialValue: ageRange
-                      ? ageRange.map((range) => range.getId())
-                      : [],
-                    valuePropName: 'value',
-                  })(
-                    <CheckboxGroup className="filter-form__checkbox-group">
-                      {ageRangeFilters.map((item) => (
-                        <Checkbox key={item.label} value={item.value}>
-                          {item.label}{' '}
-                          <span className="filter-form__checkbox-count">
-                            ({formatCount(item.count)})
-                          </span>
-                        </Checkbox>
-                      ))}
-                    </CheckboxGroup>,
-                  )}
-                </Form.Item>
-              </React.Fragment>
-            </SubMenu>
-            <SubMenu
-              title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
-              key={FilterKey.SUBJECTS}
-              className={'filter-form__section'}
-            >
-              <React.Fragment>
-                <Form.Item colon={false}>
-                  {getFieldDecorator('subjects', {
-                    rules: [{ type: 'array' }],
-                    initialValue: subjectIds,
-                  })(
-                    <CheckboxGroup className="filter-form__checkbox-group filter-form__subjects-group">
-                      {subjectFilters.map((item) => (
-                        <Checkbox key={item.label} value={item.value}>
-                          {item.label}{' '}
-                          <span className="filter-form__checkbox-count">
-                            ({formatCount(item.count)})
-                          </span>
-                        </Checkbox>
-                      ))}
-                    </CheckboxGroup>,
-                  )}
-                </Form.Item>
-              </React.Fragment>
-            </SubMenu>
-            <SubMenu
-              title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
-              key={FilterKey.RESOURCE}
-              className={'filter-form__section'}
-            >
-              <React.Fragment>
-                <Form.Item>
-                  {getFieldDecorator('resourceTypes', {
-                    initialValue: resourceTypes,
-                  })(
-                    <CheckboxGroup className="filter-form__checkbox-group">
-                      {resourceTypeFilters.map((item) => (
-                        <Checkbox key={item.label} value={item.value}>
-                          {item.label}{' '}
-                          <span className="filter-form__checkbox-count">
-                            ({formatCount(item.count)})
-                          </span>
-                        </Checkbox>
-                      ))}
-                    </CheckboxGroup>,
-                  )}
-                </Form.Item>
-              </React.Fragment>
-            </SubMenu>
-            <SubMenu
-              title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
-              key={FilterKey.DURATION}
-              className={'filter-form__section'}
-            >
-              <React.Fragment>
-                <Form.Item>
-                  {getFieldDecorator('duration', {
-                    initialValue: duration
-                      ? duration.map((range) => range.toString())
-                      : [],
-                  })(
-                    <CheckboxGroup className="filter-form__checkbox-group">
-                      {durationFilters.map((item) => (
-                        <Checkbox key={item.label} value={item.value}>
-                          {item.label}{' '}
-                          <span className="filter-form__checkbox-count">
-                            ({formatCount(item.count)})
-                          </span>
-                        </Checkbox>
-                      ))}
-                    </CheckboxGroup>,
-                  )}
-                </Form.Item>
-              </React.Fragment>
-            </SubMenu>
+            {extractTotalHits(facets?.ageRanges) > 0 && (
+              <SubMenu
+                title={renderSubMenuTitle('Age', FilterKey.AGE)}
+                key={FilterKey.AGE}
+                className={'filter-form__section'}
+              >
+                <AgeFilter
+                  ageRange={ageRange}
+                  form={props.form}
+                  formFieldId={'ageRange'}
+                />
+              </SubMenu>
+            )}
+            {extractTotalHits(facets?.subjects) > 0 && (
+              <SubMenu
+                title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
+                key={FilterKey.SUBJECTS}
+                className={'filter-form__section'}
+              >
+                <SubjectFilter
+                  subjectIds={subjectIds}
+                  form={props.form}
+                  formFieldId={'subjects'}
+                />
+              </SubMenu>
+            )}
+            {extractTotalHits(facets?.resourceTypes) > 0 && (
+              <SubMenu
+                title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
+                key={FilterKey.RESOURCE}
+                className={'filter-form__section'}
+              >
+                <ResourcesFilter
+                  resourceTypes={resourceTypes}
+                  form={props.form}
+                  formFieldId={'resourceTypes'}
+                />
+              </SubMenu>
+            )}
+            {extractTotalHits(facets?.durations) > 0 && (
+              <SubMenu
+                title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
+                key={FilterKey.DURATION}
+                className={'filter-form__section'}
+              >
+                <DurationFilter
+                  duration={duration}
+                  form={props.form}
+                  formFieldId={'duration'}
+                />
+              </SubMenu>
+            )}
           </Menu>
         </Form>
       </section>
@@ -258,7 +138,7 @@ const Filters = React.forwardRef(
 
 export const FiltersWithForm = withAppliedSearchParameters(
   Form.create<FormComponentProps & Props>({
-    onValuesChange: (props, _, allValues: FilterFormEditableFields) => {
+    onValuesChange: (props, _, allValues: FilterOptions) => {
       const filterRequest: FilterOptions = {};
       filterRequest.duration = allValues.duration;
       filterRequest.ageRange = allValues.ageRange;
@@ -269,11 +149,3 @@ export const FiltersWithForm = withAppliedSearchParameters(
     },
   })(Filters),
 );
-
-export function formatCount(count: number): string {
-  if (count >= 500) {
-    return `${count}+`;
-  } else {
-    return `${count}`;
-  }
-}

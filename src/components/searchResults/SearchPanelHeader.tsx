@@ -3,7 +3,7 @@ import React from 'react';
 import FilterIconSVG from 'resources/images/filter-icon.svg';
 import './SearchResultsHeader.less';
 import { MaxElementCount } from 'src/services/videos/parseVideosResponse';
-import { formatCount } from 'src/components/searchResults/filters/Filters';
+import { formatCount } from 'src/components/searchResults/filters/utils/formatCount';
 
 interface Props {
   totalElements: number;

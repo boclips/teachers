@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import State from 'src/types/State';
-import { ClosableTag } from '../../common/tags/Tag';
-import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
+import { ClosableTag } from '../../../common/tags/Tag';
+import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 
 interface Props {
   resource: string;

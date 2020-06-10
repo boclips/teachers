@@ -6,8 +6,8 @@ import {
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
 import { DurationRange } from 'src/types/DurationRange';
-import { ClosableTag } from '../../common/tags/Tag';
-import { updateSearchParamsAction } from '../redux/actions/updateSearchParametersActions';
+import { ClosableTag } from '../../../common/tags/Tag';
+import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 
 interface Props extends WithAppliedSearchParametersProps {
   range: DurationRange;

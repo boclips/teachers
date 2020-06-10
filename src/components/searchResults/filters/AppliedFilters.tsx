@@ -4,11 +4,11 @@ import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
-import { ResourceTypeFilterTag } from 'src/components/searchResults/filters/ResourceFilterTag';
-import SubjectFilterTag from 'src/components/searchResults/filters/SubjectFilterTag';
-import AgeRangeFilterTag from './AgeRangeFilterTag';
+import { ResourceTypeFilterTag } from 'src/components/searchResults/filters/resources/ResourceFilterTag';
+import SubjectFilterTag from 'src/components/searchResults/filters/subject/SubjectFilterTag';
+import AgeRangeFilterTag from './age/AgeRangeFilterTag';
 import ClearAllButton from './ClearAllButton';
-import DurationFilterTag from './DurationFilterTag';
+import DurationFilterTag from './duration/DurationFilterTag';
 import './AppliedFilters.less';
 
 export const AppliedFilters = withAppliedSearchParameters(

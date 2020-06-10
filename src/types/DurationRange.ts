@@ -1,4 +1,4 @@
-import DurationConverter from 'src/components/searchResults/filters/DurationConverter';
+import DurationConverter from 'src/components/searchResults/filters/duration/DurationConverter';
 
 interface Range {
   min: number;

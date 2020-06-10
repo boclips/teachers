@@ -1,4 +1,4 @@
-import { within, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import {
   renderSearchResultsView,
   renderSearchResultsViewWithSampleData,
@@ -11,15 +11,18 @@ import {
 } from 'test-support/api-responses';
 
 describe('SearchResultsView', () => {
-  it('panel contains filters for age, subjects, duration, and resource type', () => {
+  it('panel contains filters for age, subjects, duration, and resource type', async () => {
     const view = renderSearchResultsViewWithSampleData();
     const sidebar = view.getByText('Filter results').closest('div');
 
     expect(sidebar).toBeInTheDocument();
-    expect(within(sidebar).getByText('Age')).toBeInTheDocument();
-    expect(within(sidebar).getByText('Subjects')).toBeInTheDocument();
-    expect(within(sidebar).getByText('Duration')).toBeInTheDocument();
-    expect(within(sidebar).getByText('Resources')).toBeInTheDocument();
+
+    await view.findByLabelText(/Arts.*/);
+
+    expect(view.getByText('Age')).toBeInTheDocument();
+    expect(view.getByText('Subjects')).toBeInTheDocument();
+    expect(view.getByText('Duration')).toBeInTheDocument();
+    expect(view.getByText('Resources')).toBeInTheDocument();
   });
 
   it(`can change subject filters`, async () => {

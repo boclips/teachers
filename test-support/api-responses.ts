@@ -258,6 +258,11 @@ export const videosSearchResponse = buildVideoSearchResponse(
 export const videosSearchResponseWithFacets = buildVideoSearchResponse(
   [video177, video147],
   {
+    ageRanges: {
+      '3-5': {
+        hits: 3,
+      },
+    },
     subjects: {
       'art-id': {
         hits: 10,
@@ -265,6 +270,14 @@ export const videosSearchResponseWithFacets = buildVideoSearchResponse(
       'other-id': {
         hits: 12,
       },
+    },
+    durations: {
+      'PT10M-PT20M': {
+        hits: 3,
+      },
+    },
+    resourceTypes: {
+      ACTIVITY: { hits: 1 },
     },
   },
 );

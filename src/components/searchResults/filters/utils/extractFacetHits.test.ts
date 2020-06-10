@@ -1,4 +1,4 @@
-import { extractFacetHits } from 'src/components/searchResults/filters/extractFacetHits';
+import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
 
 it('can handle inexistent index ', () => {
   expect(extractFacetHits('whatevs', {})).toEqual(0);
