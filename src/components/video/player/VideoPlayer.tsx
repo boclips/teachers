@@ -89,12 +89,13 @@ class VideoPlayer extends React.PureComponent<
 
   private setPlayerRef = (player) => {
     this.player = player;
-    this.player.onEnd((overlayId: string) => this.handleVideoEnd(overlayId));
+    this.player.onEnd((endOverlay: HTMLDivElement) =>
+      this.handleVideoEnd(endOverlay),
+    );
     this.loadSegment();
   };
 
-  public handleVideoEnd = (endOverlayId) => {
-    const endOfVideoOverlay = document.getElementById(endOverlayId);
+  public handleVideoEnd = (endOverlay) => {
     if (
       document.getElementsByClassName(
         'boclips-player boclips-player-container plyr--fullscreen large-player',
@@ -104,17 +105,17 @@ class VideoPlayer extends React.PureComponent<
       ).length > 0
     ) {
       this.setState({
-        superImposedContainer: endOfVideoOverlay,
+        superImposedContainer: endOverlay,
       });
     } else {
       this.setState({
         superImposedContainer: document.body,
       });
     }
-    if (endOfVideoOverlay.firstChild) {
-      endOfVideoOverlay.removeChild(endOfVideoOverlay.firstChild);
+    if (endOverlay.firstChild) {
+      endOverlay.removeChild(endOverlay.firstChild);
     }
-    this.setState({ overlayContainer: document.getElementById(endOverlayId) });
+    this.setState({ overlayContainer: endOverlay });
     this.setState({ overlayVisible: true });
   };
 
