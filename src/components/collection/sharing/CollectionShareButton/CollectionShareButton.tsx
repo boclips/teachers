@@ -6,6 +6,8 @@ import { getShareableCollectionLink } from 'src/services/links/getShareableColle
 import { CopyLinkButton } from 'src/components/video/buttons/copyLink/CopyLinkButton';
 import { GoogleClassroomShareButton } from 'src/components/video/buttons/gclassroom/GoogleClassroomShareButton';
 import { ShareButton } from 'src/components/common/share/ShareButton/ShareButton';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import State from '../../../../types/State';
 import MediaBreakpoints from '../../../../types/MediaBreakpoints';
 
@@ -32,12 +34,25 @@ export const CollectionShareButton = React.memo<Props>(
         shareCode={user.shareCode}
       >
         <div className="share-buttons">
-          <CopyLinkButton link={shareLink} onClick={() => {}} />
+          <CopyLinkButton
+            link={shareLink}
+            onClick={() => {
+              AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+                collection,
+                CollectionInteractionType.COLLECTION_LINK_COPIED,
+              );
+            }}
+          />
           <GoogleClassroomShareButton
             link={shareLink}
             postTitle={collection.title}
             postBody={`Use code ${user.shareCode} to view this.`}
-            onClick={() => {}}
+            onClick={() => {
+              AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
+                collection,
+                CollectionInteractionType.COLLECTION_SHARED_TO_GOOGLE_CLASSROOM,
+              );
+            }}
           />
         </div>
       </ShareButton>
