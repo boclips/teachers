@@ -119,6 +119,29 @@ export class VideoCollectionFactory {
   }
 }
 
+export class ParentCollectionFactory {
+  public static sample(arg: Partial<VideoCollection> = {}): VideoCollection {
+    return Object.freeze({
+      id: arg.id || '',
+      title: arg.title || '',
+      description: arg.description || '',
+      updatedAt: arg.updatedAt || '',
+      videoIds: arg.videoIds || [],
+      links: arg.links || VideoCollectionLinksFactory.sample(),
+      discoverable: arg.discoverable || false,
+      isMine: typeof arg.isMine === 'undefined' ? true : arg.isMine,
+      createdBy: 'Le Factory',
+      subjects: arg.subjects || [],
+      ageRange: arg.ageRange || new AgeRange(),
+      subCollections: arg.subCollections || [
+        VideoCollectionFactory.sample({ id: '123' }),
+        VideoCollectionFactory.sample({ id: '456' }),
+      ],
+      attachments: arg.attachments || [],
+    });
+  }
+}
+
 export class AttachmentFactory {
   public static sample = (arg: Partial<Attachment> = {}): Attachment => ({
     id: 'attachment-id',

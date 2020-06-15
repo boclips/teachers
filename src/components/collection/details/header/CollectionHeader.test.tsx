@@ -4,8 +4,11 @@ import { Router } from 'react-router';
 import {
   AttachmentFactory,
   CollectionsFactory,
+  ParentCollectionFactory,
   SubjectFactory,
+  UserProfileFactory,
   VideoCollectionFactory,
+  VideoCollectionLinksFactory,
   VideoIdFactory,
 } from '../../../../../test-support/factories';
 import { Link } from '../../../../types/Link';
@@ -230,13 +233,12 @@ describe('CollectionHeader', () => {
 
   describe('Parent collection', () => {
     it('renders the collection buttons', () => {
-      const collection = VideoCollectionFactory.sample({
+      const collection = ParentCollectionFactory.sample({
         id: 'collection-id',
-        subCollections: [VideoCollectionFactory.sample()],
-        links: {
+        links: VideoCollectionLinksFactory.sample({
           self: new Link({ href: '' }),
           bookmark: new Link({ href: '' }),
-        },
+        }),
       });
       const component = renderWithStore(
         <Router history={createMemoryHistory()}>
@@ -244,11 +246,14 @@ describe('CollectionHeader', () => {
         </Router>,
         {
           initialState: {
+            authentication: { status: 'authenticated' },
+            user: UserProfileFactory.sample(),
             collections: CollectionsFactory.sample(),
           },
         },
       );
       expect(component.getByText('Save')).toBeInTheDocument();
+      expect(component.getByText('Share')).toBeInTheDocument();
     });
   });
 });
