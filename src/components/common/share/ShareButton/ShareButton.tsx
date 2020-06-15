@@ -16,6 +16,7 @@ type getContainerFunc = () => HTMLElement;
 
 export const ShareButton = (props: ShareModelProps) => {
   const [visible, setVisible] = useState(false);
+
   return (
     <React.Fragment>
       <Button onClick={() => setVisible(true)} data-qa={'share-button'}>

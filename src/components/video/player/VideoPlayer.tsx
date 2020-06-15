@@ -37,7 +37,6 @@ class VideoPlayer extends React.PureComponent<
     menuVisible: boolean;
     overlayVisible: boolean;
     overlayContainer: HTMLElement;
-    superImposedContainer: HTMLElement;
   }
 > {
   public state = {
@@ -45,7 +44,6 @@ class VideoPlayer extends React.PureComponent<
     menuVisible: false,
     overlayContainer: null,
     overlayVisible: false,
-    superImposedContainer: null,
   };
 
   public static defaultProps: Partial<OwnProps> = {
@@ -69,7 +67,6 @@ class VideoPlayer extends React.PureComponent<
               collectionKey={this.props.collectionKey}
               video={this.props.video}
               replayOnClick={() => this.replayOnClickDestroyOverlay()}
-              superImposedContainer={this.state.superImposedContainer}
               userIsAuthenticated={this.props.isAuthenticated}
             />
             <PlayerComponent
@@ -96,22 +93,6 @@ class VideoPlayer extends React.PureComponent<
   };
 
   public handleVideoEnd = (endOverlay) => {
-    if (
-      document.getElementsByClassName(
-        'boclips-player boclips-player-container plyr--fullscreen large-player',
-      ).length > 0 ||
-      document.getElementsByClassName(
-        'boclips-player boclips-player-container plyr--only-mute plyr--fullscreen medium-player',
-      ).length > 0
-    ) {
-      this.setState({
-        superImposedContainer: endOverlay,
-      });
-    } else {
-      this.setState({
-        superImposedContainer: document.body,
-      });
-    }
     if (endOverlay.firstChild) {
       endOverlay.removeChild(endOverlay.firstChild);
     }
