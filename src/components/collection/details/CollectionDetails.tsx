@@ -78,6 +78,7 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
         <ParentCollectionDetailsContent
           collection={collection}
           userId={userId}
+          referer={referer}
         />
       ) : (
         <CollectionDetailsContent collection={collection} userId={userId} />

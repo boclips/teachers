@@ -16,6 +16,7 @@ type Props = OwnProps & DispatchProps & StateProps;
 interface OwnProps {
   collection: VideoCollection;
   grid: boolean;
+  referer?: string;
 }
 
 const NUMBER_OF_PREVIEWS = 4;
@@ -34,6 +35,7 @@ class CollectionCardContainer extends React.PureComponent<Props> {
 
     return (
       <CollectionCard
+        referer={this.props.referer}
         grid={this.props.grid}
         collection={this.props.collection}
         videos={videos}

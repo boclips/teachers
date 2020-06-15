@@ -25,11 +25,13 @@ import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import { ButtonMenu } from '../../common/buttons/ButtonMenu';
 import BulletSVG from '../../../../resources/images/bullet.svg';
 import { CollectionCardPreview } from './CollectionCardPreview';
+import {useRefererIdInjector} from "src/hooks/useRefererIdInjector";
 
 export interface Props {
   collection: VideoCollection;
   videos: Video[];
   grid: boolean;
+  referer?: string;
 }
 
 export const CollectionCard = withMediaBreakPoint(
@@ -93,10 +95,10 @@ export const CollectionCard = withMediaBreakPoint(
 
       return props.collection.description;
     };
-
+    const refererParam = props.referer ? `?referer=${props.referer}` : '';
     return (
       <ClickableCard
-        href={`/collections/${props.collection.id}`}
+        href={`/collections/${props.collection.id}${refererParam}`}
         bordered={false}
         key={`card-${props.collection.id}`}
         className={classnames(

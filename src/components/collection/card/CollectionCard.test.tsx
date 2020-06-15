@@ -1,6 +1,9 @@
 import React from 'react';
 import { createBoclipsStore } from 'src/app/redux/store';
-import { renderWithBoclipsStore } from 'test-support/renderWithStore';
+import {
+  renderWithBoclipsStore,
+  renderWithCreatedStore
+} from 'test-support/renderWithStore';
 import {
   MockStoreFactory,
   VideoCollectionFactory,
@@ -8,6 +11,10 @@ import {
 } from 'test-support/factories';
 import { AgeRange } from 'src/types/AgeRange';
 import { CollectionCard } from './CollectionCard';
+import {fireEvent} from "@testing-library/react";
+import {Link} from "src/types/Link";
+import {createMemoryHistory} from "history";
+import {VideoCard} from "src/components/video/card/VideoCard";
 
 describe('CollectionCard', () => {
   it('displays the tags container when the given collection has tags', () => {
@@ -73,6 +80,28 @@ describe('CollectionCard', () => {
     expect(
       component.getByText('This video collection is empty.'),
     ).toBeInTheDocument();
+  });
+
+  it('adds the referer id to the collection url', async () => {
+    const history = createMemoryHistory();
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      title: 'My collection',
+    });
+    const videos = [VideoFactory.sample()];
+    const store = createBoclipsStore(MockStoreFactory.sampleState());
+    const component = renderWithCreatedStore(
+      <CollectionCard collection={collection} videos={videos} grid={false} referer={"user-123"} />,
+      store,
+      history
+    );
+
+    const card = component.getByTestId('collection-card');
+    expect(card).toBeInTheDocument();
+
+    await fireEvent.click(card);
+
+    expect(history.location.search).toEqual('?referer=user-123');
   });
 
   describe('displaying video titles when there is no description', () => {

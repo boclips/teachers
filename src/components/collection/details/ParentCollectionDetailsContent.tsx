@@ -9,6 +9,7 @@ import { CollectionUnits } from 'src/components/collection/details/header/Collec
 export interface Props {
   collection: VideoCollection;
   userId: string;
+  referer?: string;
 }
 
 export const ParentCollectionDetailsContent = (props: Props) => (
@@ -31,6 +32,7 @@ export const ParentCollectionDetailsContent = (props: Props) => (
           key={collection.id}
           collection={collection}
           grid={false}
+          referer={props.referer}
         />
       ))}
   </section>
