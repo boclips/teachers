@@ -256,6 +256,41 @@ describe('CollectionDetailsView', () => {
 
       expect(await wrapper.findByText('Oops!!')).toBeInTheDocument();
     });
+
+    test(`renders collection when share code provided`, async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=test-id'],
+      });
+
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            entities: {
+              collections: {
+                byId: {
+                  'new-collection': VideoCollectionFactory.sample({
+                    title: 'best collection',
+                  }),
+                },
+              },
+              videos: {
+                byId: {},
+              },
+            },
+            authentication: {
+              status: 'anonymous',
+              refererShareCode: '1234',
+            },
+            router: { location: { search: '?referer=user1123' } } as any,
+          }),
+          history,
+        ),
+        history,
+      );
+
+      expect(await wrapper.findByText('best collection')).toBeInTheDocument();
+    });
   });
 
   describe(`when collection of collections`, () => {

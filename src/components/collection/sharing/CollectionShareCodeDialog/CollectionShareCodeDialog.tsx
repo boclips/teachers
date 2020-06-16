@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import '../../../common/share/ShareCodeDialog/ShareCodeDialog.less';
+import { storeReferrerShareCodeAction } from 'src/app/redux/authentication/actions/storeReferrerShareCodeAction';
 import { fetchCollectionAction } from '../../redux/actions/fetchCollectionAction';
 import State from '../../../../types/State';
 import { useRefererIdInjector } from '../../../../hooks/useRefererIdInjector';
@@ -42,6 +43,7 @@ export const CollectionShareCodeDialog = React.memo((props: Props) => {
         shareCode,
       }),
     );
+    dispatch(storeReferrerShareCodeAction(shareCode));
     setSubmitted(true);
   };
 
