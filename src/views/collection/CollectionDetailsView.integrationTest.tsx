@@ -20,6 +20,7 @@ import {
 import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
 import { axiosMock } from '../../../test-support/MockFetchVerify';
 import { CollectionDetailsView } from './CollectionDetailsView';
+import {waitForElementToBeRemoved} from "@testing-library/react";
 
 describe('CollectionDetailsView', () => {
   describe('when video collection', () => {
@@ -186,6 +187,31 @@ describe('CollectionDetailsView', () => {
         await wrapper.queryByTestId('collection-skeleton'),
       ).not.toBeInTheDocument();
     });
+
+    it(`does not require a sharecode if a code has been provided already`, async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=test-id'],
+      });
+
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            authentication: {
+              status: "anonymous",
+              refererShareCode: "1234"
+            },
+            router: { location: { search: '?referer=user1123' } } as any,
+          }),
+          history,
+        ),
+        history,
+      );
+
+      await expect(
+        waitForElementToBeRemoved(() => wrapper.getByText('View collection')),
+      ).resolves.toEqual(true);
+    })
   });
 
   describe('when editable collection', () => {

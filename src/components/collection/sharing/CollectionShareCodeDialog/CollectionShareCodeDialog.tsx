@@ -5,6 +5,7 @@ import { fetchCollectionAction } from '../../redux/actions/fetchCollectionAction
 import State from '../../../../types/State';
 import { useRefererIdInjector } from '../../../../hooks/useRefererIdInjector';
 import { ShareCodeDialog } from '../../../common/share/ShareCodeDialog/ShareCodeDialog';
+import {storeReferrerShareCodeAction} from "src/app/redux/authentication/actions/storeReferrerShareCodeAction";
 interface Props {
   collectionId: string;
 }
@@ -23,9 +24,16 @@ export const CollectionShareCodeDialog = React.memo((props: Props) => {
     (state: State) => state.collections.loading,
   );
 
+  const referrerShareCode = useSelector(
+    (state: State) => state.authentication.refererShareCode,
+  );
+
   useEffect(() => {
     if (collectionHasLoaded) {
       setVisible(false);
+    // } else if (referrerShareCode) {
+    //   console.log(`handling submit with share code ${referrerShareCode}`)
+    //   handleSubmit(referrerShareCode)
     } else {
       setVisible(true);
       if (submitted && !collectionsLoading) {
@@ -35,6 +43,7 @@ export const CollectionShareCodeDialog = React.memo((props: Props) => {
   }, [collectionHasLoaded, collectionsLoading, setVisible, submitted]);
 
   const handleSubmit = (shareCode) => {
+    console.log(`submitting`);
     dispatch(
       fetchCollectionAction({
         id: props.collectionId,
@@ -42,6 +51,9 @@ export const CollectionShareCodeDialog = React.memo((props: Props) => {
         shareCode,
       }),
     );
+    // if (!referrerShareCode) {
+    //   dispatch(storeReferrerShareCodeAction(shareCode));
+    // }
     setSubmitted(true);
   };
 

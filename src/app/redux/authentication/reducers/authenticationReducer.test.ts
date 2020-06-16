@@ -1,5 +1,6 @@
 import { authenticationResolved } from '../actions/authenticationResolved';
 import { authenticationReducer } from './authenticationReducer';
+import {storeReferrerShareCodeAction} from "storeReferrerShareCodeAction.ts";
 
 describe('on authenticationResolved', () => {
   it('will change status to authenticated if authentication succeeds', () => {
@@ -22,5 +23,14 @@ describe('on authenticationResolved', () => {
     );
 
     expect(resultingState).toEqual({ status: 'anonymous' });
+  });
+
+  it('will update referer share code', () => {
+    const resultingState = authenticationReducer(
+      undefined,
+      storeReferrerShareCodeAction("user-123"),
+    );
+
+    expect(resultingState).toEqual({ refererShareCode: 'user-123' });
   });
 });

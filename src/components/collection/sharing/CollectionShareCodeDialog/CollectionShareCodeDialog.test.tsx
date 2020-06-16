@@ -69,59 +69,46 @@ describe('CollectionShareCodeDialog', () => {
   });
 
   describe('share code validation', () => {
+    let wrapper;
+    let button;
+    let  shareField;
+
     beforeEach(() => {
       MockFetchVerify.get(
         `/collections/123?referer=test-id&shareCode=test`,
         JSON.stringify(collectionResponse([video177], '123')),
       );
+
+      wrapper = renderWithCreatedStore(
+        <CollectionShareCodeDialog collectionId={'123'} />,
+        store,
+        history,
+      );
+      button = wrapper.getByText('View collection').closest('button');
+      shareField = wrapper.getByPlaceholderText('Enter code');
+      expect(button).toBeInTheDocument();
+      expect(shareField).toBeInTheDocument();
+
+      expect(wrapper.getByText('Invalid code')).not.toBeVisible();
     });
 
-    const testData = [
-      {
-        message:
-          'closes the share modal when share code is valid and the collection has loaded',
-        shareCode: 'test',
-        expectToClose: true,
-      },
-      {
-        message: 'does not close the share modal when share code is invalid',
-        shareCode: 'invalid',
-        expectToClose: false,
-      },
-    ];
+    it(`does not close the share modal when share code is invalid`, async () => {
+      await fireEvent.change(shareField, { target: { value: 'invalid' } });
+      await fireEvent.click(button);
 
-    testData.forEach(({ message, shareCode, expectToClose }) => {
-      it(message, async () => {
-        const wrapper = renderWithCreatedStore(
-          <CollectionShareCodeDialog collectionId={'123'} />,
-          store,
-          history,
-        );
-        const button = wrapper.getByText('View collection').closest('button');
-        const shareField = wrapper.getByPlaceholderText('Enter code');
-        expect(button).toBeInTheDocument();
-        expect(shareField).toBeInTheDocument();
+      await expect(
+        waitForElementToBeRemoved(() => wrapper.getByText('View collection')),
+      ).rejects.not.toBeNull();
+      expect(wrapper.getByText('Invalid code')).toBeVisible();
+    });
 
-        expect(wrapper.getByText('Invalid code')).not.toBeVisible();
+    it(`closes the share modal when share code is valid and the collection has loaded`, async () => {
+      await fireEvent.change(shareField, { target: { value: 'test' } });
+      await fireEvent.click(button);
 
-        await fireEvent.change(shareField, { target: { value: shareCode } });
-        await fireEvent.click(button);
-
-        if (expectToClose) {
-          await expect(
-            waitForElementToBeRemoved(() =>
-              wrapper.getByText('View collection'),
-            ),
-          ).resolves.toEqual(true);
-        } else {
-          await expect(
-            waitForElementToBeRemoved(() =>
-              wrapper.getByText('View collection'),
-            ),
-          ).rejects.not.toBeNull();
-          expect(wrapper.getByText('Invalid code')).toBeVisible();
-        }
-      });
+      await expect(
+        waitForElementToBeRemoved(() => wrapper.getByText('View collection')),
+      ).resolves.toEqual(true);
     });
   });
 });

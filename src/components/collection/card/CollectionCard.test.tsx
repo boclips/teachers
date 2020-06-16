@@ -12,9 +12,7 @@ import {
 import { AgeRange } from 'src/types/AgeRange';
 import { CollectionCard } from './CollectionCard';
 import {fireEvent} from "@testing-library/react";
-import {Link} from "src/types/Link";
 import {createMemoryHistory} from "history";
-import {VideoCard} from "src/components/video/card/VideoCard";
 
 describe('CollectionCard', () => {
   it('displays the tags container when the given collection has tags', () => {
