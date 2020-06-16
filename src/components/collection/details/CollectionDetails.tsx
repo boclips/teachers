@@ -22,16 +22,29 @@ interface OwnProps {
 export const CollectionDetails = React.memo((props: OwnProps) => {
   const dispatch = useCallback(useDispatch(), []);
   const referer = useRefererIdInjector();
+  const isAnonymous = !referer || referer === 'anonymous';
   const collection = useSelector((state: State) =>
     getCollectionById(state, props.collectionId),
   );
   const userId = useSelector((state: State) =>
     state.user ? state.user.id : null,
   );
+  const shareCode = useSelector(
+    (state: State) => state.authentication.refererShareCode,
+  );
+  const isAuthenticated = useSelector(
+    (state: State) => state.authentication.status === 'authenticated',
+  );
 
   useEffect(() => {
     if (!collection) {
-      dispatch(fetchCollectionAction({ id: props.collectionId }));
+      if (isAuthenticated) {
+        dispatch(fetchCollectionAction({ id: props.collectionId }));
+      } else {
+        dispatch(
+          fetchCollectionAction({ id: props.collectionId, referer, shareCode }),
+        );
+      }
     }
   }, [collection, dispatch, props]);
 
@@ -40,7 +53,6 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   }, [dispatch, props]);
 
   if (!collection) {
-    const isAnonymous = !referer || referer === 'anonymous';
     if (isAnonymous) {
       return <CollectionDetailsNotFound />;
     }

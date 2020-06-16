@@ -19,7 +19,7 @@ import { defaultDurations } from 'src/components/durations/redux/durationReducer
 
 export const renderSearchResultsView = (initialQuery: string) => {
   const history = createMemoryHistory({
-    initialEntries: [`/videos?q=${initialQuery}`],
+    initialEntries: [`/videos?q=${initialQuery}&referer=some-ref`],
   });
 
   const store = createBoclipsStore(

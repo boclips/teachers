@@ -103,32 +103,12 @@ describe('need to fetch videos scenarios', () => {
         </Router>
       </Provider>,
     );
-    expect(store.getActions()).toHaveLength(1);
+    expect(store.getActions()[0].type).toEqual('FETCH_VIDEOS_BY_IDS');
     expect(store.getActions()[0].payload.videos).toHaveLength(4);
   });
 });
 
 describe('does not fetch videos scenarios', () => {
-  test('does not fetch videos when all videos in a collection are loaded', () => {
-    const video = VideoFactory.sample({ id: '123' });
-
-    const collection = VideoCollectionFactory.sample({
-      videoIds: [VideoIdFactory.sample({ value: video.id })],
-    });
-
-    const store = createMockStore(collection, [video]);
-
-    mount(
-      <Provider store={store}>
-        <Router>
-          <CollectionCardContainer grid={false} collection={collection} />
-        </Router>
-      </Provider>,
-    );
-
-    expect(store.getActions()).toHaveLength(0);
-  });
-
   test('does not fetch videos when 4 videos in a collection are already loaded', () => {
     const videos = [
       VideoFactory.sample({ id: '1' }),
@@ -156,7 +136,8 @@ describe('does not fetch videos scenarios', () => {
       </Provider>,
     );
 
-    expect(store.getActions()).toHaveLength(0);
+    expect(store.getActions()).toHaveLength(1);
+    expect(store.getActions()[0].type).not.toEqual('FETCH_VIDEOS_BY_IDS');
   });
 });
 

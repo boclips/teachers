@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton/CollectionShareButton';
 import { AttachmentTag } from 'src/components/common/tags/AttachmentTag';
+import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -43,6 +44,8 @@ export const CollectionCard = withMediaBreakPoint(
 
     const displayTags = props.grid || collectionHasTags;
     const isParentCollection = props.collection.subCollections.length > 0;
+
+    const referer = useRefererIdInjector();
 
     const leftButtons = [
       (props.collection.links.bookmark ||
@@ -94,9 +97,10 @@ export const CollectionCard = withMediaBreakPoint(
       return props.collection.description;
     };
 
+    const refererParam = referer ? `?referer=${referer}` : '';
     return (
       <ClickableCard
-        href={`/collections/${props.collection.id}`}
+        href={`/collections/${props.collection.id}${refererParam}`}
         bordered={false}
         key={`card-${props.collection.id}`}
         className={classnames(

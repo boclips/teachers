@@ -57,7 +57,8 @@ describe('some collection', () => {
       </Provider>,
     );
 
-    expect(store.getActions()).toHaveLength(0);
+    expect(store.getActions()).toHaveLength(1);
+    expect(store.getActions()[0].type).not.toEqual('FETCH_VIDEOS_BY_IDS');
   });
 
   test('renders empty component if no collections in pageable resource', () => {
