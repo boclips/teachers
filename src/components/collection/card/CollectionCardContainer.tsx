@@ -18,7 +18,7 @@ interface OwnProps {
   grid: boolean;
 }
 
-const NUMBER_OF_PREVIEWS = 4;
+const MAX_NUMBER_OF_VIDEOS = 6;
 
 interface DispatchProps {
   fetchVideos: (request: VideosForCollectionRequest) => void;
@@ -48,7 +48,7 @@ class CollectionCardContainer extends React.PureComponent<Props> {
   private fetchVideosIfNeeded() {
     if (this.shouldFetchVideosForCollection()) {
       this.props.fetchVideos({
-        videos: this.props.collection.videoIds.slice(0, NUMBER_OF_PREVIEWS),
+        videos: this.props.collection.videoIds.slice(0, MAX_NUMBER_OF_VIDEOS),
       });
     }
   }
@@ -62,7 +62,7 @@ class CollectionCardContainer extends React.PureComponent<Props> {
 
     return (
       numberOfVideosLoaded !== videoIds.length &&
-      numberOfVideosLoaded < NUMBER_OF_PREVIEWS
+      numberOfVideosLoaded < MAX_NUMBER_OF_VIDEOS
     );
   }
 }

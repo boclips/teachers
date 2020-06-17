@@ -79,7 +79,7 @@ export const VideoCard = withMediaBreakPoint(
           <section className="video-details">
             <p
               data-qa="video-description"
-              className="description clamp-3-lines"
+              className="description clamp-6-lines"
             >
               {props.video.description}
             </p>

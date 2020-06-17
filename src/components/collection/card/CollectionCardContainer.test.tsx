@@ -74,7 +74,7 @@ describe('need to fetch videos scenarios', () => {
     );
   });
 
-  test('fetches at most the 4 videos when no videos are loaded', () => {
+  test('fetches at most 6 videos when no videos are loaded', () => {
     const videoResources = [
       VideoResourceFactory.sample({ id: '1' }),
       VideoResourceFactory.sample({ id: '2' }),
@@ -82,6 +82,7 @@ describe('need to fetch videos scenarios', () => {
       VideoResourceFactory.sample({ id: '4' }),
       VideoResourceFactory.sample({ id: '5' }),
       VideoResourceFactory.sample({ id: '6' }),
+      VideoResourceFactory.sample({ id: '7' }),
     ];
 
     const collection = VideoCollectionFactory.sample({
@@ -104,17 +105,19 @@ describe('need to fetch videos scenarios', () => {
       </Provider>,
     );
     expect(store.getActions()[0].type).toEqual('FETCH_VIDEOS_BY_IDS');
-    expect(store.getActions()[0].payload.videos).toHaveLength(4);
+    expect(store.getActions()[0].payload.videos).toHaveLength(6);
   });
 });
 
 describe('does not fetch videos scenarios', () => {
-  test('does not fetch videos when 4 videos in a collection are already loaded', () => {
+  test('does not fetch videos when 6 videos in a collection are already loaded', () => {
     const videos = [
       VideoFactory.sample({ id: '1' }),
       VideoFactory.sample({ id: '2' }),
       VideoFactory.sample({ id: '3' }),
       VideoFactory.sample({ id: '4' }),
+      VideoFactory.sample({ id: '5' }),
+      VideoFactory.sample({ id: '6' }),
     ];
 
     const collection = VideoCollectionFactory.sample({
@@ -122,7 +125,7 @@ describe('does not fetch videos scenarios', () => {
     });
 
     collection.videoIds.push({
-      value: '5',
+      value: '7',
       links: videos[1].links,
     });
 
