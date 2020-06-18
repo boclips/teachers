@@ -3,67 +3,78 @@ import React, { useState } from 'react';
 import classnames from 'classnames';
 import Bodal from '../../Bodal';
 import './ShareCodeDialog.less';
+import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
+import { checkShareCode } from 'src/services/shareCodes/checkShareCode';
+import { useDispatch } from 'react-redux';
+import { storeReferrerShareCodeAction } from 'src/app/redux/authentication/actions/storeReferrerShareCodeAction';
 
 interface Props {
   title: string;
   cta: string;
-  onSubmit: (shareCode: string) => void;
-  visible: boolean;
-  codeInvalid: boolean;
 }
 
 export const ShareCodeDialog = (props: Props) => {
   const [shareCode, setShareCode] = useState('');
+  const [codeInvalid, setCodeInvalid] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const referrer = useRefererIdInjector();
+  const dispatch = useDispatch();
 
-  return (
-    <Bodal
-      closable={false}
-      destroyOnClose={true}
-      visible={props.visible}
-      footer={null}
-      title={props.title}
-      width="360px"
-      className="share-code-dialog"
+  const handleSubmit = (code: string) => {
+    checkShareCode(referrer, code).then((valid) => {
+      if (valid) {
+        dispatch(storeReferrerShareCodeAction({ shareCode: code, referrer }));
+        setVisible(false);
+      } else {
+        setCodeInvalid(true);
+      }
+    });
+  };
+
+  return <Bodal
+    closable={false}
+    destroyOnClose={true}
+    visible={visible}
+    footer={null}
+    title={props.title}
+    width="360px"
+    className="share-code-dialog"
+  >
+    <form
+      action="#"
+      onSubmit={(event) => {
+        handleSubmit(shareCode);
+
+        event.preventDefault();
+        return false;
+      }}
     >
-      <form
-        action="#"
-        onSubmit={(event) => {
-          props.onSubmit(shareCode);
-
-          event.preventDefault();
-          return false;
+      <Input
+        size={'large'}
+        type="text"
+        className={classnames('share-code-dialog__input', {
+          'share-code-dialog__input--invalid': codeInvalid,
+        })}
+        placeholder="Enter code"
+        data-qa="share-code-input"
+        value={shareCode}
+        onChange={(event) => {
+          setShareCode(event.currentTarget.value);
         }}
+      />
+      <Button
+        className="share-code-dialog__button"
+        data-qa="share-code-submit"
+        type={'primary'}
+        size={'large'}
+        disabled={shareCode.length === 0}
+        htmlType="submit"
       >
-        <Input
-          size={'large'}
-          type="text"
-          className={classnames('share-code-dialog__input', {
-            'share-code-dialog__input--invalid': props.codeInvalid,
-          })}
-          placeholder="Enter code"
-          data-qa="share-code-input"
-          value={shareCode}
-          onChange={(event) => {
-            setShareCode(event.currentTarget.value);
-          }}
-        />
-        <Button
-          className="share-code-dialog__button"
-          data-qa="share-code-submit"
-          type={'primary'}
-          size={'large'}
-          disabled={shareCode.length === 0}
-          htmlType="submit"
-        >
-          {props.cta}
-        </Button>
-      </form>
-      <p
-        className="share-code-dialog__validation"
-        style={{ visibility: props.codeInvalid ? 'visible' : 'hidden' }}
-      >
-        Invalid code
-      </p>
-    </Bodal>
-  );
+        {props.cta}
+      </Button>
+    </form>
+    {codeInvalid && (
+      <p className="share-code-dialog__validation">Invalid code</p>
+    )}
+  </Bodal>;
 };
