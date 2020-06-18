@@ -1,5 +1,4 @@
-import { Card, Col, Row } from 'antd';
-import { Skeleton as AntSkeleton } from 'antd';
+import { Card, Col, Row, Skeleton as AntSkeleton } from 'antd';
 import React from 'react';
 import { VideoCollection } from 'src/types/VideoCollection';
 import { CollectionButtonsContainer } from 'src/components/collection/buttons/CollectionButtonsContainer';
@@ -106,7 +105,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
   );
 
   private renderDescriptionRow = () => {
-    const lessonGuideToRender = this.getLessonGuide();
+    const attachmentToRender = this.getAttachment();
 
     return (
       <Row
@@ -114,7 +113,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
         data-qa={'collection-description-row'}
       >
         <Col
-          {...(lessonGuideToRender && {
+          {...(attachmentToRender && {
             sm: { span: 24 },
             md: { span: 12 },
             lg: { span: 16 },
@@ -132,19 +131,18 @@ export class CollectionHeader extends React.PureComponent<Props> {
             {this.props.collectionUnits}
           </div>
         </Col>
-        {lessonGuideToRender && (
+        {attachmentToRender && (
           <Col sm={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
             <AttachmentDetails
-              description={lessonGuideToRender.description}
+              description={attachmentToRender.description}
               labels={getAttachmentLabels(
-                getAttachmentType(lessonGuideToRender.type),
-                this.props.isParent,
+                getAttachmentType(attachmentToRender.type),
               )}
-              link={lessonGuideToRender.links.download.getOriginalLink()}
+              link={attachmentToRender.links.download.getOriginalLink()}
               onClick={() => {
                 AnalyticsFactory.externalAnalytics().trackCollectionAttachmentLinkVisited(
                   this.props.collection.id,
-                  lessonGuideToRender,
+                  attachmentToRender,
                 );
 
                 AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
@@ -176,10 +174,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
   private shouldRenderTagContainer = () =>
     this.hasAgeRange() || this.hasSubjects();
 
-  private getLessonGuide = () =>
-    this.props.collection.attachments.find(
-      (attachment) => attachment.type === 'LESSON_PLAN',
-    );
+  private getAttachment = () => this.props.collection.attachments?.[0];
 
   private hasAgeRange = () => this.props.collection.ageRange.isBounded();
   private hasSubjects = () => this.props.collection.subjects.length > 0;

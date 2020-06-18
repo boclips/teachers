@@ -204,6 +204,62 @@ describe('CollectionHeader', () => {
       ).toHaveAttribute('href', 'http://www.my-lesson-guide.com');
     });
 
+    it(`can render an activity attachment`, () => {
+      const collection = VideoCollectionFactory.sample({
+        id: 'collection-id',
+        attachments: [
+          AttachmentFactory.sample({
+            description: '1. Point one of my lesson guide',
+            type: 'ACTIVITY',
+            links: {
+              download: new Link({ href: 'http://www.my-lesson-guide.com' }),
+            },
+          }),
+        ],
+      });
+
+      const component = renderWithStore(
+        <Router history={createMemoryHistory()}>
+          <CollectionHeader collection={collection} />
+        </Router>,
+        {
+          initialState: {
+            collections: CollectionsFactory.sample(),
+          },
+        },
+      );
+
+      expect(component.getByText('Suggested activity')).toBeInTheDocument();
+    });
+
+    it(`can render a final project attachment`, () => {
+      const collection = VideoCollectionFactory.sample({
+        id: 'collection-id',
+        attachments: [
+          AttachmentFactory.sample({
+            description: '1. Point one of my lesson guide',
+            type: 'FINAL_PROJECT',
+            links: {
+              download: new Link({ href: 'http://www.my-lesson-guide.com' }),
+            },
+          }),
+        ],
+      });
+
+      const component = renderWithStore(
+        <Router history={createMemoryHistory()}>
+          <CollectionHeader collection={collection} />
+        </Router>,
+        {
+          initialState: {
+            collections: CollectionsFactory.sample(),
+          },
+        },
+      );
+
+      expect(component.getByText('Final project')).toBeInTheDocument();
+    });
+
     it('does not restrict the description when no lesson guide is present', () => {
       const collection = VideoCollectionFactory.sample({
         id: 'collection-id',
