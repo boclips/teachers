@@ -58,16 +58,18 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     }
 
     return (
-      <React.Fragment>
-        <section
-          className="collection-view-placeholders"
-          data-qa="collection-skeleton"
-        >
-          <CollectionHeader.Skeleton />
-          <VideoCardsPlaceholder />
-        </section>
-        <CollectionShareCodeDialog collectionId={props.collectionId} />
-      </React.Fragment>
+      <PageLayout showSearchBar={true} showFooter={true} showNavigation={true}>
+        <React.Fragment>
+          <section
+            className="collection-view-placeholders"
+            data-qa="collection-skeleton"
+          >
+            <CollectionHeader.Skeleton />
+            <VideoCardsPlaceholder />
+          </section>
+          <CollectionShareCodeDialog collectionId={props.collectionId} />
+        </React.Fragment>
+      </PageLayout>
     );
   }
   const isParentCollection = () => collection.subCollections.length > 0;

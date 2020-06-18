@@ -163,9 +163,8 @@ export class CollectionHeader extends React.PureComponent<Props> {
         <AntSkeleton
           loading={true}
           title={true}
-          paragraph={false}
+          paragraph={true}
           active={true}
-          avatar={{ size: 'small', shape: 'circle' }}
         />
       </Card>
     </section>
