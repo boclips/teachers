@@ -46,6 +46,9 @@ export const ShareCodeDialog = (props: Props) => {
       width="360px"
       className="share-code-dialog"
     >
+      <div className={'share-code-dialog__explainer'}>
+        {"Don't have a code? Ask your teacher."}
+      </div>
       <form
         action="#"
         onSubmit={(event) => {
