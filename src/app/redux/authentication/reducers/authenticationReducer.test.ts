@@ -25,12 +25,18 @@ describe('on authenticationResolved', () => {
     expect(resultingState).toEqual({ status: 'anonymous' });
   });
 
-  it('will update referer share code', () => {
+  it('will update referer and share code', () => {
     const resultingState = authenticationReducer(
       undefined,
-      storeReferrerShareCodeAction('user-123'),
+      storeReferrerShareCodeAction({
+        shareCode: 'ABCD',
+        refererId: 'user-123',
+      }),
     );
 
-    expect(resultingState).toEqual({ refererShareCode: 'user-123' });
+    expect(resultingState).toEqual({
+      shareCode: 'ABCD',
+      refererId: 'user-123',
+    });
   });
 });

@@ -8,8 +8,8 @@ import { GoogleClassroomShareButton } from 'src/components/video/buttons/gclassr
 import { ShareButton } from 'src/components/common/share/ShareButton/ShareButton';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
-import State from '../../../../types/State';
-import MediaBreakpoints from '../../../../types/MediaBreakpoints';
+import State from '../../../types/State';
+import MediaBreakpoints from '../../../types/MediaBreakpoints';
 
 interface Props {
   collection: VideoCollection;

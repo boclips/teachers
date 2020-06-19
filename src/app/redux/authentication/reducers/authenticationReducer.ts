@@ -11,7 +11,11 @@ export const authenticationReducer: Reducer<AuthenticationStateValue> = createRe
   actionHandler(authenticationResolved, (_, { success }) => ({
     status: success ? 'authenticated' : 'anonymous',
   })),
-  actionHandler(storeReferrerShareCodeAction, (_, shareCode) => ({
-    refererShareCode: shareCode,
-  })),
+  actionHandler(
+    storeReferrerShareCodeAction,
+    (_, { shareCode, refererId }) => ({
+      shareCode,
+      refererId,
+    }),
+  ),
 );

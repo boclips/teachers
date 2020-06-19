@@ -1,7 +1,7 @@
 import { Card } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
-import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton/CollectionShareButton';
+import { CollectionShareButton } from 'src/components/collection/sharing/CollectionShareButton';
 import { AttachmentTag } from 'src/components/common/tags/AttachmentTag';
 import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';

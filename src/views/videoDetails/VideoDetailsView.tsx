@@ -4,11 +4,11 @@ import querystring from 'query-string';
 import { replace } from 'connected-react-router';
 import { useLocation } from 'react-router';
 import { isAuthenticated } from 'src/app/redux/authentication/selectors';
+import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import { getVideoById } from '../../components/video/redux/reducers/videoReducer';
 import State from '../../types/State';
-import { VideoShareCodeDialog } from '../../components/video/sharing/VideoShareCodeDialog/VideoShareCodeDialog';
 import { fetchVideoAction } from '../../components/video/redux/actions/fetchVideoAction';
 import { useRefererIdInjector } from '../../hooks/useRefererIdInjector';
 
@@ -65,7 +65,7 @@ export const VideoDetailsView = (props: Props) => {
         </section>
       </section>
       {checkShareCode && (
-        <VideoShareCodeDialog userId={params.referer as string} />
+        <ShareCodeDialog title="Enter code to watch video" cta="Watch video" />
       )}
     </PageLayout>
   );

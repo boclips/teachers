@@ -6,12 +6,12 @@ import { ParentCollectionDetailsContent } from 'src/components/collection/detail
 import { CollectionBanner } from 'src/components/collection/details/header/CollectionBanner';
 import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-image.svg';
 import PageLayout from 'src/components/layout/PageLayout';
+import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
 import State from '../../../types/State';
 import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
-import { CollectionShareCodeDialog } from '../sharing/CollectionShareCodeDialog/CollectionShareCodeDialog';
 import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { CollectionHeader } from './header/CollectionHeader';
 
@@ -29,24 +29,32 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   const userId = useSelector((state: State) =>
     state.user ? state.user.id : null,
   );
-  const shareCode = useSelector(
-    (state: State) => state.authentication.refererShareCode,
-  );
+
   const isAuthenticated = useSelector(
     (state: State) => state.authentication.status === 'authenticated',
   );
+  const shareCode = useSelector(
+    (state: State) => state.authentication.shareCode,
+  );
 
+  const refererId = useSelector(
+    (state: State) => state.authentication.refererId,
+  );
   useEffect(() => {
     if (!collection) {
       if (isAuthenticated) {
         dispatch(fetchCollectionAction({ id: props.collectionId }));
       } else {
         dispatch(
-          fetchCollectionAction({ id: props.collectionId, referer, shareCode }),
+          fetchCollectionAction({
+            id: props.collectionId,
+            referer: refererId,
+            shareCode,
+          }),
         );
       }
     }
-  }, [collection, dispatch, props]);
+  }, [collection, dispatch, props, shareCode, refererId]);
 
   useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
@@ -56,6 +64,8 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     if (isAnonymous) {
       return <CollectionDetailsNotFound />;
     }
+
+    const requireShareCode = !shareCode && !isAuthenticated;
 
     return (
       <PageLayout showSearchBar={true} showFooter={true} showNavigation={true}>
@@ -67,7 +77,12 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
             <CollectionHeader.Skeleton />
             <VideoCardsPlaceholder />
           </section>
-          <CollectionShareCodeDialog collectionId={props.collectionId} />
+          {requireShareCode && (
+            <ShareCodeDialog
+              title="Enter code to view collection"
+              cta="View collection"
+            />
+          )}
         </React.Fragment>
       </PageLayout>
     );

@@ -1,7 +1,7 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeShareCodesClient } from 'boclips-api-client/dist/sub-clients/shareCodes/client/FakeShareCodesClient';
-import {checkShareCode} from "src/services/shareCodes/checkShareCode";
+import { checkShareCode } from 'src/services/shareCodes/checkShareCode';
 
 const getFakeBoclipsClient: () => Promise<FakeBoclipsClient> = async () => {
   const client = await ApiClientWrapper.get();

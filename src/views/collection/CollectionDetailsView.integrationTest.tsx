@@ -1,6 +1,10 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
+import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { ApiClientWrapper } from 'src/services/apiClient';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { Store } from 'redux';
 import {
   collectionResponse,
   parentCollectionResponse,
@@ -144,48 +148,6 @@ describe('CollectionDetailsView', () => {
         await wrapper.findByTestId('collection-skeleton'),
       ).toBeInTheDocument();
     });
-
-    it('Shows skeleton and prompt for a share code when not loaded and referer set', async () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/collections/new-collection?referer=test-id'],
-      });
-
-      const wrapper = renderWithCreatedStore(
-        <CollectionDetailsView collectionId="new-collection" />,
-        createBoclipsStore(
-          MockStoreFactory.sampleState({
-            router: { location: { search: '?referer=user1123' } } as any,
-          }),
-          history,
-        ),
-        history,
-      );
-
-      expect(
-        await wrapper.findByTestId('collection-skeleton'),
-      ).toBeInTheDocument();
-      expect(await wrapper.findByText('View collection')).toBeInTheDocument();
-    });
-
-    it('Shows not found illustration when not found and no share code possible', async () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/collections/none-collection'],
-      });
-      const wrapper = renderWithCreatedStore(
-        <CollectionDetailsView collectionId="none-collection" />,
-        createBoclipsStore(MockStoreFactory.sampleState(), history),
-        history,
-      );
-
-      expect(
-        await wrapper.findByText(
-          'The collection you tried to access is not available.',
-        ),
-      ).toBeInTheDocument();
-      expect(
-        await wrapper.queryByTestId('collection-skeleton'),
-      ).not.toBeInTheDocument();
-    });
   });
 
   describe('when editable collection', () => {
@@ -229,35 +191,7 @@ describe('CollectionDetailsView', () => {
   });
 
   describe(`sharing`, () => {
-    test(`prompts for share code when referer set`, async () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/collections/123?referer=test-123'],
-      });
-      const wrapper = renderWithCreatedStore(
-        <CollectionDetailsView collectionId={'123'} />,
-        createBoclipsStore(MockStoreFactory.sampleState(), history),
-        history,
-      );
-
-      expect(
-        await wrapper.findByText('Enter code to view collection'),
-      ).toBeInTheDocument();
-    });
-
-    test(`renders not found when referer not set`, async () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/collections/123'],
-      });
-      const wrapper = renderWithCreatedStore(
-        <CollectionDetailsView collectionId={'123'} />,
-        createBoclipsStore(MockStoreFactory.sampleState(), history),
-        history,
-      );
-
-      expect(await wrapper.findByText('Oops!!')).toBeInTheDocument();
-    });
-
-    test(`renders collection when share code provided`, async () => {
+    it('does not show share code dialog if logged in', async () => {
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=test-id'],
       });
@@ -266,86 +200,166 @@ describe('CollectionDetailsView', () => {
         <CollectionDetailsView collectionId="new-collection" />,
         createBoclipsStore(
           MockStoreFactory.sampleState({
-            entities: {
-              collections: {
-                byId: {
-                  'new-collection': VideoCollectionFactory.sample({
-                    title: 'best collection',
-                  }),
-                },
-              },
-              videos: {
-                byId: {},
-              },
-            },
-            authentication: {
-              status: 'anonymous',
-              refererShareCode: '1234',
-            },
             router: { location: { search: '?referer=user1123' } } as any,
+            authentication: { status: 'authenticated' },
           }),
           history,
         ),
         history,
       );
 
-      expect(await wrapper.findByText('best collection')).toBeInTheDocument();
-    });
-  });
-
-  describe(`when collection of collections`, () => {
-    let collectionPage;
-    beforeEach(async () => {
-      new ApiStub()
-        .defaultUser()
-        .fetchCollections()
-        .fetchCollection(
-          parentCollectionResponse('parent-id', false, [
-            collectionResponse(
-              [video177Slim],
-              'child-1',
-              false,
-              'Child collection 1',
-            ),
-            collectionResponse(
-              [video177Slim],
-              'child-2',
-              false,
-              'Child collection 2',
-            ),
-          ]),
-        );
-
-      await fakeVideoSetup(video177);
-
-      collectionPage = await CollectionPage.load('parent-id');
+      expect(
+        await wrapper.findByTestId('collection-skeleton'),
+      ).toBeInTheDocument();
+      expect(
+        await wrapper.queryByText('View collection'),
+      ).not.toBeInTheDocument();
     });
 
-    it(`Displays each collection card of sub collections`, async () => {
-      expect(collectionPage.getParentCollectionDetails()).toMatchObject({
-        title: 'parent collection',
-        subjects: [],
-        ageRange: '3-9',
+    it('does not show share code dialog if code already provided', async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=test-id'],
       });
 
-      expect(collectionPage.getSubCollections()).toHaveLength(2);
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            router: { location: { search: '?referer=test-id' } } as any,
+            authentication: {
+              status: 'anonymous',
+              refererId: 'test-id',
+              shareCode: 'ABCD',
+            },
+          }),
+          history,
+        ),
+        history,
+      );
+
+      expect(
+        await wrapper.findByTestId('collection-skeleton'),
+      ).toBeInTheDocument();
+      expect(
+        await wrapper.queryByText('View collection'),
+      ).not.toBeInTheDocument();
     });
 
-    it(`Displays collection titles of sub collections in cards and units`, async () => {
-      expect(collectionPage.getSubCollections()).toHaveLength(2);
-      expect(collectionPage.getSubCollections()[0].title).toEqual(
-        'Child collection 1',
-      );
-      expect(collectionPage.getSubCollections()[1].title).toEqual(
-        'Child collection 2',
+    it('stores share code when correct', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.shareCodes.clear();
+      client.shareCodes.insertValidShareCode('test-id', 'valid');
+
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=test-id'],
+      });
+
+      const store: Store = createBoclipsStore(
+        MockStoreFactory.sampleState({
+          router: { location: { search: '?referer=test-id' } } as any,
+          authentication: {
+            status: 'anonymous',
+          },
+        }),
+        history,
       );
 
-      expect(collectionPage.getCollectionUnits()).toContain(
-        'Child collection 1',
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        store,
+        history,
       );
-      expect(collectionPage.getCollectionUnits()).toContain(
-        'Child collection 2',
-      );
+
+      expect(await wrapper.queryByText('View collection')).toBeInTheDocument();
+
+      const button = wrapper.getByText('View collection').closest('button');
+      const shareField = wrapper.getByPlaceholderText('Enter code');
+      expect(button).toBeInTheDocument();
+      expect(shareField).toBeInTheDocument();
+
+      await fireEvent.change(shareField, { target: { value: 'valid' } });
+      await fireEvent.click(button);
+
+      await expect(
+        waitForElementToBeRemoved(() =>
+          wrapper.getByText('Enter code to view collection'),
+        ),
+      ).resolves.toEqual(true);
+
+      expect(store.getState().authentication.refererId).toEqual('test-id');
+      expect(store.getState().authentication.shareCode).toEqual('valid');
     });
+
+    it('Shows not found illustration when not found and no share code possible', async () => {
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/none-collection'],
+      });
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="none-collection" />,
+        createBoclipsStore(MockStoreFactory.sampleState(), history),
+        history,
+      );
+
+      expect(
+        await wrapper.findByText(
+          'The collection you tried to access is not available.',
+        ),
+      ).toBeInTheDocument();
+      expect(
+        await wrapper.queryByTestId('collection-skeleton'),
+      ).not.toBeInTheDocument();
+    });
+  });
+});
+
+describe(`when collection of collections`, () => {
+  let collectionPage;
+  beforeEach(async () => {
+    new ApiStub()
+      .defaultUser()
+      .fetchCollections()
+      .fetchCollection(
+        parentCollectionResponse('parent-id', false, [
+          collectionResponse(
+            [video177Slim],
+            'child-1',
+            false,
+            'Child collection 1',
+          ),
+          collectionResponse(
+            [video177Slim],
+            'child-2',
+            false,
+            'Child collection 2',
+          ),
+        ]),
+      );
+
+    await fakeVideoSetup(video177);
+
+    collectionPage = await CollectionPage.load('parent-id');
+  });
+
+  it(`Displays each collection card of sub collections`, async () => {
+    expect(collectionPage.getParentCollectionDetails()).toMatchObject({
+      title: 'parent collection',
+      subjects: [],
+      ageRange: '3-9',
+    });
+
+    expect(collectionPage.getSubCollections()).toHaveLength(2);
+  });
+
+  it(`Displays collection titles of sub collections in cards and units`, async () => {
+    expect(collectionPage.getSubCollections()).toHaveLength(2);
+    expect(collectionPage.getSubCollections()[0].title).toEqual(
+      'Child collection 1',
+    );
+    expect(collectionPage.getSubCollections()[1].title).toEqual(
+      'Child collection 2',
+    );
+
+    expect(collectionPage.getCollectionUnits()).toContain('Child collection 1');
+    expect(collectionPage.getCollectionUnits()).toContain('Child collection 2');
   });
 });

@@ -39,7 +39,8 @@ export interface CollectionSearchStateValue {
 
 export interface AuthenticationStateValue {
   status: 'authenticated' | 'anonymous';
-  refererShareCode?: string;
+  refererId?: string;
+  shareCode?: string;
 }
 
 export interface VideoStateValue {
