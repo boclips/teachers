@@ -61,7 +61,7 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   }, [dispatch, props]);
 
   if (!collection) {
-    if (isAnonymous) {
+    if (!isAuthenticated && isAnonymous) {
       return <CollectionDetailsNotFound />;
     }
 

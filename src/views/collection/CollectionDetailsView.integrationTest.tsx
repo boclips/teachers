@@ -296,7 +296,12 @@ describe('CollectionDetailsView', () => {
       });
       const wrapper = renderWithCreatedStore(
         <CollectionDetailsView collectionId="none-collection" />,
-        createBoclipsStore(MockStoreFactory.sampleState(), history),
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            authentication: { status: 'anonymous' },
+          }),
+          history,
+        ),
         history,
       );
 
