@@ -2,6 +2,8 @@ import { createMemoryHistory } from 'history';
 import { waitForElement } from '@testing-library/react';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
+import { ApiClientWrapper } from 'src/services/apiClient';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
 import {
   LinksStateValueFactory,
@@ -124,6 +126,9 @@ describe('VideoDetailsView', () => {
       user: UserProfileFactory.sample({ id: 'user-test-id' }),
     };
     it('does not ask for a code', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.events.clear();
+
       const { findByText, getByText } = createViewWrapper(
         ['/videos/123?referer=user-123&share=true'],
         authenticatedState,
@@ -141,6 +146,12 @@ describe('VideoDetailsView', () => {
           },
         ),
       ).rejects.toBeTruthy();
+
+      expect(client.events.getEvents()).not.toContainEqual({
+        anonymous: true,
+        subtype: 'SHARE_CODE_MODAL_IMPRESSION',
+        type: 'PLATFORM_INTERACTED_WITH',
+      });
     });
 
     it('sets the "referer" query param', async () => {

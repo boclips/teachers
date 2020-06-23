@@ -207,6 +207,7 @@ describe('CollectionDetailsView', () => {
         ),
         history,
       );
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
       expect(
         await wrapper.findByTestId('collection-skeleton'),
@@ -214,6 +215,12 @@ describe('CollectionDetailsView', () => {
       expect(
         await wrapper.queryByText('View collection'),
       ).not.toBeInTheDocument();
+
+      expect(client.events.getEvents()).not.toContainEqual({
+        anonymous: true,
+        subtype: 'SHARE_CODE_MODAL_IMPRESSION',
+        type: 'PLATFORM_INTERACTED_WITH',
+      });
     });
 
     it('does not show share code dialog if code already provided', async () => {
@@ -313,6 +320,76 @@ describe('CollectionDetailsView', () => {
       expect(
         await wrapper.queryByTestId('collection-skeleton'),
       ).not.toBeInTheDocument();
+    });
+
+    it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL events when interacting with share code modal', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.shareCodes.clear();
+      client.shareCodes.insertValidShareCode('test-id', 'valid');
+
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=test-id'],
+      });
+
+      const store: Store = createBoclipsStore(
+        MockStoreFactory.sampleState({
+          router: { location: { search: '?referer=test-id' } } as any,
+          authentication: {
+            status: 'anonymous',
+          },
+        }),
+        history,
+      );
+      client.events.clear();
+
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        store,
+        history,
+      );
+
+      expect(await wrapper.queryByText('View collection')).toBeInTheDocument();
+
+      const button = wrapper.getByText('View collection').closest('button');
+      const shareField = wrapper.getByPlaceholderText('Enter code');
+      expect(button).toBeInTheDocument();
+      expect(shareField).toBeInTheDocument();
+
+      expect(client.events.getEvents()).toEqual([
+        {
+          anonymous: true,
+          subtype: 'SHARE_CODE_MODAL_IMPRESSION',
+          type: 'PLATFORM_INTERACTED_WITH',
+        },
+      ]);
+
+      client.events.clear();
+      await fireEvent.change(shareField, { target: { value: 'invalid' } });
+      await fireEvent.click(button);
+
+      await eventually(() => {
+        expect(client.events.getEvents()).toEqual([
+          {
+            anonymous: true,
+            subtype: 'SHARE_CODE_MODAL_INVALID',
+            type: 'PLATFORM_INTERACTED_WITH',
+          },
+        ]);
+      });
+
+      client.events.clear();
+      await fireEvent.change(shareField, { target: { value: 'valid' } });
+      await fireEvent.click(button);
+
+      await eventually(() => {
+        expect(client.events.getEvents()).toEqual([
+          {
+            anonymous: true,
+            subtype: 'SHARE_CODE_MODAL_VALID',
+            type: 'PLATFORM_INTERACTED_WITH',
+          },
+        ]);
+      });
     });
   });
 });

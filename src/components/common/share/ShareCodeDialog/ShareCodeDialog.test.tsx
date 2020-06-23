@@ -7,6 +7,7 @@ import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { createMemoryHistory } from 'history';
 import { waitForElementToBeRemoved } from '@testing-library/react';
+import eventually from 'test-support/eventually';
 
 describe(`Share code dialog`, () => {
   let wrapper;
@@ -14,6 +15,7 @@ describe(`Share code dialog`, () => {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
     client.shareCodes.clear();
     client.shareCodes.insertValidShareCode('user-123', 'valid');
+    client.events.clear();
 
     wrapper = renderWithBoclipsStore(
       <ShareCodeDialog title={'Test'} cta={'Click Me'} />,
@@ -59,6 +61,50 @@ describe(`Share code dialog`, () => {
 
     await waitFor(() => {
       expect(wrapper.getByText('Invalid code')).toBeVisible();
+    });
+  });
+
+  it(`will send PLATFORM_INTERACTED events accordingly to actions`, async () => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    expect(client.events.getEvents()).toEqual([
+      {
+        anonymous: true,
+        subtype: 'SHARE_CODE_MODAL_IMPRESSION',
+        type: 'PLATFORM_INTERACTED_WITH',
+      },
+    ]);
+
+    client.events.clear();
+    const submitButton = wrapper.getByText('Click Me').closest('button');
+    await fireEvent.change(wrapper.getByTestId('share-code-input'), {
+      target: { value: 'invalid' },
+    });
+    await fireEvent.click(submitButton);
+
+    await eventually(() => {
+      expect(client.events.getEvents()).toEqual([
+        {
+          anonymous: true,
+          subtype: 'SHARE_CODE_MODAL_INVALID',
+          type: 'PLATFORM_INTERACTED_WITH',
+        },
+      ]);
+    });
+    client.events.clear();
+
+    await fireEvent.change(wrapper.getByTestId('share-code-input'), {
+      target: { value: 'valid' },
+    });
+    await fireEvent.click(submitButton);
+
+    await eventually(() => {
+      expect(client.events.getEvents()).toEqual([
+        {
+          anonymous: true,
+          subtype: 'SHARE_CODE_MODAL_VALID',
+          type: 'PLATFORM_INTERACTED_WITH',
+        },
+      ]);
     });
   });
 });

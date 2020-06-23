@@ -1,11 +1,14 @@
 import { Button, Input } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
 import './ShareCodeDialog.less';
 import { storeReferrerShareCodeAction } from 'src/app/redux/authentication/actions/storeReferrerShareCodeAction';
 import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
 import { checkShareCode } from 'src/services/shareCodes/checkShareCode';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { isAuthenticated } from 'src/app/redux/authentication/selectors';
 import Bodal from '../../Bodal';
 
 interface Props {
@@ -13,12 +16,25 @@ interface Props {
   cta: string;
 }
 
+const sendPlatformInteractionEvent = AnalyticsFactory.internalAnalytics()
+  .trackPlatformInteraction;
+const SHARE_CODE_MODAL_IMPRESSION =
+  PlatformInteractionType.SHARE_CODE_MODAL_IMPRESSION;
+const SHARE_CODE_MODAL_INVALID =
+  PlatformInteractionType.SHARE_CODE_MODAL_INVALID;
+const SHARE_CODE_MODAL_VALID = PlatformInteractionType.SHARE_CODE_MODAL_VALID;
+
 export const ShareCodeDialog = (props: Props) => {
   const [shareCode, setShareCode] = useState('');
   const [codeInvalid, setCodeInvalid] = useState(false);
   const [visible, setVisible] = useState(true);
   const referrer = useRefererIdInjector();
   const dispatch = useDispatch();
+  const anonymous = !useSelector(isAuthenticated);
+
+  useEffect(() => {
+    sendPlatformInteractionEvent(SHARE_CODE_MODAL_IMPRESSION, anonymous);
+  }, []);
 
   const handleSubmit = (code: string) => {
     checkShareCode(referrer, code).then((valid) => {
@@ -29,8 +45,10 @@ export const ShareCodeDialog = (props: Props) => {
             refererId: referrer,
           }),
         );
+        sendPlatformInteractionEvent(SHARE_CODE_MODAL_VALID, anonymous);
         setVisible(false);
       } else {
+        sendPlatformInteractionEvent(SHARE_CODE_MODAL_INVALID, anonymous);
         setCodeInvalid(true);
       }
     });
