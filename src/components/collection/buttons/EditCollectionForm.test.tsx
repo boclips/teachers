@@ -33,7 +33,7 @@ jest.mock('antd/lib/slider', () =>
 );
 
 jest.mock('antd/lib/select', () => {
-  const Select = React.forwardRef((props: SelectProps, ref: Ref<any>) => (
+  const Select = React.forwardRef((props: SelectProps<string>, ref: Ref<any>) => (
     <input
       ref={ref}
       type="text"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Icon } from 'antd';
+import Icon from '@ant-design/icons';
+import { Button } from 'antd';
 import { ShareModal } from 'src/components/common/share/ShareModal';
 import ManageVideCollectionMenuContainer from 'src/components/video/buttons/videoCollection/ManageVideoCollectionMenuContainer';
 import { CollectionKey } from 'src/types/CollectionKey';

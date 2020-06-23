@@ -33,7 +33,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     return (
       <div className="display-desktop">
         <Dropdown
-          overlay={this.props.disciplines && this.renderMenu()}
+          overlay={this.renderMenu()}
           trigger={['click']}
           overlayClassName="subject-menu__dropdown"
           placement="bottomCenter"
@@ -57,7 +57,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     );
   }
 
-  private renderMenu = (): React.ReactFragment => (
+  private renderMenu = (): React.ReactElement => this.props.disciplines && (
     <Menu className="subject-menu__list subject-menu--desktop">
       {this.props.disciplines.map((discipline) => (
         <Menu.ItemGroup

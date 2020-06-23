@@ -113,12 +113,13 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@ant-design/compatible": "^1.0.2",
     "@ant-design/icons": "^4.0.0",
     "@bit/boclips.boclips-ui.components.video-card": "^1.0.3",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/browser": "^5.15.4",
     "@sentry/integrations": "^5.15.4",
-    "antd": "^3.26.15",
+    "antd": "^4.3.5",
     "axios": "^0.19.2",
     "boclips-api-client": "^13.2.1",
     "boclips-js-security": "^3.4.3",

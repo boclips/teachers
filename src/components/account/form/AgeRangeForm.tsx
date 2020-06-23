@@ -1,5 +1,5 @@
-import { Form } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
 import { useSelector } from 'react-redux';

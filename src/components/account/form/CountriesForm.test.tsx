@@ -5,8 +5,8 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { CountryFactory } from 'test-support/factories';
-import { Form } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Form } from '@ant-design/compatible';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 
 describe(`CountriesForm`, () => {
   const CountriesFormWithMockedForm = Form.create<

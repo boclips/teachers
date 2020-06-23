@@ -19,7 +19,6 @@ export class FiniteGrid extends React.PureComponent<Props> {
     return (
       <Row
         className={classnames('boclips-grid', this.props.className)}
-        type="flex"
         gutter={this.props.gutter}
       >
         {this.props.children}

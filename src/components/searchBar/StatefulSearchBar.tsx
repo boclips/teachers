@@ -4,12 +4,13 @@ import { SearchProps } from 'antd/es/input';
 import React, { Ref } from 'react';
 import SearchIcon from 'resources/images/search-icon.png';
 import CloseSVG from 'resources/images/close.svg';
-import { Completion, CompletionChunk, completionsFor } from './completions';
+import { Completion, completionsFor } from './completions';
 import completionsCreatedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';
 import './StatefulSearchBar.less';
+import { DataSourceItemType } from 'antd/lib/auto-complete';
 
-const { Option } = AutoComplete;
+// const { Option } = AutoComplete;
 
 const getCompletions = completionsFor({
   topics: completionsTopics,
@@ -25,17 +26,17 @@ interface State {
   completions: Completion[];
 }
 
-class AutocompleteOption extends React.Component<{
-  children: CompletionChunk[];
-}> {
-  public render() {
-    return this.props.children.map((chunk, i) => (
-      <span className={chunk.matches ? '' : 'completion-affix'} key={i + ''}>
-        {chunk.text}
-      </span>
-    ));
-  }
-}
+// class AutocompleteOption extends React.Component<{
+//   children: CompletionChunk[];
+// }> {
+//   public render() {
+//     return this.props.children.map((chunk, i) => (
+//       <span className={chunk.matches ? '' : 'completion-affix'} key={i + ''}>
+//         {chunk.text}
+//       </span>
+//     ));
+//   }
+// }
 
 class FreshSearchOnValueChange extends React.Component<Props, State> {
   private submittedText = '';
@@ -66,7 +67,6 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           defaultValue={this.props.value}
           onSearch={setDataSource}
           onSelect={this.submit}
-          optionLabelProp="text"
           size="large"
           style={{ width: '100%' }}
         >
@@ -85,15 +85,13 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     );
   }
 
-  private renderOptions() {
-    return this.state.completions.map((completion) => (
-      <Option key={completion.text} value={completion.text}>
-        {completion.list === 'channels' && (
-          <span className="autocomplete--channel">Channel:&nbsp;</span>
-        )}
-        <AutocompleteOption>{completion.textWithHighlights}</AutocompleteOption>
-      </Option>
-    ));
+  private renderOptions(): DataSourceItemType[] {
+    return this.state.completions.map((completion) => {
+      return {
+        value: completion.text,
+        text: `Channel:${completion.textWithHighlights}`,
+      };
+    });
   }
 
   private submit(value: string) {

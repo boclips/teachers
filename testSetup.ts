@@ -42,6 +42,20 @@ window.Appcues = {
 
 window.open = jest.fn();
 
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 window.Environment = {};
 window.Environment.RECAPTCHA_SITE_KEY = 'awesome-key-set-in-test-setup';
 
