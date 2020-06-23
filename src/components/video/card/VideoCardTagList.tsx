@@ -15,9 +15,12 @@ export const VideoCardTagList = (props: Props) => (
   <Authenticated>
     <div className="tag-list">
       {props.video.ageRange && <AgeRangeTag ageRange={props.video.ageRange} />}
-      {props.video.subjects.map((subject) => (
-        <SubjectTag subjectName={subject.name} key={subject.id} />
-      ))}
+      {props.video.subjects.length > 0 && (
+        <SubjectTag
+          subjectName={props.video.subjects[0].name}
+          key={props.video.subjects[0].id}
+        />
+      )}
       {props.video.bestFor && <BestForTag value={props.video.bestFor} />}
       {props.video.attachments && props.video.attachments.length > 0 && (
         <AttachmentTag label={'Activity'} />
