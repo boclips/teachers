@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { waitForElement } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import { ApiClientWrapper } from 'src/services/apiClient';
@@ -88,6 +88,84 @@ describe('VideoDetailsView', () => {
       expect(getByRole('dialog')).toBeInTheDocument();
       expect(button).toBeInTheDocument();
       expect(getByText('Enter code to watch video')).toBeInTheDocument();
+    });
+
+    it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_IMPRESSION events', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.events.clear();
+
+      createViewWrapper(
+        ['/videos/123?referer=user-123&share=true'],
+        unauthenticatedState,
+      );
+
+      await eventually(() => {
+        expect(client.events.getEvents()).toEqual([
+          {
+            anonymous: true,
+            subtype: 'SHARE_CODE_MODAL_IMPRESSION',
+            type: 'PLATFORM_INTERACTED_WITH',
+          },
+        ]);
+      });
+    });
+
+    it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_VALID events', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.shareCodes.clear();
+      client.shareCodes.insertValidShareCode('test-id', 'valid');
+
+      const wrapper = createViewWrapper(
+        ['/videos/123?referer=test-id&share=true'],
+        unauthenticatedState,
+      );
+
+      expect(await wrapper.queryByText('Watch video')).toBeInTheDocument();
+      client.events.clear();
+      const button = wrapper.getByText('Watch video').closest('button');
+      const shareField = wrapper.getByPlaceholderText('Enter code');
+
+      await fireEvent.change(shareField, { target: { value: 'valid' } });
+      await fireEvent.click(button);
+
+      await eventually(() => {
+        expect(client.events.getEvents()).toEqual([
+          {
+            anonymous: true,
+            subtype: 'SHARE_CODE_MODAL_VALID',
+            type: 'PLATFORM_INTERACTED_WITH',
+          },
+        ]);
+      });
+    });
+
+    it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_INVALID events', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.shareCodes.clear();
+      client.shareCodes.insertValidShareCode('test-id', 'valid');
+
+      const wrapper = createViewWrapper(
+        ['/videos/123?referer=test-id&share=true'],
+        unauthenticatedState,
+      );
+
+      expect(await wrapper.queryByText('Watch video')).toBeInTheDocument();
+      client.events.clear();
+      const button = wrapper.getByText('Watch video').closest('button');
+      const shareField = wrapper.getByPlaceholderText('Enter code');
+
+      await fireEvent.change(shareField, { target: { value: 'code-invalid' } });
+      await fireEvent.click(button);
+
+      await eventually(() => {
+        expect(client.events.getEvents()).toEqual([
+          {
+            anonymous: true,
+            subtype: 'SHARE_CODE_MODAL_INVALID',
+            type: 'PLATFORM_INTERACTED_WITH',
+          },
+        ]);
+      });
     });
 
     it('does not ask for a code when the "referer" param is missing', () => {
