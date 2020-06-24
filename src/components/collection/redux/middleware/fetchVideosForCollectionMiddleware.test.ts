@@ -1,9 +1,9 @@
+import Mock = jest.Mock;
 import configureStore from 'redux-mock-store';
 import { fetchVideo } from 'src/services/videos/fetchVideo';
+import { VideoFactory } from 'test-support/factories';
 import eventually from '../../../../../test-support/eventually';
-import { VideoFactory } from '../../../../../test-support/factories';
 import { fetchVideosByIdsAction } from '../../../video/redux/actions/fetchVideosByIdsAction';
-import Mock = jest.Mock;
 import { storeVideosAction } from '../../../video/redux/actions/storeVideosAction';
 import fetchVideosForCollectionMiddleware from './fetchVideosForCollectionMiddleware';
 

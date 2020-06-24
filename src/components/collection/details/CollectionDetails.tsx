@@ -54,7 +54,7 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
         );
       }
     }
-  }, [collection, dispatch, props, shareCode, refererId]);
+  }, [collection, dispatch, props, shareCode, refererId, isAuthenticated]);
 
   useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));

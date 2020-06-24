@@ -1,6 +1,6 @@
 import { Button, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
-import classnames from 'classnames';
+import c from 'classnames';
 import './ShareCodeDialog.less';
 import { storeReferrerShareCodeAction } from 'src/app/redux/authentication/actions/storeReferrerShareCodeAction';
 import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
@@ -34,7 +34,7 @@ export const ShareCodeDialog = (props: Props) => {
 
   useEffect(() => {
     sendPlatformInteractionEvent(SHARE_CODE_MODAL_IMPRESSION, anonymous);
-  }, []);
+  }, [anonymous]);
 
   const handleSubmit = (code: string) => {
     checkShareCode(referrer, code).then((valid) => {
@@ -79,7 +79,7 @@ export const ShareCodeDialog = (props: Props) => {
         <Input
           size={'large'}
           type="text"
-          className={classnames('share-code-dialog__input', {
+          className={c('share-code-dialog__input', {
             'share-code-dialog__input--invalid': codeInvalid,
           })}
           placeholder="Enter code"

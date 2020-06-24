@@ -2,21 +2,21 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ShareCode } from 'src/components/account/accountSettings/ShareCode';
-import { By } from '../../../../test-support/By';
+import Mock = jest.Mock;
+import { By } from 'test-support/By';
 import {
   CountryFactory,
   MockStoreFactory,
   UserProfileFactory,
-} from '../../../../test-support/factories';
-import { analyticsMock } from '../../../../test-support/getAnalyticsMock';
+} from 'test-support/factories';
+import { analyticsMock } from 'test-support/getAnalyticsMock';
+import { fetchUser } from 'src/services/users/fetchUser';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { fetchUser } from '../../../services/users/fetchUser';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import AccountSettings from './AccountSettings';
 import { EditProfileForm } from './EditProfileForm';
 import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
 import { Profile } from './Profile';
-import Mock = jest.Mock;
 import SchoolSettings from './SchoolSettings';
 
 jest.mock('../../../services/users/fetchUser');

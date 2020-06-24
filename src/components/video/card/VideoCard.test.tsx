@@ -1,3 +1,4 @@
+import Mock = jest.Mock;
 import React from 'react';
 import { Link } from 'src/types/Link';
 import { renderWithCreatedStore } from 'test-support/renderWithStore';
@@ -7,11 +8,9 @@ import { createMemoryHistory } from 'history';
 import { AgeRange } from 'src/types/AgeRange';
 import FakeBoclipsAnalytics from 'src/services/analytics/boclips/FakeBoclipsAnalytics';
 import { MockStoreFactory, VideoFactory } from 'test-support/factories';
-
 import eventually from 'test-support/eventually';
 import { fetchVideoTranscript } from 'src/services/videos/fetchVideoTranscript';
 import { VideoCard } from './VideoCard';
-import Mock = jest.Mock;
 
 jest.mock('../../../services/videos/fetchVideoTranscript');
 

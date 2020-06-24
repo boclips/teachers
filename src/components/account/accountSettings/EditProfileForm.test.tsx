@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
+import Mock = jest.Mock;
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import {
@@ -15,7 +16,6 @@ import { Link } from '../../../types/Link';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { EditProfileForm } from './EditProfileForm';
-import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 
