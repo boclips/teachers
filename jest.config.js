@@ -24,14 +24,11 @@ module.exports = {
   // The glob patterns Jest uses to detect test files
   testMatch: ['**/*.(integrationTest|test).(ts|tsx|js)'],
 
-  testPathIgnorePatterns: ['node_modules'],
-
+  testPathIgnorePatterns: ['node_modules', '<rootDit>/src/bits'],
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
 
   setupFilesAfterEnv: ['./testSetup.ts'],
-
-  reporters: [['jest-simple-dot-reporter', { color: true }]],
 };
