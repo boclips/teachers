@@ -4,11 +4,8 @@ import axios from 'axios';
 export const fetchVideoTranscript = (video: Video): Promise<void> => {
   const uri = video.links.transcript;
   return axios.get(uri.getOriginalLink()).then((response) => {
-    const disposition: string = response.headers['Content-Disposition'];
-    const regex = /filename="(.*?)"/;
-    const matches = regex.exec(disposition);
-    const filename =
-      (matches && matches.length > 1 && matches[1]) || video.title;
+    const disposition: string = response.headers['content-disposition'];
+    const filename = getTranscriptFilename(disposition, video.title);
 
     const url = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
@@ -18,4 +15,19 @@ export const fetchVideoTranscript = (video: Video): Promise<void> => {
     link.click();
     document.body.removeChild(link);
   });
+};
+
+export const getTranscriptFilename = (
+  dispositionHeader: string,
+  videoTitle: string,
+): string => {
+  const regex = /filename="(.*?)"/;
+  const matches = regex.exec(dispositionHeader);
+  const matchedFilename = matches?.[1];
+  if (matchedFilename) {
+    return matchedFilename;
+  } else {
+    const filename = videoTitle.replace(/\.|\:|\ /g, '_');
+    return `${filename}.txt`;
+  }
 };
