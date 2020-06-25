@@ -1,9 +1,10 @@
-import { Checkbox, Form } from 'antd';
+import { Form } from '@ant-design/compatible';
+import { Checkbox } from 'antd';
 import CheckboxGroup from 'antd/lib/checkbox/Group';
 import React from 'react';
-import { GetFieldDecoratorOptions } from 'antd/es/form/Form';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { formatCount } from 'src/components/searchResults/filters/utils/formatCount';
+import { GetFieldDecoratorOptions } from '@ant-design/compatible/lib/form/Form';
 
 export interface CheckboxGroupFilterProps {
   filterOptions: FilterOptionResult[];

@@ -33,7 +33,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     return (
       <div className="display-desktop">
         <Dropdown
-          overlay={this.props.disciplines && this.renderMenu()}
+          overlay={this.renderMenu()}
           trigger={['click']}
           overlayClassName="subject-menu__dropdown"
           placement="bottomCenter"
@@ -57,41 +57,42 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     );
   }
 
-  private renderMenu = (): React.ReactFragment => (
-    <Menu className="subject-menu__list subject-menu--desktop">
-      {this.props.disciplines.map((discipline) => (
-        <Menu.ItemGroup
-          className="subject-menu__list-item-group"
-          key={discipline.id}
-        >
-          {
-            <Menu.Item
-              className="subject-menu__list-item-heading"
-              key={discipline.id}
-            >
-              <Link
-                to={`/discover-collections?discipline=${discipline.id}`}
-                className="link--tabbable"
+  private renderMenu = (): React.ReactElement =>
+    this.props.disciplines && (
+      <Menu className="subject-menu__list subject-menu--desktop">
+        {this.props.disciplines.map((discipline) => (
+          <Menu.ItemGroup
+            className="subject-menu__list-item-group"
+            key={discipline.id}
+          >
+            {
+              <Menu.Item
+                className="subject-menu__list-item-heading"
+                key={discipline.id}
               >
-                {discipline.name}
-              </Link>
-            </Menu.Item>
-          }
-          {discipline.subjects &&
-            sortBy(discipline.subjects, ['name']).map((subject) => (
-              <Menu.Item className="subject-menu__list-item" key={subject.id}>
                 <Link
-                  to={`/discover-collections?subject=${subject.id}`}
+                  to={`/discover-collections?discipline=${discipline.id}`}
                   className="link--tabbable"
                 >
-                  {subject.name}
+                  {discipline.name}
                 </Link>
               </Menu.Item>
-            ))}
-        </Menu.ItemGroup>
-      ))}
-    </Menu>
-  );
+            }
+            {discipline.subjects &&
+              sortBy(discipline.subjects, ['name']).map((subject) => (
+                <Menu.Item className="subject-menu__list-item" key={subject.id}>
+                  <Link
+                    to={`/discover-collections?subject=${subject.id}`}
+                    className="link--tabbable"
+                  >
+                    {subject.name}
+                  </Link>
+                </Menu.Item>
+              ))}
+          </Menu.ItemGroup>
+        ))}
+      </Menu>
+    );
 }
 
 function mapStateToProps(state: DisciplineState): Props {

@@ -1,5 +1,6 @@
-import { Button, Col, Form, Input, Row } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Form } from '@ant-design/compatible';
+import { Button, Col, Input, Row } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';

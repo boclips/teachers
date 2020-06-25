@@ -1,5 +1,6 @@
-import { Form, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import { Input } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 
 interface Props {

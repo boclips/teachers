@@ -1,5 +1,6 @@
-import { Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import { Select } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { Country } from '../../../types/Country';
 import MultiSelect from '../../common/MultiSelect';
@@ -102,7 +103,7 @@ export class CountriesForm extends React.Component<
           country.id === lastHighlightedCountryId ? 'highlight-border' : ''
         }
       >
-        {country.name}
+        <span data-qa="country-option">{country.name}</span>
       </Option>
     ));
   }

@@ -1,6 +1,4 @@
-import Col from 'antd/lib/grid/col';
-import Row from 'antd/lib/grid/row';
-import { Button } from 'antd';
+import { Button, Col, Row } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-homepage.svg';
@@ -59,7 +57,7 @@ export default class HomeView extends PureComponent {
                       to={'/collections/5ecd3a5515f802372946d4dc'}
                       className={'home-banner'}
                     >
-                      <Row type="flex">
+                      <Row>
                         <Col xs={0} lg={10}>
                           <div className="home-banner__illustration">
                             <DigitalCitizenshipSVG />

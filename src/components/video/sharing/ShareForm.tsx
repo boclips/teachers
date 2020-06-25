@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Form } from '@ant-design/compatible';
 import React from 'react';
 import { Segment, Video } from '../../../types/Video';
 import { RestrictiveTimePicker } from '../../common/RestrictiveTimePicker';

@@ -1,6 +1,8 @@
-import { Form, Select } from 'antd';
+import { Form } from '@ant-design/compatible';
+
+import { Select } from 'antd';
 import React from 'react';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 export interface Props {
   onRoleChange: (value) => void;
@@ -21,7 +23,6 @@ export const RoleForm = (props: FormComponentProps & Props) => (
       ],
     })(
       <Select
-        mode={'default'}
         data-qa="select-role"
         size="large"
         className={'boclips-multi-select-selection'}

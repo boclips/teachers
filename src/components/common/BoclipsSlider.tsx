@@ -5,9 +5,11 @@ import './BoclipsSlider.less';
 export class BoclipsSlider extends React.Component<SliderProps> {
   public render() {
     return (
-      <Slider className="slider" {...this.props}>
-        {this.props.children}
-      </Slider>
+      <Slider
+        className="slider"
+        children={this.props.children}
+        {...this.props}
+      />
     );
   }
 }

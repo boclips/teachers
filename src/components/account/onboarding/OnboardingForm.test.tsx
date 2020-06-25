@@ -53,7 +53,7 @@ describe('onboarding form', () => {
             CountryFactory.sample({ id: 'EU', name: 'England' }),
             CountryFactory.sample({
               id: 'USA',
-              name: 'Trumpity Trump',
+              name: 'United States',
               states: [{ id: 'state-1', name: 'State 1' }],
             }),
           ],
@@ -67,7 +67,7 @@ describe('onboarding form', () => {
 
   describe('when USA', () => {
     it('renders school and state', () => {
-      OnboardingFormHelper.editCountry(wrapper, 'USA');
+      OnboardingFormHelper.editCountry(wrapper, 'United States');
 
       expect(wrapper.find(By.dataQa('states-filter-select'))).toExist();
       expect(wrapper.find(By.dataQa('school-name'))).not.toExist();
@@ -76,7 +76,7 @@ describe('onboarding form', () => {
 
   describe('when not USA', () => {
     it('renders school input', () => {
-      OnboardingFormHelper.editCountry(wrapper, 'ES');
+      OnboardingFormHelper.editCountry(wrapper, 'Spain');
 
       expect(wrapper.find(By.dataQa('school'))).toExist();
       expect(wrapper.find(By.dataQa('states-filter-select'))).not.toExist();
@@ -248,7 +248,7 @@ function fillValidForm(wrapper: ReactWrapper) {
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
   OnboardingFormHelper.moveCarousel(wrapper, 2);
-  OnboardingFormHelper.editCountry(wrapper, 'ES');
+  OnboardingFormHelper.editCountry(wrapper, 'Spain');
   OnboardingFormHelper.enterSchool(wrapper, 'school');
   OnboardingFormHelper.moveCarousel(wrapper, 3);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);

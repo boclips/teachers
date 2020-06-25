@@ -3,7 +3,8 @@ import withPageableCollection, {
   WithPageableCollectionProps,
 } from 'src/components/common/higherOrderComponents/withPageableCollection';
 import React from 'react';
-import { Icon, Checkbox, Menu, Input, Button } from 'antd';
+import Icon, { LoadingOutlined } from '@ant-design/icons';
+import { Checkbox, Menu, Input, Button } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Video } from 'src/types/Video';
 import AddSVG from 'resources/images/add.svg';
@@ -69,7 +70,7 @@ const ManageVideCollectionMenu = (
         data-qa="loading-collections"
         className="manage-video-collection-button__loading-collections"
       >
-        <Icon type="loading" />
+        <LoadingOutlined />
       </section>
     );
   }

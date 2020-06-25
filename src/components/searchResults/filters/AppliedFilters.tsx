@@ -24,7 +24,7 @@ export const AppliedFilters = withAppliedSearchParameters(
           </span>
           <ClearAllButton />
         </div>
-        <Row className="applied-filters-bar__tags" align="middle" type="flex">
+        <Row className="applied-filters-bar__tags" align="middle">
           {props.ageRange &&
             props.ageRange.map((ageRange, index) => (
               <AgeRangeFilterTag

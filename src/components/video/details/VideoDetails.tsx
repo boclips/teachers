@@ -1,4 +1,5 @@
-import { Col, Icon, Row, Skeleton } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
+import { Col, Row, Skeleton } from 'antd';
 import React from 'react';
 import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
 import { BestForTag } from 'src/components/common/tags/BestForTag';
@@ -35,7 +36,7 @@ const VideoDetailsContent = ({ video }: Props) => {
       itemScope={true}
       itemType="http://schema.org/Article"
     >
-      <Row type="flex" justify="space-between" className={'video-header'}>
+      <Row justify="space-between" className={'video-header'}>
         <Col>
           <h1
             className="title clamp-2-lines big-title"
@@ -66,7 +67,7 @@ const VideoDetailsContent = ({ video }: Props) => {
           </div>
           <section className="badge-container">
             <p data-qa="video-duration" className={'duration'}>
-              <Icon type="clock-circle" />{' '}
+              <ClockCircleOutlined />{' '}
               <DurationFormatter duration={video.duration} />
             </p>
           </section>
