@@ -126,16 +126,9 @@ const VideoDetailsContent = ({ video }: Props) => {
           itemProp="description"
         >
           {video.description}
+          <br />
+          {video.additionalDescription && video.additionalDescription}
         </p>
-        {video.additionalDescription && (
-          <p
-            data-qa="video-additionalDescription"
-            className="additionalDescription"
-            itemProp="additionalDescription"
-          >
-            {video.additionalDescription}
-          </p>
-        )}
         <Authenticated>
           {video.contentWarnings?.length > 0 && (
             <p className={'content-warnings'}>
