@@ -4,10 +4,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import boclipsLogo from '../../../../resources/images/boclips-logo.png';
 import BoclipsMobileLogo from '../../../../resources/images/boclips-mobile-logo.svg';
-import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import { NavbarButtonsContainer } from './NavbarButtonsContainer';
 import './TopNavbar.less';
+import SearchBarWrapper from "src/components/searchBar/SearchBarWrapper";
 
 interface Props {
   showTabs: boolean;
@@ -45,7 +45,7 @@ export const TopNavbar = React.memo((props: Props) => (
             md={{ span: 20 }}
             lg={{ span: 10 }}
           >
-            <SearchBar />
+            <SearchBarWrapper />
           </Col>
         ) : (
           props.isMobile && (

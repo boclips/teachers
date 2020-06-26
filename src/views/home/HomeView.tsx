@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
-import SearchBar from '../../components/searchBar/SearchBar';
 import { VideosAndDisciplinesSection } from './VideosAndDisciplinesSection';
 
 import './HomeView.less';
+import SearchBarWrapper from "src/components/searchBar/SearchBarWrapper";
 
 const { Content } = Layout;
 
@@ -34,7 +34,7 @@ export default class HomeView extends PureComponent {
                   <section className="home-search">
                     <section className="home-searchbar">
                       <label>Let&apos;s plan your next lesson:</label>
-                      <SearchBar />
+                      <SearchBarWrapper />
                     </section>
                   </section>
                 </Col>

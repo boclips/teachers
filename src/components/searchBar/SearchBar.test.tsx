@@ -10,6 +10,7 @@ import { MockStoreFactory, RouterFactory } from 'test-support/factories';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import SearchBar from './SearchBar';
 import StatefulSearchBar from './StatefulSearchBar';
+import {SearchBarWrapper} from "src/components/searchBar/SearchBarWrapper";
 
 let store: MockStore;
 
@@ -30,7 +31,7 @@ describe('path changes', () => {
 
     const wrapper = mount(
       <Provider store={store}>
-        <SearchBar />
+        <SearchBarWrapper />
       </Provider>,
     );
 
@@ -58,7 +59,7 @@ describe('SearchBar', () => {
     });
 
     const wrapper = renderWithBoclipsStore(
-      <SearchBar />,
+      <SearchBarWrapper />,
       MockStoreFactory.sampleState({ router: undefined }),
       history,
     );
@@ -82,7 +83,7 @@ describe('SearchBar', () => {
     });
 
     const wrapper = renderWithBoclipsStore(
-      <SearchBar />,
+      <SearchBarWrapper />,
       MockStoreFactory.sampleState({ router: undefined }),
       history,
     );
@@ -97,7 +98,7 @@ describe('SearchBar', () => {
     });
 
     const wrapper = renderWithBoclipsStore(
-      <SearchBar />,
+      <SearchBarWrapper />,
       MockStoreFactory.sampleState({ router: undefined }),
       history,
     );
@@ -121,7 +122,7 @@ describe('SearchBar', () => {
       });
 
       const wrapper = renderWithBoclipsStore(
-        <SearchBar />,
+        <SearchBarWrapper />,
         MockStoreFactory.sampleState({ router: undefined }),
         history,
       );
