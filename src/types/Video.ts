@@ -23,6 +23,7 @@ export interface Video {
   id: string;
   title: string;
   description: string;
+  additionalDescription?: string;
   duration: Duration;
   ageRange: AgeRange;
   releasedOn: Date;

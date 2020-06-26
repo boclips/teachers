@@ -45,6 +45,8 @@ export class VideoFactory {
       id,
       title: arg.title || 'my video title',
       description: arg.description || 'my video description',
+      additionalDescription:
+        arg.additionalDescription || 'my additional video description',
       createdBy: arg.createdBy || 'Bodevs Productions',
       duration: arg.duration || moment.duration(2, 'minutes'),
       ageRange: arg.ageRange || new AgeRange(3, 5),
