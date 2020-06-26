@@ -36,7 +36,7 @@ export class SearchPanel extends React.PureComponent<
       collections.length + videoPaging.totalElements;
     return (
       <React.Fragment>
-        <Row>
+        <Row className="search-panel-row">
           <SearchPanelHeader
             totalElements={totalElements}
             onOpenFilterDrawer={this.props.onOpenFilterDrawer}
