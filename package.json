@@ -116,6 +116,7 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.2",
     "@ant-design/icons": "^4.0.0",
+    "@bit/boclips.boclips-ui.components.search-bar": "^1.0.7",
     "@bit/boclips.boclips-ui.components.video-card": "^1.0.47",
     "@hot-loader/react-dom": "^16.13.0",
     "@sentry/browser": "^5.15.4",

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../types/State';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
-import './SearchBar.less'
+import './SearchBarWrapper.less'
 import SearchBar from "src/bits/components/search-bar";
 
 interface StateProps {

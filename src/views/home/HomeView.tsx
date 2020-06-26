@@ -12,7 +12,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import { VideosAndDisciplinesSection } from './VideosAndDisciplinesSection';
 
 import './HomeView.less';
-import SearchBarWrapper from "src/components/searchBar/SearchBarWrapper";
+import SearchBarWrapper from 'src/components/searchBar/SearchBarWrapper';
 
 const { Content } = Layout;
 
@@ -44,41 +44,27 @@ export default class HomeView extends PureComponent {
 
           <section>
             <Content>
-              <Row>
-                <Col>
-                  <InteractionTracker
-                    onInteraction={() =>
-                      AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
-                        PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
-                      )
-                    }
-                  >
-                    <Link
-                      to={'/collections/5ecd3a5515f802372946d4dc'}
-                      className={'home-banner'}
-                    >
-                      <Row>
-                        <Col xs={0} lg={10}>
-                          <div className="home-banner__illustration">
-                            <DigitalCitizenshipSVG />
-                          </div>
-                        </Col>
-                        <Col sm={24} lg={14} className="copy-col">
-                          <h1 className="alt">
-                            Digital Citizenship - Social Media
-                          </h1>
-                          <p>
-                            Help students understand how to keep safe online
-                          </p>
-                          <Button className="display-desktop">
-                            Explore series
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Link>
-                  </InteractionTracker>
-                </Col>
-              </Row>
+              <InteractionTracker
+                onInteraction={() =>
+                  AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+                    PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+                  )
+                }
+              >
+                <Link
+                  to={'/collections/5ecd3a5515f802372946d4dc'}
+                  className={'home-banner'}
+                >
+                  <div className="home-banner__illustration display-desktop">
+                    <DigitalCitizenshipSVG />
+                  </div>
+                  <div className={'copy-col'}>
+                    <h1 className="alt">Digital Citizenship - Social Media</h1>
+                    <p>Help students understand how to keep safe online</p>
+                    <Button className="display-desktop">Explore series</Button>
+                  </div>
+                </Link>
+              </InteractionTracker>
             </Content>
           </section>
 

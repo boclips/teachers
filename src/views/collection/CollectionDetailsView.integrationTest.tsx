@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
-import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Store } from 'redux';
