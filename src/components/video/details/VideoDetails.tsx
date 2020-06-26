@@ -120,15 +120,6 @@ const VideoDetailsContent = ({ video }: Props) => {
         </Authenticated>
       </Row>
       <section className="video-details">
-        <p
-          data-qa="video-description"
-          className="description"
-          itemProp="description"
-        >
-          {video.description}
-          <br />
-          {video.additionalDescription && video.additionalDescription}
-        </p>
         <Authenticated>
           {video.contentWarnings?.length > 0 && (
             <p className={'content-warnings'}>
