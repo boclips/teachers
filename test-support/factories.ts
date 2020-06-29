@@ -643,6 +643,7 @@ export interface VideoResource {
   subjects: Array<{ name: string; id: string }>;
   rating: number;
   description: string;
+  additionalDescription?: string;
   title: string;
   type: { name: string; id: number };
   releasedOn: string;

@@ -57,10 +57,10 @@ describe('VideoDetailsView', () => {
 
   it('fetches video details from the API & renders the result', async () => {
     const videoDetailsPage = await VideoDetailsPage.load();
-
     expect(videoDetailsPage.getVideoDetails()).toEqual({
       title: video.title,
       description: video.description,
+      additionalDescription: video.additionalDescription,
       createdBy: video.createdBy,
       duration: ' 1m 2s',
       releasedOn: 'Feb 11, 2018',

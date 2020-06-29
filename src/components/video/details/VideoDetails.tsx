@@ -120,14 +120,19 @@ const VideoDetailsContent = ({ video }: Props) => {
         </Authenticated>
       </Row>
       <section className="video-details">
-        <p
-          data-qa="video-description"
-          className="description"
-          itemProp="description"
-        >
-          {video.description}
+        <p className="description-paragraph">
+          <div
+            data-qa="video-description"
+            className="description"
+            itemProp="description"
+          >
+            {video.description}
+          </div>
           {!!video.additionalDescription && (
-            <div className="additional-description">
+            <div
+              className="additional-description"
+              data-qa="additional-description"
+            >
               {video.additionalDescription}
             </div>
           )}

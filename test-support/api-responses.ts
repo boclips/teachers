@@ -70,6 +70,7 @@ export const video177 = Object.freeze({
   ...video177Slim,
   title: 'KS3/4 Science: Demonstrating Chemistry',
   description: 'Matthew Tosh shows us the science.',
+  additionalDescription: 'additional video description',
   releasedOn: '2018-02-11T10:12:33Z',
   createdBy: 'cp1',
   subjects: [
