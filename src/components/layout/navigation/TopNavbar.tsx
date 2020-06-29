@@ -22,7 +22,7 @@ const { Content } = Layout;
 export const TopNavbar = React.memo((props: Props) => (
   <React.Fragment>
     <Content className="top-navbar">
-      <Row>
+      <Row align="middle">
         <Col
           sm={{ span: 24 }}
           md={{ span: 6 }}
