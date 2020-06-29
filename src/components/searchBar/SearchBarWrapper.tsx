@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { RouterState } from '../../types/State';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
+import SearchBar from "@bit/boclips.boclips-ui.components.search-bar";
 import './SearchBarWrapper.less'
-import SearchBar from "src/bits/components/search-bar";
 
 interface StateProps {
   query?: string;
