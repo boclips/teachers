@@ -106,6 +106,15 @@
   }
 }
 
+.has-error {
+  input {
+    box-shadow: 0 0 4px 1px @error-color;
+    border: 1px solid @error-color
+  }
+  .ant-legacy-form-explain {
+    color: @error-color;
+  }
+}
 
 button.create-account-form__social-button.ant-btn {
   &:active,
