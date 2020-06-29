@@ -33,6 +33,7 @@ export function convertApiClientVideo(clientVideo: ClientVideo): Video {
     id: clientVideo.id,
     title: clientVideo.title,
     description: clientVideo.description,
+    additionalDescription: clientVideo.additionalDescription,
     duration: clientVideo.playback.duration,
     releasedOn: clientVideo.releasedOn,
     createdBy: clientVideo.createdBy,
