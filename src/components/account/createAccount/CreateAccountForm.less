@@ -77,35 +77,35 @@
 
   &divider {
     border-top: 2px solid @shade-3;
-    margin: 40px 0px;
+    margin: 40px 0;
   }
 
   &social-button {
     background-color: @shade-1;
     font-weight: bold;
-    color: #0e69ff;
-    line-height: 36px;
+    color: @blue-shade-4;
     border: 2px solid #0e69ff;
     border-radius: 8px;
-  }
-
-  &social-buttons-list {
-    width: 100%;
-    padding-left: 0px;
-    margin-top: -10px;
-  }
-
-  &social-buttons-list-item {
-    display: inline-block;
-    list-style-type: none;
-    margin-top: 10px;
-    width: 100%;
   }
 
   &social-button-icon {
     padding-right: 10px;
   }
 }
+
+.email-form__container {
+  margin-bottom: 30px;
+  .ant-legacy-form-item-label {
+    margin-bottom: 10px;
+  }
+}
+.password-form__container {
+  margin-bottom: 30px;
+  .ant-legacy-form-item-label {
+    margin-bottom: 10px;
+  }
+}
+
 
 button.create-account-form__social-button.ant-btn {
   &:active,

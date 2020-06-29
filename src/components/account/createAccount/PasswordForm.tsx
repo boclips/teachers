@@ -47,9 +47,11 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
   public render() {
     return (
       <Form.Item
-        label="Password"
+        label="Password:"
         required={false}
         className="password-form__container"
+        labelCol={{span: 24 }}
+        colon
       >
         {this.props.form.getFieldDecorator('password', {
           rules: [
