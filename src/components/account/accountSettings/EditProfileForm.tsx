@@ -1,5 +1,5 @@
 import { Form } from '@ant-design/compatible';
-import { Button, Row } from 'antd';
+import { Button } from 'antd';
 import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -54,29 +54,25 @@ class ProfileFormFields extends React.Component<
         {this.state.screenReaderErrors && (
           <ScreenReaderErrors errors={this.state.screenReaderErrors} />
         )}
-        <Row>
-          <NameForm
-            form={this.props.form}
-            initialFirstName={this.props.userProfile.firstName}
-            initialLastName={this.props.userProfile.lastName}
-          />
-        </Row>
-        <Row>
-          <SubjectsForm
-            form={this.props.form}
-            subjects={this.props.subjects}
-            placeholder={'Choose subjects'}
-            initialValue={this.props.userProfile.subjects}
-            label={'Subjects'}
-          />
-        </Row>
-        <Row>
-          <AgeRangeForm
-            form={this.props.form}
-            initialValue={this.props.userProfile.ages}
-            label={'Age groups'}
-          />
-        </Row>
+        <NameForm
+          form={this.props.form}
+          initialFirstName={this.props.userProfile.firstName}
+          initialLastName={this.props.userProfile.lastName}
+        />
+
+        <SubjectsForm
+          form={this.props.form}
+          subjects={this.props.subjects}
+          placeholder={'Choose subjects'}
+          initialValue={this.props.userProfile.subjects}
+          label={'Subjects'}
+        />
+
+        <AgeRangeForm
+          form={this.props.form}
+          initialValue={this.props.userProfile.ages}
+          label={'Age groups'}
+        />
         <section className="buttons">
           <Button
             data-qa={'cancel-edit-button'}

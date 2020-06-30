@@ -98,6 +98,20 @@
   }
 }
 
+
+.ant-form-item-required::before {
+  color: @shade-6;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 900;
+  display: flex;
+  flex-direction: column;
+}
+.name-input-section {
+  display: flex;
+  flex-direction: column;
+}
+
 .name-form__ {
 
   &first-name,
@@ -105,6 +119,7 @@
   &role
   {
     width: 290px;
+    margin-bottom: 20px;
 
     @media (max-width: @screen-sm-max) {
       width: 100%;
@@ -114,15 +129,14 @@
 
 .ant-row.ant-legacy-form-item {
   display: block;
-  margin-bottom: 24px;
 
   .ant-legacy-form-item-label {
     margin-bottom: 8px;
+    margin-top:8px;
   }
 
   &.required {
     .ant-legacy-form-item-label {
-      margin-bottom: 8px;
       ::before {
         font-family: SimSun,sans-serif;
         margin-right: 4px;

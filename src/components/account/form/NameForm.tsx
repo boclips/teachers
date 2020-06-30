@@ -36,6 +36,7 @@ export class NameForm extends React.Component<FormComponentProps & Props> {
             />,
           )}
         </Form.Item>
+
         <Form.Item
           className="required name-form__item"
           label="Last name"

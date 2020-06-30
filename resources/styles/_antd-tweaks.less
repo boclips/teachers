@@ -111,7 +111,7 @@
     border-color: @dark-red;
     border-right-width: 2px !important;
     outline: 0;
-    box-shadow: 0 0 0 2px rgba(215,0,0,.2);
+    box-shadow: 0 0 0 2px rgba(215, 0, 0, 0.2);
   }
 }
 
@@ -142,6 +142,21 @@ input[type='checkbox'].ant-checkbox-input {
 }
 
 .has-error {
+  color: @dark-red;
+
+  .name-form__first-name,
+  .name-form__last-name {
+    border: 2px solid @dark-red;
+    margin-bottom: 0px;
+    &:focus {
+      box-shadow: 0 0 1px 1px @dark-red;
+    }
+  }
+
+  .name-form__first-name {
+    margin-bottom: 0px;
+  }
+
   .ant-checkbox-inner {
     border-color: @dark-red;
   }
@@ -308,13 +323,14 @@ input[type='checkbox'].ant-checkbox-input {
   font-size: 14px;
   line-height: 16px;
   margin-top: 4px;
-  margin-bottom: 8px;
 }
 
 .ant-select-dropdown {
   border-radius: 4px;
   border: 1px solid @shade-3;
   max-width: 319px;
+
+  min-width: 319px !important;
 }
 
 .ant-select-item:not(:first-child) {

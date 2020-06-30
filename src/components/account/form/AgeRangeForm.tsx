@@ -16,7 +16,7 @@ export const AgeRangeForm = (props: FormComponentProps & Props) => {
 
   return (
     <Form.Item
-      className="form__item"
+      className="form__item age-range"
       label={props.label}
       data-qa={'age-range-form'}
       colon={false}
