@@ -93,7 +93,29 @@
   }
 }
 
-.ant-form-item-label label {
+.has-error .ant-input,
+.has-error.ant-legacy-form-item-control,
+.has-error.ant-legacy-form-item-control .ant-legacy-form-item-children,
+.has-error .ant-input:hover {
+  border-color: @dark-red;
+
+  .ant-select .ant-select-selector {
+    border-color: @dark-red !important;
+  }
+
+  .ant-legacy-form-explain {
+    color: @dark-red;
+  }
+
+  &:focus {
+    border-color: @dark-red;
+    border-right-width: 2px !important;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(215,0,0,.2);
+  }
+}
+
+.ant-legacy-form-item-label label {
   color: @shade-7;
   font-size: 16px;
   line-height: 20px;
@@ -125,10 +147,11 @@ input[type='checkbox'].ant-checkbox-input {
   }
 }
 
-.ant-select-selection__placeholder {
+.ant-select-selection-placeholder {
   font-size: 16px;
   font-weight: bold;
-
+  opacity: 1;
+  color: @shade-6;
 }
 
 .ant-input-search.ant-input-search-enter-button > .ant-input {
@@ -200,12 +223,12 @@ input[type='checkbox'].ant-checkbox-input {
   height: auto;
 }
 
-.ant-form-explain,
-.ant-form-extra {
+.ant-legacy-form-explain,
+.ant-legacy-form-extra {
   padding-left: 12px;
 }
 
-.create-account .ant-form-item-control {
+.create-account .ant-legacy-item-control {
   line-height: normal;
 }
 
@@ -281,7 +304,7 @@ input[type='checkbox'].ant-checkbox-input {
   }
 }
 
-.ant-form-explain {
+.ant-legacy-form-explain {
   font-size: 14px;
   line-height: 16px;
   margin-top: 4px;
@@ -294,20 +317,20 @@ input[type='checkbox'].ant-checkbox-input {
   max-width: 319px;
 }
 
-.ant-select-dropdown-menu-item:not(:first-child) {
+.ant-select-item:not(:first-child) {
   border-top: 1px solid @shade-3;
 }
 
-.ant-select-dropdown-menu-item:not(:last-child) {
+.ant-select-item:not(:last-child) {
   border-bottom: 1px solid @shade-3;
 }
 
-.ant-select-dropdown-menu-item-selected {
+.ant-select-item-selected {
   background-color: @shade-2;
   font-weight: normal;
 }
 
-.ant-select-dropdown-menu-item:hover {
+.ant-select-item:hover {
   background-color: @shade-5;
   font-weight: normal;
 }

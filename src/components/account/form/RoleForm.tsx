@@ -12,7 +12,7 @@ export const RoleForm = (props: FormComponentProps & Props) => (
   <Form.Item
     label={"I'm a"}
     colon={false}
-    className="name-form__role form__item"
+    className="required name-form__role form__item"
   >
     {props.form.getFieldDecorator('role', {
       rules: [

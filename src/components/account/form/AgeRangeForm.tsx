@@ -15,7 +15,12 @@ export const AgeRangeForm = (props: FormComponentProps & Props) => {
   const allAgeRanges = useSelector((state: State) => state.ageRanges);
 
   return (
-    <Form.Item label={props.label} data-qa={'age-range-form'} colon={false}>
+    <Form.Item
+      className="form__item"
+      label={props.label}
+      data-qa={'age-range-form'}
+      colon={false}
+    >
       {props.form.getFieldDecorator('ageRange', {
         rules: [{ type: 'array' }],
         initialValue: props.initialValue

@@ -28,16 +28,9 @@
 
   &form {
     animation: slide-in 0.5s 0.4s both;
-    .ant-form-item {
+    .ant-legacy-form-item {
       padding: 0 3px;
     }
-  }
-
-  &asterisk {
-    color: @shade-6;
-    line-height: 30px;
-    font-size: 16px;
-    font-weight: 900;
   }
 
   &form-body {
@@ -90,7 +83,7 @@
     border-top: 1px solid @shade-2;
   }
 
-  &inline-item.ant-row.ant-form-item {
+  &inline-item.ant-row.ant-legacy-form-item {
     margin-bottom: 0;
   }
 
@@ -105,34 +98,39 @@
   }
 }
 
-.ant-form-item-required::before {
-  color: @shade-6;
-  line-height: 30px;
-  font-size: 16px;
-  font-weight: 900;
+.name-form__ {
+
+  &first-name,
+  &last-name,
+  &role
+  {
+    width: 290px;
+
+    @media (max-width: @screen-sm-max) {
+      width: 100%;
+    }
+  }
 }
 
-.name-form__ {
-  &first-name {
-    width: 290px;
+.ant-row.ant-legacy-form-item {
+  display: block;
+  margin-bottom: 24px;
 
-    @media (max-width: @screen-sm-max) {
-      width: 100%;
-    }
+  .ant-legacy-form-item-label {
+    margin-bottom: 8px;
   }
 
-  &last-name {
-    width: 290px;
-
-    @media (max-width: @screen-sm-max) {
-      width: 100%;
-    }
-  }
-
-  &role {
-    width: 290px;
-    @media (max-width: @screen-sm-max) {
-      width: 100%;
+  &.required {
+    .ant-legacy-form-item-label {
+      margin-bottom: 8px;
+      ::before {
+        font-family: SimSun,sans-serif;
+        margin-right: 4px;
+        content: "*";
+        color: @shade-6;
+        line-height: 30px;
+        font-weight: 900;
+      }
     }
   }
 }
