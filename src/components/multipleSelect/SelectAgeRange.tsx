@@ -43,6 +43,7 @@ export const SelectAgeRange = (props: Props) => {
         key={ageRange.getLabel()}
         title={ageRange.getLabel()}
         data-qa={ageRange.getId()}
+        data-state={ageRange.getLabel()}
         value={ageRange.encodeJSON()}
       >
         {ageRange.getShortLabel()}
