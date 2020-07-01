@@ -103,12 +103,13 @@ export class CountriesForm extends React.Component<
         key={country.name}
         value={country.id}
         title={country.name}
-        data-state={country.name}
         className={
           country.id === lastHighlightedCountryId ? 'highlight-border' : ''
         }
       >
-        <span data-qa="country-option">{country.name}</span>
+        <span data-state={country.name} data-qa="country-option">
+          {country.name}
+        </span>
       </Option>
     ));
   }
