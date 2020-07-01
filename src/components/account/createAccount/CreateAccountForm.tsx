@@ -128,40 +128,40 @@ class CreateAccountForm extends React.Component<
 
             <section className="create-account-form__social-buttons-container">
               <Row gutter={16}>
-                  <Col sm={24} md={12}>
-                      <Button
-                        data-qa="google-button"
-                        className="create-account-form__button create-account-form__social-button"
-                        size="large"
-                        type="primary"
-                        htmlType="submit"
-                        disabled={this.state.creating}
-                        loading={this.state.creating}
-                        onClick={this.handleGoogleSsoLogin}
-                      >
-                        <span className="create-account-form__social-button-icon">
-                          <GoogleSVG aria-hidden={true} />
-                        </span>
-                        <span>Continue with Google</span>
-                      </Button>
-                  </Col>
-                  <Col sm={24} md={12}>
-                      <Button
-                        data-qa="microsoft-button"
-                        className="create-account-form__button create-account-form__social-button"
-                        size="large"
-                        type="primary"
-                        htmlType="submit"
-                        disabled={this.state.creating}
-                        loading={this.state.creating}
-                        onClick={this.handleMicrosoftSsoLogin}
-                      >
-                        <span className="create-account-form__social-button-icon">
-                          <MicrosoftSVG aria-hidden={true} />
-                        </span>
-                        <span>Continue with Office 365</span>
-                      </Button>
-                  </Col>
+                <Col sm={24} md={12}>
+                  <Button
+                    data-qa="google-button"
+                    className="create-account-form__button create-account-form__social-button"
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    disabled={this.state.creating}
+                    loading={this.state.creating}
+                    onClick={this.handleGoogleSsoLogin}
+                  >
+                    <span className="create-account-form__social-button-icon">
+                      <GoogleSVG aria-hidden={true} />
+                    </span>
+                    <span>Continue with Google</span>
+                  </Button>
+                </Col>
+                <Col sm={24} md={12}>
+                  <Button
+                    data-qa="microsoft-button"
+                    className="create-account-form__button create-account-form__social-button"
+                    size="large"
+                    type="primary"
+                    htmlType="submit"
+                    disabled={this.state.creating}
+                    loading={this.state.creating}
+                    onClick={this.handleMicrosoftSsoLogin}
+                  >
+                    <span className="create-account-form__social-button-icon">
+                      <MicrosoftSVG aria-hidden={true} />
+                    </span>
+                    <span>Continue with Office 365</span>
+                  </Button>
+                </Col>
               </Row>
             </section>
 

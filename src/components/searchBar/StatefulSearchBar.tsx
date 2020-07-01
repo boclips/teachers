@@ -64,7 +64,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
             aria-label="search"
             onSearch={this.submit}
             enterButton="Search"
-            className='search-bar'
+            className="search-bar"
             size="large"
           />
         </AutoComplete>

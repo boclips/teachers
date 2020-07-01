@@ -2,10 +2,10 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import SearchBar from '@bit/boclips.boclips-ui.components.search-bar';
 import { RouterState } from '../../types/State';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
-import SearchBar from "@bit/boclips.boclips-ui.components.search-bar";
-import './SearchBarWrapper.less'
+import './SearchBarWrapper.less';
 
 interface StateProps {
   query?: string;
@@ -20,8 +20,12 @@ export class SearchBarWrapper extends React.Component<
 > {
   public render() {
     return (
-      <div className={"search-bar"}>
-        <SearchBar size={"large"} placeholder={"Enter your search term"} onSearch={this.props.onQuerySubmitted} />
+      <div className={'search-bar'}>
+        <SearchBar
+          size={'large'}
+          placeholder={'Enter your search term'}
+          onSearch={this.props.onQuerySubmitted}
+        />
       </div>
     );
   }

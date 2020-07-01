@@ -6,13 +6,13 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { InteractionTracker } from 'src/components/common/InteractionTracker';
 import { Link } from 'react-router-dom';
+import SearchBarWrapper from 'src/components/searchBar/SearchBarWrapper';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
 import { VideosAndDisciplinesSection } from './VideosAndDisciplinesSection';
 
 import './HomeView.less';
-import SearchBarWrapper from 'src/components/searchBar/SearchBarWrapper';
 
 const { Content } = Layout;
 

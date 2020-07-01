@@ -17,10 +17,7 @@ export class OnboardingFormHelper {
       .find('.ant-select-selector')
       .simulate('mousedown');
 
-    wrapper
-      .find(`[data-state="${value}"]`)
-      .first()
-      .simulate('click');
+    wrapper.find(`[data-state="${value}"]`).first().simulate('click');
 
     wrapper.find(SelectSubjects).simulate('mouseDown');
     wrapper.update();
