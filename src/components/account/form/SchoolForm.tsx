@@ -129,7 +129,13 @@ export class SchoolForm extends React.Component<
     }
 
     return schools.map((school) => (
-      <Option key={school.id} value={school.id} title={school.name}>
+      <Option
+        key={school.id}
+        value={school.id}
+        dataQa="school-option"
+        dataState={school.name}
+        title={school.name}
+      >
         {school.name}
       </Option>
     ));
