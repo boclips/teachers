@@ -1,5 +1,5 @@
-import { Form } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,12 @@ export const AgeRangeForm = (props: FormComponentProps & Props) => {
   const allAgeRanges = useSelector((state: State) => state.ageRanges);
 
   return (
-    <Form.Item label={props.label} data-qa={'age-range-form'} colon={false}>
+    <Form.Item
+      className="form__item age-range"
+      label={props.label}
+      data-qa={'age-range-form'}
+      colon={false}
+    >
       {props.form.getFieldDecorator('ageRange', {
         rules: [{ type: 'array' }],
         initialValue: props.initialValue

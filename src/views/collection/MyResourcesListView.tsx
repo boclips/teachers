@@ -1,4 +1,4 @@
-import { Icon } from 'antd';
+import Icon from '@ant-design/icons';
 import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import React, { PureComponent } from 'react';

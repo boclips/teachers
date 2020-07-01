@@ -9,10 +9,12 @@ import { cleanup } from '@testing-library/react';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { ApiBoclipsClient } from 'boclips-api-client';
 import { Constants } from 'src/app/AppConstants';
+import MutationObserver from '@sheerun/mutationobserver-shim';
 import FakeBoclipsAnalytics from './src/services/analytics/boclips/FakeBoclipsAnalytics';
 import eventually from './test-support/eventually';
 import MockFetchVerify from './test-support/MockFetchVerify';
 
+window.MutationObserver = MutationObserver;
 Enzyme.configure({ adapter: new Adapter() });
 
 beforeEach(() => {
@@ -41,6 +43,20 @@ window.Appcues = {
 };
 
 window.open = jest.fn();
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
 
 window.Environment = {};
 window.Environment.RECAPTCHA_SITE_KEY = 'awesome-key-set-in-test-setup';

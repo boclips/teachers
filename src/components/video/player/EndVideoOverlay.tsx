@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Icon } from 'antd';
+import Icon from '@ant-design/icons';
 import { ShareModal } from 'src/components/common/share/ShareModal';
 import ManageVideCollectionMenuContainer from 'src/components/video/buttons/videoCollection/ManageVideoCollectionMenuContainer';
 import { CollectionKey } from 'src/types/CollectionKey';
 import { VideoShareButtonForm } from 'src/components/video/sharing/VideoShareButton/VideoShareButton';
-import SavingButton from 'src/components/common/savingButton/SavingButton';
 import Save from '../../../../resources/images/save_white.svg';
 import Replay from '../../../../resources/images/replay_white.svg';
 import Share from '../../../../resources/images/share_white.svg';
@@ -48,7 +47,10 @@ export const EndOfVideoOverlay = (props: Props) => {
 
   const checkIfFullScreen = () => {
     setSuperImposedContainer(
-      document.fullscreenElement ? props.getOverlayContainer : document.body,
+      document.fullscreenElement ||
+        document.getElementsByClassName('plyr--fullscreen').length > 0
+        ? props.getOverlayContainer
+        : document.body,
     );
   };
 
@@ -88,36 +90,29 @@ export const EndOfVideoOverlay = (props: Props) => {
               }}
             >
               <Replay className={'overlay-buttons-icon'} />
-              <div className={'overlay-buttons-text'}>Replay</div>
+              <div className={'overlay-button-text'}>Replay</div>
             </button>
           </span>
         )}
         {props.userIsAuthenticated && (
           <React.Fragment>
-            <span className={'overlay-buttons-children'}>
-              <ManageVideCollectionMenuContainer
-                video={props.video}
-                collectionKey={props.collectionKey}
-                isMenuVisible={saveModalVisible}
-                onVisibleChange={() => {
-                  checkIfFullScreen();
-                  setSaveModalVisible(!saveModalVisible);
-                }}
-                loading={false}
-                getPopupContainer={() => superImposedContainer}
-              >
-                <SavingButton
-                  saving={false}
-                  data-qa={'video-collection-menu'}
-                  className={'video-collection-menu'}
-                  size={'large'}
-                >
-                  <Icon component={Save} />
-                  <span>Save</span>
-                </SavingButton>
-              </ManageVideCollectionMenuContainer>
-            </span>
-            <span className={'overlay-buttons-children'}>
+            <ManageVideCollectionMenuContainer
+              video={props.video}
+              collectionKey={props.collectionKey}
+              isMenuVisible={saveModalVisible}
+              onVisibleChange={() => {
+                checkIfFullScreen();
+                setSaveModalVisible(!saveModalVisible);
+              }}
+              loading={false}
+              getPopupContainer={() => superImposedContainer}
+            >
+              <button className={'video-overlay-buttons'}>
+                <Icon component={Save} className={'overlay-button-icon'} />
+                <span className={'overlay-button-text'}>Save</span>
+              </button>
+            </ManageVideCollectionMenuContainer>
+            <span>
               <ShareModal
                 title={props.video.title}
                 shareCode={props.shareCode}
@@ -129,7 +124,8 @@ export const EndOfVideoOverlay = (props: Props) => {
               >
                 <VideoShareButtonForm video={props.video} />
               </ShareModal>
-              <Button
+              <button
+                className={'video-overlay-buttons'}
                 onClick={() => {
                   checkIfFullScreen();
                   setShareModalVisible(true);
@@ -137,8 +133,8 @@ export const EndOfVideoOverlay = (props: Props) => {
                 data-qa={'share-button'}
               >
                 <Icon component={Share} />
-                <span>Share</span>
-              </Button>
+                <span className={'overlay-button-text'}>Share</span>
+              </button>
             </span>
           </React.Fragment>
         )}

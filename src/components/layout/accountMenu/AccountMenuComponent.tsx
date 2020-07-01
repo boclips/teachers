@@ -27,7 +27,7 @@ class AccountMenuComponent extends React.Component<Props, State> {
     this.setState({ visible });
   };
 
-  private renderMenu = (): React.ReactFragment => (
+  private renderMenu = (): React.ReactElement => (
     <Menu className="button-menu button-menu--desktop">
       <Menu.Item>
         <UserCollectionsLink />
@@ -45,7 +45,7 @@ class AccountMenuComponent extends React.Component<Props, State> {
     return (
       <div className="display-desktop">
         <Dropdown
-          overlay={this.renderMenu}
+          overlay={this.renderMenu()}
           trigger={['click']}
           placement="bottomRight"
           onVisibleChange={this.setVisible}

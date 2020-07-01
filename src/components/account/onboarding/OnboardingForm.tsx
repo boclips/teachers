@@ -1,5 +1,6 @@
-import { Button, Carousel, Col, Form, Row } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Form } from '@ant-design/compatible';
+import { Button, Carousel, Col, Row } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 import { push } from 'connected-react-router';
 import React from 'react';
 import { connect } from 'react-redux';

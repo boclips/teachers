@@ -14,7 +14,7 @@ import './ManageVideoCollectionMenuContainer.less';
 import ManageVideoCollectionMenu from './ManageVideoCollectionMenu';
 
 interface Props {
-  children?: React.ReactNode;
+  children?: React.ReactElement;
   isMenuVisible: boolean;
   collectionKey: CollectionKey;
   loading: boolean;

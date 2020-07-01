@@ -1,5 +1,7 @@
-import { AutoComplete, Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+
+import { AutoComplete, Select } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { searchSchools } from '../../../services/schools/searchSchools';
 import { Country } from '../../../types/Country';

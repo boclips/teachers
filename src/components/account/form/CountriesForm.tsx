@@ -1,5 +1,6 @@
-import { Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+import { Select } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { Country } from '../../../types/Country';
 import MultiSelect from '../../common/MultiSelect';
@@ -28,7 +29,11 @@ export class CountriesForm extends React.Component<
 
   public render() {
     return (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
+      <Form.Item
+        className="required form__item"
+        label={this.props.label}
+        colon={false}
+      >
         {this.props.form.getFieldDecorator('country', {
           rules: [{ required: true, message: 'Please enter your country' }],
           initialValue: this.props.initialValue,
@@ -102,7 +107,7 @@ export class CountriesForm extends React.Component<
           country.id === lastHighlightedCountryId ? 'highlight-border' : ''
         }
       >
-        {country.name}
+        <span data-qa="country-option">{country.name}</span>
       </Option>
     ));
   }
