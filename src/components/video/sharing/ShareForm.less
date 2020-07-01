@@ -1,29 +1,49 @@
-@import "../../../../resources/styles/_colours.less";
+@import '../../../../resources/styles/_colours.less';
 
 .share-form {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
 
-  .ant-form-item-label label {
+  section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .ant-row.ant-legacy-form-item {
+      display: flex;
+      flex-direction: row;
+      .ant-picker {
+        width: 70px;
+        input {
+          padding-left: 4px;
+        }
+        .ant-picker-suffix {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .ant-legacy-form-item-label label {
     color: @shade-7;
     font-size: 18px;
     line-height: 20px;
   }
 
-  .hidden-label .ant-form-item-label {
+  .hidden-label .ant-legacy-form-item-label {
     display: none;
   }
 
-  .ant-form-item {
-    .ant-form-item-label,
-    .ant-form-item-control-wrapper {
+  .ant-legacy-form-item {
+    .ant-legacy-form-item-label,
+    .ant-legacy-form-item-control-wrapper {
       vertical-align: bottom;
       width: auto;
     }
 
     &,
-    .ant-form-item-label {
+    .ant-legacy-form-item-label {
       margin-right: 12px;
     }
   }
@@ -40,7 +60,7 @@
     }
   }
 
-  section .ant-form-item:last-of-type {
+  section .ant-legacy-form-item:last-of-type {
     margin-right: 0;
   }
 }

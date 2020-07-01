@@ -40,7 +40,7 @@ export class ShareForm extends React.Component<ShareFormProps, ShareFormState> {
   public render() {
     const duration = this.props.video.duration;
     return (
-      <Form layout="inline" className="share-form">
+      <Form className="share-form">
         <RestrictiveTimePicker
           onChange={this.handleStartChange}
           checkboxLabel="enable starting from"
