@@ -77,7 +77,7 @@ export const VideoCard = withMediaBreakPoint(
         </StopClickPropagation>
 
         <section className="video-details">
-          <p data-qa="video-description" className="description clamp-6-lines">
+          <p data-qa="video-description" className="description clamp-5-lines">
             {props.video.description}
           </p>
           <Row className="buttons-row">
