@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { By } from '../../../../../test-support/By';
+import By from '../../../../../test-support/By';
 import {
   CollectionsFactory,
   MockStoreFactory,
@@ -21,7 +21,7 @@ describe('some collection', () => {
     mount(
       <Provider store={store}>
         <PageableCollectionCardList
-          title={'blah'}
+          title="blah"
           maxNumberOfCollections={1}
           description=""
           collectionKey="myCollections"
@@ -48,7 +48,7 @@ describe('some collection', () => {
       <Provider store={store}>
         <MemoryRouter>
           <PageableCollectionCardList
-            title={'blah'}
+            title="blah"
             maxNumberOfCollections={1}
             description=""
             collectionKey="myCollections"
@@ -73,7 +73,7 @@ describe('some collection', () => {
     const wrapper = mount(
       <Provider store={store}>
         <PageableCollectionCardList
-          title={'blah'}
+          title="blah"
           maxNumberOfCollections={1}
           description=""
           collectionKey="myCollections"

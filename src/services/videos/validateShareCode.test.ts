@@ -3,6 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
 import validateShareCode from './validateShareCode';
+
 let links;
 beforeEach(() => {
   links = LinksFactory.sample({

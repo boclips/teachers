@@ -22,20 +22,21 @@ export interface CollectionCardListProps
 export class CollectionCardList extends React.PureComponent<
   CollectionCardListProps
 > {
-  public render() {
-    return (
-      <React.Fragment>
-        <h1 className="big-title alt">{this.props.title}</h1>
+  private singleColumn() {
+    return !this.props.grid;
+  }
 
-        {this.props.description && (
-          <p className={'collection-list-description'}>
-            {this.props.description}
-          </p>
-        )}
-
-        {this.renderCollectionGrid()}
-      </React.Fragment>
-    );
+  public renderLoading() {
+    return [0, 1, 2, 3, 4, 5].map((count) => (
+      <Col
+        key={`sk-${count}`}
+        xs={{ span: 24 }}
+        md={{ span: this.singleColumn() ? 24 : 12 }}
+        lg={{ span: this.singleColumn() ? 24 : 8 }}
+      >
+        <CollectionCardSkeleton />
+      </Col>
+    ));
   }
 
   private renderCollectionGrid() {
@@ -62,11 +63,7 @@ export class CollectionCardList extends React.PureComponent<
 
   private renderCollections() {
     return [
-      <TransitionGroup
-        component={null}
-        exit={true}
-        key={'collections-container'}
-      >
+      <TransitionGroup component={null} exit key="collections-container">
         {this.props.emptyPlaceholder &&
           (!this.props.collections || !this.props.collections.length) && (
             <CSSTransition
@@ -109,20 +106,19 @@ export class CollectionCardList extends React.PureComponent<
     ];
   }
 
-  private singleColumn() {
-    return !this.props.grid;
-  }
+  public render() {
+    return (
+      <>
+        <h1 className="big-title alt">{this.props.title}</h1>
 
-  public renderLoading() {
-    return [0, 1, 2, 3, 4, 5].map((count) => (
-      <Col
-        key={`sk-${count}`}
-        xs={{ span: 24 }}
-        md={{ span: this.singleColumn() ? 24 : 12 }}
-        lg={{ span: this.singleColumn() ? 24 : 8 }}
-      >
-        <CollectionCardSkeleton />
-      </Col>
-    ));
+        {this.props.description && (
+          <p className="collection-list-description">
+            {this.props.description}
+          </p>
+        )}
+
+        {this.renderCollectionGrid()}
+      </>
+    );
   }
 }

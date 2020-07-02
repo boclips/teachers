@@ -3,7 +3,7 @@ import {
   MockStoreFactory,
   VideoCollectionFactory,
   VideoFactory,
-} from './../../../../../test-support/factories';
+} from '../../../../../test-support/factories';
 import {
   collectionUpdated,
   getCollectionsByIds,

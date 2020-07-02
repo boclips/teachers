@@ -13,22 +13,18 @@ interface Props {
 
 class DisciplineLogo extends React.Component<Props> {
   public ImagesMap = {
-    arts: <ArtsIcon data-qa={'arts-icon'} />,
-    humanities: <HumanitiesIcon data-qa={'humanities-icon'} />,
-    'social-studies': <HumanitiesIcon data-qa={'humanities-icon'} />,
-    stem: <StemIcon data-qa={'stem-icon'} />,
-    'life-skills': <LifeSkillsIcon data-qa={'life-skills-icon'} />,
-    pedagogy: <PedagogyIcon data-qa={'pedagogy-icon'} />,
-    'language-arts': <PedagogyIcon data-qa={'pedagogy-icon'} />,
-    languages: <LanguagesIcon data-qa={'languages-icon'} />,
+    arts: <ArtsIcon data-qa="arts-icon" />,
+    humanities: <HumanitiesIcon data-qa="humanities-icon" />,
+    'social-studies': <HumanitiesIcon data-qa="humanities-icon" />,
+    stem: <StemIcon data-qa="stem-icon" />,
+    'life-skills': <LifeSkillsIcon data-qa="life-skills-icon" />,
+    pedagogy: <PedagogyIcon data-qa="pedagogy-icon" />,
+    'language-arts': <PedagogyIcon data-qa="pedagogy-icon" />,
+    languages: <LanguagesIcon data-qa="languages-icon" />,
   };
 
   public render() {
-    return (
-      <React.Fragment>
-        {this.ImagesMap[`${this.props.discipline.code}`]}
-      </React.Fragment>
-    );
+    return <>{this.ImagesMap[`${this.props.discipline.code}`]}</>;
   }
 }
 export default DisciplineLogo;

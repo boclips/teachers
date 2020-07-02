@@ -14,7 +14,7 @@ import {
 import { renderWithConnectedRoutes } from 'test-support/renderWithStore';
 import { Route } from 'react-router';
 import React from 'react';
-import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
+import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
 import { defaultDurations } from 'src/components/durations/redux/durationReducer';
 
 export const renderSearchResultsView = (initialQuery: string) => {
@@ -35,7 +35,7 @@ export const renderSearchResultsView = (initialQuery: string) => {
   );
 
   return renderWithConnectedRoutes(
-    <Route path={'/videos'} component={ConnectedNewSearchResultsView} />,
+    <Route path="/videos" component={ConnectedNewSearchResultsView} />,
     store,
     history,
   );

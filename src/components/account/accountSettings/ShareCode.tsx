@@ -8,24 +8,22 @@ interface Props {
 
 export const ShareCode = React.memo((props: Props) => (
   <Row gutter={16}>
-    <section className={'account-settings__sharecode-section'}>
-      <section className={'account-settings__sharecode-guidance'}>
-        <section className={'account-settings__sharecode-heading'}>
-          <span className={'account-settings__sharecode-icon'}>
+    <section className="account-settings__sharecode-section">
+      <section className="account-settings__sharecode-guidance">
+        <section className="account-settings__sharecode-heading">
+          <span className="account-settings__sharecode-icon">
             <InformationIcon />
           </span>
-          <span className={'account-settings__item-label'}>
-            Your share code
-          </span>
+          <span className="account-settings__item-label">Your share code</span>
         </section>
-        <section className={'account-settings__sharecode-text'}>
+        <section className="account-settings__sharecode-text">
           Make sure to attach this code when sharing resources so students can
           access them
         </section>
       </section>
 
       <Col xs={4} xl={8}>
-        <span className={'account-settings__sharecode'} data-qa="share-code">
+        <span className="account-settings__sharecode" data-qa="share-code">
           {props.shareCode}
         </span>
       </Col>

@@ -27,8 +27,8 @@ export interface Props {
 export const VideoCardSkeleton = () => (
   <Card className="video-card skeleton" bordered={false}>
     <AntSkeleton
-      loading={true}
-      active={true}
+      loading
+      active
       title={{ width: '150px' }}
       paragraph={{ rows: 5 }}
       avatar={{ shape: 'square', size: 'large' }}
@@ -52,51 +52,47 @@ export const VideoCard = withMediaBreakPoint(
 
     if (!props.video) {
       return <VideoCardSkeleton />;
-    } else {
-      return (
-        <ClickableCard
-          className="video-card"
-          bordered={false}
-          href={`/videos/${props.video.id}${refererParam}`}
-          onMouseDown={emitVideoLinkClickEvent}
-          data-qa="video-card"
-        >
-          <VideoHeader video={props.video} />
-          <StopClickPropagation
-            wrapper="section"
-            wrapperProps={{ className: 'video-preview' }}
-          >
-            <div aria-label={'video player'} tabIndex={0}>
-              <VideoPlayer
-                collectionKey="myCollections"
-                video={props.video}
-                videoIndex={props.videoIndex}
-                mode="card"
-              />
-            </div>
-          </StopClickPropagation>
-
-          <section className="video-details">
-            <p
-              data-qa="video-description"
-              className="description clamp-6-lines"
-            >
-              {props.video.description}
-            </p>
-            <Row className="buttons-row">
-              <StopClickPropagation>
-                {renderVideoButtons && (
-                  <VideoButtons
-                    video={props.video}
-                    collection={props.currentCollection}
-                    mode={'card'}
-                  />
-                )}
-              </StopClickPropagation>
-            </Row>
-          </section>
-        </ClickableCard>
-      );
     }
+    return (
+      <ClickableCard
+        className="video-card"
+        bordered={false}
+        href={`/videos/${props.video.id}${refererParam}`}
+        onMouseDown={emitVideoLinkClickEvent}
+        data-qa="video-card"
+      >
+        <VideoHeader video={props.video} />
+        <StopClickPropagation
+          wrapper="section"
+          wrapperProps={{ className: 'video-preview' }}
+        >
+          <div aria-label="video player">
+            <VideoPlayer
+              collectionKey="myCollections"
+              video={props.video}
+              videoIndex={props.videoIndex}
+              mode="card"
+            />
+          </div>
+        </StopClickPropagation>
+
+        <section className="video-details">
+          <p data-qa="video-description" className="description clamp-6-lines">
+            {props.video.description}
+          </p>
+          <Row className="buttons-row">
+            <StopClickPropagation>
+              {renderVideoButtons && (
+                <VideoButtons
+                  video={props.video}
+                  collection={props.currentCollection}
+                  mode="card"
+                />
+              )}
+            </StopClickPropagation>
+          </Row>
+        </section>
+      </ClickableCard>
+    );
   }),
 );

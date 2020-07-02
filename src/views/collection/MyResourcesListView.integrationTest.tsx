@@ -73,7 +73,7 @@ describe('MyResourcesListView', () => {
     expect(getByText('Edit')).toBeInTheDocument();
   });
 
-  it(`only show my collections and bookmarked collections`, () => {
+  it('only show my collections and bookmarked collections', () => {
     const myCollection = getCollectionWithData('123');
     const bookmarkedCollection = getCollectionWithData(
       '456',

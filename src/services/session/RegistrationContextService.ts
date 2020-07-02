@@ -24,8 +24,7 @@ export class RegistrationContextService {
 
     if (registrationContextCookie) {
       return JSON.parse(registrationContextCookie);
-    } else {
-      return undefined;
     }
+    return undefined;
   }
 }

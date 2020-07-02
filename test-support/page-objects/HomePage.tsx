@@ -2,11 +2,11 @@ import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import App from '../../src/app/App';
-import { By } from '../By';
+import By from '../By';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
-export class HomePage {
+class HomePage {
   public constructor(private wrapper: ReactWrapper) {}
 
   public static async load() {
@@ -77,3 +77,5 @@ interface Discipline {
   name: string;
   subjects: string[];
 }
+
+export default HomePage;

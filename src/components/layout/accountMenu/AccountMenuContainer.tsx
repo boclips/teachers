@@ -7,19 +7,10 @@ import AccountMenuMobile from './AccountMenuMobileComponent';
 import './AccountMenuContainer.less';
 
 export class AccountMenuContainer extends PureComponent {
-  public render() {
-    return (
-      <div>
-        <AccountMenuComponent onLogout={this.confirmLogout} />
-        <AccountMenuMobile onLogout={this.confirmLogout} />
-      </div>
-    );
-  }
-
-  private confirmLogout(e: SyntheticEvent) {
+  private confirmLogout = (e: SyntheticEvent) => {
     e.preventDefault();
 
-    const confirm = Modal.confirm;
+    const { confirm } = Modal;
 
     confirm({
       title: 'Are you sure you want to log out?',
@@ -45,5 +36,14 @@ export class AccountMenuContainer extends PureComponent {
       },
       width: '340px',
     });
+  };
+
+  public render() {
+    return (
+      <div>
+        <AccountMenuComponent onLogout={this.confirmLogout} />
+        <AccountMenuMobile onLogout={this.confirmLogout} />
+      </div>
+    );
   }
 }

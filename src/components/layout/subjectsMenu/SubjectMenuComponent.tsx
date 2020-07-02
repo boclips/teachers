@@ -29,34 +29,6 @@ class SubjectMenuComponent extends React.Component<Props, State> {
     this.setState({ dropdownVisible: visible });
   };
 
-  public render() {
-    return (
-      <div className="display-desktop">
-        <Dropdown
-          overlay={this.renderMenu()}
-          trigger={['click']}
-          overlayClassName="subject-menu__dropdown"
-          placement="bottomCenter"
-          onVisibleChange={this.setActive}
-        >
-          <DropdownMenuIconComponent
-            dataQa={'subjects-menu-open'}
-            active={this.state.dropdownVisible}
-            icon={
-              <MySubjectSVG
-                className="account-menu-icon ant-dropdown-link"
-                aria-haspopup="true"
-                aria-hidden="true"
-                tabIndex={0}
-              />
-            }
-            label={'Subjects'}
-          />
-        </Dropdown>
-      </div>
-    );
-  }
-
   private renderMenu = (): React.ReactElement =>
     this.props.disciplines && (
       <Menu className="subject-menu__list subject-menu--desktop">
@@ -65,19 +37,17 @@ class SubjectMenuComponent extends React.Component<Props, State> {
             className="subject-menu__list-item-group"
             key={discipline.id}
           >
-            {
-              <Menu.Item
-                className="subject-menu__list-item-heading"
-                key={discipline.id}
+            <Menu.Item
+              className="subject-menu__list-item-heading"
+              key={discipline.id}
+            >
+              <Link
+                to={`/discover-collections?discipline=${discipline.id}`}
+                className="link--tabbable"
               >
-                <Link
-                  to={`/discover-collections?discipline=${discipline.id}`}
-                  className="link--tabbable"
-                >
-                  {discipline.name}
-                </Link>
-              </Menu.Item>
-            }
+                {discipline.name}
+              </Link>
+            </Menu.Item>
             {discipline.subjects &&
               sortBy(discipline.subjects, ['name']).map((subject) => (
                 <Menu.Item className="subject-menu__list-item" key={subject.id}>
@@ -93,6 +63,34 @@ class SubjectMenuComponent extends React.Component<Props, State> {
         ))}
       </Menu>
     );
+
+  public render() {
+    return (
+      <div className="display-desktop">
+        <Dropdown
+          overlay={this.renderMenu()}
+          trigger={['click']}
+          overlayClassName="subject-menu__dropdown"
+          placement="bottomCenter"
+          onVisibleChange={this.setActive}
+        >
+          <DropdownMenuIconComponent
+            dataQa="subjects-menu-open"
+            active={this.state.dropdownVisible}
+            icon={
+              <MySubjectSVG
+                className="account-menu-icon ant-dropdown-link"
+                aria-haspopup="true"
+                aria-hidden="true"
+                tabIndex={0}
+              />
+            }
+            label="Subjects"
+          />
+        </Dropdown>
+      </div>
+    );
+  }
 }
 
 function mapStateToProps(state: DisciplineState): Props {

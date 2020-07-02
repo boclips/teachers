@@ -1,15 +1,17 @@
 import Slider, { SliderProps } from 'antd/lib/slider';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import './BoclipsSlider.less';
 
-export class BoclipsSlider extends React.Component<SliderProps> {
-  public render() {
-    return (
-      <Slider
-        className="slider"
-        children={this.props.children}
-        {...this.props}
-      />
-    );
-  }
+interface BoclipsSliderProps extends SliderProps {
+  children?: ReactNode;
 }
+
+export const BoclipsSlider = (props: BoclipsSliderProps) => {
+  return (
+    // @ts-ignore
+    // eslint-disable-next-line
+    <Slider className="slider" {...props}>
+      {props.children}
+    </Slider>
+  );
+};

@@ -3,12 +3,17 @@ import { KeyboardEvent } from 'react';
 
 export default class EventSimulator {
   public submit = this.interact(EventSimulator.doSubmit);
+
   public click = this.interact(EventSimulator.doClick);
-  public pressEsc = this.interact(this.doPressKey(27));
-  public pressEnter = this.interact(this.doPressKey(13));
-  public pressShiftEnter = this.interact(this.doPressKey(13, true));
+
+  public pressEsc = this.interact(EventSimulator.doPressKey(27));
+
+  public pressEnter = this.interact(EventSimulator.doPressKey(13));
+
+  public pressShiftEnter = this.interact(EventSimulator.doPressKey(13, true));
+
   public setText = (text: string, element: ReactWrapper) =>
-    this.interact(this.doSetText(text))(element);
+    this.interact(EventSimulator.doSetText(text))(element);
 
   public constructor(protected wrapper: ReactWrapper) {}
 
@@ -34,7 +39,7 @@ export default class EventSimulator {
     submitHandler({ preventDefault: () => {} });
   }
 
-  private doPressKey(keyCode: number, shiftKey: boolean = false) {
+  private static doPressKey(keyCode: number, shiftKey: boolean = false) {
     return (element: ReactWrapper) => {
       const event: Partial<KeyboardEvent<any>> = {
         keyCode,
@@ -45,7 +50,7 @@ export default class EventSimulator {
     };
   }
 
-  private doSetText(value: string) {
+  private static doSetText(value: string) {
     return (element: ReactWrapper) => {
       element.simulate('change', { target: { value } });
       element.simulate('blur');

@@ -18,50 +18,48 @@ interface OwnProps {
 
 export default class VideoButtons extends React.PureComponent<OwnProps> {
   public render() {
+    const { collection, mode, video } = this.props;
     return (
       <section
         className="video-buttons__container"
         data-qa="video-buttons-container"
       >
         <section className="display-desktop">
-          <DesktopButtons {...this.props} />
+          <DesktopButtons video={video} collection={collection} mode={mode} />
         </section>
         <section className="display-mobile-and-tablet">
-          <MobileButtons {...this.props} />
+          <MobileButtons video={video} collection={collection} mode={mode} />
         </section>
       </section>
     );
   }
 }
 
-const DesktopButtons = (props: OwnProps) => (
+const DesktopButtons = ({ video, collection, mode }: OwnProps) => (
   <Button.Group>
-    <VideoCollectionButton video={props.video} collection={props.collection} />
-    <VideoShareButton video={props.video} />
-    {props.mode === 'card' && <DownloadTranscriptButton video={props.video} />}
+    <VideoCollectionButton video={video} collection={collection} />
+    <VideoShareButton video={video} />
+    {mode === 'card' && <DownloadTranscriptButton video={video} />}
   </Button.Group>
 );
 
-const MobileButtons = (props: OwnProps) => {
+const MobileButtons = ({ video, collection, mode }: OwnProps) => {
   const menu = () => (
     <Menu className="video-buttons__container">
       <Menu.Item>
-        <VideoCollectionButton
-          video={props.video}
-          collection={props.collection}
-        />
+        <VideoCollectionButton video={video} collection={collection} />
       </Menu.Item>
       <Menu.Item>
-        <VideoShareButton video={props.video} />
+        <VideoShareButton video={video} />
       </Menu.Item>
-      {props.mode === 'card' && props.video.links.transcript && (
+      {mode === 'card' && video.links.transcript && (
         <Menu.Item>
-          <DownloadTranscriptButton video={props.video} />
+          <DownloadTranscriptButton video={video} />
         </Menu.Item>
       )}
-      {props.video.links.rate && (
+      {video.links.rate && (
         <Menu.Item>
-          <RateButton video={props.video} />
+          <RateButton video={video} />
         </Menu.Item>
       )}
     </Menu>

@@ -1,4 +1,3 @@
-import Mock = jest.Mock;
 import configureStore from 'redux-mock-store';
 import { VideoCollectionFactory } from 'test-support/factories';
 import { fetchCollection } from 'src/services/collections/fetchCollection';
@@ -6,6 +5,7 @@ import eventually from '../../../../../test-support/eventually';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import fetchCollectionMiddleware from './fetchCollectionMiddleware';
+import Mock = jest.Mock;
 
 jest.mock('../../../../services/collections/fetchCollection');
 const fetchCollectionMock = fetchCollection as Mock;

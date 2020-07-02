@@ -8,12 +8,13 @@ import PageLayout from '../../components/layout/PageLayout';
 interface Props {
   nonRecoverable?: boolean;
 }
-export const ErrorView = (props: Props) => (
+
+export const ErrorView = ({ nonRecoverable }: Props) => (
   <PageLayout
     title="Something went wrong."
-    showNavigation={!props.nonRecoverable}
-    showFooter={true}
-    showSearchBar={!props.nonRecoverable}
+    showNavigation={!nonRecoverable}
+    showFooter
+    showSearchBar={!nonRecoverable}
   >
     <section className="illustrated-page">
       <Row>
@@ -26,7 +27,7 @@ export const ErrorView = (props: Props) => (
           <section className="message">
             <h1 className="big-title">Oops!!</h1>
             <p>Something went wrong.</p>
-            {!props.nonRecoverable && (
+            {!nonRecoverable && (
               <p>
                 You can start a new search or explore our subject list in the
                 top bar or <Link to="/">return to the homepage</Link>

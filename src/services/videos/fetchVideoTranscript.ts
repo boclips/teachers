@@ -26,8 +26,7 @@ export const getTranscriptFilename = (
   const matchedFilename = matches?.[1];
   if (matchedFilename) {
     return matchedFilename;
-  } else {
-    const filename = videoTitle.replace(/\.|\:|\ /g, '_');
-    return `${filename}.txt`;
   }
+  const filename = videoTitle.replace(/[.: ]/g, '_');
+  return `${filename}.txt`;
 };

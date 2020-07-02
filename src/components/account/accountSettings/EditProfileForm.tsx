@@ -48,54 +48,6 @@ class ProfileFormFields extends React.Component<
     };
   }
 
-  public render() {
-    return (
-      <Form data-qa="profile-form" className="account-settings__form">
-        {this.state.screenReaderErrors && (
-          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
-        )}
-        <NameForm
-          form={this.props.form}
-          initialFirstName={this.props.userProfile.firstName}
-          initialLastName={this.props.userProfile.lastName}
-        />
-
-        <SubjectsForm
-          form={this.props.form}
-          subjects={this.props.subjects}
-          placeholder={'Choose subjects'}
-          initialValue={this.props.userProfile.subjects}
-          label={'Subjects'}
-        />
-
-        <AgeRangeForm
-          form={this.props.form}
-          initialValue={this.props.userProfile.ages}
-          label={'Age groups'}
-        />
-        <section className="buttons">
-          <Button
-            data-qa={'cancel-edit-button'}
-            type={'ghost'}
-            onClick={this.props.toggleForm}
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            htmlType={'submit'}
-            type={'primary'}
-            data-qa={'submit-update-user'}
-            onClick={this.submit}
-            size="large"
-          >
-            Save changes
-          </Button>
-        </section>
-      </Form>
-    );
-  }
-
   private submit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -120,18 +72,66 @@ class ProfileFormFields extends React.Component<
               description: 'Please try again or contact our support team.',
             });
 
-            this.setState({
-              ...this.state,
-            });
+            this.setState((state) => ({
+              ...state,
+            }));
           });
       } else {
-        this.setState({
-          ...this.state,
+        this.setState((state) => ({
+          ...state,
           screenReaderErrors: transformErrors(err),
-        });
+        }));
       }
     });
   };
+
+  public render() {
+    return (
+      <Form data-qa="profile-form" className="account-settings__form">
+        {this.state.screenReaderErrors && (
+          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
+        )}
+        <NameForm
+          form={this.props.form}
+          initialFirstName={this.props.userProfile.firstName}
+          initialLastName={this.props.userProfile.lastName}
+        />
+
+        <SubjectsForm
+          form={this.props.form}
+          subjects={this.props.subjects}
+          placeholder="Choose subjects"
+          initialValue={this.props.userProfile.subjects}
+          label="Subjects"
+        />
+
+        <AgeRangeForm
+          form={this.props.form}
+          initialValue={this.props.userProfile.ages}
+          label="Age groups"
+        />
+        <section className="buttons">
+          <Button
+            data-qa="cancel-edit-button"
+            type="ghost"
+            onClick={this.props.toggleForm}
+            size="large"
+          >
+            Cancel
+          </Button>
+          <Button
+            htmlType="submit"
+            type="primary"
+            data-qa="submit-update-user"
+            onClick={this.submit}
+            size="large"
+          >
+            Save changes
+          </Button>
+        </section>
+      </Form>
+    );
+  }
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

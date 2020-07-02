@@ -34,50 +34,28 @@ class VideoPlayer extends React.PureComponent<
   OwnProps & StateProps,
   {
     hasError: boolean;
-    menuVisible: boolean;
     overlayVisible: boolean;
-    overlayContainer: HTMLElement;
+    overlayContainer: HTMLDivElement;
   }
 > {
-  public state = {
-    hasError: false,
-    menuVisible: false,
-    overlayContainer: null,
-    overlayVisible: false,
-  };
-
-  public static defaultProps: Partial<OwnProps> = {
-    mode: 'default',
-  };
-
   private player: Player;
 
-  public render() {
-    if (this.state.hasError) {
-      return null;
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasError: false,
+      overlayContainer: null,
+      overlayVisible: false,
+    };
+  }
+
+  public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>) {
+    const prevVideoUri = prevProps.video.links.self.getOriginalLink();
+    const currentVideoUri = this.props.video.links.self.getOriginalLink();
+
+    if (this.player && prevVideoUri !== currentVideoUri) {
+      this.player.loadVideo(currentVideoUri);
     }
-    return (
-      <div className="video-player">
-        <LazyLoad key={this.props.video.id} offsetVertical={200}>
-          <div>
-            <EndOfVideoOverlay
-              visible={this.state.overlayVisible}
-              getOverlayContainer={this.state.overlayContainer}
-              shareCode={this.props.shareCode}
-              collectionKey={this.props.collectionKey}
-              video={this.props.video}
-              replayOnClick={() => this.replayOnClickDestroyOverlay()}
-              userIsAuthenticated={this.props.isAuthenticated}
-            />
-            <PlayerComponent
-              playerRef={this.setPlayerRef}
-              options={this.getPlayerOptions()}
-              videoUri={this.props.video.links.self.getOriginalLink()}
-            />
-          </div>
-        </LazyLoad>
-      </div>
-    );
   }
 
   public static getDerivedStateFromError() {
@@ -90,48 +68,6 @@ class VideoPlayer extends React.PureComponent<
       this.handleVideoEnd(endOverlay),
     );
     this.loadSegment();
-  };
-
-  public handleVideoEnd = (endOverlay) => {
-    if (endOverlay.firstChild) {
-      endOverlay.removeChild(endOverlay.firstChild);
-    }
-    this.setState({ overlayContainer: endOverlay });
-    this.setState({ overlayVisible: true });
-  };
-
-  public replayOnClickDestroyOverlay = () => {
-    this.setState({ overlayVisible: false });
-    this.player.play();
-  };
-
-  public componentDidUpdate(prevProps: Readonly<OwnProps & StateProps>) {
-    const prevVideoUri = prevProps.video.links.self.getOriginalLink();
-    const currentVideoUri = this.props.video.links.self.getOriginalLink();
-
-    if (this.player && prevVideoUri !== currentVideoUri) {
-      this.player.loadVideo(currentVideoUri);
-    }
-  }
-
-  private loadSegment = () => {
-    if (!this.player) {
-      return;
-    }
-    if (this.props.segment.start || this.props.segment.end) {
-      this.player.loadVideo(
-        this.props.video.links.self.getOriginalLink(),
-        this.props.segment,
-      );
-    }
-  };
-
-  private handleOnPlayback = (_, startSeconds: number, endSeconds: number) => {
-    AnalyticsFactory.externalAnalytics().trackVideoPlayback(
-      this.props.video,
-      startSeconds,
-      endSeconds,
-    );
   };
 
   private getPlayerOptions(): Partial<PlayerOptions> {
@@ -197,6 +133,72 @@ class VideoPlayer extends React.PureComponent<
     }
 
     return options;
+  }
+
+  public handleVideoEnd = (endOverlay) => {
+    if (endOverlay.firstChild) {
+      endOverlay.removeChild(endOverlay.firstChild);
+    }
+    this.setState({ overlayContainer: endOverlay });
+    this.setState({ overlayVisible: true });
+  };
+
+  public replayOnClickDestroyOverlay = () => {
+    this.setState({ overlayVisible: false });
+    this.player.play();
+  };
+
+  private loadSegment = () => {
+    if (!this.player) {
+      return;
+    }
+    if (this.props.segment.start || this.props.segment.end) {
+      this.player.loadVideo(
+        this.props.video.links.self.getOriginalLink(),
+        this.props.segment,
+      );
+    }
+  };
+
+  private handleOnPlayback = (_, startSeconds: number, endSeconds: number) => {
+    AnalyticsFactory.externalAnalytics().trackVideoPlayback(
+      this.props.video,
+      startSeconds,
+      endSeconds,
+    );
+  };
+
+  public render() {
+    const { hasError, overlayContainer, overlayVisible } = this.state;
+
+    const { shareCode, collectionKey, isAuthenticated, video } = this.props;
+
+    if (hasError) {
+      return null;
+    }
+
+    return (
+      <div className="video-player">
+        <LazyLoad key={video.id} offsetVertical={200}>
+          <div>
+            <EndOfVideoOverlay
+              visible={overlayVisible}
+              getOverlayContainer={overlayContainer}
+              shareCode={shareCode}
+              collectionKey={collectionKey}
+              video={video}
+              replayOnClick={() => this.replayOnClickDestroyOverlay()}
+              userIsAuthenticated={isAuthenticated}
+            />
+            <PlayerComponent
+              playerRef={this.setPlayerRef}
+              options={this.getPlayerOptions()}
+              videoUri={video.links.self.getOriginalLink()}
+            />
+          </div>
+        </LazyLoad>
+      </div>
+    );
   }
 }
 

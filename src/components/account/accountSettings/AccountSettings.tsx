@@ -34,19 +34,48 @@ class AccountSettings extends React.Component<
   AccountProps & DispatchProps,
   InternalState
 > {
-  public state = {
-    editProfileForm: false,
-    editSchoolSettingsForm: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      editProfileForm: false,
+      editSchoolSettingsForm: false,
+    };
+  }
 
   public componentDidMount() {
     this.props.fetchCountries();
-    this.setState({ ...this.state });
+    this.setState((state) => ({ ...state }));
   }
+
+  private isUserAmerican = () =>
+    this.props.userProfile.country &&
+    this.props.userProfile.country.id === 'USA';
+
+  private findUSA = (): Country =>
+    this.props.countries.find((country) => country.id === 'USA');
+
+  private toggleEditProfileForm = () => {
+    this.setState((state) => {
+      return {
+        ...state,
+        editProfileForm: !state.editProfileForm,
+      };
+    });
+  };
+
+  private toggleSchoolSettingsForm = () => {
+    this.setState((state) => ({
+      ...state,
+      editSchoolSettingsForm: !state.editSchoolSettingsForm,
+    }));
+  };
+
+  private showSettings = () =>
+    !(this.state.editProfileForm || this.state.editSchoolSettingsForm);
 
   public render() {
     return (
-      <React.Fragment>
+      <>
         {this.showSettings() && (
           <section>
             <h1 className="extra-big">Settings</h1>
@@ -59,14 +88,14 @@ class AccountSettings extends React.Component<
               subjects={this.props.userProfile.subjects}
             />
             {this.isUserAmerican() && (
-              <React.Fragment>
+              <>
                 <hr className="account-settings__divider" />
                 <SchoolSettings
                   school={this.props.userProfile.school.name}
                   state={this.props.userProfile.state.name}
                   onEdit={this.toggleSchoolSettingsForm}
                 />
-              </React.Fragment>
+              </>
             )}
           </section>
         )}
@@ -94,33 +123,9 @@ class AccountSettings extends React.Component<
             />
           </section>
         )}
-      </React.Fragment>
+      </>
     );
   }
-
-  private isUserAmerican = () =>
-    this.props.userProfile.country &&
-    this.props.userProfile.country.id === 'USA';
-
-  private findUSA = (): Country =>
-    this.props.countries.find((country) => country.id === 'USA');
-
-  private toggleEditProfileForm = () => {
-    this.setState({
-      ...this.state,
-      editProfileForm: !this.state.editProfileForm,
-    });
-  };
-
-  private toggleSchoolSettingsForm = () => {
-    this.setState({
-      ...this.state,
-      editSchoolSettingsForm: !this.state.editSchoolSettingsForm,
-    });
-  };
-
-  private showSettings = () =>
-    !(this.state.editProfileForm || this.state.editSchoolSettingsForm);
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

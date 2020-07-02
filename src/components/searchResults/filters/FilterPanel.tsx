@@ -38,7 +38,7 @@ export const FilterPanel = () => {
   ).current;
 
   return (
-    <div data-qa={'search-filters-menu'} className="search-filters-menu">
+    <div data-qa="search-filters-menu" className="search-filters-menu">
       <h1>Filter results</h1>
       <AppliedFilters />
       <FiltersWithForm onApplyFilters={debouncedSearch} />

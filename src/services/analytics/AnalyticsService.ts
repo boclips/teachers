@@ -71,8 +71,8 @@ export default class AnalyticsService {
 
   public trackDiscoveryPage(subjectId?: string[], disciplineId?: string) {
     const payload = {
-      subject_id: subjectId ? subjectId : null,
-      discipline_id: disciplineId ? disciplineId : null,
+      subject_id: subjectId || null,
+      discipline_id: disciplineId || null,
     };
 
     this.trackAppcues(EventTypes.DISCOVER_COLLECTIONS, payload);

@@ -3,7 +3,7 @@ import { Link } from '../../types/Link';
 import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from './../../../test-support/factories';
+} from '../../../test-support/factories';
 import { deleteCollection } from './deleteCollection';
 
 test('delete collection', async () => {

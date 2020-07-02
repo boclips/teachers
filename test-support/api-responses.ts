@@ -1,5 +1,20 @@
 const prefix = 'https://api.example.com';
 
+export function buildVideoSearchResponse(videos: any[], facets: any = {}) {
+  return {
+    _embedded: {
+      videos,
+      facets,
+    },
+    page: {
+      size: 10,
+      totalElements: 2,
+      totalPages: 1,
+      number: 0,
+    },
+  };
+}
+
 export const links = {
   _links: {
     searchVideos: {
@@ -282,21 +297,6 @@ export const videosSearchResponseWithFacets = buildVideoSearchResponse(
     },
   },
 );
-
-export function buildVideoSearchResponse(videos: any[], facets: any = {}) {
-  return {
-    _embedded: {
-      videos,
-      facets,
-    },
-    page: {
-      size: 10,
-      totalElements: 2,
-      totalPages: 1,
-      number: 0,
-    },
-  };
-}
 
 export function promotedResponse() {
   return buildVideoSearchResponse([video177, video147]);
@@ -654,7 +654,7 @@ export function userResponse(id: string = 'my-user-id') {
       shareCode: 'BOB1',
     },
     _links: {
-      self: { href: `http://localhost/v1/users/my-user-id` },
+      self: { href: 'http://localhost/v1/users/my-user-id' },
     },
   };
 }

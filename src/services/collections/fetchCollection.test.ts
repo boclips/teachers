@@ -9,7 +9,7 @@ import { LinksFactory } from '../../../test-support/factories';
 import { Link } from '../../types/Link';
 import { fetchCollection } from './fetchCollection';
 
-describe(`fetchCollection`, () => {
+describe('fetchCollection', () => {
   it('returns available collections in skinny format', async () => {
     const axiosMock = new MockAdapter(axios);
     axiosMock

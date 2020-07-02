@@ -23,7 +23,7 @@ export const VideoCardTagList = (props: Props) => (
       )}
       {props.video.bestFor && <BestForTag value={props.video.bestFor} />}
       {props.video.attachments && props.video.attachments.length > 0 && (
-        <AttachmentTag label={'Activity'} />
+        <AttachmentTag label="Activity" />
       )}
     </div>
   </Authenticated>

@@ -5,7 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import { AgeRange } from 'src/types/AgeRange';
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import {
   MockStoreFactory,
   SubjectFactory,
@@ -52,7 +52,7 @@ describe('VideoDetails', () => {
       expect(wrapper.find(By.dataQa('download-transcript'))).not.toExist();
     });
 
-    it(`renders all of a videos subject, best for, and age range tags`, () => {
+    it('renders all of a videos subject, best for, and age range tags', () => {
       const video = VideoFactory.sample({
         subjects: [
           SubjectFactory.sample({ name: 'subject-one' }),

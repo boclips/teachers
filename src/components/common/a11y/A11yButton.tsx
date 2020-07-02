@@ -61,15 +61,15 @@ export const A11yButton = ({ callback, children, disableClick }: Props) => {
   };
 
   return (
-    <React.Fragment>
-      {childComponents.map((child, index) =>
+    <>
+      {childComponents.map((child) =>
         React.cloneElement(child, {
           onClick,
           onKeyDown,
           role: 'button',
-          key: index,
+          key: child.props.videoId,
         }),
       )}
-    </React.Fragment>
+    </>
   );
 };

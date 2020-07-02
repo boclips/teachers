@@ -27,47 +27,16 @@ export class CountriesForm extends React.Component<
     );
   };
 
-  public render() {
-    return (
-      <Form.Item
-        className="required form__item"
-        label={this.props.label}
-        colon={false}
-      >
-        {this.props.form.getFieldDecorator('country', {
-          rules: [{ required: true, message: 'Please enter your country' }],
-          initialValue: this.props.initialValue,
-        })(
-          <Select
-            filterOption={this.filterResults()}
-            placeholder={this.props.placeholder}
-            showSearch={true}
-            size={'large'}
-            onChange={this.onUpdateCountry}
-            data-qa="countries-filter-select"
-            dropdownClassName={'dropdown'}
-            className={'boclips-multi-select-selection'}
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
-      </Form.Item>
-    );
-  }
-
-  private filterResults() {
-    return (input, option) => {
-      const matchByName =
-        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-      const matchByCode =
-        option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-      return matchByCode || matchByName;
-    };
-  }
+  private filterResults = () => (input, option) => {
+    const matchByName =
+      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    const matchByCode =
+      option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    return matchByCode || matchByName;
+  };
 
   private generateOptions() {
-    const Option = MultiSelect.Option;
+    const { Option } = MultiSelect;
     const orderedCountries: Country[] = [];
     const lastHighlightedCountryId =
       HIGHLIGHTED_COUNTRY_IDS[HIGHLIGHTED_COUNTRY_IDS.length - 1];
@@ -112,5 +81,35 @@ export class CountriesForm extends React.Component<
         </span>
       </Option>
     ));
+  }
+
+  public render() {
+    return (
+      <Form.Item
+        className="required form__item"
+        label={this.props.label}
+        colon={false}
+      >
+        {this.props.form.getFieldDecorator('country', {
+          rules: [{ required: true, message: 'Please enter your country' }],
+          initialValue: this.props.initialValue,
+        })(
+          <Select
+            filterOption={this.filterResults()}
+            placeholder={this.props.placeholder}
+            showSearch
+            size="large"
+            onChange={this.onUpdateCountry}
+            data-qa="countries-filter-select"
+            dropdownClassName="dropdown"
+            className="boclips-multi-select-selection"
+            /* eslint-disable-next-line */
+            {...this.props}
+          >
+            {this.generateOptions()}
+          </Select>,
+        )}
+      </Form.Item>
+    );
   }
 }

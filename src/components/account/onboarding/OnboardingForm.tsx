@@ -84,36 +84,36 @@ class OnboardingForm extends React.Component<
   InternalState
 > {
   private formCarousel: Carousel;
+
   private imageCarousel: Carousel;
 
-  public state = {
-    updating: false,
-    currentIndex: 0,
-    formCarousel: null,
-    imageCarousel: null,
-    numberOfSlides: 0,
-    visitedIndices: new Set<number>(),
-    invisibleSlides: [false, true, true, true],
-    country: null,
-    state: null,
-    screenReaderErrors: null,
-    role: null,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      updating: false,
+      currentIndex: 0,
+      formCarousel: null,
+      imageCarousel: null,
+      numberOfSlides: 0,
+      visitedIndices: new Set<number>(),
+      invisibleSlides: [false, true, true, true],
+      country: null,
+      state: null,
+      screenReaderErrors: null,
+      role: null,
+    };
+  }
 
   public componentDidMount() {
     this.props.fetchSubjects();
     this.props.fetchCountries();
-    this.setState({
-      ...this.state,
+    this.setState((state) => ({
+      ...state,
       formCarousel: this.formCarousel,
       imageCarousel: this.imageCarousel,
       numberOfSlides: React.Children.toArray(this.imageCarousel.props.children)
         .length,
-    });
-  }
-
-  public render() {
-    return this.renderForm();
+    }));
   }
 
   private beforeSlideChange = (prev, next) => {
@@ -121,7 +121,10 @@ class OnboardingForm extends React.Component<
     invisibleSlides[prev] = false;
     invisibleSlides[next] = false;
 
-    this.setState({ ...this.state, invisibleSlides });
+    this.setState((state) => ({
+      ...state,
+      invisibleSlides,
+    }));
   };
 
   private afterSlideChange = (currentIndex) => {
@@ -147,11 +150,152 @@ class OnboardingForm extends React.Component<
       }
     }
 
-    this.setState({
-      ...this.state,
+    this.setState((state) => ({
+      ...state,
       currentIndex,
       visitedIndices,
       invisibleSlides,
+    }));
+  };
+
+  private isLastSlide = () =>
+    this.state.currentIndex === this.state.numberOfSlides - 1;
+
+  private isFirstSlide = () => this.state.currentIndex === 0;
+
+  private back = () => {
+    this.state.formCarousel.prev();
+  };
+
+  private next = () => {
+    const currentIndex = this.state.currentIndex;
+
+    this.props.form.validateFieldsAndScroll(
+      validationFields[currentIndex],
+      (validationErrors) => {
+        if (!validationErrors) {
+          this.state.formCarousel.next();
+          this.setState((state) => ({
+            ...state,
+            screenReaderErrors: null,
+          }));
+        } else {
+          this.setState((state) => ({
+            ...state,
+            screenReaderErrors: transformErrors(validationErrors),
+          }));
+        }
+      },
+    );
+  };
+
+  private onCountryChange = (country) =>
+    this.setState((state) => ({
+      ...state,
+      country,
+    }));
+
+  private onRoleChange = (value) =>
+    this.setState((state) => ({
+      ...state,
+      role: value.role,
+    }));
+
+  private onStateChange = (updatedState) =>
+    this.setState((state) => ({
+      ...state,
+      updatedState,
+    }));
+
+  private getSchoolForm = () => {
+    if (this.state.role === 'PARENT' || this.state.country === null) {
+      return <></>;
+    }
+
+    if (this.state.country && this.state.country.id === 'USA') {
+      return (
+        <section data-qa="usa-school-details">
+          <StatesForm
+            label="State"
+            form={this.props.form}
+            states={this.state.country.states}
+            placeholder="Choose state"
+            onStateChange={this.onStateChange}
+          />
+          <SchoolForm
+            form={this.props.form}
+            country={this.state.country}
+            placeholder="Enter the name of your school"
+            label="School"
+            state={this.state.state}
+            allowUnknownSchools={false}
+          />
+        </section>
+      );
+    }
+
+    return (
+      <section data-qa="non-usa-school-details">
+        <SchoolForm
+          form={this.props.form}
+          country={this.state.country}
+          placeholder="Enter the name of your school"
+          label="School"
+          allowUnknownSchools
+        />
+      </section>
+    );
+  };
+
+  private handleSubmit = () => {
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
+        const ageRanges = (values.ageRange as string[]).map((it) =>
+          AgeRange.fromJson(it),
+        );
+        const ages = extractContainedAges(ageRanges);
+
+        this.setState((state) => ({
+          ...state,
+          updating: true,
+        }));
+        onboardUser(this.props.links, {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          ages,
+          subjects: values.subjects,
+          country: values.country,
+          state: values.state,
+          schoolName: values.schoolName,
+          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+          hasOptedIntoMarketing: values.hasOptedIntoMarketing,
+          referralCode: registrationContext?.referralCode,
+          role: values.role,
+          utm: registrationContext?.utm,
+        })
+          .then(() => {
+            this.props.goToHomepage();
+            this.props.updateUser();
+          })
+          .catch((ex) => {
+            console.error(ex);
+            NotificationFactory.error({
+              message: 'Ooops! Something went wrong...',
+              description: 'Please try again or contact our support team.',
+            });
+
+            this.setState((state) => ({
+              ...state,
+              updating: false,
+            }));
+          });
+      } else {
+        this.setState((state) => ({
+          ...state,
+          screenReaderErrors: transformErrors(err),
+        }));
+      }
     });
   };
 
@@ -161,8 +305,10 @@ class OnboardingForm extends React.Component<
         <Row>
           <Col xs={{ span: 0 }} lg={{ span: 12 }}>
             <Carousel
-              ref={(imageCarousel) => (this.imageCarousel = imageCarousel)}
-              effect={'fade'}
+              ref={(imageCarousel) => {
+                this.imageCarousel = imageCarousel;
+              }}
+              effect="fade"
               dots={false}
             >
               <SvgStep1
@@ -198,9 +344,11 @@ class OnboardingForm extends React.Component<
             >
               <section className="onboarding-form__form-body">
                 <Carousel
-                  ref={(formCarousel) => (this.formCarousel = formCarousel)}
+                  ref={(formCarousel) => {
+                    this.formCarousel = formCarousel;
+                  }}
                   infinite={false}
-                  asNavFor={this.state.imageCarousel}
+                  asNavFor={this.state.imageCarousel as any}
                   dots={false}
                   swipe={false}
                   beforeChange={this.beforeSlideChange}
@@ -232,7 +380,7 @@ class OnboardingForm extends React.Component<
                       onRoleChange={this.onRoleChange}
                     />
                     <p className="onboarding-form__notes">
-                      <span className={'onboarding-form__asterisk'}>*</span>{' '}
+                      <span className="onboarding-form__asterisk">*</span>{' '}
                       Required field
                     </p>
                   </section>
@@ -360,133 +508,9 @@ class OnboardingForm extends React.Component<
     );
   }
 
-  private getSchoolForm = () => {
-    if (this.state.role === 'PARENT' || this.state.country === null) {
-      return <React.Fragment></React.Fragment>;
-    }
-
-    if (this.state.country && this.state.country.id === 'USA') {
-      return (
-        <section data-qa="usa-school-details">
-          <StatesForm
-            label="State"
-            form={this.props.form}
-            states={this.state.country.states}
-            placeholder="Choose state"
-            onStateChange={this.onStateChange}
-          />
-          <SchoolForm
-            form={this.props.form}
-            country={this.state.country}
-            placeholder="Enter the name of your school"
-            label="School"
-            state={this.state.state}
-            allowUnknownSchools={false}
-          />
-        </section>
-      );
-    }
-
-    return (
-      <section data-qa="non-usa-school-details">
-        <SchoolForm
-          form={this.props.form}
-          country={this.state.country}
-          placeholder="Enter the name of your school"
-          label="School"
-          allowUnknownSchools={true}
-        />
-      </section>
-    );
-  };
-
-  private isLastSlide = () =>
-    this.state.currentIndex === this.state.numberOfSlides - 1;
-
-  private isFirstSlide = () => this.state.currentIndex === 0;
-
-  private back = () => {
-    this.state.formCarousel.prev();
-  };
-
-  private next = () => {
-    const currentIndex = this.state.currentIndex;
-
-    this.props.form.validateFieldsAndScroll(
-      validationFields[currentIndex],
-      (validationErrors) => {
-        if (!validationErrors) {
-          this.state.formCarousel.next();
-          this.setState({
-            ...this.state,
-            screenReaderErrors: null,
-          });
-        } else {
-          this.setState({
-            ...this.state,
-            screenReaderErrors: transformErrors(validationErrors),
-          });
-        }
-      },
-    );
-  };
-
-  private onCountryChange = (country) =>
-    this.setState({ ...this.state, country });
-
-  private onRoleChange = (value) =>
-    this.setState({ ...this.state, role: value.role });
-
-  private onStateChange = (state) => this.setState({ ...this.state, state });
-
-  private handleSubmit = () => {
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
-        const ageRanges = (values.ageRange as string[]).map((it) =>
-          AgeRange.fromJson(it),
-        );
-        const ages = extractContainedAges(ageRanges);
-
-        this.setState({ ...this.state, updating: true });
-        onboardUser(this.props.links, {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          ages,
-          subjects: values.subjects,
-          country: values.country,
-          state: values.state,
-          schoolName: values.schoolName,
-          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-          hasOptedIntoMarketing: values.hasOptedIntoMarketing,
-          referralCode: registrationContext?.referralCode,
-          role: values.role,
-          utm: registrationContext?.utm,
-        })
-          .then(() => {
-            this.props.goToHomepage();
-            this.props.updateUser();
-          })
-          .catch((ex) => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
-
-            this.setState({
-              ...this.state,
-              updating: false,
-            });
-          });
-      } else {
-        this.setState({
-          ...this.state,
-          screenReaderErrors: transformErrors(err),
-        });
-      }
-    });
-  };
+  public render() {
+    return this.renderForm();
+  }
 }
 
 function mapStateToProps(state: State): OnboardingProps {

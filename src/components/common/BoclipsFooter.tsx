@@ -9,7 +9,7 @@ export class BoclipsFooter extends React.PureComponent {
       <footer className="boclips-footer ant-layout-content">
         <p>
           Copyright © {new Date().getFullYear()} Boclips. All rights reserved.{' '}
-          <span className={'boclips-footer__links'}>
+          <span className="boclips-footer__links">
             <TermsAndConditionsLink />
             &nbsp;•&nbsp;
             <PrivacyPolicyLink />

@@ -14,12 +14,15 @@ interface ShareFormState {
 }
 
 export class ShareForm extends React.Component<ShareFormProps, ShareFormState> {
-  public state = {
-    segment: {
-      start: undefined,
-      end: undefined,
-    },
-  };
+  public constructor(props) {
+    super(props);
+    this.state = {
+      segment: {
+        start: undefined,
+        end: undefined,
+      },
+    };
+  }
 
   private handleStartChange = (segmentStart: number) => {
     this.setState(
@@ -38,7 +41,7 @@ export class ShareForm extends React.Component<ShareFormProps, ShareFormState> {
   };
 
   public render() {
-    const duration = this.props.video.duration;
+    const { video } = this.props;
     return (
       <Form className="share-form">
         <RestrictiveTimePicker
@@ -46,14 +49,14 @@ export class ShareForm extends React.Component<ShareFormProps, ShareFormState> {
           checkboxLabel="enable starting from"
           initialValue={0}
           label="starting from"
-          upperBound={duration.asSeconds()}
+          upperBound={video.duration.asSeconds()}
         />
         <RestrictiveTimePicker
           checkboxLabel="enable until"
           label="until"
-          upperBound={duration.asSeconds()}
+          upperBound={video.duration.asSeconds()}
           onChange={this.handleEndChange}
-          initialValue={duration.asSeconds()}
+          initialValue={video.duration.asSeconds()}
         />
       </Form>
     );

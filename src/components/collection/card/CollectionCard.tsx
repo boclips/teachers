@@ -76,22 +76,21 @@ export const CollectionCard = withMediaBreakPoint(
       if (collectionHasNoDescription) {
         if (props.videos.length === 0) {
           return (
-            <div className={'empty-collection-message'}>
+            <div className="empty-collection-message">
               This video collection is empty.
             </div>
           );
-        } else {
-          return (
-            <ul>
-              {props.videos.map((video) => (
-                <li key={video.id}>
-                  <BulletSVG className="collection-card__description-preview__icon" />
-                  <span>{`"${video.title}" by ${video.createdBy}`}</span>
-                </li>
-              ))}
-            </ul>
-          );
         }
+        return (
+          <ul>
+            {props.videos.map((video) => (
+              <li key={video.id}>
+                <BulletSVG className="collection-card__description-preview__icon" />
+                <span>{`"${video.title}" by ${video.createdBy}`}</span>
+              </li>
+            ))}
+          </ul>
+        );
       }
 
       return props.collection.description;
@@ -154,7 +153,7 @@ export const CollectionCard = withMediaBreakPoint(
           </section>
         )}
         {displayTags && (
-          <div className="tags-container" data-qa={'tags-container'}>
+          <div className="tags-container" data-qa="tags-container">
             {props.collection.ageRange.isBounded() && (
               <AgeRangeTag ageRange={props.collection.ageRange} />
             )}
@@ -163,7 +162,7 @@ export const CollectionCard = withMediaBreakPoint(
             ))}
             {props.collection.attachments &&
               props.collection.attachments.length > 0 &&
-              !isParentCollection && <AttachmentTag label={'Lesson guide'} />}
+              !isParentCollection && <AttachmentTag label="Lesson guide" />}
           </div>
         )}
         <div className="collection-card__detail-row">
@@ -202,13 +201,11 @@ export const CollectionCard = withMediaBreakPoint(
 
 export const CollectionCardSkeleton = () => (
   <Card
-    className={
-      'collection-card collection-card--search skeleton ant-skeleton ant-skeleton-active'
-    }
+    className="collection-card collection-card--search skeleton ant-skeleton ant-skeleton-active"
     bordered={false}
   >
     <section className="ant-skeleton-content">
-      <h3 className="collection-title ant-skeleton-title" />
+      <h3 className="collection-title ant-skeleton-title"> </h3>
       <div className="collection-card__detail-row">
         <section className="collection-card__column-preview">
           <CollectionCardPreview.Skeleton />

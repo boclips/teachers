@@ -4,29 +4,26 @@ import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
 import SettingsSVG from '../../../../resources/images/settings.svg';
 
-type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-class UserCollectionsLink extends React.PureComponent<Props> {
-  public render = () => (
-    <Link
-      to={'/collections'}
-      data-qa="user-videos"
-      onClick={this.props.onClick}
-    >
+const UserCollectionsLink = (props: LinkProps) => {
+  return (
+    <Link to="/collections" data-qa="user-videos" onClick={props.onClick}>
       <span className="icon-container">
         <CollectionsIcon aria-hidden="true" />
       </span>
       <span>Your resources</span>
     </Link>
   );
-}
+};
 
-class AccountSettingsLink extends React.PureComponent<Props> {
-  public render = () => (
+const AccountSettingsLink = (props: LinkProps) => {
+  return (
     <Link
-      to={'/account-settings'}
+      to="/account-settings"
       data-qa="account-settings-button"
-      onClick={this.props.onClick}
+      onClick={props.onClick}
     >
       <span className="icon-container">
         <SettingsSVG aria-hidden="true" />
@@ -34,17 +31,23 @@ class AccountSettingsLink extends React.PureComponent<Props> {
       <span>Settings</span>
     </Link>
   );
-}
+};
 
-class LogoutLink extends React.PureComponent<Props> {
-  public render = () => (
-    <a data-qa="logout-button" href="#" onClick={this.props.onClick}>
+const LogoutLink = (props: ButtonProps) => {
+  return (
+    <section
+      role="button"
+      tabIndex={0}
+      data-qa="logout-button"
+      onKeyPress={(e) => (e.keyCode === 13 ? props.onClick : null)}
+      onClick={props.onClick}
+    >
       <span className="icon-container">
         <LogoutIconSVG aria-hidden="true" />
       </span>
       <span>Log out</span>
-    </a>
+    </section>
   );
-}
+};
 
 export { AccountSettingsLink, UserCollectionsLink, LogoutLink };

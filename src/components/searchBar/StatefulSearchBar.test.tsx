@@ -1,7 +1,7 @@
-import Mock = jest.Mock;
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import StatefulSearchBar from './StatefulSearchBar';
+import Mock = jest.Mock;
 
 let onQuerySubmitted: Mock;
 
@@ -10,7 +10,7 @@ let wrapper: ReactWrapper;
 beforeEach(() => {
   onQuerySubmitted = jest.fn();
   wrapper = mount(
-    <StatefulSearchBar onSubmit={onQuerySubmitted} value={'bears'} />,
+    <StatefulSearchBar onSubmit={onQuerySubmitted} value="bears" />,
   );
 });
 

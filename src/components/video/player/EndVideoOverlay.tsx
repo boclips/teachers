@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Icon from '@ant-design/icons';
 import { ShareModal } from 'src/components/common/share/ShareModal';
@@ -63,7 +63,7 @@ export const EndOfVideoOverlay = (props: Props) => {
   };
 
   const child = () => (
-    <div className={'end-video-overlay-container'}>
+    <div className="end-video-overlay-container">
       {!props.video.rating && !ratingsHidden && props.userIsAuthenticated ? (
         <EndOverlayRatingStars
           video={props.video}
@@ -71,17 +71,19 @@ export const EndOfVideoOverlay = (props: Props) => {
         />
       ) : (
         <button
-          className={'video-overlay-replay-button'}
+          type="button"
+          className="video-overlay-replay-button"
           onClick={() => props.replayOnClick()}
         >
           Replay
         </button>
       )}
-      <div className={'overlay-buttons-container'}>
+      <div className="overlay-buttons-container">
         {!props.video.rating && !ratingsHidden && props.userIsAuthenticated && (
-          <span className={'overlay-buttons-children'}>
+          <span className="overlay-buttons-children">
             <button
-              className={'video-overlay-buttons'}
+              type="button"
+              className="video-overlay-buttons"
               onClick={() => {
                 props.replayOnClick();
                 if (videoHasBeenRated) {
@@ -89,13 +91,13 @@ export const EndOfVideoOverlay = (props: Props) => {
                 }
               }}
             >
-              <Replay className={'overlay-buttons-icon'} />
-              <div className={'overlay-button-text'}>Replay</div>
+              <Replay className="overlay-buttons-icon" />
+              <div className="overlay-button-text">Replay</div>
             </button>
           </span>
         )}
         {props.userIsAuthenticated && (
-          <React.Fragment>
+          <>
             <ManageVideCollectionMenuContainer
               video={props.video}
               collectionKey={props.collectionKey}
@@ -107,9 +109,9 @@ export const EndOfVideoOverlay = (props: Props) => {
               loading={false}
               getPopupContainer={() => superImposedContainer}
             >
-              <button className={'video-overlay-buttons'}>
-                <Icon component={Save} className={'overlay-button-icon'} />
-                <span className={'overlay-button-text'}>Save</span>
+              <button className="video-overlay-buttons" type="button">
+                <Icon component={Save} className="overlay-button-icon" />
+                <span className="overlay-button-text">Save</span>
               </button>
             </ManageVideCollectionMenuContainer>
             <span>
@@ -125,26 +127,23 @@ export const EndOfVideoOverlay = (props: Props) => {
                 <VideoShareButtonForm video={props.video} />
               </ShareModal>
               <button
-                className={'video-overlay-buttons'}
+                type="button"
+                className="video-overlay-buttons"
                 onClick={() => {
                   checkIfFullScreen();
                   setShareModalVisible(true);
                 }}
-                data-qa={'share-button'}
+                data-qa="share-button"
               >
                 <Icon component={Share} />
-                <span className={'overlay-button-text'}>Share</span>
+                <span className="overlay-button-text">Share</span>
               </button>
             </span>
-          </React.Fragment>
+          </>
         )}
       </div>
     </div>
   );
 
-  return (
-    <React.Fragment>
-      {visible && ReactDOM.createPortal(child(), container)}
-    </React.Fragment>
-  );
+  return <>{visible && ReactDOM.createPortal(child(), container)}</>;
 };

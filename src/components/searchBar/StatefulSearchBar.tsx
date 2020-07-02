@@ -35,6 +35,24 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     this.submit = this.submit.bind(this);
   }
 
+  private submit(value: string) {
+    if (this.submittedText === value) {
+      return;
+    }
+    this.submittedText = value;
+    this.props.onSubmit(value);
+  }
+
+  private renderDatasource(): DataSourceItemType[] {
+    return this.state.completions.map((completion) => ({
+      value: completion.text,
+      text:
+        completion.list === 'channels'
+          ? `Channel: ${completion.text}`
+          : completion.text,
+    }));
+  }
+
   public render() {
     const onsubmit = (e) => e.preventDefault();
     const setDataSource = (txt: string) => {
@@ -47,7 +65,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
       <form action="" onSubmit={onsubmit} className="searchbar">
         <AutoComplete
           defaultActiveFirstOption={false}
-          backfill={true}
+          backfill
           dropdownClassName="search-completions"
           dataSource={this.renderDatasource()}
           defaultValue={this.props.value}
@@ -71,47 +89,32 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
       </form>
     );
   }
-
-  private renderDatasource(): DataSourceItemType[] {
-    return this.state.completions.map((completion) => ({
-      value: completion.text,
-      text:
-        completion.list === 'channels'
-          ? `Channel: ${completion.text}`
-          : completion.text,
-    }));
-  }
-
-  private submit(value: string) {
-    if (this.submittedText === value) {
-      return;
-    }
-    this.submittedText = value;
-    this.props.onSubmit(value);
-  }
 }
 
 const MySearch = React.forwardRef((props: SearchProps, ref: Ref<any>) => {
-  const Clear = props.value !== '' && (
+  const { onChange, value } = props;
+  const Clear = value !== '' && (
     <CloseSVG
       data-qa="clear-search-button"
       onClick={() => {
-        props.onChange({ target: { value: '' } as any } as any);
+        onChange({ target: { value: '' } as any } as any);
       }}
     />
   );
 
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <Search ref={ref} {...props} suffix={Clear} />;
 });
 
-export default class StatefulSearchBar extends React.Component<Props> {
-  public render() {
-    return [
-      <FreshSearchOnValueChange
-        key={this.props.value || ''}
-        onSubmit={this.props.onSubmit}
-        value={this.props.value}
-      />,
-    ];
-  }
-}
+const StatefulSearchBar = (props: Props) => {
+  const { onSubmit, value } = props;
+  return (
+    <FreshSearchOnValueChange
+      key={value || ''}
+      onSubmit={onSubmit}
+      value={value}
+    />
+  );
+};
+
+export default StatefulSearchBar;

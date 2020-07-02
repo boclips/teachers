@@ -19,12 +19,12 @@ interface Props {
 
 export class SearchResultsCardList extends React.PureComponent<Props> {
   public render() {
-    const videoCards: React.ReactElement[] = this.props.videos.map(
-      (video, index) => (
-        <VideoCard video={video} videoIndex={index} key={video.id} />
-      ),
-    );
-    const collectionCards: React.ReactElement[] = this.props.collections.map(
+    const { collections, videos } = this.props;
+
+    const videoCards: React.ReactElement[] = videos.map((video, index) => (
+      <VideoCard video={video} videoIndex={index} key={video.id} />
+    ));
+    const collectionCards: React.ReactElement[] = collections.map(
       (collection) => (
         <CollectionCardContainer
           grid={false}
@@ -40,9 +40,13 @@ export class SearchResultsCardList extends React.PureComponent<Props> {
 
     return (
       <FiniteGrid gutter={[32, 32]}>
-        <TransitionGroup component={null} exit={true}>
-          {videosAndCollectionElements.map((element, index) => (
-            <CSSTransition key={index} classNames="card-list" timeout={500}>
+        <TransitionGroup component={null} exit>
+          {videosAndCollectionElements.map((element) => (
+            <CSSTransition
+              key={element.key}
+              classNames="card-list"
+              timeout={500}
+            >
               <Col span={24} key={element.key}>
                 {element}
               </Col>

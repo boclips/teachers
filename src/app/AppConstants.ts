@@ -30,20 +30,9 @@ export class AppConstants {
   }
 
   public get HOST(): string {
-    return (
-      this.window.location.protocol +
-      '//' +
-      this.window.location.hostname +
-      (this.window.location.port ? ':' + this.window.location.port : '')
-    );
-  }
-
-  public get NEWS(): string {
-    return 'news';
-  }
-
-  public get CLASSROOM(): string {
-    return 'classroom';
+    return `${this.window.location.protocol}//${this.window.location.hostname}${
+      this.window.location.port ? `:${this.window.location.port}` : ''
+    }`;
   }
 }
 

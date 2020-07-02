@@ -9,6 +9,15 @@ export interface Props {
 }
 
 export class CollectionSubtitle extends React.Component<Props> {
+  private renderUpdatedAt = (updatedAt: string) => (
+    <span className="last-updated">
+      {' · Last updated: '}
+      <span data-qa="collection-updated-at">
+        <DateFormatter date={updatedAt} />
+      </span>
+    </span>
+  );
+
   public render(): React.ReactNode {
     return (
       <span className={this.props.classname}>
@@ -19,17 +28,6 @@ export class CollectionSubtitle extends React.Component<Props> {
           videos
         </span>
         {this.renderUpdatedAt(this.props.collection.updatedAt)}
-      </span>
-    );
-  }
-
-  private renderUpdatedAt(updatedAt: string) {
-    return (
-      <span className="last-updated">
-        {` · Last updated: `}
-        <span data-qa="collection-updated-at">
-          <DateFormatter date={updatedAt} />
-        </span>
       </span>
     );
   }

@@ -1,6 +1,7 @@
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
+
 import { BoclipsAnalytics } from './BoclipsAnalytics';
 
 export default abstract class AbstractBoclipsAnalytics

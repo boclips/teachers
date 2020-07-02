@@ -5,14 +5,14 @@ import App from '../../src/app/App';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
-export class AccountSettingsPage {
+class AccountSettingsPage {
   public constructor(public wrapper: ReactWrapper) {}
 
   public static async load() {
     const reactWrapper = mount(
       <App
         history={createMemoryHistory({
-          initialEntries: [`/account-settings`],
+          initialEntries: ['/account-settings'],
         })}
         apiPrefix="https://api.example.com"
       />,
@@ -31,3 +31,5 @@ export class AccountSettingsPage {
     });
   }
 }
+
+export default AccountSettingsPage;

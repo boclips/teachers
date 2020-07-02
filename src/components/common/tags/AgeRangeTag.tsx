@@ -7,15 +7,13 @@ interface AgeRangeProps {
   hideLabel?: boolean;
 }
 
-export class AgeRangeTag extends React.Component<AgeRangeProps> {
-  public render(): React.ReactNode {
-    return (
-      <span data-qa="age-range">
-        <Tag
-          value={this.props.ageRange.getShortLabel()}
-          label={this.props.hideLabel ? null : 'Ages'}
-        />
-      </span>
-    );
-  }
-}
+export const AgeRangeTag = (props: AgeRangeProps) => {
+  return (
+    <span data-qa="age-range">
+      <Tag
+        value={props.ageRange.getShortLabel()}
+        label={props.hideLabel ? null : 'Ages'}
+      />
+    </span>
+  );
+};

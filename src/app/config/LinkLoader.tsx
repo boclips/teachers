@@ -42,24 +42,24 @@ export class UnconnectedLinkLoader extends React.PureComponent<Props> {
     }
   }
 
-  public render() {
-    if (this.linksNotLoaded()) {
-      return <LoadingComponent />;
-    }
-
-    if (this.props.links.loadingState === 'failure') {
-      return <ErrorView nonRecoverable={true} />;
-    }
-
-    return this.props.children;
-  }
-
   private linksNotLoaded(): boolean {
     return (
       !this.props.links ||
       this.props.links.loadingState === null ||
       this.props.links.loadingState === 'loading'
     );
+  }
+
+  public render() {
+    if (this.linksNotLoaded()) {
+      return <LoadingComponent />;
+    }
+
+    if (this.props.links.loadingState === 'failure') {
+      return <ErrorView nonRecoverable />;
+    }
+
+    return this.props.children;
   }
 }
 

@@ -20,25 +20,10 @@ interface DispatchProps {
 export class OnboardingViewComponent extends PureComponent<
   StateProps & DispatchProps
 > {
-  public render() {
-    if (!this.props.userCanActivate) {
-      return null;
-    }
-
-    return (
-      <PageLayout title="Welcome" showFooter={true}>
-        <section className="onboarding" data-qa="onboarding-page">
-          <div className="onboarding__form">
-            <OnboardingForm />
-          </div>
-        </section>
-      </PageLayout>
-    );
-  }
-
   public componentDidMount(): void {
-    if (!this.props.userCanActivate) {
-      this.props.redirectToHomepage();
+    const { userCanActivate, redirectToHomepage } = this.props;
+    if (!userCanActivate) {
+      redirectToHomepage();
     } else {
       AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
         PlatformInteractionType.ONBOARDING_PAGE_1_STARTED,
@@ -46,6 +31,24 @@ export class OnboardingViewComponent extends PureComponent<
       );
       AnalyticsFactory.externalAnalytics().trackOnboardingStarted();
     }
+  }
+
+  public render() {
+    const { userCanActivate } = this.props;
+
+    if (!userCanActivate) {
+      return null;
+    }
+
+    return (
+      <PageLayout title="Welcome" showFooter>
+        <section className="onboarding" data-qa="onboarding-page">
+          <div className="onboarding__form">
+            <OnboardingForm />
+          </div>
+        </section>
+      </PageLayout>
+    );
   }
 }
 

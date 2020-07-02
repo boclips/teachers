@@ -21,9 +21,8 @@ export const SelectAgeRange = (props: Props) => {
         allAgeRanges,
         initialValue,
       ).map((age) => age.encodeJSON());
-    } else {
-      return [];
     }
+    return [];
   };
 
   const onChange = (value: SelectValue) => {

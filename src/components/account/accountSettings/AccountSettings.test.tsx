@@ -2,8 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ShareCode } from 'src/components/account/accountSettings/ShareCode';
-import Mock = jest.Mock;
-import { By } from 'test-support/By';
+import By from 'test-support/By';
 import {
   CountryFactory,
   MockStoreFactory,
@@ -18,6 +17,8 @@ import { EditProfileForm } from './EditProfileForm';
 import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
 import { Profile } from './Profile';
 import SchoolSettings from './SchoolSettings';
+
+import Mock = jest.Mock;
 
 jest.mock('../../../services/users/fetchUser');
 
@@ -53,7 +54,7 @@ describe('account settings form', () => {
     );
   });
 
-  it(`renders the page with existing first and last name populated`, () => {
+  it('renders the page with existing first and last name populated', () => {
     const currentProfile = wrapperWithAmericanTeacher.find(
       By.dataQa('current-profile'),
     );
@@ -67,7 +68,7 @@ describe('account settings form', () => {
     expect(subjectTags.find(SubjectTag).first().text()).toEqual('subject one');
   });
 
-  it(`renders profile view by default and profile form when editing`, () => {
+  it('renders profile view by default and profile form when editing', () => {
     expect(wrapperWithAmericanTeacher.find(EditProfileForm)).not.toExist();
     expect(wrapperWithAmericanTeacher.find(Profile)).toExist();
 

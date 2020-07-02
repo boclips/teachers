@@ -4,20 +4,18 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoIdFactory,
+  EntitiesFactory,
+  MockStoreFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
-import State from '../../../../types/State';
+import State, { CollectionMap, VideoMap } from '../../../../types/State';
 import { addVideoToMyCollectionAction } from '../actions/addToMyCollectionAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
 import { onMyCollectionRemovedAction } from '../actions/onMyCollectionRemovedAction';
 import { removeVideoFromMyCollectionAction } from '../actions/removeFromMyCollectionAction';
 import { onCollectionUnbookmarkedAction } from '../actions/onCollectionUnbookmarkedAction';
 import { onCollectionBookmarkedAction } from '../actions/onCollectionBookmarkedAction';
-import {
-  EntitiesFactory,
-  MockStoreFactory,
-} from './../../../../../test-support/factories';
-import { CollectionMap, VideoMap } from './../../../../types/State';
+
 import { collectionHandlers } from './collectionEntitiesReducer';
 
 const testReducer = createReducer(...collectionHandlers);
@@ -44,7 +42,7 @@ const createInitialState = (options: {
       }),
     }),
   });
-describe(`collectionsReducer`, () => {
+describe('collectionsReducer', () => {
   describe('manipulating my collections', () => {
     test('can remove from my collection', () => {
       const collection = VideoCollectionFactory.sample();

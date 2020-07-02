@@ -12,7 +12,7 @@ interface Props {
 export const ResourceTypeFilterTag = (props: Props) => {
   const dispatch = useDispatch();
   const resourceTypes = useSelector((state: State) => state.resourceTypes);
-  const label = resourceTypes.find((it) => it.value === props.resource).label;
+  const { label } = resourceTypes.find((it) => it.value === props.resource);
   return (
     <span data-qa="resource-type-filter-tag">
       <ClosableTag

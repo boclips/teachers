@@ -13,16 +13,16 @@ export const AgeRangeTags = (props: Props) => {
   const allAgeRanges = useSelector((state: State) => state.ageRanges);
 
   return (
-    <React.Fragment>
+    <>
       {convertAgeRangesFromNumbers(allAgeRanges, props.ageRanges).map(
-        (range, index) => (
+        (range) => (
           <AgeRangeTag
-            key={index}
+            key={range.getId()}
             ageRange={range}
             hideLabel={props.hideLabel}
           />
         ),
       )}
-    </React.Fragment>
+    </>
   );
 };

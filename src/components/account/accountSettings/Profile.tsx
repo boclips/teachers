@@ -13,41 +13,36 @@ interface Props {
   onEdit: () => void;
 }
 
-export class Profile extends React.Component<Props> {
-  public render() {
-    return (
-      <section data-qa="current-profile">
-        <Row>
-          <Col xs={{ span: 24 }}>
-            <section className="account-settings__section-header">
-              <h1 className={'alt account-settings__title'}>Profile</h1>
-              <EditButton
-                data-qa="profile-edit-button"
-                onClick={this.props.onEdit}
-              />
-            </section>
-          </Col>
-        </Row>
-        <AccountSettingsItem label="Name">
-          <span data-qa="profile-name">
-            {this.props.firstName} {this.props.lastName}
-          </span>
-        </AccountSettingsItem>
+export const Profile = (props: Props) => {
+  return (
+    <section data-qa="current-profile">
+      <Row>
+        <Col xs={{ span: 24 }}>
+          <section className="account-settings__section-header">
+            <h1 className="alt account-settings__title">Profile</h1>
+            <EditButton data-qa="profile-edit-button" onClick={props.onEdit} />
+          </section>
+        </Col>
+      </Row>
+      <AccountSettingsItem label="Name">
+        <span data-qa="profile-name">
+          {props.firstName} {props.lastName}
+        </span>
+      </AccountSettingsItem>
 
-        <AccountSettingsItem label="Subjects">
-          <span data-qa="profile-subjects">
-            {this.props.subjects.map((subject, index) => (
-              <ConnectedSubjectTag id={subject} key={index} hideLabel={true} />
-            ))}
-          </span>
-        </AccountSettingsItem>
+      <AccountSettingsItem label="Subjects">
+        <span data-qa="profile-subjects">
+          {props.subjects.map((subject) => (
+            <ConnectedSubjectTag id={subject} key={subject} hideLabel />
+          ))}
+        </span>
+      </AccountSettingsItem>
 
-        <AccountSettingsItem label="Age groups">
-          <span data-qa="profile-age-ranges">
-            <AgeRangeTags ageRanges={this.props.ages} hideLabel={true} />
-          </span>
-        </AccountSettingsItem>
-      </section>
-    );
-  }
-}
+      <AccountSettingsItem label="Age groups">
+        <span data-qa="profile-age-ranges">
+          <AgeRangeTags ageRanges={props.ages} hideLabel />
+        </span>
+      </AccountSettingsItem>
+    </section>
+  );
+};

@@ -2,10 +2,9 @@ import { mount, ReactWrapper } from 'enzyme';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
-import Mock = jest.Mock;
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import {
   CountryFactory,
   LinksFactory,
@@ -20,6 +19,8 @@ import { onboardUser } from '../../../services/users/updateUser';
 import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
+
+import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser', () => ({
   onboardUser: jest.fn().mockReturnValue(Promise.resolve()),

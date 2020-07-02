@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MockStore } from 'redux-mock-store';
-import { By } from '../../../../../test-support/By';
+import By from '../../../../../test-support/By';
 import {
   EntitiesFactory,
   MockStoreFactory,

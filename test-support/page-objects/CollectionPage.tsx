@@ -5,11 +5,11 @@ import { CollectionBanner } from 'src/components/collection/details/header/Colle
 import App from '../../src/app/App';
 import { CollectionHeader } from '../../src/components/collection/details/header/CollectionHeader';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
-import { By } from '../By';
+import By from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
-export class CollectionPage {
+class CollectionPage {
   public constructor(public wrapper: ReactWrapper) {}
 
   public static async load(collectionId: string = 'id') {
@@ -86,11 +86,13 @@ export class CollectionPage {
   public getParentCollectionDetails() {
     let collectionDetails = {};
 
+    // eslint-disable-next-line prefer-destructuring
     collectionDetails = this.wrapper.find(CollectionBanner).map((el) => ({
       title: findOne(el, 'collection-title').text(),
       ...collectionDetails,
     }))[0];
 
+    // eslint-disable-next-line prefer-destructuring
     collectionDetails = this.wrapper.find(CollectionHeader).map((el) => ({
       subjects: el.find(By.dataQa('subject-tag')).map((s) => s.text()),
       ageRange: el
@@ -127,3 +129,5 @@ export class CollectionPage {
     });
   }
 }
+
+export default CollectionPage;

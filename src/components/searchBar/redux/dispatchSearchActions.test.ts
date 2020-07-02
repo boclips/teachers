@@ -11,7 +11,7 @@ function getStore(params: string = '') {
     router: {
       location: {
         pathname: '/videos',
-        search: '?q=Testing123&page=3&' + params,
+        search: `?q=Testing123&page=3&${params}`,
         state: {},
         hash: '',
       },
@@ -46,7 +46,7 @@ describe('when on the videos page', () => {
     store = getStore();
     dispatchSearchActions(store);
 
-    action = store.getActions()[0];
+    [action] = store.getActions();
   });
 
   it('passes the query into the action', () => {
@@ -75,9 +75,9 @@ describe('when on the videos page', () => {
   });
 
   it('filters by duration lower and upper', () => {
-    store = getStore(`duration=60-190`);
+    store = getStore('duration=60-190');
     dispatchSearchActions(store);
-    action = store.getActions()[0];
+    [action] = store.getActions();
 
     expect(action.payload.filters.duration[0].toString()).toEqual('60-190');
   });
@@ -89,7 +89,7 @@ describe('when on the videos page', () => {
   it('filters videos by subject', () => {
     store = getStore('subject=subject-one-id');
     dispatchSearchActions(store);
-    action = store.getActions()[0];
+    [action] = store.getActions();
 
     expect(action.payload.filters.subject).toContain('subject-one-id');
   });

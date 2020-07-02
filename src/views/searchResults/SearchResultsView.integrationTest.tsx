@@ -25,7 +25,7 @@ describe('SearchResultsView', () => {
     expect(view.getByText('Resources')).toBeInTheDocument();
   });
 
-  it(`can change subject filters`, async () => {
+  it('can change subject filters', async () => {
     const { findByLabelText } = renderSearchResultsViewWithSampleData();
 
     const artsCheckbox = await findByLabelText(/Arts.*/);
@@ -73,7 +73,7 @@ describe('SearchResultsView', () => {
       expect(view.queryByText('Filter results')).not.toBeInTheDocument();
     });
 
-    it(`provides the correct counts for age range and subject filter`, async () => {
+    it('provides the correct counts for age range and subject filter', async () => {
       const initialQuery = 'hello';
 
       new ApiStub()

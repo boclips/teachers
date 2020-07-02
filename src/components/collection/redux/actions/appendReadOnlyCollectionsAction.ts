@@ -1,7 +1,7 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 import { Pageable } from '../../../../types/State';
 import { VideoCollection } from '../../../../types/VideoCollection';
-import { CollectionKey } from './../../../../types/CollectionKey';
+import { CollectionKey } from '../../../../types/CollectionKey';
 
 export interface AppendCollectionRequest {
   collections: Pageable<VideoCollection>;
@@ -29,5 +29,7 @@ export const appendPageableCollectionsAction = (
       return appendMyCollectionsAction(request);
     case 'discoverCollections':
       return appendDiscoverCollectionsAction(request);
+    default:
+      throw new Error('no collection found');
   }
 };

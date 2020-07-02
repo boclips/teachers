@@ -24,7 +24,7 @@ const addMoreElements = () => {
 
 storiesOf('Grids', module)
   .add('A finite grid', () => (
-    <React.Fragment>
+    <>
       <p>The green outline shows the outline of each cell.</p>
       <p>The blue outline shows the outline of the content of each cell.</p>
       <FiniteGrid>
@@ -44,10 +44,10 @@ storiesOf('Grids', module)
           <div style={contentStyle}>Cell 4</div>
         </Col>
       </FiniteGrid>
-    </React.Fragment>
+    </>
   ))
   .add('An infinite grid', () => (
-    <React.Fragment>
+    <>
       <p>The green outline shows the outline of each cell.</p>
       <p>The blue outline shows the outline of the content of each cell.</p>
       <p>Count: {elements.length}</p>
@@ -55,10 +55,10 @@ storiesOf('Grids', module)
         dataLength={elements.length}
         next={addMoreElements}
         loader={<span>Loading more!</span>}
-        hasMore={true}
+        hasMore
       >
         {elements.map((_, index) => (
-          <Col key={index} style={cellStyle} span={8}>
+          <Col key={_.toLocaleString()} style={cellStyle} span={8}>
             <div style={contentStyle}>
               Cell {index + 1}
               {index % 7 === 0 && (
@@ -72,5 +72,5 @@ storiesOf('Grids', module)
           </Col>
         ))}
       </InfiniteGrid>
-    </React.Fragment>
+    </>
   ));

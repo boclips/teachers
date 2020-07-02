@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Icon from '@ant-design/icons';
 import { Button } from 'antd';
 import ShareSVG from 'resources/images/share.svg';
-import './ShareButton';
 import { ShareModal } from '../ShareModal';
 
 export interface ShareModelProps {
@@ -10,29 +9,30 @@ export interface ShareModelProps {
   children?: React.ReactNode;
   shareCode?: string;
   extra?: boolean;
-  getContainer?: string | HTMLElement | getContainerFunc | false | null;
+  getContainer?: string | HTMLElement | GetContainerFunc | false | null;
   icon?: React.ComponentType<any>;
 }
-type getContainerFunc = () => HTMLElement;
+type GetContainerFunc = () => HTMLElement;
 
 export const ShareButton = (props: ShareModelProps) => {
   const [visible, setVisible] = useState(false);
 
   return (
-    <React.Fragment>
-      <Button onClick={() => setVisible(true)} data-qa={'share-button'}>
+    <>
+      <Button onClick={() => setVisible(true)} data-qa="share-button">
         <Icon component={props.icon ? props.icon : ShareSVG} />
         <span>Share</span>
       </Button>
       <ShareModal
         title={props.title}
-        children={props.children}
         shareCode={props.shareCode}
         extra={props.extra}
         visible={visible}
         onCancel={() => setVisible(false)}
         getContainer={props.getContainer}
-      />
-    </React.Fragment>
+      >
+        {props.children}
+      </ShareModal>
+    </>
   );
 };

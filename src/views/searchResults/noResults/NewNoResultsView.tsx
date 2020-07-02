@@ -15,42 +15,35 @@ interface Props extends WithAppliedSearchParametersProps {
   onOpenFilterDrawer: () => void;
   canUseFilters: boolean;
 }
-export const NewNoResultsView = withAppliedSearchParameters((props: Props) => {
-  if (props.canUseFilters) {
-    return (
-      <section className="search-zero-results">
-        <Row>
-          <SearchPanelHeader
-            totalElements={0}
-            onOpenFilterDrawer={props.onOpenFilterDrawer}
-          />
-        </Row>
-        <Row>{renderHelperMessage(props.query, props.canUseFilters)}</Row>
-      </section>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <Col xs={{ span: 16, push: 4 }} md={{ span: 12, push: 0 }}>
-          <img
-            className="ant-col-20"
-            src={noResultsIllustration}
-            alt="No results illustration"
-            data-qa="no-results-image"
-          />
-        </Col>
-        <Col xs={24} md={12}>
-          <section className="search-zero-results">
-            {renderHelperMessage(props.query, props.canUseFilters)}
-          </section>
-        </Col>
-      </React.Fragment>
-    );
-  }
-});
+
+const generalSuggestions: JSX.Element[] = [
+  <span>Check the spelling of your search term for any typos.</span>,
+  <span>Use broader terms or fewer keywords.</span>,
+  <span>
+    Explore our curated video collections on the{' '}
+    <Link to="/our-subjects">Subjects</Link> section.
+  </span>,
+  <span>
+    <a
+      href="mailto:teachers@boclips.com?subject=Help me find videos"
+      target="_blank"
+      rel="noreferrer"
+    >
+      Get in touch with us{' '}
+    </a>
+    and we&apos;ll help you find tailored videos.
+  </span>,
+];
+
+const renderListItem = (element: JSX.Element, key: any): JSX.Element => (
+  <li key={key}>
+    <BulletDiscSVG className="suggestion-ideas__icon" />
+    {element}
+  </li>
+);
 
 const renderHelperMessage = (query: string, canUseFilters: boolean) => (
-  <div className={'search-zero-results__message'}>
+  <div className="search-zero-results__message">
     <h1 data-qa="search-zero-results">
       Oops, we couldn’t find any results that matched your search for{' '}
       <em>{query}</em>
@@ -72,27 +65,39 @@ const renderHelperMessage = (query: string, canUseFilters: boolean) => (
   </div>
 );
 
-const generalSuggestions: JSX.Element[] = [
-  <span>Check the spelling of your search term for any typos.</span>,
-  <span>Use broader terms or fewer keywords.</span>,
-  <span>
-    Explore our curated video collections on the{' '}
-    <Link to={'/our-subjects'}>Subjects</Link> section.
-  </span>,
-  <span>
-    <a
-      href={'mailto:teachers@boclips.com?subject=Help me find videos'}
-      target="_blank"
-    >
-      Get in touch with us{' '}
-    </a>
-    and we&apos;ll help you find tailored videos.
-  </span>,
-];
-
-const renderListItem = (element: JSX.Element, key: any): JSX.Element => (
-  <li key={key}>
-    <BulletDiscSVG className={'suggestion-ideas__icon'} />
-    {element}
-  </li>
+const NewNoResultsView = withAppliedSearchParameters(
+  ({ query, onOpenFilterDrawer, canUseFilters }: Props) => {
+    if (canUseFilters) {
+      return (
+        <section className="search-zero-results">
+          <Row>
+            <SearchPanelHeader
+              totalElements={0}
+              onOpenFilterDrawer={onOpenFilterDrawer}
+            />
+          </Row>
+          <Row>{renderHelperMessage(query, canUseFilters)}</Row>
+        </section>
+      );
+    }
+    return (
+      <>
+        <Col xs={{ span: 16, push: 4 }} md={{ span: 12, push: 0 }}>
+          <img
+            className="ant-col-20"
+            src={noResultsIllustration}
+            alt="No results illustration"
+            data-qa="no-results-image"
+          />
+        </Col>
+        <Col xs={24} md={12}>
+          <section className="search-zero-results">
+            {renderHelperMessage(query, canUseFilters)}
+          </section>
+        </Col>
+      </>
+    );
+  },
 );
+
+export default NewNoResultsView;

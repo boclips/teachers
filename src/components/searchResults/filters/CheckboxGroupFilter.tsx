@@ -25,7 +25,7 @@ export const CheckboxGroupFilter = ({
   form,
   fieldOptions,
 }: CheckboxGroupFilterProps & FormComponentProps) => (
-  <React.Fragment>
+  <>
     <Form.Item>
       {form.getFieldDecorator(
         fieldId,
@@ -45,5 +45,5 @@ export const CheckboxGroupFilter = ({
         </CheckboxGroup>,
       )}
     </Form.Item>
-  </React.Fragment>
+  </>
 );

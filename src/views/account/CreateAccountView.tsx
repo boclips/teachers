@@ -16,20 +16,21 @@ interface DispatchProps {
 }
 
 class CreateAccountView extends PureComponent<StateProps & DispatchProps> {
+  public componentDidMount(): void {
+    const { canCreateAccount, redirectToHomepage } = this.props;
+    if (!canCreateAccount) {
+      redirectToHomepage();
+    }
+  }
+
   public render() {
     return (
-      <PageLayout title="Create Account" showFooter={true}>
+      <PageLayout title="Create Account" showFooter>
         <section className="create-account" data-qa="create-account-page">
           <CreateAccountForm />
         </section>
       </PageLayout>
     );
-  }
-
-  public componentDidMount(): void {
-    if (!this.props.canCreateAccount) {
-      this.props.redirectToHomepage();
-    }
   }
 }
 

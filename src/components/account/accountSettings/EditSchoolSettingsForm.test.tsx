@@ -1,8 +1,7 @@
-import Mock = jest.Mock;
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from 'test-support/By';
+import By from 'test-support/By';
 import {
   CountryFactory,
   LinksFactory,
@@ -14,6 +13,8 @@ import { Link } from 'src/types/Link';
 import { SchoolForm } from '../form/SchoolForm';
 import { StatesForm } from '../form/StatesForm';
 import { EditSchoolSettingsForm } from './EditSchoolSettingsForm';
+
+import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 

@@ -17,25 +17,40 @@ interface StateProps {
 }
 
 class TagVideo extends React.PureComponent<Props & StateProps> {
+  public onKeyPress(e, tag) {
+    if (e.keyCode === 13) {
+      this.triggerChange(tag);
+    }
+  }
+
+  public triggerChange(tag: Tag) {
+    const { onChange } = this.props;
+    return () => onChange(tag);
+  }
+
   public render() {
-    if (!this.props.video.links.tag) {
+    const { tags, selectedTag, video } = this.props;
+    if (!video.links.tag) {
       return null;
     }
 
     return (
       <section data-qa="tag-video" className="tag-video--container">
         <h2>How would you use it in class?</h2>
-        <Radio.Group value={this.props.selectedTag}>
+        <Radio.Group value={selectedTag}>
           <Row>
-            {this.props.tags.map((t) => (
-              <Col md={8} xs={24} key={t.id}>
+            {tags.map((tag) => (
+              <Col md={8} xs={24} key={tag.id}>
                 <span
-                  data-state={t.label}
+                  role="button"
+                  tabIndex={0}
+                  data-state={tag.label}
                   data-qa="tag-radio"
                   className="tag-video--radio"
-                  onClick={this.triggerChange(t)}
+                  onClick={this.triggerChange(tag)}
+                  onKeyPress={(e) => this.onKeyPress(e, tag)}
                 >
-                  <Radio value={t}>{t.label}</Radio>
+                  <Radio value={tag}>{tag.label}</Radio>
                 </span>
               </Col>
             ))}
@@ -43,10 +58,6 @@ class TagVideo extends React.PureComponent<Props & StateProps> {
         </Radio.Group>
       </section>
     );
-  }
-
-  public triggerChange(tag: Tag) {
-    return () => this.props.onChange(tag);
   }
 }
 

@@ -68,8 +68,8 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     const requireShareCode = !shareCode && !isAuthenticated;
 
     return (
-      <PageLayout showSearchBar={true} showFooter={true} showNavigation={true}>
-        <React.Fragment>
+      <PageLayout showSearchBar showFooter showNavigation>
+        <>
           <section
             className="collection-view-placeholders"
             data-qa="collection-skeleton"
@@ -83,21 +83,21 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
               cta="View collection"
             />
           )}
-        </React.Fragment>
+        </>
       </PageLayout>
     );
   }
   const isParentCollection = () => collection.subCollections.length > 0;
   return (
     <PageLayout
-      showSearchBar={true}
-      showFooter={true}
-      showNavigation={true}
+      showSearchBar
+      showFooter
+      showNavigation
       subheader={
         isParentCollection() ? (
           <CollectionBanner
             title={collection.title}
-            subtitle={'Digital Citizenship'}
+            subtitle="Digital Citizenship"
             image={<DigitalCitizenshipSVG />}
           />
         ) : null

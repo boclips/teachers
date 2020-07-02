@@ -86,12 +86,12 @@ export const onCollectionEdited = (
   state: State,
   editedCollection: VideoCollection,
 ): State => {
-  state = onUpdateCollection(state, editedCollection);
+  const newState = onUpdateCollection(state, editedCollection);
 
   return {
-    ...state,
+    ...newState,
     collections: {
-      ...state.collections,
+      ...newState.collections,
       updating: false,
     },
   };
@@ -117,7 +117,7 @@ export const onCollectionUnbookmarked = (
       unbookmarkedCollection,
     );
 
-    const myResources = draftState.collections.myResources;
+    const { myResources } = draftState.collections;
     if (myResources) {
       const collections = myResources.items || [];
       collections.splice(
@@ -137,7 +137,7 @@ export const onCollectionBookmarked = (
       bookmarkedCollection,
     );
 
-    const myResources = draftState.collections.myResources;
+    const { myResources } = draftState.collections;
     if (myResources) {
       myResources.items = myResources.items || [];
       myResources.items.push(bookmarkedCollection.id);

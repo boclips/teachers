@@ -6,32 +6,31 @@ interface Props {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onClick?: () => void;
-  className?: string;
   dataQa: string;
   icon: React.ReactNode;
   label: string;
   active?: boolean;
 }
-class DropdownMenuIconComponent extends React.Component<Props> {
-  public render() {
-    return (
-      <A11yButton callback={this.props.onClick}>
-        <div
-          className={'navbar-buttons__button'}
-          onMouseEnter={this.props.onMouseEnter}
-          onMouseLeave={this.props.onMouseLeave}
-          data-qa={this.props.dataQa}
-        >
-          <span className={'icon'}>{this.props.icon}</span>
-          <span className={'icon-label'}>
-            {this.props.label}
-            <span className={'dropdown-arrow'}>
-              <DropdownArrow active={this.props.active} />
-            </span>
+
+const DropdownMenuIconComponent = (props: Props) => {
+  return (
+    <A11yButton callback={props.onClick}>
+      <div
+        className="navbar-buttons__button"
+        onMouseEnter={props.onMouseEnter}
+        onMouseLeave={props.onMouseLeave}
+        data-qa={props.dataQa}
+      >
+        <span className="icon">{props.icon}</span>
+        <span className="icon-label">
+          {props.label}
+          <span className="dropdown-arrow">
+            <DropdownArrow active={props.active} />
           </span>
-        </div>
-      </A11yButton>
-    );
-  }
-}
+        </span>
+      </div>
+    </A11yButton>
+  );
+};
+
 export default DropdownMenuIconComponent;

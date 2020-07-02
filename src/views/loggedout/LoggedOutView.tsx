@@ -8,7 +8,7 @@ import PageLayout from '../../components/layout/PageLayout';
 export default class LoggedOutView extends React.PureComponent {
   public render() {
     return (
-      <PageLayout title="Logged out" showNavigation={false} showFooter={true}>
+      <PageLayout title="Logged out" showNavigation={false} showFooter>
         <section className="illustrated-page">
           <Row>
             <Col sm={{ span: 24 }} md={{ span: 8 }}>
@@ -24,7 +24,7 @@ export default class LoggedOutView extends React.PureComponent {
                   again soon.
                 </p>
                 <p className="action">
-                  <Link to={'/'}>
+                  <Link to="/">
                     Click here if you&apos;d like to log in again
                   </Link>
                 </p>

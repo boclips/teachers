@@ -22,38 +22,11 @@ export class StatesForm extends React.Component<
     this.props.onStateChange(this.props.states.find((c) => c.id === value));
   };
 
-  public render() {
-    return (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('state', {
-          rules: [{ required: true, message: 'Please enter your state' }],
-          initialValue: this.props.initialValue,
-        })(
-          <Select
-            filterOption={this.filterResults()}
-            placeholder={this.props.placeholder}
-            showSearch={true}
-            className={'boclips-multi-select-selection'}
-            size={'large'}
-            onChange={this.onUpdateState}
-            data-qa="states-filter-select"
-            dropdownClassName={'dropdown'}
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
-      </Form.Item>
-    );
-  }
-
-  private filterResults() {
-    return (input, option) =>
-      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-  }
+  private filterResults = () => (input, option) =>
+    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 
   private generateOptions() {
-    const Option = Select.Option;
+    const { Option } = Select;
 
     return (
       this.props.states &&
@@ -69,6 +42,32 @@ export class StatesForm extends React.Component<
             {state.name}
           </Option>
         ))
+    );
+  }
+
+  public render() {
+    return (
+      <Form.Item className="form__item" label={this.props.label} colon={false}>
+        {this.props.form.getFieldDecorator('state', {
+          rules: [{ required: true, message: 'Please enter your state' }],
+          initialValue: this.props.initialValue,
+        })(
+          <Select
+            filterOption={this.filterResults()}
+            placeholder={this.props.placeholder}
+            showSearch
+            className="boclips-multi-select-selection"
+            size="large"
+            onChange={this.onUpdateState}
+            data-qa="states-filter-select"
+            dropdownClassName="dropdown"
+            /* eslint-disable-next-line */
+            {...this.props}
+          >
+            {this.generateOptions()}
+          </Select>,
+        )}
+      </Form.Item>
     );
   }
 }

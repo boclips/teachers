@@ -18,7 +18,7 @@ export class PromotedCollectionsGrid extends React.PureComponent<Props> {
           </span>
         }
         description={this.props.description}
-        grid={true}
+        grid
         maxNumberOfCollections={this.props.maxNumberOfCollections}
         collectionKey="promotedCollections"
       />

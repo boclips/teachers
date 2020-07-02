@@ -38,6 +38,19 @@ export class SchoolForm extends React.Component<
     };
   }
 
+  public componentDidUpdate(prevProps: FormComponentProps) {
+    if (
+      this.props.form.getFieldValue('schoolId') !==
+        prevProps.form.getFieldValue('schoolId') &&
+      this.props.form.getFieldValue('schoolId') === undefined
+    ) {
+      this.setState((state) => ({
+        ...state,
+        schools: [],
+      }));
+    }
+  }
+
   public onUpdateSchool = (value: string) => {
     if (this.props.allowUnknownSchools) {
       this.props.form.setFieldsValue({ schoolName: value });
@@ -50,71 +63,15 @@ export class SchoolForm extends React.Component<
     if (searchValue) {
       searchSchools(searchValue, this.props.country, this.props.state).then(
         (schools) => {
-          this.setState({
-            ...this.state,
+          this.setState((state) => ({
+            ...state,
             schools,
             searchValue,
-          });
+          }));
         },
       );
     }
   };
-
-  public componentDidUpdate(prevProps: FormComponentProps) {
-    if (
-      this.props.form.getFieldValue('schoolId') !==
-        prevProps.form.getFieldValue('schoolId') &&
-      this.props.form.getFieldValue('schoolId') === undefined
-    ) {
-      this.setState({ ...this.state, schools: [] });
-    }
-  }
-
-  public render() {
-    return this.props.allowUnknownSchools ? (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('schoolName', {
-          rules: [{ required: true, message: 'Please enter your school' }],
-          initialValue: this.props.initialValue,
-        })(
-          // @ts-ignore
-          <AutoComplete
-            dataSource={this.state.schools.map((s) => s.name)}
-            placeholder={this.props.placeholder}
-            size={'large'}
-            onSearch={this.onSearchSchool}
-            onChange={this.onUpdateSchool}
-            data-qa="school"
-            dropdownClassName={'dropdown'}
-            {...this.props}
-          />,
-        )}
-      </Form.Item>
-    ) : (
-      <Form.Item className="form__item" label={this.props.label}>
-        {this.props.form.getFieldDecorator('schoolId', {
-          rules: [{ required: true, message: 'Please enter your school' }],
-          initialValue: this.props.initialValue && this.props.initialValue.name,
-        })(
-          <Select
-            filterOption={false}
-            placeholder={this.props.placeholder}
-            onSearch={this.onSearchSchool}
-            disabled={!this.props.state}
-            showSearch={true}
-            data-qa="school-filter-select"
-            size={'large'}
-            className={'boclips-multi-select-selection'}
-            dropdownClassName={'dropdown'}
-            notFoundContent={'Please type to search your school'}
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
-      </Form.Item>
-    );
-  }
 
   private generateOptions = () => {
     const Option = MultiSelect.Option;
@@ -140,4 +97,52 @@ export class SchoolForm extends React.Component<
       </Option>
     ));
   };
+
+  public render() {
+    return this.props.allowUnknownSchools ? (
+      <Form.Item className="form__item" label={this.props.label} colon={false}>
+        {this.props.form.getFieldDecorator('schoolName', {
+          rules: [{ required: true, message: 'Please enter your school' }],
+          initialValue: this.props.initialValue,
+        })(
+          // @ts-ignore
+          <AutoComplete
+            dataSource={this.state.schools.map((s) => s.name)}
+            placeholder={this.props.placeholder}
+            size="large"
+            onSearch={this.onSearchSchool}
+            onChange={this.onUpdateSchool}
+            data-qa="school"
+            dropdownClassName="dropdown"
+            /* eslint-disable-next-line */
+            {...this.props}
+          />,
+        )}
+      </Form.Item>
+    ) : (
+      <Form.Item className="form__item" label={this.props.label}>
+        {this.props.form.getFieldDecorator('schoolId', {
+          rules: [{ required: true, message: 'Please enter your school' }],
+          initialValue: this.props.initialValue && this.props.initialValue.name,
+        })(
+          <Select
+            filterOption={false}
+            placeholder={this.props.placeholder}
+            onSearch={this.onSearchSchool}
+            disabled={!this.props.state}
+            showSearch
+            data-qa="school-filter-select"
+            size="large"
+            className="boclips-multi-select-selection"
+            dropdownClassName="dropdown"
+            notFoundContent="Please type to search your school"
+            /* eslint-disable-next-line */
+            {...this.props}
+          >
+            {this.generateOptions()}
+          </Select>,
+        )}
+      </Form.Item>
+    );
+  }
 }

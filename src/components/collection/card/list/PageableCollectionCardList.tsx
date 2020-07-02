@@ -22,6 +22,15 @@ class PageableCollectionCardList extends React.PureComponent<
     CollectionCardListProps &
     WithPageableCollectionProps
 > {
+  public componentDidMount() {
+    if (
+      !this.props.collections ||
+      (this.props.shouldRefresh && this.props.shouldRefresh())
+    ) {
+      this.props.fetchCollections();
+    }
+  }
+
   public render() {
     if (!this.props.collections) {
       return null;
@@ -35,6 +44,7 @@ class PageableCollectionCardList extends React.PureComponent<
 
     return (
       <CollectionCardList
+        /* eslint-disable-next-line react/jsx-props-no-spreading */
         {...this.props}
         collections={this.props.collections}
         infiniteScroll={
@@ -47,15 +57,6 @@ class PageableCollectionCardList extends React.PureComponent<
         }
       />
     );
-  }
-
-  public componentDidMount() {
-    if (
-      !this.props.collections ||
-      (this.props.shouldRefresh && this.props.shouldRefresh())
-    ) {
-      this.props.fetchCollections();
-    }
   }
 }
 

@@ -63,16 +63,16 @@ window.Environment.RECAPTCHA_SITE_KEY = 'awesome-key-set-in-test-setup';
 
 ApiClientWrapper.set(ApiBoclipsClient.create(axios, Constants.API_PREFIX));
 
+export function findElement(selector: string) {
+  return (global as any).document.querySelector(selector);
+}
+
 export async function waitForElement(selector: string) {
   await eventually(() => {
     expect(findElement(selector)).toBeTruthy();
   });
 
   return findElement(selector);
-}
-
-export function findElement(selector: string) {
-  return (global as any).document.querySelector(selector);
 }
 
 jest.mock(
