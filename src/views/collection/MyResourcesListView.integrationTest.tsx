@@ -115,17 +115,20 @@ describe('MyResourcesListView', () => {
     // Intentionally not using ApiStub so we only set up what is needed
     MockFetchVerify.delete(`/v1/collections/${myCollectionToDelete.id}/delete`);
 
-    const wrapper = renderWithStore(<MyResourcesListView />, {
-      initialState: createStateWithMyResources([
-        myCollectionToDelete,
-        myOtherCollection,
-      ]),
-      reducers: collectionHandlers,
-      middlewares: collectionMiddleware,
-    });
+    const { findByTestId, getAllByTestId, findByRole } = renderWithStore(
+      <MyResourcesListView />,
+      {
+        initialState: createStateWithMyResources([
+          myCollectionToDelete,
+          myOtherCollection,
+        ]),
+        reducers: collectionHandlers,
+        middlewares: collectionMiddleware,
+      },
+    );
 
     // Before delete
-    const myCollectionsBeforeDelete = wrapper.getAllByTestId('collection-card');
+    const myCollectionsBeforeDelete = getAllByTestId('collection-card');
     expect(myCollectionsBeforeDelete).toHaveLength(2);
 
     // Get one to delete
@@ -136,10 +139,11 @@ describe('MyResourcesListView', () => {
       within(collectionToBeDeleted).getByTestId('collection-edit-button'),
     );
 
-    fireEvent.click(await wrapper.findByTestId('delete-collection'));
+    fireEvent.click(await findByTestId('delete-collection'));
 
     // Check the delete confirmation dialog
-    fireEvent.click(await wrapper.findByText('Delete'));
+    const deleteDialog = await findByRole('dialog');
+    fireEvent.click(within(deleteDialog).getByText('Delete'));
 
     // Verify that the right collection is removed
     await waitForElementToBeRemoved(() =>
@@ -147,7 +151,7 @@ describe('MyResourcesListView', () => {
     );
     expect(collectionToBeDeleted).not.toBeInTheDocument();
 
-    const collectionsAfterDelete = wrapper.getAllByTestId('collection-card');
+    const collectionsAfterDelete = getAllByTestId('collection-card');
     expect(collectionsAfterDelete).toHaveLength(1);
     expect(collectionNotToBeDeleted).toBeInTheDocument();
   });

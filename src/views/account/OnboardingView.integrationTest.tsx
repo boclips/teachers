@@ -49,7 +49,7 @@ describe('When user is not activated', () => {
     onboardingPage.setName('Rebecca', 'Sanchez');
     onboardingPage.setRole('TEACHER');
     onboardingPage.setSubjects(['1', '3']);
-    onboardingPage.setCountry('Spain');
+    onboardingPage.setCountry('ES');
     onboardingPage.enterSchool('school');
     onboardingPage.setAgeRanges(['3-5']);
     onboardingPage.setMarketingOptIn(true);

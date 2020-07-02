@@ -1,4 +1,4 @@
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { Icon } from 'antd';
 import React from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Video } from 'src/types/Video';
@@ -37,7 +37,7 @@ export const VideoHeader = withRouter(
       </StopClickPropagation>
       <section className="badge-container">
         <p data-qa="video-duration" className={'subtitle duration'}>
-          <ClockCircleOutlined />{' '}
+          <Icon type="clock-circle" />{' '}
           <DurationFormatter duration={props.video.duration} />
         </p>
       </section>

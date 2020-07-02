@@ -1,6 +1,5 @@
-import { Form } from '@ant-design/compatible';
-import { Input } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
+import { Form, Input } from 'antd';
+import { FormComponentProps } from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
 import Button from 'antd/lib/button';
 import React, { useState } from 'react';

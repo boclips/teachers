@@ -1,16 +1,14 @@
 @import '../../../resources/styles/_antd-theme.less';
 
 .boclips-multi-select-selection {
-  width: 100%;
-
-  .ant-select-selector {
-    border: 2px solid @shade-2 !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    line-height: 24px !important;
+  & .ant-select-selection {
+    border: 2px solid @shade-2;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 24px;
   }
 
-  &:not(.ant-select-single) span.ant-select-selection-item {
+  li.ant-select-selection__choice {
     border-radius: 8px;
     font-weight: normal;
     font-size: 14px;
@@ -18,7 +16,7 @@
     border: 2px solid @shade-2;
   }
 
-  span.ant-select-selection-item-remove {
+  i.ant-select-remove-icon {
     color: @cta-blue;
   }
 
@@ -26,23 +24,5 @@
     height: 26px;
     line-height: 24px;
     margin-top: 5px;
-  }
-
-  &.ant-select-open .ant-select-arrow .anticon-down {
-    transform: rotate(180deg);
-    transition: transform .3s !important;
-    transition-property: transform;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    transition-delay: 0s;
-  }
-
-  &:not(.ant-select-open) .ant-select-arrow .anticon-down {
-    transform: rotate(0);
-    transition: transform .3s !important;
-    transition-property: transform;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    transition-delay: 0s;
   }
 }

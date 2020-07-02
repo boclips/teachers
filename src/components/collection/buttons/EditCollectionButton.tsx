@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
+import Icon from 'antd/lib/icon';
 import { useSelector } from 'react-redux';
-import Icon from '@ant-design/compatible/lib/icon';
 import State from '../../../types/State';
 import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
 import { VideoCollection } from '../../../types/VideoCollection';

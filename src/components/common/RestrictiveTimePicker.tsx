@@ -1,6 +1,4 @@
-import { Form } from '@ant-design/compatible';
-
-import { Checkbox, TimePicker } from 'antd';
+import { Checkbox, Form, TimePicker } from 'antd';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import range from 'lodash/range';
 import moment, { Moment } from 'moment';

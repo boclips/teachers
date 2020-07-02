@@ -2,9 +2,9 @@ import { Col, Row } from 'antd';
 import Layout from 'antd/lib/layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SearchBarWrapper from 'src/components/searchBar/SearchBarWrapper';
 import boclipsLogo from '../../../../resources/images/boclips-logo.png';
 import BoclipsMobileLogo from '../../../../resources/images/boclips-mobile-logo.svg';
+import SearchBar from '../../searchBar/SearchBar';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import { NavbarButtonsContainer } from './NavbarButtonsContainer';
 import './TopNavbar.less';
@@ -22,7 +22,7 @@ const { Content } = Layout;
 export const TopNavbar = React.memo((props: Props) => (
   <React.Fragment>
     <Content className="top-navbar">
-      <Row align="middle">
+      <Row>
         <Col
           sm={{ span: 24 }}
           md={{ span: 6 }}
@@ -45,7 +45,7 @@ export const TopNavbar = React.memo((props: Props) => (
             md={{ span: 20 }}
             lg={{ span: 10 }}
           >
-            <SearchBarWrapper />
+            <SearchBar />
           </Col>
         ) : (
           props.isMobile && (

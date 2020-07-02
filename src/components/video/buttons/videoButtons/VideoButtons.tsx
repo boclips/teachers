@@ -1,5 +1,4 @@
-import Icon from '@ant-design/icons';
-import { Button, Dropdown, Menu } from 'antd';
+import { Button, Dropdown, Icon, Menu } from 'antd';
 import React from 'react';
 import { DownloadTranscriptButton } from 'src/components/video/buttons/downloadTranscriptButton/DownloadTranscriptButton';
 import MoreSVG from '../../../../../resources/images/more.svg';

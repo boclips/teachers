@@ -1,6 +1,5 @@
-import { Form } from '@ant-design/compatible';
-import { Input } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Form, Input } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 
 interface Props {
@@ -12,12 +11,7 @@ export class NameForm extends React.Component<FormComponentProps & Props> {
   public render() {
     return (
       <section>
-        <Form.Item
-          className="required name-form__item"
-          label="First name"
-          required={true}
-          colon={false}
-        >
+        <Form.Item label="First name" required={true} colon={false}>
           {this.props.form.getFieldDecorator('firstName', {
             rules: [
               {
@@ -36,13 +30,7 @@ export class NameForm extends React.Component<FormComponentProps & Props> {
             />,
           )}
         </Form.Item>
-
-        <Form.Item
-          className="required name-form__item"
-          label="Last name"
-          required={true}
-          colon={false}
-        >
+        <Form.Item label="Last name" required={true} colon={false}>
           {this.props.form.getFieldDecorator('lastName', {
             rules: [
               {

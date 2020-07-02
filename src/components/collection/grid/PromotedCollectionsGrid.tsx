@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons';
+import { Icon } from 'antd';
 import React from 'react';
 import collectionsSvg from '../../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../card/list/PageableCollectionCardList';

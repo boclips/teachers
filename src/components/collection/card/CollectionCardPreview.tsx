@@ -78,7 +78,7 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
     }
 
     return (
-      <Row gutter={[4, 4]}>
+      <Row type="flex" gutter={[4, 4]}>
         {previewImages.map((image, index) => (
           <Col key={index} span={12}>
             {image}
@@ -90,6 +90,7 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
 
   public static Skeleton = () => (
     <Row
+      type="flex"
       gutter={[4, 4]}
       className={'skeleton ant-skeleton ant-skeleton-active'}
     >

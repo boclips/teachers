@@ -1,6 +1,5 @@
-import { Form } from '@ant-design/compatible';
-import { Checkbox } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Checkbox, Form } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import BlankTargetLink from '../../common/BlankTargetLink';
 import { PrivacyPolicyLink } from './PrivacyPolicyLink';

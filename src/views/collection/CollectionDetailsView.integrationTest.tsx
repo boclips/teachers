@@ -1,11 +1,10 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Store } from 'redux';
-import { waitFor } from '@testing-library/dom';
 import {
   collectionResponse,
   parentCollectionResponse,
@@ -288,11 +287,11 @@ describe('CollectionDetailsView', () => {
       await fireEvent.change(shareField, { target: { value: 'valid' } });
       await fireEvent.click(button);
 
-      await waitFor(() =>
-        expect(
-          wrapper.queryByText('Enter code to view collection'),
-        ).not.toBeInTheDocument(),
-      );
+      await expect(
+        waitForElementToBeRemoved(() =>
+          wrapper.getByText('Enter code to view collection'),
+        ),
+      ).resolves.toEqual(true);
 
       expect(store.getState().authentication.refererId).toEqual('test-id');
       expect(store.getState().authentication.shareCode).toEqual('valid');

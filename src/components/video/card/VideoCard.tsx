@@ -39,7 +39,7 @@ export const VideoCardSkeleton = () => (
 export const VideoCard = withMediaBreakPoint(
   React.memo<Props & WithMediaBreakPointProps>((props) => {
     const isAuthenticated = useSelector((state: State) => !!state.user);
-    const smallCard = props.mediaBreakpoint.width < MediaBreakpoints.lg.width;
+    const smallCard = props.mediaBreakpoint.width < MediaBreakpoints.md.width;
 
     const renderVideoButtons =
       ((props.video && props.video.links.transcript) || isAuthenticated) &&

@@ -16,7 +16,7 @@ const user = UserProfileFactory.sample({});
 test('renders search bar', () => {
   const wrapper = mountTopNavBarWithSearchBar();
 
-  expect(wrapper.find('Connect(SearchBarWrapper)')).toExist();
+  expect(wrapper.find('Connect(SearchBar)')).toExist();
 });
 
 test('renders account menu', () => {
@@ -29,7 +29,7 @@ test('renders navbar with account menu and search bar', () => {
   const wrapper = mountTopNavBarWithAccountMenuAndSearchBar();
 
   expect(wrapper.find(NavbarButtonsContainer)).toExist();
-  expect(wrapper.find('Connect(SearchBarWrapper)')).toExist();
+  expect(wrapper.find('Connect(SearchBar)')).toExist();
 });
 
 test('renders top navbar with navigation', () => {

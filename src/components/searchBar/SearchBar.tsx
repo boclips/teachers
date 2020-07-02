@@ -2,10 +2,9 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import SearchBar from '@bit/boclips.boclips-ui.components.search-bar';
 import { RouterState } from '../../types/State';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
-import './SearchBarWrapper.less';
+import StatefulSearchBar from './StatefulSearchBar';
 
 interface StateProps {
   query?: string;
@@ -15,18 +14,13 @@ interface DispatchProps {
   onQuerySubmitted: (query: string) => void;
 }
 
-export class SearchBarWrapper extends React.Component<
-  StateProps & DispatchProps
-> {
+export class SearchBar extends React.Component<StateProps & DispatchProps> {
   public render() {
     return (
-      <div className={'search-bar'}>
-        <SearchBar
-          size={'large'}
-          placeholder={'Enter your search term'}
-          onSearch={this.props.onQuerySubmitted}
-        />
-      </div>
+      <StatefulSearchBar
+        onSubmit={this.props.onQuerySubmitted}
+        value={this.props.query}
+      />
     );
   }
 }
@@ -45,4 +39,4 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBarWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

@@ -1,79 +1,107 @@
-@import '../../../../resources/styles/_colours';
-
 .end-video-overlay-container {
-  background-color: @shade-7;
+  background-color: #3d4564;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Heebo;
-  font-size: 16px;
-
-  .video-overlay-replay-button {
-    height: 40px;
-    width: 146px;
-    border-radius: 8px;
-    background-color: @blue-shade-4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    letter-spacing: 0;
-    line-height: 24px;
-    text-align: center;
-    border: none;
-  }
-  .overlay-buttons-container {
-    border-top: 2px solid #848fbb;
-    padding-top: 15px;
-    padding-bottom: 0px;
-    margin-top: 24px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-    span:not(:first-child) {
-      .video-overlay-buttons {
-        border-left: 2px solid #848fbb;
-      }
-    }
-
-    span {
-      padding: 0 4px 0 4px;
-      .video-overlay-buttons {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 0px 10px;
-        border: none;
-        border-radius: 0px;
-        background-color: @shade-7;
-        cursor: pointer;
-        color: white;
-        height: 24px;
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0;
-        line-height: 18px;
-        text-align: center;
-        outline: none;
-
-        svg {
-          height: 28px;
-          width: 28px;
-          padding: 5px;
-        }
-
-        .overlay-button-text {
-          padding-left: 4px;
-        }
-      }
-    }
-  }
 }
 
+.overlay-buttons-container {
+  border-top: 2px solid #848fbb;
+  padding-top: 15px;
+  padding-bottom: 0px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.overlay-buttons-children > span > button,
+.overlay-buttons-children > button,
+.video-overlay-buttons {
+  border: none;
+}
+.overlay-buttons-children > span > button:hover,
+.overlay-buttons-children > button:hover,
+.video-overlay-buttons:hover {
+  border: none;
+}
+
+.overlay-buttons-children > span > button,
+.overlay-buttons-children > button,
+.video-overlay-buttons {
+  border-radius: 0px;
+  background-color: #3d4564;
+  padding: 0px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 0px;
+  justify-content: center;
+  cursor: pointer;
+  height: 24px;
+}
 #overlay {
   z-index: 3;
+}
+.end-video-overlay-container > div > span > button > i,
+.end-video-overlay-container
+  > div.overlay-buttons-container
+  > span
+  > button
+  > i {
+  line-height: 0px;
+}
+
+.overlay-buttons-text,
+.overlay-buttons-children span > button > section > span,
+.overlay-buttons-children > button > span {
+  color: #fafaff;
+  font-family: Heebo;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 18px;
+  text-align: center;
+  padding-left: 4px;
+}
+
+.overlay-buttons-children {
+  padding-right: 16px;
+  padding-left: 16px;
+  border-right: 2px solid #848fbb;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.overlay-buttons-children:last-child {
+  border-right: none;
+}
+
+.end-video-overlay-container > .video-overlay-replay-button {
+  height: 40px;
+  width: 146px;
+  border-radius: 8px;
+  background-color: #0e69ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #0e69ff;
+  color: #ffffff;
+  font-family: Heebo;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  line-height: 24px;
+  text-align: center;
+  border: none;
+}
+
+.overlay-buttons-children > span > button > section > i > svg,
+.overlay-buttons-children > button > i > svg,
+.overlay-buttons-icon {
+  width: 24px;
+  height: 24px;
 }

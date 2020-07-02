@@ -1,6 +1,5 @@
-import { Form } from '@ant-design/compatible';
-import { Menu } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
+import { Form, Menu } from 'antd';
+import { FormComponentProps } from 'antd/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { Ref, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';

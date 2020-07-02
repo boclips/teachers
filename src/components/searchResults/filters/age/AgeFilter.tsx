@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import State from 'src/types/State';
 import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
 import { AgeRange } from 'src/types/AgeRange';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { FormComponentProps } from 'antd/lib/form';
 
 interface Props {
   ageRange: AgeRange[];

@@ -2,7 +2,7 @@ import Select, { SelectProps } from 'antd/lib/select';
 import React from 'react';
 import './MultiSelect.less';
 
-class MultiSelect extends React.PureComponent<SelectProps<string[]>> {
+class MultiSelect extends React.PureComponent<SelectProps> {
   public static Option = Select.Option;
   public render() {
     return (

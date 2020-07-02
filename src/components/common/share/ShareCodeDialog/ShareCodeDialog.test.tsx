@@ -6,6 +6,7 @@ import { RouterFactory, UserProfileFactory } from 'test-support/factories';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { createMemoryHistory } from 'history';
+import { waitForElementToBeRemoved } from '@testing-library/react';
 import eventually from 'test-support/eventually';
 
 describe(`Share code dialog`, () => {
@@ -44,9 +45,9 @@ describe(`Share code dialog`, () => {
 
     await fireEvent.click(submitButton);
 
-    await waitFor(() =>
-      expect(wrapper.queryByText('Test')).not.toBeInTheDocument(),
-    );
+    await expect(
+      waitForElementToBeRemoved(() => wrapper.getByText('Test')),
+    ).resolves.toEqual(true);
   });
 
   it(`when code is incorrect displays invalid code`, async () => {

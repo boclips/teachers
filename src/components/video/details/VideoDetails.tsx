@@ -1,5 +1,4 @@
-import { ClockCircleOutlined } from '@ant-design/icons';
-import { Col, Row, Skeleton } from 'antd';
+import { Col, Icon, Row, Skeleton } from 'antd';
 import React from 'react';
 import { Authenticated } from 'src/components/common/Authenticated/Authenticated';
 import { BestForTag } from 'src/components/common/tags/BestForTag';
@@ -36,7 +35,7 @@ const VideoDetailsContent = ({ video }: Props) => {
       itemScope={true}
       itemType="http://schema.org/Article"
     >
-      <Row justify="space-between" className={'video-header'}>
+      <Row type="flex" justify="space-between" className={'video-header'}>
         <Col>
           <h1
             className="title clamp-2-lines big-title"
@@ -67,7 +66,7 @@ const VideoDetailsContent = ({ video }: Props) => {
           </div>
           <section className="badge-container">
             <p data-qa="video-duration" className={'duration'}>
-              <ClockCircleOutlined />{' '}
+              <Icon type="clock-circle" />{' '}
               <DurationFormatter duration={video.duration} />
             </p>
           </section>
@@ -75,11 +74,11 @@ const VideoDetailsContent = ({ video }: Props) => {
       </Row>
       <Row className="subtitle">
         <Rating video={video} />
-        Released on&nbsp;
+        Released on{' '}
         <span data-qa="video-released-on">
           <DateFormatter date={video.releasedOn} />
-        </span>
-        &nbsp;by&nbsp;<span data-qa="video-created-by">{video.createdBy}</span>
+        </span>{' '}
+        by <span data-qa="video-created-by">{video.createdBy}</span>
       </Row>
       <Row className={'video-player-container'}>
         <Col

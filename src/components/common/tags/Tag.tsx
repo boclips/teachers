@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons';
+import { Icon } from 'antd';
 import React from 'react';
 import CloseSVG from '../../../../resources/images/close.svg';
 import './Tag.less';

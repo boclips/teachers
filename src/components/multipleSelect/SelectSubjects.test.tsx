@@ -19,7 +19,7 @@ describe('SelectSubjects', () => {
     );
 
     const selector = view.getByText('Select a subject');
-    fireEvent.mouseDown(selector);
+    fireEvent.click(selector);
 
     const maths = await view.findByText('Maths');
     const art = view.getByText('Art');
@@ -29,8 +29,8 @@ describe('SelectSubjects', () => {
 
     const options = view.getAllByRole('option');
 
-    expect(options[0].outerHTML).toContain('Art');
-    expect(options[1].outerHTML).toContain('Maths');
+    expect(options[0].textContent).toContain('Art');
+    expect(options[1].textContent).toContain('Maths');
   });
 
   test('onSelection returns a list of selected ids', async () => {
@@ -49,7 +49,7 @@ describe('SelectSubjects', () => {
     );
 
     const selector = view.getByText('Select a subject');
-    fireEvent.mouseDown(selector);
+    fireEvent.click(selector);
 
     const maths = await view.findByText('Maths');
 

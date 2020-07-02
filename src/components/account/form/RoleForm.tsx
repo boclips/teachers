@@ -1,8 +1,6 @@
-import { Form } from '@ant-design/compatible';
-
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 import React from 'react';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { FormComponentProps } from 'antd/lib/form';
 
 export interface Props {
   onRoleChange: (value) => void;
@@ -12,7 +10,7 @@ export const RoleForm = (props: FormComponentProps & Props) => (
   <Form.Item
     label={"I'm a"}
     colon={false}
-    className="required name-form__role form__item"
+    className="name-form__role form__item"
   >
     {props.form.getFieldDecorator('role', {
       rules: [
@@ -23,6 +21,7 @@ export const RoleForm = (props: FormComponentProps & Props) => (
       ],
     })(
       <Select
+        mode={'default'}
         data-qa="select-role"
         size="large"
         className={'boclips-multi-select-selection'}

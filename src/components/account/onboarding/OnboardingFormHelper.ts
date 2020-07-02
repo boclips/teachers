@@ -2,6 +2,7 @@ import { Carousel } from 'antd';
 import { ReactWrapper } from 'enzyme';
 import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
+import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 
 export class OnboardingFormHelper {
@@ -12,15 +13,12 @@ export class OnboardingFormHelper {
   }
 
   public static editRole(wrapper, value: string) {
-    wrapper
-      .find(By.dataQa('select-role'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+    wrapper.find(By.dataQa('select-role')).first().simulate('click');
 
-    wrapper.find(`[data-state="${value}"]`).first().simulate('click');
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
 
-    wrapper.find(SelectSubjects).simulate('mouseDown');
-    wrapper.update();
+    menuItems.find(`[value="${value}"]`).simulate('click');
+    wrapper.find(By.dataQa('select-role')).first().simulate('click');
   }
 
   public static setMarketingOptIn(wrapper: ReactWrapper, optIn: boolean) {
@@ -40,31 +38,25 @@ export class OnboardingFormHelper {
   }
 
   public static editSubjects(wrapper: ReactWrapper, subjectIds: string[]) {
-    wrapper
-      .find(By.dataQa('subjects'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+    wrapper.find(SelectSubjects).simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
 
     subjectIds.forEach((subjectId) => {
-      wrapper.find(`[data-qa="${subjectId}"]`).first().simulate('click');
+      menuItems.find(`[value="${subjectId}"]`).simulate('click');
     });
 
-    wrapper.find(SelectSubjects).simulate('mouseDown');
+    wrapper.find(SelectSubjects).simulate('click');
   }
 
-  public static editCountry(wrapper: ReactWrapper, countryName: string) {
-    wrapper
-      .find(By.dataQa('countries-filter-select'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+  public static editCountry(wrapper: ReactWrapper, countryId: string) {
+    wrapper.find(By.dataQa('countries-filter-select', 'div')).simulate('click');
 
-    wrapper
-      .find('[data-qa="country-option"]')
-      .findWhere((n) => n.text() === countryName)
-      .first()
-      .simulate('click');
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
 
-    wrapper.find(SelectSubjects).simulate('mousedown');
+    menuItems.find(`[value="${countryId}"]`).simulate('click');
+
+    wrapper.find(SelectSubjects).simulate('click');
     wrapper.update();
   }
 
@@ -75,17 +67,13 @@ export class OnboardingFormHelper {
   }
 
   public static editAgeRange(wrapper: ReactWrapper, ageRanges: string[]) {
-    wrapper
-      .find(By.dataQa('age-select'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+    wrapper.find(SelectAgeRange).find('.ant-select').simulate('click');
+
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
 
     ageRanges.forEach((ageRange) => {
-      wrapper.find(`[data-qa="${ageRange}"]`).first().simulate('click');
+      menuItems.find(`[data-qa="${ageRange}"]`).first().simulate('click');
     });
-
-    wrapper.find(SelectSubjects).simulate('mousedown');
-    wrapper.update();
   }
 
   public static moveCarousel(wrapper: ReactWrapper, currentSlide: number) {

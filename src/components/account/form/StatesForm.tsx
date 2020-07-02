@@ -1,7 +1,5 @@
-import { Form } from '@ant-design/compatible';
-
-import { Select } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Form, Select } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import { UsaState } from '../../../types/UsaState';
 import '../../common/MultiSelect.less';

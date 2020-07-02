@@ -1,5 +1,4 @@
-import Icon from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { Col, Icon, Row } from 'antd';
 import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -92,6 +91,7 @@ export class DiscoverCollectionsView extends PureComponent<
               </h1>
               <Row
                 className="discover-collections__subjects-list"
+                type="flex"
                 gutter={[12, 12]}
               >
                 {sortBy(this.props.discipline.subjects, ['name']).map(

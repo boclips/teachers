@@ -1,4 +1,4 @@
-import Icon from '@ant-design/icons';
+import { Icon } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import SaveSVG from 'resources/images/save.svg';

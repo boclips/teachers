@@ -62,7 +62,7 @@ describe(`Profile form`, () => {
   });
 
   it(`sends an updateuser request with the correct values`, () => {
-    wrapper.find(SelectAgeRange).find('.ant-select').simulate('mousedown');
+    wrapper.find(SelectAgeRange).find('.ant-select').simulate('click');
 
     const events = new EventSimulator(wrapper);
     events.setText(
@@ -74,23 +74,16 @@ describe(`Profile form`, () => {
       wrapper.find(By.dataQa('last-name', 'input')),
     );
 
-    wrapper
-      .find(By.dataQa('age-select'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+    const ageRangeOptions = wrapper.find('Trigger').find('MenuItem');
+    ageRangeOptions.find(`[data-qa="11-14"]`).first().simulate('click');
 
-    wrapper.find('[data-qa="11-14"]').first().simulate('click');
+    wrapper.find(SelectSubjects).simulate('click');
 
-    wrapper.find(SelectSubjects).simulate('mousedown');
+    const menuItems = wrapper.find('Trigger').find('MenuItem');
 
-    wrapper
-      .find(By.dataQa('subjects'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+    menuItems.find(`[data-qa="subject-two-id"]`).first().simulate('click');
+    wrapper.update();
 
-    wrapper.find(`[data-qa="subject-two-id"]`).first().simulate('click');
-
-    wrapper.find(SelectSubjects).simulate('mouseDown');
     wrapper.find(By.dataQa('submit-update-user', 'button')).simulate('click');
 
     expect(mockUpdateUser).toHaveBeenCalledWith(links, {

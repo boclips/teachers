@@ -1,5 +1,4 @@
-import Icon from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 import React from 'react';
 import RateIcon from '../../../../../resources/images/rate.svg';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';

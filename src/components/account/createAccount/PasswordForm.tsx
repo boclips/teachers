@@ -1,7 +1,5 @@
-import { EyeFilled, EyeInvisibleOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Input } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Form, Icon, Input } from 'antd';
+import { FormComponentProps } from 'antd/lib/form';
 import React from 'react';
 import ErrorSvg from '../../../../resources/images/validation-error.svg';
 import SuccessSvg from '../../../../resources/images/validation-success.svg';
@@ -47,11 +45,9 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
   public render() {
     return (
       <Form.Item
-        label="Password:"
+        label="Password"
         required={false}
         className="password-form__container"
-        labelCol={{ span: 24 }}
-        colon
       >
         {this.props.form.getFieldDecorator('password', {
           rules: [
@@ -73,7 +69,7 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
                   data-qa="hide-password"
                   onClick={this.toggleShow}
                 >
-                  <EyeInvisibleOutlined />
+                  <Icon type="eye-invisible" />
                   &nbsp;Hide
                 </a>
               ) : (
@@ -83,7 +79,7 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
                   data-qa="show-password"
                   onClick={this.toggleShow}
                 >
-                  <EyeFilled />
+                  <Icon type="eye" theme="filled" />
                   &nbsp;Show
                 </a>
               )

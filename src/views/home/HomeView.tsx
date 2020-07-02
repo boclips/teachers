@@ -1,4 +1,6 @@
-import { Button, Col, Row } from 'antd';
+import Col from 'antd/lib/grid/col';
+import Row from 'antd/lib/grid/row';
+import { Button } from 'antd';
 import Layout from 'antd/lib/layout/layout';
 import React, { PureComponent } from 'react';
 import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-homepage.svg';
@@ -6,10 +8,10 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { InteractionTracker } from 'src/components/common/InteractionTracker';
 import { Link } from 'react-router-dom';
-import SearchBarWrapper from 'src/components/searchBar/SearchBarWrapper';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
+import SearchBar from '../../components/searchBar/SearchBar';
 import { VideosAndDisciplinesSection } from './VideosAndDisciplinesSection';
 
 import './HomeView.less';
@@ -34,7 +36,7 @@ export default class HomeView extends PureComponent {
                   <section className="home-search">
                     <section className="home-searchbar">
                       <label>Let&apos;s plan your next lesson:</label>
-                      <SearchBarWrapper />
+                      <SearchBar />
                     </section>
                   </section>
                 </Col>
@@ -44,27 +46,41 @@ export default class HomeView extends PureComponent {
 
           <section>
             <Content>
-              <InteractionTracker
-                onInteraction={() =>
-                  AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
-                    PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
-                  )
-                }
-              >
-                <Link
-                  to={'/collections/5ecd3a5515f802372946d4dc'}
-                  className={'home-banner'}
-                >
-                  <div className="home-banner__illustration display-desktop">
-                    <DigitalCitizenshipSVG />
-                  </div>
-                  <div className={'copy-col'}>
-                    <h1 className="alt">Digital Citizenship - Social Media</h1>
-                    <p>Help students understand how to keep safe online</p>
-                    <Button className="display-desktop">Explore series</Button>
-                  </div>
-                </Link>
-              </InteractionTracker>
+              <Row>
+                <Col>
+                  <InteractionTracker
+                    onInteraction={() =>
+                      AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+                        PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+                      )
+                    }
+                  >
+                    <Link
+                      to={'/collections/5ecd3a5515f802372946d4dc'}
+                      className={'home-banner'}
+                    >
+                      <Row type="flex">
+                        <Col xs={0} lg={10}>
+                          <div className="home-banner__illustration">
+                            <DigitalCitizenshipSVG />
+                          </div>
+                        </Col>
+                        <Col sm={24} lg={14} className="copy-col">
+                          <h1 className="alt">
+                            Digital Citizenship - Social Media
+                          </h1>
+                          <p>
+                            Help students understand how to keep safe online
+                          </p>
+                          <Button className="display-desktop">
+                            Explore series
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Link>
+                  </InteractionTracker>
+                </Col>
+              </Row>
             </Content>
           </section>
 
