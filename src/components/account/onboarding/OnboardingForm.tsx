@@ -204,7 +204,7 @@ class OnboardingForm extends React.Component<
   private onStateChange = (updatedState) =>
     this.setState((state) => ({
       ...state,
-      updatedState,
+      state: updatedState,
     }));
 
   private getSchoolForm = () => {
