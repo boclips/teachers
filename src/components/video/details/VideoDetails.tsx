@@ -18,16 +18,12 @@ import VideoPlayer from '../player/VideoPlayer';
 import Rating from '../rating/Rating';
 import './VideoDetails.less';
 
-interface VideoDetailsProps {
-  video: Video | null;
-}
-
-interface SkeletonProps {
+interface Props {
   video: Video | null;
   children?: React.ReactNode;
 }
 
-const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
+const VideoDetailsContent = ({ video }: Props) => {
   if (!video) {
     return null;
   }
@@ -37,10 +33,10 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
   return (
     <section
       className="video-details-container video-content"
-      itemScope
+      itemScope={true}
       itemType="http://schema.org/Article"
     >
-      <Row justify="space-between" className="video-header">
+      <Row justify="space-between" className={'video-header'}>
         <Col>
           <h1
             className="title clamp-2-lines big-title"
@@ -53,7 +49,7 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
         <Authenticated>
           <Col>
             <section className="buttons-row">
-              <VideoButtons video={video} mode="default" />
+              <VideoButtons video={video} mode={'default'} />
             </section>
           </Col>
         </Authenticated>
@@ -70,7 +66,7 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
             </Authenticated>
           </div>
           <section className="badge-container">
-            <p data-qa="video-duration" className="duration">
+            <p data-qa="video-duration" className={'duration'}>
               <ClockCircleOutlined />{' '}
               <DurationFormatter duration={video.duration} />
             </p>
@@ -79,22 +75,23 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
       </Row>
       <Row className="subtitle">
         <Rating video={video} />
-        Released on{' '}
+        Released on&nbsp;
         <span data-qa="video-released-on">
           <DateFormatter date={video.releasedOn} />
-        </span>{' '}
-        by <span data-qa="video-created-by">{video.createdBy}</span>
+        </span>
+        &nbsp;by&nbsp;<span data-qa="video-created-by">{video.createdBy}</span>
       </Row>
-      <Row className="video-player-container">
+      <Row className={'video-player-container'}>
         <Col
-          className="player"
-          sm={hasAttachments && { span: 24 }}
-          md={hasAttachments && { span: 24 }}
-          lg={hasAttachments && { span: 18 }}
+          className={'player'}
+          {...(hasAttachments && {
+            sm: { span: 24 },
+            md: { span: 24 },
+            lg: { span: 18 },
+          })}
         >
           <VideoPlayer collectionKey="myCollections" video={video} />
           <img
-            alt={video.title}
             src={video.thumbnailUrl}
             style={{ display: 'none' }}
             itemProp="image"
@@ -143,12 +140,12 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
         </p>
         <Authenticated>
           {video.contentWarnings?.length > 0 && (
-            <p className="content-warnings">
-              <span className="content-warnings__icon">
+            <p className={'content-warnings'}>
+              <span className={'content-warnings__icon'}>
                 <ContentWarningIcon />
               </span>
               <span>
-                <span className="content-warnings__title">
+                <span className={'content-warnings__title'}>
                   Content warning:
                 </span>{' '}
                 {video.contentWarnings.map((it) => it.label).join(', ')}
@@ -161,23 +158,23 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
   );
 };
 
-const VideoDetailsSkeleton = ({ video, children }: SkeletonProps) => (
+const VideoDetailsSkeleton = (props: Props) => (
   <section className="video-details">
     <Skeleton
-      loading={!video}
-      active
+      loading={!props.video}
+      active={true}
       title={{ width: '150px' }}
       paragraph={{ rows: 5 }}
       avatar={{ shape: 'square', size: 'large' }}
     >
-      {children}
+      {props.children}
     </Skeleton>
   </section>
 );
 
-const VideoDetails = ({ video }: VideoDetailsProps) => (
-  <VideoDetailsSkeleton video={video}>
-    <VideoDetailsContent video={video} />
+const VideoDetails = (props: Props) => (
+  <VideoDetailsSkeleton video={props.video}>
+    <VideoDetailsContent video={props.video} />
   </VideoDetailsSkeleton>
 );
 

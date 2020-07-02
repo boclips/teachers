@@ -14,7 +14,7 @@ storiesOf('AttachmentDetails', module)
       <br />
       <AttachmentDetails
         onClick={noOp}
-        link="http://www.google.com"
+        link={'http://www.google.com'}
         description="my resource description"
         labels={getAttachmentLabels(AttachmentType.ACTIVITY)}
       />
@@ -25,7 +25,7 @@ storiesOf('AttachmentDetails', module)
       <br />
       <br />
       <AttachmentDetails
-        link="http://www.google.com"
+        link={'http://www.google.com'}
         onClick={noOp}
         description="my resource description"
         labels={getAttachmentLabels(AttachmentType.LESSON_PLAN)}

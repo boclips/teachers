@@ -7,7 +7,7 @@ import {
   LinksFactory,
   LinksStateValueFactory,
 } from '../../../test-support/factories';
-import TrialExpiredView from './TrialExpiredView';
+import { TrialExpiredView } from './TrialExpiredView';
 
 describe('TrialExpiryView', () => {
   it('tells the user their trial is over', () => {
@@ -29,7 +29,7 @@ describe('TrialExpiryView', () => {
   });
 
   it('emits a UserExpired event', async () => {
-    renderWithStore(<TrialExpiredView />, {
+    const {} = renderWithStore(<TrialExpiredView />, {
       initialState: {
         links: {
           loadingState: 'success',

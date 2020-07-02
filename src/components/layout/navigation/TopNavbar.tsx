@@ -10,6 +10,7 @@ import { NavbarButtonsContainer } from './NavbarButtonsContainer';
 import './TopNavbar.less';
 
 interface Props {
+  showTabs: boolean;
   authorized: boolean;
   showSearchBar: boolean;
   isMobile: boolean;
@@ -19,7 +20,7 @@ interface Props {
 const { Content } = Layout;
 
 export const TopNavbar = React.memo((props: Props) => (
-  <>
+  <React.Fragment>
     <Content className="top-navbar">
       <Row align="middle">
         <Col
@@ -78,5 +79,5 @@ export const TopNavbar = React.memo((props: Props) => (
         </Col>
       </Row>
     </Content>
-  </>
+  </React.Fragment>
 ));

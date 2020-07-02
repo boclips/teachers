@@ -66,7 +66,6 @@ it('renders child component with correct props', () => {
   const store = MockStoreFactory.sample();
 
   const WithPageableCollectionComponent = withPageableCollection<ButtonProps>(
-    // eslint-disable-next-line
     (props) => <Button {...props} />,
   );
 

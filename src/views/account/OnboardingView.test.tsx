@@ -23,12 +23,12 @@ describe('When user is activated', () => {
   });
 });
 
-describe('when user is not activated', () => {
-  it('should send an onboarding page 1 started event on load', async () => {
+describe(`when user is not activated`, () => {
+  it(`should send an onboarding page 1 started event on load`, async () => {
     mount(
       <Provider store={MockStoreFactory.sample()}>
         <OnboardingViewComponent
-          userCanActivate
+          userCanActivate={true}
           redirectToHomepage={jest.fn()}
         />
       </Provider>,

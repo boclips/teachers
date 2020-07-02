@@ -31,8 +31,6 @@ export const fetchPageableCollections = (
     case 'promotedCollections':
       url = links.promotedCollections.getOriginalLink();
       break;
-    default:
-      throw 'Error fetching collections';
   }
 
   return axios

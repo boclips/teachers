@@ -12,7 +12,7 @@ import {
 import MockFetchVerify, {
   axiosMock,
 } from '../../../test-support/MockFetchVerify';
-import OnboardingPage from '../../../test-support/page-objects/OnboardingPage';
+import { OnboardingPage } from '../../../test-support/page-objects/OnboardingPage';
 
 describe('When user is not activated', () => {
   beforeEach(() => {

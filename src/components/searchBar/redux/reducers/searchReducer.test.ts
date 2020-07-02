@@ -5,7 +5,6 @@ import {
   VideoCollectionFactory,
   VideoFactory,
   VideoSearchFactory,
-  CollectionSearchFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
 import {
@@ -20,7 +19,7 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
-
+import { CollectionSearchFactory } from './../../../../../test-support/factories';
 import {
   collectionSearchHandlers,
   getCollectionsFromSearchResult,

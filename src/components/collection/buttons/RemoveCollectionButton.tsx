@@ -24,7 +24,7 @@ export const RemoveCollectionButton = React.memo((props: Props) => {
       props.onOpen();
     }
 
-    const { confirm } = Modal;
+    const confirm = Modal.confirm;
 
     confirm({
       title: (
@@ -76,6 +76,7 @@ export const RemoveCollectionButton = React.memo((props: Props) => {
         Delete Collection
       </Button>
     );
+  } else {
+    return null;
   }
-  return null;
 });

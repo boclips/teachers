@@ -5,10 +5,10 @@ import { ShareModelProps } from './ShareButton/ShareButton';
 interface Props extends ShareModelProps {
   visible: boolean;
   onCancel: () => void;
-  getContainer?: string | HTMLElement | GetContainer | false | null;
+  getContainer?: string | HTMLElement | getContainerFunc | false | null;
 }
 
-type GetContainer = () => HTMLElement;
+type getContainerFunc = () => HTMLElement;
 
 export const ShareModal = (props: Props) => (
   <Bodal

@@ -4,26 +4,29 @@ import CollectionsIcon from '../../../../resources/images/collections-grey.svg';
 import LogoutIconSVG from '../../../../resources/images/logout.svg';
 import SettingsSVG from '../../../../resources/images/settings.svg';
 
-type LinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement>;
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+type Props = React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
-const UserCollectionsLink = (props: LinkProps) => {
-  return (
-    <Link to="/collections" data-qa="user-videos" onClick={props.onClick}>
+class UserCollectionsLink extends React.PureComponent<Props> {
+  public render = () => (
+    <Link
+      to={'/collections'}
+      data-qa="user-videos"
+      onClick={this.props.onClick}
+    >
       <span className="icon-container">
         <CollectionsIcon aria-hidden="true" />
       </span>
       <span>Your resources</span>
     </Link>
   );
-};
+}
 
-const AccountSettingsLink = (props: LinkProps) => {
-  return (
+class AccountSettingsLink extends React.PureComponent<Props> {
+  public render = () => (
     <Link
-      to="/account-settings"
+      to={'/account-settings'}
       data-qa="account-settings-button"
-      onClick={props.onClick}
+      onClick={this.props.onClick}
     >
       <span className="icon-container">
         <SettingsSVG aria-hidden="true" />
@@ -31,23 +34,17 @@ const AccountSettingsLink = (props: LinkProps) => {
       <span>Settings</span>
     </Link>
   );
-};
+}
 
-const LogoutLink = (props: ButtonProps) => {
-  return (
-    <section
-      role="button"
-      tabIndex={0}
-      data-qa="logout-button"
-      onKeyPress={(e) => (e.keyCode === 13 ? props.onClick : null)}
-      onClick={props.onClick}
-    >
+class LogoutLink extends React.PureComponent<Props> {
+  public render = () => (
+    <a data-qa="logout-button" href="#" onClick={this.props.onClick}>
       <span className="icon-container">
         <LogoutIconSVG aria-hidden="true" />
       </span>
       <span>Log out</span>
-    </section>
+    </a>
   );
-};
+}
 
 export { AccountSettingsLink, UserCollectionsLink, LogoutLink };

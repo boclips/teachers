@@ -23,7 +23,7 @@ describe('when saving', () => {
   test('renders button saving class', () => {
     const onclick = () => {};
     const wrapper = mount(
-      <SavingButton data-qa="sometin" onClick={onclick} saving />,
+      <SavingButton data-qa="sometin" onClick={onclick} saving={true} />,
     );
 
     expect(wrapper.find('.saving-button__tick-container')).toHaveClassName(
@@ -38,7 +38,7 @@ describe('when saving', () => {
     test('renders button saving class', () => {
       const onclick = () => {};
       const wrapper = mount(
-        <SavingButton data-qa="sometin" onClick={onclick} saving />,
+        <SavingButton data-qa="sometin" onClick={onclick} saving={true} />,
       );
 
       wrapper.setProps({ saving: false });

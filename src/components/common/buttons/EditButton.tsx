@@ -14,9 +14,9 @@ export default class EditButton extends React.PureComponent<
   public render() {
     return (
       <Button
-        onClick={this.props.onClick}
-        size="large"
-        className="boclips__edit-button"
+        {...this.props}
+        size={'large'}
+        className={'boclips__edit-button'}
         data-qa={this.props['data-qa']}
       >
         <Icon theme="filled" aria-label="Edit" component={EditSVG} />

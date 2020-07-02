@@ -15,13 +15,7 @@ export const InteractionTracker = (props: Props) => {
   };
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => (e.keyCode === 13 ? props.onInteraction : null)}
-      onMouseDown={handleMouseDown}
-      onClick={props.onInteraction}
-    >
+    <div onMouseDown={handleMouseDown} onClick={props.onInteraction}>
       {props.children}
     </div>
   );

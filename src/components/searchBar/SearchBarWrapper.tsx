@@ -15,17 +15,21 @@ interface DispatchProps {
   onQuerySubmitted: (query: string) => void;
 }
 
-export const SearchBarWrapper = (props: StateProps & DispatchProps) => {
-  return (
-    <div className="search-bar">
-      <SearchBar
-        size="large"
-        placeholder="Enter your search term"
-        onSearch={props.onQuerySubmitted}
-      />
-    </div>
-  );
-};
+export class SearchBarWrapper extends React.Component<
+  StateProps & DispatchProps
+> {
+  public render() {
+    return (
+      <div className={'search-bar'}>
+        <SearchBar
+          size={'large'}
+          placeholder={'Enter your search term'}
+          onSearch={this.props.onQuerySubmitted}
+        />
+      </div>
+    );
+  }
+}
 
 function mapStateToProps(state: RouterState): StateProps {
   return {

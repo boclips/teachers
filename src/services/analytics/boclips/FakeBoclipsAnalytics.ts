@@ -27,16 +27,16 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
     return Promise.resolve();
   }
 
-  public trackPageRendered = async (url: string): Promise<void> => {
+  public async trackPageRendered(url: string): Promise<void> {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
     return client.events.trackPageRendered({ url });
-  };
+  }
 
-  public trackCollectionInteractedWith = async (
+  public async trackCollectionInteractedWith(
     collection: VideoCollection,
     subtype: keyof typeof CollectionInteractionType,
-  ) => {
+  ) {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
     return client.events.trackCollectionInteraction(
@@ -52,21 +52,21 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
       { subtype: CollectionInteractionType[subtype] },
       'www.test.com',
     );
-  };
+  }
 
-  public trackUserExpired = async (): Promise<void> => {
+  public async trackUserExpired(): Promise<void> {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
     return client.events.trackUserExpired();
-  };
+  }
 
-  public trackPlatformInteraction = async (
+  public async trackPlatformInteraction(
     subtype: PlatformInteractionType,
     anonymous: boolean = false,
-  ): Promise<void> => {
+  ): Promise<void> {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
     return client.events.trackPlatformInteraction(subtype, anonymous);
-  };
+  }
 }
 
 export default new FakeBoclipsAnalytics();

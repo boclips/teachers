@@ -6,12 +6,7 @@ import { withAppliedSearchParameters } from 'src/components/common/higherOrderCo
 const getProps = (query: string) => {
   const store = MockStoreFactory.sampleState({
     router: RouterFactory.sample({
-      location: {
-        pathname: '',
-        search: query,
-        hash: '',
-        state: null,
-      },
+      location: { pathname: '', search: query, hash: '', state: null },
     }),
   });
   const spyComponent = jest.fn().mockReturnValue(<div />);
@@ -25,7 +20,7 @@ const getProps = (query: string) => {
 
 describe('query text', () => {
   it('provides the query text', () => {
-    const props = getProps('?q=hi');
+    const props = getProps(`?q=hi`);
 
     expect(props.query).toEqual('hi');
     expect(props.numberOfFiltersApplied).toEqual(0);
@@ -36,7 +31,7 @@ describe('query text', () => {
 
 describe('duration filters', () => {
   it('provides duration with normal range', () => {
-    const props = getProps('?q=hi&duration=60-180');
+    const props = getProps(`?q=hi&duration=60-180`);
 
     expect(props.query).toEqual('hi');
     expect(props.duration[0].toString()).toEqual('60-180');
@@ -45,7 +40,7 @@ describe('duration filters', () => {
   });
 
   it('provides valid duration with no min', () => {
-    const props = getProps('?q=hi&duration=0-180');
+    const props = getProps(`?q=hi&duration=0-180`);
     expect(props.query).toEqual('hi');
     expect(props.duration[0].toString()).toEqual('0-180');
     expect(props.subjectIds).toEqual([]);
@@ -56,7 +51,7 @@ describe('duration filters', () => {
 describe('age range filters', () => {
   it('provides age range with both values', () => {
     const props = getProps(
-      '?q=hi&age_range_min=5&age_range_max=11&age_range=5-11',
+      `?q=hi&age_range_min=5&age_range_max=11&age_range=5-11`,
     );
 
     expect(props.query).toEqual('hi');
@@ -67,7 +62,7 @@ describe('age range filters', () => {
   });
 
   it('provides valid age range with no max', () => {
-    const props = getProps('?q=hi&age_range_min=5&age_range=5+');
+    const props = getProps(`?q=hi&age_range_min=5&age_range=5+`);
 
     expect(props.query).toEqual('hi');
     expect(props.duration).toEqual(null);
@@ -80,7 +75,7 @@ describe('age range filters', () => {
 
 describe('subject filters', () => {
   it('provides single subject filter', () => {
-    const props = getProps('?q=hi&subject=subject-one-id');
+    const props = getProps(`?q=hi&subject=subject-one-id`);
 
     expect(props.query).toEqual('hi');
     expect(props.duration).toEqual(null);
@@ -89,7 +84,7 @@ describe('subject filters', () => {
   });
 
   it('provides multiple subject filter', () => {
-    const props = getProps('?q=hi&subject=subject-one-id,subject-two-id');
+    const props = getProps(`?q=hi&subject=subject-one-id,subject-two-id`);
 
     expect(props.query).toEqual('hi');
     expect(props.duration).toEqual(null);
@@ -101,7 +96,7 @@ describe('subject filters', () => {
 describe('number of filters applied', () => {
   it('calculates correctly for multiple filters', () => {
     const props = getProps(
-      '?q=hi&age_range_min=5&age_range_max=11&age_range=5-11&duration=60-180',
+      `?q=hi&age_range_min=5&age_range_max=11&age_range=5-11&duration=60-180`,
     );
     expect(props.query).toEqual('hi');
     expect(props.duration[0].toString()).toEqual('60-180');

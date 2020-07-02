@@ -11,7 +11,7 @@ import { renderWithCreatedStore } from '../../test-support/renderWithStore';
 import State from '../types/State';
 import { useRefererIdInjector } from './useRefererIdInjector';
 
-describe('withRefererId', () => {
+describe(`withRefererId`, () => {
   const render = (initialHistory, initialState) => {
     const DivWithRefererId = () => {
       const oldRefererId = useRefererIdInjector();
@@ -37,7 +37,7 @@ describe('withRefererId', () => {
     return renderWithCreatedStore(<DivWithRefererId />, store, history);
   };
 
-  describe('when authenticated', () => {
+  describe(`when authenticated`, () => {
     const authenticatedState = {
       authenticated: { status: 'authenticated' },
       user: UserProfileFactory.sample({ id: 'user-test-id' }),
@@ -74,7 +74,7 @@ describe('withRefererId', () => {
       });
     });
   });
-  describe('when unauthenticated', () => {
+  describe(`when unauthenticated`, () => {
     const unauthenticatedState: Partial<State> = {
       authentication: {
         status: 'anonymous',

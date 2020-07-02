@@ -17,6 +17,11 @@ interface Constraint {
 }
 
 export class PasswordForm extends React.Component<FormComponentProps, State> {
+  public constructor(props: FormComponentProps, context: any) {
+    super(props, context);
+    this.state = { show: false };
+  }
+
   private constraints: Constraint[] = [
     {
       regex: /^(.){8,}$/,
@@ -36,36 +41,8 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
     },
   ];
 
-  public constructor(props: FormComponentProps, context: any) {
-    super(props, context);
-    this.state = { show: false };
-  }
-
   private toggleShow = () =>
-    this.setState((state) => ({ ...state, show: !state.show }));
-
-  private validatePassword = (_, value, callback) => {
-    if (this.constraints.find((c) => !value.match(c.regex))) {
-      callback(
-        <section className="password-form__rules-container">
-          Your password must have at least:
-          <section data-qa="password-rules" className="password-form__rules">
-            {this.constraints.map((c) => (
-              <Criteria
-                key={`criteria-${c.label}`}
-                regex={c.regex}
-                value={value}
-              >
-                {c.label}
-              </Criteria>
-            ))}
-          </section>
-        </section>,
-      );
-    } else {
-      callback();
-    }
-  };
+    this.setState({ ...this.state, show: !this.state.show });
 
   public render() {
     return (
@@ -90,25 +67,25 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
             placeholder="Enter your password"
             suffix={
               this.state.show ? (
-                <button
-                  type="button"
+                <a
+                  href="#"
                   className="password-form__show"
                   data-qa="hide-password"
                   onClick={this.toggleShow}
                 >
                   <EyeInvisibleOutlined />
                   &nbsp;Hide
-                </button>
+                </a>
               ) : (
-                <button
-                  type="button"
+                <a
+                  href="#"
                   className="password-form__show"
                   data-qa="show-password"
                   onClick={this.toggleShow}
                 >
                   <EyeFilled />
                   &nbsp;Show
-                </button>
+                </a>
               )
             }
           />,
@@ -116,6 +93,24 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
       </Form.Item>
     );
   }
+  private validatePassword = (_, value, callback) => {
+    if (this.constraints.find((c) => !value.match(c.regex))) {
+      callback(
+        <section className="password-form__rules-container">
+          Your password must have at least:
+          <section data-qa="password-rules" className="password-form__rules">
+            {this.constraints.map((c, i) => (
+              <Criteria key={`criteria-${i}`} regex={c.regex} value={value}>
+                {c.label}
+              </Criteria>
+            ))}
+          </section>
+        </section>,
+      );
+    } else {
+      callback();
+    }
+  };
 }
 
 interface CriteriaProps {
@@ -129,12 +124,17 @@ function Criteria(props: CriteriaProps) {
   return (
     <section
       data-qa="password-rule"
-      className={`password-form__rule ${
-        valid ? 'password-form__rule__valid' : 'password-form__rule__error'
-      }`}
+      className={
+        'password-form__rule ' +
+        (valid ? 'password-form__rule__valid' : 'password-form__rule__error')
+      }
     >
       <section data-qa={valid ? 'password-success' : 'password-error'}>
-        {valid ? <SuccessSvg aria-hidden /> : <ErrorSvg aria-hidden />}
+        {valid ? (
+          <SuccessSvg aria-hidden={true} />
+        ) : (
+          <ErrorSvg aria-hidden={true} />
+        )}
         {props.children}
       </section>
     </section>

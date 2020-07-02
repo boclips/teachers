@@ -9,7 +9,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import State from '../../types/State';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 
-const TrialExpiredView = () => {
+export const TrialExpiredView = () => {
   const dispatch = useDispatch();
 
   const userHasExpired = useSelector(
@@ -29,7 +29,7 @@ const TrialExpiredView = () => {
   }
 
   return (
-    <PageLayout title="Trial over" showNavigation={false} showFooter>
+    <PageLayout title="Trial over" showNavigation={false} showFooter={true}>
       <section className="illustrated-page">
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 12 }}>
@@ -62,5 +62,3 @@ const TrialExpiredView = () => {
     </PageLayout>
   );
 };
-
-export default TrialExpiredView;

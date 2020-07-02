@@ -7,7 +7,7 @@ jest.mock('lodash/debounce', () => {
   let latestCallback = null;
   const debounceFn = jest.fn();
 
-  const mockDebounce = (callback) => {
+  const mockDebounce = (callback, _) => {
     latestCallback = callback;
     return debounceFn;
   };
@@ -22,7 +22,7 @@ jest.mock('lodash/debounce', () => {
 });
 
 describe('SearchResultsView - mocked debounce', () => {
-  it('changing multiple filters does not trigger multiple searches but waits', async () => {
+  it(`changing multiple filters does not trigger multiple searches but waits`, async () => {
     const view = renderSearchResultsViewWithSampleData();
 
     axiosMock.resetHistory();

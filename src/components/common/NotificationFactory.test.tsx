@@ -15,7 +15,7 @@ test('success calls ui notification with correct details', () => {
       message: ' Hello from the otherside',
       description: (
         <div role="alert" data-qa="success-notification">
-          I must have called 1000 times
+          {'I must have called 1000 times'}
         </div>
       ),
       placement: 'bottomRight',
@@ -34,7 +34,7 @@ test('error calls ui notification with correct details', () => {
       message: 'Now youre somebody that I used to know',
       description: (
         <div role="alert" data-qa="error-notification">
-          SOMEBODY
+          {'SOMEBODY'}
         </div>
       ),
       placement: 'bottomRight',

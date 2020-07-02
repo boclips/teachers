@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { mount, ReactWrapper } from 'enzyme';
 import React from 'react';
 import { noOp } from '../../../utils';

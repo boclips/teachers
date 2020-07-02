@@ -21,10 +21,10 @@ export const COLLECTIONS_COUNT = 9;
 export default class HomeView extends PureComponent {
   public render() {
     return (
-      <>
+      <React.Fragment>
         <section className="home-page">
           <section className="search-section">
-            <PageLayout data-qa="home-page" showNavigation>
+            <PageLayout data-qa="home-page" showNavigation={true}>
               <Row>
                 <Col
                   xs={{ span: 22, offset: 1 }}
@@ -32,12 +32,10 @@ export default class HomeView extends PureComponent {
                   xl={{ span: 14, offset: 5 }}
                 >
                   <section className="home-search">
-                    <div className="home-searchbar">
-                      <span className="home-search-label">
-                        Let&apos;s plan your next lesson:
-                      </span>
+                    <section className="home-searchbar">
+                      <label>Let&apos;s plan your next lesson:</label>
                       <SearchBarWrapper />
-                    </div>
+                    </section>
                   </section>
                 </Col>
               </Row>
@@ -54,13 +52,13 @@ export default class HomeView extends PureComponent {
                 }
               >
                 <Link
-                  to="/collections/5ecd3a5515f802372946d4dc"
-                  className="home-banner"
+                  to={'/collections/5ecd3a5515f802372946d4dc'}
+                  className={'home-banner'}
                 >
                   <div className="home-banner__illustration display-desktop">
                     <DigitalCitizenshipSVG />
                   </div>
-                  <div className="copy-col">
+                  <div className={'copy-col'}>
                     <h1 className="alt">Digital Citizenship - Social Media</h1>
                     <p>Help students understand how to keep safe online</p>
                     <Button className="display-desktop">Explore series</Button>
@@ -88,7 +86,7 @@ export default class HomeView extends PureComponent {
           </section>
           <BoclipsFooter />
         </section>
-      </>
+      </React.Fragment>
     );
   }
 }

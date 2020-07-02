@@ -17,11 +17,19 @@ interface DispatchProps {
   onClose: () => void;
 }
 
-const DurationFilterTag = ({ range, onClose }: Props & DispatchProps) => (
-  <span data-qa="duration-filter-tag">
-    <ClosableTag label="Duration" value={range.getLabel()} onClose={onClose} />
-  </span>
-);
+class DurationFilterTag extends React.Component<Props & DispatchProps> {
+  public render() {
+    return (
+      <span data-qa="duration-filter-tag">
+        <ClosableTag
+          label="Duration"
+          value={this.props.range.getLabel()}
+          onClose={this.props.onClose}
+        />
+      </span>
+    );
+  }
+}
 
 const mapDispatchToProps = (
   dispatch: Dispatch,

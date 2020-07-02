@@ -5,7 +5,7 @@ import {
   VideoCollectionLinksFactory,
   VideoFactory,
   VideoIdFactory,
-} from '../../../test-support/factories';
+} from './../../../test-support/factories';
 import removeFromCollection from './removeFromCollection';
 
 const video = VideoFactory.sample({ id: '123' });

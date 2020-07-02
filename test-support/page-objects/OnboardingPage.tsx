@@ -6,7 +6,7 @@ import { OnboardingFormHelper } from '../../src/components/account/onboarding/On
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
-class OnboardingPage {
+export class OnboardingPage {
   public constructor(public wrapper: ReactWrapper) {}
 
   public static async navigateToOnboarding() {
@@ -14,7 +14,7 @@ class OnboardingPage {
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: ['/onboarding'],
+            initialEntries: [`/onboarding`],
           })}
           apiPrefix="https://api.example.com"
         />,
@@ -30,7 +30,7 @@ class OnboardingPage {
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: ['/'],
+            initialEntries: [`/`],
           })}
           apiPrefix="https://api.example.com"
         />,
@@ -91,5 +91,3 @@ class OnboardingPage {
     });
   }
 }
-
-export default OnboardingPage;

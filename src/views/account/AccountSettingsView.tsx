@@ -9,12 +9,12 @@ export class AccountSettingsView extends PureComponent {
     return (
       <PageLayout
         title="Settings"
-        showFooter
-        showNavigation
-        showSearchBar
-        subheader
+        showFooter={true}
+        showNavigation={true}
+        showSearchBar={true}
+        subheader={true}
       >
-        <section data-qa="account-settings-page" className="illustrated-page">
+        <section data-qa="account-settings-page" className={'illustrated-page'}>
           <Row>
             <Col xs={{ span: 0 }} lg={{ span: 12 }}>
               <section className="illustration">

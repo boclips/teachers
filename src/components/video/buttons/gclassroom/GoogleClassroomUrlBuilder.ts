@@ -2,11 +2,8 @@ import * as queryString from 'querystring';
 
 export class GoogleClassroomUrlBuilder {
   private readonly baseUrl: string = 'https://classroom.google.com/u/0/share';
-
   private videoUrl: string;
-
   private videoTitle: string;
-
   private body: string;
 
   public setTitle(title: string) {

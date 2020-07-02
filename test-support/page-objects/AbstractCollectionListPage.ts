@@ -1,5 +1,5 @@
 import { ReactWrapper } from 'enzyme';
-import By from '../By';
+import { By } from '../By';
 import { findOne } from '../enzymeHelpers';
 
 export abstract class AbstractCollectionListPage {

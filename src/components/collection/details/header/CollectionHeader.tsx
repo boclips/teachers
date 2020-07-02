@@ -25,22 +25,34 @@ export class CollectionHeader extends React.PureComponent<Props> {
     renderSubtitle: true,
   };
 
-  public static Skeleton = () => (
-    <section className="collection-header__skeleton">
-      <Card className="video-card" bordered={false}>
-        <AntSkeleton loading title paragraph active />
-      </Card>
-    </section>
-  );
+  public render() {
+    return this.props.isParent
+      ? this.renderParentCollectionHeader()
+      : this.renderSimpleCollectionHeader();
+  }
 
-  private shouldRenderTagContainer = () =>
-    this.hasAgeRange() || this.hasSubjects();
+  public renderParentCollectionHeader() {
+    return (
+      <React.Fragment>
+        {this.renderTitleRow([<Col />, this.renderButtons()])}
+        {this.renderSubtitleRow([this.renderTags()])}
+        {this.renderDescriptionRow()}
+      </React.Fragment>
+    );
+  }
 
-  private getAttachment = () => this.props.collection.attachments?.[0];
-
-  private hasAgeRange = () => this.props.collection.ageRange.isBounded();
-
-  private hasSubjects = () => this.props.collection.subjects.length > 0;
+  public renderSimpleCollectionHeader() {
+    return (
+      <React.Fragment>
+        {this.renderTitleRow([this.renderTitle(), this.renderButtons()])}
+        {this.renderSubtitleRow([
+          this.renderTags(),
+          this.renderAdditionalInfo(),
+        ])}
+        {this.renderDescriptionRow()}
+      </React.Fragment>
+    );
+  }
 
   private renderTitleRow = (elements: React.ReactNode[]) => (
     <Row justify="space-between" className="collection-header__title-row">
@@ -56,7 +68,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
 
   private renderTags = () =>
     this.shouldRenderTagContainer() && (
-      <div className="tags-container" data-qa="tags-container" key="tags">
+      <div className="tags-container" data-qa={'tags-container'} key={'tags'}>
         {this.hasAgeRange() && (
           <AgeRangeTag ageRange={this.props.collection.ageRange} />
         )}
@@ -68,20 +80,20 @@ export class CollectionHeader extends React.PureComponent<Props> {
 
   private renderAdditionalInfo = () => (
     <CollectionSubtitle
-      classname="highlight collection-subtitle header"
+      classname={'highlight collection-subtitle header'}
       collection={this.props.collection}
-      key="subtitle"
+      key={'subtitle'}
     />
   );
 
   private renderTitle = () => (
-    <Col key="title">
+    <Col key={'title'}>
       <CollectionTitle collection={this.props.collection} />
     </Col>
   );
 
   private renderButtons = () => (
-    <Col key="buttons">
+    <Col key={'buttons'}>
       <StopClickPropagation>
         <CollectionButtonsContainer collection={this.props.collection} />
       </StopClickPropagation>
@@ -94,22 +106,24 @@ export class CollectionHeader extends React.PureComponent<Props> {
     return (
       <Row
         className="collection-header__description-row"
-        data-qa="collection-description-row"
+        data-qa={'collection-description-row'}
       >
         <Col
-          sm={attachmentToRender && { span: 24 }}
-          md={attachmentToRender && { span: 12 }}
-          lg={attachmentToRender && { span: 16 }}
-          key="header"
+          {...(attachmentToRender && {
+            sm: { span: 24 },
+            md: { span: 12 },
+            lg: { span: 16 },
+          })}
+          key={'header'}
         >
           <div
-            key="div-description"
-            className="collection-header__description details"
+            key={'div-description'}
+            className={'collection-header__description details'}
             data-qa="collection-description"
           >
             {this.props.collection.description}
           </div>
-          <div key="div-units" className="collection-header__units">
+          <div key={'div-units'} className={'collection-header__units'}>
             {this.props.collectionUnits}
           </div>
         </Col>
@@ -139,32 +153,24 @@ export class CollectionHeader extends React.PureComponent<Props> {
     );
   };
 
-  public renderSimpleCollectionHeader() {
-    return (
-      <>
-        {this.renderTitleRow([this.renderTitle(), this.renderButtons()])}
-        {this.renderSubtitleRow([
-          this.renderTags(),
-          this.renderAdditionalInfo(),
-        ])}
-        {this.renderDescriptionRow()}
-      </>
-    );
-  }
+  public static Skeleton = () => (
+    <section className="collection-header__skeleton">
+      <Card className="video-card" bordered={false}>
+        <AntSkeleton
+          loading={true}
+          title={true}
+          paragraph={true}
+          active={true}
+        />
+      </Card>
+    </section>
+  );
 
-  public renderParentCollectionHeader() {
-    return (
-      <>
-        {this.renderTitleRow([<Col />, this.renderButtons()])}
-        {this.renderSubtitleRow([this.renderTags()])}
-        {this.renderDescriptionRow()}
-      </>
-    );
-  }
+  private shouldRenderTagContainer = () =>
+    this.hasAgeRange() || this.hasSubjects();
 
-  public render() {
-    return this.props.isParent
-      ? this.renderParentCollectionHeader()
-      : this.renderSimpleCollectionHeader();
-  }
+  private getAttachment = () => this.props.collection.attachments?.[0];
+
+  private hasAgeRange = () => this.props.collection.ageRange.isBounded();
+  private hasSubjects = () => this.props.collection.subjects.length > 0;
 }

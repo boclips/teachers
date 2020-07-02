@@ -59,47 +59,36 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   }
 
   public render() {
-    const {
-      collections,
-      loading,
-      getPopupContainer,
-      icon,
-      canFetchMyCollections,
-      video,
-    } = this.props;
-
-    const { isMenuOpen, isSaving } = this.state;
-
-    if (!canFetchMyCollections || !collections) {
+    if (!this.props.canFetchMyCollections || !this.props.collections) {
       return null;
     }
 
     return (
-      <>
+      <React.Fragment>
         <ManageVideCollectionMenuContainer
           onVisibleChange={() => {
             this.setState({
-              isMenuOpen: !isMenuOpen,
+              isMenuOpen: !this.state.isMenuOpen,
             });
           }}
-          video={video}
-          isMenuVisible={isMenuOpen}
-          loading={loading}
+          video={this.props.video}
+          isMenuVisible={this.state.isMenuOpen}
+          loading={this.props.loading}
           onChange={() => this.setState({ isSaving: true })}
           collectionKey="myCollections"
-          getPopupContainer={getPopupContainer}
+          getPopupContainer={this.props.getPopupContainer}
         >
           <SavingButton
-            saving={isSaving}
-            data-qa="video-collection-menu"
-            className="video-collection-menu"
-            size="large"
+            saving={this.state.isSaving}
+            data-qa={'video-collection-menu'}
+            className={'video-collection-menu'}
+            size={'large'}
           >
-            <Icon component={icon || SaveSVG} />
+            <Icon component={this.props.icon || SaveSVG} />
             <span>Save</span>
           </SavingButton>
         </ManageVideCollectionMenuContainer>
-      </>
+      </React.Fragment>
     );
   }
 }

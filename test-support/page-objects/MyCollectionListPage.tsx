@@ -7,7 +7,7 @@ import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 import { AbstractCollectionListPage } from './AbstractCollectionListPage';
 
-class MyCollectionListPage extends AbstractCollectionListPage {
+export class MyCollectionListPage extends AbstractCollectionListPage {
   public constructor(public wrapper: ReactWrapper) {
     super(wrapper);
   }
@@ -18,7 +18,7 @@ class MyCollectionListPage extends AbstractCollectionListPage {
       mount(
         <App
           history={createMemoryHistory({
-            initialEntries: ['/collections'],
+            initialEntries: [`/collections`],
           })}
           apiPrefix="https://api.example.com"
         />,
@@ -36,5 +36,3 @@ class MyCollectionListPage extends AbstractCollectionListPage {
     });
   }
 }
-
-export default MyCollectionListPage;

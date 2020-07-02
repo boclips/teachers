@@ -8,16 +8,15 @@ class ScrollToTopOnForwardNavigation extends Component<RouteComponentProps> {
     }
   }
 
-  private isForwardNavigation(prevProps): boolean {
-    const { location, history } = this.props;
-
-    return location !== prevProps.location && history.action === 'PUSH';
+  public render() {
+    return this.props.children;
   }
 
-  public render() {
-    const { children } = this.props;
-
-    return children;
+  private isForwardNavigation(prevProps): boolean {
+    return (
+      this.props.location !== prevProps.location &&
+      this.props.history.action === 'PUSH'
+    );
   }
 }
 

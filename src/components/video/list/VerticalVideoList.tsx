@@ -9,7 +9,7 @@ interface Props {
 export default class VerticalVideoList extends React.PureComponent<Props> {
   public render() {
     return (
-      <div className="video-list">
+      <div className={'video-list'}>
         {this.props.videoIds.map((videoId) => (
           <VideoPreview videoId={videoId} key={videoId} />
         ))}

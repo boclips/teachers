@@ -80,31 +80,31 @@ describe('AgeRange', () => {
   });
 
   describe('encoding and decoding ageranges as JSON', () => {
-    it('encodes an agerange into json', () => {
+    it(`encodes an agerange into json`, () => {
       const ageRange = new AgeRange(10, 15);
 
-      expect(ageRange.encodeJSON()).toEqual('{"min":10,"max":15}');
+      expect(ageRange.encodeJSON()).toEqual(`{"min":10,"max":15}`);
     });
 
-    it('encodes an agerange with unbounded upper into json', () => {
+    it(`encodes an agerange with unbounded upper into json`, () => {
       const ageRange = new AgeRange(19);
 
-      expect(ageRange.encodeJSON()).toEqual('{"min":19}');
+      expect(ageRange.encodeJSON()).toEqual(`{"min":19}`);
     });
 
-    it('decodes an agerange with unbounded upper from json', () => {
-      expect(AgeRange.fromJson('{"min":19}')).toEqual(new AgeRange(19));
+    it(`decodes an agerange with unbounded upper from json`, () => {
+      expect(AgeRange.fromJson(`{"min":19}`)).toEqual(new AgeRange(19));
     });
 
-    it('decodes json into an agerange', () => {
-      const jsonAgeRange = '{"min":10, "max":15}';
+    it(`decodes json into an agerange`, () => {
+      const jsonAgeRange = `{"min":10, "max":15}`;
 
       expect(AgeRange.fromJson(jsonAgeRange)).toEqual(new AgeRange(10, 15));
     });
   });
 
-  describe('removing duplicates', () => {
-    it('sorts and removes duplicates correctly', () => {
+  describe(`removing duplicates`, () => {
+    it(`sorts and removes duplicates correctly`, () => {
       const ageRangeList: AgeRange[] = [
         new AgeRange(4, 7),
         new AgeRange(3, 4),

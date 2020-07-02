@@ -1,10 +1,11 @@
-import { links, userResponse } from 'test-support/api-responses';
-import By from 'test-support/By';
-import { fakeSubjectsSetup } from 'test-support/fakeApiClientSetup';
-import AccountSettingsPage from 'test-support/page-objects/AccountSettingsPage';
-import { Profile } from 'src/components/account/accountSettings/Profile';
-import { SubjectTag } from 'src/components/common/tags/SubjectTag';
+import { links, userResponse } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
+import { By } from '../../../test-support/By';
+import { fakeSubjectsSetup } from '../../../test-support/fakeApiClientSetup';
+import { AccountSettingsPage } from '../../../test-support/page-objects/AccountSettingsPage';
+import { Profile } from '../../components/account/accountSettings/Profile';
+import { SubjectTag } from '../../components/common/tags/SubjectTag';
+import '../../types/Link';
 
 jest.mock('../../services/users/updateUser');
 

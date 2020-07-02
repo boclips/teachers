@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Reducer } from 'redux';
 import { Action, ActionCreator } from './actions';
 
@@ -46,7 +45,7 @@ function genericReducer<TState>(
 ): Reducer<TState> {
   const handlersMap: { [type: string]: Reducer<TState> } = {};
   handlers.forEach(([action, handler]) => {
-    const { type } = action;
+    const type = action.type;
     if (handlersMap.hasOwnProperty(type)) {
       throw new Error(`Two handlers for one action type: ${type}`);
     }
@@ -56,7 +55,8 @@ function genericReducer<TState>(
   return function reducer(state: TState = initialState, action: Action<any>) {
     if (handlersMap.hasOwnProperty(action.type)) {
       return handlersMap[action.type](state, action.payload);
+    } else {
+      return state;
     }
-    return state;
   };
 }

@@ -28,26 +28,14 @@ const ManageVideCollectionMenu = (
     boolean
   >(false);
 
-  const {
-    collections,
-    onRemoveFromCollection,
-    onAddToCollection,
-    loading,
-    fetchNextPage,
-    onVisibleChange,
-    video,
-    hasMoreCollections,
-    onCreateCollection,
-  } = props;
-
   const createCollection = React.useCallback(() => {
-    onVisibleChange(false);
+    props.onVisibleChange(false);
 
-    onCreateCollection({
+    props.onCreateCollection({
       title: newCollectionTitle,
-      videos: [video],
+      videos: [props.video],
     });
-  }, [onVisibleChange, onCreateCollection, newCollectionTitle, video]);
+  }, [props, newCollectionTitle]);
 
   const handleTitleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,21 +49,22 @@ const ManageVideCollectionMenu = (
     collection: VideoCollection,
   ) => () => {
     if (alreadyInCollection) {
-      onRemoveFromCollection(collection);
+      props.onRemoveFromCollection(collection);
     } else {
-      onAddToCollection(collection);
+      props.onAddToCollection(collection);
     }
-    onVisibleChange(false);
+    props.onVisibleChange(false);
   };
 
   const dataQa = (alreadyInCollection: boolean) => {
     if (alreadyInCollection) {
       return 'remove-from-collection';
+    } else {
+      return 'add-to-collection';
     }
-    return 'add-to-collection';
   };
 
-  if (loading || !collections) {
+  if (props.loading || !props.collections) {
     return (
       <section
         data-qa="loading-collections"
@@ -86,13 +75,9 @@ const ManageVideCollectionMenu = (
     );
   }
 
-  const collectionItem = (
-    videoCollection: VideoCollection,
-    collectionVideo: Video,
-  ) => {
+  const collectionItem = (videoCollection: VideoCollection, video: Video) => {
     const alreadyInCollection =
-      videoCollection.videoIds.find((v) => v.value === collectionVideo.id) !==
-      undefined;
+      videoCollection.videoIds.find((v) => v.value === video.id) !== undefined;
     return (
       <Checkbox
         defaultChecked={alreadyInCollection}
@@ -107,23 +92,23 @@ const ManageVideCollectionMenu = (
     );
   };
 
-  const menuEntries = (collections || []).map((collection) => (
+  const menuEntries = (props.collections || []).map((collection) => (
     <Menu.Item
       key={collection.id}
       className="manage-video-collection-button__menu-item"
     >
-      {collectionItem(collection, video)}
+      {collectionItem(collection, props.video)}
     </Menu.Item>
   ));
 
   return (
-    <>
+    <React.Fragment>
       <InfiniteScroll
-        dataLength={collections.length}
-        next={fetchNextPage}
-        hasMore={hasMoreCollections}
+        dataLength={props.collections.length}
+        next={props.fetchNextPage}
+        hasMore={props.hasMoreCollections}
         scrollThreshold={0.3}
-        hasChildren={collections.length > 0}
+        hasChildren={props.collections.length > 0}
         loader=""
         scrollableTarget="videoCollectionButtonScroll"
       >
@@ -137,6 +122,7 @@ const ManageVideCollectionMenu = (
       <div
         className="manage-video-collection-button__create-collection-container"
         key="option-create-collection"
+        onClick={(e) => e.preventDefault()}
       >
         {createCollectionVisible ? (
           <section>
@@ -160,16 +146,15 @@ const ManageVideCollectionMenu = (
           </section>
         ) : (
           <section
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) =>
-              e.keyCode === 13 ? setCreateCollectionVisible(true) : null
-            }
             data-qa="create-collection"
             className="manage-video-collection-button__create-collection"
             onClick={() => setCreateCollectionVisible(true)}
           >
-            <span className="manage-video-collection-button__create-collection-icon">
+            <span
+              className={
+                'manage-video-collection-button__create-collection-icon'
+              }
+            >
               <Icon component={AddSVG} />
             </span>
 
@@ -177,7 +162,7 @@ const ManageVideCollectionMenu = (
           </section>
         )}
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

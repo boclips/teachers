@@ -3,12 +3,7 @@ import { disciplinesReducer } from './disciplinesReducer';
 
 test('reduces disciplines', () => {
   const action = fetchedDisciplinesAction([
-    {
-      id: '1',
-      code: 'french',
-      name: 'French',
-      subjects: [],
-    },
+    { id: '1', code: 'french', name: 'French', subjects: [] },
   ]);
 
   const stateAfter = disciplinesReducer([], action);

@@ -9,19 +9,36 @@ import PageLayout from '../../components/layout/PageLayout';
 import './MyResourcesListView.less';
 
 export default class MyResourcesListView extends PureComponent {
-  public renderContent = () => (
-    <PageableCollectionCardList
-      title={
-        <span>
-          <Icon component={collectionsSVG} /> Your resources
-        </span>
-      }
-      collectionKey="myResources"
-      renderIfEmptyCollection={MyResourcesListView.renderEmptyCollection()}
-    />
-  );
+  public render() {
+    return (
+      <PageLayout
+        title="Your Resources"
+        showSearchBar={true}
+        showNavigation={true}
+        showFooter={true}
+      >
+        <section className="collection-list" data-qa="collection-list-page">
+          {this.renderContent()}
+        </section>
+      </PageLayout>
+    );
+  }
 
-  private static renderEmptyCollection() {
+  public renderContent() {
+    return (
+      <PageableCollectionCardList
+        title={
+          <span>
+            <Icon component={collectionsSVG} /> Your resources
+          </span>
+        }
+        collectionKey="myResources"
+        renderIfEmptyCollection={this.renderEmptyCollection()}
+      />
+    );
+  }
+
+  private renderEmptyCollection() {
     return (
       <Row className="collections-view-empty" data-qa="collections-view-empty">
         <Col md={{ offset: 6, span: 12 }} lg={{ offset: 8, span: 8 }}>
@@ -32,21 +49,6 @@ export default class MyResourcesListView extends PureComponent {
           <p>Save your favourite videos and collections here.</p>
         </Col>
       </Row>
-    );
-  }
-
-  public render() {
-    return (
-      <PageLayout
-        title="Your Resources"
-        showSearchBar
-        showNavigation
-        showFooter
-      >
-        <section className="collection-list" data-qa="collection-list-page">
-          {this.renderContent()}
-        </section>
-      </PageLayout>
     );
   }
 }

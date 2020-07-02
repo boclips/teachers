@@ -35,7 +35,7 @@ describe('CollectionCard', () => {
     const videos = [VideoFactory.sample()];
     const store = createBoclipsStore(MockStoreFactory.sampleState());
     const component = renderWithBoclipsStore(
-      <CollectionCard collection={collection} videos={videos} grid />,
+      <CollectionCard collection={collection} videos={videos} grid={true} />,
       store,
     );
     const tagsContainer = component.getByTestId('tags-container');

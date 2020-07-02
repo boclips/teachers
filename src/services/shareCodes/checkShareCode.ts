@@ -5,5 +5,5 @@ export async function checkShareCode(
   shareCode: string,
 ): Promise<boolean> {
   const client = await ApiClientWrapper.get();
-  return client.shareCodes.validate(userId, shareCode);
+  return await client.shareCodes.validate(userId, shareCode);
 }

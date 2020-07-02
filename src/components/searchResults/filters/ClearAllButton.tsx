@@ -9,11 +9,15 @@ interface DispatchProps {
   onClick: () => void;
 }
 
-const ClearAllButton = (props: DispatchProps) => (
-  <Button className="clear-all-button" onClick={props.onClick}>
-    Clear all
-  </Button>
-);
+class ClearAllButton extends React.Component<DispatchProps> {
+  public render() {
+    return (
+      <Button className="clear-all-button" onClick={this.props.onClick}>
+        Clear all
+      </Button>
+    );
+  }
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onClick: () => dispatch(clearSearchFilterParametersAction()),

@@ -14,8 +14,8 @@ import './AppliedFilters.less';
 export const AppliedFilters = withAppliedSearchParameters(
   (props: WithAppliedSearchParametersProps) =>
     props.numberOfFiltersApplied > 0 ? (
-      <div className="applied-filters-bar" data-qa="filters-bar">
-        <div className="applied-filters-bar__headings">
+      <div className="applied-filters-bar" data-qa={'filters-bar'}>
+        <div className={'applied-filters-bar__headings'}>
           <span
             data-qa="filters-bar-title"
             className="applied-filters-bar__title"
@@ -26,9 +26,9 @@ export const AppliedFilters = withAppliedSearchParameters(
         </div>
         <Row className="applied-filters-bar__tags" align="middle">
           {props.ageRange &&
-            props.ageRange.map((ageRange) => (
+            props.ageRange.map((ageRange, index) => (
               <AgeRangeFilterTag
-                key={ageRange.getId()}
+                key={index}
                 activeAgeRanges={props.ageRange}
                 ageRange={ageRange}
               />
@@ -42,17 +42,14 @@ export const AppliedFilters = withAppliedSearchParameters(
               />
             ))}
           {props.duration &&
-            props.duration.map((durationRange) => (
-              <DurationFilterTag
-                key={durationRange.getLabel()}
-                range={durationRange}
-              />
+            props.duration.map((durationRange, index) => (
+              <DurationFilterTag key={index} range={durationRange} />
             ))}
           {props.resourceTypes &&
-            props.resourceTypes.map((resourceType) => (
+            props.resourceTypes.map((resorceType, index) => (
               <ResourceTypeFilterTag
-                key={resourceType}
-                resource={resourceType}
+                key={index}
+                resource={resorceType}
                 activeFilters={props.resourceTypes}
               />
             ))}

@@ -5,11 +5,11 @@ import { generateUri } from 'src/utils';
 import 'urijs/src/URITemplate';
 import App from '../../src/app/App';
 import VideoPlayer from '../../src/components/video/player/VideoPlayer';
-import By from '../By';
+import { By } from '../By';
 import { findAll, findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
-class SearchPage {
+export class SearchPage {
   public constructor(public wrapper: ReactWrapper) {}
 
   public static async load(params: {
@@ -87,5 +87,3 @@ class SearchPage {
     });
   }
 }
-
-export default SearchPage;

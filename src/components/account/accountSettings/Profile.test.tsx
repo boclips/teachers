@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import By from '../../../../test-support/By';
+import { By } from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import { MockStoreFactory } from '../../../../test-support/factories';
 import { AgeRangeTag } from '../../common/tags/AgeRangeTag';
@@ -26,7 +26,7 @@ describe('account settings form', () => {
     );
   });
 
-  it('renders the page with existing name, subjects, and age range populated', () => {
+  it(`renders the page with existing name, subjects, and age range populated`, () => {
     const currentProfile = wrapper.find(By.dataQa('current-profile'));
     const subjectTags = currentProfile.find(By.dataQa('profile-subjects'));
     const ageTags = currentProfile.find(By.dataQa('profile-age-ranges'));
@@ -40,7 +40,7 @@ describe('account settings form', () => {
     expect(ageTags.find(AgeRangeTag).text()).toEqual('3-5');
   });
 
-  it('renders the edit button', () => {
+  it(`renders the edit button`, () => {
     const currentProfile = wrapper.find(By.dataQa('current-profile'));
     const events = new EventSimulator(wrapper);
     const editButton = currentProfile.find(

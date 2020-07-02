@@ -9,7 +9,6 @@ describe('StopClickPropagation component', () => {
     onMouseDown = () => {},
   ) =>
     mount(
-      // eslint-disable-next-line
       <div onClick={onClick} onMouseDown={onMouseDown}>
         <StopClickPropagation>{children}</StopClickPropagation>
       </div>,
@@ -61,7 +60,6 @@ describe('StopClickPropagation component', () => {
     const parentOnClick = jest.fn();
 
     const wrapper = mount(
-      // eslint-disable-next-line
       <div onClick={parentOnClick}>
         <StopClickPropagation>
           <span>Some text</span>
@@ -81,7 +79,6 @@ describe('StopClickPropagation component', () => {
   it('Can still call child components onClick handler', () => {
     const childOnClick = jest.fn();
     const wrapper = wrapWithStopClickPropagation(
-      // eslint-disable-next-line
       <span onClick={childOnClick}>Some Text</span>,
       () => {},
     );

@@ -47,6 +47,55 @@ export class EditSchoolSettingsFields extends React.Component<
     };
   }
 
+  public render() {
+    return (
+      <Form data-qa="school-settings-form" className="account-settings__form">
+        {this.state.screenReaderErrors && (
+          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
+        )}
+        <Row>
+          <StatesForm
+            form={this.props.form}
+            states={this.props.country.states}
+            initialValue={this.props.userProfile.state.id}
+            label={'State'}
+            onStateChange={this.stateChange}
+          />
+        </Row>
+        <Row>
+          <SchoolForm
+            form={this.props.form}
+            country={this.props.country}
+            state={this.props.userProfile.state}
+            label={'School'}
+            allowUnknownSchools={false}
+            initialValue={this.props.userProfile.school}
+            placeholder={'Enter the name of your school'}
+          />
+        </Row>
+        <section className="buttons">
+          <Button
+            data-qa={'cancel-edit-button'}
+            type={'ghost'}
+            onClick={this.props.toggleForm}
+            size="large"
+          >
+            Cancel
+          </Button>
+          <Button
+            htmlType={'submit'}
+            type={'primary'}
+            data-qa={'save-button'}
+            onClick={this.submit}
+            size="large"
+          >
+            Save changes
+          </Button>
+        </section>
+      </Form>
+    );
+  }
+
   private stateChange = (value: UsaState) => {
     if (this.state.latestState !== value.id) {
       this.props.form.setFieldsValue({ schoolId: undefined });
@@ -75,62 +124,13 @@ export class EditSchoolSettingsFields extends React.Component<
             });
           });
       } else {
-        this.setState((state) => ({
-          ...state,
+        this.setState({
+          ...this.state,
           screenReaderErrors: transformErrors(err),
-        }));
+        });
       }
     });
   };
-
-  public render() {
-    return (
-      <Form data-qa="school-settings-form" className="account-settings__form">
-        {this.state.screenReaderErrors && (
-          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
-        )}
-        <Row>
-          <StatesForm
-            form={this.props.form}
-            states={this.props.country.states}
-            initialValue={this.props.userProfile.state.id}
-            label="State"
-            onStateChange={this.stateChange}
-          />
-        </Row>
-        <Row>
-          <SchoolForm
-            form={this.props.form}
-            country={this.props.country}
-            state={this.props.userProfile.state}
-            label="School"
-            allowUnknownSchools={false}
-            initialValue={this.props.userProfile.school}
-            placeholder="Enter the name of your school"
-          />
-        </Row>
-        <section className="buttons">
-          <Button
-            data-qa="cancel-edit-button"
-            type="ghost"
-            onClick={this.props.toggleForm}
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-            data-qa="save-button"
-            onClick={this.submit}
-            size="large"
-          >
-            Save changes
-          </Button>
-        </section>
-      </Form>
-    );
-  }
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

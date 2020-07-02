@@ -67,7 +67,7 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
   );
 
   return (
-    <>
+    <React.Fragment>
       {breakpoint.width >= MediaBreakpoints.md.width ? (
         <span>
           <Popover
@@ -90,8 +90,8 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
           <Drawer
             className="manage-video-collection-button__drawer"
             title="Save to:"
-            placement="bottom"
-            closable
+            placement={'bottom'}
+            closable={true}
             onClose={() => props.onVisibleChange(false)}
             visible={props.isMenuVisible}
             getContainer={props.getPopupContainer}
@@ -100,7 +100,7 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
           </Drawer>
         </span>
       )}
-    </>
+    </React.Fragment>
   );
 };
 

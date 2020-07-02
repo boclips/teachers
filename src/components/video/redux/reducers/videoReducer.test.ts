@@ -5,8 +5,8 @@ import {
   EntitiesFactory,
   MockStoreFactory,
   VideoFactory,
-} from '../../../../../test-support/factories';
-import { storeVideoAction } from '../actions/storeVideoAction';
+} from './../../../../../test-support/factories';
+import { storeVideoAction } from './../actions/storeVideoAction';
 import {
   getPromotedVideos,
   getVideosByIds,

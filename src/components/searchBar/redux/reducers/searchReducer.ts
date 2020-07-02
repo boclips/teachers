@@ -9,7 +9,7 @@ import {
   CollectionSearchResult,
   VideoSearchResult,
 } from '../../../../types/SearchResults';
-import State, { SearchStateValue, VideoMap } from '../../../../types/State';
+import State, { SearchStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
@@ -20,6 +20,7 @@ import { searchCollectionsAction } from '../actions/searchCollectionsActions';
 import { searchVideosAction } from '../actions/searchVideosActions';
 import { storeCollectionSearchResultsAction } from '../actions/storeCollectionSearchResultsAction';
 import { storeVideoSearchResultsAction } from '../actions/storeVideoSearchResultsAction';
+import { VideoMap } from './../../../../types/State';
 
 const defaultPaging: PageSpec = {
   totalElements: 0,

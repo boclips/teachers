@@ -8,7 +8,7 @@ const getFakeBoclipsClient: () => Promise<FakeBoclipsClient> = async () => {
 
   return client as FakeBoclipsClient;
 };
-describe('checkShareCode', () => {
+describe(`checkShareCode`, () => {
   test('check valid share code', async () => {
     const shareCodeClient: FakeShareCodesClient = (await getFakeBoclipsClient())
       .shareCodes;

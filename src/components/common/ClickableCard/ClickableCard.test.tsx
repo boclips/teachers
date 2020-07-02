@@ -11,7 +11,6 @@ describe('ClickableCard', () => {
     } as any;
 
     return mount(
-      // eslint-disable-next-line
       <ClickableCardForRouter {...props}>
         <span>
           Hello world. <a href="/testing">Click me!</a>

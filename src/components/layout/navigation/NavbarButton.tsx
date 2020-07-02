@@ -1,4 +1,4 @@
-import c from 'classnames';
+import classnames from 'classnames';
 import React from 'react';
 
 interface Props {
@@ -22,17 +22,17 @@ export class NavbarButton extends React.PureComponent<Props> {
         tabIndex={-1}
         href={this.props.link}
         target={this.props.target}
-        className={c('navbar-buttons__button', this.props.className)}
+        className={classnames('navbar-buttons__button', this.props.className)}
         data-qa={this.props.dataQa}
         onClick={this.props.onClick}
         role="button"
       >
-        <>
-          <span className="icon" aria-hidden>
+        <React.Fragment>
+          <span tabIndex={0} className={'icon'} aria-hidden={true}>
             {this.props.icon}
           </span>
-          <span className="icon-label">{this.props.label}</span>
-        </>
+          <span className={'icon-label'}>{this.props.label}</span>
+        </React.Fragment>
       </a>
     );
   }

@@ -26,10 +26,32 @@ class DisciplineCardList extends React.PureComponent<
   public static defaultProps: Partial<Props> = {
     columns: 2,
   };
+  public render() {
+    return (
+      <section className="discipline-card-list__container">
+        <SectionHeader
+          title={'Our subjects'}
+          description={
+            "Browse our range of videos for the subjects that you teach and find collections tailored to your students' needs."
+          }
+          image={SubjectsSVG}
+        />
+        <FiniteGrid className="discipline-card-list__grid">
+          {this.props.disciplines && this.props.disciplines.length
+            ? this.renderDisciplines()
+            : this.renderLoading()}
+        </FiniteGrid>
+      </section>
+    );
+  }
 
   private renderDisciplines() {
     return [
-      <TransitionGroup component={null} exit key="disciplines-container">
+      <TransitionGroup
+        component={null}
+        exit={true}
+        key={'disciplines-container'}
+      >
         {this.props.disciplines &&
           this.props.disciplines
             .slice(0, this.props.limit || this.props.disciplines.length)
@@ -72,25 +94,6 @@ class DisciplineCardList extends React.PureComponent<
         />
       </Col>
     ));
-  }
-
-  public render() {
-    return (
-      <section className="discipline-card-list__container">
-        <SectionHeader
-          title="Our subjects"
-          description={
-            "Browse our range of videos for the subjects that you teach and find collections tailored to your students' needs."
-          }
-          image={SubjectsSVG}
-        />
-        <FiniteGrid className="discipline-card-list__grid">
-          {this.props.disciplines && this.props.disciplines.length
-            ? this.renderDisciplines()
-            : this.renderLoading()}
-        </FiniteGrid>
-      </section>
-    );
   }
 }
 

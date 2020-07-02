@@ -19,7 +19,7 @@ export const ParentCollectionDetailsContent = (props: Props) => (
     <div className="parent-collection-view__header">
       <CollectionHeader
         collection={props.collection}
-        isParent
+        isParent={true}
         collectionUnits={
           <CollectionUnits units={props.collection.subCollections} />
         }

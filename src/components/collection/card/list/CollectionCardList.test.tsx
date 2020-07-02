@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import By from '../../../../../test-support/By';
+import { By } from '../../../../../test-support/By';
 import { VideoCollectionFactory } from '../../../../../test-support/factories';
 import CollectionCardContainer from '../CollectionCardContainer';
 import { CollectionCardList } from './CollectionCardList';

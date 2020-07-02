@@ -18,7 +18,7 @@ export const AgeRangeForm = (props: FormComponentProps & Props) => {
     <Form.Item
       className="form__item age-range"
       label={props.label}
-      data-qa="age-range-form"
+      data-qa={'age-range-form'}
       colon={false}
     >
       {props.form.getFieldDecorator('ageRange', {
@@ -31,7 +31,7 @@ export const AgeRangeForm = (props: FormComponentProps & Props) => {
           : [],
       })(
         <SelectAgeRange
-          data-qa="age-select-input"
+          data-qa={'age-select-input'}
           initialValue={props.initialValue}
         />,
       )}

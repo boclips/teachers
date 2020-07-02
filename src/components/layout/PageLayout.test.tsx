@@ -12,7 +12,7 @@ describe('Header when authenticated', () => {
 
   beforeEach(() => {
     context = renderWithStore(
-      <PageLayout showNavigation>
+      <PageLayout showNavigation={true}>
         <div>Content</div>
       </PageLayout>,
       {

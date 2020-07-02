@@ -13,27 +13,10 @@ interface Props {
 }
 
 export class CollectionCardPreview extends React.PureComponent<Props> {
-  public static Skeleton = () => (
-    <Row gutter={[4, 4]} className="skeleton ant-skeleton ant-skeleton-active">
-      <Col span={12}>
-        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
-      </Col>
-      <Col span={12}>
-        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
-      </Col>
-      <Col span={12}>
-        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
-      </Col>
-      <Col span={12}>
-        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
-      </Col>
-    </Row>
-  );
-
   public render() {
     if (this.props.collection.subCollections.length > 0) {
       return (
-        <Row className="parent-collection">
+        <Row className={'parent-collection'}>
           <ParentCollectionImage />
         </Row>
       );
@@ -41,7 +24,7 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
     const totalVideoCount = this.props.collection.videoIds.length;
     if (totalVideoCount === 0) {
       return (
-        <Row className="empty-collection">
+        <Row className={'empty-collection'}>
           <EmptyCollectionImage />
         </Row>
       );
@@ -96,12 +79,32 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
 
     return (
       <Row gutter={[4, 4]}>
-        {previewImages.map((image) => (
-          <Col key={image.props.background} span={12}>
+        {previewImages.map((image, index) => (
+          <Col key={index} span={12}>
             {image}
           </Col>
         ))}
       </Row>
     );
   }
+
+  public static Skeleton = () => (
+    <Row
+      gutter={[4, 4]}
+      className={'skeleton ant-skeleton ant-skeleton-active'}
+    >
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+      <Col span={12}>
+        <section className="thumbnail-container ant-skeleton-avatar ant-skeleton-avatar-lg" />
+      </Col>
+    </Row>
+  );
 }

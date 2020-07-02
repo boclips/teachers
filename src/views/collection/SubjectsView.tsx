@@ -14,8 +14,13 @@ class SubjectsViewComponent extends PureComponent<WithMediaBreakPointProps> {
       this.props.mediaBreakpoint.width > MediaBreakpoints.lg.width;
 
     return (
-      <PageLayout title="Our Subjects" showSearchBar showFooter showNavigation>
-        <section data-qa="subjects-view-page" className="subjects-view-page">
+      <PageLayout
+        title="Our Subjects"
+        showSearchBar={true}
+        showFooter={true}
+        showNavigation={true}
+      >
+        <section data-qa="subjects-view-page" className={'subjects-view-page'}>
           <DisciplineCardList columns={screenIsDesktop ? 3 : 2} />
         </section>
       </PageLayout>

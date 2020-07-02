@@ -7,7 +7,7 @@ describe('SelectSubjects', () => {
   test('renders a list of subjects alphabetically ordered', async () => {
     const view = render(
       <SelectSubjects
-        label=""
+        label={''}
         subjects={[
           SubjectFactory.sample({ id: '1', name: 'Maths' }),
           SubjectFactory.sample({ id: '3', name: 'Art' }),
@@ -37,7 +37,7 @@ describe('SelectSubjects', () => {
     const callback = jest.fn();
     const view = render(
       <SelectSubjects
-        label=""
+        label={''}
         subjects={[
           SubjectFactory.sample({ id: '1', name: 'Maths' }),
           SubjectFactory.sample({ id: '3', name: 'Art' }),
@@ -65,7 +65,7 @@ describe('SelectSubjects', () => {
     const callback = jest.fn();
     const view = render(
       <SelectSubjects
-        label=""
+        label={''}
         subjects={[
           SubjectFactory.sample({ id: '1', name: 'Maths' }),
           SubjectFactory.sample({ id: '3', name: 'Art' }),

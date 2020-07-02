@@ -13,26 +13,6 @@ interface Props {
 }
 
 export class DisciplineCard extends React.PureComponent<Props> {
-  public static Skeleton = ({ className }: { className?: string }) => (
-    <section
-      className={`discipline-card skeleton ant-skeleton ant-skeleton-active ${className}`}
-    >
-      <section className="ant-skeleton-content">
-        <h3 className="discipline-title ant-skeleton-title"> </h3>
-        <span className="highlight">
-          <span />
-        </span>
-        <section className="discipline-subjects">
-          <section className="ant-skeleton-title" />
-          <section className="ant-skeleton-title" />
-          <section className="ant-skeleton-title" />
-          <section className="ant-skeleton-title" />
-          <section className="ant-skeleton-title" />
-        </section>
-      </section>
-    </section>
-  );
-
   public render() {
     if (!this.props.discipline) {
       return null;
@@ -62,7 +42,7 @@ export class DisciplineCard extends React.PureComponent<Props> {
             <ul className="discipline-card__subjects">
               {this.props.discipline.subjects.slice(0, 4).map((subject) => (
                 <li
-                  className="discipline-card__subject-item"
+                  className={'discipline-card__subject-item'}
                   data-qa="discipline-subject"
                   key={`subject-${subject.id}`}
                 >
@@ -90,4 +70,24 @@ export class DisciplineCard extends React.PureComponent<Props> {
       </Card>
     );
   }
+
+  public static Skeleton = ({ className }: { className?: string }) => (
+    <section
+      className={`discipline-card skeleton ant-skeleton ant-skeleton-active ${className}`}
+    >
+      <section className="ant-skeleton-content">
+        <h3 className="discipline-title ant-skeleton-title" />
+        <span className="highlight">
+          <span />
+        </span>
+        <section className="discipline-subjects">
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
+          <section className="ant-skeleton-title" />
+        </section>
+      </section>
+    </section>
+  );
 }

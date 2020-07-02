@@ -16,14 +16,16 @@ interface Props {
   videoId: string;
 }
 
-const VideoDetailsView = ({ videoId }: Props) => {
+export const VideoDetailsView = (props: Props) => {
   useRefererIdInjector();
   const dispatch = useDispatch();
   const location = useLocation();
 
   const authenticated = useSelector(isAuthenticated);
   const userId = useSelector((state: State) => state.user && state.user.id);
-  const video = useSelector((state: State) => getVideoById(state, videoId));
+  const video = useSelector((state: State) =>
+    getVideoById(state, props.videoId),
+  );
 
   const params = querystring.parse(location.search);
   const checkShareCode =
@@ -33,14 +35,14 @@ const VideoDetailsView = ({ videoId }: Props) => {
     params.referer !== 'anonymous';
 
   useEffect(() => {
-    dispatch(fetchVideoAction(videoId));
-  }, [dispatch, videoId]);
+    dispatch(fetchVideoAction(props.videoId));
+  }, [dispatch, props.videoId]);
 
   useEffect(() => {
     if ((userId || !params.referer) && userId !== params.referer) {
       dispatch(
         replace({
-          pathname: `/videos/${videoId}`,
+          pathname: `/videos/${props.videoId}`,
           search: querystring.stringify({
             ...params,
             referer: userId || 'anonymous',
@@ -48,10 +50,15 @@ const VideoDetailsView = ({ videoId }: Props) => {
         }),
       );
     }
-  }, [dispatch, params, videoId, userId]);
+  }, [dispatch, params, props.videoId, userId]);
 
   return (
-    <PageLayout title={video?.title} showNavigation showFooter showSearchBar>
+    <PageLayout
+      title={video?.title}
+      showNavigation={true}
+      showFooter={true}
+      showSearchBar={true}
+    >
       <section data-qa="video-details-page">
         <section className="video-details-page" data-qa="video-details">
           <VideoDetails video={video} />
@@ -63,5 +70,3 @@ const VideoDetailsView = ({ videoId }: Props) => {
     </PageLayout>
   );
 };
-
-export default VideoDetailsView;

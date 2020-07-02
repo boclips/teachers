@@ -11,6 +11,5 @@ export const withMediaBreakPoint = <P extends WithMediaBreakPointProps>(
 ) => (props: Omit<P, keyof WithMediaBreakPointProps>) => {
   const breakpoint = useMediaBreakPoint();
 
-  // eslint-disable-next-line
   return <Component {...(props as P)} mediaBreakpoint={breakpoint} />;
 };

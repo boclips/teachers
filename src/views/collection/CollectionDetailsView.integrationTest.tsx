@@ -14,7 +14,7 @@ import {
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import eventually from '../../../test-support/eventually';
-import CollectionPage from '../../../test-support/page-objects/CollectionPage';
+import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
 import { createBoclipsStore } from '../../app/redux/store';
 import {
   LinksStateValueFactory,
@@ -69,7 +69,7 @@ describe('CollectionDetailsView', () => {
       });
     });
 
-    test('adds the referer id to the url', async () => {
+    test(`adds the referer id to the url`, async () => {
       const existingHistory = createMemoryHistory({
         initialEntries: ['/collection/123'],
       });
@@ -191,7 +191,7 @@ describe('CollectionDetailsView', () => {
     });
   });
 
-  describe('sharing', () => {
+  describe(`sharing`, () => {
     it('does not show share code dialog if logged in', async () => {
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=test-id'],
@@ -395,7 +395,7 @@ describe('CollectionDetailsView', () => {
   });
 });
 
-describe('when collection of collections', () => {
+describe(`when collection of collections`, () => {
   let collectionPage;
   beforeEach(async () => {
     new ApiStub()
@@ -423,7 +423,7 @@ describe('when collection of collections', () => {
     collectionPage = await CollectionPage.load('parent-id');
   });
 
-  it('Displays each collection card of sub collections', async () => {
+  it(`Displays each collection card of sub collections`, async () => {
     expect(collectionPage.getParentCollectionDetails()).toMatchObject({
       title: 'parent collection',
       subjects: [],
@@ -433,7 +433,7 @@ describe('when collection of collections', () => {
     expect(collectionPage.getSubCollections()).toHaveLength(2);
   });
 
-  it('Displays collection titles of sub collections in cards and units', async () => {
+  it(`Displays collection titles of sub collections in cards and units`, async () => {
     expect(collectionPage.getSubCollections()).toHaveLength(2);
     expect(collectionPage.getSubCollections()[0].title).toEqual(
       'Child collection 1',

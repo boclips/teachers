@@ -14,7 +14,7 @@ storiesOf('FilterPanel', module)
         router: RouterFactory.sample({
           location: {
             pathname: '',
-            search: '?q=hi&subject=subject-one-id',
+            search: `?q=hi&subject=subject-one-id`,
             hash: '',
             state: {},
           },

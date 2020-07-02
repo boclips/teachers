@@ -12,7 +12,6 @@ export default class MockFetchVerify {
   ): void {
     axiosMock.onGet(matcher).reply(status, responseBody, responseHeaders);
   }
-
   public static getOnce(
     matcher: string | RegExp,
     responseBody?: any,

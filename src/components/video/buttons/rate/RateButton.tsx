@@ -23,25 +23,13 @@ export default class RateButton extends React.Component<RatingProps, State> {
     };
   }
 
-  private openModal = () => {
-    this.setState({ visible: true });
-    AnalyticsFactory.externalAnalytics().trackVideoRatingModalOpened();
-    AnalyticsFactory.internalAnalytics().trackRateThisVideoLinkClicked(
-      this.props.video,
-    );
-  };
-
-  private closeModal = () => {
-    this.setState({ visible: false });
-  };
-
   public render() {
     if (!this.props.video.links.rate) {
       return null;
     }
 
     return (
-      <>
+      <React.Fragment>
         <VideoFeedbackModal
           visible={this.state.visible}
           video={this.props.video}
@@ -55,7 +43,19 @@ export default class RateButton extends React.Component<RatingProps, State> {
         >
           <Icon component={RateIcon} /> Rate this video
         </Button>
-      </>
+      </React.Fragment>
     );
   }
+
+  private openModal = () => {
+    this.setState({ visible: true });
+    AnalyticsFactory.externalAnalytics().trackVideoRatingModalOpened();
+    AnalyticsFactory.internalAnalytics().trackRateThisVideoLinkClicked(
+      this.props.video,
+    );
+  };
+
+  private closeModal = () => {
+    this.setState({ visible: false });
+  };
 }

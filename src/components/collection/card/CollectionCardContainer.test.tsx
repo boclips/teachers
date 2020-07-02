@@ -49,10 +49,7 @@ describe('need to fetch videos scenarios', () => {
 
     const store = createMockStore(collection, []);
 
-    const apiStub = () => new ApiStub();
-
-    apiStub();
-
+    new ApiStub();
     await fakeVideoSetup(video);
 
     mount(
@@ -97,8 +94,7 @@ describe('need to fetch videos scenarios', () => {
     });
 
     const store = createMockStore(collection, []);
-    const apiStub = () => new ApiStub();
-    apiStub();
+    new ApiStub();
     fakeVideosSetup(videoResources);
 
     mount(
@@ -160,7 +156,7 @@ describe('showing correct video previews', () => {
       router: RouterFactory.sample(),
       entities: {
         collections: { byId: { [collection.id]: collection } },
-        videos: { byId: { 1234: VideoFactory.sample() } },
+        videos: { byId: { '1234': VideoFactory.sample() } },
       },
       collections: CollectionsFactory.sample(),
     };

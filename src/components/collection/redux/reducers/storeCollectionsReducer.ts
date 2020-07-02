@@ -14,9 +14,9 @@ export const onStoreCollectionsAction = (
       links: request.collections.links,
     };
 
-    request.collections.items.forEach((c) => {
-      draftState.entities.collections.byId[c.id] = c;
-    });
+    request.collections.items.map(
+      (c) => (draftState.entities.collections.byId[c.id] = c),
+    );
 
     draftState.collections.updating = false;
     draftState.collections.loading = false;
@@ -76,9 +76,9 @@ export const onAppendPageableCollectionsAction = (
 
   return produce(state, (draftState) => {
     draftState.collections[collectionKey] = collectionPage;
-    request.collections.items.forEach((c) => {
-      draftState.entities.collections.byId[c.id] = c;
-    });
+    request.collections.items.map(
+      (c) => (draftState.entities.collections.byId[c.id] = c),
+    );
 
     draftState.collections.updating = false;
     draftState.collections.loading = false;

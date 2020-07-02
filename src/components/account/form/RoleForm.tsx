@@ -25,20 +25,20 @@ export const RoleForm = (props: FormComponentProps & Props) => (
       <Select
         data-qa="select-role"
         size="large"
-        className="boclips-multi-select-selection"
+        className={'boclips-multi-select-selection'}
         onChange={(value: string) => props.onRoleChange({ role: value })}
         placeholder="Select your role"
       >
         <Select.Option value="TEACHER" data-state="TEACHER">
-          Teacher
+          {'Teacher'}
         </Select.Option>
         <Select.Option value="PARENT" data-state="PARENT">
-          Parent
+          {'Parent'}
         </Select.Option>
         <Select.Option value="SCHOOLADMIN" data-state="SCHOOLADMIN">
-          School admin
+          {'School admin'}
         </Select.Option>
-        <Select.Option value="OTHER">Other</Select.Option>
+        <Select.Option value="OTHER">{'Other'}</Select.Option>
       </Select>,
     )}
   </Form.Item>

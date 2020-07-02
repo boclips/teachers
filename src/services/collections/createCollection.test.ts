@@ -1,7 +1,7 @@
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
 import { Links } from '../../types/Links';
-import { LinksFactory, VideoFactory } from '../../../test-support/factories';
+import { LinksFactory, VideoFactory } from './../../../test-support/factories';
 import { createCollection } from './createCollection';
 
 let links: Links;

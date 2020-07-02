@@ -6,7 +6,7 @@ export default class AccountSettingsItem extends React.PureComponent<{
   public render() {
     return (
       <section className="account-settings__item-container">
-        <section className="account-settings__item-label">
+        <section className={'account-settings__item-label'}>
           {this.props.label}
         </section>
         <section className="account-settings__item-value">

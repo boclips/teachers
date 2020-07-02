@@ -3,12 +3,11 @@ import NotificationFactory from '../../../common/NotificationFactory';
 import {
   VideoCollectionFactory,
   VideoFactory,
-} from '../../../../../test-support/factories';
+} from './../../../../../test-support/factories';
 import {
   ERROR_DESCRIPTION,
   onAddToCollectionResult,
 } from './addToCollectionResultMiddleware';
-
 jest.mock('antd');
 jest.mock('../../../common/NotificationFactory');
 

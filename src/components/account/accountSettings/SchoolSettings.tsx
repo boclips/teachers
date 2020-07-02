@@ -12,11 +12,11 @@ interface Props {
 class SchoolSettings extends React.PureComponent<Props> {
   public render() {
     return (
-      <section data-qa="school-settings">
+      <section data-qa={'school-settings'}>
         <Row>
           <Col xs={{ span: 24 }}>
             <section className="account-settings__section-header">
-              <h1 className="alt account-settings__title">School</h1>
+              <h1 className={'alt account-settings__title'}>School</h1>
               <EditButton
                 data-qa="school-settings-edit-button"
                 onClick={this.props.onEdit}

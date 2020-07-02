@@ -15,25 +15,23 @@ interface DispatchProps {
 }
 
 class AgeRangeFilterTag extends React.Component<Props & DispatchProps> {
-  private updateAgeRanges(ageRange: AgeRange) {
-    const { activeAgeRanges } = this.props;
-
-    return activeAgeRanges.filter(
-      (item) => !(item.getLabel() === ageRange.getLabel()),
-    );
-  }
-
   public render() {
-    const { onClose, ageRange } = this.props;
-
     return (
       <span data-qa="age-range-filter-tag">
         <ClosableTag
           label="Age"
-          value={ageRange.getShortLabel()}
-          onClose={() => onClose(this.updateAgeRanges(ageRange))}
+          value={this.props.ageRange.getShortLabel()}
+          onClose={() =>
+            this.props.onClose(this.updateAgeRanges(this.props.ageRange))
+          }
         />
       </span>
+    );
+  }
+
+  private updateAgeRanges(ageRange: AgeRange) {
+    return this.props.activeAgeRanges.filter(
+      (item) => !(item.getLabel() === ageRange.getLabel()),
     );
   }
 }

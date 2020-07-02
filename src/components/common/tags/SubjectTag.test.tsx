@@ -7,7 +7,7 @@ import { ConnectedSubjectTag } from './SubjectTag';
 describe('Subject tag', () => {
   it('Renders the correct name when only id is passed', () => {
     const { getByText } = renderWithStore(
-      <ConnectedSubjectTag id="maths-id" />,
+      <ConnectedSubjectTag id={'maths-id'} />,
       {
         initialState: {
           subjects: SubjectsFactory.sample([
@@ -22,7 +22,7 @@ describe('Subject tag', () => {
 
   it('Does not render if the subject name is not found', () => {
     const { queryByText, queryByTestId } = renderWithStore(
-      <ConnectedSubjectTag id="not-maths-id" />,
+      <ConnectedSubjectTag id={'not-maths-id'} />,
       {
         initialState: {
           subjects: SubjectsFactory.sample([

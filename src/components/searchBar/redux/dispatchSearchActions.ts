@@ -31,7 +31,7 @@ const getCollectionFilters = (queryParams: any): CollectionRequestFilters => ({
 });
 
 export const dispatchSearchActions = (store: Store<RouterState>) => {
-  const { location } = store.getState().router;
+  const location = store.getState().router.location;
 
   if (location.pathname === '/videos' && location.search.indexOf('q')) {
     const queryParams = queryString.parse(location.search);

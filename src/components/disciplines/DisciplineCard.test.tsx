@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import By from '../../../test-support/By';
+import { By } from '../../../test-support/By';
 import {
   DisciplineFactory,
   SubjectFactory,

@@ -10,12 +10,10 @@ export interface ProviderComponentProps<P> {
 }
 
 /**
- * This component allows you to change the OwnProps fo the child component once
- * it has been mounted using
+ * This component allows you to change the OwnProps fo the child component once it has been mounted using
  * `ReactWrapper.setProps`.
  *
- * `setProps` has a limitation whereby it can only be called on the root node.
- * When we wrap a component in `<Provider/>`
+ * `setProps` has a limitation whereby it can only be called on the root node. When we wrap a component in `<Provider/>`
  * we are no longer able to `setProps` on the child.
  *
  * Using this component it is possible to `setProps` on the child, using the following syntax:
@@ -55,12 +53,10 @@ export interface ProviderComponentProps<P> {
  * @param props
  * @constructor
  */
-export const ProviderComponent = <P extends {}>({
-  store,
-  childComponent,
-  childProps,
-}: ProviderComponentProps<P>) => (
-  <Provider store={store}>
-    {React.createElement(childComponent, childProps)}
+export const ProviderComponent = <P extends {}>(
+  props: ProviderComponentProps<P>,
+) => (
+  <Provider store={props.store}>
+    {React.createElement(props.childComponent, props.childProps)}
   </Provider>
 );

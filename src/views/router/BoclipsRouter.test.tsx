@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
-import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
+import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
 import {
   MockStoreFactory,
   UserProfileFactory,
@@ -12,18 +12,12 @@ import DisciplineCardList from '../../components/disciplines/DisciplineCardList'
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { CollectionDetailsView } from '../collection/CollectionDetailsView';
-import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
+import { DiscoverCollectionsView } from '../collection/DiscoverCollectionsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
-import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
 import MyResourcesListView from '../collection/MyResourcesListView';
 import BoclipsRouter from './BoclipsRouter';
-
-function buildStore(authorised: boolean = true) {
-  return MockStoreFactory.sample({
-    user: authorised ? UserProfileFactory.sample() : null,
-  });
-}
 
 describe('BoclipsRouter', () => {
   test('shows video details view on /videos/{id}', () => {
@@ -324,3 +318,9 @@ describe('BoclipsRouter', () => {
     });
   });
 });
+
+function buildStore(authorised: boolean = true) {
+  return MockStoreFactory.sample({
+    user: authorised ? UserProfileFactory.sample() : null,
+  });
+}

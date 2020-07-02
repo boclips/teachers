@@ -6,7 +6,7 @@ interface Props {
 }
 
 export const BestForTag = (props: Props) => (
-  <span data-qa="best-for-tag">
+  <span data-qa={'best-for-tag'}>
     <Tag value={props.value} label="Best for" />
   </span>
 );

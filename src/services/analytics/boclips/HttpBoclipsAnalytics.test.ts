@@ -15,7 +15,7 @@ test('logInteraction', async () => {
   const video = VideoFactory.sample({
     id: 'id-1',
     links: {
-      self: new Link({ href: '/v1/videos/id-1' }),
+      self: new Link({ href: `/v1/videos/id-1` }),
       logInteraction: new Link({
         href: '/v1/videos/id-1/events?logVideoInteraction=true&type={type}',
       }),
@@ -39,7 +39,7 @@ test('logInteraction rejects when link is missing', async () => {
   const video = VideoFactory.sample({
     id: 'id-1',
     links: {
-      self: new Link({ href: '/v1/videos/id-1' }),
+      self: new Link({ href: `/v1/videos/id-1` }),
     },
   });
 
@@ -48,9 +48,7 @@ test('logInteraction rejects when link is missing', async () => {
     'copied-to-google-classroom',
   );
 
-  await result.catch((e) => {
-    expect(e.message).toEqual('Video id-1 has no logInteraction link');
-  });
+  await expect(result).rejects.toEqual('Video id-1 has no logInteraction link');
 });
 
 test('trackPageRendered calls ApiClient with url', async () => {

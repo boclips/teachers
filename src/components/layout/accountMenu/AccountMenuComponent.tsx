@@ -51,7 +51,7 @@ class AccountMenuComponent extends React.Component<Props, State> {
           onVisibleChange={this.setVisible}
         >
           <DropdownMenuIconComponent
-            dataQa="account-menu-open"
+            dataQa={'account-menu-open'}
             active={this.state.visible}
             icon={
               <MyAccountSVG
@@ -61,7 +61,7 @@ class AccountMenuComponent extends React.Component<Props, State> {
                 aria-hidden="true"
               />
             }
-            label="Your account"
+            label={'Your account'}
           />
         </Dropdown>
       </div>

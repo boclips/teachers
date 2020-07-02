@@ -20,7 +20,6 @@ jest.mock('antd/lib/slider', () =>
   React.forwardRef((props: SliderProps, ref: Ref<any>) => (
     <input
       ref={ref}
-      /* eslint-disable-next-line */
       role="slider"
       onChange={(event) => {
         props.onChange(JSON.parse(event.target.value));
@@ -34,21 +33,22 @@ jest.mock('antd/lib/slider', () =>
 );
 
 jest.mock('antd/lib/select', () => {
-  const Select = React.forwardRef((props: SelectProps<any>, ref: Ref<any>) => (
-    <input
-      ref={ref}
-      type="text"
-      /* eslint-disable-next-line */
-      role="select"
-      onChange={(event) => {
-        props.onChange(JSON.parse(event.target.value), null);
-      }}
-      data-value-json={JSON.stringify(props.value)}
-      value={props.value as any}
-      data-default-value-json={JSON.stringify(props.defaultValue)}
-      data-qa="select"
-    />
-  ));
+  const Select = React.forwardRef(
+    (props: SelectProps<string>, ref: Ref<any>) => (
+      <input
+        ref={ref}
+        type="text"
+        role="select"
+        onChange={(event) => {
+          props.onChange(JSON.parse(event.target.value), null);
+        }}
+        data-value-json={JSON.stringify(props.value)}
+        value={props.value as any}
+        data-default-value-json={JSON.stringify(props.defaultValue)}
+        data-qa="select"
+      />
+    ),
+  );
   // @ts-ignore
   Select.Option = () => <span>test</span>;
   return Select;
@@ -73,7 +73,7 @@ describe('EditCollectionForm', () => {
     renderWithBoclipsStore(
       <EditCollectionForm
         setVisible={jest.fn()}
-        visible
+        visible={true}
         disableButton={false}
         collection={collection}
       />,

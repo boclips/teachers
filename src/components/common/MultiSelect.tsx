@@ -4,15 +4,13 @@ import './MultiSelect.less';
 
 class MultiSelect extends React.PureComponent<SelectProps<string[]>> {
   public static Option = Select.Option;
-
   public render() {
     return (
       <Select
-        className="boclips-multi-select-selection"
+        className={'boclips-multi-select-selection'}
         mode="multiple"
-        size="large"
-        dropdownClassName="dropdown"
-        /* eslint-disable-next-line */
+        size={'large'}
+        dropdownClassName={'dropdown'}
         {...this.props}
       >
         {this.props.children}

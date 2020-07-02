@@ -28,24 +28,24 @@ class TopNavbarContainerComponent extends React.PureComponent<
     showFooter: false,
   };
 
-  private showSearchBar(): boolean {
-    return this.props.authorized && this.props.showSearchBar;
-  }
-
-  private isMobile(): boolean {
-    return this.props.mediaBreakpoint.width <= MediaBreakpoints.lg.width;
-  }
-
   public render() {
     return (
       <TopNavbar
-        data-qa="top-navbar"
+        showTabs={this.props.showTabs}
         authorized={this.props.authorized}
         showSearchBar={this.showSearchBar()}
         isMobile={this.isMobile()}
         showNavigation={this.props.showNavigation}
       />
     );
+  }
+
+  private showSearchBar(): boolean {
+    return this.props.authorized && this.props.showSearchBar;
+  }
+
+  private isMobile(): boolean {
+    return this.props.mediaBreakpoint.width <= MediaBreakpoints.lg.width;
   }
 }
 

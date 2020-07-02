@@ -28,8 +28,8 @@ const GenericVideoCardList = React.memo<GenericProps>((props) => {
 
   return (
     <Row gutter={[20, 20]}>
-      <ul className="video-card-list">
-        <TransitionGroup component={null} exit>
+      <ul className={'video-card-list'}>
+        <TransitionGroup component={null} exit={true}>
           {props.videos.map((video, index) => (
             <CSSTransition
               key={video ? video.id : index}
@@ -58,12 +58,10 @@ export class CollectionVideoCardList extends React.PureComponent<
   CollectionProps
 > {
   public render() {
-    const { userId, currentCollection, videos } = this.props;
     return (
       <GenericVideoCardList
-        currentCollection={currentCollection}
-        videos={videos}
-        userId={userId}
+        currentCollection={this.props.currentCollection}
+        {...this.props}
       />
     );
   }

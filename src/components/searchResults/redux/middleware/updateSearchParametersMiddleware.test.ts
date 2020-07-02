@@ -1,7 +1,7 @@
 import { push } from 'connected-react-router';
 import { DurationRange } from 'src/types/DurationRange';
 import eventually from 'test-support/eventually';
-import setupStore from 'test-support/setupStore';
+import { setupStore } from 'test-support/setupStore';
 import { AgeRange } from 'src/types/AgeRange';
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
@@ -9,7 +9,7 @@ import {
   updateSearchParamsAction,
 } from '../actions/updateSearchParametersActions';
 
-describe('updateSearchParametersMiddleware', () => {
+describe(`updateSearchParametersMiddleware`, () => {
   it('updates query in url parameters', async () => {
     const store = setupStore('q=test&duration=0-1', '/videos');
     store.dispatch(updateSearchParamsAction({ q: '123' }));

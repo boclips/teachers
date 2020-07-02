@@ -1,6 +1,6 @@
 import { Card } from 'antd';
 import { CardProps } from 'antd/es/card';
-import c from 'classnames';
+import classnames from 'classnames';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 
@@ -11,6 +11,18 @@ export interface Props extends CardProps, RouteComponentProps {
 }
 
 export class ClickableCardForRouter extends React.PureComponent<Props> {
+  public render() {
+    const { href, history, location, staticContext, ...cardProps } = this.props;
+
+    return (
+      <Card
+        onClick={this.handleOnClick}
+        {...cardProps}
+        className={classnames('clickable-card', this.props.className)}
+      />
+    );
+  }
+
   private handleOnClick = (event: React.MouseEvent) => {
     if (event.ctrlKey || event.metaKey) {
       window.open(this.props.href);
@@ -18,19 +30,6 @@ export class ClickableCardForRouter extends React.PureComponent<Props> {
       this.props.history.push(this.props.href);
     }
   };
-
-  public render() {
-    const { href, history, location, staticContext, ...cardProps } = this.props;
-
-    return (
-      <Card
-        onClick={this.handleOnClick}
-        /* eslint-disable-next-line */
-        {...cardProps}
-        className={c('clickable-card', this.props.className)}
-      />
-    );
-  }
 }
 
 export const ClickableCard = withRouter(ClickableCardForRouter);

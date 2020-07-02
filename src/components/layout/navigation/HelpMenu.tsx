@@ -22,7 +22,7 @@ export const HelpMenu = () => {
   const menuContent = () => (
     <Menu className="button-menu button-menu--desktop">
       <Menu.Item>
-        <a href="https://www.boclips.com/training" rel="noreferrer">
+        <a href="https://www.boclips.com/training" target="_blank">
           <span className="icon-container">
             <TutorialsIcon aria-hidden="true" />
           </span>
@@ -33,7 +33,6 @@ export const HelpMenu = () => {
         <a
           href="https://www.boclips.com/remote-learning-with-video-resources-for-teachers"
           target="_blank"
-          rel="noreferrer"
         >
           <span className="icon-container">
             <RemoteLearningIcon aria-hidden="true" />
@@ -61,7 +60,7 @@ export const HelpMenu = () => {
         onVisibleChange={setVisible}
       >
         <DropdownMenuIconComponent
-          dataQa="tutorial-menu-open"
+          dataQa={'tutorial-menu-open'}
           active={visible}
           icon={<HelpIcon />}
           label="Help"

@@ -32,5 +32,4 @@ export const getAttachmentLabels = (
   if (attachmentType === AttachmentType.ACTIVITY) {
     return LABELS.ACTIVITY;
   }
-  throw new Error('Attachment label not found');
 };

@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import By from '../../../../test-support/By';
+import { By } from '../../../../test-support/By';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
@@ -35,7 +35,7 @@ describe('create account form', () => {
         .find(By.dataQa('google-button'))
         .hostNodes();
 
-      googleSsoButton.first().simulate('click');
+      googleSsoButton.simulate('click');
 
       expect(store.getActions()).toContainEqual(
         requestSsoAuthentication('google'),
@@ -49,7 +49,7 @@ describe('create account form', () => {
         .find(By.dataQa('microsoft-button'))
         .hostNodes();
 
-      microsoftSsoButton.first().simulate('click');
+      microsoftSsoButton.simulate('click');
 
       expect(store.getActions()).toContainEqual(
         requestSsoAuthentication('microsoft'),

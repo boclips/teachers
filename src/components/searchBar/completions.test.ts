@@ -1,5 +1,5 @@
-import { completionsFor } from './completions';
 import objectContaining = jasmine.objectContaining;
+import { completionsFor } from './completions';
 
 const getCompletions = (allCompletions: string[]) => (text: string) =>
   completionsFor({ test: allCompletions })(text).map(

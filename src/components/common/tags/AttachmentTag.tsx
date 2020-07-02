@@ -7,8 +7,8 @@ export interface Props {
 }
 
 export const AttachmentTag = (props: Props) => (
-  <span className="attachment-tag">
+  <span className={'attachment-tag'}>
     <PaperclipSVG />
-    <span className="attachment-tag__label">{props.label}</span>
+    <span className={'attachment-tag__label'}>{props.label}</span>
   </span>
 );

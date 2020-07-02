@@ -3,7 +3,6 @@ import {
   MockStoreFactory,
   PageableCollectionsFactory,
   VideoCollectionFactory,
-  EntitiesFactory,
 } from '../../../../../test-support/factories';
 import { createReducer } from '../../../../app/redux/createReducer';
 import { Link } from '../../../../types/Link';
@@ -11,7 +10,7 @@ import State from '../../../../types/State';
 import { appendPageableCollectionsAction } from '../actions/appendReadOnlyCollectionsAction';
 import { storeCollectionAction } from '../actions/storeCollectionAction';
 import { storeCollectionsAction } from '../actions/storeCollectionsAction';
-
+import { EntitiesFactory } from './../../../../../test-support/factories';
 import { collectionHandlers } from './collectionEntitiesReducer';
 
 const testReducer = createReducer(...collectionHandlers);

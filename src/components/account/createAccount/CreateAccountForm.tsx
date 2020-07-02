@@ -54,15 +54,12 @@ class CreateAccountForm extends React.Component<
   CreateAccountProps & FormComponentProps & DispatchProps,
   InternalState
 > {
-  constructor(props) {
-    super(props);
-    this.state = {
-      confirmDirty: false,
-      creating: false,
-      renderRecaptcha: true,
-      screenReaderErrors: null,
-    };
-  }
+  public state = {
+    confirmDirty: false,
+    creating: false,
+    renderRecaptcha: true,
+    screenReaderErrors: null,
+  };
 
   public componentDidMount() {
     const registrationContext: RegistrationContext = {
@@ -72,57 +69,6 @@ class CreateAccountForm extends React.Component<
 
     RegistrationContextService.store(registrationContext);
   }
-
-  private updateRecaptchaToken = (recaptchaToken) => {
-    this.props.form.setFieldsValue({ recaptchaToken });
-    this.setState({ renderRecaptcha: false });
-  };
-
-  private handleGoogleSsoLogin = () => {
-    this.props.onSsoLogin('google');
-  };
-
-  private handleMicrosoftSsoLogin = () => {
-    this.props.onSsoLogin('microsoft');
-  };
-
-  private handleSubmit = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.props.form.validateFieldsAndScroll(
-      (err, values: CreateAccountRequest) => {
-        if (!err) {
-          this.setState((state) => ({
-            ...state,
-            creating: true,
-          }));
-          createAccount(this.props.links, values)
-            .then(() => {
-              this.props.onSuccesfulRegistration(values.email, values.password);
-            })
-            .catch((error) => {
-              if (error && error.response.status === 409) {
-                handleUserExists();
-              } else {
-                handleError();
-              }
-
-              this.setState((state) => ({
-                ...state,
-                creating: false,
-                renderRecaptcha: true,
-              }));
-            });
-        } else {
-          this.setState((state) => ({
-            ...state,
-            screenReaderErrors: transformErrors(err),
-          }));
-        }
-      },
-    );
-  };
 
   public render() {
     const { getFieldDecorator } = this.props.form;
@@ -141,7 +87,7 @@ class CreateAccountForm extends React.Component<
               <ScreenReaderErrors errors={this.state.screenReaderErrors} />
             )}
 
-            <Form onSubmit={this.handleSubmit} colon>
+            <Form onSubmit={this.handleSubmit} colon={true}>
               <h1 className="alt create-account-form__title">Create account</h1>
 
               <section className="create-account-form__form">
@@ -176,7 +122,7 @@ class CreateAccountForm extends React.Component<
             <LoginLink />
 
             <section className="create-account-form__divider-container">
-              <span className="create-account-form__divider-label">or</span>
+              <label className="create-account-form__divider-label">or</label>
               <hr className="create-account-form__divider" />
             </section>
 
@@ -194,46 +140,12 @@ class CreateAccountForm extends React.Component<
                     onClick={this.handleGoogleSsoLogin}
                   >
                     <span className="create-account-form__social-button-icon">
-                      <GoogleSVG aria-hidden />
-                    </span>
-                    <span>Continue with Google</span>
-                  </Button>
-                </Col>
-                <Col>
-                  <Button
-                    data-qa="google-button"
-                    className="create-account-form__button create-account-form__social-button"
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    disabled={this.state.creating}
-                    loading={this.state.creating}
-                    onClick={this.handleGoogleSsoLogin}
-                  >
-                    <span className="create-account-form__social-button-icon">
-                      <GoogleSVG aria-hidden />
+                      <GoogleSVG aria-hidden={true} />
                     </span>
                     <span>Continue with Google</span>
                   </Button>
                 </Col>
                 <Col sm={24} md={12}>
-                  <li className="create-account-form__social-buttons-list-item">
-                    <Button
-                      data-qa="microsoft-button"
-                      className="create-account-form__button create-account-form__social-button"
-                      size="large"
-                      type="primary"
-                      htmlType="submit"
-                      disabled={this.state.creating}
-                      loading={this.state.creating}
-                      onClick={this.handleMicrosoftSsoLogin}
-                    >
-                      <span className="create-account-form__social-button-icon">
-                        <MicrosoftSVG aria-hidden />
-                      </span>
-                      <span>Continue with Office 365</span>
-                    </Button>
-                  </li>
                   <Button
                     data-qa="microsoft-button"
                     className="create-account-form__button create-account-form__social-button"
@@ -245,7 +157,7 @@ class CreateAccountForm extends React.Component<
                     onClick={this.handleMicrosoftSsoLogin}
                   >
                     <span className="create-account-form__social-button-icon">
-                      <MicrosoftSVG aria-hidden />
+                      <MicrosoftSVG aria-hidden={true} />
                     </span>
                     <span>Continue with Office 365</span>
                   </Button>
@@ -261,6 +173,54 @@ class CreateAccountForm extends React.Component<
       </section>
     );
   }
+
+  private updateRecaptchaToken = (recaptchaToken) => {
+    this.props.form.setFieldsValue({ recaptchaToken });
+    this.setState({ renderRecaptcha: false });
+  };
+
+  private handleGoogleSsoLogin = () => {
+    this.props.onSsoLogin('google');
+  };
+
+  private handleMicrosoftSsoLogin = () => {
+    this.props.onSsoLogin('microsoft');
+  };
+
+  private handleSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.props.form.validateFieldsAndScroll(
+      (err, values: CreateAccountRequest) => {
+        if (!err) {
+          this.setState({ ...this.state, creating: true });
+          createAccount(this.props.links, values)
+            .then(() => {
+              this.props.onSuccesfulRegistration(values.email, values.password);
+            })
+            .catch((error) => {
+              if (error && error.response.status === 409) {
+                handleUserExists();
+              } else {
+                handleError();
+              }
+
+              this.setState({
+                ...this.state,
+                creating: false,
+                renderRecaptcha: true,
+              });
+            });
+        } else {
+          this.setState({
+            ...this.state,
+            screenReaderErrors: transformErrors(err),
+          });
+        }
+      },
+    );
+  };
 }
 
 function mapStateToProps(state: State): CreateAccountProps {
@@ -305,8 +265,9 @@ const extractUtmParams = (queryParam) => {
       ...(campaign && { campaign }),
       ...(content && { content }),
     };
+  } else {
+    return undefined;
   }
-  return undefined;
 };
 
 export default connect<CreateAccountProps, {}, {}>(

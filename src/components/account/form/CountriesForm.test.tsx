@@ -8,12 +8,12 @@ import { CountryFactory } from 'test-support/factories';
 import { Form } from '@ant-design/compatible';
 import { FormComponentProps } from '@ant-design/compatible/es/form';
 
-describe('CountriesForm', () => {
+describe(`CountriesForm`, () => {
   const CountriesFormWithMockedForm = Form.create<
     CountriesFormProps & FormComponentProps
   >()(CountriesForm);
 
-  it('renders highlighted countries first, then sort the rest by abc', async () => {
+  it(`renders highlighted countries first, then sort the rest by abc`, async () => {
     const testCountries = [
       CountryFactory.sample({ id: 'GBR', name: 'United Kingdom' }),
       CountryFactory.sample({ id: 'URY', name: 'Uruguay' }),
@@ -45,7 +45,7 @@ describe('CountriesForm', () => {
     const component = render(
       <CountriesFormWithMockedForm
         countries={testCountries}
-        placeholder="Choose country"
+        placeholder={'Choose country'}
       />,
     );
 

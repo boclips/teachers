@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect } from 'react';
 import Rating from 'src/components/video/rating/Rating';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +14,6 @@ export const Bit = (): any => {
   // @ts-ignore
   const videos = useSelector((state) => state.entities.videos.byId);
 
-  // @ts-ignore
   useEffect(() => {
     dispatch(
       fetchVideosAction({
@@ -29,6 +27,7 @@ export const Bit = (): any => {
         page: 1,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const emitVideoLinkClickEvent = (video: Video) => {
@@ -44,7 +43,7 @@ export const Bit = (): any => {
       {Object.keys(videos).map((it, i) => {
         const video = videos[it];
         return (
-          <>
+          <React.Fragment>
             <VideoCard
               video={video}
               rating={<Rating video={video} />}
@@ -57,11 +56,11 @@ export const Bit = (): any => {
                   collectionKey="discoverCollections"
                 />
               }
-              videoActionButtons={<VideoButtons video={video} mode="card" />}
+              videoActionButtons={<VideoButtons video={video} mode={'card'} />}
               analytics={() => emitVideoLinkClickEvent(video)}
-              key={video.id}
+              key={i}
             />
-          </>
+          </React.Fragment>
         );
       })}
     </div>

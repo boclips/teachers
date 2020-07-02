@@ -6,18 +6,6 @@ interface Props {
 }
 
 export class ScreenReaderErrors extends React.Component<Props> {
-  private renderErrors() {
-    return (
-      <ul data-qa="errors-list" className="screen-reader-errors__list">
-        {this.props.errors.map((error) => (
-          <li data-qa="error" key={error.field}>
-            {error.field}: {error.message}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
   public render() {
     return (
       <section
@@ -30,6 +18,18 @@ export class ScreenReaderErrors extends React.Component<Props> {
         </p>
         {this.renderErrors()}
       </section>
+    );
+  }
+
+  private renderErrors() {
+    return (
+      <ul data-qa="errors-list" className="screen-reader-errors__list">
+        {this.props.errors.map((error) => (
+          <li data-qa="error" key={error.field}>
+            {error.field}: {error.message}
+          </li>
+        ))}
+      </ul>
     );
   }
 }

@@ -13,7 +13,7 @@ beforeEach(async () => {
 
   await rateVideo(VideoFactory.sample(), 3);
 
-  const { url } = axiosMock.history.patch[0];
+  const url = axiosMock.history.patch[0].url;
   queryParams = queryString.parse(url.split('?')[1]);
 });
 

@@ -1,5 +1,5 @@
 import { ReactWrapper } from 'enzyme';
-import By from './By';
+import { By } from './By';
 
 export function findOne(wrapper: ReactWrapper, dataQa: string, tag?: string) {
   const result: ReactWrapper = wrapper.find(By.dataQa(dataQa, tag)).hostNodes();

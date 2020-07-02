@@ -10,7 +10,8 @@ import { Action } from '../redux/actions';
 import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
 import { ErrorView } from '../../views/error/ErrorView';
-import LinkLoader, { UnconnectedLinkLoader } from './LinkLoader';
+import { UnconnectedLinkLoader } from './LinkLoader';
+import LinkLoader from './LinkLoader';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
 

@@ -18,9 +18,11 @@ interface Props {
 
 const sendPlatformInteractionEvent = AnalyticsFactory.internalAnalytics()
   .trackPlatformInteraction;
-const { SHARE_CODE_MODAL_IMPRESSION } = PlatformInteractionType;
-const { SHARE_CODE_MODAL_INVALID } = PlatformInteractionType;
-const { SHARE_CODE_MODAL_VALID } = PlatformInteractionType;
+const SHARE_CODE_MODAL_IMPRESSION =
+  PlatformInteractionType.SHARE_CODE_MODAL_IMPRESSION;
+const SHARE_CODE_MODAL_INVALID =
+  PlatformInteractionType.SHARE_CODE_MODAL_INVALID;
+const SHARE_CODE_MODAL_VALID = PlatformInteractionType.SHARE_CODE_MODAL_VALID;
 
 export const ShareCodeDialog = (props: Props) => {
   const [shareCode, setShareCode] = useState('');
@@ -55,15 +57,15 @@ export const ShareCodeDialog = (props: Props) => {
   return (
     <Bodal
       closable={false}
-      destroyOnClose
+      destroyOnClose={true}
       visible={visible}
       footer={null}
       title={props.title}
       width="360px"
       className="share-code-dialog"
     >
-      <div className="share-code-dialog__explainer">
-        Don&apos;t have a code? Ask your teacher.
+      <div className={'share-code-dialog__explainer'}>
+        {"Don't have a code? Ask your teacher."}
       </div>
       <form
         action="#"
@@ -75,7 +77,7 @@ export const ShareCodeDialog = (props: Props) => {
         }}
       >
         <Input
-          size="large"
+          size={'large'}
           type="text"
           className={c('share-code-dialog__input', {
             'share-code-dialog__input--invalid': codeInvalid,
@@ -90,8 +92,8 @@ export const ShareCodeDialog = (props: Props) => {
         <Button
           className="share-code-dialog__button"
           data-qa="share-code-submit"
-          type="primary"
-          size="large"
+          type={'primary'}
+          size={'large'}
           disabled={shareCode.length === 0}
           htmlType="submit"
         >

@@ -34,48 +34,27 @@ interface StateProps {
 const { Content } = Layout;
 const refresh = () => true;
 
-class DiscoverCollectionsView extends PureComponent<
+export class DiscoverCollectionsView extends PureComponent<
   OwnProps & StateProps & WithMediaBreakPointProps
 > {
-  public componentDidMount(): void {
-    const { subjectIds, disciplineId } = this.props;
-    AnalyticsFactory.externalAnalytics().trackDiscoveryPage(
-      subjectIds,
-      disciplineId,
-    );
-  }
-
-  private isDesktop(): boolean {
-    const { mediaBreakpoint } = this.props;
-    return mediaBreakpoint.width > MediaBreakpoints.md.width;
-  }
-
-  private subjectClassName(): string {
-    return this.isDesktop()
-      ? 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg'
-      : 'discover-collections__subject-link link--tabbable';
-  }
-
   public render() {
-    const { discipline, subjects, subjectIds } = this.props;
-
-    if (!discipline) {
+    if (!this.props.discipline) {
       return null;
     }
 
-    let pageTitle = discipline.name;
+    let pageTitle = this.props.discipline.name;
 
-    if (subjects && subjects.length === 1) {
-      pageTitle += ` > ${subjects[0].name}`;
+    if (this.props.subjects && this.props.subjects.length === 1) {
+      pageTitle += ` > ${this.props.subjects[0].name}`;
     }
 
     return (
       <section>
         <PageLayout
           title={pageTitle}
-          showNavigation
-          showSearchBar
-          showFooter
+          showNavigation={true}
+          showSearchBar={true}
+          showFooter={true}
           subheader={
             <section className="discover-collections__header-container">
               <Content>
@@ -83,27 +62,27 @@ class DiscoverCollectionsView extends PureComponent<
                   <h1>
                     <strong className="discipline-name">
                       <Link
-                        to={`/discover-collections?discipline=${discipline.id}`}
+                        to={`/discover-collections?discipline=${this.props.discipline.id}`}
                       >
-                        {discipline.name}
+                        {this.props.discipline.name}
                       </Link>
                     </strong>
-                    {subjects && subjects.length === 1 && (
+                    {this.props.subjects && this.props.subjects.length === 1 && (
                       <span className="discipline-subject">
                         <strong> &gt; </strong>
-                        {subjects[0].name}
+                        {this.props.subjects[0].name}
                       </span>
                     )}
                   </h1>
                   <section className="discover-collections__header-logo display-tablet-and-desktop">
-                    <DisciplineLogo discipline={discipline} />
+                    <DisciplineLogo discipline={this.props.discipline} />
                   </section>
                 </section>
               </Content>
             </section>
           }
         >
-          {!subjectIds || subjectIds.length === 0 ? (
+          {!this.props.subjectIds || this.props.subjectIds.length === 0 ? (
             <section
               className="discover-collections__subjects"
               data-qa="discover-collections-discipline-subjects"
@@ -115,18 +94,20 @@ class DiscoverCollectionsView extends PureComponent<
                 className="discover-collections__subjects-list"
                 gutter={[12, 12]}
               >
-                {sortBy(discipline.subjects, ['name']).map((subject) => (
-                  <Col md={6} key={subject.id}>
-                    <Link
-                      className={this.subjectClassName()}
-                      to={`/discover-collections?subject=${subject.id}`}
-                    >
-                      <span data-qa="discipline-subject-link">
-                        {subject.name}
-                      </span>
-                    </Link>
-                  </Col>
-                ))}
+                {sortBy(this.props.discipline.subjects, ['name']).map(
+                  (subject) => (
+                    <Col md={6} key={subject.id}>
+                      <Link
+                        className={this.subjectClassName()}
+                        to={`/discover-collections?subject=${subject.id}`}
+                      >
+                        <span data-qa="discipline-subject-link">
+                          {subject.name}
+                        </span>
+                      </Link>
+                    </Col>
+                  ),
+                )}
               </Row>
             </section>
           ) : null}
@@ -134,19 +115,19 @@ class DiscoverCollectionsView extends PureComponent<
           <section
             className="discover-collections__container collection-list"
             data-qa="discover-collections-list-page"
-            key={`container-${subjects.map((s) => s.id).join()}`}
+            key={`container-${this.props.subjects.map((s) => s.id).join()}`}
           >
             <PageableCollectionCardList
-              key={subjects.map((s) => s.id).join()}
+              key={this.props.subjects.map((s) => s.id).join()}
               title={
                 <span>
                   <img src={collectionsImg} alt="" /> Video collections
                 </span>
               }
-              grid
+              grid={true}
               collectionKey="discoverCollections"
               collectionFilter={{
-                filters: { subject: subjects.map((s) => s.id) },
+                filters: { subject: this.props.subjects.map((s) => s.id) },
               }}
               shouldRefresh={refresh}
             />
@@ -154,6 +135,23 @@ class DiscoverCollectionsView extends PureComponent<
         </PageLayout>
       </section>
     );
+  }
+
+  public componentDidMount(): void {
+    AnalyticsFactory.externalAnalytics().trackDiscoveryPage(
+      this.props.subjectIds,
+      this.props.disciplineId,
+    );
+  }
+
+  private isDesktop(): boolean {
+    return this.props.mediaBreakpoint.width > MediaBreakpoints.md.width;
+  }
+
+  private subjectClassName(): string {
+    return this.isDesktop()
+      ? 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg'
+      : 'discover-collections__subject-link link--tabbable';
   }
 }
 

@@ -8,34 +8,39 @@ interface TagProps {
   label?: string;
 }
 
-export const Tag = (props: TagProps) => {
-  return (
-    <div className="tag">
-      {props.label && <span className="tag__type">{props.label}:</span>}
-      <span data-qa="filter-tag">{props.value}</span>
-    </div>
-  );
-};
+export class Tag extends React.Component<TagProps> {
+  public render() {
+    return (
+      <div className="tag">
+        {this.props.label && (
+          <span className="tag__type">{this.props.label}:</span>
+        )}
+        <span data-qa={'filter-tag'}>{this.props.value}</span>
+      </div>
+    );
+  }
+}
 
 interface ClosableTagProps extends TagProps {
   onClose: () => void;
 }
 
-export const ClosableTag = (props: ClosableTagProps) => {
-  return (
-    <div className="tag">
-      {props.label && <span className="tag__type">{props.label}:</span>}
-      <span data-qa="filter-tag">{props.value}</span>
-      <span
-        role="button"
-        tabIndex={0}
-        className="tag__close"
-        data-qa="close-tag"
-        onKeyPress={(e) => (e.keyCode === 13 ? props.onClose : null)}
-        onClick={props.onClose}
-      >
-        <Icon component={CloseSVG} />
-      </span>
-    </div>
-  );
-};
+export class ClosableTag extends React.Component<ClosableTagProps> {
+  public render() {
+    return (
+      <div className="tag">
+        {this.props.label && (
+          <span className="tag__type">{this.props.label}:</span>
+        )}
+        <span data-qa="filter-tag">{this.props.value}</span>
+        <span
+          className="tag__close"
+          data-qa="close-tag"
+          onClick={this.props.onClose}
+        >
+          <Icon component={CloseSVG} />
+        </span>
+      </div>
+    );
+  }
+}

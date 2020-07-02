@@ -21,9 +21,9 @@ export const EditCollectionButton = React.memo(({ collection }: Props) => {
 
   if (collection.links.edit) {
     return (
-      <>
+      <React.Fragment>
         <Button
-          size="large"
+          size={'large'}
           onClick={() => {
             setVisible(true);
           }}
@@ -45,8 +45,9 @@ export const EditCollectionButton = React.memo(({ collection }: Props) => {
           setVisible={setVisible}
           disableButton={disableButton}
         />
-      </>
+      </React.Fragment>
     );
+  } else {
+    return null;
   }
-  return null;
 });

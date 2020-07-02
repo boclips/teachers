@@ -20,9 +20,9 @@ export const AttachmentDetails = (props: Props) => (
         {props.description}
       </ReactMarkdown>
       <InteractionTracker onInteraction={props.onClick}>
-        <a href={props.link} target="_blank" rel="noreferrer">
+        <a href={props.link} target="_blank">
           <div className="attachment-details__link">
-            <LessonClip aria-hidden />
+            <LessonClip aria-hidden={true} />
             {props.labels.linkLabel}
           </div>
         </a>

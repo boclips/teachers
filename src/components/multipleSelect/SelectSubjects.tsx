@@ -36,7 +36,6 @@ export const SelectSubjects = React.forwardRef(
           key={subject.id}
           value={subject.id}
           data-qa={subject.id}
-          data-state={subject.name}
           title={subject.name}
         >
           {subject.name}

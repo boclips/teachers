@@ -1,6 +1,6 @@
 import React from 'react';
 import './Grid.less';
-import c from 'classnames';
+import classnames from 'classnames';
 import InfiniteScroll, {
   Props as InfiniteScrollProps,
 } from 'react-infinite-scroll-component';
@@ -11,9 +11,8 @@ export class InfiniteGrid extends React.PureComponent<Props> {
   public render() {
     return (
       <InfiniteScroll
-        /* eslint-disable-next-line */
         {...this.props}
-        className={c(
+        className={classnames(
           'boclips-grid',
           'boclips-grid--infinite',
           this.props.className,

@@ -25,7 +25,6 @@ const getWrapper = (
     video: VideoFactory.sample(),
     ...givenProps,
   };
-  // eslint-disable-next-line react/jsx-props-no-spreading
   return shallow(<VideoCollectionButton {...props} />);
 };
 

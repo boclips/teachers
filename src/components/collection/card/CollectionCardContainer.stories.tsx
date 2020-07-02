@@ -172,29 +172,35 @@ storiesOf('CollectionCardContainer', module)
   ))
   .add('Grid Card', () => (
     <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid collection={bookmarkableCollection} />{' '}
+      <CollectionCardContainer
+        grid={true}
+        collection={bookmarkableCollection}
+      />{' '}
     </div>
   ))
   .add('Grid Card with no tags', () => (
     <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid collection={collectionWithoutTags} />{' '}
+      <CollectionCardContainer grid={true} collection={collectionWithoutTags} />{' '}
     </div>
   ))
   .add('Grid Card which is mine', () => (
     <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid collection={myCollection} />{' '}
+      <CollectionCardContainer grid={true} collection={myCollection} />{' '}
     </div>
   ))
 
   .add('Grid Card which is bookmarked', () => (
     <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid collection={bookmarkedCollection} />{' '}
+      <CollectionCardContainer grid={true} collection={bookmarkedCollection} />{' '}
     </div>
   ))
 
   .add('Grid Card with no description', () => (
     <div style={{ maxWidth: '400px' }}>
-      <CollectionCardContainer grid collection={collectionWithoutDescription} />{' '}
+      <CollectionCardContainer
+        grid={true}
+        collection={collectionWithoutDescription}
+      />{' '}
     </div>
   ))
   .add('Skeleton', () => <CollectionCardSkeleton />);

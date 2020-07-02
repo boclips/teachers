@@ -39,19 +39,10 @@ interface DispatchProps {
 class PrivateRoute extends React.Component<
   RouteComponentProps<{}> & RouteProps & OwnProps & StateProps & DispatchProps
 > {
-  public componentDidMount(): void {
-    const {
-      isAuthenticated,
-      accessExpired,
-      redirectToAccessRenewalPage,
-      authenticate,
-    } = this.props;
-    if (!isAuthenticated) {
-      authenticate();
-    }
-    if (accessExpired) {
-      redirectToAccessRenewalPage();
-    }
+  public render(): React.ReactNode {
+    const { canRenderComponent, component, children, ...rest } = this.props;
+
+    return <Route {...rest} render={this.renderChild} />;
   }
 
   private renderChild = () => {
@@ -80,11 +71,13 @@ class PrivateRoute extends React.Component<
     return children;
   };
 
-  public render(): React.ReactNode {
-    const { canRenderComponent, component, children, ...rest } = this.props;
-
-    // eslint-disable-next-line
-    return <Route {...rest} render={this.renderChild} />;
+  public componentDidMount(): void {
+    if (!this.props.isAuthenticated) {
+      this.props.authenticate();
+    }
+    if (this.props.accessExpired) {
+      this.props.redirectToAccessRenewalPage();
+    }
   }
 }
 

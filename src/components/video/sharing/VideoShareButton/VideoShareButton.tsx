@@ -12,21 +12,13 @@ import { getShareableVideoLink } from 'src/services/links/getShareableVideoLink'
 import { ShareButton } from 'src/components/common/share/ShareButton/ShareButton';
 import State from '../../../../types/State';
 
-interface VideoShareButtonProps {
+interface Props {
   video: Video;
   getContainer?: HTMLElement;
   icon?: React.ComponentType<any>;
 }
 
-interface VideoShareButtonForm {
-  video: Video;
-}
-
-export const VideoShareButton = ({
-  video,
-  getContainer,
-  icon,
-}: VideoShareButtonProps) => {
+export const VideoShareButton = (props: Props) => {
   const isAuthenticated = useSelector((state: State) => !!state.user);
 
   const user = useSelector((state: State) => state.user);
@@ -36,49 +28,53 @@ export const VideoShareButton = ({
   if (isAuthenticated) {
     return (
       <ShareButton
-        title={`Share ${mobileView ? 'video' : video.title}`}
+        title={`Share ${mobileView ? 'video' : props.video.title}`}
         shareCode={user.shareCode}
-        getContainer={getContainer}
-        icon={icon}
+        getContainer={props.getContainer}
+        icon={props.icon}
       >
-        <VideoShareButtonForm video={video} />
+        <VideoShareButtonForm video={props.video} />
       </ShareButton>
     );
+  } else {
+    return null;
   }
-  return null;
 };
 
-export const VideoShareButtonForm = ({ video }: VideoShareButtonForm) => {
+export const VideoShareButtonForm = (props: Props) => {
   const [segment, setSegment] = useState<Segment>(null);
   const user = useSelector((state: State) => state.user);
 
-  const shareLink = getShareableVideoLink(video.id, user.id, segment);
+  const shareLink = getShareableVideoLink(props.video.id, user.id, segment);
 
   const handleCopyLink = () => {
-    AnalyticsFactory.externalAnalytics().trackVideoLinkCopied(video, segment);
+    AnalyticsFactory.externalAnalytics().trackVideoLinkCopied(
+      props.video,
+      segment,
+    );
     AnalyticsFactory.internalAnalytics()
-      .trackVideoLinkCopied(video)
+      .trackVideoLinkCopied(props.video)
       .catch(console.error);
   };
 
   const handleGoogleShare = () => {
     AnalyticsFactory.externalAnalytics().trackVideoSharedInGoogle(
-      video,
+      props.video,
       segment,
     );
     AnalyticsFactory.internalAnalytics()
-      .trackVideoSharedInGoogle(video)
+      .trackVideoSharedInGoogle(props.video)
       .catch(console.error);
   };
 
   return (
     <div>
-      <ShareForm video={video} onSegmentChange={setSegment} />
+      <ShareForm video={props.video} onSegmentChange={setSegment} />
       <div className="share-buttons">
         <CopyLinkButton link={shareLink} onClick={handleCopyLink} />
         <GoogleClassroomShareButton
           link={shareLink}
-          postTitle={video.title}
+          postTitle={props.video.title}
           postBody={`Use code ${user.shareCode} to view this.`}
           onClick={handleGoogleShare}
         />

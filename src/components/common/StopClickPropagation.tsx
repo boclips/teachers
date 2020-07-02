@@ -31,16 +31,13 @@ class StopClickPropagation extends React.PureComponent<Props> {
   };
 
   public render() {
-    return React.createElement(
-      this.props.wrapper,
-      {
-        ...this.props.wrapperProps,
-        onClick: this.handleOnClick,
-        onKeyDown: this.handleOnKeyDown,
-        onMouseDown: this.handleOnMouseDown,
-      },
-      [this.props.children],
-    );
+    return React.createElement(this.props.wrapper, {
+      ...this.props.wrapperProps,
+      children: this.props.children,
+      onClick: this.handleOnClick,
+      onKeyDown: this.handleOnKeyDown,
+      onMouseDown: this.handleOnMouseDown,
+    });
   }
 }
 export default StopClickPropagation;
