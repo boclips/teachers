@@ -131,6 +131,7 @@
     "boclips-js-security": "^3.4.3",
     "boclips-player": "5.2.0",
     "boclips-player-react": "1.1.3",
+    "eslint-config-boclips": "latest",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",
     "lodash.sortby": "^4.7.0",
