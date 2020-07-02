@@ -2,6 +2,7 @@
 
 @description-line-height: 24px;
 @description-line-number: 6;
+@mobile-description-line-number: 3;
 
 .collection-card {
   animation: slide-in 0.5s 0s both;
@@ -106,6 +107,13 @@
     -webkit-line-clamp: @description-line-number;
     -webkit-box-orient: vertical;
     max-height: calc(@description-line-height * @description-line-number);
+
+    @media (max-width: @screen-sm-max) {
+      -webkit-line-clamp: @mobile-description-line-number;
+      max-height: calc(
+        @description-line-height * @mobile-description-line-number
+      );
+    }
 
     .empty-collection-message {
       margin-top: 50px;
@@ -235,7 +243,6 @@
       }
     }
   }
-
 
   &.skeleton.ant-skeleton-active .ant-skeleton-content {
     display: block;
