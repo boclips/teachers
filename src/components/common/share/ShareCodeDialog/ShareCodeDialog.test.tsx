@@ -6,10 +6,9 @@ import { RouterFactory, UserProfileFactory } from 'test-support/factories';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { createMemoryHistory } from 'history';
-import { waitForElementToBeRemoved } from '@testing-library/react';
 import eventually from 'test-support/eventually';
 
-describe(`Share code dialog`, () => {
+describe('Share code dialog', () => {
   let wrapper;
   beforeEach(async () => {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
@@ -18,12 +17,12 @@ describe(`Share code dialog`, () => {
     client.events.clear();
 
     wrapper = renderWithBoclipsStore(
-      <ShareCodeDialog title={'Test'} cta={'Click Me'} />,
+      <ShareCodeDialog title="Test" cta="Click Me" />,
       {
         router: RouterFactory.sample({
           location: {
             pathname: '',
-            search: `?referer=user-123`,
+            search: '?referer=user-123',
             hash: '',
             state: null,
           },
@@ -36,7 +35,7 @@ describe(`Share code dialog`, () => {
     );
   });
 
-  it(`disappears when referer id and referer share code entered are correct`, async () => {
+  it('disappears when referer id and referer share code entered are correct', async () => {
     const submitButton = wrapper.getByText('Click Me').closest('button');
 
     await fireEvent.change(wrapper.getByTestId('share-code-input'), {
@@ -45,12 +44,12 @@ describe(`Share code dialog`, () => {
 
     await fireEvent.click(submitButton);
 
-    await expect(
-      waitForElementToBeRemoved(() => wrapper.getByText('Test')),
-    ).resolves.toEqual(true);
+    await waitFor(() =>
+      expect(wrapper.queryByText('Test')).not.toBeInTheDocument(),
+    );
   });
 
-  it(`when code is incorrect displays invalid code`, async () => {
+  it('when code is incorrect displays invalid code', async () => {
     const submitButton = wrapper.getByText('Click Me').closest('button');
 
     await fireEvent.change(wrapper.getByTestId('share-code-input'), {
@@ -64,7 +63,7 @@ describe(`Share code dialog`, () => {
     });
   });
 
-  it(`will send PLATFORM_INTERACTED events accordingly to actions`, async () => {
+  it('will send PLATFORM_INTERACTED events accordingly to actions', async () => {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
     expect(client.events.getEvents()).toEqual([
       {

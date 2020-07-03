@@ -4,5 +4,5 @@ import { Subject } from '../../types/Subject';
 export async function fetchSubjects(): Promise<Subject[]> {
   const client = await ApiClientWrapper.get();
 
-  return await client.subjects.getAll();
+  return client.subjects.getAll();
 }

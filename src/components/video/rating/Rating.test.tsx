@@ -1,7 +1,7 @@
 import { Rate } from 'antd';
 import { shallow } from 'enzyme';
 import React from 'react';
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import { VideoFactory } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import { Video } from '../../../types/Video';
@@ -46,8 +46,8 @@ describe('when video has no rating', () => {
     expect(rating.find(By.dataQa('rating-video-button'))).toExist();
   });
 
-  describe(`when clicking on rating button`, () => {
-    test(`it opens the feedback modal and does not follow dummy rating link`, () => {
+  describe('when clicking on rating button', () => {
+    test('it opens the feedback modal and does not follow dummy rating link', () => {
       const preventDefaultSpy = jest.fn();
       rating.find(By.dataQa('rating-video-button')).simulate('click', {
         preventDefault: preventDefaultSpy,

@@ -42,8 +42,10 @@ const onStorePromotedVideosAction = (
   state: State,
   request: { promotedVideos: Video[] },
 ): State => {
-  state = onStoreVideosAction(state, { videos: request.promotedVideos });
-  return produce(state, (draftState) => {
+  const stateTemp = onStoreVideosAction(state, {
+    videos: request.promotedVideos,
+  });
+  return produce(stateTemp, (draftState) => {
     draftState.videos.promotedVideoIds = request.promotedVideos.map(
       (video) => video.id,
     );

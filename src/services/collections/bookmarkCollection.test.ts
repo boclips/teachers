@@ -4,12 +4,12 @@ import { Link } from '../../types/Link';
 import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
-} from './../../../test-support/factories';
+} from '../../../test-support/factories';
 import { bookmarkCollection } from './bookmarkCollection';
 
 test('bookmark collection', async () => {
   MockFetchVerify.patch(
-    `/v1/collections/the-id`,
+    '/v1/collections/the-id',
     undefined,
     200,
     collectionResponse(),

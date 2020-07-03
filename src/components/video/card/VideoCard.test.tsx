@@ -1,4 +1,3 @@
-import Mock = jest.Mock;
 import React from 'react';
 import { Link } from 'src/types/Link';
 import { renderWithCreatedStore } from 'test-support/renderWithStore';
@@ -11,6 +10,7 @@ import { MockStoreFactory, VideoFactory } from 'test-support/factories';
 import eventually from 'test-support/eventually';
 import { fetchVideoTranscript } from 'src/services/videos/fetchVideoTranscript';
 import { VideoCard } from './VideoCard';
+import Mock = jest.Mock;
 
 jest.mock('../../../services/videos/fetchVideoTranscript');
 
@@ -24,8 +24,8 @@ describe('when outside video collection', () => {
     video = VideoFactory.sample({
       ageRange: new AgeRange(3, 9),
       links: {
-        self: new Link({ href: `/v1/videos/123` }),
-        transcript: new Link({ href: `/v1/videos/123` }),
+        self: new Link({ href: '/v1/videos/123' }),
+        transcript: new Link({ href: '/v1/videos/123' }),
       },
     });
     history = createMemoryHistory();
@@ -81,7 +81,7 @@ describe('when outside video collection', () => {
   });
 });
 
-describe(`when unauthenticated`, () => {
+describe('when unauthenticated', () => {
   const history = createMemoryHistory();
   const store = createBoclipsStore(
     MockStoreFactory.sampleState({
@@ -91,9 +91,9 @@ describe(`when unauthenticated`, () => {
         loadingState: 'success',
         entries: {
           myCollections: null,
-          video: new Link({ href: `/videos/{id}`, templated: true }),
+          video: new Link({ href: '/videos/{id}', templated: true }),
           createNoSearchResultsEvent: new Link({
-            href: `/videos/{id}`,
+            href: '/videos/{id}',
             templated: true,
           }),
         },
@@ -102,9 +102,9 @@ describe(`when unauthenticated`, () => {
     history,
   );
 
-  it(`does not render the video card buttons when there are no appropriate links`, () => {
+  it('does not render the video card buttons when there are no appropriate links', () => {
     const videoWithNoLinks = VideoFactory.sample({
-      links: { self: new Link({ href: `/v1/videos/123` }) },
+      links: { self: new Link({ href: '/v1/videos/123' }) },
     });
     const component = renderWithCreatedStore(
       <VideoCard video={videoWithNoLinks} />,
@@ -120,11 +120,11 @@ describe(`when unauthenticated`, () => {
     expect(component.queryByText('Save')).not.toBeInTheDocument();
   });
 
-  it(`renders the transcript button when available`, () => {
+  it('renders the transcript button when available', () => {
     const videoWithTranscriptLink = VideoFactory.sample({
       links: {
-        self: new Link({ href: `/v1/videos/123` }),
-        transcript: new Link({ href: `/v1/videos/123` }),
+        self: new Link({ href: '/v1/videos/123' }),
+        transcript: new Link({ href: '/v1/videos/123' }),
       },
     });
     const component = renderWithCreatedStore(

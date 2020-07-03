@@ -1,8 +1,10 @@
 export class AgeRange {
   private readonly min: number;
+
   private readonly max?: number;
 
   private static AGE_RANGE_MIN = 3;
+
   private static AGE_RANGE_MAX = 19;
 
   public constructor(min: number = null, max: number = null) {
@@ -35,9 +37,8 @@ export class AgeRange {
 
     if (max === 19) {
       return `${this.resolveMin()}+`;
-    } else {
-      return `${this.resolveMin()} - ${this.max}`;
     }
+    return `${this.resolveMin()} - ${this.max}`;
   }
 
   public getShortLabel() {
@@ -45,16 +46,15 @@ export class AgeRange {
 
     if (max === 19 || max === 99) {
       return `${this.resolveMin()}+`;
-    } else {
-      return `${this.resolveMin()}-${this.max}`;
     }
+    return `${this.resolveMin()}-${this.max}`;
   }
 
   public getNumbers(): number[] {
     const max = !this.max ? AgeRange.AGE_RANGE_MAX : this.max;
 
     const arr = [];
-    for (let i = this.min; i <= max; i++) {
+    for (let i = this.min; i <= max; i += 1) {
       arr.push(i);
     }
 
@@ -64,17 +64,15 @@ export class AgeRange {
   public resolveMin() {
     if (this.min && this.min > 2) {
       return this.min;
-    } else {
-      return AgeRange.AGE_RANGE_MIN;
     }
+    return AgeRange.AGE_RANGE_MIN;
   }
 
   public resolveMax() {
     if (this.max) {
       return this.max;
-    } else {
-      return AgeRange.AGE_RANGE_MAX;
     }
+    return AgeRange.AGE_RANGE_MAX;
   }
 
   public isBounded() {

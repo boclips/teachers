@@ -10,20 +10,20 @@ import {
 } from '../../components/common/higherOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
-import HomeViewVideoList from './HomeViewVideoList';
+import HomeViewVideoListView from './HomeViewVideoList';
 
 const { Content } = Layout;
 
 const DisciplineSection = () => (
-  <React.Fragment>
+  <>
     <DisciplineCardList limit={4} />
     <Link
-      to={'/our-subjects'}
-      className={'disciplines-section__all-subjects link--tabbable'}
+      to="/our-subjects"
+      className="disciplines-section__all-subjects link--tabbable"
     >
       Explore all subjects <ForwardArrowIcon />
     </Link>
-  </React.Fragment>
+  </>
 );
 
 export const VideosAndDisciplinesSection = withMediaBreakPoint(
@@ -37,7 +37,7 @@ export const VideosAndDisciplinesSection = withMediaBreakPoint(
           {screenIsDesktop ? (
             <Row gutter={90}>
               <Col lg={{ span: 8 }}>
-                <HomeViewVideoList />
+                <HomeViewVideoListView />
               </Col>
               <Col lg={{ span: 16 }}>
                 <DisciplineSection />

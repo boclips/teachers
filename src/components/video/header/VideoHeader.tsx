@@ -1,4 +1,4 @@
-import { Icon } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Video } from 'src/types/Video';
@@ -19,13 +19,13 @@ interface Props {
 
 export const VideoHeader = withRouter(
   React.memo((props: Props & RouteComponentProps) => (
-    <section className={'video-card-header'}>
+    <section className="video-card-header">
       <h1 className="title clamp-2-lines" data-qa="video-title">
         <Link to={`/videos/${props.video.id}`} onClick={onClick}>
           {props.video.title}
         </Link>
       </h1>
-      <StopClickPropagation wrapper={'section'}>
+      <StopClickPropagation wrapper="section">
         <ButtonMenu
           buttons={[
             <VideoShareButton video={props.video} />,
@@ -36,15 +36,15 @@ export const VideoHeader = withRouter(
         />
       </StopClickPropagation>
       <section className="badge-container">
-        <p data-qa="video-duration" className={'subtitle duration'}>
-          <Icon type="clock-circle" />{' '}
+        <p data-qa="video-duration" className="subtitle duration">
+          <ClockCircleOutlined />{' '}
           <DurationFormatter duration={props.video.duration} />
         </p>
       </section>
 
       <VideoCardTagList video={props.video} />
       <section className="subtitle">
-        <StopClickPropagation wrapper={'span'}>
+        <StopClickPropagation wrapper="span">
           <Rating video={props.video} />
         </StopClickPropagation>
         Released on{' '}

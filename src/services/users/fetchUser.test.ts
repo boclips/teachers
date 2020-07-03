@@ -1,7 +1,7 @@
 import { userResponse } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import { Link } from '../../types/Link';
-import { LinksFactory } from './../../../test-support/factories';
+import { LinksFactory } from '../../../test-support/factories';
 import { fetchUser } from './fetchUser';
 
 describe('fetch user ', () => {

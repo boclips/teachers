@@ -1,5 +1,6 @@
-import { Form, Menu } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Form } from '@ant-design/compatible';
+import { Menu } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import React, { Ref, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -63,7 +64,7 @@ const Filters = React.forwardRef(
     }, []);
 
     const renderSubMenuTitle = (title: string, key: string) => (
-      <span className={'filter-form__submenu-title'}>
+      <span className="filter-form__submenu-title">
         {title}
         {openFilters.indexOf(key) > -1 ? <ArrowUpSVG /> : <ArrowDownSVG />}
       </span>
@@ -72,7 +73,7 @@ const Filters = React.forwardRef(
       <section ref={ref}>
         <Form className="filter-form">
           <Menu
-            mode={'inline'}
+            mode="inline"
             openKeys={openFilters}
             inlineIndent={0}
             onOpenChange={onOpenChange}
@@ -81,12 +82,12 @@ const Filters = React.forwardRef(
               <SubMenu
                 title={renderSubMenuTitle('Age', FilterKey.AGE)}
                 key={FilterKey.AGE}
-                className={'filter-form__section'}
+                className="filter-form__section"
               >
                 <AgeFilter
                   ageRange={ageRange}
                   form={props.form}
-                  formFieldId={'ageRange'}
+                  formFieldId="ageRange"
                 />
               </SubMenu>
             )}
@@ -94,12 +95,12 @@ const Filters = React.forwardRef(
               <SubMenu
                 title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
                 key={FilterKey.SUBJECTS}
-                className={'filter-form__section'}
+                className="filter-form__section"
               >
                 <SubjectFilter
                   subjectIds={subjectIds}
                   form={props.form}
-                  formFieldId={'subjects'}
+                  formFieldId="subjects"
                 />
               </SubMenu>
             )}
@@ -107,12 +108,12 @@ const Filters = React.forwardRef(
               <SubMenu
                 title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
                 key={FilterKey.RESOURCE}
-                className={'filter-form__section'}
+                className="filter-form__section"
               >
                 <ResourcesFilter
                   resourceTypes={resourceTypes}
                   form={props.form}
-                  formFieldId={'resourceTypes'}
+                  formFieldId="resourceTypes"
                 />
               </SubMenu>
             )}
@@ -120,12 +121,12 @@ const Filters = React.forwardRef(
               <SubMenu
                 title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
                 key={FilterKey.DURATION}
-                className={'filter-form__section'}
+                className="filter-form__section"
               >
                 <DurationFilter
                   duration={duration}
                   form={props.form}
-                  formFieldId={'duration'}
+                  formFieldId="duration"
                 />
               </SubMenu>
             )}

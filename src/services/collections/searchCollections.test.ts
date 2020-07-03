@@ -32,7 +32,7 @@ describe('searchCollections', () => {
       links,
     );
 
-    const url = axiosMock.history.get[0].url;
+    const { url } = axiosMock.history.get[0];
     queryParams = queryString.parse(url.split('?')[1]);
 
     expect(queryParams.query).toEqual('foo');
@@ -50,7 +50,7 @@ describe('searchCollections', () => {
       links,
     );
 
-    const url = axiosMock.history.get[0].url;
+    const { url } = axiosMock.history.get[0];
     queryParams = queryString.parse(url.split('?')[1]);
 
     expect(queryParams.subject).toEqual('my-subject-id-1,my-subject-id-2');
@@ -68,7 +68,7 @@ describe('searchCollections', () => {
       links,
     );
 
-    const url = axiosMock.history.get[0].url;
+    const { url } = axiosMock.history.get[0];
     queryParams = queryString.parse(url.split('?')[1]);
 
     expect(queryParams.age_range_min).toEqual('5');

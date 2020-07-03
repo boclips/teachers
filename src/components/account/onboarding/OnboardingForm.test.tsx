@@ -2,10 +2,9 @@ import { mount, ReactWrapper } from 'enzyme';
 import Cookies from 'js-cookie';
 import React from 'react';
 import { Provider } from 'react-redux';
-import Mock = jest.Mock;
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import {
   CountryFactory,
   LinksFactory,
@@ -20,6 +19,8 @@ import { onboardUser } from '../../../services/users/updateUser';
 import { Link } from '../../../types/Link';
 import OnboardingForm from './OnboardingForm';
 import { OnboardingFormHelper } from './OnboardingFormHelper';
+
+import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser', () => ({
   onboardUser: jest.fn().mockReturnValue(Promise.resolve()),
@@ -53,7 +54,7 @@ describe('onboarding form', () => {
             CountryFactory.sample({ id: 'EU', name: 'England' }),
             CountryFactory.sample({
               id: 'USA',
-              name: 'Trumpity Trump',
+              name: 'United States',
               states: [{ id: 'state-1', name: 'State 1' }],
             }),
           ],
@@ -67,7 +68,7 @@ describe('onboarding form', () => {
 
   describe('when USA', () => {
     it('renders school and state', () => {
-      OnboardingFormHelper.editCountry(wrapper, 'USA');
+      OnboardingFormHelper.editCountry(wrapper, 'United States');
 
       expect(wrapper.find(By.dataQa('states-filter-select'))).toExist();
       expect(wrapper.find(By.dataQa('school-name'))).not.toExist();
@@ -76,7 +77,7 @@ describe('onboarding form', () => {
 
   describe('when not USA', () => {
     it('renders school input', () => {
-      OnboardingFormHelper.editCountry(wrapper, 'ES');
+      OnboardingFormHelper.editCountry(wrapper, 'Spain');
 
       expect(wrapper.find(By.dataQa('school'))).toExist();
       expect(wrapper.find(By.dataQa('states-filter-select'))).not.toExist();
@@ -248,7 +249,7 @@ function fillValidForm(wrapper: ReactWrapper) {
   OnboardingFormHelper.editSubjects(wrapper, ['1']);
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
   OnboardingFormHelper.moveCarousel(wrapper, 2);
-  OnboardingFormHelper.editCountry(wrapper, 'ES');
+  OnboardingFormHelper.editCountry(wrapper, 'Spain');
   OnboardingFormHelper.enterSchool(wrapper, 'school');
   OnboardingFormHelper.moveCarousel(wrapper, 3);
   OnboardingFormHelper.setMarketingOptIn(wrapper, true);

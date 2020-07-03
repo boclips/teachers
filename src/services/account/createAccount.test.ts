@@ -1,7 +1,7 @@
 import MockFetchVerify from '../../../test-support/MockFetchVerify';
 import { Link } from '../../types/Link';
 import { Links } from '../../types/Links';
-import { LinksFactory } from './../../../test-support/factories';
+import { LinksFactory } from '../../../test-support/factories';
 import { createAccount } from './createAccount';
 
 let links: Links;

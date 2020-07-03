@@ -12,7 +12,7 @@ import {
 import MockFetchVerify, {
   axiosMock,
 } from '../../../test-support/MockFetchVerify';
-import { OnboardingPage } from '../../../test-support/page-objects/OnboardingPage';
+import OnboardingPage from '../../../test-support/page-objects/OnboardingPage';
 
 describe('When user is not activated', () => {
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('When user is not activated', () => {
     onboardingPage.setName('Rebecca', 'Sanchez');
     onboardingPage.setRole('TEACHER');
     onboardingPage.setSubjects(['1', '3']);
-    onboardingPage.setCountry('ES');
+    onboardingPage.setCountry('Spain');
     onboardingPage.enterSchool('school');
     onboardingPage.setAgeRanges(['3-5']);
     onboardingPage.setMarketingOptIn(true);

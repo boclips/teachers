@@ -1,8 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import Mock = jest.Mock;
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import {
   LinksFactory,
@@ -16,6 +15,7 @@ import { Link } from '../../../types/Link';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 import { EditProfileForm } from './EditProfileForm';
+import Mock = jest.Mock;
 
 jest.mock('../../../services/users/updateUser');
 
@@ -62,7 +62,7 @@ describe(`Profile form`, () => {
   });
 
   it(`sends an updateuser request with the correct values`, () => {
-    wrapper.find(SelectAgeRange).find('.ant-select').simulate('click');
+    wrapper.find(SelectAgeRange).find('.ant-select').simulate('mousedown');
 
     const events = new EventSimulator(wrapper);
     events.setText(
@@ -74,16 +74,23 @@ describe(`Profile form`, () => {
       wrapper.find(By.dataQa('last-name', 'input')),
     );
 
-    const ageRangeOptions = wrapper.find('Trigger').find('MenuItem');
-    ageRangeOptions.find(`[data-qa="11-14"]`).first().simulate('click');
+    wrapper
+      .find(By.dataQa('age-select'))
+      .find('.ant-select-selector')
+      .simulate('mousedown');
 
-    wrapper.find(SelectSubjects).simulate('click');
+    wrapper.find('[data-qa="11-14"]').first().simulate('click');
 
-    const menuItems = wrapper.find('Trigger').find('MenuItem');
+    wrapper.find(SelectSubjects).simulate('mousedown');
 
-    menuItems.find(`[data-qa="subject-two-id"]`).first().simulate('click');
-    wrapper.update();
+    wrapper
+      .find(By.dataQa('subjects'))
+      .find('.ant-select-selector')
+      .simulate('mousedown');
 
+    wrapper.find(`[data-qa="subject-two-id"]`).first().simulate('click');
+
+    wrapper.find(SelectSubjects).simulate('mouseDown');
     wrapper.find(By.dataQa('submit-update-user', 'button')).simulate('click');
 
     expect(mockUpdateUser).toHaveBeenCalledWith(links, {

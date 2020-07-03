@@ -1,4 +1,5 @@
-import { Button, Icon } from 'antd';
+import Icon from '@ant-design/icons';
+import { Button } from 'antd';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -23,55 +24,6 @@ interface DispatchProps {
 export class BookmarkCollectionButtonInner extends PureComponent<
   OwnProps & DispatchProps
 > {
-  public render() {
-    if (
-      !this.props.collection.links.bookmark &&
-      !this.props.collection.links.unbookmark
-    ) {
-      return null;
-    }
-
-    if (this.props.collection.links.bookmark) {
-      return (
-        <A11yButton callback={this.onClick}>
-          <Button
-            className="bookmark-icon bookmark-button"
-            data-qa="bookmark-collection"
-          >
-            <React.Fragment>
-              <Icon
-                component={SaveBookmarkSVG}
-                aria-label="Bookmark a collection"
-                title="Button to bookmark a collection"
-                className="bookmark-button__icon"
-              />
-              <span>Save</span>
-            </React.Fragment>
-          </Button>
-        </A11yButton>
-      );
-    } else if (this.props.collection.links.unbookmark) {
-      return (
-        <A11yButton callback={this.onClick}>
-          <Button
-            className="bookmark-icon bookmark-button"
-            data-qa="unbookmark-collection"
-          >
-            <React.Fragment>
-              <Icon
-                component={RemoveBookmarkSVG}
-                aria-label="Remove collection bookmark"
-                title="Button to remove the collection bookmark"
-                className="bookmark-button__icon"
-              />
-              <span>Remove</span>
-            </React.Fragment>
-          </Button>
-        </A11yButton>
-      );
-    }
-  }
-
   private onClick = (event: React.SyntheticEvent<HTMLElement>) => {
     if (this.props.collection.links.bookmark) {
       this.bookmarkCollection();
@@ -97,6 +49,50 @@ export class BookmarkCollectionButtonInner extends PureComponent<
     );
     this.props.onUnbookmarkCollectionAction(this.props.collection);
   };
+
+  public render() {
+    if (this.props.collection.links.bookmark) {
+      return (
+        <A11yButton callback={this.onClick}>
+          <Button
+            className="bookmark-icon bookmark-button"
+            data-qa="bookmark-collection"
+          >
+            <>
+              <Icon
+                component={SaveBookmarkSVG}
+                aria-label="Bookmark a collection"
+                title="Button to bookmark a collection"
+                className="bookmark-button__icon"
+              />
+              <span>Save</span>
+            </>
+          </Button>
+        </A11yButton>
+      );
+    }
+    if (this.props.collection.links.unbookmark) {
+      return (
+        <A11yButton callback={this.onClick}>
+          <Button
+            className="bookmark-icon bookmark-button"
+            data-qa="unbookmark-collection"
+          >
+            <>
+              <Icon
+                component={RemoveBookmarkSVG}
+                aria-label="Remove collection bookmark"
+                title="Button to remove the collection bookmark"
+                className="bookmark-button__icon"
+              />
+              <span>Remove</span>
+            </>
+          </Button>
+        </A11yButton>
+      );
+    }
+    return null;
+  }
 }
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {

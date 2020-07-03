@@ -36,16 +36,16 @@ export class DurationRange {
 
   public toIso() {
     const durationConverter = new DurationConverter();
-    return (
-      durationConverter.secondsToIso(this.min) +
-      '-' +
-      durationConverter.secondsToIso(this.max)
-    );
+    return `${durationConverter.secondsToIso(
+      this.min,
+    )}-${durationConverter.secondsToIso(this.max)}`;
   }
 
   public static newFromStrings = (
     serialised: string | string[],
   ): DurationRange[] => {
+    let serializedArray: string[];
+
     const fromString = (str: string): DurationRange => {
       const [min, max] = str.split('-');
 
@@ -60,7 +60,8 @@ export class DurationRange {
     }
 
     if (!Array.isArray(serialised)) {
-      serialised = [serialised];
+      serializedArray = [serialised];
+      return serializedArray.map((rangeString) => fromString(rangeString));
     }
 
     return serialised.map((rangeString) => fromString(rangeString));

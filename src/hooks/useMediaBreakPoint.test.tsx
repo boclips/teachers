@@ -67,7 +67,7 @@ describe('breakpoints', () => {
   });
 });
 
-describe(`on resize`, () => {
+describe('on resize', () => {
   it('injects correct props to child component when window is resized', () => {
     setWidth(300);
     const wrapper = renderComponent();

@@ -1,4 +1,5 @@
-import { Col, Icon, Row } from 'antd';
+import Icon from '@ant-design/icons';
+import { Col, Row } from 'antd';
 import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -33,27 +34,48 @@ interface StateProps {
 const { Content } = Layout;
 const refresh = () => true;
 
-export class DiscoverCollectionsView extends PureComponent<
+class DiscoverCollectionsView extends PureComponent<
   OwnProps & StateProps & WithMediaBreakPointProps
 > {
+  public componentDidMount(): void {
+    const { subjectIds, disciplineId } = this.props;
+    AnalyticsFactory.externalAnalytics().trackDiscoveryPage(
+      subjectIds,
+      disciplineId,
+    );
+  }
+
+  private isDesktop(): boolean {
+    const { mediaBreakpoint } = this.props;
+    return mediaBreakpoint.width > MediaBreakpoints.md.width;
+  }
+
+  private subjectClassName(): string {
+    return this.isDesktop()
+      ? 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg'
+      : 'discover-collections__subject-link link--tabbable';
+  }
+
   public render() {
-    if (!this.props.discipline) {
+    const { discipline, subjects, subjectIds } = this.props;
+
+    if (!discipline) {
       return null;
     }
 
-    let pageTitle = this.props.discipline.name;
+    let pageTitle = discipline.name;
 
-    if (this.props.subjects && this.props.subjects.length === 1) {
-      pageTitle += ` > ${this.props.subjects[0].name}`;
+    if (subjects && subjects.length === 1) {
+      pageTitle += ` > ${subjects[0].name}`;
     }
 
     return (
       <section>
         <PageLayout
           title={pageTitle}
-          showNavigation={true}
-          showSearchBar={true}
-          showFooter={true}
+          showNavigation
+          showSearchBar
+          showFooter
           subheader={
             <section className="discover-collections__header-container">
               <Content>
@@ -61,27 +83,27 @@ export class DiscoverCollectionsView extends PureComponent<
                   <h1>
                     <strong className="discipline-name">
                       <Link
-                        to={`/discover-collections?discipline=${this.props.discipline.id}`}
+                        to={`/discover-collections?discipline=${discipline.id}`}
                       >
-                        {this.props.discipline.name}
+                        {discipline.name}
                       </Link>
                     </strong>
-                    {this.props.subjects && this.props.subjects.length === 1 && (
+                    {subjects && subjects.length === 1 && (
                       <span className="discipline-subject">
                         <strong> &gt; </strong>
-                        {this.props.subjects[0].name}
+                        {subjects[0].name}
                       </span>
                     )}
                   </h1>
                   <section className="discover-collections__header-logo display-tablet-and-desktop">
-                    <DisciplineLogo discipline={this.props.discipline} />
+                    <DisciplineLogo discipline={discipline} />
                   </section>
                 </section>
               </Content>
             </section>
           }
         >
-          {!this.props.subjectIds || this.props.subjectIds.length === 0 ? (
+          {!subjectIds || subjectIds.length === 0 ? (
             <section
               className="discover-collections__subjects"
               data-qa="discover-collections-discipline-subjects"
@@ -91,23 +113,20 @@ export class DiscoverCollectionsView extends PureComponent<
               </h1>
               <Row
                 className="discover-collections__subjects-list"
-                type="flex"
                 gutter={[12, 12]}
               >
-                {sortBy(this.props.discipline.subjects, ['name']).map(
-                  (subject) => (
-                    <Col md={6} key={subject.id}>
-                      <Link
-                        className={this.subjectClassName()}
-                        to={`/discover-collections?subject=${subject.id}`}
-                      >
-                        <span data-qa="discipline-subject-link">
-                          {subject.name}
-                        </span>
-                      </Link>
-                    </Col>
-                  ),
-                )}
+                {sortBy(discipline.subjects, ['name']).map((subject) => (
+                  <Col md={6} key={subject.id}>
+                    <Link
+                      className={this.subjectClassName()}
+                      to={`/discover-collections?subject=${subject.id}`}
+                    >
+                      <span data-qa="discipline-subject-link">
+                        {subject.name}
+                      </span>
+                    </Link>
+                  </Col>
+                ))}
               </Row>
             </section>
           ) : null}
@@ -115,19 +134,19 @@ export class DiscoverCollectionsView extends PureComponent<
           <section
             className="discover-collections__container collection-list"
             data-qa="discover-collections-list-page"
-            key={`container-${this.props.subjects.map((s) => s.id).join()}`}
+            key={`container-${subjects.map((s) => s.id).join()}`}
           >
             <PageableCollectionCardList
-              key={this.props.subjects.map((s) => s.id).join()}
+              key={subjects.map((s) => s.id).join()}
               title={
                 <span>
                   <img src={collectionsImg} alt="" /> Video collections
                 </span>
               }
-              grid={true}
+              grid
               collectionKey="discoverCollections"
               collectionFilter={{
-                filters: { subject: this.props.subjects.map((s) => s.id) },
+                filters: { subject: subjects.map((s) => s.id) },
               }}
               shouldRefresh={refresh}
             />
@@ -135,23 +154,6 @@ export class DiscoverCollectionsView extends PureComponent<
         </PageLayout>
       </section>
     );
-  }
-
-  public componentDidMount(): void {
-    AnalyticsFactory.externalAnalytics().trackDiscoveryPage(
-      this.props.subjectIds,
-      this.props.disciplineId,
-    );
-  }
-
-  private isDesktop(): boolean {
-    return this.props.mediaBreakpoint.width > MediaBreakpoints.md.width;
-  }
-
-  private subjectClassName(): string {
-    return this.isDesktop()
-      ? 'discover-collections__subject-link link--tabbable ant-btn ant-btn-lg'
-      : 'discover-collections__subject-link link--tabbable';
   }
 }
 

@@ -13,7 +13,7 @@ interface Props {
 
 export const GoogleClassroomShareButton = (props: Props) => (
   <Button
-    tabIndex={1}
+    tabIndex={0}
     onClick={() => {
       const url: string = new GoogleClassroomUrlBuilder()
         .setVideoUrl(props.link)

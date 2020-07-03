@@ -33,6 +33,7 @@ describe('InteractionTracker', () => {
   const renderView = (spy: () => void) =>
     render(
       <InteractionTracker onInteraction={spy}>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a>Link</a>
       </InteractionTracker>,
     );

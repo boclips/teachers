@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import Icon from 'antd/lib/icon';
 import { useSelector } from 'react-redux';
+import Icon from '@ant-design/compatible/lib/icon';
 import State from '../../../types/State';
 import EditCollectionSVG from '../../../../resources/images/edit-collection.svg';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -21,9 +21,9 @@ export const EditCollectionButton = React.memo(({ collection }: Props) => {
 
   if (collection.links.edit) {
     return (
-      <React.Fragment>
+      <>
         <Button
-          size={'large'}
+          size="large"
           onClick={() => {
             setVisible(true);
           }}
@@ -45,9 +45,8 @@ export const EditCollectionButton = React.memo(({ collection }: Props) => {
           setVisible={setVisible}
           disableButton={disableButton}
         />
-      </React.Fragment>
+      </>
     );
-  } else {
-    return null;
   }
+  return null;
 });

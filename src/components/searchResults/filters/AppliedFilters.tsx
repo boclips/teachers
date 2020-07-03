@@ -14,8 +14,8 @@ import './AppliedFilters.less';
 export const AppliedFilters = withAppliedSearchParameters(
   (props: WithAppliedSearchParametersProps) =>
     props.numberOfFiltersApplied > 0 ? (
-      <div className="applied-filters-bar" data-qa={'filters-bar'}>
-        <div className={'applied-filters-bar__headings'}>
+      <div className="applied-filters-bar" data-qa="filters-bar">
+        <div className="applied-filters-bar__headings">
           <span
             data-qa="filters-bar-title"
             className="applied-filters-bar__title"
@@ -24,11 +24,11 @@ export const AppliedFilters = withAppliedSearchParameters(
           </span>
           <ClearAllButton />
         </div>
-        <Row className="applied-filters-bar__tags" align="middle" type="flex">
+        <Row className="applied-filters-bar__tags" align="middle">
           {props.ageRange &&
-            props.ageRange.map((ageRange, index) => (
+            props.ageRange.map((ageRange) => (
               <AgeRangeFilterTag
-                key={index}
+                key={ageRange.getId()}
                 activeAgeRanges={props.ageRange}
                 ageRange={ageRange}
               />
@@ -42,14 +42,17 @@ export const AppliedFilters = withAppliedSearchParameters(
               />
             ))}
           {props.duration &&
-            props.duration.map((durationRange, index) => (
-              <DurationFilterTag key={index} range={durationRange} />
+            props.duration.map((durationRange) => (
+              <DurationFilterTag
+                key={durationRange.getLabel()}
+                range={durationRange}
+              />
             ))}
           {props.resourceTypes &&
-            props.resourceTypes.map((resorceType, index) => (
+            props.resourceTypes.map((resourceType) => (
               <ResourceTypeFilterTag
-                key={index}
-                resource={resorceType}
+                key={resourceType}
+                resource={resourceType}
                 activeFilters={props.resourceTypes}
               />
             ))}

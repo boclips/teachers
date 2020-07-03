@@ -1,10 +1,10 @@
 import { render as rtlRender, RenderResult } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
+import { createMemoryHistory, History } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { applyMiddleware, createStore, Store } from 'redux';
-import { History } from 'history';
+
 import { createReducer } from 'src/app/redux/createReducer';
 import { ConnectedRouter } from 'connected-react-router';
 import { createBoclipsStore } from 'src/app/redux/store';
@@ -20,29 +20,6 @@ export interface ResultingContext extends RenderResult {
   store: Store<State>;
   history: History;
 }
-
-export const renderWithStore = (
-  ui,
-  { initialState = {}, reducers = [], middlewares = [] }: Options = {},
-): ResultingContext => {
-  const store: Store = createStore(
-    createReducer(...reducers),
-    initialState,
-    applyMiddleware(...middlewares),
-  );
-
-  return renderWithCreatedStore(ui, store, createMemoryHistory({}));
-};
-
-export const renderWithBoclipsStore = (
-  ui,
-  initialState: Partial<State> = {},
-  history = createMemoryHistory(),
-): ResultingContext => {
-  const store = createBoclipsStore(initialState, history);
-
-  return renderWithCreatedStore(ui, store, history);
-};
 
 export const renderWithCreatedStore = (
   ui,
@@ -67,6 +44,29 @@ export const renderWithCreatedStore = (
     store,
     history,
   };
+};
+
+export const renderWithStore = (
+  ui,
+  { initialState = {}, reducers = [], middlewares = [] }: Options = {},
+): ResultingContext => {
+  const store: Store = createStore(
+    createReducer(...reducers),
+    initialState,
+    applyMiddleware(...middlewares),
+  );
+
+  return renderWithCreatedStore(ui, store, createMemoryHistory({}));
+};
+
+export const renderWithBoclipsStore = (
+  ui,
+  initialState: Partial<State> = {},
+  history = createMemoryHistory(),
+): ResultingContext => {
+  const store = createBoclipsStore(initialState, history);
+
+  return renderWithCreatedStore(ui, store, history);
 };
 
 export const renderWithConnectedRoutes = (

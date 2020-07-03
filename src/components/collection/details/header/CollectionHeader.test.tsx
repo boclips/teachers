@@ -204,7 +204,7 @@ describe('CollectionHeader', () => {
       ).toHaveAttribute('href', 'http://www.my-lesson-guide.com');
     });
 
-    it(`can render an activity attachment`, () => {
+    it('can render an activity attachment', () => {
       const collection = VideoCollectionFactory.sample({
         id: 'collection-id',
         attachments: [
@@ -232,7 +232,7 @@ describe('CollectionHeader', () => {
       expect(component.getByText('Suggested activity')).toBeInTheDocument();
     });
 
-    it(`can render a final project attachment`, () => {
+    it('can render a final project attachment', () => {
       const collection = VideoCollectionFactory.sample({
         id: 'collection-id',
         attachments: [

@@ -8,14 +8,16 @@ import { VideoCollection } from '../../../types/VideoCollection';
 import AbstractBoclipsAnalytics from './AbstractBoclipsAnalytics';
 
 export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
-  public trackVideoInteraction(
+  public trackVideoInteraction = (
     video: Video,
     interactionType: string,
-  ): Promise<void> {
+  ): Promise<void> => {
     const link = video.links.logInteraction;
 
     if (!link) {
-      return Promise.reject(`Video ${video.id} has no logInteraction link`);
+      return Promise.reject(
+        new Error(`Video ${video.id} has no logInteraction link`),
+      );
     }
 
     return axios.post(
@@ -26,18 +28,18 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
         headers: { 'Boclips-Referer': window.location.href },
       },
     );
-  }
+  };
 
-  public async trackPageRendered(url: string): Promise<void> {
+  public trackPageRendered = async (url: string): Promise<void> => {
     const client = await ApiClientWrapper.get();
 
     return client.events.trackPageRendered({ url });
-  }
+  };
 
-  public async trackCollectionInteractedWith(
+  public trackCollectionInteractedWith = async (
     collection: VideoCollection,
     subtype: keyof typeof CollectionInteractionType,
-  ): Promise<void> {
+  ): Promise<void> => {
     const client = await ApiClientWrapper.get();
 
     return client.events.trackCollectionInteraction(
@@ -53,20 +55,20 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
       { subtype: CollectionInteractionType[subtype] },
       window.location.href,
     );
-  }
+  };
 
-  public async trackUserExpired(): Promise<void> {
+  public trackUserExpired = async (): Promise<void> => {
     const client = await ApiClientWrapper.get();
 
     return client.events.trackUserExpired();
-  }
+  };
 
-  public async trackPlatformInteraction(
+  public trackPlatformInteraction = async (
     subtype: PlatformInteractionType,
     anonymous: boolean = false,
-  ): Promise<void> {
+  ): Promise<void> => {
     const client = await ApiClientWrapper.get();
 
     return client.events.trackPlatformInteraction(subtype, anonymous);
-  }
+  };
 }

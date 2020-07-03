@@ -8,7 +8,7 @@ import {
   EditCollectionRequest,
 } from '../actions/editCollectionAction';
 import { onCollectionEditedAction } from '../actions/onCollectionEditedAction';
-import { VideoCollection } from './../../../../types/VideoCollection';
+import { VideoCollection } from '../../../../types/VideoCollection';
 
 export function onEditCollection(
   store: MiddlewareAPI,

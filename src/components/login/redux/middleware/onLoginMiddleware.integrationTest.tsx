@@ -11,17 +11,19 @@ import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
-import onRegisterUserMiddleware from './onRegisterUserForAnalytics';
-import onRegisterUserForAnalytics from './onRegisterUserForAnalytics';
+import analytics from './onRegisterUserForAnalytics';
 
 jest.mock('../../../searchBar/redux/dispatchSearchActions');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
 jest.mock('../../../../services/users/updateUser');
 
+const onRegisterUserMiddleware = analytics;
+const onRegisterUserForAnalytics = analytics;
+
 const mockStore = configureStore<{}>([
   onStoreLoginMiddleware,
-  onRegisterUserForAnalytics,
   onRegisterUserMiddleware,
+  onRegisterUserForAnalytics,
 ]);
 const store = mockStore({
   apiPrefix: 'https://api.example.com',

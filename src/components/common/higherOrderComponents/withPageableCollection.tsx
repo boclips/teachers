@@ -32,6 +32,7 @@ export interface WithPageableCollectionProps
 
 const withPageableCollection = (Component) => (
   props: Props & DispatchProps & StateProps,
+  // eslint-disable-next-line
 ) => <Component {...props} />;
 
 const mapDispatchToProps = (

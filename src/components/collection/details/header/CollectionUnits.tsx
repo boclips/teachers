@@ -14,7 +14,7 @@ export const CollectionUnits = (props: Props) => {
   const refererParam = referer ? `?referer=${referer}` : '';
 
   return (
-    <div className={'collection-unit-list'} data-qa="collection-unit-list">
+    <div className="collection-unit-list" data-qa="collection-unit-list">
       <h1 className="collection-unit-list__heading">Units</h1>
       <ul>
         {props.units.map((collection) => (

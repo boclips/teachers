@@ -26,7 +26,7 @@ describe('ErrorView', () => {
   });
 
   it('does not render searchbar and navigation menu when non-recoverable', () => {
-    const view = renderWithStore(<ErrorView nonRecoverable={true} />);
+    const view = renderWithStore(<ErrorView nonRecoverable />);
 
     expect(view.queryByText('Search')).not.toBeInTheDocument();
     expect(view.queryByText('Your account')).not.toBeInTheDocument();

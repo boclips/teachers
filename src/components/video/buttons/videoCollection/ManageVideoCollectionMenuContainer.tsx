@@ -14,7 +14,7 @@ import './ManageVideoCollectionMenuContainer.less';
 import ManageVideoCollectionMenu from './ManageVideoCollectionMenu';
 
 interface Props {
-  children?: React.ReactNode;
+  children?: React.ReactElement;
   isMenuVisible: boolean;
   collectionKey: CollectionKey;
   loading: boolean;
@@ -67,7 +67,7 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
   );
 
   return (
-    <React.Fragment>
+    <>
       {breakpoint.width >= MediaBreakpoints.md.width ? (
         <span>
           <Popover
@@ -90,8 +90,8 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
           <Drawer
             className="manage-video-collection-button__drawer"
             title="Save to:"
-            placement={'bottom'}
-            closable={true}
+            placement="bottom"
+            closable
             onClose={() => props.onVisibleChange(false)}
             visible={props.isMenuVisible}
             getContainer={props.getPopupContainer}
@@ -100,7 +100,7 @@ const ManageVideCollectionMenuContainer = (props: Props) => {
           </Drawer>
         </span>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

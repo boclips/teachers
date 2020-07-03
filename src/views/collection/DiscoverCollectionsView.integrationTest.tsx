@@ -5,14 +5,14 @@ import eventually from 'test-support/eventually';
 import React from 'react';
 import { video177 } from 'test-support/api-responses';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
-import { DiscoverCollectionListPage } from '../../../test-support/page-objects/DiscoverCollectionListPage';
+import DiscoverCollectionListPage from '../../../test-support/page-objects/DiscoverCollectionListPage';
 import ApiStub from '../../../test-support/ApiStub';
 
 it('redirects if discipline is not found', () => {
   const history = createMemoryHistory();
 
   renderWithBoclipsStore(
-    <DiscoverCollectionsView disciplineId={'223'} />,
+    <DiscoverCollectionsView disciplineId="223" />,
     {},
     history,
   );

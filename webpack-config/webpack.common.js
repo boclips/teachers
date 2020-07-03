@@ -9,7 +9,7 @@ const distPath = path.resolve(__dirname, '../dist');
 const staticPath = path.resolve(__dirname, '../static');
 
 module.exports = {
-  entry: path.resolve(srcPath, 'index.tsx'),
+  entry: ['react-hot-loader/patch', srcPath],
   output: {
     path: distPath,
     filename: '[name]-[hash:20].js',

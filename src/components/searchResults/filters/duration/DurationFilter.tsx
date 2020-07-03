@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
 import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
-import { FormComponentProps } from 'antd/lib/form';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { DurationRange } from 'src/types/DurationRange';
 
 interface Props {

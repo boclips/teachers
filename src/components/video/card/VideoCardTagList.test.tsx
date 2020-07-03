@@ -3,12 +3,14 @@ import { SubjectFactory, VideoFactory } from 'test-support/factories';
 import { Video } from 'src/types/Video';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import { VideoCardTagList } from './VideoCardTagList';
-describe(`VideoCardTagList`, () => {
+
+describe('VideoCardTagList', () => {
   const getWrapper = (givenProps: Partial<{ video: Video }> = {}) => {
     const props = {
       video: VideoFactory.sample(),
       ...givenProps,
     };
+    // eslint-disable-next-line react/jsx-props-no-spreading
     return renderWithBoclipsStore(<VideoCardTagList {...props} />, {
       authentication: { status: 'authenticated' },
     });

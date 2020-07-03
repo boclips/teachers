@@ -7,7 +7,7 @@ describe('SelectSubjects', () => {
   test('renders a list of subjects alphabetically ordered', async () => {
     const view = render(
       <SelectSubjects
-        label={''}
+        label=""
         subjects={[
           SubjectFactory.sample({ id: '1', name: 'Maths' }),
           SubjectFactory.sample({ id: '3', name: 'Art' }),
@@ -19,7 +19,7 @@ describe('SelectSubjects', () => {
     );
 
     const selector = view.getByText('Select a subject');
-    fireEvent.click(selector);
+    fireEvent.mouseDown(selector);
 
     const maths = await view.findByText('Maths');
     const art = view.getByText('Art');
@@ -29,15 +29,15 @@ describe('SelectSubjects', () => {
 
     const options = view.getAllByRole('option');
 
-    expect(options[0].textContent).toContain('Art');
-    expect(options[1].textContent).toContain('Maths');
+    expect(options[0].outerHTML).toContain('Art');
+    expect(options[1].outerHTML).toContain('Maths');
   });
 
   test('onSelection returns a list of selected ids', async () => {
     const callback = jest.fn();
     const view = render(
       <SelectSubjects
-        label={''}
+        label=""
         subjects={[
           SubjectFactory.sample({ id: '1', name: 'Maths' }),
           SubjectFactory.sample({ id: '3', name: 'Art' }),
@@ -49,7 +49,7 @@ describe('SelectSubjects', () => {
     );
 
     const selector = view.getByText('Select a subject');
-    fireEvent.click(selector);
+    fireEvent.mouseDown(selector);
 
     const maths = await view.findByText('Maths');
 
@@ -65,7 +65,7 @@ describe('SelectSubjects', () => {
     const callback = jest.fn();
     const view = render(
       <SelectSubjects
-        label={''}
+        label=""
         subjects={[
           SubjectFactory.sample({ id: '1', name: 'Maths' }),
           SubjectFactory.sample({ id: '3', name: 'Art' }),

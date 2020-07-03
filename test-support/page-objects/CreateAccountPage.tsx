@@ -5,7 +5,7 @@ import App from '../../src/app/App';
 import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 
-export class CreateAccountPage {
+class CreateAccountPage {
   public constructor(public wrapper: ReactWrapper) {}
 
   public static async load(params = '') {
@@ -31,3 +31,5 @@ export class CreateAccountPage {
     });
   }
 }
+
+export default CreateAccountPage;

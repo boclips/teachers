@@ -1,6 +1,6 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
-.rating--{
+.rating-- {
   &container {
     margin-right: 20px;
     @media (max-width: @screen-sm-max) {
@@ -11,8 +11,13 @@
   &rate {
     font-size: 32px !important;
   }
+  &rate-button {
+    background: none;
+    border: 0;
+  }
 
-  &rate-stars,&rate-stars * {
+  &rate-stars,
+  &rate-stars * {
     cursor: pointer;
     border-radius: 4px;
     @media (max-width: @screen-sm-max) {
@@ -28,10 +33,12 @@
     }
   }
 
-  &stars--non-editable,&stars--non-editable * {
-    cursor: default ;
+  &stars--non-editable,
+  &stars--non-editable * {
+    cursor: default;
 
-    .ant-rate-star > div:hover, .ant-rate-star > div:focus {
+    .ant-rate-star > div:hover,
+    .ant-rate-star > div:focus {
       transform: none;
     }
 

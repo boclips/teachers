@@ -1,4 +1,4 @@
-import { Icon } from 'antd';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import collectionsSvg from '../../../../resources/images/our-collections.svg';
 import PageableCollectionCardList from '../card/list/PageableCollectionCardList';
@@ -18,7 +18,7 @@ export class PromotedCollectionsGrid extends React.PureComponent<Props> {
           </span>
         }
         description={this.props.description}
-        grid={true}
+        grid
         maxNumberOfCollections={this.props.maxNumberOfCollections}
         collectionKey="promotedCollections"
       />

@@ -1,4 +1,5 @@
-import { Button, Icon } from 'antd';
+import Icon from '@ant-design/icons';
+import { Button } from 'antd';
 import React, { useCallback } from 'react';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { fetchVideoTranscript } from 'src/services/videos/fetchVideoTranscript';
@@ -18,14 +19,13 @@ export const DownloadTranscriptButton = ({ video }: Props) => {
   if (video.links.transcript) {
     return (
       <Button
-        size={'large'}
+        size="large"
         onClick={handleTranscriptClick}
         data-qa="download-transcript"
       >
         <Icon component={DownloadTranscriptSVG} /> Transcript
       </Button>
     );
-  } else {
-    return null;
   }
+  return null;
 };

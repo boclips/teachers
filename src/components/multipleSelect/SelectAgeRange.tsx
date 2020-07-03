@@ -21,9 +21,8 @@ export const SelectAgeRange = (props: Props) => {
         allAgeRanges,
         initialValue,
       ).map((age) => age.encodeJSON());
-    } else {
-      return [];
     }
+    return [];
   };
 
   const onChange = (value: SelectValue) => {
@@ -43,6 +42,7 @@ export const SelectAgeRange = (props: Props) => {
         key={ageRange.getLabel()}
         title={ageRange.getLabel()}
         data-qa={ageRange.getId()}
+        data-state={ageRange.getLabel()}
         value={ageRange.encodeJSON()}
       >
         {ageRange.getShortLabel()}

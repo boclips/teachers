@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Col, Drawer } from 'antd';
-import { NewNoResultsView } from 'src/views/searchResults/noResults/NewNoResultsView';
+import NewNoResultsView from 'src/views/searchResults/noResults/NewNoResultsView';
 import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
@@ -55,21 +55,6 @@ class SearchResultsView extends React.PureComponent<
       filterDrawerVisible: false,
     };
   }
-  public render() {
-    return (
-      <PageLayout
-        title={`"${this.props.videoResults.query}"`}
-        showTabs={true}
-        showNavigation={true}
-        showFooter={true}
-        showSearchBar={true}
-      >
-        <section className={'search-results-container'} data-qa="search-page">
-          {this.renderResults()}
-        </section>
-      </PageLayout>
-    );
-  }
 
   private renderResults = () => {
     if (this.props.loading) {
@@ -97,17 +82,16 @@ class SearchResultsView extends React.PureComponent<
         return this.renderBasicLayoutWithFilterPanel(
           <NewNoResultsView
             onOpenFilterDrawer={this.onOpenFilterDrawer}
-            canUseFilters={true}
+            canUseFilters
           />,
         );
-      } else {
-        return (
-          <NewNoResultsView
-            onOpenFilterDrawer={this.onOpenFilterDrawer}
-            canUseFilters={false}
-          />
-        );
       }
+      return (
+        <NewNoResultsView
+          onOpenFilterDrawer={this.onOpenFilterDrawer}
+          canUseFilters={false}
+        />
+      );
     }
     return null;
   };
@@ -115,28 +99,28 @@ class SearchResultsView extends React.PureComponent<
   private renderBasicLayoutWithFilterPanel = (
     content: JSX.Element,
   ): JSX.Element => (
-    <React.Fragment>
+    <>
       <Col xs={{ span: 0 }} lg={{ span: 6 }}>
         <FilterPanel />
       </Col>
       <Drawer
-        className={'display-mobile-and-tablet filters-drawer'}
+        className="display-mobile-and-tablet filters-drawer"
         visible={this.state.filterDrawerVisible}
-        closable={true}
+        closable
         onClose={this.onCloseFilterDrawer}
-        placement={'left'}
-        width={'auto'}
+        placement="left"
+        width="auto"
       >
         <FilterPanel />
       </Drawer>
       <Col
         xs={{ span: 24 }}
         lg={{ span: 18 }}
-        className={'search-results-container__results'}
+        className="search-results-container__results"
       >
         {content}
       </Col>
-    </React.Fragment>
+    </>
   );
 
   private onCloseFilterDrawer = () => {
@@ -158,10 +142,28 @@ class SearchResultsView extends React.PureComponent<
     this.props.loading ||
     this.hasSearchResults() ||
     this.props.numberOfFiltersApplied > 0;
+
+  public render() {
+    const { videoResults } = this.props;
+    return (
+      <PageLayout
+        title={`"${videoResults.query}"`}
+        showTabs
+        showNavigation
+        showFooter
+        showSearchBar
+      >
+        <section className="search-results-container" data-qa="search-page">
+          {this.renderResults()}
+        </section>
+      </PageLayout>
+    );
+  }
 }
 
 function mapStateToProps(state: State): StateProps {
   const { search, links, router, user } = state;
+
   return {
     loading: search.videoSearch.loading || search.collectionSearch.loading,
     videoResults: {
@@ -186,9 +188,11 @@ function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   };
 }
 
-export const ConnectedNewSearchResultsView = withAppliedSearchParameters(
+const ConnectedNewSearchResultsView = withAppliedSearchParameters(
   connect<StateProps, DispatchProps, {}>(
     mapStateToProps,
     mapDispatchToProps,
   )(SearchResultsView),
 );
+
+export default ConnectedNewSearchResultsView;

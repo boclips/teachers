@@ -1,4 +1,4 @@
-import { actionCreatorFactory } from './../../../../app/redux/actions';
+import { actionCreatorFactory } from '../../../../app/redux/actions';
 
 export const fetchCollectionAction = actionCreatorFactory<{
   id: string;

@@ -1,7 +1,8 @@
-import { Form } from 'antd';
+import { Form } from '@ant-design/compatible';
+
 import { mount } from 'enzyme';
 import * as React from 'react';
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import EventSimulator from '../../../../test-support/EventSimulator';
 import { PasswordForm } from './PasswordForm';
 

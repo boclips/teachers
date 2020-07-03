@@ -48,7 +48,7 @@ export default class ApiStub {
   public queryVideos(options: VideoQueryOptions) {
     const escapedQuery = encodeURIComponent(options.query);
 
-    let url = `/v1/videos`;
+    let url = '/v1/videos';
     url += options.query ? `?.*query=${escapedQuery}` : '';
     url += options.tag ? `?.*&include_tag=${options.tag}` : '';
     url += options.subject ? `?.*&subject=${options.subject.join(',')}` : '';
@@ -74,7 +74,7 @@ export default class ApiStub {
 
   public fetchPromoted(result = promotedResponse()) {
     MockFetchVerify.get(
-      new RegExp(`/v1/videos.*&promoted=true`),
+      new RegExp('/v1/videos.*&promoted=true'),
       JSON.stringify(result),
     );
     return this;

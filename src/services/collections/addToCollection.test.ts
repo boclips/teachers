@@ -4,7 +4,7 @@ import {
   VideoCollectionFactory,
   VideoCollectionLinksFactory,
   VideoFactory,
-} from './../../../test-support/factories';
+} from '../../../test-support/factories';
 import addToCollection from './addToCollection';
 
 const video = VideoFactory.sample({ id: '123' });

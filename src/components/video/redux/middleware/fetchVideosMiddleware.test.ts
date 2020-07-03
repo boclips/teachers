@@ -1,4 +1,3 @@
-import Mock = jest.Mock;
 import configureStore from 'redux-mock-store';
 import { linkFetchPromotedVideosToDispatch } from 'src/views/home/HomeViewVideoList';
 import { PageSpecFactory, VideoFactory } from 'test-support/factories';
@@ -7,6 +6,8 @@ import eventually from '../../../../../test-support/eventually';
 import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
 import fetchVideos from '../../../../services/videos/fetchVideos';
 import fetchVideosMiddleware from './fetchVideosMiddleware';
+
+import Mock = jest.Mock;
 
 jest.mock('../../../../services/videos/fetchVideos');
 const fetchVideosMock = fetchVideos as Mock;

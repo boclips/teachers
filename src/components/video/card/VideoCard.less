@@ -81,30 +81,33 @@
         white-space: pre-line;
 
         @media (min-width: @screen-md) {
-          &.clamp-6-lines {
+          &.clamp-5-lines {
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 6;
+            -webkit-line-clamp: 5;
             -webkit-box-orient: vertical;
           }
         }
 
         @media (max-width: @screen-sm-max) {
-          &.clamp-6-lines {
+          &.clamp-5-lines {
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 6;
+            -webkit-line-clamp: 5;
             -webkit-box-orient: vertical;
           }
         }
       }
 
       .buttons-row {
+        display: block;
         margin-top: auto;
-        border-top: 2px solid #e8f0fe;
 
+        .video-buttons__container {
+          border-top: 2px solid #e8f0fe;
+        }
       }
     }
   }

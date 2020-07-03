@@ -44,7 +44,7 @@ export default class AccountMenuMobile extends React.PureComponent<
       <div className="display-mobile-and-tablet">
         <DropdownMenuIconComponent
           onClick={this.showDrawer}
-          dataQa={'account-menu-open'}
+          dataQa="account-menu-open"
           icon={
             <MyAccountSVG
               className="account-menu-icon ant-dropdown-link"
@@ -53,7 +53,7 @@ export default class AccountMenuMobile extends React.PureComponent<
               aria-hidden="true"
             />
           }
-          label={'Your account'}
+          label="Your account"
         />
         <Drawer
           className="account-menu account-menu-mobile__drawer"

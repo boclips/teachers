@@ -4,6 +4,7 @@ import { ReCaptcha } from 'react-recaptcha-v3';
 import { Props, Recaptcha } from './Recaptcha';
 
 describe('Recaptcha', () => {
+  // eslint-disable-next-line
   const getComponent = (props: Props) => mount(<Recaptcha {...props} />);
 
   it('Configures the Recaptcha component', () => {

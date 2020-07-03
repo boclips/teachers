@@ -1,10 +1,11 @@
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
-import { fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { Store } from 'redux';
+import { waitFor } from '@testing-library/dom';
 import {
   collectionResponse,
   parentCollectionResponse,
@@ -13,7 +14,7 @@ import {
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
 import eventually from '../../../test-support/eventually';
-import { CollectionPage } from '../../../test-support/page-objects/CollectionPage';
+import CollectionPage from '../../../test-support/page-objects/CollectionPage';
 import { createBoclipsStore } from '../../app/redux/store';
 import {
   LinksStateValueFactory,
@@ -68,7 +69,7 @@ describe('CollectionDetailsView', () => {
       });
     });
 
-    test(`adds the referer id to the url`, async () => {
+    test('adds the referer id to the url', async () => {
       const existingHistory = createMemoryHistory({
         initialEntries: ['/collection/123'],
       });
@@ -190,7 +191,7 @@ describe('CollectionDetailsView', () => {
     });
   });
 
-  describe(`sharing`, () => {
+  describe('sharing', () => {
     it('does not show share code dialog if logged in', async () => {
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=test-id'],
@@ -287,11 +288,11 @@ describe('CollectionDetailsView', () => {
       await fireEvent.change(shareField, { target: { value: 'valid' } });
       await fireEvent.click(button);
 
-      await expect(
-        waitForElementToBeRemoved(() =>
-          wrapper.getByText('Enter code to view collection'),
-        ),
-      ).resolves.toEqual(true);
+      await waitFor(() =>
+        expect(
+          wrapper.queryByText('Enter code to view collection'),
+        ).not.toBeInTheDocument(),
+      );
 
       expect(store.getState().authentication.refererId).toEqual('test-id');
       expect(store.getState().authentication.shareCode).toEqual('valid');
@@ -394,7 +395,7 @@ describe('CollectionDetailsView', () => {
   });
 });
 
-describe(`when collection of collections`, () => {
+describe('when collection of collections', () => {
   let collectionPage;
   beforeEach(async () => {
     new ApiStub()
@@ -422,7 +423,7 @@ describe(`when collection of collections`, () => {
     collectionPage = await CollectionPage.load('parent-id');
   });
 
-  it(`Displays each collection card of sub collections`, async () => {
+  it('Displays each collection card of sub collections', async () => {
     expect(collectionPage.getParentCollectionDetails()).toMatchObject({
       title: 'parent collection',
       subjects: [],
@@ -432,7 +433,7 @@ describe(`when collection of collections`, () => {
     expect(collectionPage.getSubCollections()).toHaveLength(2);
   });
 
-  it(`Displays collection titles of sub collections in cards and units`, async () => {
+  it('Displays collection titles of sub collections in cards and units', async () => {
     expect(collectionPage.getSubCollections()).toHaveLength(2);
     expect(collectionPage.getSubCollections()[0].title).toEqual(
       'Child collection 1',

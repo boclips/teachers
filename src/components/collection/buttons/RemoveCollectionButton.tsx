@@ -1,4 +1,5 @@
-import { Icon, Modal } from 'antd';
+import Icon from '@ant-design/icons';
+import { Modal } from 'antd';
 import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -23,7 +24,7 @@ export const RemoveCollectionButton = React.memo((props: Props) => {
       props.onOpen();
     }
 
-    const confirm = Modal.confirm;
+    const { confirm } = Modal;
 
     confirm({
       title: (
@@ -75,7 +76,6 @@ export const RemoveCollectionButton = React.memo((props: Props) => {
         Delete Collection
       </Button>
     );
-  } else {
-    return null;
   }
+  return null;
 });

@@ -29,18 +29,6 @@ interface StateProps {
 }
 
 class CollectionCardContainer extends React.PureComponent<Props> {
-  public render() {
-    const videos = this.props.videos.filter((video) => video !== undefined);
-
-    return (
-      <CollectionCard
-        grid={this.props.grid}
-        collection={this.props.collection}
-        videos={videos}
-      />
-    );
-  }
-
   public componentDidMount() {
     this.fetchVideosIfNeeded();
   }
@@ -63,6 +51,18 @@ class CollectionCardContainer extends React.PureComponent<Props> {
     return (
       numberOfVideosLoaded !== videoIds.length &&
       numberOfVideosLoaded < MAX_NUMBER_OF_VIDEOS
+    );
+  }
+
+  public render() {
+    const videos = this.props.videos.filter((video) => video !== undefined);
+
+    return (
+      <CollectionCard
+        grid={this.props.grid}
+        collection={this.props.collection}
+        videos={videos}
+      />
     );
   }
 }

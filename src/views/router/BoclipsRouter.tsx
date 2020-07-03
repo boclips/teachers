@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
-import { ConnectedNewSearchResultsView } from 'src/views/searchResults/SearchResultsView';
+import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
 import { Constants } from 'src/app/AppConstants';
 import { RouterState } from 'src/types/State';
 import { Bit } from 'src/views/bit';
@@ -18,22 +18,27 @@ import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
-import { VideoDetailsView } from '../videoDetails/VideoDetailsView';
-import { TrialExpiredView } from '../trial/TrialExpiredView';
+import VideoDetailsView from '../videoDetails/VideoDetailsView';
+import TrialExpiredView from '../trial/TrialExpiredView';
 import { ErrorView } from '../error/ErrorView';
 import MyResourcesListView from '../collection/MyResourcesListView';
 import ScrollToTopOnForwardNavigation from './ScrollToTopOnForwardNavigation';
 
-const videoDetailsView = (props: RouteComponentProps<{ videoId: string }>) => (
-  <VideoDetailsView videoId={props.match.params.videoId} />
+const videoDetailsView = ({
+  match,
+}: RouteComponentProps<{ videoId: string }>) => (
+  <VideoDetailsView videoId={match.params.videoId} />
 );
 
-const collectionView = (
-  props: RouteComponentProps<{ collectionId: string }>,
-) => <CollectionDetailsView collectionId={props.match.params.collectionId} />;
+const collectionView = ({
+  match,
+}: RouteComponentProps<{ collectionId: string }>) => (
+  <CollectionDetailsView collectionId={match.params.collectionId} />
+);
 
 const discoverCollectionsView = (props: RouteComponentProps) => {
-  const queryParams = queryString.parse(props.location.search);
+  const { location } = props;
+  const queryParams = queryString.parse(location.search);
   const subjectIdQuery = queryParams.subject as string[] | string;
   const disciplineId = queryParams.discipline as string;
 
@@ -64,9 +69,35 @@ interface Props {
 }
 
 class BoclipsRouter extends Component<Props & StateProps> {
+  public componentDidMount() {
+    this.trackRenderedPage();
+  }
+
+  public componentDidUpdate(prevProps: Props & StateProps) {
+    const { pathname } = this.props;
+    const previousPath = prevProps.pathname;
+    const currentPath = pathname;
+
+    this.trackRenderedPage();
+
+    if (previousPath !== currentPath) {
+      AnalyticsFactory.externalAnalytics().pageChange();
+    }
+  }
+
+  private getFullUrl() {
+    const { pathname, search } = this.props;
+    return Constants.HOST + pathname + search;
+  }
+
+  private trackRenderedPage() {
+    AnalyticsFactory.internalAnalytics().trackPageRendered(this.getFullUrl());
+  }
+
   public render() {
+    const { history } = this.props;
     return (
-      <ConnectedRouter history={this.props.history}>
+      <ConnectedRouter history={history}>
         <ScrollToTopOnForwardNavigation>
           <Switch>
             <Route path="/bye" component={LoggedOutView} />
@@ -83,11 +114,7 @@ class BoclipsRouter extends Component<Props & StateProps> {
                 />
               </Switch>
             </Route>
-            <PrivateRoute
-              path="/onboarding"
-              component={OnboardingView}
-              exact={true}
-            />
+            <PrivateRoute path="/onboarding" component={OnboardingView} exact />
             <Route path="/collections">
               <Switch>
                 <Route
@@ -103,17 +130,13 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <PrivateRoute
               path="/discover-collections"
               component={discoverCollectionsView}
-              exact={true}
+              exact
             />
-            <PrivateRoute
-              path="/our-subjects"
-              component={SubjectsView}
-              exact={true}
-            />
+            <PrivateRoute path="/our-subjects" component={SubjectsView} exact />
             <PrivateRoute
               path="/account-settings"
               component={AccountSettingsView}
-              exact={true}
+              exact
             />
             <PrivateRoute path="/">
               <HomeView />
@@ -122,29 +145,6 @@ class BoclipsRouter extends Component<Props & StateProps> {
         </ScrollToTopOnForwardNavigation>
       </ConnectedRouter>
     );
-  }
-
-  public componentDidMount() {
-    this.trackRenderedPage();
-  }
-
-  public componentDidUpdate(prevProps: Props & StateProps) {
-    const previousPath = prevProps.pathname;
-    const currentPath = this.props.pathname;
-
-    this.trackRenderedPage();
-
-    if (previousPath !== currentPath) {
-      AnalyticsFactory.externalAnalytics().pageChange();
-    }
-  }
-
-  private trackRenderedPage() {
-    AnalyticsFactory.internalAnalytics().trackPageRendered(this.getFullUrl());
-  }
-
-  private getFullUrl() {
-    return Constants.HOST + this.props.pathname + this.props.search;
   }
 }
 

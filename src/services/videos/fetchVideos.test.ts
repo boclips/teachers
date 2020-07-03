@@ -43,7 +43,7 @@ beforeEach(async () => {
     links,
   );
 
-  const url = axiosMock.history.get[0].url;
+  const { url } = axiosMock.history.get[0];
   queryParams = queryString.parse(url.split('?')[1], { arrayFormat: 'comma' });
 });
 

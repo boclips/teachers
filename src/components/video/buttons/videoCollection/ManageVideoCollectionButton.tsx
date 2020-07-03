@@ -1,4 +1,4 @@
-import { Icon } from 'antd';
+import Icon from '@ant-design/icons';
 import React from 'react';
 import { connect } from 'react-redux';
 import SaveSVG from 'resources/images/save.svg';
@@ -59,36 +59,47 @@ class ManageVideoCollectionsButton extends React.PureComponent<
   }
 
   public render() {
-    if (!this.props.canFetchMyCollections || !this.props.collections) {
+    const {
+      collections,
+      loading,
+      getPopupContainer,
+      icon,
+      canFetchMyCollections,
+      video,
+    } = this.props;
+
+    const { isMenuOpen, isSaving } = this.state;
+
+    if (!canFetchMyCollections || !collections) {
       return null;
     }
 
     return (
-      <React.Fragment>
+      <>
         <ManageVideCollectionMenuContainer
           onVisibleChange={() => {
             this.setState({
-              isMenuOpen: !this.state.isMenuOpen,
+              isMenuOpen: !isMenuOpen,
             });
           }}
-          video={this.props.video}
-          isMenuVisible={this.state.isMenuOpen}
-          loading={this.props.loading}
+          video={video}
+          isMenuVisible={isMenuOpen}
+          loading={loading}
           onChange={() => this.setState({ isSaving: true })}
           collectionKey="myCollections"
-          getPopupContainer={this.props.getPopupContainer}
+          getPopupContainer={getPopupContainer}
         >
           <SavingButton
-            saving={this.state.isSaving}
-            data-qa={'video-collection-menu'}
-            className={'video-collection-menu'}
-            size={'large'}
+            saving={isSaving}
+            data-qa="video-collection-menu"
+            className="video-collection-menu"
+            size="large"
           >
-            <Icon component={this.props.icon || SaveSVG} />
+            <Icon component={icon || SaveSVG} />
             <span>Save</span>
           </SavingButton>
         </ManageVideCollectionMenuContainer>
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -2,21 +2,24 @@ import { useEffect, useState } from 'react';
 import MediaBreakpoints, { Breakpoint } from '../types/MediaBreakpoints';
 
 const getMediaBreakpoint = (): Breakpoint => {
-  const innerWidth = window.innerWidth;
+  const { innerWidth } = window;
 
   if (innerWidth < MediaBreakpoints.xs.width) {
     return MediaBreakpoints.xs;
-  } else if (innerWidth < MediaBreakpoints.sm.width) {
-    return MediaBreakpoints.sm;
-  } else if (innerWidth < MediaBreakpoints.md.width) {
-    return MediaBreakpoints.md;
-  } else if (innerWidth < MediaBreakpoints.lg.width) {
-    return MediaBreakpoints.lg;
-  } else if (innerWidth < MediaBreakpoints.xl.width) {
-    return MediaBreakpoints.xl;
-  } else {
-    return MediaBreakpoints.xxl;
   }
+  if (innerWidth < MediaBreakpoints.sm.width) {
+    return MediaBreakpoints.sm;
+  }
+  if (innerWidth < MediaBreakpoints.md.width) {
+    return MediaBreakpoints.md;
+  }
+  if (innerWidth < MediaBreakpoints.lg.width) {
+    return MediaBreakpoints.lg;
+  }
+  if (innerWidth < MediaBreakpoints.xl.width) {
+    return MediaBreakpoints.xl;
+  }
+  return MediaBreakpoints.xxl;
 };
 
 export const useMediaBreakPoint = (): Breakpoint => {

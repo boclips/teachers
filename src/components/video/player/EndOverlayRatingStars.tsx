@@ -15,8 +15,8 @@ export const EndOverlayRatingStars = (props: OverlayRatingStars) => {
   };
 
   return (
-    <React.Fragment>
-      <div className={'overlay-buttons-ratingtext'}>
+    <>
+      <div className="overlay-buttons-ratingtext">
         What did you think of this video?
       </div>
       <span data-qa="rating-score" data-state={props.video.rating}>
@@ -25,9 +25,9 @@ export const EndOverlayRatingStars = (props: OverlayRatingStars) => {
           onChange={(value) => {
             save(value);
           }}
-          allowClear={true}
+          allowClear
         />
       </span>
-    </React.Fragment>
+    </>
   );
 };

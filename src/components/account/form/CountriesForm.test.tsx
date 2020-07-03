@@ -5,15 +5,15 @@ import {
 import { render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { CountryFactory } from 'test-support/factories';
-import { Form } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Form } from '@ant-design/compatible';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 
-describe(`CountriesForm`, () => {
+describe('CountriesForm', () => {
   const CountriesFormWithMockedForm = Form.create<
     CountriesFormProps & FormComponentProps
   >()(CountriesForm);
 
-  it(`renders highlighted countries first, then sort the rest by abc`, async () => {
+  it('renders highlighted countries first, then sort the rest by abc', async () => {
     const testCountries = [
       CountryFactory.sample({ id: 'GBR', name: 'United Kingdom' }),
       CountryFactory.sample({ id: 'URY', name: 'Uruguay' }),
@@ -45,15 +45,15 @@ describe(`CountriesForm`, () => {
     const component = render(
       <CountriesFormWithMockedForm
         countries={testCountries}
-        placeholder={'Choose country'}
+        placeholder="Choose country"
       />,
     );
 
-    fireEvent.click(component.getByText('Choose country'));
-    const options = await component.findAllByRole('option');
+    fireEvent.mouseDown(component.getByText('Choose country'));
+    const options = await component.findAllByTestId('country-option');
 
     expectedOrder.forEach((countryName, index) => {
-      expect(options[index].title).toEqual(countryName);
+      expect(options[index].innerHTML).toEqual(countryName);
     });
   });
 });

@@ -11,12 +11,12 @@ import {
   UserProfileFactory,
   VideoResourceFactory,
 } from '../../../test-support/factories';
-import { VideoDetailsPage } from '../../../test-support/page-objects/VideoDetailsPage';
+import VideoDetailsPage from '../../../test-support/page-objects/VideoDetailsPage';
 import ApiStub from '../../../test-support/ApiStub';
 import State from '../../types/State';
 import { createBoclipsStore } from '../../app/redux/store';
 import eventually from '../../../test-support/eventually';
-import { VideoDetailsView } from './VideoDetailsView';
+import VideoDetailsView from './VideoDetailsView';
 
 describe('VideoDetailsView', () => {
   const video = VideoResourceFactory.sample({

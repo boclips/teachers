@@ -1,9 +1,8 @@
 import { Rate } from 'antd';
-import Mock = jest.Mock;
 import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { By } from '../../../../test-support/By';
+import By from '../../../../test-support/By';
 import eventually from '../../../../test-support/eventually';
 import {
   MockStoreFactory,
@@ -17,6 +16,8 @@ import { Video } from '../../../types/Video';
 import { noOp } from '../../../utils';
 import TagVideo from './TagVideo';
 import VideoFeedbackModal from './VideoFeedbackModal';
+
+import Mock = jest.Mock;
 
 jest.mock('../../../services/tags/tagVideo');
 const tagVideoMock = tagVideo as Mock;
@@ -39,7 +40,7 @@ function mountTagVideo(video: Video) {
       })}
     >
       <VideoFeedbackModal
-        visible={true}
+        visible
         video={video}
         onSaved={onSaved}
         onModalCancelled={noOp}

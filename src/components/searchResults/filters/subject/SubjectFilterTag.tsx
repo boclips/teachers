@@ -19,21 +19,15 @@ interface DispatchProps {
   onClose: () => void;
 }
 
-class SubjectFilterTag extends React.Component<
-  Props & DispatchProps & StateProps
-> {
-  public render() {
-    return this.props.subject ? (
-      <span data-qa="subject-filter-tag">
-        <ClosableTag
-          label="Subject"
-          value={this.props.subject.name}
-          onClose={this.props.onClose}
-        />
-      </span>
-    ) : null;
-  }
-}
+const SubjectFilterTag = ({
+  subject,
+  onClose,
+}: Props & DispatchProps & StateProps) =>
+  subject ? (
+    <span data-qa="subject-filter-tag">
+      <ClosableTag label="Subject" value={subject.name} onClose={onClose} />
+    </span>
+  ) : null;
 
 function mapStateToProps(state: State, ownProps: Props): StateProps {
   return {

@@ -42,22 +42,45 @@ class VideoFeedbackModal extends React.Component<
     };
   }
 
+  private changeRating = (rating) => this.setState({ rating });
+
+  private changeSelectedTag = (selectedTag) => this.setState({ selectedTag });
+
+  private save = () => {
+    Promise.resolve()
+      .then(() =>
+        this.state.rating && this.props.video.links.rate
+          ? rateVideo(this.props.video, this.state.rating)
+          : this.props.video,
+      )
+      .then((video) =>
+        this.state.selectedTag && this.props.video.links.tag
+          ? tagVideo(video, this.state.selectedTag)
+          : video,
+      )
+      .then((video) => this.props.videoUpdated(video))
+      .then(() => this.props.onSaved());
+  };
+
   private alreadyRated() {
     try {
-      return desc[this.props.video.yourRating - 1] && true;
+      const { video } = this.props;
+      return desc[video.yourRating - 1] && true;
     } catch (e) {
       return false;
     }
   }
 
   public render() {
-    return this.props.video.links.rate ? (
+    const { onModalCancelled, video, visible } = this.props;
+    const { selectedTag } = this.state;
+    return video.links.rate ? (
       <Bodal
         title="Help us improve the information on this video"
         closable={false}
-        visible={this.props.visible}
+        visible={visible}
         onOk={this.save}
-        onCancel={this.props.onModalCancelled}
+        onCancel={onModalCancelled}
         // @ts-ignore
         okButtonProps={{ size: 'large', 'data-qa': 'rate-button' }}
         cancelButtonProps={{ size: 'large' }}
@@ -72,45 +95,26 @@ class VideoFeedbackModal extends React.Component<
           <h2 data-qa="rating-description">
             {this.alreadyRated()
               ? `You have already rated this video as "${
-                  desc[this.props.video.yourRating - 1]
+                  desc[video.yourRating - 1]
                 }". If you would like to change this, select a new rating.`
-              : `What rating would you give "${this.props.video.title}"?`}
+              : `What rating would you give "${video.title}"?`}
           </h2>
           <Rate
             className="rating--rate"
             tooltips={desc}
             onChange={this.changeRating}
-            defaultValue={this.props.video.yourRating}
+            defaultValue={video.yourRating}
           />
         </section>
 
         <TagVideo
           onChange={this.changeSelectedTag}
-          video={this.props.video}
-          selectedTag={this.state.selectedTag}
+          video={video}
+          selectedTag={selectedTag}
         />
       </Bodal>
     ) : null;
   }
-
-  private changeRating = (rating) => this.setState({ rating });
-  private changeSelectedTag = (selectedTag) => this.setState({ selectedTag });
-
-  private save = () => {
-    Promise.resolve()
-      .then((_) =>
-        this.state.rating && this.props.video.links.rate
-          ? rateVideo(this.props.video, this.state.rating)
-          : this.props.video,
-      )
-      .then((video) =>
-        this.state.selectedTag && this.props.video.links.tag
-          ? tagVideo(video, this.state.selectedTag)
-          : video,
-      )
-      .then((video) => this.props.videoUpdated(video))
-      .then(() => this.props.onSaved());
-  };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {

@@ -1,4 +1,4 @@
-import { Row, Pagination } from 'antd';
+import { Pagination, Row } from 'antd';
 import React from 'react';
 import {
   CollectionSearchResult,
@@ -24,9 +24,31 @@ interface Props {
 export class SearchPanel extends React.PureComponent<
   Props & DrawerFilterProps
 > {
+  private showPagination() {
+    const { videoResults, currentPage, onPageChange } = this.props;
+
+    if (!videoResults.paging || videoResults.paging.totalPages === 0) {
+      return null;
+    }
+
+    return (
+      <section className="results-pagination" data-qa="pagination">
+        <Pagination
+          current={currentPage}
+          defaultCurrent={currentPage}
+          defaultPageSize={videoResults.paging.size}
+          total={videoResults.paging.totalElements}
+          onChange={onPageChange}
+        />
+      </section>
+    );
+  }
+
   public render() {
-    const { videos, paging: videoPaging } = this.props.videoResults;
-    let { collections } = this.props.collectionResults;
+    const { collectionResults, videoResults, onOpenFilterDrawer } = this.props;
+    const { videos, paging: videoPaging } = videoResults;
+    let { collections } = collectionResults;
+
     if (videoPaging.number > 0) {
       collections = [];
     }
@@ -35,11 +57,11 @@ export class SearchPanel extends React.PureComponent<
       videoPaging &&
       collections.length + videoPaging.totalElements;
     return (
-      <React.Fragment>
+      <>
         <Row>
           <SearchPanelHeader
             totalElements={totalElements}
-            onOpenFilterDrawer={this.props.onOpenFilterDrawer}
+            onOpenFilterDrawer={onOpenFilterDrawer}
           />
         </Row>
         <Row className="search-results__list">
@@ -50,28 +72,7 @@ export class SearchPanel extends React.PureComponent<
           />
         </Row>
         <Row>{this.showPagination()}</Row>
-      </React.Fragment>
-    );
-  }
-
-  private showPagination() {
-    if (
-      !this.props.videoResults.paging ||
-      this.props.videoResults.paging.totalPages === 0
-    ) {
-      return null;
-    }
-
-    return (
-      <section className={'results-pagination'} data-qa="pagination">
-        <Pagination
-          current={this.props.currentPage}
-          defaultCurrent={this.props.currentPage}
-          defaultPageSize={this.props.videoResults.paging.size}
-          total={this.props.videoResults.paging.totalElements}
-          onChange={this.props.onPageChange}
-        />
-      </section>
+      </>
     );
   }
 }

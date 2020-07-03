@@ -20,6 +20,7 @@ jest.mock('antd/lib/slider', () =>
   React.forwardRef((props: SliderProps, ref: Ref<any>) => (
     <input
       ref={ref}
+      /* eslint-disable-next-line */
       role="slider"
       onChange={(event) => {
         props.onChange(JSON.parse(event.target.value));
@@ -33,10 +34,11 @@ jest.mock('antd/lib/slider', () =>
 );
 
 jest.mock('antd/lib/select', () => {
-  const Select = React.forwardRef((props: SelectProps, ref: Ref<any>) => (
+  const Select = React.forwardRef((props: SelectProps<any>, ref: Ref<any>) => (
     <input
       ref={ref}
       type="text"
+      /* eslint-disable-next-line */
       role="select"
       onChange={(event) => {
         props.onChange(JSON.parse(event.target.value), null);
@@ -71,7 +73,7 @@ describe('EditCollectionForm', () => {
     renderWithBoclipsStore(
       <EditCollectionForm
         setVisible={jest.fn()}
-        visible={true}
+        visible
         disableButton={false}
         collection={collection}
       />,

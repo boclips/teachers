@@ -6,19 +6,17 @@ import { findOne } from '../enzymeHelpers';
 import eventually from '../eventually';
 import { AbstractCollectionListPage } from './AbstractCollectionListPage';
 
-export class DiscoverCollectionListPage extends AbstractCollectionListPage {
+class DiscoverCollectionListPage extends AbstractCollectionListPage {
   public constructor(public wrapper: ReactWrapper) {
     super(wrapper);
   }
 
   public static async loadBySubject(subjectId: string) {
-    return await this.loadByUrl(`/discover-collections?subject=${subjectId}`);
+    return this.loadByUrl(`/discover-collections?subject=${subjectId}`);
   }
 
   public static async loadByDiscipline(disciplineId: string) {
-    return await this.loadByUrl(
-      `/discover-collections?discipline=${disciplineId}`,
-    );
+    return this.loadByUrl(`/discover-collections?discipline=${disciplineId}`);
   }
 
   private static async loadByUrl(url: string) {
@@ -44,3 +42,5 @@ export class DiscoverCollectionListPage extends AbstractCollectionListPage {
     });
   }
 }
+
+export default DiscoverCollectionListPage;

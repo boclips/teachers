@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { SubjectFactory as ApiClientSubjectFactory } from 'boclips-api-client/dist/test-support';
 import {
   RouterActionType,

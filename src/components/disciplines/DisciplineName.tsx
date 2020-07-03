@@ -11,15 +11,13 @@ interface StateProps {
   currentDiscipline?: Discipline;
 }
 
-class DisciplineName extends React.Component<Props & StateProps> {
-  public render() {
-    return this.props.currentDiscipline ? (
-      <strong className="discipline-name">
-        {`${this.props.currentDiscipline.name} > `}
-      </strong>
-    ) : null;
-  }
-}
+const DisciplineName = (props: Props & StateProps) => {
+  return props.currentDiscipline ? (
+    <strong className="discipline-name">
+      {`${props.currentDiscipline.name} > `}
+    </strong>
+  ) : null;
+};
 
 function mapStateToProps(state: DisciplineState, ownProps: Props): StateProps {
   return {

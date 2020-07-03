@@ -1,5 +1,6 @@
-import { Form, Input } from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Form } from '@ant-design/compatible';
+import { Input } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/es/form';
 import TextArea from 'antd/lib/input/TextArea';
 import Button from 'antd/lib/button';
 import React, { useState } from 'react';
@@ -44,7 +45,11 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
       let shouldSubmitChanges = false;
 
       for (const key in values) {
-        if (values.hasOwnProperty(key) && props.form.isFieldTouched(key)) {
+        if (
+          // https://eslint.org/docs/rules/no-prototype-builtins#top
+          Object.prototype.hasOwnProperty.call(values, key) &&
+          props.form.isFieldTouched(key)
+        ) {
           changeRequest.changes[key] = values[key];
 
           shouldSubmitChanges = true;
@@ -138,7 +143,7 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
       closable={false}
       width={655}
       wrapClassName="edit-collection-modal"
-      destroyOnClose={true}
+      destroyOnClose
     >
       <Form className="form-edit-collection">
         <Form.Item className="form__item">

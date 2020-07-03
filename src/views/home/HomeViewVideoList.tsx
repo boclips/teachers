@@ -22,20 +22,22 @@ export class HomeViewVideoList extends React.PureComponent<
   DispatchProps & StateProps
 > {
   public componentDidMount(): void {
-    this.props.fetchPromotedVideos();
+    const { fetchPromotedVideos } = this.props;
+    fetchPromotedVideos();
   }
 
   public render() {
+    const { videoIds } = this.props;
     return (
-      this.props.videoIds &&
-      this.props.videoIds.length > 0 && (
+      videoIds &&
+      videoIds.length > 0 && (
         <section data-qa="home-view-videos" className="home-view-video-list">
           <SectionHeader
-            title={'Videos for you'}
-            description={'Watch a selection of some of our best videos'}
+            title="Videos for you"
+            description="Watch a selection of some of our best videos"
             image={HeaderLogoSVG}
           />
-          <VerticalVideoList videoIds={this.props.videoIds} />
+          <VerticalVideoList videoIds={videoIds} />
         </section>
       )
     );
@@ -64,4 +66,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fetchPromotedVideos: linkFetchPromotedVideosToDispatch(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeViewVideoList);
+const HomeViewVideoListView = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HomeViewVideoList);
+
+export default HomeViewVideoListView;

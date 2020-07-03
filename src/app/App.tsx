@@ -25,9 +25,7 @@ interface Props {
 }
 
 class App extends PureComponent<Props> {
-  public static defaultProps = {
-    history: createBrowserHistory(),
-  };
+  public static defaultProps = { history: createBrowserHistory() };
 
   private store = createBoclipsStore(
     {
@@ -38,7 +36,7 @@ class App extends PureComponent<Props> {
 
   public render() {
     return (
-      <React.Fragment>
+      <>
         <Helmet
           defaultTitle="Boclips for teachers"
           titleTemplate="%s - Boclips for teachers"
@@ -48,7 +46,7 @@ class App extends PureComponent<Props> {
             <BoclipsRouter history={this.props.history} />
           </LinkLoader>
         </Provider>
-      </React.Fragment>
+      </>
     );
   }
 }

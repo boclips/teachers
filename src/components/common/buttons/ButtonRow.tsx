@@ -11,7 +11,7 @@ export const ButtonRow = React.memo((props: Props) => (
   <section className="button-row">
     {props.leftButtons && <Button.Group>{props.leftButtons}</Button.Group>}
     {props.rightButtons && (
-      <Button.Group className={'button-row__group--right'}>
+      <Button.Group className="button-row__group--right">
         {props.rightButtons}
       </Button.Group>
     )}

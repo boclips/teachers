@@ -10,7 +10,7 @@ import {
   fakeSubjectsSetup,
   fakeVideoSetup,
 } from '../../../test-support/fakeApiClientSetup';
-import { HomePage } from '../../../test-support/page-objects/HomePage';
+import HomePage from '../../../test-support/page-objects/HomePage';
 
 describe('Home page', () => {
   test('loads public collections', async () => {

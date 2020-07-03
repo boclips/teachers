@@ -1,5 +1,7 @@
-import { AutoComplete, Form, Select } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Form } from '@ant-design/compatible';
+
+import { AutoComplete, Select } from 'antd';
+import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
 import { searchSchools } from '../../../services/schools/searchSchools';
 import { Country } from '../../../types/Country';
@@ -36,6 +38,19 @@ export class SchoolForm extends React.Component<
     };
   }
 
+  public componentDidUpdate(prevProps: FormComponentProps) {
+    if (
+      this.props.form.getFieldValue('schoolId') !==
+        prevProps.form.getFieldValue('schoolId') &&
+      this.props.form.getFieldValue('schoolId') === undefined
+    ) {
+      this.setState((state) => ({
+        ...state,
+        schools: [],
+      }));
+    }
+  }
+
   public onUpdateSchool = (value: string) => {
     if (this.props.allowUnknownSchools) {
       this.props.form.setFieldsValue({ schoolName: value });
@@ -48,25 +63,40 @@ export class SchoolForm extends React.Component<
     if (searchValue) {
       searchSchools(searchValue, this.props.country, this.props.state).then(
         (schools) => {
-          this.setState({
-            ...this.state,
+          this.setState((state) => ({
+            ...state,
             schools,
             searchValue,
-          });
+          }));
         },
       );
     }
   };
 
-  public componentDidUpdate(prevProps: FormComponentProps) {
-    if (
-      this.props.form.getFieldValue('schoolId') !==
-        prevProps.form.getFieldValue('schoolId') &&
-      this.props.form.getFieldValue('schoolId') === undefined
-    ) {
-      this.setState({ ...this.state, schools: [] });
+  private generateOptions = () => {
+    const Option = MultiSelect.Option;
+    let schools = [];
+    if (this.state.schools) {
+      schools = schools
+        .concat(this.state.schools)
+        .sort((a, b) => a.name.localeCompare(b.name));
     }
-  }
+    if (this.state.searchValue && this.state.schools.length === 0) {
+      schools.unshift({ id: UNKNOWN_SCHOOL, name: "My school isn't listed" });
+    }
+
+    return schools.map((school) => (
+      <Option
+        key={school.id}
+        value={school.id}
+        dataQa="school-option"
+        dataState={school.name}
+        title={school.name}
+      >
+        {school.name}
+      </Option>
+    ));
+  };
 
   public render() {
     return this.props.allowUnknownSchools ? (
@@ -79,11 +109,12 @@ export class SchoolForm extends React.Component<
           <AutoComplete
             dataSource={this.state.schools.map((s) => s.name)}
             placeholder={this.props.placeholder}
-            size={'large'}
+            size="large"
             onSearch={this.onSearchSchool}
             onChange={this.onUpdateSchool}
             data-qa="school"
-            dropdownClassName={'dropdown'}
+            dropdownClassName="dropdown"
+            /* eslint-disable-next-line */
             {...this.props}
           />,
         )}
@@ -99,12 +130,13 @@ export class SchoolForm extends React.Component<
             placeholder={this.props.placeholder}
             onSearch={this.onSearchSchool}
             disabled={!this.props.state}
-            showSearch={true}
+            showSearch
             data-qa="school-filter-select"
-            size={'large'}
-            className={'boclips-multi-select-selection'}
-            dropdownClassName={'dropdown'}
-            notFoundContent={'Please type to search your school'}
+            size="large"
+            className="boclips-multi-select-selection"
+            dropdownClassName="dropdown"
+            notFoundContent="Please type to search your school"
+            /* eslint-disable-next-line */
             {...this.props}
           >
             {this.generateOptions()}
@@ -113,23 +145,4 @@ export class SchoolForm extends React.Component<
       </Form.Item>
     );
   }
-
-  private generateOptions = () => {
-    const Option = MultiSelect.Option;
-    let schools = [];
-    if (this.state.schools) {
-      schools = schools
-        .concat(this.state.schools)
-        .sort((a, b) => a.name.localeCompare(b.name));
-    }
-    if (this.state.searchValue && this.state.schools.length === 0) {
-      schools.unshift({ id: UNKNOWN_SCHOOL, name: "My school isn't listed" });
-    }
-
-    return schools.map((school) => (
-      <Option key={school.id} value={school.id} title={school.name}>
-        {school.name}
-      </Option>
-    ));
-  };
 }

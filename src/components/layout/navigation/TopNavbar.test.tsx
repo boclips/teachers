@@ -2,11 +2,12 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Link, MemoryRouter } from 'react-router-dom';
+import By from 'test-support/By';
 import {
   MockStoreFactory,
   UserProfileFactory,
 } from '../../../../test-support/factories';
-import { setWidth } from '../../../../test-support/setWidth';
+import setWidth from '../../../../test-support/setWidth';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
 import { NavbarButtonsContainer } from './NavbarButtonsContainer';
 import { TopNavbarContainer } from './TopNavbarContainer';
@@ -16,7 +17,7 @@ const user = UserProfileFactory.sample({});
 test('renders search bar', () => {
   const wrapper = mountTopNavBarWithSearchBar();
 
-  expect(wrapper.find('Connect(SearchBar)')).toExist();
+  expect(wrapper.find(By.dataQa('top-navbar'))).toExist();
 });
 
 test('renders account menu', () => {
@@ -29,7 +30,7 @@ test('renders navbar with account menu and search bar', () => {
   const wrapper = mountTopNavBarWithAccountMenuAndSearchBar();
 
   expect(wrapper.find(NavbarButtonsContainer)).toExist();
-  expect(wrapper.find('Connect(SearchBar)')).toExist();
+  expect(wrapper.find(By.dataQa('top-navbar'))).toExist();
 });
 
 test('renders top navbar with navigation', () => {
@@ -79,7 +80,7 @@ function mountTopNavBarWithAccountMenu() {
   return mount(
     <Provider store={MockStoreFactory.sample({ user })}>
       <MemoryRouter>
-        <TopNavbarContainer showNavigation={true} />
+        <TopNavbarContainer showNavigation />
       </MemoryRouter>
     </Provider>,
   );
@@ -89,7 +90,7 @@ function mountTopNavBarWithAccountMenuAndSearchBar() {
   return mount(
     <Provider store={MockStoreFactory.sample({ user })}>
       <MemoryRouter>
-        <TopNavbarContainer showNavigation={true} showSearchBar={true} />
+        <TopNavbarContainer showNavigation showSearchBar />
       </MemoryRouter>
     </Provider>,
   );
@@ -99,7 +100,7 @@ function mountTopNavBarWithSearchBar() {
   return mount(
     <Provider store={MockStoreFactory.sample({ user })}>
       <MemoryRouter>
-        <TopNavbarContainer showSearchBar={true} />
+        <TopNavbarContainer showSearchBar />
       </MemoryRouter>
     </Provider>,
   );
@@ -109,7 +110,7 @@ function mountTopNavBarWithNavigation() {
   return mount(
     <Provider store={MockStoreFactory.sample({ user })}>
       <MemoryRouter>
-        <TopNavbarContainer showNavigation={true} />
+        <TopNavbarContainer showNavigation />
       </MemoryRouter>
     </Provider>,
   );

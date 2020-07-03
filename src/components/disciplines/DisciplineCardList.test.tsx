@@ -6,7 +6,7 @@ import { MockStoreFactory } from '../../../test-support/factories';
 import { DisciplineCard } from './DisciplineCard';
 import DisciplineCardList from './DisciplineCardList';
 
-describe(`discipline card limits`, () => {
+describe('discipline card limits', () => {
   it('only renders 4 cards when limited to 4', () => {
     const wrapper = mount(
       <Provider store={MockStoreFactory.sample()}>

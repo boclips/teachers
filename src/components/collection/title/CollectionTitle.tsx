@@ -8,18 +8,18 @@ interface Props {
 }
 
 export class CollectionTitle extends React.PureComponent<Props> {
+  private handleOnClick = (event) => event.preventDefault();
+
   public render() {
     return (
-      <section className={'collection-title-section'}>
+      <section className="collection-title-section">
         <h1
           data-qa="collection-title"
           id={this.props.collection.id}
-          tabIndex={0}
           className="collection-title"
         >
           <Link
             to={`/collections/${this.props.collection.id}`}
-            tabIndex={-1}
             onClick={this.handleOnClick}
           >
             {this.props.collection.title}
@@ -28,6 +28,4 @@ export class CollectionTitle extends React.PureComponent<Props> {
       </section>
     );
   }
-
-  private handleOnClick = (event) => event.preventDefault();
 }

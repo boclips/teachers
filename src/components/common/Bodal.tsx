@@ -1,17 +1,19 @@
 import Modal, { ModalProps } from 'antd/lib/modal';
-import classnames from 'classnames';
-import React from 'react';
+import React, { ReactNode } from 'react';
+import c from 'classnames';
 import './Bodal.less';
 
-export default class Bodal extends React.Component<ModalProps> {
-  public render() {
-    return (
-      <Modal
-        {...this.props}
-        wrapClassName={classnames('generic-modal', this.props.wrapClassName)}
-      >
-        {this.props.children}
-      </Modal>
-    );
-  }
+interface BodalProps extends ModalProps {
+  children?: ReactNode;
 }
+
+const Bodal = (props: BodalProps) => {
+  return (
+    // eslint-disable-next-line
+    <Modal {...props} wrapClassName={c('generic-modal', props.wrapClassName)}>
+      {props.children}
+    </Modal>
+  );
+};
+
+export default Bodal;
