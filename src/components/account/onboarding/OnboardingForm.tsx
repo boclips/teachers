@@ -65,7 +65,6 @@ interface InternalState {
   imageCarousel: Carousel;
   numberOfSlides: number;
   visitedIndices: Set<number>;
-  invisibleSlides: boolean[];
   role?: 'TEACHER' | 'PARENT' | 'SCHOOLADMIN' | 'OTHER';
   country?: Country;
   state?: UsaState;
@@ -96,7 +95,6 @@ class OnboardingForm extends React.Component<
       imageCarousel: null,
       numberOfSlides: 0,
       visitedIndices: new Set<number>(),
-      invisibleSlides: [false, true, true, true],
       country: null,
       state: null,
       screenReaderErrors: null,
@@ -116,21 +114,7 @@ class OnboardingForm extends React.Component<
     }));
   }
 
-  private beforeSlideChange = (prev, next) => {
-    const invisibleSlides = [true, true, true, true];
-    invisibleSlides[prev] = false;
-    invisibleSlides[next] = false;
-
-    this.setState((state) => ({
-      ...state,
-      invisibleSlides,
-    }));
-  };
-
   private afterSlideChange = (currentIndex) => {
-    const invisibleSlides = [true, true, true, true];
-    invisibleSlides[currentIndex] = false;
-
     const visitedIndices = new Set(this.state.visitedIndices);
     const previousIndex = currentIndex - 1;
 
@@ -154,7 +138,6 @@ class OnboardingForm extends React.Component<
       ...state,
       currentIndex,
       visitedIndices,
-      invisibleSlides,
     }));
   };
 
@@ -351,16 +334,9 @@ class OnboardingForm extends React.Component<
                   asNavFor={this.state.imageCarousel as any}
                   dots={false}
                   swipe={false}
-                  beforeChange={this.beforeSlideChange}
                   afterChange={this.afterSlideChange}
                 >
-                  <section
-                    className={
-                      this.state.invisibleSlides[0]
-                        ? 'onboarding-form__slide__invisible'
-                        : ''
-                    }
-                  >
+                  <section>
                     <h1 className="alt onboarding-form__title big-title">
                       Hello
                     </h1>
@@ -384,13 +360,7 @@ class OnboardingForm extends React.Component<
                       Required field
                     </p>
                   </section>
-                  <section
-                    className={
-                      this.state.invisibleSlides[1]
-                        ? 'onboarding-form__slide__invisible'
-                        : ''
-                    }
-                  >
+                  <section>
                     <h1 className="alt onboarding-form__title big-title">
                       Your students
                     </h1>
@@ -410,13 +380,7 @@ class OnboardingForm extends React.Component<
                       form={this.props.form}
                     />
                   </section>
-                  <section
-                    className={
-                      this.state.invisibleSlides[2]
-                        ? 'onboarding-form__slide__invisible'
-                        : ''
-                    }
-                  >
+                  <section>
                     <h1 className="alt onboarding-form__title big-title">
                       Your school
                     </h1>
@@ -438,13 +402,7 @@ class OnboardingForm extends React.Component<
                     />
                     {this.getSchoolForm()}
                   </section>
-                  <section
-                    className={
-                      this.state.invisibleSlides[3]
-                        ? 'onboarding-form__slide__invisible'
-                        : ''
-                    }
-                  >
+                  <section>
                     <h1 className="alt onboarding-form__title big-title">
                       Almost there!
                     </h1>
