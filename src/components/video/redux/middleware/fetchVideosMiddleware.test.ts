@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
-import { linkFetchPromotedVideosToDispatch } from 'src/views/home/HomeViewVideoList';
 import { PageSpecFactory, VideoFactory } from 'test-support/factories';
 import { VideoType } from 'src/types/Video';
+import { storePromotedVideosAction } from 'src/components/video/redux/actions/storePromotedVideosAction';
 import eventually from '../../../../../test-support/eventually';
 import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
 import fetchVideos from '../../../../services/videos/fetchVideos';
@@ -15,10 +15,14 @@ const fetchVideosMock = fetchVideos as Mock;
 const mockStore = configureStore<{}>(fetchVideosMiddleware);
 
 describe('fetchVideosMiddleware', () => {
-  it('filters videos by STOCK and INSTRUCTIONAL types', async () => {
+  it('fetching promoted videos will store them', async () => {
+    const promotedVideos = [
+      VideoFactory.sample({ id: '123' }),
+      VideoFactory.sample({ id: '456' }),
+    ];
     fetchVideosMock.mockReturnValue(
       Promise.resolve({
-        videos: [VideoFactory.sample()],
+        videos: promotedVideos,
         paging: PageSpecFactory.sample(),
       }),
     );
@@ -27,22 +31,22 @@ describe('fetchVideosMiddleware', () => {
       links: { entries: [], loadingState: 'success' },
     });
 
-    const fetchPromotedVideos = linkFetchPromotedVideosToDispatch(
-      store.dispatch,
+    store.dispatch(
+      fetchPromotedVideosAction({
+        filters: {
+          promoted: true,
+          type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
+        },
+        page: 1,
+        size: 3,
+        sortBy: 'RANDOM',
+      }),
     );
-
-    fetchPromotedVideos();
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        fetchPromotedVideosAction({
-          filters: {
-            promoted: true,
-            type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
-          },
-          page: 1,
-          size: 3,
-          sortBy: 'RANDOM',
+        storePromotedVideosAction({
+          promotedVideos,
         }),
       );
     });

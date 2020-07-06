@@ -3,6 +3,7 @@ import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { HomeViewVideoList } from 'src/views/home/HomeViewVideoList';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import {
   withMediaBreakPoint,
@@ -10,7 +11,6 @@ import {
 } from '../../components/common/higherOrderComponents/withMediaBreakPoint';
 import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
-import HomeViewVideoListView from './HomeViewVideoList';
 
 const { Content } = Layout;
 
@@ -37,7 +37,7 @@ export const VideosAndDisciplinesSection = withMediaBreakPoint(
           {screenIsDesktop ? (
             <Row gutter={90}>
               <Col lg={{ span: 8 }}>
-                <HomeViewVideoListView />
+                <HomeViewVideoList />
               </Col>
               <Col lg={{ span: 16 }}>
                 <DisciplineSection />
