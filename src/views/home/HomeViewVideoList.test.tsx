@@ -3,6 +3,7 @@ import { renderWithStore } from 'test-support/renderWithStore';
 import {
   EntitiesFactory,
   MockStoreFactory,
+  UserProfileFactory,
   VideoFactory,
 } from '../../../test-support/factories';
 import { HomeViewVideoList } from './HomeViewVideoList';
@@ -31,6 +32,7 @@ describe('HomeViewVideoList', () => {
       videos: {
         promotedVideoIds: [promotedVideo.id],
       },
+      user: UserProfileFactory.sample({ subjects: ['test-subject-id'] }),
     });
 
     const view = renderWithStore(<HomeViewVideoList />, {
@@ -47,6 +49,7 @@ describe('HomeViewVideoList', () => {
         videos: {
           promotedVideoIds: [],
         },
+        user: UserProfileFactory.sample({ subjects: ['test-subject-id'] }),
       },
     });
 

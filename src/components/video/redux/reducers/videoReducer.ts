@@ -1,4 +1,5 @@
 import produce from 'immer';
+import union from 'lodash/union';
 import {
   actionHandler,
   ActionHandler,
@@ -7,7 +8,10 @@ import State, { VideoStateValue } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import { organizeById } from '../../../../utils/entityMap';
 import { fetchVideoAction } from '../actions/fetchVideoAction';
-import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
+import {
+  PromotedVideos,
+  storePromotedVideosAction,
+} from '../actions/storePromotedVideosAction';
 import { storeVideoAction } from '../actions/storeVideoAction';
 import { storeVideosAction } from '../actions/storeVideosAction';
 
@@ -40,15 +44,16 @@ const onStoreVideosAction = (
 
 const onStorePromotedVideosAction = (
   state: State,
-  request: { promotedVideos: Video[] },
+  request: PromotedVideos,
 ): State => {
   const stateTemp = onStoreVideosAction(state, {
     videos: request.promotedVideos,
   });
   return produce(stateTemp, (draftState) => {
-    draftState.videos.promotedVideoIds = request.promotedVideos.map(
-      (video) => video.id,
-    );
+    const ids: string[] = request.promotedVideos.map((video) => video.id);
+    draftState.videos.promotedVideoIds = request.additionalVideos
+      ? union(draftState.videos.promotedVideoIds, ids)
+      : ids;
   });
 };
 

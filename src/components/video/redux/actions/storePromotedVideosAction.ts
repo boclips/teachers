@@ -1,6 +1,11 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 import { Video } from '../../../../types/Video';
 
-export const storePromotedVideosAction = actionCreatorFactory<{
+export interface PromotedVideos {
   promotedVideos: Video[];
-}>('STORE_PROMOTED_VIDEOS');
+  additionalVideos: boolean;
+}
+
+export const storePromotedVideosAction = actionCreatorFactory<PromotedVideos>(
+  'STORE_PROMOTED_VIDEOS',
+);

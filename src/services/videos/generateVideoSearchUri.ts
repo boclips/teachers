@@ -15,9 +15,9 @@ export function generateVideoSearchUri(
     searchRequest.filters.age_range &&
     searchRequest.filters.age_range.map((ageRange) => ageRange.getId());
 
-  const ageRangeFacets = facets.ageRanges.map((ageRange) => ageRange.getId());
-  const durationFacets = facets.durations.map((duration) => duration.toIso());
-  const resourceTypeFacets = facets.resourceTypes.map((type) => type.label);
+  const ageRangeFacets = facets?.ageRanges.map((ageRange) => ageRange.getId());
+  const durationFacets = facets?.durations.map((duration) => duration.toIso());
+  const resourceTypeFacets = facets?.resourceTypes.map((type) => type.label);
 
   return links.videos.getTemplatedLink({
     query: searchRequest.query,

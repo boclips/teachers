@@ -2,6 +2,7 @@ import { LOCATION_CHANGE } from 'connected-react-router';
 import { Store } from 'redux';
 import { VideoSearchResult } from 'src/types/SearchResults';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
+import { PROMOTED_VIDEOS_SIZE } from 'src/views/home/HomeViewVideoList';
 import {
   actionCreatorFactory,
   sideEffect,
@@ -11,7 +12,10 @@ import fetchVideos from '../../../../services/videos/fetchVideos';
 import State from '../../../../types/State';
 import { VideoSearchRequest } from '../../../../types/VideoSearchRequest';
 import { dispatchSearchActions } from '../../../searchBar/redux/dispatchSearchActions';
-import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
+import {
+  fetchPromotedVideosAction,
+  PromotedVideosRequest,
+} from '../actions/fetchPromotedVideosAction';
 import { fetchVideosAction } from '../actions/fetchVideosAction';
 import { storePromotedVideosAction } from '../actions/storePromotedVideosAction';
 import { storeVideosAction } from '../actions/storeVideosAction';
@@ -43,19 +47,35 @@ const onFetchVideos = (store: Store<State>, request: VideoSearchRequest) => {
 
 const onFetchPromotedVideos = (
   store: Store<State>,
-  request: VideoSearchRequest,
+  request: PromotedVideosRequest,
 ) => {
   const links: Links = store.getState().links.entries;
-  const facets: VideoSearchFacets = {
-    ageRanges: store.getState().ageRanges,
-    durations: store.getState().durations,
-    resourceTypes: store.getState().resourceTypes,
-  };
 
-  fetchVideos(request, facets, links).then((result) => {
+  fetchVideos(request.videoSearchRequest, null, links).then((result) => {
     store.dispatch(
-      storePromotedVideosAction({ promotedVideos: result.videos }),
+      storePromotedVideosAction({
+        promotedVideos: result.videos,
+        additionalVideos: request.additionalVideos,
+      }),
     );
+
+    if (
+      !request.additionalVideos &&
+      result.videos?.length < PROMOTED_VIDEOS_SIZE
+    ) {
+      store.dispatch(
+        fetchPromotedVideosAction({
+          videoSearchRequest: {
+            ...request.videoSearchRequest,
+            filters: {
+              ...request.videoSearchRequest.filters,
+              subject: undefined,
+            },
+          },
+          additionalVideos: true,
+        }),
+      );
+    }
   });
 };
 

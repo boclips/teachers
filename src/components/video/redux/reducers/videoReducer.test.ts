@@ -53,7 +53,44 @@ describe('storing videos', () => {
     const stateBefore = MockStoreFactory.sampleState({});
 
     const firstVideo = VideoFactory.sample({ id: 'v1' });
-    const action = storePromotedVideosAction({ promotedVideos: [firstVideo] });
+    const secondVideo = VideoFactory.sample({ id: 'v2' });
+    const thirdVideo = VideoFactory.sample({ id: 'v3' });
+
+    const startState = testReducer(
+      stateBefore,
+      storePromotedVideosAction({
+        promotedVideos: [firstVideo, secondVideo],
+        additionalVideos: false,
+      }),
+    );
+
+    const action = storePromotedVideosAction({
+      promotedVideos: [secondVideo, thirdVideo],
+      additionalVideos: true,
+    });
+
+    const stateAfter = testReducer(startState, action);
+    const videoEntities = stateAfter.entities.videos.byId;
+
+    expect(stateAfter.videos.promotedVideoIds).toEqual([
+      firstVideo.id,
+      secondVideo.id,
+      thirdVideo.id,
+    ]);
+
+    expect(videoEntities[firstVideo.id]).toEqual(firstVideo);
+    expect(videoEntities[secondVideo.id]).toEqual(secondVideo);
+    expect(videoEntities[thirdVideo.id]).toEqual(thirdVideo);
+  });
+
+  it('can add additional unique promoted videos to the existing promoted videos', () => {
+    const stateBefore = MockStoreFactory.sampleState({});
+
+    const firstVideo = VideoFactory.sample({ id: 'v1' });
+    const action = storePromotedVideosAction({
+      promotedVideos: [firstVideo],
+      additionalVideos: false,
+    });
 
     const stateAfter = testReducer(stateBefore, action);
 
