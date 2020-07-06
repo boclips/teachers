@@ -97,7 +97,7 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
     return (
       <Row gutter={[4, 4]}>
         {previewImages.map((image) => (
-          <Col key={image.props.background} span={12}>
+          <Col key={image.key} span={12}>
             {image}
           </Col>
         ))}

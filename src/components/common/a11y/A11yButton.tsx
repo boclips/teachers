@@ -67,7 +67,7 @@ export const A11yButton = ({ callback, children, disableClick }: Props) => {
           onClick,
           onKeyDown,
           role: 'button',
-          key: child.props.videoId,
+          key: child.props['data-qa'],
         }),
       )}
     </>
