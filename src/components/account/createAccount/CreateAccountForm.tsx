@@ -1,9 +1,6 @@
-import { Form } from '@ant-design/compatible';
-import { Button, Col, Input, Row } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
-import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Button, Col, Input, Row, Form } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
 import GoogleSVG from '../../../../resources/images/google.svg';
 import MicrosoftSVG from '../../../../resources/images/office-365.svg';
@@ -13,10 +10,8 @@ import {
   createAccount,
   CreateAccountRequest,
 } from '../../../services/account/createAccount';
-import Utm from '../../../services/account/Utm';
 import { RegistrationContext } from '../../../services/session/RegistrationContext';
 import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
-import { Links } from '../../../types/Links';
 import State from '../../../types/State';
 import {
   ScreenReaderError,
@@ -27,268 +22,9 @@ import { extractQueryParam } from '../referral/extractQueryParam';
 import { CaptchaNotice } from './CaptchaNotice';
 import './CreateAccountForm.less';
 import { handleError, handleUserExists } from './createAccountHelpers';
-import { EmailForm } from './EmailForm';
 import { LoginLink } from './LoginLink';
 import { PasswordForm } from './PasswordForm';
 import { Recaptcha } from './recaptcha/Recaptcha';
-
-interface CreateAccountProps {
-  links: Links;
-  referralCode: string;
-  utm: Utm;
-}
-
-interface InternalState {
-  confirmDirty: boolean;
-  creating: boolean;
-  renderRecaptcha: boolean;
-  screenReaderErrors: ScreenReaderError[];
-}
-
-interface DispatchProps {
-  onSsoLogin: (idpHint: string) => void;
-  onSuccesfulRegistration: (username: string, password: string) => void;
-}
-
-class CreateAccountForm extends React.Component<
-  CreateAccountProps & FormComponentProps & DispatchProps,
-  InternalState
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      confirmDirty: false,
-      creating: false,
-      renderRecaptcha: true,
-      screenReaderErrors: null,
-    };
-  }
-
-  public componentDidMount() {
-    const registrationContext: RegistrationContext = {
-      referralCode: this.props.referralCode,
-      utm: this.props.utm,
-    };
-
-    RegistrationContextService.store(registrationContext);
-  }
-
-  private updateRecaptchaToken = (recaptchaToken) => {
-    this.props.form.setFieldsValue({ recaptchaToken });
-    this.setState({ renderRecaptcha: false });
-  };
-
-  private handleGoogleSsoLogin = () => {
-    this.props.onSsoLogin('google');
-  };
-
-  private handleMicrosoftSsoLogin = () => {
-    this.props.onSsoLogin('microsoft');
-  };
-
-  private handleSubmit = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.props.form.validateFieldsAndScroll(
-      (err, values: CreateAccountRequest) => {
-        if (!err) {
-          this.setState((state) => ({
-            ...state,
-            creating: true,
-          }));
-          createAccount(this.props.links, values)
-            .then(() => {
-              this.props.onSuccesfulRegistration(values.email, values.password);
-            })
-            .catch((error) => {
-              if (error && error.response.status === 409) {
-                handleUserExists();
-              } else {
-                handleError();
-              }
-
-              this.setState((state) => ({
-                ...state,
-                creating: false,
-                renderRecaptcha: true,
-              }));
-            });
-        } else {
-          this.setState((state) => ({
-            ...state,
-            screenReaderErrors: transformErrors(err),
-          }));
-        }
-      },
-    );
-  };
-
-  public render() {
-    const { getFieldDecorator } = this.props.form;
-
-    return (
-      <section
-        className="create-account-form__container"
-        data-qa="create-account-form"
-      >
-        <Row>
-          <Col xs={{ span: 0 }} lg={{ span: 12 }}>
-            <RegistrationLogoSVG className="create-account__logo" />
-          </Col>
-          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-            {this.state.screenReaderErrors && (
-              <ScreenReaderErrors errors={this.state.screenReaderErrors} />
-            )}
-
-            <Form onSubmit={this.handleSubmit} colon>
-              <h1 className="alt create-account-form__title">Create account</h1>
-
-              <section className="create-account-form__form">
-                <EmailForm form={this.props.form} />
-                <PasswordForm form={this.props.form} />
-              </section>
-
-              <div style={{ display: 'none' }}>
-                <Form.Item>
-                  {getFieldDecorator('recaptchaToken', {
-                    rules: [],
-                    initialValue: '',
-                  })(<Input type="text" />)}
-                </Form.Item>
-                {this.state.renderRecaptcha && (
-                  <Recaptcha verifyCallback={this.updateRecaptchaToken} />
-                )}
-              </div>
-
-              <Button
-                data-qa="register-button"
-                className="create-account-form__button create-account-form__submit"
-                size="large"
-                type="primary"
-                htmlType="submit"
-                disabled={this.state.creating}
-                loading={this.state.creating}
-              >
-                Create account
-              </Button>
-            </Form>
-            <LoginLink />
-
-            <section className="create-account-form__divider-container">
-              <span className="create-account-form__divider-label">or</span>
-              <hr className="create-account-form__divider" />
-            </section>
-
-            <section className="create-account-form__social-buttons-container">
-              <Row gutter={16}>
-                <Col sm={24} md={12}>
-                  <Button
-                    data-qa="google-button"
-                    className="create-account-form__button create-account-form__social-button"
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    disabled={this.state.creating}
-                    loading={this.state.creating}
-                    onClick={this.handleGoogleSsoLogin}
-                  >
-                    <span className="create-account-form__social-button-icon">
-                      <GoogleSVG aria-hidden />
-                    </span>
-                    <span>Continue with Google</span>
-                  </Button>
-                </Col>
-                <Col>
-                  <Button
-                    data-qa="google-button"
-                    className="create-account-form__button create-account-form__social-button"
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    disabled={this.state.creating}
-                    loading={this.state.creating}
-                    onClick={this.handleGoogleSsoLogin}
-                  >
-                    <span className="create-account-form__social-button-icon">
-                      <GoogleSVG aria-hidden />
-                    </span>
-                    <span>Continue with Google</span>
-                  </Button>
-                </Col>
-                <Col sm={24} md={12}>
-                  <li className="create-account-form__social-buttons-list-item">
-                    <Button
-                      data-qa="microsoft-button"
-                      className="create-account-form__button create-account-form__social-button"
-                      size="large"
-                      type="primary"
-                      htmlType="submit"
-                      disabled={this.state.creating}
-                      loading={this.state.creating}
-                      onClick={this.handleMicrosoftSsoLogin}
-                    >
-                      <span className="create-account-form__social-button-icon">
-                        <MicrosoftSVG aria-hidden />
-                      </span>
-                      <span>Continue with Office 365</span>
-                    </Button>
-                  </li>
-                  <Button
-                    data-qa="microsoft-button"
-                    className="create-account-form__button create-account-form__social-button"
-                    size="large"
-                    type="primary"
-                    htmlType="submit"
-                    disabled={this.state.creating}
-                    loading={this.state.creating}
-                    onClick={this.handleMicrosoftSsoLogin}
-                  >
-                    <span className="create-account-form__social-button-icon">
-                      <MicrosoftSVG aria-hidden />
-                    </span>
-                    <span>Continue with Office 365</span>
-                  </Button>
-                </Col>
-              </Row>
-            </section>
-
-            <section className="create-account-form__recaptcha">
-              <CaptchaNotice />
-            </section>
-          </Col>
-        </Row>
-      </section>
-    );
-  }
-}
-
-function mapStateToProps(state: State): CreateAccountProps {
-  const queryParam = state.router.location.search;
-
-  const utm = extractUtmParams(queryParam);
-
-  return {
-    links: state.links.entries,
-    referralCode: extractQueryParam(queryParam, 'REFERRALCODE'),
-    utm,
-  };
-}
-
-function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
-  return {
-    onSsoLogin: (idpHint: string) =>
-      dispatch(requestSsoAuthentication(idpHint)),
-    onSuccesfulRegistration: (username: string, password: string) =>
-      dispatch(
-        requestAuthentication({
-          authenticationRequired: true,
-          username,
-          password,
-        }),
-      ),
-  };
-}
 
 const extractUtmParams = (queryParam) => {
   const source = extractQueryParam(queryParam, 'utm_source');
@@ -309,7 +45,204 @@ const extractUtmParams = (queryParam) => {
   return undefined;
 };
 
-export default connect<CreateAccountProps, {}, {}>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create<CreateAccountProps & FormComponentProps>()(CreateAccountForm));
+const CreateAccountForm = () => {
+  const [creating, setCreating] = useState<boolean>(false);
+  const [renderRecaptcha, setRenderRecaptcha] = useState<boolean>(true);
+  const [screenReaderErrors, setScreenReaderErrors] = useState<
+    ScreenReaderError[] | null
+  >(null);
+
+  const queryParam = useSelector(
+    (state: State) => state.router.location.search,
+  );
+
+  const links = useSelector((state: State) => state.links.entries);
+  const referralCode = extractQueryParam(queryParam, 'REFERRALCODE');
+  const utm = extractUtmParams(queryParam);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const registrationContext: RegistrationContext = {
+      referralCode,
+      utm,
+    };
+
+    RegistrationContextService.store(registrationContext);
+  }, [referralCode, utm]);
+
+  const handleGoogleSsoLogin = () => {
+    dispatch(requestSsoAuthentication('google'));
+  };
+
+  const handleMicrosoftSsoLogin = () => {
+    dispatch(requestSsoAuthentication('microsoft'));
+  };
+
+  const onSuccesfulRegistration = (username: string, password: string) => {
+    dispatch(
+      requestAuthentication({
+        authenticationRequired: true,
+        username,
+        password,
+      }),
+    );
+  };
+
+  const updateRecaptchaToken = (recaptchaToken) => {
+    form.setFieldsValue({ recaptchaToken });
+    setRenderRecaptcha(false);
+  };
+
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    form
+      .validateFields()
+      .then((values: CreateAccountRequest) => {
+        setCreating(true);
+        createAccount(links, values)
+          .then(() => {
+            onSuccesfulRegistration(values.email, values.password);
+          })
+          .catch((error) => {
+            if (error && error.response.status === 409) {
+              handleUserExists();
+            } else {
+              handleError();
+            }
+            setCreating(false);
+            setRenderRecaptcha(true);
+          });
+      })
+      .catch((err) => {
+        setScreenReaderErrors(transformErrors(err));
+      });
+  };
+
+  const [form] = Form.useForm();
+
+  return (
+    <section
+      className="create-account-form__container"
+      data-qa="create-account-form"
+    >
+      <Row>
+        <Col xs={{ span: 0 }} lg={{ span: 12 }}>
+          <RegistrationLogoSVG className="create-account__logo" />
+        </Col>
+        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+          {screenReaderErrors && (
+            <ScreenReaderErrors errors={screenReaderErrors} />
+          )}
+          <Form form={form}>
+            <h1 className="alt create-account-form__title">Create account</h1>
+
+            <section className="create-account-form__form">
+              <Form.Item
+                label="Work Email:"
+                required={false}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 18 }}
+                className="email-form__container"
+                name="email"
+                rules={[
+                  {
+                    type: 'email',
+                    message: 'The input is not valid email',
+                  },
+                  {
+                    required: true,
+                    message: 'Please enter your email',
+                  },
+                ]}
+                colon
+              >
+                <Input
+                  data-qa="email"
+                  size="large"
+                  placeholder="Enter your email"
+                  aria-required
+                />
+              </Form.Item>
+              <PasswordForm />
+            </section>
+
+            <div style={{ display: 'none' }}>
+              <Form.Item name="recaptchaToken" initialValue="">
+                <Input type="text" />
+              </Form.Item>
+              {renderRecaptcha && (
+                <Recaptcha verifyCallback={updateRecaptchaToken} />
+              )}
+            </div>
+
+            <Button
+              data-qa="register-button"
+              className="create-account-form__button create-account-form__submit"
+              size="large"
+              type="primary"
+              htmlType="submit"
+              disabled={creating}
+              loading={creating}
+              onClick={handleSubmit}
+            >
+              Create account
+            </Button>
+          </Form>
+          <LoginLink />
+
+          <section className="create-account-form__divider-container">
+            <span className="create-account-form__divider-label">or</span>
+            <hr className="create-account-form__divider" />
+          </section>
+
+          <section className="create-account-form__social-buttons-container">
+            <Row gutter={16}>
+              <Col sm={24} md={24}>
+                <Button
+                  data-qa="google-button"
+                  className="create-account-form__button create-account-form__social-button"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  disabled={creating}
+                  loading={creating}
+                  onClick={handleGoogleSsoLogin}
+                >
+                  <span className="create-account-form__social-button-icon">
+                    <GoogleSVG aria-hidden />
+                  </span>
+                  <span>Continue with Google</span>
+                </Button>
+              </Col>
+
+              <Col sm={24} md={24}>
+                <Button
+                  data-qa="microsoft-button"
+                  className="create-account-form__button create-account-form__social-button"
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  disabled={creating}
+                  loading={creating}
+                  onClick={handleMicrosoftSsoLogin}
+                >
+                  <span className="create-account-form__social-button-icon">
+                    <MicrosoftSVG aria-hidden />
+                  </span>
+                  <span>Continue with Office 365</span>
+                </Button>
+              </Col>
+            </Row>
+          </section>
+          <section className="create-account-form__recaptcha">
+            <CaptchaNotice />
+          </section>
+        </Col>
+      </Row>
+    </section>
+  );
+};
+
+export default CreateAccountForm;

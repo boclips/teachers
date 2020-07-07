@@ -2,6 +2,9 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { fireEvent } from '@testing-library/react';
+import { Form } from 'antd';
+import { renderWithBoclipsStore } from 'test-support/renderWithStore';
 import By from '../../../../test-support/By';
 import {
   LinksStateValueFactory,
@@ -55,5 +58,62 @@ describe('create account form', () => {
         requestSsoAuthentication('microsoft'),
       );
     });
+  });
+});
+
+describe(`password validation`, () => {
+  const validPassword = 'Aa123456';
+  let wrapper;
+  beforeEach(() => {
+    wrapper = renderWithBoclipsStore(
+      <Form>
+        <CreateAccountForm />
+      </Form>,
+      MockStoreFactory.sampleState(),
+    );
+  });
+
+  it('validates good password removing validation warnings', () => {
+    fireEvent.change(wrapper.getByPlaceholderText('Enter your password'), {
+      target: { value: validPassword },
+    });
+
+    expect(wrapper.queryByTestId('password-error')).toBeNull();
+    expect(wrapper.queryByTestId('password-success')).toBeNull();
+  });
+
+  it('validates short password', async () => {
+    fireEvent.change(wrapper.getByPlaceholderText('Enter your password'), {
+      target: { value: 'Aa123' },
+    });
+
+    expect(await wrapper.findAllByTestId('password-error')).toHaveLength(1);
+    expect(await wrapper.findAllByTestId('password-success')).toHaveLength(3);
+  });
+
+  it('validates password without uppercase', async () => {
+    fireEvent.change(wrapper.getByPlaceholderText('Enter your password'), {
+      target: { value: validPassword.toLocaleLowerCase() },
+    });
+
+    expect(await wrapper.findAllByTestId('password-error')).toHaveLength(1);
+    expect(await wrapper.findAllByTestId('password-success')).toHaveLength(3);
+  });
+
+  it('validates password without lowercase', async () => {
+    fireEvent.change(wrapper.getByPlaceholderText('Enter your password'), {
+      target: { value: validPassword.toLocaleUpperCase() },
+    });
+
+    expect(await wrapper.findAllByTestId('password-error')).toHaveLength(1);
+    expect(await wrapper.findAllByTestId('password-success')).toHaveLength(3);
+  });
+
+  it('validates password without numbers', async () => {
+    fireEvent.change(wrapper.getByPlaceholderText('Enter your password'), {
+      target: { value: 'AAAaaaaaa' },
+    });
+    expect(await wrapper.findAllByTestId('password-error')).toHaveLength(1);
+    expect(await wrapper.findAllByTestId('password-success')).toHaveLength(3);
   });
 });

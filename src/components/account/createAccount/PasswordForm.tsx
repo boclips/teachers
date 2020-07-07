@@ -1,7 +1,5 @@
-import { EyeFilled, EyeInvisibleOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
-import { Input } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Form, Input } from 'antd';
 import React from 'react';
 import ErrorSvg from '../../../../resources/images/validation-error.svg';
 import SuccessSvg from '../../../../resources/images/validation-success.svg';
@@ -16,7 +14,7 @@ interface Constraint {
   label: React.ReactNode;
 }
 
-export class PasswordForm extends React.Component<FormComponentProps, State> {
+export class PasswordForm extends React.Component<{}, State> {
   private constraints: Constraint[] = [
     {
       regex: /^(.){8,}$/,
@@ -36,13 +34,9 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
     },
   ];
 
-  public constructor(props: FormComponentProps, context: any) {
-    super(props, context);
-    this.state = { show: false };
+  public constructor() {
+    super(null);
   }
-
-  private toggleShow = () =>
-    this.setState((state) => ({ ...state, show: !state.show }));
 
   private validatePassword = (_, value, callback) => {
     if (this.constraints.find((c) => !value.match(c.regex))) {
@@ -73,46 +67,25 @@ export class PasswordForm extends React.Component<FormComponentProps, State> {
         label="Password:"
         required={false}
         className="password-form__container"
-        labelCol={{ span: 24 }}
         colon
+        name="password"
+        labelCol={{ span: 24 }}
+        wrapperCol={{ span: 18 }}
+        rules={[
+          {
+            validator: this.validatePassword,
+          },
+        ]}
       >
-        {this.props.form.getFieldDecorator('password', {
-          rules: [
-            {
-              validator: this.validatePassword,
-            },
-          ],
-        })(
-          <Input
-            data-qa="password"
-            size="large"
-            type={this.state.show ? 'text' : 'password'}
-            placeholder="Enter your password"
-            suffix={
-              this.state.show ? (
-                <button
-                  type="button"
-                  className="password-form__show"
-                  data-qa="hide-password"
-                  onClick={this.toggleShow}
-                >
-                  <EyeInvisibleOutlined />
-                  &nbsp;Hide
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="password-form__show"
-                  data-qa="show-password"
-                  onClick={this.toggleShow}
-                >
-                  <EyeFilled />
-                  &nbsp;Show
-                </button>
-              )
-            }
-          />,
-        )}
+        <Input.Password
+          data-qa="password"
+          size="large"
+          className="password-form__input"
+          placeholder="Enter your password"
+          iconRender={(visible) =>
+            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+          }
+        />
       </Form.Item>
     );
   }
@@ -124,8 +97,8 @@ interface CriteriaProps {
   children: React.ReactNode;
 }
 
-function Criteria(props: CriteriaProps) {
-  const valid = props.value.match(props.regex);
+function Criteria({ regex, children, value }: CriteriaProps) {
+  const valid = value.match(regex);
   return (
     <section
       data-qa="password-rule"
@@ -135,7 +108,7 @@ function Criteria(props: CriteriaProps) {
     >
       <section data-qa={valid ? 'password-success' : 'password-error'}>
         {valid ? <SuccessSvg aria-hidden /> : <ErrorSvg aria-hidden />}
-        {props.children}
+        {children}
       </section>
     </section>
   );
