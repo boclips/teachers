@@ -17,23 +17,21 @@ export const HomeViewVideoList = () => {
   const userSubjects = useSelector((state: State) => state.user.subjects);
 
   useEffect(() => {
-    if (!videoIds || videoIds.length === 0) {
-      dispatch(
-        fetchPromotedVideosAction({
-          videoSearchRequest: {
-            filters: {
-              promoted: true,
-              subject: userSubjects,
-            },
-            page: 1,
-            size: 3,
-            sortBy: 'RANDOM',
+    dispatch(
+      fetchPromotedVideosAction({
+        videoSearchRequest: {
+          filters: {
+            promoted: true,
+            subject: userSubjects,
           },
-          additionalVideos: false,
-        }),
-      );
-    }
-  }, [dispatch, videoIds, userSubjects]);
+          page: 1,
+          size: 3,
+          sortBy: 'RANDOM',
+        },
+        additionalVideos: false,
+      }),
+    );
+  }, [dispatch, userSubjects]);
 
   return (
     videoIds &&
