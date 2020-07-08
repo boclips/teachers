@@ -39,6 +39,7 @@ export class SearchPanel extends React.PureComponent<
           defaultPageSize={videoResults.paging.size}
           total={videoResults.paging.totalElements}
           onChange={onPageChange}
+          showSizeChanger={false}
         />
       </section>
     );
