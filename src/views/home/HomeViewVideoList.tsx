@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { SortKey } from 'boclips-api-client/dist/sub-clients/videos/model/SortKey';
 import HeaderLogoSVG from '../../../resources/images/recommendations-logo.svg';
 import { SectionHeader } from '../../components/common/SectionHeader';
 import VerticalVideoList from '../../components/video/list/VerticalVideoList';
@@ -26,7 +27,7 @@ export const HomeViewVideoList = () => {
           },
           page: 1,
           size: 3,
-          sortBy: 'RANDOM',
+          sortBy: SortKey.RANDOM,
         },
         additionalVideos: false,
       }),

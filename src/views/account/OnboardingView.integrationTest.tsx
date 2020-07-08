@@ -38,8 +38,7 @@ describe('When user is not activated', () => {
     })
       .fetchUser(userResponse('user-id'))
       .fetchSchools('ES', 'school')
-      .fetchCollections()
-      .fetchPromoted();
+      .fetchCollections();
 
     await fakeSubjectsSetup();
     await fakeVideoSetup(video177);

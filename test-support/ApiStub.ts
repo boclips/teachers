@@ -6,21 +6,10 @@ import {
   disciplinesResponse,
   links,
   promotedCollectionsResponse,
-  promotedResponse,
   schoolsResponse,
   tagsResponse,
   userResponse,
 } from './api-responses';
-
-interface VideoQueryOptions {
-  query?: string;
-  tag?: string;
-  subject?: string[];
-  age_range_min?: number;
-  age_range_max?: number;
-  results: any;
-  promoted?: boolean;
-}
 
 interface CollectionQueryOptions {
   query: string;
@@ -45,38 +34,11 @@ export default class ApiStub {
       .fetchTags();
   }
 
-  public queryVideos(options: VideoQueryOptions) {
-    const escapedQuery = encodeURIComponent(options.query);
-
-    let url = '/v1/videos';
-    url += options.query ? `?.*query=${escapedQuery}` : '';
-    url += options.tag ? `?.*&include_tag=${options.tag}` : '';
-    url += options.subject ? `?.*&subject=${options.subject.join(',')}` : '';
-    url += options.age_range_min
-      ? `?.*&age_range_min=${options.age_range_min}`
-      : '';
-    url += options.age_range_max
-      ? `?.*&age_range_max=${options.age_range_max}`
-      : '';
-    url += options.promoted ? `?.*&promoted=${options.promoted}` : '';
-
-    MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
-    return this;
-  }
-
   public queryCollections(options: CollectionQueryOptions) {
     const escapedQuery = encodeURIComponent(options.query);
     const url = `/v1/collections?.*query=${escapedQuery}`;
 
     MockFetchVerify.get(new RegExp(url), JSON.stringify(options.results));
-    return this;
-  }
-
-  public fetchPromoted(result = promotedResponse()) {
-    MockFetchVerify.get(
-      new RegExp('/v1/videos.*&promoted=true'),
-      JSON.stringify(result),
-    );
     return this;
   }
 

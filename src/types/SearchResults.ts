@@ -1,4 +1,4 @@
-import { VideoFacets } from 'src/types/VideoFacets';
+import { VideoFacets } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 import PageSpec from './PageSpec';
 import { Video } from './Video';
 import { VideoCollection } from './VideoCollection';

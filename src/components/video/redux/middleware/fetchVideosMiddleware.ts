@@ -1,8 +1,9 @@
 import { LOCATION_CHANGE } from 'connected-react-router';
 import { Store } from 'redux';
-import { VideoSearchResult } from 'src/types/SearchResults';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import { PROMOTED_VIDEOS_SIZE } from 'src/views/home/HomeViewVideoList';
+import { Video } from 'src/types/Video';
+import { VideoSearchResult } from 'src/types/SearchResults';
 import {
   actionCreatorFactory,
   sideEffect,
@@ -31,17 +32,16 @@ const searchVideosAndCollections = (store: Store<State>) => {
 };
 
 const onFetchVideos = (store: Store<State>, request: VideoSearchRequest) => {
-  const links: Links = store.getState().links.entries;
   const facets: VideoSearchFacets = {
     ageRanges: store.getState().ageRanges,
     durations: store.getState().durations,
     resourceTypes: store.getState().resourceTypes,
   };
 
-  fetchVideos(request, facets, links).then((result: VideoSearchResult) => {
-    store.dispatch(
-      storeVideosAction({ videos: result.videos, facets: result.facets }),
-    );
+  fetchVideos(request, facets).then((result: VideoSearchResult) => {
+    const videos: Video[] = result.videos;
+
+    store.dispatch(storeVideosAction({ videos, facets: result.facets }));
   });
 };
 
@@ -49,34 +49,33 @@ const onFetchPromotedVideos = (
   store: Store<State>,
   request: PromotedVideosRequest,
 ) => {
-  const links: Links = store.getState().links.entries;
+  fetchVideos(request.videoSearchRequest, null).then(
+    (result: VideoSearchResult) => {
+      const videos: Video[] = result.videos;
 
-  fetchVideos(request.videoSearchRequest, null, links).then((result) => {
-    store.dispatch(
-      storePromotedVideosAction({
-        promotedVideos: result.videos,
-        additionalVideos: request.additionalVideos,
-      }),
-    );
-
-    if (
-      !request.additionalVideos &&
-      result.videos?.length < PROMOTED_VIDEOS_SIZE
-    ) {
       store.dispatch(
-        fetchPromotedVideosAction({
-          videoSearchRequest: {
-            ...request.videoSearchRequest,
-            filters: {
-              ...request.videoSearchRequest.filters,
-              subject: undefined,
-            },
-          },
-          additionalVideos: true,
+        storePromotedVideosAction({
+          promotedVideos: videos,
+          additionalVideos: request.additionalVideos,
         }),
       );
-    }
-  });
+
+      if (!request.additionalVideos && videos?.length < PROMOTED_VIDEOS_SIZE) {
+        store.dispatch(
+          fetchPromotedVideosAction({
+            videoSearchRequest: {
+              ...request.videoSearchRequest,
+              filters: {
+                ...request.videoSearchRequest.filters,
+                subject: undefined,
+              },
+            },
+            additionalVideos: true,
+          }),
+        );
+      }
+    },
+  );
 };
 
 const onUrlChangeMiddleware = sideEffect(

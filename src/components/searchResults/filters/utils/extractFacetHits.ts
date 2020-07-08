@@ -1,5 +1,5 @@
-import { Facet } from 'src/types/VideoFacets';
 import { MaxElementCount } from 'src/services/videos/parseVideosResponse';
+import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 
 export const extractFacetHits = (
   id: string,

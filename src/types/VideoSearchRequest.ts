@@ -1,11 +1,12 @@
 import { DurationRange } from 'src/types/DurationRange';
 import { AgeRange } from 'src/types/AgeRange';
+import { SortKey } from 'boclips-api-client/dist/sub-clients/videos/model/SortKey';
 
 export interface VideoSearchRequest {
   query?: string;
   page: number;
   filters: VideoRequestFilters;
-  sortBy: SortBy;
+  sortBy: SortKey;
   size?: number;
 }
 
@@ -19,5 +20,3 @@ export interface VideoRequestFilters {
   promoted?: boolean;
   resource_types?: string[];
 }
-
-export type SortBy = null | 'RELEASE_DATE' | 'RANDOM';

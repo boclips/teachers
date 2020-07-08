@@ -1,5 +1,6 @@
 import { MiddlewareAPI } from 'redux';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
+import { VideoSearchResult } from 'src/types/SearchResults';
 import { sideEffect } from '../../../../app/redux/actions';
 import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { searchCollections } from '../../../../services/collections/searchCollections';
@@ -17,17 +18,15 @@ export function onSearchVideos(
   store: MiddlewareAPI<any, State>,
   searchRequest: VideoSearchRequest,
 ) {
-  const links: Links = store.getState().links.entries;
   const facets: VideoSearchFacets = {
     ageRanges: store.getState().ageRanges,
     durations: store.getState().durations,
     resourceTypes: store.getState().resourceTypes,
   };
 
-  fetchVideos(searchRequest, facets, links).then((results) => {
-    store.dispatch(storeVideoSearchResultsAction(results));
-
-    AnalyticsFactory.externalAnalytics().trackVideoSearch(results);
+  fetchVideos(searchRequest, facets).then((result: VideoSearchResult) => {
+    store.dispatch(storeVideoSearchResultsAction(result));
+    AnalyticsFactory.externalAnalytics().trackVideoSearch(result);
   });
 }
 

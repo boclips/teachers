@@ -1,6 +1,7 @@
 import configureStore from 'redux-mock-store';
 import { PageSpecFactory, VideoFactory } from 'test-support/factories';
 import { storePromotedVideosAction } from 'src/components/video/redux/actions/storePromotedVideosAction';
+import { SortKey } from 'boclips-api-client/dist/sub-clients/videos/model/SortKey';
 import eventually from '../../../../../test-support/eventually';
 import { fetchPromotedVideosAction } from '../actions/fetchPromotedVideosAction';
 import fetchVideos from '../../../../services/videos/fetchVideos';
@@ -39,7 +40,7 @@ describe('fetchVideosMiddleware', () => {
           },
           page: 1,
           size: 3,
-          sortBy: 'RANDOM',
+          sortBy: SortKey.RANDOM,
         },
         additionalVideos: true,
       }),
@@ -80,7 +81,7 @@ describe('fetchVideosMiddleware', () => {
           },
           page: 1,
           size: 3,
-          sortBy: 'RANDOM',
+          sortBy: SortKey.RANDOM,
         },
         additionalVideos: false,
       }),
@@ -95,7 +96,7 @@ describe('fetchVideosMiddleware', () => {
             },
             page: 1,
             size: 3,
-            sortBy: 'RANDOM',
+            sortBy: SortKey.RANDOM,
           },
           additionalVideos: true,
         }),

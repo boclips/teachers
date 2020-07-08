@@ -1,79 +1,86 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import queryString from 'query-string';
 import { DurationRange } from 'src/types/DurationRange';
-import { videosSearchResponse } from '../../../test-support/api-responses';
-import { LinksFactory } from '../../../test-support/factories';
-import { Link } from '../../types/Link';
-import { VideoType } from '../../types/Video';
+import { SortKey } from 'boclips-api-client/dist/sub-clients/videos/model/SortKey';
+import { ApiClientWrapper } from 'src/services/apiClient';
+import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { VideoSearchResult } from 'src/types/SearchResults';
 import fetchVideos from './fetchVideos';
+import { VideoType } from '../../types/Video';
 
-let queryParams = null;
-
-beforeEach(async () => {
-  const axiosMock = new MockAdapter(axios);
-  axiosMock.onGet().reply(200, JSON.stringify(videosSearchResponse), {});
-
-  const links = LinksFactory.sample({
-    videos: new Link({
-      href:
-        '/v1/videos?query={query}&size={size}&page={page}{&sort_by,include_tag,exclude_tag,duration,duration_min,duration_max,age_range_min,age_range_max,age_range,subject,type,is_classroom}',
-      templated: true,
-    }),
+describe('fetchVideos', () => {
+  beforeEach(async () => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    client.videos.insertVideo(VideoFactory.sample({ title: 'test foo' }));
+    client.videos.setFacets({
+      ageRanges: {
+        '3-5': {
+          hits: 3,
+        },
+      },
+      subjects: {
+        'art-id': {
+          hits: 10,
+        },
+        'other-id': {
+          hits: 12,
+        },
+      },
+      durations: {
+        'PT10M-PT20M': {
+          hits: 3,
+        },
+      },
+      resourceTypes: {
+        Activity: {
+          hits: 2,
+        },
+      },
+    });
   });
 
-  await fetchVideos(
-    {
-      query: 'foo',
-      page: 1,
-      filters: {
-        duration: [new DurationRange({ min: 100, max: 200 })],
-        age_range_min: 5,
-        age_range_max: 11,
-        type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
-        subject: ['subject-one-id', 'subject-two-id'],
+  it('can search by query', async () => {
+    const searchResult: VideoSearchResult = await fetchVideos(
+      {
+        query: 'foo',
+        page: 1,
+        filters: {
+          duration: [new DurationRange({ min: 100, max: 200 })],
+          age_range_min: 5,
+          age_range_max: 11,
+          type: [VideoType.STOCK, VideoType.INSTRUCTIONAL],
+          subject: ['subject-one-id', 'subject-two-id'],
+        },
+        sortBy: SortKey.RELEASE_DATE,
       },
-      sortBy: 'RELEASE_DATE',
-    },
-    {
-      ageRanges: [],
-      durations: [],
-      resourceTypes: [],
-    },
-    links,
-  );
+      {
+        ageRanges: [],
+        durations: [],
+        resourceTypes: [],
+      },
+    );
 
-  const { url } = axiosMock.history.get[0];
-  queryParams = queryString.parse(url.split('?')[1], { arrayFormat: 'comma' });
-});
+    expect(searchResult.videos.length).toEqual(1);
+  });
 
-test('requests the correct search query', () => {
-  expect(queryParams.query).toEqual('foo');
-});
+  it(`can handle facets in search results`, async () => {
+    const searchResult: VideoSearchResult = await fetchVideos(
+      {
+        query: 'foo',
+        page: 1,
+        filters: {},
+        sortBy: SortKey.NOT_SORTED,
+      },
+      {
+        ageRanges: [],
+        durations: [],
+        resourceTypes: [],
+      },
+    );
 
-test('includes video type in a search request', () => {
-  expect(queryParams.type).toEqual(
-    expect.arrayContaining([VideoType.STOCK, VideoType.INSTRUCTIONAL]),
-  );
-});
-
-test('includes page and size params in the request', () => {
-  expect(queryParams.page).toEqual('0');
-  expect(queryParams.size).not.toHaveLength(0);
-});
-
-test('includes sort_by when provided', () => {
-  expect(queryParams.sort_by).toEqual('RELEASE_DATE');
-});
-
-test('converts durations to ranges of ISO-8601', () => {
-  expect(queryParams.duration).toEqual('PT1M40S-PT3M20S');
-});
-
-test('includes age range min and max when provided', () => {
-  expect(queryParams.age_range_min).toEqual('5');
-  expect(queryParams.age_range_max).toEqual('11');
-});
-test('includes a subject when provided', () => {
-  expect(queryParams.subject).toEqual(['subject-one-id', 'subject-two-id']);
+    const resultFacets = searchResult.facets;
+    expect(resultFacets.ageRanges['3-5'].hits).toEqual(3);
+    expect(resultFacets.subjects['art-id'].hits).toEqual(10);
+    expect(resultFacets.durations['PT10M-PT20M'].hits).toEqual(3);
+    expect(resultFacets.resourceTypes.Activity.hits).toEqual(2);
+  });
 });

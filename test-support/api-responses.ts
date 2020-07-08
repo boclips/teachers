@@ -298,10 +298,6 @@ export const videosSearchResponseWithFacets = buildVideoSearchResponse(
   },
 );
 
-export function promotedResponse() {
-  return buildVideoSearchResponse([video177, video147]);
-}
-
 export function collectionResponse(
   videosWithin: any[] = [video177Slim],
   id: string = 'id',

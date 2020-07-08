@@ -1,11 +1,9 @@
 import {
   collectionResponseWithSubject,
   collectionsResponse,
-  buildVideoSearchResponse,
   video177,
 } from '../../../test-support/api-responses';
 import ApiStub from '../../../test-support/ApiStub';
-import { VideoResourceFactory } from '../../../test-support/factories';
 import {
   fakeSubjectsSetup,
   fakeVideoSetup,
@@ -14,9 +12,7 @@ import HomePage from '../../../test-support/page-objects/HomePage';
 
 describe('Home page', () => {
   test('loads public collections', async () => {
-    new ApiStub().defaultUser().fetchPromoted();
-
-    // await fakeVideoSetup(video177);
+    new ApiStub().defaultUser();
 
     const homePage = await HomePage.load();
 
@@ -29,7 +25,6 @@ describe('Home page', () => {
   test('loads disciplines', async () => {
     new ApiStub()
       .defaultUser()
-      .fetchPromoted()
       .fetchCollections()
       .fetchDisciplines()
       .fetchCollections();
@@ -47,7 +42,6 @@ describe('Home page', () => {
   test('loads promoted collection and renders a single subject', async () => {
     new ApiStub()
       .defaultUser()
-      .fetchPromoted()
       .fetchPromotedCollections(
         collectionsResponse([collectionResponseWithSubject()]),
       )
@@ -64,20 +58,12 @@ describe('Home page', () => {
   });
 
   test('loads promoted videosSearchResponse', async () => {
-    new ApiStub().defaultUser().fetchPromoted(
-      buildVideoSearchResponse([
-        VideoResourceFactory.sample({
-          id: 'some-other-id',
-          title: 'hello',
-          promoted: true,
-        }),
-      ]),
-    );
+    new ApiStub().defaultUser();
     await fakeVideoSetup(video177);
     const homePage = await HomePage.load();
 
     expect(homePage.getVideos()).toContainEqual({
-      title: 'hello',
+      title: video177.title,
     });
   });
 });

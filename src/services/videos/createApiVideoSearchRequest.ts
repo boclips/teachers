@@ -1,12 +1,11 @@
 import { VideoSearchRequest } from 'src/types/VideoSearchRequest';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
-import { Links } from 'src/types/Links';
+import { VideoSearchRequest as ApiVideoSearchRequest } from 'boclips-api-client/dist/sub-clients/videos/model/VideoSearchRequest';
 
-export function generateVideoSearchUri(
+export function createApiVideoSearchRequest(
   searchRequest: VideoSearchRequest,
   facets: VideoSearchFacets,
-  links: Links,
-) {
+): ApiVideoSearchRequest {
   const durationParams =
     searchRequest.filters.duration &&
     searchRequest.filters.duration.map((duration) => duration.toIso());
@@ -19,7 +18,7 @@ export function generateVideoSearchUri(
   const durationFacets = facets?.durations.map((duration) => duration.toIso());
   const resourceTypeFacets = facets?.resourceTypes.map((type) => type.label);
 
-  return links.videos.getTemplatedLink({
+  return {
     query: searchRequest.query,
     size: searchRequest.size || 10,
     page: searchRequest.page - 1,
@@ -35,5 +34,5 @@ export function generateVideoSearchUri(
     promoted: searchRequest.filters.promoted,
     resource_types: searchRequest.filters.resource_types,
     resource_type_facets: resourceTypeFacets,
-  });
+  };
 }
