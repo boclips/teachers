@@ -13,8 +13,15 @@
   &.clickable {
     cursor: pointer;
   }
+
   .video-buttons {
     display: none;
+  }
+
+  .subtitle {
+    .rating--rate-stars {
+      padding-right: 25px;
+    }
   }
 
   @media (max-width: @screen-sm-max) {
@@ -23,9 +30,11 @@
     .badge-container {
       display: none;
     }
+
     .subtitle {
       display: none;
     }
+
     .video-buttons {
       display: flex;
       justify-content: flex-end;
