@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import SearchBar from '@bit/boclips.boclips-ui.components.search-bar';
+import SearchBar from '@bit/dev-boclips.boclips-ui.components.search-bar';
 import { RouterState } from '../../types/State';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import './SearchBarWrapper.less';
