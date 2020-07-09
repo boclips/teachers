@@ -3,6 +3,7 @@ import BoclipsSecurity from 'boclips-js-security';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import AccountMenuComponent from './AccountMenuComponent';
 import AccountMenuMobile from './AccountMenuMobileComponent';
+import QuestionIcon from '../../../../resources/images/question-icon.svg';
 
 import './AccountMenuContainer.less';
 
@@ -13,6 +14,7 @@ export class AccountMenuContainer extends PureComponent {
     const { confirm } = Modal;
 
     confirm({
+      icon: <QuestionIcon />,
       title: 'Are you sure you want to log out?',
       onOk() {
         BoclipsSecurity.getInstance().logout({

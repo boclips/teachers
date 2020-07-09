@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 63.1 (101010) - https://sketch.com -->
+    <title>6EA2FC81-E15D-4984-8D5F-1575F6E100B3</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Edit-video" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="delete-thumbnail" transform="translate(-402.000000, -478.000000)">
+            <g id="Icons-/-alerts-/-question" transform="translate(400.500000, 476.000000)">
+                <g id="round-help-24px">
+                    <g id="Bounding_Boxes">
+                        <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                    </g>
+                    <g id="Rounded" transform="translate(2.000000, 2.000000)" fill="#0051BC" fill-rule="nonzero">
+                        <path d="M10,0 C4.48,0 0,4.48 0,10 C0,15.52 4.48,20 10,20 C15.52,20 20,15.52 20,10 C20,4.48 15.52,0 10,0 Z M11,17 L9,17 L9,15 L11,15 L11,17 Z M13.07,9.25 L12.17,10.17 C11.67,10.68 11.31,11.14 11.13,11.86 C11.05,12.18 11,12.54 11,13 L9,13 L9,12.5 C9,12.04 9.08,11.6 9.22,11.19 C9.42,10.61 9.75,10.09 10.17,9.67 L11.41,8.41 C11.87,7.97 12.09,7.31 11.96,6.61 C11.83,5.89 11.27,5.28 10.57,5.08 C9.46,4.77 8.43,5.4 8.1,6.35 C7.98,6.72 7.67,7 7.28,7 L6.98,7 C6.4,7 6,6.44 6.16,5.88 C6.59,4.41 7.84,3.29 9.39,3.05 C10.91,2.81 12.36,3.6 13.26,4.85 C14.44,6.48 14.09,8.23 13.07,9.25 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
