@@ -79,11 +79,11 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
       </Row>
       <Row className="subtitle">
         <Rating video={video} />
-        Released on{' '}
+        Released on&nbsp;
         <span data-qa="video-released-on">
           <DateFormatter date={video.releasedOn} />
-        </span>{' '}
-        by <span data-qa="video-created-by">{video.createdBy}</span>
+        </span>
+        &nbsp;by&nbsp;<span data-qa="video-created-by">{video.createdBy}</span>
       </Row>
       <Row className="video-player-container">
         <Col
