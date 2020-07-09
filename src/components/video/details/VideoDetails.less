@@ -1,6 +1,14 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
 .video-details-container {
+  .ant-row {
+    &.subtitle:not(:first-child) {
+      span {
+        margin-left: 10px
+      }
+    }
+  }
+
   .video-header {
     display: flex;
     justify-content: space-between;
@@ -30,6 +38,11 @@
 
   .rating--container {
     margin-bottom: 8px;
+
+    .rating--rate-button {
+      color: @blue-shade-4;
+      font-weight: bold;
+    }
   }
 
   .rating--rate-stars,
