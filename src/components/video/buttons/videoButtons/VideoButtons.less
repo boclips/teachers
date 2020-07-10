@@ -15,15 +15,16 @@
 
   .ant-btn-group {
     display: flex;
+
+    button:first-child {
+      border-left: none !important;
+    }
   }
 
-  button:last-child {
-    border-right: none !important;
-  }
 
   button {
     .ant-btn--borderless();
-    border-right: 2px solid @shade-2 !important;
+    border-left: 2px solid @shade-2 !important;
 
 
     &.video-collection-menu {
