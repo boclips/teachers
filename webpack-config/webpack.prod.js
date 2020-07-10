@@ -64,9 +64,7 @@ module.exports = merge(common, {
       algorithm: 'gzip',
       test: /\.js$|\.css$|\.svg$|\.png$/,
     }),
-    new DynamicCdnWebpackPlugin({
-      exclude: ['react-router', 'react-router-dom'],
-    }),
+    new DynamicCdnWebpackPlugin(),
     new webpack.EnvironmentPlugin(['SENTRY_RELEASE']),
   ],
 
