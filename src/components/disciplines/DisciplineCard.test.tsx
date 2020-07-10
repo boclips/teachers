@@ -48,7 +48,7 @@ test('renders at most 4 first subjects', () => {
   }
 });
 
-test('renders at subjects when less than 4', () => {
+test('renders all subjects when less than 4', () => {
   const wrapper = mount(
     <MemoryRouter>
       <DisciplineCard

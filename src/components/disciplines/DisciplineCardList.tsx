@@ -7,7 +7,7 @@ import State from '../../types/State';
 import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
-import { DisciplineCard } from './DisciplineCard';
+import { DisciplineCard, DisciplineCardSkeleton } from './DisciplineCard';
 import './DisciplineCardList.less';
 
 export interface Props {
@@ -17,15 +17,21 @@ export interface Props {
 
 const DisciplineCardList = ({ limit, columns = 2 }: Props) => {
   const disciplines = useSelector((state: State) => state.disciplines);
-  const userSubjects = useSelector((state: State) => state.user.subjects);
+  const userSubjects = useSelector(
+    (state: State) => state.user && state.user.subjects,
+  );
 
   const boostUserDisciplines = (a, b) =>
-    a.subjects.filter((it) => userSubjects.indexOf(it.id) > -1).length >
-    b.subjects.filter((it) => userSubjects.indexOf(it.id) > -1).length
+    a.subjects.filter((it) => userSubjects && userSubjects.indexOf(it.id) > -1)
+      .length >
+    b.subjects.filter((it) => userSubjects && userSubjects.indexOf(it.id) > -1)
+      .length
       ? -1
       : 1;
   const boostUserSubjects = (a, b) =>
-    userSubjects.indexOf(a.id) > userSubjects.indexOf(b.id) ? -1 : 1;
+    userSubjects && userSubjects.indexOf(a.id) > userSubjects.indexOf(b.id)
+      ? -1
+      : 1;
 
   const renderDisciplines = () => {
     return [
@@ -36,6 +42,10 @@ const DisciplineCardList = ({ limit, columns = 2 }: Props) => {
             .slice(0, limit || disciplines.length)
             .map((discipline, index, slicedArray) => {
               discipline.subjects.sort(boostUserSubjects);
+              const userSubjectCount = discipline.subjects.filter(
+                (subject) =>
+                  userSubjects && userSubjects.indexOf(subject.id) > -1,
+              ).length;
               return (
                 <CSSTransition
                   classNames="card-list"
@@ -50,6 +60,7 @@ const DisciplineCardList = ({ limit, columns = 2 }: Props) => {
                         slicedArray.length,
                       )}
                       discipline={discipline}
+                      limit={userSubjectCount}
                     />
                   </Col>
                 </CSSTransition>
@@ -67,7 +78,7 @@ const DisciplineCardList = ({ limit, columns = 2 }: Props) => {
         md={{ span: 12 }}
         lg={{ span: 24 / columns }}
       >
-        <DisciplineCard.Skeleton
+        <DisciplineCardSkeleton
           className={generateBorderRadiusClassNames(
             count,
             columns,
