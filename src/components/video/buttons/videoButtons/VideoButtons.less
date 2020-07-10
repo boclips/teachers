@@ -17,9 +17,14 @@
     display: flex;
   }
 
+  button:last-child {
+    border-right: none !important;
+  }
+
   button {
     .ant-btn--borderless();
     border-right: 2px solid @shade-2 !important;
+
 
     &.video-collection-menu {
       border-right: 2px solid @shade-2 !important;
@@ -64,11 +69,6 @@
       &:last-child:not(:first-child) {
         border-right: 0;
       }
-    }
-
-    &.share-button {
-      border-right: none !important;
-      padding-right: 0;
     }
   }
 
