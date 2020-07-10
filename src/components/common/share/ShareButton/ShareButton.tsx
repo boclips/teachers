@@ -19,7 +19,11 @@ export const ShareButton = (props: ShareModelProps) => {
 
   return (
     <>
-      <Button onClick={() => setVisible(true)} data-qa="share-button">
+      <Button
+        onClick={() => setVisible(true)}
+        className="share-button"
+        data-qa="share-button"
+      >
         <Icon component={props.icon ? props.icon : ShareSVG} />
         <span>Share</span>
       </Button>

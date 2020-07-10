@@ -71,18 +71,18 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
           </div>
           <section className="badge-container">
             <p data-qa="video-duration" className="duration">
-              <ClockCircleOutlined />&nbsp;
+              <ClockCircleOutlined />{' '}
               <DurationFormatter duration={video.duration} />
             </p>
           </section>
         </section>
       </Row>
       <Row className="subtitle">
-        <Rating video={video}/>
+        <Rating video={video} />
         <div className="releasedOn">
           Released on&nbsp;
           <span data-qa="video-released-on">
-            <DateFormatter date={video.releasedOn}/>
+            <DateFormatter date={video.releasedOn} />
           </span>
           &nbsp;by&nbsp;
           <span data-qa="video-created-by">{video.createdBy}</span>
