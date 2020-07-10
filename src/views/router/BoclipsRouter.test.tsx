@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
 import {
+  DisciplineFactory,
   MockStoreFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
@@ -22,6 +23,7 @@ import BoclipsRouter from './BoclipsRouter';
 function buildStore(authorised: boolean = true) {
   return MockStoreFactory.sample({
     user: authorised ? UserProfileFactory.sample() : null,
+    disciplines: [DisciplineFactory.sample()],
   });
 }
 
