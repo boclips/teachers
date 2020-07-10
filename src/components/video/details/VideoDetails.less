@@ -1,14 +1,6 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
 .video-details-container {
-  .ant-row {
-    &.subtitle:not(:first-child) {
-      span {
-        margin-left: 2px;
-        margin-right: 2px;
-      }
-    }
-  }
 
   .video-header {
     display: flex;
@@ -58,6 +50,10 @@
     line-height: 18px;
     margin-bottom: 8px;
     margin-top: -2px;
+
+    .releasedOn {
+      margin-top: 2px;
+    }
   }
 
   .video-player-container {
@@ -122,21 +118,24 @@
         @media (min-width: @screen-md) {
           text-align: right;
         }
-
+        margin-left: 40px;
+        display: flex;
+        align-items: center;
         white-space: nowrap;
         font-size: 14px;
         color: @shade-6;
         font-weight: bold;
         line-height: 24px;
         padding-top: 4px;
-        margin-bottom: 0px;
 
         .anticon:hover {
           color: inherit;
         }
 
         span {
-          vertical-align: 2px;
+          svg {
+            margin-bottom: 2px;
+          }
         }
       }
     }
