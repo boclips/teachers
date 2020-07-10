@@ -71,7 +71,8 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
           </div>
           <section className="badge-container">
             <p data-qa="video-duration" className="duration">
-              <ClockCircleOutlined />{' '}
+              <ClockCircleOutlined />
+              &nbsp;
               <DurationFormatter duration={video.duration} />
             </p>
           </section>

@@ -62,7 +62,7 @@ describe('VideoDetailsView', () => {
       description: video.description,
       additionalDescription: video.additionalDescription,
       createdBy: video.createdBy,
-      duration: ' 1m 2s',
+      duration: ' 1m 2s',
       releasedOn: 'Feb 11, 2018',
       subjects: ['Maths', 'Physics'],
       playerVideoId: video.id,
