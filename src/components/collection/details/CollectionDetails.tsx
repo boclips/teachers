@@ -7,12 +7,12 @@ import { CollectionBanner } from 'src/components/collection/details/header/Colle
 import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-image.svg';
 import PageLayout from 'src/components/layout/PageLayout';
 import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
+import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
 import State from '../../../types/State';
 import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
 import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
 import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
 import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
-import { useRefererIdInjector } from '../../../hooks/useRefererIdInjector';
 import { CollectionHeader } from './header/CollectionHeader';
 
 interface OwnProps {
@@ -29,8 +29,11 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   const userId = useSelector((state: State) =>
     state.user ? state.user.id : null,
   );
+  const isCollectionLoading = useSelector(
+    (state: State) => state.collections?.loading,
+  );
 
-  const isAuthenticated = useSelector(
+  const isLoggedIn = useSelector(
     (state: State) => state.authentication.status === 'authenticated',
   );
   const shareCode = useSelector(
@@ -42,7 +45,7 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   );
   useEffect(() => {
     if (!collection) {
-      if (isAuthenticated) {
+      if (isLoggedIn) {
         dispatch(fetchCollectionAction({ id: props.collectionId }));
       } else {
         dispatch(
@@ -54,14 +57,17 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
         );
       }
     }
-  }, [collection, dispatch, props, shareCode, refererId, isAuthenticated]);
+  }, [collection, dispatch, props, shareCode, refererId, isLoggedIn]);
 
   useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
   }, [dispatch, props]);
 
   if (!collection) {
-    if (!isAuthenticated && isAnonymous) {
+    const missingReferer = !isLoggedIn && isAnonymous;
+    const isAuthenticated = isLoggedIn || shareCode;
+
+    if (missingReferer || (isAuthenticated && !isCollectionLoading)) {
       return (
         <DetailsNotFound
           title="Oops!!"
@@ -71,7 +77,7 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
       );
     }
 
-    const requireShareCode = !shareCode && !isAuthenticated;
+    const requireShareCode = !shareCode && !isLoggedIn;
 
     return (
       <PageLayout showSearchBar showFooter showNavigation>

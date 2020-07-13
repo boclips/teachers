@@ -211,9 +211,6 @@ describe('CollectionDetailsView', () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
       expect(
-        await wrapper.findByTestId('collection-skeleton'),
-      ).toBeInTheDocument();
-      expect(
         await wrapper.queryByText('View collection'),
       ).not.toBeInTheDocument();
 
@@ -245,9 +242,6 @@ describe('CollectionDetailsView', () => {
         history,
       );
 
-      expect(
-        await wrapper.findByTestId('collection-skeleton'),
-      ).toBeInTheDocument();
       expect(
         await wrapper.queryByText('View collection'),
       ).not.toBeInTheDocument();
@@ -296,31 +290,6 @@ describe('CollectionDetailsView', () => {
 
       expect(store.getState().authentication.refererId).toEqual('test-id');
       expect(store.getState().authentication.shareCode).toEqual('valid');
-    });
-
-    it('Shows not found illustration when not found and no share code possible', async () => {
-      const history = createMemoryHistory({
-        initialEntries: ['/collections/none-collection'],
-      });
-      const wrapper = renderWithCreatedStore(
-        <CollectionDetailsView collectionId="none-collection" />,
-        createBoclipsStore(
-          MockStoreFactory.sampleState({
-            authentication: { status: 'anonymous' },
-          }),
-          history,
-        ),
-        history,
-      );
-
-      expect(
-        await wrapper.findByText(
-          'The collection you tried to access is not available.',
-        ),
-      ).toBeInTheDocument();
-      expect(
-        await wrapper.queryByTestId('collection-skeleton'),
-      ).not.toBeInTheDocument();
     });
 
     it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL events when interacting with share code modal', async () => {
@@ -444,5 +413,70 @@ describe('when collection of collections', () => {
 
     expect(collectionPage.getCollectionUnits()).toContain('Child collection 1');
     expect(collectionPage.getCollectionUnits()).toContain('Child collection 2');
+  });
+});
+
+describe(`collection not found page`, () => {
+  const history = createMemoryHistory({
+    initialEntries: ['/collections/none-collection'],
+  });
+
+  const renderCollectionDetailsWithAuthState = (authenticationState) =>
+    renderWithCreatedStore(
+      <CollectionDetailsView collectionId="none-collection" />,
+      createBoclipsStore(
+        MockStoreFactory.sampleState({
+          authentication: authenticationState,
+        }),
+        history,
+      ),
+      history,
+    );
+
+  it('Shows not found illustration when not found and no share code possible', async () => {
+    const wrapper = renderCollectionDetailsWithAuthState({
+      status: 'anonymous',
+    });
+
+    expect(
+      await wrapper.findByText(
+        'The collection you tried to access is not available.',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      await wrapper.queryByTestId('collection-skeleton'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('Shows not found illustration when authenticated and collection not found', async () => {
+    const wrapper = renderCollectionDetailsWithAuthState({
+      status: 'authenticated',
+    });
+
+    expect(
+      await wrapper.findByText(
+        'The collection you tried to access is not available.',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      await wrapper.queryByTestId('collection-skeleton'),
+    ).not.toBeInTheDocument();
+  });
+
+  it('Shows not found illustration with valid shared code but collection not found', async () => {
+    const wrapper = renderCollectionDetailsWithAuthState({
+      status: 'anonymous',
+      refererId: 'user-123',
+      shareCode: 'ABCD',
+    });
+
+    expect(
+      await wrapper.findByText(
+        'The collection you tried to access is not available.',
+      ),
+    ).toBeInTheDocument();
+    expect(
+      await wrapper.queryByTestId('collection-skeleton'),
+    ).not.toBeInTheDocument();
   });
 });

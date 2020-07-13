@@ -53,7 +53,7 @@ export const initialCollectionsState: CollectionsStateValue = {
   updating: false,
 };
 
-const loadingCollections = (state: State): State => ({
+const onFetchCollections = (state: State): State => ({
   ...state,
   collections: {
     ...state.collections,
@@ -116,9 +116,9 @@ export const collectionHandlers: Array<ActionHandler<State, any>> = [
   actionHandler(onCollectionEditedAction, onCollectionEdited),
   actionHandler(createCollectionAction, collectionUpdating),
   actionHandler(editCollectionAction, collectionUpdating),
-  actionHandler(fetchCollectionAction, loadingCollections),
-  actionHandler(fetchCollectionsAction, loadingCollections),
-  actionHandler(fetchPageableCollectionsAction, loadingCollections),
+  actionHandler(fetchCollectionAction, onFetchCollections),
+  actionHandler(fetchCollectionsAction, onFetchCollections),
+  actionHandler(fetchPageableCollectionsAction, onFetchCollections),
   actionHandler(onRemoveFromCollectionAction, collectionUpdated),
   actionHandler(onAddToCollectionAction, collectionUpdated),
   actionHandler(onCreateCollectionAction, collectionCreated),
