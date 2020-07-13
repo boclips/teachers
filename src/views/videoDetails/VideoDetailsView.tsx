@@ -57,11 +57,13 @@ const VideoDetailsView = ({ videoId }: Props) => {
 
   if (!video && !isVideoLoading) {
     return (
-      <DetailsNotFound
-        title="Oops!!"
-        message="The video you tried to access is not available."
-        dataQa="video-not-found"
-      />
+      <PageLayout showNavigation showFooter showSearchBar>
+        <DetailsNotFound
+          title="Oops!!"
+          message="The video you tried to access is not available."
+          dataQa="video-not-found"
+        />
+      </PageLayout>
     );
   }
 

@@ -22,7 +22,10 @@ import {
   UserProfileFactory,
   VideoCollectionFactory,
 } from '../../../test-support/factories';
-import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
+import {
+  renderWithCreatedStore,
+  ResultingContext,
+} from '../../../test-support/renderWithStore';
 import { axiosMock } from '../../../test-support/MockFetchVerify';
 import { CollectionDetailsView } from './CollectionDetailsView';
 
@@ -433,19 +436,26 @@ describe(`collection not found page`, () => {
       history,
     );
 
-  it('Shows not found illustration when not found and no share code possible', async () => {
-    const wrapper = renderCollectionDetailsWithAuthState({
-      status: 'anonymous',
-    });
-
+  const validateCollectionNotFoundPage = async (wrapper: ResultingContext) => {
     expect(
       await wrapper.findByText(
         'The collection you tried to access is not available.',
       ),
     ).toBeInTheDocument();
     expect(
+      await wrapper.findByPlaceholderText('Enter your search term'),
+    ).toBeInTheDocument();
+    expect(
       await wrapper.queryByTestId('collection-skeleton'),
     ).not.toBeInTheDocument();
+  };
+
+  it('Shows not found illustration when not found and no share code possible', async () => {
+    const wrapper = renderCollectionDetailsWithAuthState({
+      status: 'anonymous',
+    });
+
+    await validateCollectionNotFoundPage(wrapper);
   });
 
   it('Shows not found illustration when authenticated and collection not found', async () => {
@@ -453,14 +463,7 @@ describe(`collection not found page`, () => {
       status: 'authenticated',
     });
 
-    expect(
-      await wrapper.findByText(
-        'The collection you tried to access is not available.',
-      ),
-    ).toBeInTheDocument();
-    expect(
-      await wrapper.queryByTestId('collection-skeleton'),
-    ).not.toBeInTheDocument();
+    await validateCollectionNotFoundPage(wrapper);
   });
 
   it('Shows not found illustration with valid shared code but collection not found', async () => {
@@ -470,13 +473,6 @@ describe(`collection not found page`, () => {
       shareCode: 'ABCD',
     });
 
-    expect(
-      await wrapper.findByText(
-        'The collection you tried to access is not available.',
-      ),
-    ).toBeInTheDocument();
-    expect(
-      await wrapper.queryByTestId('collection-skeleton'),
-    ).not.toBeInTheDocument();
+    await validateCollectionNotFoundPage(wrapper);
   });
 });

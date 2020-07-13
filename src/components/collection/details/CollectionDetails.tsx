@@ -63,17 +63,27 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
   }, [dispatch, props]);
 
+  const digitalCitizenshipBanner = (collectionTitle) => (
+    <CollectionBanner
+      title={collectionTitle}
+      subtitle="Digital Citizenship"
+      image={<DigitalCitizenshipSVG />}
+    />
+  );
+
   if (!collection) {
     const missingReferer = !isLoggedIn && isAnonymous;
     const isAuthenticated = isLoggedIn || shareCode;
 
     if (missingReferer || (isAuthenticated && !isCollectionLoading)) {
       return (
-        <DetailsNotFound
-          title="Oops!!"
-          message="The collection you tried to access is not available."
-          dataQa="collection-not-found"
-        />
+        <PageLayout showSearchBar showFooter showNavigation>
+          <DetailsNotFound
+            title="Oops!!"
+            message="The collection you tried to access is not available."
+            dataQa="collection-not-found"
+          />
+        </PageLayout>
       );
     }
 
@@ -99,30 +109,20 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
       </PageLayout>
     );
   }
+
   const isParentCollection = () => collection.subCollections.length > 0;
-  return (
+  return isParentCollection() ? (
     <PageLayout
       showSearchBar
       showFooter
       showNavigation
-      subheader={
-        isParentCollection() ? (
-          <CollectionBanner
-            title={collection.title}
-            subtitle="Digital Citizenship"
-            image={<DigitalCitizenshipSVG />}
-          />
-        ) : null
-      }
+      subheader={digitalCitizenshipBanner(collection.title)}
     >
-      {isParentCollection() ? (
-        <ParentCollectionDetailsContent
-          collection={collection}
-          userId={userId}
-        />
-      ) : (
-        <CollectionDetailsContent collection={collection} userId={userId} />
-      )}
+      <ParentCollectionDetailsContent collection={collection} userId={userId} />
+    </PageLayout>
+  ) : (
+    <PageLayout showSearchBar showFooter showNavigation>
+      <CollectionDetailsContent collection={collection} userId={userId} />
     </PageLayout>
   );
 });

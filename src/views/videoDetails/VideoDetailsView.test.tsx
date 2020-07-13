@@ -73,7 +73,11 @@ describe('VideoDetailsView', () => {
   });
 
   it('displays video not found page when trying to reach non existing videoId', async () => {
-    const { queryByRole, queryByText } = renderWithBoclipsStore(
+    const {
+      queryByRole,
+      queryByText,
+      queryByPlaceholderText,
+    } = renderWithBoclipsStore(
       <VideoDetailsView videoId="invalidId" />,
       MockStoreFactory.sampleState(),
     );
@@ -81,6 +85,9 @@ describe('VideoDetailsView', () => {
     await eventually(() => {
       expect(
         queryByText('The video you tried to access is not available.'),
+      ).toBeInTheDocument();
+      expect(
+        queryByPlaceholderText('Enter your search term'),
       ).toBeInTheDocument();
       expect(queryByRole('dialog')).toBeNull();
       expect(queryByText('Watch video')).toBeNull();
