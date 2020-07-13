@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchVideosAction } from 'src/components/video/redux/actions/fetchVideosAction';
 import VideoPlayer from 'src/components/video/player/VideoPlayer';
 import VideoButtons from 'src/components/video/buttons/videoButtons/VideoButtons';
-import { VideoCard } from '@bit/dev-boclips.boclips-ui.components.video-card';
+import { VideoCard } from '@bit/boclips.boclips-ui.components.video-card';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Video } from 'src/types/Video';
 import State from 'src/types/State';
