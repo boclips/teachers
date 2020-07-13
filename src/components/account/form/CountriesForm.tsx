@@ -29,9 +29,9 @@ export class CountriesForm extends React.Component<
 
   private filterResults = () => (input, option) => {
     const matchByName =
-      option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      option.title?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     const matchByCode =
-      option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+      option.value?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     return matchByCode || matchByName;
   };
 

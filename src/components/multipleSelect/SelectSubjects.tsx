@@ -20,8 +20,7 @@ export const SelectSubjects = React.forwardRef(
     <MultiSelect
       ref={ref}
       filterOption={(inputValue, option) =>
-        option.props.title.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-        -1
+        option.title?.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
       }
       placeholder={props.placeholder}
       data-qa="subjects"

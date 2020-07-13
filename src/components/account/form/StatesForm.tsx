@@ -23,7 +23,7 @@ export class StatesForm extends React.Component<
   };
 
   private filterResults = () => (input, option) =>
-    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    option.title?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 
   private generateOptions() {
     const { Option } = Select;
