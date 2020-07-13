@@ -22,11 +22,18 @@ const onFetchVideoAction = (state: State): State => ({
 
 const onStoreVideoAction = (state: State, video: Video): State =>
   produce(state, (draftState) => {
-    draftState.entities.videos.byId[video.id] = video;
-    draftState.video = {
-      loading: false,
-      id: { value: video.id, links: video.links },
-    };
+    if (video) {
+      draftState.entities.videos.byId[video.id] = video;
+      draftState.video = {
+        loading: false,
+        id: { value: video.id, links: video.links },
+      };
+    } else {
+      draftState.video = {
+        loading: false,
+        id: null,
+      };
+    }
   });
 
 const onStoreVideosAction = (
@@ -71,6 +78,8 @@ export const getVideosByIds = (state: State, videoIds: string[]): Video[] =>
 
 export const getVideoById = (state: State, videoId: string): Video =>
   state.entities.videos.byId[videoId];
+
+export const isLoading = (state: State): Boolean => state.video?.loading;
 
 export const getPromotedVideos = (state: State): Video[] =>
   getVideosByIds(state, state.videos.promotedVideoIds);

@@ -18,7 +18,10 @@ export function onFetchVideo(
     })
     .then(storeVideoAction)
     .then(store.dispatch)
-    .catch(console.error);
+    .catch((e) => {
+      console.error(e);
+      store.dispatch(storeVideoAction(null));
+    });
 }
 
 export default sideEffect(fetchVideoAction, onFetchVideo);

@@ -4,7 +4,10 @@ import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
-import { renderWithCreatedStore } from '../../../test-support/renderWithStore';
+import {
+  renderWithBoclipsStore,
+  renderWithCreatedStore,
+} from '../../../test-support/renderWithStore';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
@@ -66,6 +69,22 @@ describe('VideoDetailsView', () => {
       releasedOn: 'Feb 11, 2018',
       subjects: ['Maths', 'Physics'],
       playerVideoId: video.id,
+    });
+  });
+
+  it('displays video not found page when trying to reach non existing videoId', async () => {
+    const { queryByRole, queryByText } = renderWithBoclipsStore(
+      <VideoDetailsView videoId="invalidId" />,
+      MockStoreFactory.sampleState(),
+    );
+
+    await eventually(() => {
+      expect(
+        queryByText('The video you tried to access is not available.'),
+      ).toBeInTheDocument();
+      expect(queryByRole('dialog')).toBeNull();
+      expect(queryByText('Watch video')).toBeNull();
+      expect(queryByText('Enter code to watch video')).toBeNull();
     });
   });
 

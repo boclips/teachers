@@ -27,3 +27,17 @@ test('fetches and stores a video on FETCH_VIDEO', async () => {
     expect(store.getActions()).toContainEqual(storeVideoAction(video));
   });
 });
+
+test(`can handle receiving no video on bad request`, async () => {
+  const store = mockStore({ links: { entries: [], loadingState: 'success' } });
+  fetchVideoMock.mockRejectedValue({
+    response: { status: 404, message: 'not found' },
+  });
+
+  store.dispatch(fetchVideoAction('invalidId'));
+
+  await eventually(() => {
+    expect(store.getActions()[0]).toEqual(fetchVideoAction('invalidId'));
+    expect(store.getActions()[1]).toEqual(storeVideoAction(null));
+  });
+});

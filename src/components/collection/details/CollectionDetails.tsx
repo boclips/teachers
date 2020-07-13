@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CollectionDetailsContent } from 'src/components/collection/details/CollectionDetailsContent';
-import { CollectionDetailsNotFound } from 'src/components/collection/details/CollectionDetailsNotFound';
+import { DetailsNotFound } from 'src/components/common/DetailsNotFound';
 import { ParentCollectionDetailsContent } from 'src/components/collection/details/ParentCollectionDetailsContent';
 import { CollectionBanner } from 'src/components/collection/details/header/CollectionBanner';
 import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-image.svg';
@@ -62,7 +62,13 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
 
   if (!collection) {
     if (!isAuthenticated && isAnonymous) {
-      return <CollectionDetailsNotFound />;
+      return (
+        <DetailsNotFound
+          title="Oops!!"
+          message="The collection you tried to access is not available."
+          dataQa="collection-not-found"
+        />
+      );
     }
 
     const requireShareCode = !shareCode && !isAuthenticated;
