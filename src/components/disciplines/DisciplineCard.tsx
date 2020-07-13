@@ -55,7 +55,7 @@ export const DisciplineCard = ({ discipline, className, limit = 4 }: Props) => {
               </li>
             ))}
           </ul>
-          {discipline.subjects.length > 4 ? (
+          {discipline.subjects.length > limit ? (
             <Link
               data-qa="view-all-subjects"
               className="discipline-card__view-all no-underline link--tabbable"
