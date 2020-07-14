@@ -105,6 +105,12 @@
       flex-direction: column;
     }
 
+    .subjects-container {
+      & > span:last-child {
+        margin-right: 40px;
+      }
+    }
+
     .badge-container {
       display: flex;
       justify-content: flex-end;
@@ -118,7 +124,6 @@
         @media (min-width: @screen-md) {
           text-align: right;
         }
-        margin-left: 40px;
         display: flex;
         align-items: center;
         white-space: nowrap;
