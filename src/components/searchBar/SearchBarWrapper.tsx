@@ -21,7 +21,7 @@ export const SearchBarWrapper = () => {
       <SearchBar
         size="large"
         initialQuery={query}
-        theme="teachers"
+        key={query}
         placeholder="Enter your search term"
         onSearch={onQuerySubmitted}
       />

@@ -1,5 +1,4 @@
 /* eslint-disable */
-/* tslint:disable */
 import React, { useEffect } from 'react';
 import Rating from 'src/components/video/rating/Rating';
 import { useDispatch, useSelector } from 'react-redux';
