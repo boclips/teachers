@@ -1,6 +1,6 @@
 import { fireEvent } from '@testing-library/react';
 import React, { Ref } from 'react';
-import { SliderProps } from 'antd/lib/slider';
+import { SliderSingleProps } from 'antd/lib/slider';
 import { SelectProps } from 'antd/lib/select';
 import {
   MockStoreFactory,
@@ -17,7 +17,7 @@ import eventually from 'test-support/eventually';
 import { EditCollectionForm } from './EditCollectionForm';
 
 jest.mock('antd/lib/slider', () =>
-  React.forwardRef((props: SliderProps, ref: Ref<any>) => (
+  React.forwardRef((props: SliderSingleProps, ref: Ref<any>) => (
     <input
       ref={ref}
       /* eslint-disable-next-line */

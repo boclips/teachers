@@ -1,8 +1,8 @@
-import Slider, { SliderProps } from 'antd/lib/slider';
+import Slider, { SliderSingleProps } from 'antd/lib/slider';
 import React, { ReactNode } from 'react';
 import './BoclipsSlider.less';
 
-interface BoclipsSliderProps extends SliderProps {
+interface BoclipsSliderProps extends SliderSingleProps {
   children?: ReactNode;
 }
 
