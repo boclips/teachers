@@ -39,7 +39,7 @@ export const HomeViewVideoList = () => {
     videoIds.length > 0 && (
       <section data-qa="home-view-videos" className="home-view-video-list">
         <SectionHeader
-          title="Videos for you"
+          title="Suggested videos"
           description="Watch a selection of some of our best videos"
           image={HeaderLogoSVG}
         />

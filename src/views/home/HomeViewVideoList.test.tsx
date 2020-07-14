@@ -39,7 +39,7 @@ describe('HomeViewVideoList', () => {
       initialState: state,
     });
 
-    expect(view.getByText('Videos for you')).toBeInTheDocument();
+    expect(view.getByText('Suggested videos')).toBeInTheDocument();
     expect(view.getByText('This is promoted')).toBeInTheDocument();
   });
 
@@ -53,6 +53,6 @@ describe('HomeViewVideoList', () => {
       },
     });
 
-    expect(view.queryByText('Videos for you')).not.toBeInTheDocument();
+    expect(view.queryByText('Suggested videos')).not.toBeInTheDocument();
   });
 });

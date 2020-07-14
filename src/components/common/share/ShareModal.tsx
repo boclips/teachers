@@ -16,10 +16,18 @@ export const ShareModal = (props: Props) => (
     visible={props.visible}
     onCancel={props.onCancel}
     getContainer={props.getContainer}
+    width={610}
     footer={
       <section className="share-code">
         <p className="share-code__explainer">
-          Share this code with the link for access:
+          <span className="share-code__explainer__bold">
+            Share your unique teacher code with students
+          </span>
+          &nbsp;to give them access
+          <br />
+          <span className="share-code__explainer__sub-info">
+            (teachers logged into Boclips will not need to use this)
+          </span>
         </p>
         <span className="share-code__code">{props.shareCode}</span>
       </section>

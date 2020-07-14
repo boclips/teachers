@@ -61,7 +61,7 @@
   .ant-modal-content .ant-modal-footer {
     background-color: @shade-2;
     margin: 24px 0 0 0;
-    padding: 24px 36px 26px 36px;
+    padding: 28px 36px 28px 36px;
     border-radius: 0 0 8px 8px;
   }
 
@@ -69,7 +69,16 @@
     text-align: center;
 
     &__explainer {
-      margin: 0;
+      margin: 0 0 5px 0;
+
+      &__bold {
+        font-weight: bold;
+      }
+
+      &__sub-info {
+        font-size: 14px;
+        line-height: 22px;
+      }
     }
 
     &__code {

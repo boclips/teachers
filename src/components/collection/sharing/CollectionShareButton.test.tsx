@@ -30,7 +30,7 @@ describe('CollectionShareButton', () => {
     fireEvent.click(shareButton);
 
     expect(
-      getByText('Share this code with the link for access:'),
+      getByText('Share your unique teacher code with students'),
     ).toBeVisible();
     expect(getByText('BOB1')).toBeVisible();
 
