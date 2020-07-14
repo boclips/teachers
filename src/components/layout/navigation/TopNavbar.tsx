@@ -39,6 +39,7 @@ export const TopNavbar = React.memo((props: Props) => (
         </Col>
         {props.showSearchBar ? (
           <Col
+            flex="auto"
             xs={{ span: 18 }}
             sm={{ span: 20 }}
             md={{ span: 20 }}

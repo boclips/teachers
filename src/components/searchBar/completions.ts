@@ -56,8 +56,8 @@ const getMatch = (record: EnrichedEntry, txt: string): Match => {
     matches,
     list: record.list,
     text: record.entry,
-    weight: matches ? matchingPrefix.weight : 0,
-    offset: matches ? matchingPrefix.offset : 0,
+    weight: matches ? matchingPrefix!!.weight : 0,
+    offset: matches ? matchingPrefix!!.offset : 0,
   };
 };
 
@@ -70,6 +70,7 @@ export interface Completion {
   text: string;
   textWithHighlights: CompletionChunk[];
   list: string;
+  value: string;
 }
 
 const getHighlights = (match: Match, text: string): CompletionChunk[] => {
@@ -97,6 +98,7 @@ const completions = (lists: Lists, txt: string): Completion[] =>
     .sort((m1, m2) => m2.weight - m1.weight)
     .map((matchResult) => ({
       text: matchResult.text,
+      value: matchResult.text,
       textWithHighlights: getHighlights(matchResult, txt),
       list: matchResult.list,
     }));
