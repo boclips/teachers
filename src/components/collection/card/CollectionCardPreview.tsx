@@ -10,6 +10,7 @@ import { VideoCollection } from '../../../types/VideoCollection';
 interface Props {
   collection: VideoCollection;
   videos: Video[];
+  isMobileView?: boolean;
 }
 
 export class CollectionCardPreview extends React.PureComponent<Props> {
@@ -47,7 +48,8 @@ export class CollectionCardPreview extends React.PureComponent<Props> {
       );
     }
 
-    const gridSize = 4;
+    const gridSize =
+      this.props.videos.length < 3 && this.props.isMobileView ? 2 : 4;
     const previewImages = this.props.videos.slice(0, gridSize).map((video) => (
       <LazyLoadImage
         className="thumbnail-container"

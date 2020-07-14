@@ -95,4 +95,52 @@ describe('Rendering a full grid of video previews', () => {
     expect(placeholders).toHaveLength(1);
     expect(placeholders.at(0).text()).toEqual('+3videos');
   });
+  it('renders a two video collection with two thumbnails and no placeholder when in mobile view', () => {
+    const previews = mount(
+      <CollectionCardPreview
+        collection={getCollection(2)}
+        videos={videos.slice(0, 2)}
+        isMobileView
+      />,
+    );
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(2);
+    const placeholders = previews.find(By.dataQa('placeholder'));
+    expect(placeholders).not.toExist();
+  });
+  it('renders a four video collection with four thumbnails when in mobile view', () => {
+    const previews = mount(
+      <CollectionCardPreview
+        collection={getCollection(4)}
+        videos={videos.slice(0, 4)}
+        isMobileView
+      />,
+    );
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(4);
+    const placeholders = previews.find(By.dataQa('placeholder'));
+    expect(placeholders).not.toExist();
+  });
+  it('renders a three video collection with three thumbnails one placeholder when in mobile view', () => {
+    const previews = mount(
+      <CollectionCardPreview
+        collection={getCollection(3)}
+        videos={videos.slice(0, 3)}
+        isMobileView
+      />,
+    );
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(3);
+    const placeholders = previews.find(By.dataQa('placeholder'));
+    expect(placeholders).toHaveLength(1);
+  });
+  it('renders a one video collection with one thumbnails one placeholder when in mobile view', () => {
+    const previews = mount(
+      <CollectionCardPreview
+        collection={getCollection(1)}
+        videos={videos.slice(0, 1)}
+        isMobileView
+      />,
+    );
+    expect(previews.find(By.dataQa('thumbnail', 'img')).length).toEqual(1);
+    const placeholders = previews.find(By.dataQa('placeholder'));
+    expect(placeholders).toHaveLength(1);
+  });
 });

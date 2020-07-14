@@ -37,7 +37,8 @@ export const CollectionCard = withMediaBreakPoint(
   React.memo((props: Props & WithMediaBreakPointProps) => {
     const isSmallCard =
       props.grid || props.mediaBreakpoint.width <= MediaBreakpoints.md.width;
-
+    const isMobileView =
+      props.mediaBreakpoint.width <= MediaBreakpoints.lg.width;
     const collectionHasTags =
       props.collection.subjects.length > 0 ||
       props.collection.ageRange.isBounded();
@@ -170,6 +171,7 @@ export const CollectionCard = withMediaBreakPoint(
             <CollectionCardPreview
               collection={props.collection}
               videos={props.videos}
+              isMobileView={isMobileView}
             />
           </section>
           <section className="collection-card__column-detail">
