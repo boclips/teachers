@@ -16,8 +16,6 @@ export const SectionHeader = React.memo((props: Props) => (
       {props.title}
     </h1>
 
-    <p className="section-header__description display-tablet-and-desktop">
-      {props.description}
-    </p>
+    <p className="section-header__description">{props.description}</p>
   </>
 ));

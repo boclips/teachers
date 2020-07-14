@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { MockStoreFactory } from '../../../test-support/factories';
-import DisciplineCardList from './DisciplineCardList';
+import { DisciplineCardList } from './DisciplineCardList';
 
 storiesOf('DisciplineCardList', module).add('on desktop view', () => (
   <Provider
@@ -89,7 +89,7 @@ storiesOf('DisciplineCardList', module).add('on desktop view', () => (
     })}
   >
     <MemoryRouter initialEntries={['/']}>
-      <DisciplineCardList limit={4} />
+      <DisciplineCardList visibleDisciplines={4} visibleSubjects={4} />
     </MemoryRouter>
   </Provider>
 ));
