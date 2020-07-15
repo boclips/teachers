@@ -8,6 +8,7 @@ import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
 import { DisciplineCard, DisciplineCardSkeleton } from './DisciplineCard';
+import { DisciplineCardWithoutLink } from './DisciplineCardWithoutLink';
 import './DisciplineCardList.less';
 
 export interface Props {
@@ -76,21 +77,34 @@ const DisciplineCardList = ({
                       tabIndex={-1}
                       ref={discipline.name === nameToFocusOn ? inputRef : null}
                     >
-                      <DisciplineCard
-                        className={generateBorderRadiusClassNames(
-                          index,
-                          columns,
-                          slicedArray.length,
-                        )}
-                        discipline={discipline}
-                        limit={
-                          visibleSubjects
-                            ? Math.max(visibleSubjects, userSubjectCount)
-                            : undefined
-                        }
-                        headerClickable={isHomepage || nameToFocusOn !== discipline.name}
-                        nameToFocusOn={screenIsMobile ? nameToFocusOn : ''}
-                      />
+                      {nameToFocusOn === discipline.name ? (
+                        <DisciplineCardWithoutLink
+                          discipline={discipline}
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
+                        />
+                      ) : (
+                        <DisciplineCard
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
+                          discipline={discipline}
+                          limit={
+                            visibleSubjects
+                              ? Math.max(visibleSubjects, userSubjectCount)
+                              : undefined
+                          }
+                          headerClickable={
+                            isHomepage || nameToFocusOn !== discipline.name
+                          }
+                          nameToFocusOn={screenIsMobile ? nameToFocusOn : ''}
+                        />
+                      )}
                     </div>
                   </Col>
                 </CSSTransition>

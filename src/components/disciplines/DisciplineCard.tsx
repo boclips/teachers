@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import { Discipline } from '../../types/Discipline';
@@ -11,51 +11,18 @@ interface Props {
   discipline: Discipline;
   className?: string;
   limit?: number;
-  headerClickable?: boolean;
-  nameToFocusOn?: string;
 }
 
-export const DisciplineCard = ({
-                                 discipline,
-                                 className,
-                                 limit,
-                                 headerClickable,
-                                 nameToFocusOn
-                               }: Props) => {
+export const DisciplineCard = ({ discipline, className, limit }: Props) => {
   if (!discipline) {
     return null;
   }
-  const [isDisciplineOpen, setIsDisciplineOpen] = useState(false);
-
-  useEffect(() => {
-    if (nameToFocusOn == discipline.name && isDisciplineOpen === false) {
-      setIsDisciplineOpen(true);
-    }
-    if (nameToFocusOn !== discipline.name) {
-      setIsDisciplineOpen(false);
-    }
-  }, [nameToFocusOn])
 
   const visibleSubjects = limit
     ? discipline.subjects.slice(0, limit)
     : discipline.subjects;
 
-  const basicHeader = (
-    <div
-      onClick={() => {
-        return setIsDisciplineOpen(!isDisciplineOpen);
-      }}
-    >
-      <h1 data-qa="discipline-title" className="discipline-card__title">
-        {discipline.name}
-      </h1>
-      <span className="discipline-card__icon">
-        <DisciplineLogo discipline={discipline}/>
-      </span>
-    </div>
-  );
-
-  const getLinkedHeader = () => (
+  const getHeader = () => (
     <Link
       className="discipline-card__link"
       to={{
@@ -68,8 +35,8 @@ export const DisciplineCard = ({
           {discipline.name}
         </h1>
         <span className="discipline-card__icon">
-        <DisciplineLogo discipline={discipline}/>
-      </span>
+          <DisciplineLogo discipline={discipline} />
+        </span>
       </>
     </Link>
   );
@@ -78,15 +45,9 @@ export const DisciplineCard = ({
       data-qa="discipline-card"
       className={`discipline-card ${className}`}
       bordered={false}
-      title={
-        headerClickable ? getLinkedHeader() : basicHeader
-      }
+      title={getHeader()}
     >
-      <div
-        className={`discipline-card__body display-tablet-and-desktop ${
-          isDisciplineOpen ? 'display-subjects' : null
-        }`}
-      >
+      <div className="discipline-card__body display-tablet-and-desktop">
         <ul className="discipline-card__subjects">
           {visibleSubjects.map((subject) => (
             <li
@@ -112,7 +73,7 @@ export const DisciplineCard = ({
               hash: discipline.name,
             }}
           >
-            view all ({discipline.subjects.length}) <ForwardArrowIcon/>
+            view all ({discipline.subjects.length}) <ForwardArrowIcon />
           </Link>
         )}
       </div>
@@ -120,8 +81,8 @@ export const DisciplineCard = ({
   );
 };
 export const DisciplineCardSkeleton = ({
-                                         className,
-                                       }: {
+  className,
+}: {
   className?: string;
 }) => (
   <section
@@ -130,14 +91,14 @@ export const DisciplineCardSkeleton = ({
     <section className="ant-skeleton-content">
       <h3 className="discipline-title ant-skeleton-title"></h3>
       <span className="highlight">
-        <span/>
+        <span />
       </span>
       <section className="discipline-subjects">
-        <section className="ant-skeleton-title"/>
-        <section className="ant-skeleton-title"/>
-        <section className="ant-skeleton-title"/>
-        <section className="ant-skeleton-title"/>
-        <section className="ant-skeleton-title"/>
+        <section className="ant-skeleton-title" />
+        <section className="ant-skeleton-title" />
+        <section className="ant-skeleton-title" />
+        <section className="ant-skeleton-title" />
+        <section className="ant-skeleton-title" />
       </section>
     </section>
   </section>
