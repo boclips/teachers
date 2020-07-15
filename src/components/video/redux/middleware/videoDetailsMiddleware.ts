@@ -16,7 +16,9 @@ export function onFetchVideo(
       AnalyticsFactory.externalAnalytics().trackVideoVisited(video);
       return video;
     })
-    .then(storeVideoAction)
+    .then((fetchedVideo) =>
+      storeVideoAction({ originalId: videoId, video: fetchedVideo }),
+    )
     .then(store.dispatch)
     .catch((e) => {
       console.error(e);

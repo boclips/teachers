@@ -20,7 +20,10 @@ describe('storing videos', () => {
     const stateBefore = MockStoreFactory.sampleState({});
 
     const videoToSave = VideoFactory.sample();
-    const action = storeVideoAction(videoToSave);
+    const action = storeVideoAction({
+      originalId: videoToSave.id,
+      video: videoToSave,
+    });
 
     const stateAfter = testReducer(stateBefore, action);
 
@@ -32,6 +35,21 @@ describe('storing videos', () => {
       links: videoToSave.links,
     });
     expect(stateAfter.video.loading).toEqual(false);
+  });
+
+  it('when a the fetchedVideo id is different then the originalId, stores the video response in both ids', () => {
+    const stateBefore = MockStoreFactory.sampleState({});
+
+    const videoToSave = VideoFactory.sample({ id: 'deactivated-video' });
+    const action = storeVideoAction({
+      originalId: 'active-video-id',
+      video: videoToSave,
+    });
+
+    const videosAfter = testReducer(stateBefore, action).entities.videos;
+
+    expect(videosAfter.byId['deactivated-video']).toEqual(videoToSave);
+    expect(videosAfter.byId['active-video-id']).toEqual(videoToSave);
   });
 
   it('can store many videos', () => {

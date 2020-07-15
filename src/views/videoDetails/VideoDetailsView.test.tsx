@@ -4,11 +4,13 @@ import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
+import { fetchVideo } from 'src/services/videos/fetchVideo';
 import {
   renderWithBoclipsStore,
   renderWithCreatedStore,
 } from '../../../test-support/renderWithStore';
 import {
+  EntitiesFactory,
   LinksStateValueFactory,
   MockStoreFactory,
   UserProfileFactory,
@@ -93,6 +95,26 @@ describe('VideoDetailsView', () => {
       expect(queryByText('Watch video')).toBeNull();
       expect(queryByText('Enter code to watch video')).toBeNull();
     });
+  });
+
+  it("when the fetched Video's id is different then the requested, load the new video", async () => {
+    const activeVideo = await fetchVideo(video.id);
+
+    const view = renderWithBoclipsStore(
+      <VideoDetailsView videoId="deactivated-id" />,
+      MockStoreFactory.sampleState({
+        entities: EntitiesFactory.sample({
+          videos: {
+            byId: {
+              'deactivated-id': activeVideo,
+              [activeVideo.id]: activeVideo,
+            },
+          },
+        }),
+      }),
+    );
+
+    expect(await view.findByText(activeVideo.title)).toBeVisible();
   });
 
   describe('When unauthenticated', () => {

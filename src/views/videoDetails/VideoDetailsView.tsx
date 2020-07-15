@@ -55,6 +55,16 @@ const VideoDetailsView = ({ videoId }: Props) => {
     }
   }, [dispatch, params, videoId, userId]);
 
+  useEffect(() => {
+    if (video && video.id !== videoId) {
+      dispatch(
+        replace({
+          pathname: `/videos/${video.id}`,
+        }),
+      );
+    }
+  }, [dispatch, video, videoId]);
+
   if (!video && !isVideoLoading) {
     return (
       <PageLayout showNavigation showFooter showSearchBar>

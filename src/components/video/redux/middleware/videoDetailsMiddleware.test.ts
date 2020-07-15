@@ -24,7 +24,9 @@ test('fetches and stores a video on FETCH_VIDEO', async () => {
   store.dispatch(fetchVideoAction('123'));
 
   await eventually(() => {
-    expect(store.getActions()).toContainEqual(storeVideoAction(video));
+    expect(store.getActions()).toContainEqual(
+      storeVideoAction({ originalId: video.id, video }),
+    );
   });
 });
 

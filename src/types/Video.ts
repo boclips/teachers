@@ -41,6 +41,11 @@ export interface Video {
   contentWarnings?: ContentWarning[];
 }
 
+export interface FetchedVideo {
+  originalId: string;
+  video: Video;
+}
+
 export enum VideoType {
   NEWS = 'NEWS',
   STOCK = 'STOCK',

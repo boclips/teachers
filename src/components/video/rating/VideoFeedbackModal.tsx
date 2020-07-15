@@ -119,7 +119,8 @@ class VideoFeedbackModal extends React.Component<
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    videoUpdated: (video: Video) => dispatch(storeVideoAction(video)),
+    videoUpdated: (video: Video) =>
+      dispatch(storeVideoAction({ originalId: video.id, video })),
   };
 }
 

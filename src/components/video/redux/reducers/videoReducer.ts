@@ -5,7 +5,7 @@ import {
   ActionHandler,
 } from '../../../../app/redux/createReducer';
 import State, { VideoStateValue } from '../../../../types/State';
-import { Video } from '../../../../types/Video';
+import { FetchedVideo, Video } from '../../../../types/Video';
 import { organizeById } from '../../../../utils/entityMap';
 import { fetchVideoAction } from '../actions/fetchVideoAction';
 import {
@@ -20,10 +20,14 @@ const onFetchVideoAction = (state: State): State => ({
   video: { loading: true, id: null },
 });
 
-const onStoreVideoAction = (state: State, video: Video): State =>
+const onStoreVideoAction = (state: State, fetchedVideo: FetchedVideo): State =>
   produce(state, (draftState) => {
+    const video = fetchedVideo?.video;
     if (video) {
       draftState.entities.videos.byId[video.id] = video;
+      if (fetchedVideo.originalId !== video.id) {
+        draftState.entities.videos.byId[fetchedVideo.originalId] = video;
+      }
       draftState.video = {
         loading: false,
         id: { value: video.id, links: video.links },
