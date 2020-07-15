@@ -15,11 +15,7 @@ export interface Props {
   visibleSubjects?: number;
   columns?: number;
   nameToFocusOn?: string;
-<<<<<<< Updated upstream
-=======
   screenIsMobile?: boolean;
-  headersClickable?: boolean;
->>>>>>> Stashed changes
 }
 
 const DisciplineCardList = ({
@@ -27,10 +23,7 @@ const DisciplineCardList = ({
   visibleSubjects,
   columns = 2,
   nameToFocusOn,
-<<<<<<< Updated upstream
-=======
-  screenIsMobile, headersClickable,
->>>>>>> Stashed changes
+  screenIsMobile,
 }: Props) => {
   const disciplines = useSelector((state: State) => state.disciplines);
   const userSubjects = useSelector(
@@ -46,7 +39,7 @@ const DisciplineCardList = ({
       ? -1
       : 1;
 
-  const boostUserSubjects = (a, b) =>
+  const prioritiseUserSubjects = (a, b) =>
     userSubjects && userSubjects.indexOf(a.id) > userSubjects.indexOf(b.id)
       ? -1
       : 1;
@@ -57,6 +50,8 @@ const DisciplineCardList = ({
     }
   }, [nameToFocusOn, inputRef]);
 
+  console.log(nameToFocusOn);
+  const isHomepage = nameToFocusOn === undefined;
   const renderDisciplines = () => {
     return [
       <TransitionGroup component={null} exit key="disciplines-container">
@@ -65,15 +60,11 @@ const DisciplineCardList = ({
             .sort(boostUserDisciplines)
             .slice(0, visibleDisciplines || disciplines.length)
             .map((discipline, index, slicedArray) => {
-<<<<<<< Updated upstream
-              discipline.subjects.sort(boostUserSubjects);
-=======
               discipline.subjects.sort(prioritiseUserSubjects);
               const userSubjectCount = discipline.subjects.filter(
                 (subject) =>
                   userSubjects && userSubjects.indexOf(subject.id) > -1,
               ).length;
->>>>>>> Stashed changes
               return (
                 <CSSTransition
                   classNames="card-list"
@@ -92,19 +83,13 @@ const DisciplineCardList = ({
                           slicedArray.length,
                         )}
                         discipline={discipline}
-<<<<<<< Updated upstream
-                        limit={visibleSubjects}
-=======
                         limit={
                           visibleSubjects
                             ? Math.max(visibleSubjects, userSubjectCount)
                             : undefined
                         }
-                        displaySubjectsForMobile={
-                          screenIsMobile && nameToFocusOn === discipline.name
-                        }
-                        headerClickable={headersClickable}
->>>>>>> Stashed changes
+                        headerClickable={isHomepage || nameToFocusOn !== discipline.name}
+                        nameToFocusOn={screenIsMobile ? nameToFocusOn : ''}
                       />
                     </div>
                   </Col>

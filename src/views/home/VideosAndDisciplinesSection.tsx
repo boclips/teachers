@@ -19,7 +19,6 @@ const DisciplineSection = () => (
     <DisciplineCardList
       visibleDisciplines={4}
       visibleSubjects={4}
-      headersClickable
     />
     <Link
       to="/our-subjects"

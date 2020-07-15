@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import { Discipline } from '../../types/Discipline';
@@ -11,46 +11,51 @@ interface Props {
   discipline: Discipline;
   className?: string;
   limit?: number;
-  displaySubjectsForMobile?: boolean;
   headerClickable?: boolean;
+  nameToFocusOn?: string;
 }
 
-<<<<<<< Updated upstream
-export const DisciplineCard = ({ discipline, className, limit }: Props) => {
-=======
 export const DisciplineCard = ({
-  discipline,
-  className,
-  limit,
-  displaySubjectsForMobile,
-  headerClickable,
-}: Props) => {
->>>>>>> Stashed changes
+                                 discipline,
+                                 className,
+                                 limit,
+                                 headerClickable,
+                                 nameToFocusOn
+                               }: Props) => {
   if (!discipline) {
     return null;
   }
   const [isDisciplineOpen, setIsDisciplineOpen] = useState(false);
 
+  useEffect(() => {
+    if (nameToFocusOn == discipline.name && isDisciplineOpen === false) {
+      setIsDisciplineOpen(true);
+    }
+    if (nameToFocusOn !== discipline.name) {
+      setIsDisciplineOpen(false);
+    }
+  }, [nameToFocusOn])
+
   const visibleSubjects = limit
     ? discipline.subjects.slice(0, limit)
     : discipline.subjects;
 
-  const basicHeader = (isMobileView) => (
-    <button
+  const basicHeader = (
+    <div
       onClick={() => {
-        return isMobileView ? setIsDisciplineOpen(!isDisciplineOpen) : null;
+        return setIsDisciplineOpen(!isDisciplineOpen);
       }}
     >
       <h1 data-qa="discipline-title" className="discipline-card__title">
         {discipline.name}
       </h1>
       <span className="discipline-card__icon">
-        <DisciplineLogo discipline={discipline} />
+        <DisciplineLogo discipline={discipline}/>
       </span>
-    </button>
+    </div>
   );
 
-  const getLinkedHeader = (header) => (
+  const getLinkedHeader = () => (
     <Link
       className="discipline-card__link"
       to={{
@@ -58,7 +63,14 @@ export const DisciplineCard = ({
         hash: discipline.name,
       }}
     >
-      {header}
+      <>
+        <h1 data-qa="discipline-title" className="discipline-card__title">
+          {discipline.name}
+        </h1>
+        <span className="discipline-card__icon">
+        <DisciplineLogo discipline={discipline}/>
+      </span>
+      </>
     </Link>
   );
   return (
@@ -67,33 +79,12 @@ export const DisciplineCard = ({
       className={`discipline-card ${className}`}
       bordered={false}
       title={
-<<<<<<< Updated upstream
-        <Link
-          className="discipline-card__link"
-          to={{
-            pathname: '/our-subjects',
-            hash: discipline.name,
-          }}
-        >
-          <h1 data-qa="discipline-title" className="discipline-card__title">
-            {discipline.name}
-          </h1>
-          <span className="discipline-card__icon">
-            <DisciplineLogo discipline={discipline} />
-          </span>
-        </Link>
-=======
-        headerClickable
-          ? getLinkedHeader(basicHeader)
-          : basicHeader(displaySubjectsForMobile)
->>>>>>> Stashed changes
+        headerClickable ? getLinkedHeader() : basicHeader
       }
     >
       <div
         className={`discipline-card__body display-tablet-and-desktop ${
-          displaySubjectsForMobile || isDisciplineOpen
-            ? 'display-subjects'
-            : null
+          isDisciplineOpen ? 'display-subjects' : null
         }`}
       >
         <ul className="discipline-card__subjects">
@@ -121,7 +112,7 @@ export const DisciplineCard = ({
               hash: discipline.name,
             }}
           >
-            view all ({discipline.subjects.length}) <ForwardArrowIcon />
+            view all ({discipline.subjects.length}) <ForwardArrowIcon/>
           </Link>
         )}
       </div>
@@ -129,8 +120,8 @@ export const DisciplineCard = ({
   );
 };
 export const DisciplineCardSkeleton = ({
-  className,
-}: {
+                                         className,
+                                       }: {
   className?: string;
 }) => (
   <section
@@ -139,14 +130,14 @@ export const DisciplineCardSkeleton = ({
     <section className="ant-skeleton-content">
       <h3 className="discipline-title ant-skeleton-title"></h3>
       <span className="highlight">
-        <span />
+        <span/>
       </span>
       <section className="discipline-subjects">
-        <section className="ant-skeleton-title" />
-        <section className="ant-skeleton-title" />
-        <section className="ant-skeleton-title" />
-        <section className="ant-skeleton-title" />
-        <section className="ant-skeleton-title" />
+        <section className="ant-skeleton-title"/>
+        <section className="ant-skeleton-title"/>
+        <section className="ant-skeleton-title"/>
+        <section className="ant-skeleton-title"/>
+        <section className="ant-skeleton-title"/>
       </section>
     </section>
   </section>

@@ -72,8 +72,6 @@ describe('Discipline Cards', () => {
       .closest('a') as HTMLAnchorElement;
     expect(disciplineLink.href).toMatch(/\/our-subjects#Arts/);
   });
-<<<<<<< Updated upstream
-=======
   it('in mobile view adds a class name to the card which is in the subject page URL', () => {
     const view = renderWithStore(
       <DisciplineCard discipline={discipline} displaySubjectsForMobile />,
@@ -97,5 +95,4 @@ describe('Discipline Cards', () => {
     );
     expect(displaySubjectsForMobileClass.length).toEqual(0);
   });
->>>>>>> Stashed changes
 });

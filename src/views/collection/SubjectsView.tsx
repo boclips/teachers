@@ -15,13 +15,8 @@ export const SubjectsView = withMediaBreakPoint((props) => {
       <section data-qa="subjects-view-page" className="subjects-view-page">
         <DisciplineCardList
           columns={screenIsDesktop ? 3 : 2}
-<<<<<<< Updated upstream
           nameToFocusOn={anchor.split('#')[1]}
-=======
-          nameToFocusOn={disciplineToFocus}
-          screenIsMobile={screenIsMobile}
-          // headersClickable={screenIsMobile}
->>>>>>> Stashed changes
+          screenIsMobile={!screenIsDesktop}
         />
       </section>
     </PageLayout>
