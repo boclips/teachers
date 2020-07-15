@@ -8,7 +8,7 @@ import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
 import { DisciplineCard, DisciplineCardSkeleton } from './DisciplineCard';
-import { DisciplineCardWithoutLink } from './DisciplineCardWithoutLink';
+import { DisciplineCardWithToggle } from './DisciplineCardWithToggle';
 import './DisciplineCardList.less';
 
 export interface Props {
@@ -51,7 +51,6 @@ const DisciplineCardList = ({
     }
   }, [nameToFocusOn, inputRef]);
 
-  console.log(nameToFocusOn);
   const isHomepage = nameToFocusOn === undefined;
   const renderDisciplines = () => {
     return [
@@ -77,8 +76,9 @@ const DisciplineCardList = ({
                       tabIndex={-1}
                       ref={discipline.name === nameToFocusOn ? inputRef : null}
                     >
-                      {nameToFocusOn === discipline.name ? (
-                        <DisciplineCardWithoutLink
+                      {nameToFocusOn === discipline.name ||
+                      (!screenIsMobile && !isHomepage) ? (
+                        <DisciplineCardWithToggle
                           discipline={discipline}
                           className={generateBorderRadiusClassNames(
                             index,
@@ -99,10 +99,6 @@ const DisciplineCardList = ({
                               ? Math.max(visibleSubjects, userSubjectCount)
                               : undefined
                           }
-                          headerClickable={
-                            isHomepage || nameToFocusOn !== discipline.name
-                          }
-                          nameToFocusOn={screenIsMobile ? nameToFocusOn : ''}
                         />
                       )}
                     </div>

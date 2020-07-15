@@ -12,7 +12,7 @@ interface Props {
   limit?: number;
 }
 
-export const DisciplineCardWithoutLink = ({
+export const DisciplineCardWithToggle = ({
   discipline,
   className,
   limit,
