@@ -1,5 +1,5 @@
 import { Card } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
 import { Discipline } from '../../types/Discipline';
@@ -11,22 +11,69 @@ interface Props {
   discipline: Discipline;
   className?: string;
   limit?: number;
+  displaySubjectsForMobile?: boolean;
+  headerClickable?: boolean;
 }
 
-export const DisciplineCard = ({ discipline, className, limit = 4 }: Props) => {
+<<<<<<< Updated upstream
+export const DisciplineCard = ({ discipline, className, limit }: Props) => {
+=======
+export const DisciplineCard = ({
+  discipline,
+  className,
+  limit,
+  displaySubjectsForMobile,
+  headerClickable,
+}: Props) => {
+>>>>>>> Stashed changes
   if (!discipline) {
     return null;
   }
+  const [isDisciplineOpen, setIsDisciplineOpen] = useState(false);
 
+  const visibleSubjects = limit
+    ? discipline.subjects.slice(0, limit)
+    : discipline.subjects;
+
+  const basicHeader = (isMobileView) => (
+    <button
+      onClick={() => {
+        return isMobileView ? setIsDisciplineOpen(!isDisciplineOpen) : null;
+      }}
+    >
+      <h1 data-qa="discipline-title" className="discipline-card__title">
+        {discipline.name}
+      </h1>
+      <span className="discipline-card__icon">
+        <DisciplineLogo discipline={discipline} />
+      </span>
+    </button>
+  );
+
+  const getLinkedHeader = (header) => (
+    <Link
+      className="discipline-card__link"
+      to={{
+        pathname: '/our-subjects',
+        hash: discipline.name,
+      }}
+    >
+      {header}
+    </Link>
+  );
   return (
     <Card
       data-qa="discipline-card"
       className={`discipline-card ${className}`}
       bordered={false}
       title={
+<<<<<<< Updated upstream
         <Link
-          to={`/discover-collections?discipline=${discipline.id}`}
           className="discipline-card__link"
+          to={{
+            pathname: '/our-subjects',
+            hash: discipline.name,
+          }}
         >
           <h1 data-qa="discipline-title" className="discipline-card__title">
             {discipline.name}
@@ -35,37 +82,49 @@ export const DisciplineCard = ({ discipline, className, limit = 4 }: Props) => {
             <DisciplineLogo discipline={discipline} />
           </span>
         </Link>
+=======
+        headerClickable
+          ? getLinkedHeader(basicHeader)
+          : basicHeader(displaySubjectsForMobile)
+>>>>>>> Stashed changes
       }
     >
-      {discipline.subjects && (
-        <div className="discipline-card__body display-tablet-and-desktop">
-          <ul className="discipline-card__subjects">
-            {discipline.subjects.slice(0, Math.max(limit, 4)).map((subject) => (
-              <li
-                className="discipline-card__subject-item"
-                data-qa="discipline-subject"
-                key={`subject-${subject.id}`}
-              >
-                <Link
-                  to={`/discover-collections?subject=${subject.id}`}
-                  className="discipline-card__subject-link link--tabbable"
-                >
-                  {subject.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {discipline.subjects.length > 4 ? (
-            <Link
-              data-qa="view-all-subjects"
-              className="discipline-card__view-all no-underline link--tabbable"
-              to={`/discover-collections?discipline=${discipline.id}`}
+      <div
+        className={`discipline-card__body display-tablet-and-desktop ${
+          displaySubjectsForMobile || isDisciplineOpen
+            ? 'display-subjects'
+            : null
+        }`}
+      >
+        <ul className="discipline-card__subjects">
+          {visibleSubjects.map((subject) => (
+            <li
+              className="discipline-card__subject-item"
+              data-qa="discipline-subject"
+              key={`subject-${subject.id}`}
             >
-              view all ({discipline.subjects.length}) <ForwardArrowIcon />
-            </Link>
-          ) : null}
-        </div>
-      )}
+              <Link
+                to={`/discover-collections?subject=${subject.id}`}
+                className="discipline-card__subject-link link--tabbable"
+              >
+                {subject.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        {limit && discipline.subjects.length > limit && (
+          <Link
+            data-qa="view-all-subjects"
+            className="discipline-card__view-all no-underline link--tabbable"
+            to={{
+              pathname: '/our-subjects',
+              hash: discipline.name,
+            }}
+          >
+            view all ({discipline.subjects.length}) <ForwardArrowIcon />
+          </Link>
+        )}
+      </div>
     </Card>
   );
 };
@@ -78,7 +137,7 @@ export const DisciplineCardSkeleton = ({
     className={`discipline-card skeleton ant-skeleton ant-skeleton-active ${className}`}
   >
     <section className="ant-skeleton-content">
-      <h3 className="discipline-title ant-skeleton-title"> </h3>
+      <h3 className="discipline-title ant-skeleton-title"></h3>
       <span className="highlight">
         <span />
       </span>

@@ -16,7 +16,11 @@ const { Content } = Layout;
 
 const DisciplineSection = () => (
   <>
-    <DisciplineCardList limit={4} />
+    <DisciplineCardList
+      visibleDisciplines={4}
+      visibleSubjects={4}
+      headersClickable
+    />
     <Link
       to="/our-subjects"
       className="disciplines-section__all-subjects link--tabbable"

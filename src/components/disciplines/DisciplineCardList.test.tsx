@@ -33,9 +33,12 @@ describe('discipline card list', () => {
   ];
 
   it('only renders 4 cards when limited to 4', () => {
-    const wrapper = renderWithStore(<DisciplineCardList limit={4} />, {
-      initialState: { disciplines: stateDisciplines },
-    });
+    const wrapper = renderWithStore(
+      <DisciplineCardList visibleDisciplines={4} />,
+      {
+        initialState: { disciplines: stateDisciplines },
+      },
+    );
     expect(wrapper.getAllByTestId('discipline-card')).toHaveLength(4);
   });
 
@@ -48,14 +51,17 @@ describe('discipline card list', () => {
   });
 
   it('renders user disciplines and user subjects at top of list of 4 subjects', () => {
-    const wrapper = renderWithStore(<DisciplineCardList limit={1} />, {
-      initialState: {
-        disciplines: stateDisciplines,
-        user: UserProfileFactory.sample({
-          subjects: ['subject-id-5', 'subject-id-6'],
-        }),
+    const wrapper = renderWithStore(
+      <DisciplineCardList visibleDisciplines={1} />,
+      {
+        initialState: {
+          disciplines: stateDisciplines,
+          user: UserProfileFactory.sample({
+            subjects: ['subject-id-5', 'subject-id-6'],
+          }),
+        },
       },
-    });
+    );
 
     expect(
       wrapper.getByText("Our Teacher's favourite discipline"),
@@ -69,20 +75,23 @@ describe('discipline card list', () => {
   });
 
   it('renders all user subjects if more than 4 selected for a discipline', () => {
-    const wrapper = renderWithStore(<DisciplineCardList limit={1} />, {
-      initialState: {
-        disciplines: stateDisciplines,
-        user: UserProfileFactory.sample({
-          subjects: [
-            'subject-id-5',
-            'subject-id-6',
-            'subject-id-7',
-            'subject-id-8',
-            'subject-id-9',
-          ],
-        }),
+    const wrapper = renderWithStore(
+      <DisciplineCardList visibleDisciplines={1} />,
+      {
+        initialState: {
+          disciplines: stateDisciplines,
+          user: UserProfileFactory.sample({
+            subjects: [
+              'subject-id-5',
+              'subject-id-6',
+              'subject-id-7',
+              'subject-id-8',
+              'subject-id-9',
+            ],
+          }),
+        },
       },
-    });
+    );
 
     expect(wrapper.getByText('Subject 9')).toBeInTheDocument();
     expect(wrapper.getByText('Subject 5')).toBeInTheDocument();
@@ -94,4 +103,9 @@ describe('discipline card list', () => {
     expect(wrapper.queryByText('Subject 3')).not.toBeInTheDocument();
     expect(wrapper.queryByText('Subject 4')).not.toBeInTheDocument();
   });
+
+  it('show description of our subjects in mobile view', () => {
+
+  });
+
 });
