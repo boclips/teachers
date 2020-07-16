@@ -24,7 +24,8 @@ describe('when accounts cannot be created', () => {
 
     mount(
       <Provider store={store}>
-        <Router history={createMemoryHistory()}>
+        <Router history={
+          createMemoryHistory()}>
           <CreateAccountView />
         </Router>
       </Provider>,

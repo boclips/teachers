@@ -6,6 +6,7 @@ import {
   UserProfileFactory,
 } from '../../../test-support/factories';
 import DisciplineCardList from './DisciplineCardList';
+import { fireEvent } from "@testing-library/react";
 
 describe('discipline card list', () => {
   const subjects = [
@@ -103,9 +104,4 @@ describe('discipline card list', () => {
     expect(wrapper.queryByText('Subject 3')).not.toBeInTheDocument();
     expect(wrapper.queryByText('Subject 4')).not.toBeInTheDocument();
   });
-
-  it('show description of our subjects in mobile view', () => {
-
-  });
-
 });

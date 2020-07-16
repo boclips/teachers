@@ -13,7 +13,7 @@ interface Props {
   limit?: number;
 }
 
-export const DisciplineCard = ({ discipline, className, limit }: Props) => {
+export const DisciplineCardLimited = ({ discipline, className, limit }: Props) => {
   if (!discipline) {
     return null;
   }

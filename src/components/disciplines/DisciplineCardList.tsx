@@ -7,8 +7,8 @@ import State from '../../types/State';
 import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
-import { DisciplineCard, DisciplineCardSkeleton } from './DisciplineCard';
-import { DisciplineCardWithToggle } from './DisciplineCardWithToggle';
+import { DisciplineCardLimited, DisciplineCardSkeleton } from './DisciplineCardLimited';
+import { DisciplineCardFull } from './DisciplineCardFull';
 import './DisciplineCardList.less';
 
 export interface Props {
@@ -51,7 +51,13 @@ const DisciplineCardList = ({
     }
   }, [nameToFocusOn, inputRef]);
 
-  const isHomepage = nameToFocusOn === undefined;
+
+  const isDisciplineWithToggle = (discipline) => {
+    const noAnchoredDiscipline = nameToFocusOn === undefined;
+    return nameToFocusOn === discipline.name ||
+      (!screenIsMobile && !noAnchoredDiscipline);
+  }
+
   const renderDisciplines = () => {
     return [
       <TransitionGroup component={null} exit key="disciplines-container">
@@ -65,6 +71,7 @@ const DisciplineCardList = ({
                 (subject) =>
                   userSubjects && userSubjects.indexOf(subject.id) > -1,
               ).length;
+
               return (
                 <CSSTransition
                   classNames="card-list"
@@ -76,9 +83,8 @@ const DisciplineCardList = ({
                       tabIndex={-1}
                       ref={discipline.name === nameToFocusOn ? inputRef : null}
                     >
-                      {nameToFocusOn === discipline.name ||
-                      (!screenIsMobile && !isHomepage) ? (
-                        <DisciplineCardWithToggle
+                      {isDisciplineWithToggle(discipline) ? (
+                        <DisciplineCardFull
                           discipline={discipline}
                           className={generateBorderRadiusClassNames(
                             index,
@@ -87,7 +93,7 @@ const DisciplineCardList = ({
                           )}
                         />
                       ) : (
-                        <DisciplineCard
+                        <DisciplineCardLimited
                           className={generateBorderRadiusClassNames(
                             index,
                             columns,

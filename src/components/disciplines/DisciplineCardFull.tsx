@@ -10,13 +10,11 @@ import './DisciplineCardWithToggle.less';
 interface Props {
   discipline: Discipline;
   className?: string;
-  limit?: number;
 }
 
-export const DisciplineCardWithToggle = ({
+export const DisciplineCardFull = ({
   discipline,
   className,
-  limit,
 }: Props) => {
   const [isDisciplineOpen, setIsDisciplineOpen] = useState(true);
 
@@ -24,9 +22,7 @@ export const DisciplineCardWithToggle = ({
     return null;
   }
 
-  const visibleSubjects = limit
-    ? discipline.subjects.slice(0, limit)
-    : discipline.subjects;
+  const visibleSubjects = discipline.subjects;
 
   const basicHeader = (
     <div

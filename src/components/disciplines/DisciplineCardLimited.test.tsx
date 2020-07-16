@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderWithStore } from 'test-support/renderWithStore';
 import { DisciplineFactory } from '../../../test-support/factories';
-import { DisciplineCard } from './DisciplineCard';
+import { DisciplineCardLimited } from './DisciplineCardLimited';
 
 describe('Discipline Cards', () => {
   const discipline = DisciplineFactory.sample({
@@ -16,7 +16,7 @@ describe('Discipline Cards', () => {
   });
   it('renders a card with title', () => {
     const view = renderWithStore(
-      <DisciplineCard
+      <DisciplineCardLimited
         discipline={DisciplineFactory.sample({ name: 'Arts' })}
       />,
     );
@@ -26,7 +26,7 @@ describe('Discipline Cards', () => {
 
   it('Can limit the visible subjects', () => {
     const view = renderWithStore(
-      <DisciplineCard discipline={discipline} limit={4} />,
+      <DisciplineCardLimited discipline={discipline} limit={4} />,
     );
 
     expect(view.queryByText('expressionist art')).toBeNull();
@@ -36,7 +36,7 @@ describe('Discipline Cards', () => {
   });
 
   it('If limit is not defined all subjects are rendered', () => {
-    const view = renderWithStore(<DisciplineCard discipline={discipline} />);
+    const view = renderWithStore(<DisciplineCardLimited discipline={discipline} />);
 
     expect(view.getByText('classical art')).toBeVisible();
     expect(view.getByText('modern art')).toBeVisible();
@@ -48,14 +48,14 @@ describe('Discipline Cards', () => {
 
   it('does not render view all when there are fewer subjects than the limit', () => {
     const view = renderWithStore(
-      <DisciplineCard discipline={discipline} limit={6} />,
+      <DisciplineCardLimited discipline={discipline} limit={6} />,
     );
     expect(view.queryByText('view all (5)')).toBeNull();
   });
 
   it('renders a link to subjects page when view all exists', () => {
     const view = renderWithStore(
-      <DisciplineCard discipline={discipline} limit={2} />,
+      <DisciplineCardLimited discipline={discipline} limit={2} />,
     );
 
     const viewAll = view.getByText('view all (5)') as HTMLAnchorElement;
@@ -64,35 +64,12 @@ describe('Discipline Cards', () => {
 
   it('adds an anchor to the subject page link when a discipline is clicked', () => {
     const view = renderWithStore(
-      <DisciplineCard discipline={discipline} limit={2} />,
+      <DisciplineCardLimited discipline={discipline} limit={2} />,
     );
 
     const disciplineLink = view
       .getByText('Arts')
       .closest('a') as HTMLAnchorElement;
     expect(disciplineLink.href).toMatch(/\/our-subjects#Arts/);
-  });
-  it('in mobile view adds a class name to the card which is in the subject page URL', () => {
-    const view = renderWithStore(
-      <DisciplineCard discipline={discipline} displaySubjectsForMobile />,
-    );
-
-    const displaySubjectsForMobileClass = view.baseElement.getElementsByClassName(
-      'display-subjects',
-    );
-    expect(displaySubjectsForMobileClass.length).toEqual(1);
-  });
-  it('in mobile view does not add a class name to the card if it is not the anchor element', () => {
-    const view = renderWithStore(
-      <DisciplineCard
-        discipline={discipline}
-        displaySubjectsForMobile={false}
-      />,
-    );
-
-    const displaySubjectsForMobileClass = view.baseElement.getElementsByClassName(
-      'display-subjects',
-    );
-    expect(displaySubjectsForMobileClass.length).toEqual(0);
   });
 });
