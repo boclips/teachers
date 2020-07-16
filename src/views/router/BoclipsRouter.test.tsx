@@ -9,7 +9,7 @@ import {
   UserProfileFactory,
 } from '../../../test-support/factories';
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
-import { DisciplineCardList } from '../../components/disciplines/DisciplineCardList';
+import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { CollectionDetailsView } from '../collection/CollectionDetailsView';

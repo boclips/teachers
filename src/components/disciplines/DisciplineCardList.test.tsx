@@ -5,7 +5,7 @@ import {
   SubjectFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
-import { DisciplineCardList } from './DisciplineCardList';
+import DisciplineCardList from './DisciplineCardList';
 
 describe('discipline card list', () => {
   const subjects = [

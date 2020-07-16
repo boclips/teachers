@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { withMediaBreakPoint } from '../../components/common/higherOrderComponents/withMediaBreakPoint';
-import { DisciplineCardList } from '../../components/disciplines/DisciplineCardList';
+import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import PageLayout from '../../components/layout/PageLayout';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
 import './SubjectsView.less';
@@ -21,7 +21,7 @@ export const SubjectsView = withMediaBreakPoint((props) => {
         <DisciplineCardList
           columns={screenIsDesktop ? 3 : 2}
           nameToFocusOn={disciplineToFocus}
-          useLegacyDisciplineLink={screenIsMobile}
+          screenIsMobile={screenIsMobile}
         />
       </section>
     </PageLayout>

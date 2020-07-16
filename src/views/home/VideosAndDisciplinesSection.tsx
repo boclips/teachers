@@ -9,14 +9,17 @@ import {
   withMediaBreakPoint,
   WithMediaBreakPointProps,
 } from '../../components/common/higherOrderComponents/withMediaBreakPoint';
-import { DisciplineCardList } from '../../components/disciplines/DisciplineCardList';
+import DisciplineCardList from '../../components/disciplines/DisciplineCardList';
 import MediaBreakpoints from '../../types/MediaBreakpoints';
 
 const { Content } = Layout;
 
 const DisciplineSection = () => (
   <>
-    <DisciplineCardList visibleDisciplines={4} visibleSubjects={4} />
+    <DisciplineCardList
+      visibleDisciplines={4}
+      visibleSubjects={4}
+    />
     <Link
       to="/our-subjects"
       className="disciplines-section__all-subjects link--tabbable"

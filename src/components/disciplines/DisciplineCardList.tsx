@@ -9,7 +9,11 @@ import State from '../../types/State';
 import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
-import { DisciplineCard, DisciplineCardSkeleton } from './DisciplineCard';
+import {
+  DisciplineCardLimited,
+  DisciplineCardSkeleton,
+} from './DisciplineCardLimited';
+import { DisciplineCardFull } from './DisciplineCardFull';
 import './DisciplineCardList.less';
 
 export interface Props {
@@ -17,15 +21,15 @@ export interface Props {
   visibleSubjects?: number;
   columns?: number;
   nameToFocusOn?: string;
-  useLegacyDisciplineLink?: boolean;
+  screenIsMobile?: boolean;
 }
 
-export const DisciplineCardList = ({
+const DisciplineCardList = ({
   visibleDisciplines,
   visibleSubjects,
   columns = 2,
   nameToFocusOn,
-  useLegacyDisciplineLink,
+  screenIsMobile,
 }: Props) => {
   const disciplines = useSelector((state: State) => state.disciplines);
   const userSubjects = useSelector(
@@ -42,6 +46,14 @@ export const DisciplineCardList = ({
   const prioritiseDisciplinesWithUserSubjects = (a, b) =>
     numberOfUserSubjectsInDiscipline(b) - numberOfUserSubjectsInDiscipline(a);
 
+  const boostUserDisciplines = (a, b) =>
+    a.subjects.filter((it) => userSubjects && userSubjects.indexOf(it.id) > -1)
+      .length >
+    b.subjects.filter((it) => userSubjects && userSubjects.indexOf(it.id) > -1)
+      .length
+      ? -1
+      : 1;
+
   const prioritiseUserSubjects = (a, b) =>
     userSubjects?.indexOf(b.id) - userSubjects?.indexOf(a.id);
 
@@ -51,20 +63,32 @@ export const DisciplineCardList = ({
     }
   }, [nameToFocusOn, inputRef]);
 
+  const isFullDisciplineCard = (discipline) => {
+    const noAnchoredDiscipline = nameToFocusOn === undefined;
+    return (
+      nameToFocusOn === discipline.name ||
+      (!screenIsMobile && !noAnchoredDiscipline)
+    );
+  };
+
   const renderDisciplines = () => {
     return [
       <TransitionGroup component={null} exit key="disciplines-container">
         {disciplines &&
           disciplines
+            .sort(boostUserDisciplines)
+            .slice(0, visibleDisciplines || disciplines.length)
             .sort(prioritiseDisciplinesWithUserSubjects)
             .slice(0, visibleDisciplines || disciplines.length)
             .map((discipline, index, slicedArray) => {
+              discipline.subjects
+                .sort(prioritiseUserSubjects)
               discipline.subjects.sort(prioritiseUserSubjects);
               const userSubjectCount = discipline.subjects.filter(
                 (subject) =>
                   userSubjects && userSubjects.indexOf(subject.id) > -1,
               ).length;
-              console.log(userSubjectCount);
+
               return (
                 <CSSTransition
                   classNames="card-list"
@@ -76,24 +100,30 @@ export const DisciplineCardList = ({
                       tabIndex={-1}
                       ref={discipline.name === nameToFocusOn ? inputRef : null}
                     >
-                      <DisciplineCard
-                        className={generateBorderRadiusClassNames(
-                          index,
-                          columns,
-                          slicedArray.length,
-                        )}
-                        discipline={discipline}
-                        limit={
-                          visibleSubjects
-                            ? Math.max(visibleSubjects, userSubjectCount)
-                            : undefined
-                        }
-                        overrideDisciplineLink={
-                          useLegacyDisciplineLink
-                            ? `discover-collections?discipline=${discipline.id}`
-                            : undefined
-                        }
-                      />
+                      {isFullDisciplineCard(discipline) ? (
+                        <DisciplineCardFull
+                          discipline={discipline}
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
+                        />
+                      ) : (
+                        <DisciplineCardLimited
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
+                          discipline={discipline}
+                          limit={
+                            visibleSubjects
+                              ? Math.max(visibleSubjects, userSubjectCount)
+                              : undefined
+                          }
+                        />
+                      )}
                     </div>
                   </Col>
                 </CSSTransition>
@@ -139,3 +169,4 @@ export const DisciplineCardList = ({
     </section>
   );
 };
+export default DisciplineCardList;
