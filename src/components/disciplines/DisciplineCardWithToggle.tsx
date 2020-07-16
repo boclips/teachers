@@ -5,6 +5,7 @@ import { Discipline } from '../../types/Discipline';
 import DisciplineLogo from './DisciplineLogo';
 
 import './DisciplineCard.less';
+import './DisciplineCardWithToggle.less';
 
 interface Props {
   discipline: Discipline;
@@ -29,10 +30,12 @@ export const DisciplineCardWithToggle = ({
 
   const basicHeader = (
     <div
-      role="button"
+      className="discipline-card-wrapper"
       onClick={() => {
         return setIsDisciplineOpen(!isDisciplineOpen);
       }}
+      role="button"
+      tabIndex={-1}
     >
       <h1 data-qa="discipline-title" className="discipline-card__title">
         {discipline.name}
