@@ -1,7 +1,9 @@
 import { Card } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DropdownArrow from 'src/components/layout/navigation/DropdownArrow';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
+
 import { Discipline } from '../../types/Discipline';
 import DisciplineLogo from './DisciplineLogo';
 
@@ -9,48 +11,52 @@ import './DisciplineCard.less';
 
 interface Props {
   discipline: Discipline;
-  overrideDisciplineLink?: string;
   className?: string;
   limit?: number;
 }
 
-export const DisciplineCard = ({
+export const DisciplineCardLimited = ({
   discipline,
   className,
   limit,
-  overrideDisciplineLink,
 }: Props) => {
   if (!discipline) {
     return null;
   }
 
   const visibleSubjects = limit
-    ? discipline.subjects?.slice(0, limit)
+    ? discipline.subjects.slice(0, limit)
     : discipline.subjects;
 
+  const getHeader = () => (
+    <Link
+      className="discipline-card__link"
+      to={{
+        pathname: '/our-subjects',
+        hash: discipline.name,
+      }}
+    >
+      <>
+        <span className="discipline-card-header">
+          <span className="discipline-card-dropdown-arrow">
+            <DropdownArrow active={false} />
+          </span>
+          <h1 data-qa="discipline-title" className="discipline-card__title">
+            {discipline.name}
+          </h1>
+        </span>
+        <span className="discipline-card__icon">
+          <DisciplineLogo discipline={discipline} />
+        </span>
+      </>
+    </Link>
+  );
   return (
     <Card
       data-qa="discipline-card"
       className={`discipline-card ${className}`}
       bordered={false}
-      title={
-        <Link
-          className="discipline-card__link"
-          to={
-            overrideDisciplineLink || {
-              pathname: '/our-subjects',
-              hash: discipline.name,
-            }
-          }
-        >
-          <h1 data-qa="discipline-title" className="discipline-card__title">
-            {discipline.name}
-          </h1>
-          <span className="discipline-card__icon">
-            <DisciplineLogo discipline={discipline} />
-          </span>
-        </Link>
-      }
+      title={getHeader()}
     >
       <div className="discipline-card__body display-tablet-and-desktop">
         <ul className="discipline-card__subjects">

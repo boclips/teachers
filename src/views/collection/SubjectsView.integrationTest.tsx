@@ -29,7 +29,26 @@ describe('Subjects view', () => {
     expect(within(elementInFocus).getByText('STEM')).toBeVisible();
     expect(within(elementInFocus).queryByText('Maths')).toBeNull();
   });
+  it('Discipline card rendered should not have a clickable header', () => {
+    const view = renderWithBoclipsStore(
+      <SubjectsView />,
+      {
+        disciplines: [
+          DisciplineFactory.sample({ id: 'id 1', name: 'Arts' }),
+          DisciplineFactory.sample({ id: 'id 2', name: 'Maths' }),
+          DisciplineFactory.sample({ id: 'id 3', name: 'Test 3' }),
+          DisciplineFactory.sample({ id: 'id 4', name: 'Test 4' }),
+          DisciplineFactory.sample({ id: 'id 5', name: 'STEM' }),
+        ],
+      },
+      createMemoryHistory({
+        initialEntries: ['our-subjects'],
+      }),
+    );
 
+    const disciplineCard = view.getByText('STEM');
+    expect(disciplineCard.tagName).toEqual('H1');
+  });
   it('when url has no anchor just render the page ', () => {
     const view = renderWithBoclipsStore(
       <SubjectsView />,

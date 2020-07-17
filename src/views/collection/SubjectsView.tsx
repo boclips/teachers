@@ -21,7 +21,7 @@ export const SubjectsView = withMediaBreakPoint((props) => {
         <DisciplineCardList
           columns={screenIsDesktop ? 3 : 2}
           nameToFocusOn={disciplineToFocus}
-          useLegacyDisciplineLink={screenIsMobile}
+          screenIsMobile={screenIsMobile}
         />
       </section>
     </PageLayout>

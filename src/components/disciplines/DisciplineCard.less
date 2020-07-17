@@ -4,6 +4,36 @@
 .discipline-card {
   background-color: @shade-2;
 
+  .discipline-card-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .discipline-card {
+      &__icon {
+        padding-left: 5px;
+      }
+    }
+  }
+
+  .discipline-card-header {
+    display: flex;
+  }
+  .discipline-card-dropdown-arrow {
+    margin-right: 10px;
+    display: inline-block;
+
+    @media (min-width: @screen-md) {
+      display: none;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
   .ant-card-head {
     &-title {
       padding-top: 24px;
@@ -118,12 +148,21 @@
 }
 
 @media (max-width: @screen-sm-max) {
+  .section-header {
+    &__description {
+      display: inline-table;
+    }
+  }
   .discipline-card {
     background-color: @shade-4;
     border-radius: 8px;
 
     .ant-card-body {
-      display: none;
+      padding-bottom: 5px;
+    }
+
+    .display-subjects {
+      display: initial;
     }
 
     .ant-card-head {

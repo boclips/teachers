@@ -9,7 +9,11 @@ import State from '../../types/State';
 import { generateBorderRadiusClassNames } from '../../utils';
 import { SectionHeader } from '../common/SectionHeader';
 import { FiniteGrid } from '../common/Grid/FiniteGrid';
-import { DisciplineCard, DisciplineCardSkeleton } from './DisciplineCard';
+import {
+  DisciplineCardLimited,
+  DisciplineCardSkeleton,
+} from './DisciplineCardLimited';
+import { DisciplineCardFull } from './DisciplineCardFull';
 import './DisciplineCardList.less';
 
 export interface Props {
@@ -17,7 +21,7 @@ export interface Props {
   visibleSubjects?: number;
   columns?: number;
   nameToFocusOn?: string;
-  useLegacyDisciplineLink?: boolean;
+  screenIsMobile?: boolean;
 }
 
 export const DisciplineCardList = ({
@@ -25,7 +29,7 @@ export const DisciplineCardList = ({
   visibleSubjects,
   columns = 2,
   nameToFocusOn,
-  useLegacyDisciplineLink,
+  screenIsMobile,
 }: Props) => {
   const disciplines = useSelector((state: State) => state.disciplines);
   const userSubjects = useSelector(
@@ -51,6 +55,14 @@ export const DisciplineCardList = ({
     }
   }, [nameToFocusOn, inputRef]);
 
+  const isFullDisciplineCard = (discipline) => {
+    const noAnchoredDiscipline = nameToFocusOn === undefined;
+    return (
+      nameToFocusOn === discipline.name ||
+      (!screenIsMobile && !noAnchoredDiscipline)
+    );
+  };
+
   const renderDisciplines = () => {
     return [
       <TransitionGroup component={null} exit key="disciplines-container">
@@ -64,7 +76,7 @@ export const DisciplineCardList = ({
                 (subject) =>
                   userSubjects && userSubjects.indexOf(subject.id) > -1,
               ).length;
-              console.log(userSubjectCount);
+
               return (
                 <CSSTransition
                   classNames="card-list"
@@ -76,24 +88,30 @@ export const DisciplineCardList = ({
                       tabIndex={-1}
                       ref={discipline.name === nameToFocusOn ? inputRef : null}
                     >
-                      <DisciplineCard
-                        className={generateBorderRadiusClassNames(
-                          index,
-                          columns,
-                          slicedArray.length,
-                        )}
-                        discipline={discipline}
-                        limit={
-                          visibleSubjects
-                            ? Math.max(visibleSubjects, userSubjectCount)
-                            : undefined
-                        }
-                        overrideDisciplineLink={
-                          useLegacyDisciplineLink
-                            ? `discover-collections?discipline=${discipline.id}`
-                            : undefined
-                        }
-                      />
+                      {isFullDisciplineCard(discipline) ? (
+                        <DisciplineCardFull
+                          discipline={discipline}
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
+                        />
+                      ) : (
+                        <DisciplineCardLimited
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
+                          discipline={discipline}
+                          limit={
+                            visibleSubjects
+                              ? Math.max(visibleSubjects, userSubjectCount)
+                              : undefined
+                          }
+                        />
+                      )}
                     </div>
                   </Col>
                 </CSSTransition>
