@@ -22,6 +22,7 @@ export interface Props {
   columns?: number;
   nameToFocusOn?: string;
   screenIsMobile?: boolean;
+  displaySubjectsLimited?: (discipline: Discipline) => boolean;
 }
 
 export const DisciplineCardList = ({
@@ -29,7 +30,8 @@ export const DisciplineCardList = ({
   visibleSubjects,
   columns = 2,
   nameToFocusOn,
-  screenIsMobile,
+  screenIsMobile = false,
+  displaySubjectsLimited = (_) => true,
 }: Props) => {
   const disciplines = useSelector((state: State) => state.disciplines);
   const userSubjects = useSelector(
@@ -54,14 +56,6 @@ export const DisciplineCardList = ({
       inputRef.current.focus();
     }
   }, [nameToFocusOn, inputRef]);
-
-  const isFullDisciplineCard = (discipline) => {
-    const noAnchoredDiscipline = nameToFocusOn === undefined;
-    return (
-      nameToFocusOn === discipline.name ||
-      (!screenIsMobile && !noAnchoredDiscipline)
-    );
-  };
 
   const renderDisciplines = () => {
     return [
@@ -88,16 +82,7 @@ export const DisciplineCardList = ({
                       tabIndex={-1}
                       ref={discipline.name === nameToFocusOn ? inputRef : null}
                     >
-                      {isFullDisciplineCard(discipline) ? (
-                        <DisciplineCardFull
-                          discipline={discipline}
-                          className={generateBorderRadiusClassNames(
-                            index,
-                            columns,
-                            slicedArray.length,
-                          )}
-                        />
-                      ) : (
+                      {displaySubjectsLimited(discipline) ? (
                         <DisciplineCardLimited
                           className={generateBorderRadiusClassNames(
                             index,
@@ -110,6 +95,16 @@ export const DisciplineCardList = ({
                               ? Math.max(visibleSubjects, userSubjectCount)
                               : undefined
                           }
+                        />
+                      ) : (
+                        <DisciplineCardFull
+                          discipline={discipline}
+                          closeable={screenIsMobile}
+                          className={generateBorderRadiusClassNames(
+                            index,
+                            columns,
+                            slicedArray.length,
+                          )}
                         />
                       )}
                     </div>

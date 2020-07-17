@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DropdownArrow from 'src/components/layout/navigation/DropdownArrow';
 import { A11yButton } from 'src/components/common/a11y/A11yButton';
+import classNames from 'classnames';
 import { Discipline } from '../../types/Discipline';
 import DisciplineLogo from './DisciplineLogo';
 import './DisciplineCard.less';
@@ -10,28 +11,26 @@ import './DisciplineCard.less';
 interface Props {
   discipline: Discipline;
   className?: string;
+  closeable?: boolean;
 }
 
-export const DisciplineCardFull = ({ discipline, className }: Props) => {
-  const [isDisciplineOpen, setIsDisciplineOpen] = useState(true);
+export const DisciplineCardFull = ({
+  discipline,
+  className,
+  closeable,
+}: Props) => {
+  const [isDisciplineOpen, setIsDisciplineOpen] = useState(closeable);
 
   if (!discipline) {
     return null;
   }
 
-  const sortSubjects = (a, b) => {
-    if (a.name > b.name) {
-      return 1;
-    }
-    if (b.name > a.name) {
-      return -1;
-    }
-    return 0;
-  };
+  const alphabetizedSubjects = discipline.subjects.sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
 
-  const alphabetizedSubjects = discipline.subjects.sort(sortSubjects);
-
-  const toggleDisciplineCard = () => setIsDisciplineOpen(!isDisciplineOpen);
+  const toggleDisciplineCard = () =>
+    closeable && setIsDisciplineOpen(!isDisciplineOpen);
 
   const basicHeader = (
     <A11yButton callback={toggleDisciplineCard}>
@@ -59,9 +58,10 @@ export const DisciplineCardFull = ({ discipline, className }: Props) => {
       title={basicHeader}
     >
       <div
-        className={`discipline-card__body display-tablet-and-desktop ${
-          isDisciplineOpen ? 'display-subjects' : null
-        }`}
+        className={classNames(
+          'discipline-card__body display-tablet-and-desktop',
+          { 'display-subjects': isDisciplineOpen },
+        )}
       >
         <ul className="discipline-card__subjects">
           {alphabetizedSubjects.map((subject) => (

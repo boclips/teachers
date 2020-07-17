@@ -22,6 +22,9 @@ export const SubjectsView = withMediaBreakPoint((props) => {
           columns={screenIsDesktop ? 3 : 2}
           nameToFocusOn={disciplineToFocus}
           screenIsMobile={screenIsMobile}
+          displaySubjectsLimited={(discipline) =>
+            screenIsMobile && discipline.name !== disciplineToFocus
+          }
         />
       </section>
     </PageLayout>

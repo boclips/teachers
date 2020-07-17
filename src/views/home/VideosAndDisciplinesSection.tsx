@@ -14,9 +14,14 @@ import MediaBreakpoints from '../../types/MediaBreakpoints';
 
 const { Content } = Layout;
 
-const DisciplineSection = () => (
+const DisciplineSection = ({ screenIsMobile }) => (
   <>
-    <DisciplineCardList visibleDisciplines={4} visibleSubjects={4} />
+    <DisciplineCardList
+      visibleDisciplines={4}
+      visibleSubjects={4}
+      screenIsMobile={screenIsMobile}
+      displaySubjectsLimited={(_) => true}
+    />
     <Link
       to="/our-subjects"
       className="disciplines-section__all-subjects link--tabbable"
@@ -31,6 +36,8 @@ export const VideosAndDisciplinesSection = withMediaBreakPoint(
     const screenIsDesktop =
       props.mediaBreakpoint.width > MediaBreakpoints.lg.width;
 
+    const screenIsMobile =
+      props.mediaBreakpoint.width < MediaBreakpoints.sm.width;
     return (
       <section className="disciplines-section">
         <Content>
@@ -40,11 +47,11 @@ export const VideosAndDisciplinesSection = withMediaBreakPoint(
                 <HomeViewVideoList />
               </Col>
               <Col lg={{ span: 16 }}>
-                <DisciplineSection />
+                <DisciplineSection screenIsMobile={screenIsMobile} />
               </Col>
             </Row>
           ) : (
-            <DisciplineSection />
+            <DisciplineSection screenIsMobile={screenIsMobile} />
           )}
         </Content>
       </section>

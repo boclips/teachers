@@ -1,5 +1,9 @@
 import React from 'react';
-import { renderWithStore } from 'test-support/renderWithStore';
+import {
+  renderWithStore,
+  ResultingContext,
+} from 'test-support/renderWithStore';
+import { fireEvent } from '@testing-library/react';
 import { DisciplineFactory } from '../../../test-support/factories';
 import { DisciplineCardFull } from './DisciplineCardFull';
 
@@ -15,15 +19,30 @@ describe('Discipline Cards with toggle', () => {
     ],
   });
 
-  it('in mobile view adds a class name to the card which is in the subject page URL', () => {
+  it('toggles a class name by clicking on header when closeable', async () => {
     const view = renderWithStore(
-      <DisciplineCardFull discipline={discipline} />,
+      <DisciplineCardFull discipline={discipline} closeable />,
     );
 
-    const displaySubjectsForMobileClass = view.baseElement.getElementsByClassName(
-      'display-subjects',
+    expect(isSubjectsListOpened(view)).toBeTruthy();
+
+    const clickableHeader = await view.findByText('Arts');
+    fireEvent.click(clickableHeader);
+
+    expect(isSubjectsListOpened(view)).toBeFalsy();
+  });
+
+  it('doesnt add a class when not closeable', async () => {
+    const view = renderWithStore(
+      <DisciplineCardFull discipline={discipline} closeable={false} />,
     );
-    expect(displaySubjectsForMobileClass.length).toEqual(1);
+
+    expect(isSubjectsListOpened(view)).toBeFalsy();
+
+    const clickableHeader = await view.findByText('Arts');
+    fireEvent.click(clickableHeader);
+
+    expect(isSubjectsListOpened(view)).toBeFalsy();
   });
 
   it('alphabetises the subjects when rendering in discipline card', () => {
@@ -45,4 +64,12 @@ describe('Discipline Cards with toggle', () => {
     expect(subjects[4]).toBeVisible();
     expect(subjects[4].textContent).toEqual('post-modern art');
   });
+
+  const isSubjectsListOpened = (view: ResultingContext) => {
+    const subjectsList = view.baseElement.getElementsByClassName(
+      'display-subjects',
+    );
+
+    return subjectsList.length === 1;
+  };
 });
