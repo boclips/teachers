@@ -90,6 +90,19 @@
     .discipline-card-dropdown-arrow {
       display: none;
     }
+
+    .discipline-card {
+      @media (max-width: @screen-sm) {
+        &__subject-item {
+          display: -webkit-box;
+        }
+        &__subject-link {
+          display: -webkit-box;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 1;
+        }
+      }
+    }
   }
 
   .discovery-section {
