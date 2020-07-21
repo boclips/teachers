@@ -10,7 +10,7 @@ import requestAuthenticationMiddleware from './requestAuthenticationMiddleware';
 
 jest.mock('boclips-js-security');
 
-it('requests authentication with check-sso when authentication not required', async () => {
+it("doesn't send users to login page when authentication not required", async () => {
   const mockStore = configureStore<{}>([...requestAuthenticationMiddleware]);
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
@@ -22,13 +22,13 @@ it('requests authentication with check-sso when authentication not required', as
   await eventually(() => {
     expect(createInstance).toHaveBeenCalledWith(
       expect.objectContaining({
-        mode: 'check-sso',
+        requireLoginPage: false,
       }),
     );
   });
 });
 
-it('requests authentication with login-required when authentication is required', async () => {
+it('requires login page when authentication is required', async () => {
   const mockStore = configureStore<{}>([...requestAuthenticationMiddleware]);
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
@@ -40,7 +40,7 @@ it('requests authentication with login-required when authentication is required'
   await eventually(() => {
     expect(createInstance).toHaveBeenCalledWith(
       expect.objectContaining({
-        mode: 'login-required',
+        requireLoginPage: true,
       }),
     );
   });

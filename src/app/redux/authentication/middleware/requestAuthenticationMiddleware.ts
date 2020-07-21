@@ -17,7 +17,7 @@ const onAuthenticationRequested = (
 ) => {
   BoclipsSecurity.createInstance({
     ...getDefaultSecurityOptions(store),
-    mode: options.authenticationRequired ? 'login-required' : 'check-sso',
+    requireLoginPage: options.authenticationRequired,
     username: options.username,
     password: options.password,
   });
@@ -55,6 +55,7 @@ const getDefaultSecurityOptions = (store: Store) => ({
   realm: 'boclips',
   clientId: 'teachers',
   authEndpoint: Constants.AUTH_ENDPOINT,
+  requireLoginPage: true,
 });
 
 export default [

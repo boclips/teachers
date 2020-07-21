@@ -22,7 +22,7 @@ export const storyWithAuthentication = () => (story) => {
     onLogin: noOp,
     onFailure: noOp,
     authEndpoint: '',
-    mode: 'check-sso',
+    requireLoginPage: false,
   });
 
   return story();

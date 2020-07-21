@@ -28,6 +28,10 @@ module.exports = merge(common, {
       template: path.resolve(srcPath, 'index-dev.html'),
       ga: googleAnalyticsId,
     }),
+    new HtmlWebpackPlugin({
+      filename: 'silent-check-sso.html',
+      template: path.resolve(srcPath, 'silent-check-sso.html'),
+    }),
     new DynamicCdnWebpackPlugin({
       exclude: ['react-router', 'react-router-dom'],
     }),
