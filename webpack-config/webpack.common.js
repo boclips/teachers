@@ -10,6 +10,9 @@ const distPath = path.resolve(__dirname, '../dist');
 const staticPath = path.resolve(__dirname, '../static');
 
 module.exports = {
+  stats: {
+    children: false,
+  },
   entry: ['react-hot-loader/patch', srcPath],
   output: {
     path: distPath,
