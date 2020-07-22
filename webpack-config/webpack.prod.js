@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const webpack = require('webpack');
-const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -51,9 +50,6 @@ module.exports = merge(common, {
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
-    }),
-    new DynamicCdnWebpackPlugin({
-      exclude: ['react-router', 'react-router-dom'],
     }),
     new webpack.EnvironmentPlugin(['SENTRY_RELEASE']),
   ],

@@ -2,7 +2,6 @@ require('dotenv').config({ path: '.env.dev' });
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
@@ -31,9 +30,6 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       filename: 'silent-check-sso.html',
       template: path.resolve(srcPath, 'silent-check-sso.html'),
-    }),
-    new DynamicCdnWebpackPlugin({
-      exclude: ['react-router', 'react-router-dom'],
     }),
   ],
 });

@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const tsImportPluginFactory = require('ts-import-plugin');
 const path = require('path');
@@ -127,5 +128,8 @@ module.exports = {
         to: 'resources',
       },
     ]),
+    new DynamicCdnWebpackPlugin({
+      exclude: ['react-router', 'react-router-dom'],
+    }),
   ],
 };
