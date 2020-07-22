@@ -11,7 +11,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-const distPath = path.resolve(__dirname, '../dist');
 const srcPath = path.resolve(__dirname, '../src');
 
 const googleAnalyticsId = 'UA-126218810-2';
