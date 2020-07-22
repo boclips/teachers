@@ -118,8 +118,20 @@
       }
       &__subject-link {
         display: -webkit-box;
-        text-overflow: ellipsis;
         -webkit-line-clamp: 1;
+        @media (min-width: @screen-lg-min) {
+          display: inline-block;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 200px;
+        }
+        @media (min-width: @screen-xl-min) {
+          display: initial;
+          text-overflow: initial;
+          overflow: visible;
+          white-space: normal;
+        }
       }
     }
   }
