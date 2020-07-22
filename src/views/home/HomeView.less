@@ -87,20 +87,39 @@
   .disciplines-section {
     animation: slide-in 0.5s 0.4s both;
 
+    @media (max-width: @screen-sm) {
+      margin-top: 30px;
+    }
+
+    margin-top: 60px;
+
+    &__all-subjects {
+      float: right;
+      height: 24px;
+      color: #0e69ff;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 24px;
+      text-decoration: none;
+      margin-top: 10px;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
     .discipline-card-dropdown-arrow {
       display: none;
     }
 
     .discipline-card {
-      @media (max-width: @screen-sm) {
-        &__subject-item {
-          display: -webkit-box;
-        }
-        &__subject-link {
-          display: -webkit-box;
-          text-overflow: ellipsis;
-          -webkit-line-clamp: 1;
-        }
+      &__subject-item {
+        display: -webkit-box;
+      }
+      &__subject-link {
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
       }
     }
   }
@@ -144,29 +163,6 @@
       width: 100%;
       height: auto;
       cursor: pointer;
-    }
-  }
-}
-
-.disciplines-section {
-  @media (max-width: @screen-sm) {
-    margin-top: 30px;
-  }
-
-  margin-top: 60px;
-
-  &__all-subjects {
-    float: right;
-    height: 24px;
-    color: #0e69ff;
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 24px;
-    text-decoration: none;
-    margin-top: 10px;
-
-    &:hover {
-      text-decoration: none;
     }
   }
 }
