@@ -5,4 +5,5 @@ export interface VideoSearchQuery {
   resource_types?: string[];
   q?: string;
   page?: number;
+  completion_id?: string;
 }

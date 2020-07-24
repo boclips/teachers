@@ -34,4 +34,12 @@ describe('generateNewUri', () => {
     expect(queryParams.resource_types).toEqual(['LESSON_PLAN']);
     expect(queryParams.page).toEqual(1);
   });
+
+  it('handles completionId', () => {
+    const queryParams = generateVideoSearchQuery({}, [
+      { q: 'london', completion_id: 'comp123' },
+    ]);
+
+    expect(queryParams.completion_id).toEqual('comp123');
+  });
 });

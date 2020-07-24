@@ -9,19 +9,37 @@ import { Completion, completionsFor } from './completions';
 import completionsCreatedBy from './completionsCreatedBy.json';
 import completionsTopics from './completionsTopics.json';
 import './StatefulSearchBar.less';
+import { v4 as uuidv4 } from 'uuid';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 
 const getCompletions = completionsFor({
   topics: completionsTopics,
   channels: completionsCreatedBy,
 });
 
+const sendPublishSearchSuggestion = (
+  searchQuery: string,
+  suggestions: Completion[],
+  completionId: string,
+  componentId: string,
+): void => {
+  AnalyticsFactory.internalAnalytics().trackSearchSuggestionImpression({
+    searchQuery,
+    impressions: suggestions.map((suggestion) => suggestion.text),
+    completionId,
+    componentId,
+  });
+};
+
 interface Props {
-  onSubmit: (query: string) => void;
+  onSubmit: (query: string, completionId?: string) => void;
   value?: string;
 }
 
 interface State {
   completions: Completion[];
+  completionId: string;
+  componentId: string;
 }
 
 class FreshSearchOnValueChange extends React.Component<Props, State> {
@@ -31,20 +49,38 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     super(props);
     this.state = {
       completions: [],
+      completionId: undefined,
+      componentId: uuidv4(),
     };
     this.submit = this.submit.bind(this);
   }
 
   public render() {
     const onsubmit = (e) => e.preventDefault();
-    const setDataSource = (txt: string) => {
+    const setDataSource = (query: string) => {
+      const suggestions = getCompletions(query);
+      const completionId = uuidv4();
+
       this.setState({
-        completions: getCompletions(txt),
+        completions: suggestions,
+        completionId,
       });
+      suggestions?.length > 0 &&
+        sendPublishSearchSuggestion(
+          query,
+          suggestions,
+          completionId,
+          this.state.componentId,
+        );
     };
 
     return (
-      <form action="" onSubmit={onsubmit} className="searchbar">
+      <form
+        action=""
+        onSubmit={onsubmit}
+        className="searchbar"
+        data-qa={'testing-form'}
+      >
         <AutoComplete
           defaultActiveFirstOption={false}
           backfill
@@ -52,17 +88,20 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           options={this.optionsRender()}
           defaultValue={this.props.value}
           onSearch={setDataSource}
-          onSelect={this.submit}
+          onSelect={(suggestion) =>
+            this.submit(suggestion, this.state.completionId)
+          }
           size="large"
           style={{ width: '100%' }}
+          data-qa={'testing-autocomplete'}
         >
           <MySearch
             prefix={<img src={SearchIcon} alt="" />}
             placeholder="Enter your search term"
             type="search"
-            data-qa="search-input"
+            data-qa={`search-input-${this.state.componentId}`}
             aria-label="search"
-            onSearch={this.submit}
+            onSearch={(value) => this.submit(value)}
             enterButton="Search"
             size="large"
           />
@@ -103,12 +142,12 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     );
   }
 
-  private submit(value: string) {
+  private submit(value: string, completionId?: string) {
     if (this.submittedText === value) {
       return;
     }
     this.submittedText = value;
-    this.props.onSubmit(value);
+    this.props.onSubmit(value, completionId);
   }
 }
 

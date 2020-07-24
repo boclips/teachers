@@ -1,5 +1,6 @@
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 import HttpBoclipsAnalytics from './HttpBoclipsAnalytics';
@@ -25,6 +26,10 @@ export interface BoclipsAnalytics {
   ): Promise<void>;
 
   trackUserExpired(): Promise<void>;
+
+  trackSearchSuggestionImpression(
+    request: SearchQueryCompletionsSuggestedRequest,
+  ): Promise<void>;
 
   trackPlatformInteraction(
     subtype: PlatformInteractionType,

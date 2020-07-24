@@ -12,7 +12,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onQuerySubmitted: (query: string) => void;
+  onQuerySubmitted: (query: string, completionId?: string) => void;
 }
 
 const SearchBar = ({ onQuerySubmitted, query }: StateProps & DispatchProps) => {
@@ -27,8 +27,13 @@ function mapStateToProps(state: RouterState): StateProps {
 
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
-    onQuerySubmitted: (query: string) => {
-      dispatch(bulkUpdateSearchParamsAction([{ page: 1 }, { q: query }]));
+    onQuerySubmitted: (query: string, completionId?: string) => {
+      dispatch(
+        bulkUpdateSearchParamsAction([
+          { page: 1 },
+          { q: query, completion_id: completionId },
+        ]),
+      );
     },
   };
 }

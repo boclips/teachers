@@ -2,6 +2,7 @@ import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/e
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { ApiClientWrapper } from 'src/services/apiClient';
+import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -66,6 +67,13 @@ class FakeBoclipsAnalytics extends AbstractBoclipsAnalytics {
   ): Promise<void> => {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
     return client.events.trackPlatformInteraction(subtype, anonymous);
+  };
+
+  public trackSearchSuggestionImpression = async (
+    request: SearchQueryCompletionsSuggestedRequest,
+  ): Promise<void> => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    return client.events.trackSearchQueryCompletionsSuggested(request);
   };
 }
 

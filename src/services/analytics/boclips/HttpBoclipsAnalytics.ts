@@ -2,6 +2,7 @@ import axios from 'axios';
 import { CollectionInteractionType } from 'boclips-api-client/dist/sub-clients/events/model/CollectionInteractedWithRequest';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import { ApiClientWrapper } from 'src/services/apiClient';
+import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { convertToApiClientLink } from '../../../types/Link';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
@@ -70,5 +71,13 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
     const client = await ApiClientWrapper.get();
 
     return client.events.trackPlatformInteraction(subtype, anonymous);
+  };
+
+  public trackSearchSuggestionImpression = async (
+    request: SearchQueryCompletionsSuggestedRequest,
+  ): Promise<void> => {
+    const client = await ApiClientWrapper.get();
+
+    return client.events.trackSearchQueryCompletionsSuggested(request);
   };
 }

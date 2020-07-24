@@ -1,4 +1,5 @@
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
 import { Video } from '../../../types/Video';
 import { VideoCollection } from '../../../types/VideoCollection';
 
@@ -50,5 +51,9 @@ export default abstract class AbstractBoclipsAnalytics
   public abstract trackPlatformInteraction(
     subtype: PlatformInteractionType,
     anonymous: boolean,
+  ): Promise<void>;
+
+  public abstract trackSearchSuggestionImpression(
+    request: SearchQueryCompletionsSuggestedRequest,
   ): Promise<void>;
 }

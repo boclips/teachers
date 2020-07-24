@@ -30,6 +30,10 @@ export interface UpdateResourceTypeFilter {
   resource_types?: string[];
 }
 
+export interface AppliedSuggestedCompletion {
+  completion_id?: string;
+}
+
 export type UpdateAllFilters =
   | UpdateDurationFilter
   | UpdateAgeRangeFilter
@@ -43,7 +47,8 @@ export type SearchRequest =
   | UpdateResourceTypeFilter
   | UpdateSearchQuery
   | UpdateSearchPage
-  | SearchPathname;
+  | SearchPathname
+  | AppliedSuggestedCompletion;
 
 export const updateSearchParamsAction = actionCreatorFactory<SearchRequest>(
   'UPDATE_SEARCH_PARAMS',

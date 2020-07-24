@@ -8,79 +8,103 @@ import { VideoFactory } from '../../../../test-support/factories';
 import { Link } from '../../../types/Link';
 import HttpBoclipsAnalytics from './HttpBoclipsAnalytics';
 
-test('logInteraction', async () => {
-  const axiosMock = new MockAdapter(axios);
-  axiosMock.onPost().reply(200);
+describe('Boclips analytics', () => {
+  it('logInteraction', async () => {
+    const axiosMock = new MockAdapter(axios);
+    axiosMock.onPost().reply(200);
 
-  const video = VideoFactory.sample({
-    id: 'id-1',
-    links: {
-      self: new Link({ href: '/v1/videos/id-1' }),
-      logInteraction: new Link({
-        href: '/v1/videos/id-1/events?logVideoInteraction=true&type={type}',
-      }),
-    },
+    const video = VideoFactory.sample({
+      id: 'id-1',
+      links: {
+        self: new Link({ href: '/v1/videos/id-1' }),
+        logInteraction: new Link({
+          href: '/v1/videos/id-1/events?logVideoInteraction=true&type={type}',
+        }),
+      },
+    });
+
+    await new HttpBoclipsAnalytics().trackVideoInteraction(
+      video,
+      'copied-to-google-classroom',
+    );
+
+    expect(axiosMock.history.post[0].url).toEqual(
+      '/v1/videos/id-1/events?logVideoInteraction=true&type=copied-to-google-classroom',
+    );
   });
 
-  await new HttpBoclipsAnalytics().trackVideoInteraction(
-    video,
-    'copied-to-google-classroom',
-  );
+  it('logInteraction rejects when link is missing', async () => {
+    const axiosMock = new MockAdapter(axios);
+    axiosMock.onPost().reply(200);
 
-  expect(axiosMock.history.post[0].url).toEqual(
-    '/v1/videos/id-1/events?logVideoInteraction=true&type=copied-to-google-classroom',
-  );
-});
+    const video = VideoFactory.sample({
+      id: 'id-1',
+      links: {
+        self: new Link({ href: '/v1/videos/id-1' }),
+      },
+    });
 
-test('logInteraction rejects when link is missing', async () => {
-  const axiosMock = new MockAdapter(axios);
-  axiosMock.onPost().reply(200);
+    const result = new HttpBoclipsAnalytics().trackVideoInteraction(
+      video,
+      'copied-to-google-classroom',
+    );
 
-  const video = VideoFactory.sample({
-    id: 'id-1',
-    links: {
-      self: new Link({ href: '/v1/videos/id-1' }),
-    },
+    await result.catch((e) => {
+      expect(e.message).toEqual('Video id-1 has no logInteraction link');
+    });
   });
 
-  const result = new HttpBoclipsAnalytics().trackVideoInteraction(
-    video,
-    'copied-to-google-classroom',
-  );
+  it('trackPageRendered calls ApiClient with url', async () => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    client.events.clear();
 
-  await result.catch((e) => {
-    expect(e.message).toEqual('Video id-1 has no logInteraction link');
+    const analytics = new HttpBoclipsAnalytics();
+
+    await analytics.trackPageRendered('http://test.com/test?id=123');
+
+    expect(client.events.getEvents().length).toEqual(1);
+    expect((client.events.getEvents()[0] as PageRenderedRequest).url).toEqual(
+      'http://test.com/test?id=123',
+    );
   });
-});
 
-test('trackPageRendered calls ApiClient with url', async () => {
-  const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-  client.events.clear();
+  it('trackPlatformInteraction calls ApiClient with subtype', async () => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    client.events.clear();
 
-  const analytics = new HttpBoclipsAnalytics();
+    const analytics = new HttpBoclipsAnalytics();
 
-  await analytics.trackPageRendered('http://test.com/test?id=123');
+    await analytics.trackPlatformInteraction(
+      PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+    );
 
-  expect(client.events.getEvents().length).toEqual(1);
-  expect((client.events.getEvents()[0] as PageRenderedRequest).url).toEqual(
-    'http://test.com/test?id=123',
-  );
-});
+    expect(client.events.getEvents().length).toEqual(1);
+    expect(client.events.getEvents()[0]).toEqual({
+      type: 'PLATFORM_INTERACTED_WITH',
+      subtype: PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+      anonymous: false,
+    });
+  });
 
-test('trackPlatformInteraction calls ApiClient with subtype', async () => {
-  const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-  client.events.clear();
+  it('trackSearchQueryCompletionsSuggested calls ApiClient', async () => {
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    client.events.clear();
+    const request = {
+      searchQuery: 'eng',
+      impressions: ['english', 'engineering'],
+      componentId: 'kjsdfo',
+      completionId: 'sdfnsdn',
+    };
+    const analytics = new HttpBoclipsAnalytics();
 
-  const analytics = new HttpBoclipsAnalytics();
+    await analytics.trackSearchSuggestionImpression(request);
 
-  await analytics.trackPlatformInteraction(
-    PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
-  );
-
-  expect(client.events.getEvents().length).toEqual(1);
-  expect(client.events.getEvents()[0]).toEqual({
-    type: 'PLATFORM_INTERACTED_WITH',
-    subtype: PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
-    anonymous: false,
+    expect(client.events.getEvents().length).toEqual(1);
+    expect(client.events.getEvents()[0]).toEqual({
+      searchQuery: 'eng',
+      impressions: ['english', 'engineering'],
+      componentId: 'kjsdfo',
+      completionId: 'sdfnsdn',
+    });
   });
 });

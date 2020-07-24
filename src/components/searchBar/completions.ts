@@ -96,6 +96,7 @@ const completions = (lists: Lists, txt: string): Completion[] =>
     .map((entry) => getMatch(entry, txt))
     .filter((matchResult) => matchResult.matches)
     .sort((m1, m2) => m2.weight - m1.weight)
+    .slice(0, 6)
     .map((matchResult) => ({
       text: matchResult.text,
       value: matchResult.text,
