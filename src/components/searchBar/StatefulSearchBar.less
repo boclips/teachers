@@ -4,6 +4,18 @@
 .search-completions {
   font-weight: bold;
   font-size: 16px;
+  div {
+    :first-child {
+      border-top: none;
+    }
+  }
+
+  .channels {
+    border-top: 1px solid #848FBB;
+  }
+  .channels ~ .channels {
+    border-top: none;
+  }
 
   .autocomplete--channel {
     color: @shade-6;
