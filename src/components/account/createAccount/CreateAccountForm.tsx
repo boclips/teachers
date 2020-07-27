@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
 import GoogleSVG from '../../../../resources/images/google.svg';
 import MicrosoftSVG from '../../../../resources/images/office-365.svg';
-import RegistrationLogoSVG from '../../../../resources/images/registration-logo.svg';
 import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
@@ -129,7 +128,11 @@ const CreateAccountForm = () => {
     >
       <Row>
         <Col xs={{ span: 0 }} lg={{ span: 12 }}>
-          <RegistrationLogoSVG className="create-account__logo" />
+          <img
+            className="create-account__logo"
+            src="/resources/registration-logo.svg"
+            alt=""
+          />
         </Col>
         <Col xs={{ span: 24 }} lg={{ span: 12 }}>
           {screenReaderErrors && (

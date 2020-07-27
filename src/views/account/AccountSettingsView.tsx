@@ -1,7 +1,6 @@
 import { Col, Row } from 'antd';
 import React, { PureComponent } from 'react';
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
-import AccountSettingsSVG from '../../components/account/onboarding/dwarf-with-pencil.svg';
 import PageLayout from '../../components/layout/PageLayout';
 
 export class AccountSettingsView extends PureComponent {
@@ -18,7 +17,7 @@ export class AccountSettingsView extends PureComponent {
           <Row>
             <Col xs={{ span: 0 }} lg={{ span: 12 }}>
               <section className="illustration">
-                <AccountSettingsSVG />
+                <img src="/resources/dwarf-with-pencil.svg" alt="" />
               </section>
             </Col>
             <Col xs={{ span: 24 }} lg={{ span: 12 }}>

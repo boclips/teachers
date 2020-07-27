@@ -1,5 +1,4 @@
 import { Col, Row } from 'antd';
-import SadTeacherSVG from 'resources/images/sad-teacher.svg';
 import React from 'react';
 
 interface Props {
@@ -13,7 +12,7 @@ export const DetailsNotFound = ({ title, message, dataQa }: Props) => (
     <Row>
       <Col sm={{ span: 24 }} md={{ span: 8 }}>
         <section className="illustration">
-          <SadTeacherSVG />
+          <img src="/resources/sad-teacher.svg" alt="" />
         </section>
       </Col>
       <Col sm={{ span: 24 }} md={{ span: 16 }}>

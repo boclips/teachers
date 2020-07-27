@@ -2,7 +2,6 @@ import React from 'react';
 import Row from 'antd/lib/grid/row';
 import Col from 'antd/lib/grid/col';
 import { Link } from 'react-router-dom';
-import SadTeacher from '../../../resources/images/sad-teacher.svg';
 import PageLayout from '../../components/layout/PageLayout';
 
 interface Props {
@@ -20,7 +19,7 @@ export const ErrorView = ({ nonRecoverable }: Props) => (
       <Row>
         <Col xs={{ span: 0 }} lg={{ span: 12 }}>
           <section className="illustration">
-            <SadTeacher />
+            <img src="/resources/sad-teacher.svg" alt="" />
           </section>
         </Col>
         <Col xs={{ span: 24 }} lg={{ span: 12 }}>

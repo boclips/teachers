@@ -36,13 +36,9 @@ import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
 import { SchoolForm, UNKNOWN_SCHOOL } from '../form/SchoolForm';
 import { StatesForm } from '../form/StatesForm';
 import { SubjectsForm } from '../form/SubjectsForm';
-import SvgStep2 from './dwarf-with-pencil.svg';
 import './OnboardingForm.less';
 import { OnboardingProgressDots } from './OnboardingProgressDots';
 import { fetchCountriesAction } from './redux/actions/fetchCountriesAction';
-import SvgStep3 from './teacher-micromanaging.svg';
-import SvgStep4 from './teacher-presenting.svg';
-import SvgStep1 from './teachers-waving.svg';
 
 const validationFields = [
   ['firstName', 'lastName', 'role'],
@@ -294,21 +290,25 @@ class OnboardingForm extends React.Component<
               effect="fade"
               dots={false}
             >
-              <SvgStep1
+              <img
+                src="/resources/teachers-waving.svg"
                 className="onboarding__logo"
-                title="Two teachers waving hello"
+                alt=""
               />
-              <SvgStep2
+              <img
+                src="/resources/dwarf-with-pencil.svg"
                 className="onboarding__logo"
-                title="Teacher holding a pencil about to fill in a form"
+                alt=""
               />
-              <SvgStep3
+              <img
+                src="/resources/teacher-micromanaging.svg"
                 className="onboarding__logo"
-                title="Two teachers working together on a computer"
+                alt=""
               />
-              <SvgStep4
+              <img
+                src="/resources/teacher-presenting.svg"
                 className="onboarding__logo"
-                title="Teacher presenting in front of a digital smartboard"
+                alt=""
               />
             </Carousel>
           </Col>

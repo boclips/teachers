@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
-import SadTeacher from '../../../resources/images/sad-teacher.svg';
 import PageLayout from '../../components/layout/PageLayout';
 import State from '../../types/State';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
@@ -34,7 +33,7 @@ const TrialExpiredView = () => {
         <Row>
           <Col sm={{ span: 24 }} md={{ span: 12 }}>
             <section className="illustration">
-              <SadTeacher />
+              <img src="/resources/sad-teacher.svg" alt="" />
             </section>
           </Col>
           <Col sm={{ span: 24 }} md={{ span: 12 }}>
