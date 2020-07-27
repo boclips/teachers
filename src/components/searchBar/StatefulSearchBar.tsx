@@ -112,11 +112,14 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   }
 
   private optionsRender() {
-    return this.state.completions.map((r) => ({
-      key: r.text,
-      value: r.text,
-      label: this.renderResult(r),
-    }));
+    return this.state.completions
+      .sort((r) => (r.list === 'topics' ? -1 : 1))
+      .map((r) => ({
+        key: r.text,
+        value: r.text,
+        label: this.renderResult(r),
+        className: r.list === 'topics' ? 'topics' : 'channels',
+      }));
   }
 
   private renderResult(r: Completion) {
