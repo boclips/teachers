@@ -11,8 +11,22 @@
 
   .ant-input-affix-wrapper {
     border-radius: 8px;
+    border: 2px @shade-3 solid;
+    border-right: none;
+    @media (max-width: @screen-lg) {
+      border-radius: 8px !important;
+      border: 2px @shade-3 solid;
+    }
     .ant-input-lg {
       padding-left: 2px;
+    }
+  }
+}
+
+.ant-input-search {
+  .ant-input-group-addon {
+    @media (max-width: @screen-lg) {
+      display: none;
     }
   }
 }
