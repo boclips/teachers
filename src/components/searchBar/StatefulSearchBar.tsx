@@ -84,7 +84,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
         <AutoComplete
           defaultActiveFirstOption={false}
           backfill
-          dropdownAlign={{ offset:[0,0] }}
+          dropdownAlign={{ offset: [0, 0] }}
           dropdownClassName="search-completions"
           options={this.optionsRender()}
           defaultValue={this.props.value}
