@@ -1,1 +1,15 @@
-<svg width="6" height="8" xmlns="http://www.w3.org/2000/svg"><path d="M1.504 7.84l3.992-2.78c.672-.463.672-1.645 0-2.12L1.504.16C.832-.303 0 .294 0 1.22v5.547c0 .939.832 1.536 1.504 1.073z" fill="#848FBB" fill-rule="nonzero"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="8px" viewBox="0 0 6 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 61.2 (101010) - https://sketch.com -->
+    <title>3C4585CC-2D83-4BD5-930E-2BDC6A27DA40</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="homepage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="my-resources" transform="translate(-395.000000, -1790.000000)" fill="#848FBB" fill-rule="nonzero">
+            <g id="bullet-plan-icons-/-bullet-plan" transform="translate(388.000000, 1784.000000)">
+                <g id="bullet" transform="translate(7.000000, 6.000000)">
+                    <path d="M1.5043878,7.83978841 L5.49603009,5.06057225 C6.16798997,4.59736955 6.16798997,3.41498373 5.49603009,2.93959149 L1.5043878,0.160375329 C0.832427915,-0.302827365 0,0.294460319 0,1.22086571 L0,6.76710849 C0,7.70570342 0.832427915,8.3029911 1.5043878,7.83978841 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
