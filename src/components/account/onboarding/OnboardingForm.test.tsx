@@ -218,15 +218,17 @@ describe('onboarding form', () => {
     expect(mockOnboardUser).not.toHaveBeenCalled();
   });
 
-  it('sends a page changed event if page has not already been visited', async () => {
+  it('sends a page changed event to Appcues if page has not already been visited', async () => {
     const wrapper = getView();
-
+    const trackedPageIndex = 0;
     await fillStep1(wrapper);
 
-    expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(0);
+    expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(
+      trackedPageIndex,
+    );
   });
 
-  it('does not send page changed event if page has already been visited', async () => {
+  it('does not send duplicated page changed event to Appcues if page has already been visited', async () => {
     const wrapper = getView();
 
     await fillStep1(wrapper);
@@ -236,7 +238,7 @@ describe('onboarding form', () => {
     expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
   });
 
-  it('sends a platform interaction event if page has not already been visited', async () => {
+  it('sends a platform interaction event when visiting a page ', async () => {
     const wrapper = getView();
 
     await fillStep1(wrapper);
@@ -251,7 +253,7 @@ describe('onboarding form', () => {
     ]);
   });
 
-  it('does not send platform interaction event if page has already been visited', async () => {
+  it('does not send duplicated platform interaction event if page has already been visited', async () => {
     const wrapper = getView();
 
     await fillStep1(wrapper);

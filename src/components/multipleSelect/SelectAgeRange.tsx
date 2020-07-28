@@ -26,7 +26,6 @@ export const SelectAgeRange = (props: Props) => {
   };
 
   const onChange = (value: SelectValue) => {
-    console.log(value);
     const split = value as string[];
     const parsed = split.map((it) => AgeRange.fromJson(it));
     const sorted = AgeRange.removeDuplicates(parsed);
