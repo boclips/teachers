@@ -1,73 +1,60 @@
-import { Form } from '@ant-design/compatible';
-
-import { Select } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Select, Form } from 'antd';
 import React from 'react';
 import { UsaState } from '../../../types/UsaState';
 import '../../common/MultiSelect.less';
 
 interface StatesFormProps {
+  formItemId: string;
   states: UsaState[];
-  placeholder?: string;
-  label?: string;
-  initialValue?: string;
-  onStateChange?: (value: UsaState) => void;
+  onChange: (value) => void;
 }
 
-export class StatesForm extends React.Component<
-  FormComponentProps & StatesFormProps
-> {
-  public onUpdateState = (value: string) => {
-    this.props.form.setFieldsValue({ state: value });
-    this.props.onStateChange(this.props.states.find((c) => c.id === value));
-  };
-
-  private filterResults = () => (input, option) =>
+export const StatesForm = (props: StatesFormProps) => {
+  const filterResults = (input, option) =>
     option.title?.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 
-  private generateOptions() {
-    const { Option } = Select;
+  const getById = (id: string) => props.states.find((state) => state.id === id);
 
+  const generateOptions = () => {
     return (
-      this.props.states &&
-      this.props.states
+      props.states &&
+      props.states
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((state) => (
-          <Option
+          <Select.Option
             data-qa="state-option"
             key={state.id}
             value={state.id}
             title={state.name}
           >
             {state.name}
-          </Option>
+          </Select.Option>
         ))
     );
-  }
+  };
 
-  public render() {
-    return (
-      <Form.Item className="form__item" label={this.props.label} colon={false}>
-        {this.props.form.getFieldDecorator('state', {
-          rules: [{ required: true, message: 'Please enter your state' }],
-          initialValue: this.props.initialValue,
-        })(
-          <Select
-            filterOption={this.filterResults()}
-            placeholder={this.props.placeholder}
-            showSearch
-            className="boclips-multi-select-selection"
-            size="large"
-            onChange={this.onUpdateState}
-            data-qa="states-filter-select"
-            dropdownClassName="dropdown"
-            /* eslint-disable-next-line */
-            {...this.props}
-          >
-            {this.generateOptions()}
-          </Select>,
-        )}
-      </Form.Item>
-    );
-  }
-}
+  return (
+    <Form.Item
+      className="required form__item"
+      label="State"
+      htmlFor="states-filter-select"
+      colon={false}
+      name={props.formItemId}
+      rules={[{ required: true, message: 'Please enter your state' }]}
+    >
+      <Select
+        filterOption={filterResults}
+        placeholder="Choose state"
+        showSearch
+        className="boclips-multi-select-selection"
+        size="large"
+        data-qa="states-filter-select"
+        id="states-filter-select"
+        dropdownClassName="dropdown"
+        onChange={(id: string) => props.onChange(getById(id))}
+      >
+        {generateOptions()}
+      </Select>
+    </Form.Item>
+  );
+};

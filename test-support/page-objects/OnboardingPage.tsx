@@ -1,17 +1,16 @@
-import { mount, ReactWrapper } from 'enzyme';
 import { createMemoryHistory } from 'history';
 import React from 'react';
+import { render } from '@testing-library/react';
+import { OnboardingSections } from 'src/components/account/onboarding/OnboardingFormValues';
+import { OnboardingFormHelper } from 'test-support/OnboardingFormHelper';
 import App from '../../src/app/App';
-import { OnboardingFormHelper } from '../../src/components/account/onboarding/OnboardingFormHelper';
-import { findOne } from '../enzymeHelpers';
-import eventually from '../eventually';
 
 class OnboardingPage {
-  public constructor(public wrapper: ReactWrapper) {}
+  public constructor(public wrapper) {}
 
   public static async navigateToOnboarding() {
     const page = new OnboardingPage(
-      mount(
+      render(
         <App
           history={createMemoryHistory({
             initialEntries: ['/onboarding'],
@@ -27,7 +26,7 @@ class OnboardingPage {
 
   public static async loadHomeExpectingRedirectToOnboarding() {
     const page = new OnboardingPage(
-      mount(
+      render(
         <App
           history={createMemoryHistory({
             initialEntries: ['/'],
@@ -42,10 +41,7 @@ class OnboardingPage {
   }
 
   private async hasLoaded() {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      findOne(this.wrapper, 'onboarding-page');
-    });
+    await this.wrapper.findByText(OnboardingSections[0].title);
   }
 
   public setName(firstName: string, lastName: string) {
@@ -68,12 +64,19 @@ class OnboardingPage {
     OnboardingFormHelper.enterSchool(this.wrapper, schoolName);
   }
 
-  public setMarketingOptIn(optIn: boolean) {
-    OnboardingFormHelper.setMarketingOptIn(this.wrapper, optIn);
+  public setMarketingOptIn() {
+    OnboardingFormHelper.tickMarketingOptIn(this.wrapper);
   }
 
-  public setAgreeTerms(accept: boolean) {
-    OnboardingFormHelper.setTermsAndConditions(this.wrapper, accept);
+  public setAgreeTerms() {
+    OnboardingFormHelper.tickTermsAndConditions(this.wrapper);
+  }
+
+  public async navigateTo(nextPage: number) {
+    await OnboardingFormHelper.moveCarouselForward(
+      this.wrapper,
+      OnboardingSections[nextPage - 1],
+    );
   }
 
   public save() {
@@ -85,10 +88,7 @@ class OnboardingPage {
   }
 
   public async hasRedirectedToHome() {
-    await eventually(() => {
-      this.wrapper = this.wrapper.update();
-      findOne(this.wrapper, 'home-page');
-    });
+    await this.wrapper.findByText("Let's plan your next lesson:");
   }
 }
 

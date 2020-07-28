@@ -1,14 +1,11 @@
-import { Form } from '@ant-design/compatible';
-import { Button, Row } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { editUser } from '../../../services/users/updateUser';
-import { UserProfile } from '../../../services/users/UserProfile';
-import { Country } from '../../../types/Country';
-import { Links } from '../../../types/Links';
-import { UsaState } from '../../../types/UsaState';
+import { Button, Form } from 'antd';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { editUser } from 'src/services/users/updateUser';
+import { UserProfile } from 'src/services/users/UserProfile';
+import { Country } from 'src/types/Country';
+import { Links } from 'src/types/Links';
+import { UsaState } from 'src/types/UsaState';
 import {
   ScreenReaderError,
   ScreenReaderErrors,
@@ -26,120 +23,92 @@ interface Props {
   userProfile: UserProfile;
 }
 
-interface DispatchProps {
-  updateUser: () => void;
-}
+export const EditSchoolSettingsForm = (props: Props) => {
+  const [screenReaderErrors, setScreenReaderErrors] = useState<
+    ScreenReaderError[]
+  >([]);
+  const [usaState, setUsaState] = useState<UsaState>(props.userProfile.state);
 
-interface InternalState {
-  latestState: string;
-  screenReaderErrors: ScreenReaderError[];
-}
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
-export class EditSchoolSettingsFields extends React.Component<
-  Props & FormComponentProps & DispatchProps,
-  InternalState
-> {
-  public constructor(props: Props & FormComponentProps & DispatchProps) {
-    super(props);
-    this.state = {
-      latestState: this.props.userProfile.state.id,
-      screenReaderErrors: null,
-    };
-  }
+  const submit = (values) => {
+    editUser(props.links, {
+      state: values.state,
+      schoolName: values.schoolName,
+      schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
+    })
+      .then(() => {
+        dispatch(updateUserAction());
+        props.toggleForm();
+      })
+      .catch((ex) => {
+        console.error(ex);
+        NotificationFactory.error({
+          message: 'Ooops! Something went wrong...',
+          description: 'Please try again or contact our support team.',
+        });
+      });
+  };
 
-  private stateChange = (value: UsaState) => {
-    if (this.state.latestState !== value.id) {
-      this.props.form.setFieldsValue({ schoolId: undefined });
+  const changeUsaState = (value: UsaState) => {
+    if (usaState.id !== value.id) {
+      form.setFieldsValue({ schoolId: undefined });
+      form.setFieldsValue({ schoolName: undefined });
     }
 
-    this.setState({ latestState: value.id });
+    setUsaState(value);
   };
 
-  private submit = () => {
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        editUser(this.props.links, {
-          state: values.state,
-          schoolName: values.schoolName,
-          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-        })
-          .then(() => {
-            this.props.updateUser();
-            this.props.toggleForm();
-          })
-          .catch((ex) => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
-          });
-      } else {
-        this.setState((state) => ({
-          ...state,
-          screenReaderErrors: transformErrors(err),
-        }));
-      }
-    });
-  };
+  const validationFailed = (errorInfo) =>
+    setScreenReaderErrors(transformErrors(errorInfo.errorFields));
 
-  public render() {
-    return (
-      <Form data-qa="school-settings-form" className="account-settings__form">
-        {this.state.screenReaderErrors && (
-          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
-        )}
-        <Row>
-          <StatesForm
-            form={this.props.form}
-            states={this.props.country.states}
-            initialValue={this.props.userProfile.state.id}
-            label="State"
-            onStateChange={this.stateChange}
-          />
-        </Row>
-        <Row>
-          <SchoolForm
-            form={this.props.form}
-            country={this.props.country}
-            state={this.props.userProfile.state}
-            label="School"
-            allowUnknownSchools={false}
-            initialValue={this.props.userProfile.school}
-            placeholder="Enter the name of your school"
-          />
-        </Row>
-        <section className="buttons">
-          <Button
-            data-qa="cancel-edit-button"
-            type="ghost"
-            onClick={this.props.toggleForm}
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-            data-qa="save-button"
-            onClick={this.submit}
-            size="large"
-          >
-            Save changes
-          </Button>
-        </section>
-      </Form>
-    );
-  }
-}
+  return (
+    <Form
+      data-qa="school-settings-form"
+      className="account-settings__form"
+      form={form}
+      onFinish={submit}
+      onFinishFailed={validationFailed}
+      initialValues={{
+        state: props.userProfile.state.id,
+        schoolName: props.userProfile.school.name,
+        schoolId: props.userProfile.school.name,
+      }}
+    >
+      {screenReaderErrors && <ScreenReaderErrors errors={screenReaderErrors} />}
+      <section>
+        <StatesForm
+          formItemId="state"
+          states={props.country.states}
+          onChange={changeUsaState}
+        />
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    updateUser: () => dispatch(updateUserAction()),
-  };
-}
-
-export const EditSchoolSettingsForm = connect<Props, DispatchProps>(
-  null,
-  mapDispatchToProps,
-)(Form.create<Props & FormComponentProps>()(EditSchoolSettingsFields));
+        <SchoolForm
+          formItemId="schoolId"
+          country={props.country}
+          state={usaState}
+          allowUnknownSchools={false}
+        />
+      </section>
+      <section className="buttons">
+        <Button
+          data-qa="cancel-edit-button"
+          type="ghost"
+          onClick={props.toggleForm}
+          size="large"
+        >
+          Cancel
+        </Button>
+        <Button
+          htmlType="submit"
+          type="primary"
+          data-qa="save-button"
+          size="large"
+        >
+          Save changes
+        </Button>
+      </section>
+    </Form>
+  );
+};

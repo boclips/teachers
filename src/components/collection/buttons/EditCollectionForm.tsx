@@ -1,42 +1,33 @@
-import { Form } from '@ant-design/compatible';
-import { Input } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
+import { Form, Input } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import Button from 'antd/lib/button';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AgeRangeSelect } from 'src/components/ageRanges/AgeRangeSelect';
 import { AgeRange } from 'src/types/AgeRange';
-import State from '../../../types/State';
 import { SubjectsForm } from '../../account/form/SubjectsForm';
 import './EditCollectionForm.less';
 import Bodal from '../../common/Bodal';
 import {
   editCollectionAction,
   EditCollectionRequest,
-  VideoCollectionChanges,
 } from '../redux/actions/editCollectionAction';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { RemoveCollectionButton } from './RemoveCollectionButton';
 
-interface Props extends FormComponentProps {
+interface Props {
   collection: VideoCollection;
   visible: boolean;
   setVisible: (visible: boolean) => void;
   disableButton: boolean;
 }
 
-export const EditCollectionForm = Form.create<Props>()((props: Props) => {
-  const subjectsInStore = useSelector((state: State) => state.subjects);
-  const { getFieldDecorator } = props.form;
+export const EditCollectionForm = (props: Props) => {
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   const handleOk = () => {
-    props.form.validateFields((formErrors, values: VideoCollectionChanges) => {
-      if (formErrors) {
-        return;
-      }
-
+    form.validateFields().then((values) => {
       const changeRequest: EditCollectionRequest = {
         collection: props.collection,
         changes: {},
@@ -48,7 +39,7 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
         if (
           // https://eslint.org/docs/rules/no-prototype-builtins#top
           Object.prototype.hasOwnProperty.call(values, key) &&
-          props.form.isFieldTouched(key)
+          form.isFieldTouched(key)
         ) {
           changeRequest.changes[key] = values[key];
 
@@ -67,7 +58,7 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
       }
 
       if (shouldSubmitChanges) {
-        props.form.resetFields();
+        form.resetFields();
         dispatch(editCollectionAction(changeRequest));
       }
 
@@ -145,11 +136,13 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
       wrapClassName="edit-collection-modal"
       destroyOnClose
     >
-      <Form className="form-edit-collection">
-        <Form.Item className="form__item">
-          {getFieldDecorator('title', { initialValue: props.collection.title })(
-            <Input data-qa="title-edit" />,
-          )}
+      <Form className="form-edit-collection" form={form}>
+        <Form.Item
+          className="form__item"
+          name="title"
+          initialValue={props.collection.title}
+        >
+          <Input data-qa="title-edit" />
         </Form.Item>
         <Form.Item
           className="form__item"
@@ -164,25 +157,25 @@ export const EditCollectionForm = Form.create<Props>()((props: Props) => {
           />
         </Form.Item>
         <SubjectsForm
-          form={props.form}
-          subjects={subjectsInStore}
+          formItemId="subjects"
+          label="Subjects"
           placeholder="Choose from our list.."
           initialValue={props.collection.subjects}
-          label="Subjects"
         />
-        <Form.Item className="form__item" label="Description">
-          {getFieldDecorator('description', {
-            initialValue: props.collection.description,
-          })(
-            <TextArea
-              data-qa="description-edit"
-              rows={3}
-              placeholder="Enter a brief overview of the topic of your collection"
-              className="form__item__textarea"
-            />,
-          )}
+        <Form.Item
+          className="form__item"
+          label="Description"
+          name="description"
+          initialValue={props.collection.description}
+        >
+          <TextArea
+            data-qa="description-edit"
+            rows={3}
+            placeholder="Enter a brief overview of the topic of your collection"
+            className="form__item__textarea"
+          />
         </Form.Item>
       </Form>
     </Bodal>
   );
-});
+};

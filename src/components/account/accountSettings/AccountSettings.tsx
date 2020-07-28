@@ -105,7 +105,6 @@ class AccountSettings extends React.Component<
             <h1 className="extra-big">Edit profile</h1>
             <EditProfileForm
               userProfile={this.props.userProfile}
-              subjects={this.props.subjects}
               toggleForm={this.toggleEditProfileForm}
               links={this.props.links}
             />

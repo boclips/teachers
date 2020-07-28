@@ -1,495 +1,204 @@
-import { Form } from '@ant-design/compatible';
-import { Button, Carousel, Col, Row } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
-import { push } from 'connected-react-router';
-import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
+import { Carousel, Col, Row, Form } from 'antd';
+
+import React, { useRef, useState } from 'react';
+import { OnboardingProgressDots } from 'src/components/account/onboarding/OnboardingProgressDots';
+import { OnboardingSection } from 'src/components/account/onboarding/OnboardingSection';
+import { NameForm } from 'src/components/account/form/NameForm';
 import { RoleForm } from 'src/components/account/form/RoleForm';
-import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
-import { RegistrationContext } from '../../../services/session/RegistrationContext';
-import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
-import { onboardUser } from '../../../services/users/updateUser';
-import { UserProfile } from '../../../services/users/UserProfile';
-import { AgeRange } from '../../../types/AgeRange';
-import { Country } from '../../../types/Country';
-import { Links } from '../../../types/Links';
-import State from '../../../types/State';
-import { Subject } from '../../../types/Subject';
-import { UsaState } from '../../../types/UsaState';
-import '../../common/MultiSelect.less';
+import { ScreenReaderError } from 'src/components/common/a11y/ScreenReaderErrors';
+import { transformErrors } from 'src/components/account/form/FormHelper';
+import { SubjectsForm } from 'src/components/account/form/SubjectsForm';
+import { AgeRangeForm } from 'src/components/account/form/AgeRangeForm';
+import { MarketingAgreementForm } from 'src/components/account/form/MarketingAgreementForm';
+import { PrivacyPolicyAgreementForm } from 'src/components/account/form/PrivacyPolicyAgreementForm';
+import { SchoolDetailsForm } from 'src/components/account/onboarding/SchoolDetailsForm';
+import { OnboardingButtons } from 'src/components/account/onboarding/OnboardingButtons';
+import { OnboardingStepsIndicator } from 'src/components/account/onboarding/OnboardingStepsIndicator';
+import { RegistrationContext } from 'src/services/session/RegistrationContext';
+import { RegistrationContextService } from 'src/services/session/RegistrationContextService';
+import { onboardUser, UpdateUserRequest } from 'src/services/users/updateUser';
+import NotificationFactory from 'src/components/common/NotificationFactory';
+import { useDispatch, useSelector } from 'react-redux';
+import State from 'src/types/State';
+import { updateUserAction } from 'src/components/account/accountSettings/redux/actions/updateUserAction';
+import { push } from 'connected-react-router';
 import {
-  ScreenReaderError,
-  ScreenReaderErrors,
-} from '../../common/a11y/ScreenReaderErrors';
-import NotificationFactory from '../../common/NotificationFactory';
-import { fetchSubjectsAction } from '../../multipleSelect/redux/actions/fetchSubjectsAction';
-import { updateUserAction } from '../accountSettings/redux/actions/updateUserAction';
-import { AgeRangeForm } from '../form/AgeRangeForm';
-import { CountriesForm } from '../form/CountriesForm';
-import { transformErrors } from '../form/FormHelper';
-import { MarketingAgreementForm } from '../form/MarketingAgreementForm';
-import { NameForm } from '../form/NameForm';
-import { PrivacyPolicyAgreementForm } from '../form/PrivacyPolicyAgreementForm';
-import { SchoolForm, UNKNOWN_SCHOOL } from '../form/SchoolForm';
-import { StatesForm } from '../form/StatesForm';
-import { SubjectsForm } from '../form/SubjectsForm';
+  OnboardingFormValues,
+  OnboardingSections,
+} from 'src/components/account/onboarding/OnboardingFormValues';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import './OnboardingForm.less';
-import { OnboardingProgressDots } from './OnboardingProgressDots';
-import { fetchCountriesAction } from './redux/actions/fetchCountriesAction';
+import { OnboardingIllustration } from 'src/components/account/onboarding/OnboardingIllustration';
+import { convertFormValues } from 'src/components/account/onboarding/convertOnboardingFormToUpdateRequest';
 
-const validationFields = [
-  ['firstName', 'lastName', 'role'],
-  ['ageRange', 'subjects'],
-  ['country', 'state', 'schoolName', 'schoolId'],
-  ['hasOptedIntoMarketing', 'privacyPolicy'],
-];
+const getFormId = (name: keyof OnboardingFormValues): string => name;
 
-interface OnboardingProps {
-  links: Links;
-  subjects: Subject[];
-  countries: Country[];
-  userProfile: UserProfile;
-}
+export const OnboardingForm = () => {
+  const links = useSelector((state: State) => state.links.entries);
+  const imageCarousel = useRef<Carousel>();
+  const formCarousel = useRef<Carousel>();
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
-interface InternalState {
-  updating: boolean;
-  currentIndex: number;
-  formCarousel: Carousel;
-  imageCarousel: Carousel;
-  numberOfSlides: number;
-  visitedIndices: Set<number>;
-  role?: 'TEACHER' | 'PARENT' | 'SCHOOLADMIN' | 'OTHER';
-  country?: Country;
-  state?: UsaState;
-  screenReaderErrors: ScreenReaderError[];
-}
+  const [section, setSection] = useState(OnboardingSections[0]);
+  const [farthestVisitedPage, setFarthestVisitedPage] = useState(-1);
+  const [role, setRole] = useState<string>(null);
 
-interface DispatchProps {
-  fetchSubjects: () => void;
-  fetchCountries: () => void;
-  updateUser: () => void;
-  goToHomepage: () => void;
-}
+  const [screenReaderErrors, setScreenReaderErrors] = useState<
+    ScreenReaderError[]
+  >([]);
 
-class OnboardingForm extends React.Component<
-  OnboardingProps & FormComponentProps & DispatchProps,
-  InternalState
-> {
-  private formCarousel: Carousel;
+  const stepBack = () => formCarousel.current.prev();
+  const stepForward = () => {
+    form
+      .validateFields(section.fields)
+      .then(() => formCarousel.current.next())
+      .catch((errorInfo) => {
+        setScreenReaderErrors(transformErrors(errorInfo.errorFields));
+      });
+  };
+  const onSubmit = (values: OnboardingFormValues) => {
+    const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
+    const userValues: Partial<UpdateUserRequest> = convertFormValues(values);
 
-  private imageCarousel: Carousel;
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      updating: false,
-      currentIndex: 0,
-      formCarousel: null,
-      imageCarousel: null,
-      numberOfSlides: 0,
-      visitedIndices: new Set<number>(),
-      country: null,
-      state: null,
-      screenReaderErrors: null,
-      role: null,
-    };
-  }
-
-  public componentDidMount() {
-    this.props.fetchSubjects();
-    this.props.fetchCountries();
-    this.setState((state) => ({
-      ...state,
-      formCarousel: this.formCarousel,
-      imageCarousel: this.imageCarousel,
-      numberOfSlides: React.Children.toArray(this.imageCarousel.props.children)
-        .length,
-    }));
-  }
-
-  private afterSlideChange = (currentIndex) => {
-    const visitedIndices = new Set(this.state.visitedIndices);
-    const previousIndex = currentIndex - 1;
-
-    if (currentIndex > 0) {
-      visitedIndices.add(previousIndex);
-
-      if (!this.state.visitedIndices.has(previousIndex)) {
-        AnalyticsFactory.externalAnalytics().trackOnboardingPageChanged(
-          previousIndex,
-        );
-        AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
-          PlatformInteractionType[
-            `ONBOARDING_PAGE_${currentIndex + 1}_STARTED`
-          ],
-          true,
-        );
-      }
-    }
-
-    this.setState((state) => ({
-      ...state,
-      currentIndex,
-      visitedIndices,
-    }));
+    onboardUser(links, {
+      ...userValues,
+      referralCode: registrationContext?.referralCode,
+      utm: registrationContext?.utm,
+    })
+      .then(() => {
+        dispatch(updateUserAction());
+        dispatch(push('/'));
+      })
+      .catch((ex) => {
+        console.error(ex);
+        NotificationFactory.generalError();
+      });
   };
 
-  private isLastSlide = () =>
-    this.state.currentIndex === this.state.numberOfSlides - 1;
+  const onSubmitFailed = (errorInfo) =>
+    setScreenReaderErrors(transformErrors(errorInfo.errorFields));
 
-  private isFirstSlide = () => this.state.currentIndex === 0;
-
-  private back = () => {
-    this.state.formCarousel.prev();
-  };
-
-  private next = () => {
-    const currentIndex = this.state.currentIndex;
-
-    this.props.form.validateFieldsAndScroll(
-      validationFields[currentIndex],
-      (validationErrors) => {
-        if (!validationErrors) {
-          this.state.formCarousel.next();
-          this.setState((state) => ({
-            ...state,
-            screenReaderErrors: null,
-          }));
-        } else {
-          this.setState((state) => ({
-            ...state,
-            screenReaderErrors: transformErrors(validationErrors),
-          }));
-        }
-      },
-    );
-  };
-
-  private onCountryChange = (country) =>
-    this.setState((state) => ({
-      ...state,
-      country,
-    }));
-
-  private onRoleChange = (value) =>
-    this.setState((state) => ({
-      ...state,
-      role: value.role,
-    }));
-
-  private onStateChange = (updatedState) =>
-    this.setState((state) => ({
-      ...state,
-      state: updatedState,
-    }));
-
-  private getSchoolForm = () => {
-    if (this.state.role === 'PARENT' || this.state.country === null) {
-      return <></>;
-    }
-
-    if (this.state.country && this.state.country.id === 'USA') {
-      return (
-        <section data-qa="usa-school-details">
-          <StatesForm
-            label="State"
-            form={this.props.form}
-            states={this.state.country.states}
-            placeholder="Choose state"
-            onStateChange={this.onStateChange}
-          />
-          <SchoolForm
-            form={this.props.form}
-            country={this.state.country}
-            placeholder="Enter the name of your school"
-            label="School"
-            state={this.state.state}
-            allowUnknownSchools={false}
-          />
-        </section>
+  const afterCarouselChange = (index: number) => {
+    if (index > farthestVisitedPage) {
+      AnalyticsFactory.externalAnalytics().trackOnboardingPageChanged(
+        index - 1,
       );
+      AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+        PlatformInteractionType[`ONBOARDING_PAGE_${index + 1}_STARTED`],
+        true,
+      );
+      setFarthestVisitedPage(index);
     }
-
-    return (
-      <section data-qa="non-usa-school-details">
-        <SchoolForm
-          form={this.props.form}
-          country={this.state.country}
-          placeholder="Enter the name of your school"
-          label="School"
-          allowUnknownSchools
-        />
-      </section>
-    );
+    setSection(OnboardingSections[index]);
   };
 
-  private handleSubmit = () => {
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        const registrationContext: RegistrationContext = RegistrationContextService.retrieve();
-        const ageRanges = (values.ageRange as string[]).map((it) =>
-          AgeRange.fromJson(it),
-        );
-        const ages = extractContainedAges(ageRanges);
-
-        this.setState((state) => ({
-          ...state,
-          updating: true,
-        }));
-        onboardUser(this.props.links, {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          ages,
-          subjects: values.subjects,
-          country: values.country,
-          state: values.state,
-          schoolName: values.schoolName,
-          schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
-          hasOptedIntoMarketing: values.hasOptedIntoMarketing,
-          referralCode: registrationContext?.referralCode,
-          role: values.role,
-          utm: registrationContext?.utm,
-        })
-          .then(() => {
-            this.props.goToHomepage();
-            this.props.updateUser();
-          })
-          .catch((ex) => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
-
-            this.setState((state) => ({
-              ...state,
-              updating: false,
-            }));
-          });
-      } else {
-        this.setState((state) => ({
-          ...state,
-          screenReaderErrors: transformErrors(err),
-        }));
-      }
-    });
-  };
-
-  public renderForm() {
-    return (
-      <section className="onboarding-form__container">
-        <Row>
-          <Col xs={{ span: 0 }} lg={{ span: 12 }}>
-            <Carousel
-              ref={(imageCarousel) => {
-                this.imageCarousel = imageCarousel;
-              }}
-              effect="fade"
-              dots={false}
-            >
-              <img
-                src="/resources/teachers-waving.svg"
-                className="onboarding__logo"
-                alt=""
+  return (
+    <section className="onboarding-form__container">
+      <Row>
+        <Col
+          xs={{ span: 0 }}
+          lg={{ span: 12 }}
+          className="onboarding__illustrations"
+        >
+          <Carousel ref={imageCarousel} effect="fade" dots={false}>
+            {OnboardingSections.map((onboardingSection) => (
+              <OnboardingIllustration
+                key={onboardingSection.pageIndex}
+                section={onboardingSection}
               />
-              <img
-                src="/resources/dwarf-with-pencil.svg"
-                className="onboarding__logo"
-                alt=""
+            ))}
+          </Carousel>
+        </Col>
+        <Col xs={{ span: 24 }} lg={{ span: 12 }}>
+          <OnboardingStepsIndicator
+            page={section.pageIndex}
+            total={OnboardingSections.length}
+          />
+          <Form
+            form={form}
+            layout="vertical"
+            className="onboarding-form__form"
+            onFinish={onSubmit}
+            onFinishFailed={onSubmitFailed}
+          >
+            <section className="onboarding-form__form-body">
+              <Carousel
+                ref={formCarousel}
+                asNavFor={imageCarousel.current as any}
+                dots={false}
+                swipe={false}
+                infinite={false}
+                effect="scrollx"
+                afterChange={(index) => afterCarouselChange(index)}
+              >
+                <OnboardingSection
+                  section={OnboardingSections[0]}
+                  screenReaderErrors={screenReaderErrors}
+                  visibleIndex={section.pageIndex}
+                >
+                  <NameForm
+                    firstNameFormItemId={getFormId('firstName')}
+                    lastNameFormItemId={getFormId('lastName')}
+                  />
+                  <RoleForm formItemId={getFormId('role')} onChange={setRole} />
+                </OnboardingSection>
+                <OnboardingSection
+                  section={OnboardingSections[1]}
+                  screenReaderErrors={screenReaderErrors}
+                  visibleIndex={section.pageIndex}
+                >
+                  <SubjectsForm
+                    formItemId={getFormId('subjects')}
+                    label="Your subjects"
+                    placeholder="Choose subjects"
+                  />
+                  <AgeRangeForm
+                    formItemId={getFormId('ageRange')}
+                    label="Your age groups"
+                  />
+                </OnboardingSection>
+                <OnboardingSection
+                  section={OnboardingSections[2]}
+                  screenReaderErrors={screenReaderErrors}
+                  visibleIndex={section.pageIndex}
+                >
+                  <SchoolDetailsForm
+                    role={role}
+                    countryFormItemId={getFormId('country')}
+                    schoolIdFormItemId={getFormId('schoolId')}
+                    schoolNameFormItemId={getFormId('schoolName')}
+                    stateFormItemId={getFormId('state')}
+                  />
+                </OnboardingSection>
+                <OnboardingSection
+                  section={OnboardingSections[3]}
+                  screenReaderErrors={screenReaderErrors}
+                  visibleIndex={section.pageIndex}
+                >
+                  <MarketingAgreementForm
+                    formItemId={getFormId('hasOptedIntoMarketing')}
+                  />
+                  <PrivacyPolicyAgreementForm
+                    formItemId={getFormId('privacyPolicy')}
+                  />
+                </OnboardingSection>
+              </Carousel>
+              <OnboardingProgressDots
+                numberOfPages={OnboardingSections.length}
+                page={section.pageIndex}
               />
-              <img
-                src="/resources/teacher-micromanaging.svg"
-                className="onboarding__logo"
-                alt=""
-              />
-              <img
-                src="/resources/teacher-presenting.svg"
-                className="onboarding__logo"
-                alt=""
-              />
-            </Carousel>
-          </Col>
-          <Col xs={{ span: 24 }} lg={{ span: 12 }}>
-            <span
-              key={`counter-${this.state.currentIndex}`}
-              className="onboarding-form__page-count"
-            >
-              {this.state.currentIndex + 1} of {this.state.numberOfSlides}
-            </span>
-            <Form
-              onSubmit={this.handleSubmit}
-              layout="vertical"
-              data-qa="onboarding-form"
-              className="onboarding-form__form"
-            >
-              <section className="onboarding-form__form-body">
-                <Carousel
-                  ref={(formCarousel) => {
-                    this.formCarousel = formCarousel;
-                  }}
-                  infinite={false}
-                  asNavFor={this.state.imageCarousel as any}
-                  dots={false}
-                  swipe={false}
-                  afterChange={this.afterSlideChange}
-                >
-                  <section>
-                    <h1 className="alt onboarding-form__title big-title">
-                      Hello
-                    </h1>
-                    <p className="onboarding-form__text">
-                      Before you get started, we’d like to get to know you a bit
-                      better to help you get the most out of Boclips for
-                      Teachers.
-                    </p>
-                    {this.state.screenReaderErrors && (
-                      <ScreenReaderErrors
-                        errors={this.state.screenReaderErrors}
-                      />
-                    )}
-                    <NameForm form={this.props.form} />
-                    <RoleForm
-                      form={this.props.form}
-                      onRoleChange={this.onRoleChange}
-                    />
-                    <p className="onboarding-form__notes">
-                      <span className="onboarding-form__asterisk">*</span>{' '}
-                      Required field
-                    </p>
-                  </section>
-                  <section>
-                    <h1 className="alt onboarding-form__title big-title">
-                      Your students
-                    </h1>
-                    <p className="onboarding-form__text">
-                      Tell us what you teach so we can help you find the most
-                      relevant videos for your classroom.
-                    </p>
-                    <SubjectsForm
-                      label="Your subjects"
-                      form={this.props.form}
-                      subjects={this.props.subjects}
-                      placeholder="Choose subjects"
-                      initialValue={[]}
-                    />
-                    <AgeRangeForm
-                      label="Your age groups"
-                      form={this.props.form}
-                    />
-                  </section>
-                  <section>
-                    <h1 className="alt onboarding-form__title big-title">
-                      Your school
-                    </h1>
-                    <p className="onboarding-form__text">
-                      We&apos;d like to know where you teach so that we can
-                      provide your community with the most relevant resources.
-                    </p>
-                    {this.state.screenReaderErrors && (
-                      <ScreenReaderErrors
-                        errors={this.state.screenReaderErrors}
-                      />
-                    )}
-                    <CountriesForm
-                      label="Country"
-                      form={this.props.form}
-                      countries={this.props.countries}
-                      placeholder="Choose country"
-                      onCountryChange={this.onCountryChange}
-                    />
-                    {this.getSchoolForm()}
-                  </section>
-                  <section>
-                    <h1 className="alt onboarding-form__title big-title">
-                      Almost there!
-                    </h1>
-                    <p className="onboarding-form__text">
-                      We’d love to find out about your experience using Boclips
-                      for Teachers. To do this, we’d like to ask for your
-                      opinion and send you information about our new features
-                      and similar products or services which may be of interest
-                      to you.
-                    </p>
-                    {this.state.screenReaderErrors && (
-                      <ScreenReaderErrors
-                        errors={this.state.screenReaderErrors}
-                      />
-                    )}
-                    <MarketingAgreementForm form={this.props.form} />
-                    <PrivacyPolicyAgreementForm form={this.props.form} />
-                  </section>
-                </Carousel>
-                <OnboardingProgressDots
-                  numberOfSteps={this.state.numberOfSlides}
-                  currentStep={this.state.currentIndex + 1}
-                />
-              </section>
-              {!this.isFirstSlide() && (
-                <Button
-                  data-qa="onboard-back-button"
-                  className="onboarding-form__back"
-                  size="large"
-                  onClick={this.back}
-                >
-                  Back
-                </Button>
-              )}
-
-              {this.isLastSlide() ? (
-                <Button
-                  data-qa="onboard-submit-button"
-                  className="onboarding-form__submit"
-                  size="large"
-                  type="primary"
-                  onClick={this.handleSubmit}
-                >
-                  Finish
-                </Button>
-              ) : (
-                <Button
-                  data-qa="onboard-next-button"
-                  className="onboarding-form__next"
-                  size="large"
-                  type="primary"
-                  onClick={this.next}
-                >
-                  Next
-                </Button>
-              )}
-            </Form>
-          </Col>
-        </Row>
-      </section>
-    );
-  }
-
-  public render() {
-    return this.renderForm();
-  }
-}
-
-function mapStateToProps(state: State): OnboardingProps {
-  return {
-    links: state.links.entries,
-    subjects: state.subjects,
-    countries: state.countries,
-    userProfile: state.user,
-  };
-}
-
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    fetchSubjects: () => dispatch(fetchSubjectsAction()),
-    fetchCountries: () => dispatch(fetchCountriesAction()),
-    updateUser: () => dispatch(updateUserAction()),
-    goToHomepage: () => dispatch(push('/')),
-  };
-}
-
-export default connect<OnboardingProps, DispatchProps, {}>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form.create<OnboardingProps & FormComponentProps>()(OnboardingForm));
+            </section>
+            <OnboardingButtons
+              page={section.pageIndex}
+              numberOfPages={OnboardingSections.length}
+              stepBack={stepBack}
+              stepForward={stepForward}
+            />
+          </Form>
+        </Col>
+      </Row>
+    </section>
+  );
+};

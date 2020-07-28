@@ -1,40 +1,27 @@
-import { Form } from '@ant-design/compatible';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import React from 'react';
-import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
-import { useSelector } from 'react-redux';
-import State from 'src/types/State';
+import { Form } from 'antd';
 import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
 
 interface Props {
+  formItemId: string;
   label?: string;
   initialValue?: number[];
 }
 
-export const AgeRangeForm = (props: FormComponentProps & Props) => {
-  const allAgeRanges = useSelector((state: State) => state.ageRanges);
-
+export const AgeRangeForm = (props: Props) => {
   return (
     <Form.Item
+      name={props.formItemId}
       className="form__item age-range"
       label={props.label}
       data-qa="age-range-form"
       colon={false}
+      rules={[{ type: 'array' }]}
     >
-      {props.form.getFieldDecorator('ageRange', {
-        rules: [{ type: 'array' }],
-        initialValue: props.initialValue
-          ? convertAgeRangesFromNumbers(
-              allAgeRanges,
-              props.initialValue,
-            ).map((age) => age.encodeJSON())
-          : [],
-      })(
-        <SelectAgeRange
-          data-qa="age-select-input"
-          initialValue={props.initialValue}
-        />,
-      )}
+      <SelectAgeRange
+        data-qa="age-select-input"
+        initialValue={props.initialValue}
+      />
     </Form.Item>
   );
 };

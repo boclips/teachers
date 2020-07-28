@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { replace } from 'connected-react-router';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
-import OnboardingForm from '../../components/account/onboarding/OnboardingForm';
+import { OnboardingForm } from 'src/components/account/onboarding/OnboardingForm';
 import PageLayout from '../../components/layout/PageLayout';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import './OnboardingView.less';

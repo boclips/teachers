@@ -1,7 +1,14 @@
 import { ScreenReaderError } from '../../common/a11y/ScreenReaderErrors';
 
-export const transformErrors = (errors: object): ScreenReaderError[] =>
-  Object.keys(errors).map((field) => ({
-    field,
-    message: errors[field].errors[0].message,
+export interface ErrorField {
+  name: string[];
+  errors: string[];
+}
+
+export const transformErrors = (
+  errorFields: ErrorField[],
+): ScreenReaderError[] =>
+  errorFields.map((error) => ({
+    field: error.name[0],
+    message: error.errors[0],
   }));

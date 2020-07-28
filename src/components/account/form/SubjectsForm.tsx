@@ -1,29 +1,40 @@
-import { Form } from '@ant-design/compatible';
-
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import React from 'react';
-import { Subject } from '../../../types/Subject';
+import React, { useEffect } from 'react';
+import { Form } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import State from 'src/types/State';
+import { fetchSubjectsAction } from 'src/components/multipleSelect/redux/actions/fetchSubjectsAction';
 import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
 
-interface SubjectsFormProps {
-  subjects: Subject[];
+interface Props {
+  formItemId: string;
+  initialValue?: string[];
+  label: string;
   placeholder: string;
-  label?: string;
-  initialValue: string[];
 }
-
-export const SubjectsForm = (props: FormComponentProps & SubjectsFormProps) => (
-  <Form.Item className="form__item" label={props.label} colon={false}>
-    {props.form.getFieldDecorator('subjects', {
-      rules: [{ type: 'array' }],
-      initialValue: props.initialValue,
-    })(
+export const SubjectsForm = (props: Props) => {
+  const dispatch = useDispatch();
+  const allSubjects = useSelector((state: State) => state.subjects);
+  useEffect(() => {
+    if (!allSubjects || allSubjects.length === 0) {
+      dispatch(fetchSubjectsAction());
+    }
+  }, [dispatch, allSubjects]);
+  return (
+    <Form.Item
+      name={props.formItemId}
+      className="form__item"
+      label={props.label}
+      colon={false}
+      rules={[{ type: 'array' }]}
+      initialValue={props.initialValue}
+    >
       <SelectSubjects
-        subjects={props.subjects}
-        placeholder={props.placeholder}
+        subjects={allSubjects}
         label={props.label}
+        placeholder={props.placeholder}
         data-qa="subject-select"
-      />,
-    )}
-  </Form.Item>
-);
+        value={props.initialValue}
+      />
+    </Form.Item>
+  );
+};

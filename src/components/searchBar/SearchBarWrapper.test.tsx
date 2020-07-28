@@ -117,9 +117,8 @@ describe('SearchBar', () => {
       expect(events.length).toBe(1);
       const event = events[0] as SearchQueryCompletionsSuggestedRequest;
       const shownSuggestions: string[] = event?.impressions;
-      console.log(shownSuggestions);
       shownSuggestions.forEach((phrase) => {
-        const segments: string[] = phrase.split('geo', 1); // this is failing because test data contains geo 2x in one string
+        const segments: string[] = phrase.split('geo', 1);
         segments.forEach((segment) => {
           expect(wrapper.getAllByText(segment.trim()).length).toBeGreaterThan(
             0,

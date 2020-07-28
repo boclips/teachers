@@ -1,65 +1,64 @@
-import { Form } from '@ant-design/compatible';
-import { Input } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
+import { Input, Form } from 'antd';
 import React from 'react';
 
 interface Props {
+  firstNameFormItemId: string;
+  lastNameFormItemId: string;
   initialFirstName?: string;
   initialLastName?: string;
 }
-
-export const NameForm = (props: FormComponentProps & Props) => {
+export const NameForm = (props: Props) => {
   return (
     <section>
-      <Form.Item
-        className="required name-form__item"
+      <NameInputItem
+        name={props.firstNameFormItemId}
         label="First name"
-        required
-        colon={false}
-      >
-        {props.form.getFieldDecorator('firstName', {
-          rules: [
-            {
-              required: true,
-              message: 'Please enter your first name',
-            },
-          ],
-          initialValue: props.initialFirstName,
-        })(
-          <Input
-            data-qa="first-name"
-            size="large"
-            placeholder="Enter first name"
-            className="name-form__first-name"
-            aria-required
-          />,
-        )}
-      </Form.Item>
+        validationMessage="Please enter your first name"
+        placeholder="Enter first name"
+        inputClass="required name-form__item"
+        initialValue={props.initialFirstName}
+      />
 
-      <Form.Item
-        className="required name-form__item"
+      <NameInputItem
+        name={props.lastNameFormItemId}
         label="Last name"
-        required
-        colon={false}
-      >
-        {props.form.getFieldDecorator('lastName', {
-          rules: [
-            {
-              required: true,
-              message: 'Please enter your last name',
-            },
-          ],
-          initialValue: props.initialLastName,
-        })(
-          <Input
-            data-qa="last-name"
-            size="large"
-            placeholder="Enter last name"
-            className="name-form__last-name"
-            aria-required
-          />,
-        )}
-      </Form.Item>
+        validationMessage="Please enter your last name"
+        placeholder="Enter last name"
+        inputClass="required name-form__item"
+        initialValue={props.initialLastName}
+      />
     </section>
   );
 };
+
+interface NameInputItemProps {
+  name: string;
+  label: string;
+  validationMessage: string;
+  placeholder: string;
+  inputClass: string;
+  initialValue?: string;
+}
+const NameInputItem = (props: NameInputItemProps) => (
+  <Form.Item
+    name={props.name}
+    initialValue={props.initialValue}
+    className="required name-form__item"
+    label={props.label}
+    required
+    colon={false}
+    rules={[
+      {
+        required: true,
+        message: props.validationMessage,
+      },
+    ]}
+  >
+    <Input
+      size="large"
+      placeholder={props.placeholder}
+      className={props.inputClass}
+      aria-required
+    />
+  </Form.Item>
+);

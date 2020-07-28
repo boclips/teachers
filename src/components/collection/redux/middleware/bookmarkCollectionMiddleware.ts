@@ -15,7 +15,7 @@ export function onBookmarkCollection(
       store.dispatch(onCollectionBookmarkedAction(response));
     })
     .catch((ex) => {
-      console.log('error:', ex);
+      console.error('error:', ex);
       NotificationFactory.error({
         message: 'Error bookmarking collection.',
       });

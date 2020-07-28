@@ -1,18 +1,9 @@
-import {
-  CountriesForm,
-  CountriesFormProps,
-} from 'src/components/account/form/CountriesForm';
+import { CountriesForm } from 'src/components/account/form/CountriesForm';
 import { render, fireEvent } from '@testing-library/react';
 import React from 'react';
 import { CountryFactory } from 'test-support/factories';
-import { Form } from '@ant-design/compatible';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
 
 describe('CountriesForm', () => {
-  const CountriesFormWithMockedForm = Form.create<
-    CountriesFormProps & FormComponentProps
-  >()(CountriesForm);
-
   it('renders highlighted countries first, then sort the rest by abc', async () => {
     const testCountries = [
       CountryFactory.sample({ id: 'GBR', name: 'United Kingdom' }),
@@ -43,10 +34,7 @@ describe('CountriesForm', () => {
     ];
 
     const component = render(
-      <CountriesFormWithMockedForm
-        countries={testCountries}
-        placeholder="Choose country"
-      />,
+      <CountriesForm formItemId="test" countries={testCountries} />,
     );
 
     fireEvent.mouseDown(component.getByText('Choose country'));

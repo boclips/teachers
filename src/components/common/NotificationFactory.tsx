@@ -38,4 +38,11 @@ export default class NotificationFactory {
       duration: 6,
     });
   }
+
+  public static generalError() {
+    NotificationFactory.error({
+      message: 'Ooops! Something went wrong...',
+      description: 'Please try again or contact our support team.',
+    });
+  }
 }

@@ -1,19 +1,18 @@
-import { mount } from 'enzyme';
 import React from 'react';
-import { Provider } from 'react-redux';
-import By from '../../../../test-support/By';
-import EventSimulator from '../../../../test-support/EventSimulator';
+import { editUser } from 'src/services/users/updateUser';
 import {
   LinksFactory,
   MockStoreFactory,
   SubjectsFactory,
   UserProfileFactory,
-} from '../../../../test-support/factories';
-import { editUser } from '../../../services/users/updateUser';
-import { AgeRange } from '../../../types/AgeRange';
-import { Link } from '../../../types/Link';
-import { SelectAgeRange } from '../../multipleSelect/SelectAgeRange';
-import { SelectSubjects } from '../../multipleSelect/SelectSubjects';
+} from 'test-support/factories';
+import { Link } from 'src/types/Link';
+import {
+  renderWithBoclipsStore,
+  ResultingContext,
+} from 'test-support/renderWithStore';
+import { fireEvent, within } from '@testing-library/dom';
+import eventually from 'test-support/eventually';
 import { EditProfileForm } from './EditProfileForm';
 import Mock = jest.Mock;
 
@@ -25,79 +24,70 @@ const links = LinksFactory.sample({
 });
 
 describe(`Profile form`, () => {
-  let wrapper;
   const cancelCallback = jest.fn();
-  beforeEach(() => {
-    wrapper = mount(
-      <Provider store={MockStoreFactory.sample()}>
-        <EditProfileForm
-          userProfile={UserProfileFactory.sample()}
-          subjects={SubjectsFactory.sample()}
-          toggleForm={cancelCallback}
-          links={links}
-        />
-      </Provider>,
-    );
-  });
 
-  it(`renders initial name values correctly`, () => {
-    expect(wrapper.find(By.dataQa('first-name')).first().props().value).toBe(
-      'joe',
+  const getView = (): ResultingContext =>
+    renderWithBoclipsStore(
+      <EditProfileForm
+        userProfile={UserProfileFactory.sample()}
+        toggleForm={cancelCallback}
+        links={links}
+      />,
+      MockStoreFactory.sampleState({
+        subjects: SubjectsFactory.sample(),
+      }),
     );
-    expect(wrapper.find(By.dataQa('last-name')).first().props().value).toBe(
-      'boclips',
-    );
-    expect(
-      wrapper.find(By.dataQa('subject-select')).first().props().value,
-    ).toContainEqual('subject-one-id');
-    expect(
-      wrapper.find(By.dataQa('age-select-input')).first().props().value,
-    ).toContainEqual(new AgeRange(3, 5).encodeJSON());
+
+  it(`renders initial values correctly`, () => {
+    const view = getView();
+    expect(view.getByDisplayValue('joe')).toBeVisible();
+    expect(view.getByDisplayValue('boclips')).toBeVisible();
+    expect(view.getByText('3-5')).toBeVisible();
+    expect(view.getByText('5-9')).toBeVisible();
+    expect(view.getByText('subject one')).toBeVisible();
+    expect(view.getByText('subject two')).toBeVisible();
   });
 
   it(`returns to current account settings when cancel button is clicked`, () => {
-    wrapper.find(By.dataQa('cancel-edit-button')).first().simulate('click');
-    wrapper.update();
+    const view = getView();
+    fireEvent.click(view.getByText('Cancel').closest('button'));
     expect(cancelCallback).toHaveBeenCalled();
   });
 
-  it(`sends an updateuser request with the correct values`, () => {
-    wrapper.find(SelectAgeRange).find('.ant-select').simulate('mousedown');
+  it(`sends an updateuser request with the correct values`, async () => {
+    const view = getView();
 
-    const events = new EventSimulator(wrapper);
-    events.setText(
-      'new first name',
-      wrapper.find(By.dataQa('first-name', 'input')),
+    fireEvent.change(view.getByPlaceholderText('Enter first name'), {
+      target: { value: 'new first name' },
+    });
+
+    fireEvent.change(view.getByPlaceholderText('Enter last name'), {
+      target: { value: 'new last name' },
+    });
+
+    fireEvent.mouseDown(
+      within(view.getByTestId('subjects')).getByRole('combobox'),
     );
-    events.setText(
-      'new last name',
-      wrapper.find(By.dataQa('last-name', 'input')),
+    fireEvent.click(
+      view.getByText('subject two', {
+        selector: 'div.ant-select-item-option-content',
+      }),
     );
 
-    wrapper
-      .find(By.dataQa('age-select'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
+    fireEvent.mouseDown(
+      within(view.getByTestId('age-select')).getByRole('combobox'),
+    );
+    fireEvent.click(view.getByText('11-14'));
 
-    wrapper.find('[data-qa="11-14"]').first().simulate('click');
+    fireEvent.click(view.getByText('Save changes').closest('button'));
 
-    wrapper.find(SelectSubjects).simulate('mousedown');
-
-    wrapper
-      .find(By.dataQa('subjects'))
-      .find('.ant-select-selector')
-      .simulate('mousedown');
-
-    wrapper.find(`[data-qa="subject-two-id"]`).first().simulate('click');
-
-    wrapper.find(SelectSubjects).simulate('mouseDown');
-    wrapper.find(By.dataQa('submit-update-user', 'button')).simulate('click');
-
-    expect(mockUpdateUser).toHaveBeenCalledWith(links, {
-      firstName: 'new first name',
-      lastName: 'new last name',
-      subjects: ['subject-one-id'],
-      ages: [3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14],
+    await eventually(() => {
+      expect(mockUpdateUser).toHaveBeenCalledWith(links, {
+        firstName: 'new first name',
+        lastName: 'new last name',
+        subjects: ['subject-one-id'],
+        ages: [3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14],
+      });
     });
   });
 });

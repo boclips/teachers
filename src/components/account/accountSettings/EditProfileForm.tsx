@@ -1,15 +1,12 @@
-import { Form } from '@ant-design/compatible';
-import { Button } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
-import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Button, Form } from 'antd';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { extractContainedAges } from 'src/components/ageRanges/extractContainedAges';
-import { editUser } from '../../../services/users/updateUser';
-import { UserProfile } from '../../../services/users/UserProfile';
-import { AgeRange } from '../../../types/AgeRange';
-import { Links } from '../../../types/Links';
-import { Subject } from '../../../types/Subject';
+import { updateUserAction } from 'src/components/account/accountSettings/redux/actions/updateUserAction';
+import { editUser } from 'src/services/users/updateUser';
+import { UserProfile } from 'src/services/users/UserProfile';
+import { AgeRange } from 'src/types/AgeRange';
+import { Links } from 'src/types/Links';
 import {
   ScreenReaderError,
   ScreenReaderErrors,
@@ -19,128 +16,93 @@ import { AgeRangeForm } from '../form/AgeRangeForm';
 import { transformErrors } from '../form/FormHelper';
 import { NameForm } from '../form/NameForm';
 import { SubjectsForm } from '../form/SubjectsForm';
-import { updateUserAction } from './redux/actions/updateUserAction';
 
 interface Props {
   userProfile: UserProfile;
-  subjects: Subject[];
   toggleForm: () => void;
   links: Links;
 }
 
-interface DispatchProps {
-  updateUser: () => {};
-}
+export const EditProfileForm = (props: Props) => {
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+  const [screenReaderErrors, setScreenReaderErrors] = useState<
+    ScreenReaderError[]
+  >([]);
 
-interface InternalState {
-  screenReaderErrors: ScreenReaderError[];
-}
-
-class ProfileFormFields extends React.Component<
-  Props & FormComponentProps & DispatchProps,
-  InternalState
-> {
-  public constructor(props: Props & FormComponentProps & DispatchProps) {
-    super(props);
-
-    this.state = {
-      screenReaderErrors: null,
-    };
-  }
-
-  private submit = () => {
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        const ageRanges = (values.ageRange as string[]).map((it) =>
-          AgeRange.fromJson(it),
-        );
-        const ages = extractContainedAges(ageRanges);
-        editUser(this.props.links, {
-          firstName: values.firstName,
-          lastName: values.lastName,
-          ages,
-          subjects: values.subjects,
-        })
-          .then(() => {
-            this.props.updateUser();
-            this.props.toggleForm();
-          })
-          .catch((ex) => {
-            console.error(ex);
-            NotificationFactory.error({
-              message: 'Ooops! Something went wrong...',
-              description: 'Please try again or contact our support team.',
-            });
-
-            this.setState((state) => ({
-              ...state,
-            }));
-          });
-      } else {
-        this.setState((state) => ({
-          ...state,
-          screenReaderErrors: transformErrors(err),
-        }));
-      }
-    });
-  };
-
-  public render() {
-    return (
-      <Form data-qa="profile-form" className="account-settings__form">
-        {this.state.screenReaderErrors && (
-          <ScreenReaderErrors errors={this.state.screenReaderErrors} />
-        )}
-        <NameForm
-          form={this.props.form}
-          initialFirstName={this.props.userProfile.firstName}
-          initialLastName={this.props.userProfile.lastName}
-        />
-
-        <SubjectsForm
-          form={this.props.form}
-          subjects={this.props.subjects}
-          placeholder="Choose subjects"
-          initialValue={this.props.userProfile.subjects}
-          label="Subjects"
-        />
-
-        <AgeRangeForm
-          form={this.props.form}
-          initialValue={this.props.userProfile.ages}
-          label="Age groups"
-        />
-        <section className="buttons">
-          <Button
-            data-qa="cancel-edit-button"
-            type="ghost"
-            onClick={this.props.toggleForm}
-            size="large"
-          >
-            Cancel
-          </Button>
-          <Button
-            htmlType="submit"
-            type="primary"
-            data-qa="submit-update-user"
-            onClick={this.submit}
-            size="large"
-          >
-            Save changes
-          </Button>
-        </section>
-      </Form>
+  const submit = (values) => {
+    const ageRanges = (values.ageRange as string[]).map((it) =>
+      AgeRange.fromJson(it),
     );
-  }
-}
-
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    updateUser: () => dispatch(updateUserAction()),
+    const ages = extractContainedAges(ageRanges);
+    editUser(props.links, {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      ages,
+      subjects: values.subjects,
+    })
+      .then(() => {
+        dispatch(updateUserAction());
+        props.toggleForm();
+      })
+      .catch((ex) => {
+        console.error(ex);
+        NotificationFactory.error({
+          message: 'Ooops! Something went wrong...',
+          description: 'Please try again or contact our support team.',
+        });
+      });
   };
-}
 
-export const EditProfileForm = connect<Props, DispatchProps>(
-  null,
-  mapDispatchToProps,
-)(Form.create<DispatchProps & Props & FormComponentProps>()(ProfileFormFields));
+  const validationFailed = (errorInfo) => {
+    setScreenReaderErrors(transformErrors(errorInfo.errorFields));
+  };
+
+  return (
+    <Form
+      form={form}
+      data-qa="profile-form"
+      className="account-settings__form"
+      onFinish={submit}
+      onFinishFailed={validationFailed}
+      initialValues={{
+        firstName: props.userProfile.firstName,
+        lastName: props.userProfile.lastName,
+        subjects: props.userProfile.subjects,
+      }}
+    >
+      {screenReaderErrors && <ScreenReaderErrors errors={screenReaderErrors} />}
+      <NameForm firstNameFormItemId="firstName" lastNameFormItemId="lastName" />
+
+      <SubjectsForm
+        formItemId="subjects"
+        label="Your subjects"
+        placeholder="Choose subjects"
+      />
+
+      <AgeRangeForm
+        formItemId="ageRange"
+        initialValue={props.userProfile.ages}
+        label="Age groups"
+      />
+      <section className="buttons">
+        <Button
+          data-qa="cancel-edit-button"
+          type="ghost"
+          onClick={props.toggleForm}
+          size="large"
+        >
+          Cancel
+        </Button>
+        <Button
+          htmlType="submit"
+          type="primary"
+          data-qa="submit-update-user"
+          size="large"
+        >
+          Save changes
+        </Button>
+      </section>
+    </Form>
+  );
+};

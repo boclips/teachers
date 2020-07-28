@@ -98,7 +98,9 @@
 
 .has-error .ant-input,
 .has-error.ant-legacy-form-item-control,
+.has-error.ant-form-item-control,
 .has-error.ant-legacy-form-item-control .ant-legacy-form-item-children,
+.has-error.ant-form-item-control .ant-form-item-children,
 .has-error .ant-input:hover {
   border-color: @dark-red;
 
@@ -106,7 +108,8 @@
     border-color: @dark-red !important;
   }
 
-  .ant-legacy-form-explain {
+  .ant-legacy-form-explain,
+  .ant-form-explain {
     color: @dark-red;
   }
 
@@ -118,7 +121,8 @@
   }
 }
 
-.ant-legacy-form-item-label label {
+.ant-legacy-form-item-label label,
+.ant-form-item-label label {
   color: @shade-7;
   font-size: 16px;
   line-height: 20px;
@@ -249,11 +253,14 @@ input[type='checkbox'].ant-checkbox-input {
 }
 
 .ant-legacy-form-explain,
-.ant-legacy-form-extra {
+.ant-form-explain,
+.ant-legacy-form-extra,
+.ant-form-extra {
   padding-left: 12px;
 }
 
-.create-account .ant-legacy-item-control {
+.create-account .ant-legacy-item-control,
+.create-account .ant-item-control {
   line-height: normal;
 }
 
@@ -282,6 +289,7 @@ input[type='checkbox'].ant-checkbox-input {
   .ant-pagination-prev .ant-pagination-item-link {
     border: 2px solid @shade-6;
     border-radius: 8px;
+
     a {
       color: @shade-6;
       font-size: 16px;
@@ -292,6 +300,7 @@ input[type='checkbox'].ant-checkbox-input {
     &:hover {
       border-color: @mid-blue;
       color: @mid-blue;
+
       a {
         color: @mid-blue;
       }
@@ -305,6 +314,7 @@ input[type='checkbox'].ant-checkbox-input {
 
   .anticon {
     vertical-align: 0px;
+
     &:hover {
       color: @mid-blue;
     }
@@ -313,6 +323,7 @@ input[type='checkbox'].ant-checkbox-input {
   .ant-pagination-item-active,
   .ant-pagination-item-active:hover {
     border-color: @cta-blue;
+
     a {
       color: @cta-blue;
     }
@@ -322,6 +333,7 @@ input[type='checkbox'].ant-checkbox-input {
   .ant-pagination-disabled:hover .ant-pagination-item-link {
     border-color: @shade-5;
     color: @shade-5;
+
     a,
     i:hover {
       color: @shade-5;
@@ -329,7 +341,8 @@ input[type='checkbox'].ant-checkbox-input {
   }
 }
 
-.ant-legacy-form-explain {
+.ant-legacy-form-explain,
+.ant-form-explain {
   font-size: 14px;
   line-height: 16px;
   margin-top: 4px;
@@ -368,7 +381,8 @@ input[type='checkbox'].ant-checkbox-input {
   margin-right: 2px;
 }
 
-.ant-legacy-form-item-children {
+.ant-legacy-form-item-children,
+.ant-form-item-children {
   .ant-select-auto-complete {
     display: block;
   }

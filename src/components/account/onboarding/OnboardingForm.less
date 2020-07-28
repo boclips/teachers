@@ -25,7 +25,7 @@
 
   &form {
     animation: slide-in 0.5s 0.4s both;
-    .ant-legacy-form-item {
+    .ant-form-item {
       padding: 0 3px;
     }
   }
@@ -42,17 +42,7 @@
     }
   }
 
-  &submit {
-    float: right;
-    margin-top: 47px;
-    width: 151px;
-
-    @media (max-width: @screen-sm-max) {
-      width: 139px;
-    }
-  }
-
-  &next {
+  &primary {
     float: right;
     margin-top: 47px;
     width: 151px;
@@ -80,7 +70,7 @@
     border-top: 1px solid @shade-2;
   }
 
-  &inline-item.ant-row.ant-legacy-form-item {
+  &inline-item.ant-row.ant-form-item {
     margin-bottom: 0;
   }
 
@@ -111,12 +101,11 @@
 
 .name-form__ {
 
-  &first-name,
-  &last-name,
+  &item,
   &role
   {
     width: 290px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     @media (max-width: @screen-sm-max) {
       width: 100%;
@@ -124,16 +113,16 @@
   }
 }
 
-.ant-row.ant-legacy-form-item {
+.ant-row.ant-form-item {
   display: block;
 
-  .ant-legacy-form-item-label {
+  .ant-form-item-label {
     margin-bottom: 8px;
     margin-top:8px;
   }
 
   &.required {
-    .ant-legacy-form-item-label {
+    .ant-form-item-label {
       ::before {
         font-family: SimSun,sans-serif;
         margin-right: 4px;
