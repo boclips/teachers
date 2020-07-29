@@ -47,6 +47,7 @@ export const SelectAgeRange = (props: Props) => {
       aria-label="Ages I teach"
       data-qa="age-select"
       defaultValue={props.initialValue}
+      showArrow
     >
       {generateOptions()}
     </MultiSelect>

@@ -10,6 +10,7 @@ export const PrivacyPolicyAgreementForm = (props: Props) => {
   return (
     <Form.Item
       name={props.formItemId}
+      className="required form__item"
       rules={[
         {
           required: true,
@@ -22,7 +23,7 @@ export const PrivacyPolicyAgreementForm = (props: Props) => {
       valuePropName="checked"
     >
       <Checkbox
-        className="create-account-form__checkbox"
+        className="create-account-form__checkbox create-account-form__condition"
         data-qa="privacy-policy"
         aria-required
       >

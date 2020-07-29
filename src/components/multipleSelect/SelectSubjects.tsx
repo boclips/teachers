@@ -29,6 +29,7 @@ export const SelectSubjects = React.forwardRef(
       }}
       aria-label={props.placeholder}
       value={props.value}
+      showArrow
     >
       {sortBy(props.subjects, ['name']).map((subject) => (
         <MultiSelect.Option

@@ -9,7 +9,7 @@ export const MarketingAgreementForm = (props: Props) => {
   return (
     <Form.Item name={props.formItemId} valuePropName="checked">
       <Checkbox
-        className="create-account-form__checkbox"
+        className="create-account-form__checkbox create-account-form__condition"
         data-qa="marketing-optin"
       >
         I would like to receive marketing information about Boclips in
