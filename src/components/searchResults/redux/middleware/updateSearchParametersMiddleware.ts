@@ -9,9 +9,9 @@ import { VideoSearchQuery } from 'src/services/searchParameters/VideoSearchQuery
 import { clearSearchFilterParametersAction } from '../actions/clearSearchFilterParametersAction';
 import {
   bulkUpdateSearchParamsAction,
+  SearchRequest,
   UpdateAllFilters,
   updateSearchParamsAction,
-  SearchRequest,
 } from '../actions/updateSearchParametersActions';
 
 export function onBulkUpdateSearchParameter(
@@ -19,15 +19,20 @@ export function onBulkUpdateSearchParameter(
   updateRequests: SearchRequest[],
 ) {
   const { pathname, search } = store.getState().router.location;
-  const existingQueryParams: VideoSearchQuery =
-    pathname === '/discover-collections' ? {} : queryString.parse(search);
+  const existingQueryParams: VideoSearchQuery = queryString.parse(search);
 
   const updatedQueryParams = generateVideoSearchQuery(
     existingQueryParams,
     updateRequests,
   );
-  const newUri = generateUri('/videos', updatedQueryParams);
-  store.dispatch(push(newUri));
+
+  if (pathname.startsWith('/subjects')) {
+    const newUri = generateUri(pathname, updatedQueryParams);
+    store.dispatch(push(newUri));
+  } else {
+    const newUri = generateUri('/videos', updatedQueryParams);
+    store.dispatch(push(newUri));
+  }
 }
 
 export function onUpdateSearchParameter(

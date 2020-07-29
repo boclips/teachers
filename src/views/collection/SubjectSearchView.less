@@ -1,0 +1,65 @@
+@import '../../../resources/styles/_antd-theme.less';
+@import '../../../resources/styles/_colours.less';
+
+.subjects__ {
+
+  &subheader-container {
+    margin-bottom: 42px;
+    background-color: @shade-5;
+    padding: 4px 0px;
+    animation: slide-in 0.5s 0s both;
+  }
+
+  &subheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      strong {
+        color: @dark-blue;
+        font-weight: normal;
+        a {
+          color: @dark-blue;
+          font-weight: normal;
+          text-decoration: none;
+        }
+      }
+
+      color: @mid-blue;
+      font-weight: normal;
+      font-size: 32px;
+      line-height: 32px;
+      margin: 0px;
+      padding: 0px;
+
+      .discipline-subject {
+        animation: slide-right 0.5s 0s both;
+      }
+    }
+  }
+
+  &subheader-logo {
+    svg {
+      height: 130px;
+      width: 130px;
+      padding: 10px;
+    }
+  }
+}
+
+@media (max-width: @screen-sm-max) {
+  .subjects__subheader {
+    height: 60px;
+
+    h1 {
+      font-size: 22px;
+      line-height: 26px;
+    }
+  }
+
+  .subjects__subheader-container {
+    margin-bottom: 22px;
+  }
+}
+

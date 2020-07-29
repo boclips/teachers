@@ -42,7 +42,7 @@ export const HelpMenu = () => {
         </a>
       </Menu.Item>
       <Menu.Item>
-        <Link to="/discover-collections?subject=5cb1f6ba5c9cb675c59df37e">
+        <Link to="/subjects/5cb1f6ba5c9cb675c59df37e">
           <span className="icon-container">
             <TeacherTrainingIcon aria-hidden="true" />
           </span>

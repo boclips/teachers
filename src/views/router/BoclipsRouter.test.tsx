@@ -3,6 +3,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
+import SubjectSearchView from 'src/views/collection/SubjectSearchView';
 import {
   DisciplineFactory,
   MockStoreFactory,
@@ -13,7 +14,6 @@ import { DisciplineCardList } from '../../components/disciplines/DisciplineCardL
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { CollectionDetailsView } from '../collection/CollectionDetailsView';
-import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
 import VideoDetailsView from '../videoDetails/VideoDetailsView';
@@ -107,9 +107,9 @@ describe('BoclipsRouter', () => {
       expect(collectionsView).toExist();
     });
 
-    test('shows discover collections view on /discover-collections', () => {
+    test('shows subject search view on subjects/:id', () => {
       const history = createMemoryHistory({
-        initialEntries: ['/discover-collections?subject=maths'],
+        initialEntries: ['/subjects/maths'],
       });
 
       const wrapper = mount(
@@ -118,29 +118,9 @@ describe('BoclipsRouter', () => {
         </Provider>,
       );
 
-      const collectionsView = wrapper.find(DiscoverCollectionsView);
-      expect(collectionsView).toExist();
-      expect(collectionsView).toHaveProp('subjectIds', ['maths']);
-      expect(collectionsView).toHaveProp('disciplineId', undefined);
-    });
-
-    test('shows discover collections by subject view on /discover-collections', () => {
-      const history = createMemoryHistory({
-        initialEntries: [
-          '/discover-collections?discipline=stuff&subject=maths&subject=myths',
-        ],
-      });
-
-      const wrapper = mount(
-        <Provider store={buildStore(true)}>
-          <BoclipsRouter history={history} />
-        </Provider>,
-      );
-
-      const collectionsView = wrapper.find(DiscoverCollectionsView);
-      expect(collectionsView).toExist();
-      expect(collectionsView).toHaveProp('subjectIds', ['maths', 'myths']);
-      expect(collectionsView).toHaveProp('disciplineId', 'stuff');
+      const subjectView = wrapper.find(SubjectSearchView);
+      expect(subjectView).toExist();
+      expect(subjectView).toHaveProp('subjectId', 'maths');
     });
 
     test('shows new account form on /onboarding', () => {

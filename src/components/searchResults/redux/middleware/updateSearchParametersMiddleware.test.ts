@@ -130,8 +130,8 @@ describe('updateSearchParametersMiddleware', () => {
     });
   });
 
-  it('removes the discover-collections subject/discipline if a new search is done', async () => {
-    const store = setupStore('subject=1', '/discover-collections');
+  it('stays on subject search and keeps params when a new search is done from that page', async () => {
+    const store = setupStore('age_range=3-5', '/subjects/1');
 
     store.dispatch(
       bulkUpdateSearchParamsAction([
@@ -143,7 +143,7 @@ describe('updateSearchParametersMiddleware', () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/videos?page=1&q=test%20query'),
+        push('/subjects/1?age_range=3-5&page=1&q=test%20query'),
       );
     });
   });

@@ -47,7 +47,7 @@ class SubjectMenuComponent extends React.Component<Props, State> {
               sortBy(discipline.subjects, ['name']).map((subject) => (
                 <Menu.Item className="subject-menu__list-item" key={subject.id}>
                   <Link
-                    to={`/discover-collections?subject=${subject.id}`}
+                    to={`/subjects/${subject.id}`}
                     className="link--tabbable"
                   >
                     {subject.name}

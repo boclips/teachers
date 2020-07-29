@@ -39,16 +39,23 @@ interface StateProps {
   userId: string | null;
 }
 
+interface OwnProps {
+  subheader: any;
+}
+
 interface DispatchProps {
   onPageChange: (page: number) => void;
 }
 
 class SearchResultsView extends React.PureComponent<
-  StateProps & DispatchProps & WithAppliedSearchParametersProps,
+  StateProps & DispatchProps & WithAppliedSearchParametersProps & OwnProps,
   InternalState
 > {
   public constructor(
-    props: StateProps & DispatchProps & WithAppliedSearchParametersProps,
+    props: StateProps &
+      DispatchProps &
+      WithAppliedSearchParametersProps &
+      OwnProps,
   ) {
     super(props);
     this.state = {
@@ -144,7 +151,7 @@ class SearchResultsView extends React.PureComponent<
     this.props.numberOfFiltersApplied > 0;
 
   public render() {
-    const { videoResults } = this.props;
+    const { videoResults, subheader } = this.props;
     return (
       <PageLayout
         title={`"${videoResults.query}"`}
@@ -152,6 +159,7 @@ class SearchResultsView extends React.PureComponent<
         showNavigation
         showFooter
         showSearchBar
+        subheader={subheader}
       >
         <section className="search-results-container" data-qa="search-page">
           {this.renderResults()}

@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+import queryString, { ParsedQuery } from 'query-string';
 import { Store } from 'redux';
 import { DurationRange } from 'src/types/DurationRange';
 import { RouterState } from 'src/types/State';
@@ -34,21 +34,39 @@ export const dispatchSearchActions = (store: Store<RouterState>) => {
   const { location } = store.getState().router;
 
   if (location.pathname === '/videos' && location.search.indexOf('q')) {
-    const queryParams = queryString.parse(location.search);
-    const query = queryParams.q as string;
-
-    const videoSearchRequest = {
-      query,
-      page: parseInt(queryParams.page as string, 10),
-      filters: getVideoFilters(queryParams),
-      sortBy: null,
-    };
-    const collectionSearchRequest: CollectionSearchRequest = {
-      query,
-      filters: getCollectionFilters(queryParams),
-    };
-
-    store.dispatch(searchVideosAction(videoSearchRequest));
-    store.dispatch(searchCollectionsAction(collectionSearchRequest));
+    handleSearchActions(queryString.parse(location.search), store);
+  } else if (location.pathname.startsWith('/subjects')) {
+    handleSearchActions(overrideSubjectParam(location), store);
   }
+};
+
+const overrideSubjectParam = (location: any): ParsedQuery => {
+  const queryParams = queryString.parse(location.search);
+
+  const subjectId = location.pathname.substring(
+    location.pathname.lastIndexOf('/') + 1,
+  );
+  queryParams.subject = subjectId;
+  return queryParams;
+};
+
+const handleSearchActions = (
+  queryParams: ParsedQuery,
+  store: Store<RouterState>,
+) => {
+  const query = queryParams.q as string;
+
+  const videoSearchRequest = {
+    query,
+    page: parseInt((queryParams.page || 1) as string, 10),
+    filters: getVideoFilters(queryParams),
+    sortBy: null,
+  };
+  const collectionSearchRequest: CollectionSearchRequest = {
+    query,
+    filters: getCollectionFilters(queryParams),
+  };
+
+  store.dispatch(searchVideosAction(videoSearchRequest));
+  store.dispatch(searchCollectionsAction(collectionSearchRequest));
 };

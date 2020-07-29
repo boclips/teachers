@@ -67,7 +67,7 @@ export const DisciplineCardLimited = ({
               key={`subject-${subject.id}`}
             >
               <Link
-                to={`/discover-collections?subject=${subject.id}`}
+                to={`/subjects/${subject.id}`}
                 className="discipline-card__subject-link link--tabbable"
               >
                 {subject.name}

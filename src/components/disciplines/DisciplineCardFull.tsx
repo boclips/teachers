@@ -34,7 +34,10 @@ export const DisciplineCardFull = ({
 
   const basicHeader = (
     <A11yButton callback={toggleDisciplineCard}>
-      <div className="discipline-card-wrapper">
+      <div
+        key={`discipline-card-wrapper-${discipline.id}`}
+        className="discipline-card-wrapper"
+      >
         <span className="discipline-card-header">
           <span className="discipline-card-dropdown-arrow">
             <DropdownArrow active={isDisciplineOpen} />
@@ -71,8 +74,9 @@ export const DisciplineCardFull = ({
               key={`subject-${subject.id}`}
             >
               <Link
-                to={`/discover-collections?subject=${subject.id}`}
+                to={`/subjects/${subject.id}`}
                 className="discipline-card__subject-link link--tabbable"
+                key={`link-${subject.id}`}
               >
                 {subject.name}
               </Link>

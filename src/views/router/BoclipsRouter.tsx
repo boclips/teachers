@@ -1,6 +1,5 @@
 import { ConnectedRouter } from 'connected-react-router';
 import { History } from 'history';
-import queryString from 'query-string';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, RouteComponentProps, Switch } from 'react-router';
@@ -8,13 +7,13 @@ import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResults
 import { Constants } from 'src/app/AppConstants';
 import { RouterState } from 'src/types/State';
 import { Bit } from 'src/views/bit';
+import SubjectSearchView from 'src/views/collection/SubjectSearchView';
 import PrivateRoute from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
 import { AccountSettingsView } from '../account/AccountSettingsView';
 import CreateAccountView from '../account/CreateAccountView';
 import { OnboardingView } from '../account/OnboardingView';
 import { CollectionDetailsView } from '../collection/CollectionDetailsView';
-import DiscoverCollectionsView from '../collection/DiscoverCollectionsView';
 import { SubjectsView } from '../collection/SubjectsView';
 import HomeView from '../home/HomeView';
 import LoggedOutView from '../loggedout/LoggedOutView';
@@ -36,27 +35,12 @@ const collectionView = ({
   <CollectionDetailsView collectionId={match.params.collectionId} />
 );
 
-const discoverCollectionsView = (props: RouteComponentProps) => {
-  const { location } = props;
-  const queryParams = queryString.parse(location.search);
-  const subjectIdQuery = queryParams.subject as string[] | string;
-  const disciplineId = queryParams.discipline as string;
+const subjectSearchView = ({
+  match,
+}: RouteComponentProps<{ subjectId: string }>) => {
+  const subjectId = match.params.subjectId;
 
-  let subjectIds;
-  if (!subjectIdQuery) {
-    subjectIds = [];
-  } else if (subjectIdQuery instanceof Array) {
-    subjectIds = subjectIdQuery;
-  } else {
-    subjectIds = [subjectIdQuery];
-  }
-
-  return (
-    <DiscoverCollectionsView
-      subjectIds={subjectIds}
-      disciplineId={disciplineId}
-    />
-  );
+  return <SubjectSearchView subjectId={subjectId} />;
 };
 
 interface StateProps {
@@ -127,9 +111,9 @@ class BoclipsRouter extends Component<Props & StateProps> {
                 />
               </Switch>
             </Route>
-            <PrivateRoute
-              path="/discover-collections"
-              component={discoverCollectionsView}
+            <Route
+              path="/subjects/:subjectId"
+              component={subjectSearchView}
               exact
             />
             <PrivateRoute path="/our-subjects" component={SubjectsView} exact />
