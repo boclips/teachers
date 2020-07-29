@@ -20,6 +20,7 @@ import { onboardUser } from 'src/services/users/updateUser';
 import { Link } from 'src/types/Link';
 import eventually from 'test-support/eventually';
 import { OnboardingFormHelper } from 'test-support/OnboardingFormHelper';
+import { within } from '@testing-library/dom';
 import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { OnboardingForm } from './OnboardingForm';
 
@@ -29,7 +30,11 @@ jest.mock('../../../services/users/updateUser', () => ({
   onboardUser: jest.fn().mockReturnValue(Promise.resolve()),
 }));
 jest.mock('../../../services/schools/searchSchools', () => ({
-  searchSchools: jest.fn().mockResolvedValue([]),
+  searchSchools: jest.fn().mockResolvedValue([
+    { id: 'id1', name: 'school 1' },
+    { id: 'id2', name: 'school 2' },
+    { id: 'id3', name: 'school 3' },
+  ]),
 }));
 jest.mock('../../../services/users/fetchUser', () => ({
   fetchUser: jest.fn().mockResolvedValue(Promise.resolve()),
@@ -71,14 +76,19 @@ describe('onboarding form', () => {
     );
 
   describe('when USA', () => {
-    it('renders school and state', async () => {
+    it('have to select a state then a school', async () => {
       const wrapper = getView();
       await fillStep1(wrapper);
       await fillStep2(wrapper);
-      OnboardingFormHelper.editCountry(wrapper, 'United States');
+      await OnboardingFormHelper.editCountry(wrapper, 'United States');
 
-      expect(wrapper.getByLabelText('State')).toBeInTheDocument();
-      expect(wrapper.queryByLabelText('School')).not.toBeVisible();
+      await OnboardingFormHelper.editState(wrapper, 'State 1');
+      await OnboardingFormHelper.selectSchool(wrapper, 'school 1');
+
+      const selectedSchoolItem = wrapper.getAllByTestId('school-option')[0];
+      expect(within(selectedSchoolItem).getByText('school 1'));
+      expect(selectedSchoolItem).toBeVisible();
+      expect(selectedSchoolItem.getAttribute('aria-selected')).toBeTruthy();
     });
   });
 
@@ -88,7 +98,7 @@ describe('onboarding form', () => {
 
       await fillStep1(wrapper);
       await fillStep2(wrapper);
-      OnboardingFormHelper.editCountry(wrapper, 'Spain');
+      await OnboardingFormHelper.editCountry(wrapper, 'Spain');
 
       expect(wrapper.getByLabelText('School')).toBeInTheDocument();
       expect(wrapper.queryByLabelText('State')).toBeNull();
@@ -285,8 +295,8 @@ const fillStep2 = async (wrapper: ResultingContext) => {
 };
 
 const fillStep3 = async (wrapper: ResultingContext) => {
-  OnboardingFormHelper.editCountry(wrapper, 'Spain');
-  OnboardingFormHelper.enterSchool(wrapper, 'school');
+  await OnboardingFormHelper.editCountry(wrapper, 'Spain');
+  await OnboardingFormHelper.enterSchool(wrapper, 'school');
   await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[3]);
 };
 

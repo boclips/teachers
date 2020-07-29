@@ -30,7 +30,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import './OnboardingForm.less';
 import { OnboardingIllustration } from 'src/components/account/onboarding/OnboardingIllustration';
-import { convertFormValues } from 'src/components/account/onboarding/convertOnboardingFormToUpdateRequest';
+import { convertFormValues } from 'src/components/account/onboarding/convertOnboardingFormValues';
 
 const getFormId = (name: keyof OnboardingFormValues): string => name;
 

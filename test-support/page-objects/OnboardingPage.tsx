@@ -48,28 +48,28 @@ class OnboardingPage {
     OnboardingFormHelper.editName(this.wrapper, firstName, lastName);
   }
 
-  public setRole(value: string) {
-    OnboardingFormHelper.editRole(this.wrapper, value);
+  public async setRole(value: string) {
+    await OnboardingFormHelper.editRole(this.wrapper, value);
   }
 
   public setSubjects(subjectIds: string[]) {
     OnboardingFormHelper.editSubjects(this.wrapper, subjectIds);
   }
 
-  public setCountry(countryId: string) {
-    OnboardingFormHelper.editCountry(this.wrapper, countryId);
+  public async setCountry(countryId: string) {
+    await OnboardingFormHelper.editCountry(this.wrapper, countryId);
   }
 
-  public enterSchool(schoolName: string) {
-    OnboardingFormHelper.enterSchool(this.wrapper, schoolName);
+  public async enterSchool(schoolName: string) {
+    await OnboardingFormHelper.enterSchool(this.wrapper, schoolName);
   }
 
   public setMarketingOptIn() {
     OnboardingFormHelper.tickMarketingOptIn(this.wrapper);
   }
 
-  public setAgreeTerms() {
-    OnboardingFormHelper.tickTermsAndConditions(this.wrapper);
+  public async setAgreeTerms() {
+    await OnboardingFormHelper.tickTermsAndConditions(this.wrapper);
   }
 
   public async navigateTo(nextPage: number) {

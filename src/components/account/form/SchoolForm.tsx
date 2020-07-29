@@ -1,5 +1,6 @@
 import { AutoComplete, Select, Form } from 'antd';
 import React, { useState } from 'react';
+import sortBy from 'lodash/sortBy';
 import { searchSchools } from 'src/services/schools/searchSchools';
 import { Country } from 'src/types/Country';
 import { UsaState } from 'src/types/UsaState';
@@ -21,19 +22,15 @@ export const SchoolForm = (props: SchoolFormProps) => {
   const onSearchSchool = (value) => {
     if (value) {
       searchSchools(value, props.country, props.state).then((foundSchools) => {
-        setSchools(foundSchools);
+        const sortedSchools = sortBy(foundSchools, 'name');
+        setSchools(sortedSchools);
         setSearchValue(value);
       });
     }
   };
 
   const generateOptions = () => {
-    let schoolOptions = [];
-    if (schools) {
-      schoolOptions = schools
-        .concat(schools)
-        .sort((a, b) => a.name.localeCompare(b.name));
-    }
+    const schoolOptions = schools;
     if (searchValue && schools.length === 0) {
       schoolOptions.unshift({
         id: UNKNOWN_SCHOOL,
@@ -45,7 +42,7 @@ export const SchoolForm = (props: SchoolFormProps) => {
       <Select.Option
         key={school.id}
         value={school.id}
-        dataQa="school-option"
+        data-qa="school-option"
         title={school.name}
       >
         {school.name}
@@ -89,9 +86,9 @@ export const SchoolForm = (props: SchoolFormProps) => {
         data-qa="school-filter-select"
         id="school-filter-select"
         size="large"
-        className="boclips-multi-select-selection"
         dropdownClassName="dropdown"
         notFoundContent="Please type to search your school"
+        optionLabelProp="title"
       >
         {generateOptions()}
       </Select>

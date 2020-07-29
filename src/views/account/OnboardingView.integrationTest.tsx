@@ -60,16 +60,16 @@ describe('When user is not activated', () => {
     const onboardingPage = await OnboardingPage.navigateToOnboarding();
 
     onboardingPage.setName('Rebecca', 'Sanchez');
-    onboardingPage.setRole('Teacher');
+    await onboardingPage.setRole('Teacher');
     await onboardingPage.navigateTo(2);
-    onboardingPage.setSubjects(['Maths', 'German']);
+    await onboardingPage.setSubjects(['Maths', 'German']);
     onboardingPage.setAgeRanges(['3-5']);
     await onboardingPage.navigateTo(3);
-    onboardingPage.setCountry('Spain');
-    onboardingPage.enterSchool('school');
+    await onboardingPage.setCountry('Spain');
+    await onboardingPage.enterSchool('school');
     await onboardingPage.navigateTo(4);
     onboardingPage.setMarketingOptIn();
-    onboardingPage.setAgreeTerms();
+    await onboardingPage.setAgreeTerms();
 
     MockFetchVerify.put('https://api.example.com/v1/users/user-id');
 

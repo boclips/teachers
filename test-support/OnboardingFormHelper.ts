@@ -55,21 +55,66 @@ export class OnboardingFormHelper {
     });
   }
 
-  public static editCountry(wrapper: ResultingContext, countryName: string) {
+  public static async editCountry(
+    wrapper: ResultingContext,
+    countryName: string,
+  ) {
     act(() => {
       fireEvent.mouseDown(wrapper.getByLabelText('Country'));
     });
     act(() => {
       fireEvent.click(wrapper.getByText(countryName));
     });
+    await OnboardingFormHelper.waitForSelectionSuccess(wrapper, countryName);
   }
 
-  public static enterSchool(wrapper: ResultingContext, schoolName: string) {
+  public static async editState(wrapper: ResultingContext, stateName: string) {
+    act(() => {
+      fireEvent.mouseDown(wrapper.getByLabelText('State'));
+    });
+    act(() => {
+      fireEvent.click(wrapper.getByText(stateName));
+    });
+  }
+
+  public static async selectSchool(
+    wrapper: ResultingContext,
+    schoolName: string,
+  ) {
+    act(() => {
+      fireEvent.change(wrapper.getByLabelText('School'), {
+        target: { value: { schoolName } },
+      });
+    });
+    await waitFor(() => wrapper.getByText(schoolName));
+    act(() => {
+      fireEvent.click(wrapper.getByText(schoolName));
+    });
+  }
+
+  public static async enterSchool(
+    wrapper: ResultingContext,
+    schoolName: string,
+  ) {
     act(() => {
       fireEvent.change(wrapper.getByLabelText('School'), {
         target: { value: schoolName },
       });
     });
+  }
+
+  private static async waitForSelectionSuccess(
+    wrapper: ResultingContext,
+    selectedItem: string,
+  ) {
+    await waitFor(() =>
+      expect(
+        wrapper.getByText(selectedItem, {
+          selector:
+            '.ant-select-selection-item > span, ant-select-selection-item',
+        }),
+      ).toBeVisible(),
+    );
   }
 
   public static editAgeRange(wrapper: ResultingContext, ageRanges: string[]) {
