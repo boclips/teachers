@@ -1,30 +1,15 @@
 import { SelectValue } from 'antd/lib/select';
 import React from 'react';
-import { convertAgeRangesFromNumbers } from 'src/components/ageRanges/convertAgeRangesFromNumbers';
-import { useSelector } from 'react-redux';
-import State from 'src/types/State';
 import MultiSelect from '../common/MultiSelect';
 import { AgeRange } from '../../types/AgeRange';
 
 interface Props {
   onChange?: (value: string[]) => void;
-  initialValue?: number[];
+  allAgeRanges: AgeRange[];
+  initialValue?: string[];
 }
 
 export const SelectAgeRange = (props: Props) => {
-  const allAgeRanges = useSelector((state: State) => state.ageRanges);
-
-  const generateInitialValues = () => {
-    const { initialValue } = props;
-    if (initialValue) {
-      return convertAgeRangesFromNumbers(
-        allAgeRanges,
-        initialValue,
-      ).map((age) => age.encodeJSON());
-    }
-    return [];
-  };
-
   const onChange = (value: SelectValue) => {
     const split = value as string[];
     const parsed = split.map((it) => AgeRange.fromJson(it));
@@ -37,7 +22,7 @@ export const SelectAgeRange = (props: Props) => {
   const generateOptions = () => {
     const Option = MultiSelect.Option;
 
-    return allAgeRanges.map((ageRange) => (
+    return props.allAgeRanges.map((ageRange) => (
       <Option
         key={ageRange.getLabel()}
         title={ageRange.getLabel()}
@@ -61,7 +46,7 @@ export const SelectAgeRange = (props: Props) => {
       onChange={onChange}
       aria-label="Ages I teach"
       data-qa="age-select"
-      defaultValue={generateInitialValues()}
+      defaultValue={props.initialValue}
     >
       {generateOptions()}
     </MultiSelect>
