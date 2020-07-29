@@ -14,7 +14,10 @@ interface Props {
 export const OnboardingSection = (props: Props) => {
   const { children, section, screenReaderErrors, visibleIndex } = props;
   return (
-    <section hidden={section.pageIndex !== visibleIndex}>
+    <section
+      hidden={section.pageIndex !== visibleIndex}
+      data-qa={`onboarding-section-${section.pageIndex}`}
+    >
       <h1 className="alt onboarding-form__title big-title">{section.title}</h1>
       <p className="onboarding-form__text">{section.description}</p>
       {screenReaderErrors && <ScreenReaderErrors errors={screenReaderErrors} />}

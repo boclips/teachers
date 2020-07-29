@@ -41,7 +41,7 @@ jest.mock('../../../services/users/fetchUser', () => ({
 }));
 
 AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
-
+const timeoutForFullOnboarding = 10000;
 const mockOnboardUser = onboardUser as Mock;
 const SECTIONS = OnboardingSections;
 const links = LinksFactory.sample({
@@ -104,56 +104,37 @@ describe('onboarding form', () => {
       expect(wrapper.queryByLabelText('State')).toBeNull();
     });
 
-    it('sends all information with full form', async () => {
-      const wrapper = getView();
+    it(
+      'sends all information with full form',
+      async () => {
+        const wrapper = getView();
 
-      await fillValidForm(wrapper);
-      OnboardingFormHelper.save(wrapper);
+        await fillValidForm(wrapper);
+        OnboardingFormHelper.save(wrapper);
 
-      await eventually(() => {
-        expect(mockOnboardUser).toHaveBeenCalledWith(links, {
-          firstName: 'Rebecca',
-          lastName: 'Sanchez',
-          subjects: ['1'],
-          role: 'TEACHER',
-          ages: [3, 4, 5],
-          country: 'ES',
-          hasOptedIntoMarketing: true,
-          schoolName: 'school',
+        await eventually(() => {
+          expect(mockOnboardUser).toHaveBeenCalledWith(links, {
+            firstName: 'Rebecca',
+            lastName: 'Sanchez',
+            subjects: ['1'],
+            role: 'TEACHER',
+            ages: [3, 4, 5],
+            country: 'ES',
+            hasOptedIntoMarketing: true,
+            schoolName: 'school',
+          });
         });
-      });
-    });
+      },
+      timeoutForFullOnboarding,
+    );
   });
 
-  it('sends marketing information from cookies with full form', async () => {
-    const wrapper = getView();
+  it(
+    'sends marketing information from cookies with full form',
+    async () => {
+      const wrapper = getView();
 
-    const marketingData: RegistrationContext = {
-      referralCode: 'REFERRALCODE',
-      utm: {
-        source: 'some-source-value',
-        term: 'some-term-value',
-        medium: 'some-medium-value',
-        campaign: 'some-campaign-value',
-        content: 'some-content-value',
-      },
-    };
-
-    Cookies.set('registrationContext', marketingData);
-    await fillValidForm(wrapper);
-    OnboardingFormHelper.save(wrapper);
-
-    await eventually(() => {
-      expect(mockOnboardUser).toHaveBeenCalledWith(links, {
-        firstName: 'Rebecca',
-        lastName: 'Sanchez',
-        subjects: ['1'],
-        ages: [3, 4, 5],
-        country: 'ES',
-        schoolName: 'school',
-        schoolId: undefined,
-        hasOptedIntoMarketing: true,
-        role: 'TEACHER',
+      const marketingData: RegistrationContext = {
         referralCode: 'REFERRALCODE',
         utm: {
           source: 'some-source-value',
@@ -162,59 +143,98 @@ describe('onboarding form', () => {
           campaign: 'some-campaign-value',
           content: 'some-content-value',
         },
+      };
+
+      Cookies.set('registrationContext', marketingData);
+      await fillValidForm(wrapper);
+      OnboardingFormHelper.save(wrapper);
+
+      await eventually(() => {
+        expect(mockOnboardUser).toHaveBeenCalledWith(links, {
+          firstName: 'Rebecca',
+          lastName: 'Sanchez',
+          subjects: ['1'],
+          ages: [3, 4, 5],
+          country: 'ES',
+          schoolName: 'school',
+          schoolId: undefined,
+          hasOptedIntoMarketing: true,
+          role: 'TEACHER',
+          referralCode: 'REFERRALCODE',
+          utm: {
+            source: 'some-source-value',
+            term: 'some-term-value',
+            medium: 'some-medium-value',
+            campaign: 'some-campaign-value',
+            content: 'some-content-value',
+          },
+        });
       });
-    });
-  });
+    },
+    timeoutForFullOnboarding,
+  );
 
-  it('sends partial marketing information from the cookie', async () => {
-    const wrapper = getView();
+  it(
+    'sends partial marketing information from the cookie',
+    async () => {
+      const wrapper = getView();
 
-    const marketingData: RegistrationContext = {
-      referralCode: 'REFERRALCODE',
-      utm: undefined,
-    };
-
-    Cookies.set('registrationContext', marketingData);
-    await fillValidForm(wrapper);
-    OnboardingFormHelper.save(wrapper);
-    await eventually(() => {
-      expect(mockOnboardUser).toHaveBeenCalledWith(links, {
-        firstName: 'Rebecca',
-        lastName: 'Sanchez',
-        role: 'TEACHER',
-        subjects: ['1'],
-        ages: [3, 4, 5],
-        country: 'ES',
-        schoolName: 'school',
-        hasOptedIntoMarketing: true,
+      const marketingData: RegistrationContext = {
         referralCode: 'REFERRALCODE',
+        utm: undefined,
+      };
+
+      Cookies.set('registrationContext', marketingData);
+      await fillValidForm(wrapper);
+      OnboardingFormHelper.save(wrapper);
+      await eventually(() => {
+        expect(mockOnboardUser).toHaveBeenCalledWith(links, {
+          firstName: 'Rebecca',
+          lastName: 'Sanchez',
+          role: 'TEACHER',
+          subjects: ['1'],
+          ages: [3, 4, 5],
+          country: 'ES',
+          schoolName: 'school',
+          hasOptedIntoMarketing: true,
+          referralCode: 'REFERRALCODE',
+        });
       });
-    });
-  });
+    },
+    timeoutForFullOnboarding,
+  );
 
-  it('does not send information if no firstName', async () => {
-    const wrapper = getView();
+  it(
+    'does not send information if no firstName',
+    async () => {
+      const wrapper = getView();
 
-    await fillValidForm(wrapper);
+      await fillValidForm(wrapper);
 
-    OnboardingFormHelper.editName(wrapper, '', 'Sanchez');
+      OnboardingFormHelper.editName(wrapper, '', 'Sanchez');
 
-    OnboardingFormHelper.save(wrapper);
+      OnboardingFormHelper.save(wrapper);
 
-    expect(mockOnboardUser).not.toHaveBeenCalled();
-  });
+      expect(mockOnboardUser).not.toHaveBeenCalled();
+    },
+    timeoutForFullOnboarding,
+  );
 
-  it('does not send information if no lastName', async () => {
-    const wrapper = getView();
+  it(
+    'does not send information if no lastName',
+    async () => {
+      const wrapper = getView();
 
-    await fillValidForm(wrapper);
+      await fillValidForm(wrapper);
 
-    OnboardingFormHelper.editName(wrapper, 'Dog', '');
+      OnboardingFormHelper.editName(wrapper, 'Dog', '');
 
-    OnboardingFormHelper.save(wrapper);
+      OnboardingFormHelper.save(wrapper);
 
-    expect(mockOnboardUser).not.toHaveBeenCalled();
-  });
+      expect(mockOnboardUser).not.toHaveBeenCalled();
+    },
+    timeoutForFullOnboarding,
+  );
 
   it('does not send information if no T&C', async () => {
     const wrapper = getView();

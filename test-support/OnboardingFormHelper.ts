@@ -136,7 +136,7 @@ export class OnboardingFormHelper {
     act(() => {
       fireEvent.click(wrapper.getByText('Next').closest('button'));
     });
-    await this.carouselPageIsVisible(wrapper, newSection.title);
+    await this.carouselPageIsVisible(wrapper, newSection);
   }
 
   public static async moveCarouselBackward(
@@ -146,13 +146,20 @@ export class OnboardingFormHelper {
     act(() => {
       fireEvent.click(wrapper.getByText('Back').closest('button'));
     });
-    await this.carouselPageIsVisible(wrapper, newSection.title);
+    await this.carouselPageIsVisible(wrapper, newSection);
   }
 
   public static carouselPageIsVisible = async (
     wrapper: ResultingContext,
-    title: string,
-  ) => waitFor(() => expect(wrapper.getByText(title)).toBeVisible());
+    section: OnboardingSectionAttributes,
+  ) => {
+    await waitFor(() => {
+      const newSection = wrapper.getByTestId(
+        `onboarding-section-${section.pageIndex}`,
+      );
+      expect(newSection.hidden).toBeFalsy();
+    });
+  };
 
   public static save(wrapper: ResultingContext) {
     act(() => {
