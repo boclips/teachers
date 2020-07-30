@@ -8,7 +8,11 @@ import { AppliedFilters } from './AppliedFilters';
 import { FilterOptions, FiltersWithForm } from './Filters';
 import './FilterPanel.less';
 
-export const FilterPanel = () => {
+export interface FilterPanelProps {
+  hideFilterTypes?: string[];
+}
+
+export const FilterPanel = ({ hideFilterTypes }: FilterPanelProps) => {
   const dispatch = useDispatch();
 
   const applySearchFilters = (filterOptions: FilterOptions) => {
@@ -41,7 +45,10 @@ export const FilterPanel = () => {
     <div data-qa="search-filters-menu" className="search-filters-menu">
       <h1>Filter results</h1>
       <AppliedFilters />
-      <FiltersWithForm onApplyFilters={debouncedSearch} />
+      <FiltersWithForm
+        onApplyFilters={debouncedSearch}
+        hideFilterTypes={hideFilterTypes}
+      />
     </div>
   );
 };

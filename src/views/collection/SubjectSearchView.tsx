@@ -73,6 +73,7 @@ class SubjectSearchView extends PureComponent<
     return (
       <ConnectedNewSearchResultsView
         subheader={this.renderSubheader(discipline, subject)}
+        hideFilterTypes={['subjects']}
       />
     );
   }

@@ -34,6 +34,7 @@ export interface FilterOptions {
 
 interface Props extends StateProps, WithAppliedSearchParametersProps {
   onApplyFilters: (FilterOptions) => void;
+  hideFilterTypes?: string[];
 }
 
 interface StateProps {
@@ -42,7 +43,13 @@ interface StateProps {
 
 const Filters = React.forwardRef(
   (props: FormComponentProps & Props, ref: Ref<any>) => {
-    const { ageRange, subjectIds, duration, resourceTypes } = props;
+    const {
+      ageRange,
+      subjectIds,
+      duration,
+      resourceTypes,
+      hideFilterTypes,
+    } = props;
     const { resetFields } = props.form;
     const facets = useSelector(
       (state: State) => state.search.videoSearch.facets,
@@ -63,6 +70,10 @@ const Filters = React.forwardRef(
       setOpenFilters(openKeys);
     }, []);
 
+    const isHiddenFilterType = (filterType: string) => {
+      return !!hideFilterTypes?.find((toBeHidden) => toBeHidden === filterType);
+    };
+
     const renderSubMenuTitle = (title: string, key: string) => (
       <span className="filter-form__submenu-title">
         {title}
@@ -78,58 +89,62 @@ const Filters = React.forwardRef(
             inlineIndent={0}
             onOpenChange={onOpenChange}
           >
-            {extractTotalHits(facets?.ageRanges) > 0 && (
-              <SubMenu
-                title={renderSubMenuTitle('Age', FilterKey.AGE)}
-                key={FilterKey.AGE}
-                className="filter-form__section"
-              >
-                <AgeFilter
-                  ageRange={ageRange}
-                  form={props.form}
-                  formFieldId="ageRange"
-                />
-              </SubMenu>
-            )}
-            {extractTotalHits(facets?.subjects) > 0 && (
-              <SubMenu
-                title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
-                key={FilterKey.SUBJECTS}
-                className="filter-form__section"
-              >
-                <SubjectFilter
-                  subjectIds={subjectIds}
-                  form={props.form}
-                  formFieldId="subjects"
-                />
-              </SubMenu>
-            )}
-            {extractTotalHits(facets?.resourceTypes) > 0 && (
-              <SubMenu
-                title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
-                key={FilterKey.RESOURCE}
-                className="filter-form__section"
-              >
-                <ResourcesFilter
-                  resourceTypes={resourceTypes}
-                  form={props.form}
-                  formFieldId="resourceTypes"
-                />
-              </SubMenu>
-            )}
-            {extractTotalHits(facets?.durations) > 0 && (
-              <SubMenu
-                title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
-                key={FilterKey.DURATION}
-                className="filter-form__section"
-              >
-                <DurationFilter
-                  duration={duration}
-                  form={props.form}
-                  formFieldId="duration"
-                />
-              </SubMenu>
-            )}
+            {!isHiddenFilterType(FilterKey.AGE) &&
+              extractTotalHits(facets?.ageRanges) > 0 && (
+                <SubMenu
+                  title={renderSubMenuTitle('Age', FilterKey.AGE)}
+                  key={FilterKey.AGE}
+                  className="filter-form__section"
+                >
+                  <AgeFilter
+                    ageRange={ageRange}
+                    form={props.form}
+                    formFieldId="ageRange"
+                  />
+                </SubMenu>
+              )}
+            {!isHiddenFilterType(FilterKey.SUBJECTS) &&
+              extractTotalHits(facets?.subjects) > 0 && (
+                <SubMenu
+                  title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
+                  key={FilterKey.SUBJECTS}
+                  className="filter-form__section"
+                >
+                  <SubjectFilter
+                    subjectIds={subjectIds}
+                    form={props.form}
+                    formFieldId="subjects"
+                  />
+                </SubMenu>
+              )}
+            {!isHiddenFilterType(FilterKey.RESOURCE) &&
+              extractTotalHits(facets?.resourceTypes) > 0 && (
+                <SubMenu
+                  title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
+                  key={FilterKey.RESOURCE}
+                  className="filter-form__section"
+                >
+                  <ResourcesFilter
+                    resourceTypes={resourceTypes}
+                    form={props.form}
+                    formFieldId="resourceTypes"
+                  />
+                </SubMenu>
+              )}
+            {!isHiddenFilterType(FilterKey.DURATION) &&
+              extractTotalHits(facets?.durations) > 0 && (
+                <SubMenu
+                  title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
+                  key={FilterKey.DURATION}
+                  className="filter-form__section"
+                >
+                  <DurationFilter
+                    duration={duration}
+                    form={props.form}
+                    formFieldId="duration"
+                  />
+                </SubMenu>
+              )}
           </Menu>
         </Form>
       </section>

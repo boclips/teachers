@@ -46,7 +46,7 @@ const overrideSubjectParam = (location: any): ParsedQuery => {
   const subjectId = location.pathname.substring(
     location.pathname.lastIndexOf('/') + 1,
   );
-  queryParams.subject = subjectId;
+  queryParams.subject = [subjectId];
   return queryParams;
 };
 

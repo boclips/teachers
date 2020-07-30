@@ -41,6 +41,7 @@ interface StateProps {
 
 interface OwnProps {
   subheader: any;
+  hideFilterTypes?: string[];
 }
 
 interface DispatchProps {
@@ -105,30 +106,33 @@ class SearchResultsView extends React.PureComponent<
 
   private renderBasicLayoutWithFilterPanel = (
     content: JSX.Element,
-  ): JSX.Element => (
-    <>
-      <Col xs={{ span: 0 }} lg={{ span: 6 }}>
-        <FilterPanel />
-      </Col>
-      <Drawer
-        className="display-mobile-and-tablet filters-drawer"
-        visible={this.state.filterDrawerVisible}
-        closable
-        onClose={this.onCloseFilterDrawer}
-        placement="left"
-        width="auto"
-      >
-        <FilterPanel />
-      </Drawer>
-      <Col
-        xs={{ span: 24 }}
-        lg={{ span: 18 }}
-        className="search-results-container__results"
-      >
-        {content}
-      </Col>
-    </>
-  );
+  ): JSX.Element => {
+    const { hideFilterTypes } = this.props;
+    return (
+      <>
+        <Col xs={{ span: 0 }} lg={{ span: 6 }}>
+          <FilterPanel hideFilterTypes={hideFilterTypes} />
+        </Col>
+        <Drawer
+          className="display-mobile-and-tablet filters-drawer"
+          visible={this.state.filterDrawerVisible}
+          closable
+          onClose={this.onCloseFilterDrawer}
+          placement="left"
+          width="auto"
+        >
+          <FilterPanel hideFilterTypes={hideFilterTypes} />
+        </Drawer>
+        <Col
+          xs={{ span: 24 }}
+          lg={{ span: 18 }}
+          className="search-results-container__results"
+        >
+          {content}
+        </Col>
+      </>
+    );
+  };
 
   private onCloseFilterDrawer = () => {
     this.setState({ filterDrawerVisible: false });
