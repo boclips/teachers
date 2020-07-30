@@ -1,7 +1,6 @@
 import Layout from 'antd/lib/layout';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Subject } from 'src/types/Subject';
 import { Discipline } from 'src/types/Discipline';
 import { CollectionState, DisciplineState } from 'src/types/State';
@@ -11,8 +10,8 @@ import {
 } from 'src/components/common/higherOrderComponents/withMediaBreakPoint';
 import './SubjectSearchView.less';
 import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
-import { updateSearchParamsAction } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { Link } from 'react-router-dom';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 
 interface OwnProps {
@@ -25,45 +24,39 @@ interface StateProps {
   discipline: Discipline;
 }
 
-interface DispatchProps {
-  initializeSubjectSearch: () => {};
-}
-
 const { Content } = Layout;
 
 class SubjectSearchView extends PureComponent<
-  OwnProps & StateProps & DispatchProps & WithMediaBreakPointProps
+  OwnProps & StateProps & WithMediaBreakPointProps
 > {
   public componentDidMount(): void {
-    const { initializeSubjectSearch, subjectId } = this.props;
+    const { subjectId } = this.props;
     AnalyticsFactory.externalAnalytics().trackDiscoveryPage([subjectId]);
-    initializeSubjectSearch();
   }
 
   private renderSubheader = (discipline: Discipline, subject: Subject) => {
     return (
-      <section className="subjects__subheader-container">
-        <Content>
-          <section className="subjects__subheader">
-            <h1>
+      subject && (
+        <section className="subjects__subheader-container">
+          <Content>
+            <section className="subjects__subheader">
+              <h1>
+                {discipline && (
+                  <strong className="discipline-name">
+                    <Link to="/our-subjects">{discipline.name}</Link>
+                  </strong>
+                )}
+                <div className="discipline-subject">{subject?.name}</div>
+              </h1>
               {discipline && (
-                <strong className="discipline-name">
-                  <Link to="/our-subjects">{discipline.name}</Link>
-                </strong>
+                <section className="subjects__subheader-logo display-tablet-and-desktop">
+                  <DisciplineLogo discipline={discipline} />
+                </section>
               )}
-              <span className="discipline-subject">
-                <strong> &gt; </strong>
-                {subject?.name}
-              </span>
-            </h1>
-            {discipline && (
-              <section className="subjects__subheader-logo display-tablet-and-desktop">
-                <DisciplineLogo discipline={discipline} />
-              </section>
-            )}
-          </section>
-        </Content>
-      </section>
+            </section>
+          </Content>
+        </section>
+      )
     );
   };
 
@@ -71,10 +64,12 @@ class SubjectSearchView extends PureComponent<
     const { discipline, subject } = this.props;
 
     return (
-      <ConnectedNewSearchResultsView
-        subheader={this.renderSubheader(discipline, subject)}
-        hideFilterTypes={['subjects']}
-      />
+      <div className="subject-search-page">
+        <ConnectedNewSearchResultsView
+          subheader={this.renderSubheader(discipline, subject)}
+          hideFilterTypes={['subjects']}
+        />
+      </div>
     );
   }
 }
@@ -100,14 +95,4 @@ function mapStateToProps(
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    initializeSubjectSearch: (subject: string) =>
-      dispatch(updateSearchParamsAction({ subject: [subject] })),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withMediaBreakPoint(SubjectSearchView));
+export default connect(mapStateToProps)(withMediaBreakPoint(SubjectSearchView));

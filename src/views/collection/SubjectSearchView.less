@@ -16,24 +16,21 @@
     align-items: center;
 
     h1 {
-      strong {
-        color: @dark-blue;
-        font-weight: normal;
-        a {
-          color: @dark-blue;
-          font-weight: normal;
-          text-decoration: none;
-        }
-      }
-
       color: @mid-blue;
       font-weight: normal;
-      font-size: 32px;
-      line-height: 32px;
-      margin: 0px;
-      padding: 0px;
+      margin: 0;
+      padding: 0;
+
+      strong a {
+        color: @dark-blue;
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: none;
+      }
 
       .discipline-subject {
+        font-size: 32px;
+        line-height: 47px;
         animation: slide-right 0.5s 0s both;
       }
     }
@@ -50,11 +47,14 @@
 
 @media (max-width: @screen-sm-max) {
   .subjects__subheader {
-    height: 60px;
+    height: 100px;
 
     h1 {
       font-size: 22px;
       line-height: 26px;
+    }
+    strong {
+      display: none;
     }
   }
 

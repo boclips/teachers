@@ -130,7 +130,7 @@ describe('updateSearchParametersMiddleware', () => {
     });
   });
 
-  it('stays on subject search and keeps params when a new search is done from that page', async () => {
+  it('goes to /videos and keeps params including subject when a new search is done from subjects page', async () => {
     const store = setupStore('age_range=3-5', '/subjects/1');
 
     store.dispatch(
@@ -143,7 +143,25 @@ describe('updateSearchParametersMiddleware', () => {
 
     await eventually(() => {
       expect(store.getActions()).toContainEqual(
-        push('/subjects/1?age_range=3-5&page=1&q=test%20query'),
+        push('/videos?age_range=3-5&page=1&q=test%20query&subject=1'),
+      );
+    });
+  });
+
+  it('stays on subject search and keeps params when changing filters', async () => {
+    const store = setupStore('age_range=3-5&page=1', '/subjects/1');
+
+    store.dispatch(
+      bulkUpdateSearchParamsAction([
+        {
+          duration: [new DurationRange({ min: 123, max: 123 })],
+        },
+      ]),
+    );
+
+    await eventually(() => {
+      expect(store.getActions()).toContainEqual(
+        push('/subjects/1?age_range=3-5&duration=123-123&page=1'),
       );
     });
   });

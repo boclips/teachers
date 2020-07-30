@@ -27,12 +27,29 @@ export function onBulkUpdateSearchParameter(
   );
 
   if (pathname.startsWith('/subjects')) {
-    const newUri = generateUri(pathname, updatedQueryParams);
+    const isQuerySearchOnSubject = !!updatedQueryParams.q;
+    const newUri = isQuerySearchOnSubject
+      ? getUriToVideoSearchWithAppliedSubjectFilter(
+          pathname,
+          updatedQueryParams,
+        )
+      : generateUri(pathname, updatedQueryParams);
+
     store.dispatch(push(newUri));
   } else {
     const newUri = generateUri('/videos', updatedQueryParams);
     store.dispatch(push(newUri));
   }
+}
+
+function getUriToVideoSearchWithAppliedSubjectFilter(
+  pathname: any,
+  updatedQueryParams: VideoSearchQuery,
+) {
+  const subjectId = pathname.substring(pathname.lastIndexOf('/') + 1);
+  updatedQueryParams.subject = [subjectId];
+
+  return generateUri('/videos', updatedQueryParams);
 }
 
 export function onUpdateSearchParameter(
