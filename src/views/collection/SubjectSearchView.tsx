@@ -64,12 +64,12 @@ class SubjectSearchView extends PureComponent<
     const { discipline, subject } = this.props;
 
     return (
-      <div className="subject-search-page">
+      <section data-qa="subject-search-page">
         <ConnectedNewSearchResultsView
           subheader={this.renderSubheader(discipline, subject)}
           hideFilterTypes={['subjects']}
         />
-      </div>
+      </section>
     );
   }
 }
