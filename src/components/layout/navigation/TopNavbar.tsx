@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import Layout from 'antd/lib/layout';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SearchBarWrapper from 'src/components/searchBar/SearchBarWrapper';
+import { SearchBar } from 'src/components/searchBar/SearchBarWrapper';
 import boclipsLogo from '../../../../resources/images/boclips-logo.png';
 import BoclipsMobileLogo from '../../../../resources/images/boclips-mobile-logo.svg';
 import { AccountMenuContainer } from '../accountMenu/AccountMenuContainer';
@@ -45,7 +45,7 @@ export const TopNavbar = React.memo((props: Props) => (
             md={{ span: 20 }}
             lg={{ span: 10 }}
           >
-            <SearchBarWrapper />
+            <SearchBar />
           </Col>
         ) : (
           props.isMobile && (

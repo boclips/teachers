@@ -1,3 +1,5 @@
+import { SuggestionType } from 'src/components/searchBar/SearchBarWrapper';
+
 interface Word {
   text: string;
   offset: number;
@@ -40,14 +42,15 @@ const prefixes = (txt: string): Prefix[] => {
 
 interface Match {
   text: string;
-  list: string;
+  id?: string;
+  list: SuggestionType;
   matches: boolean;
   weight: number;
   offset: number;
 }
 
 const getMatch = (record: EnrichedEntry, txt: string): Match => {
-  const matchingPrefix = prefixes(record.entry).find(
+  const matchingPrefix = prefixes(record.entry.value.trim()).find(
     (prefix) =>
       prefix.text.toLowerCase().indexOf(txt.trim().toLowerCase()) === 0,
   );
@@ -55,7 +58,8 @@ const getMatch = (record: EnrichedEntry, txt: string): Match => {
   return {
     matches,
     list: record.list,
-    text: record.entry,
+    id: record.entry.id,
+    text: record.entry.value.trim(),
     weight: matches ? matchingPrefix!!.weight : 0,
     offset: matches ? matchingPrefix!!.offset : 0,
   };
@@ -69,8 +73,9 @@ export interface CompletionChunk {
 export interface Completion {
   text: string;
   textWithHighlights: CompletionChunk[];
-  list: string;
+  list: SuggestionType;
   value: string;
+  id?: string;
 }
 
 const getHighlights = (match: Match, text: string): CompletionChunk[] => {
@@ -85,32 +90,50 @@ const getHighlights = (match: Match, text: string): CompletionChunk[] => {
   ].filter((chunk) => chunk.text.length > 0);
 };
 
-const completions = (lists: Lists, txt: string): Completion[] =>
-  Object.keys(lists)
-    .reduce((acc: EnrichedEntry[], listName) => {
+const completions = (lists: Lists, txt: string): Completion[] => {
+  const results = Object.keys(lists)
+    .reduce((acc: EnrichedEntry[], listName: SuggestionType) => {
       for (const entry of lists[listName]) {
-        acc.push({ list: listName, entry: entry.trim() });
+        acc.push({ list: listName, entry });
       }
       return acc;
     }, [])
     .map((entry) => getMatch(entry, txt))
     .filter((matchResult) => matchResult.matches)
     .sort((m1, m2) => m2.weight - m1.weight)
-    .slice(0, 6)
     .map((matchResult) => ({
       text: matchResult.text,
+      id: matchResult.id,
       value: matchResult.text,
       textWithHighlights: getHighlights(matchResult, txt),
       list: matchResult.list,
     }));
 
-interface Lists {
-  [name: string]: string[];
+  const subjects = results
+    .filter((entry) => entry.list === 'subjects')
+    .slice(0, 3);
+  const topics = results.filter((entry) => entry.list === 'topics').slice(0, 4);
+  const channels = results
+    .filter((entry) => entry.list === 'channels')
+    .slice(0, 3);
+
+  return topics.concat(subjects).concat(channels);
+};
+
+export interface Suggestion {
+  value: string;
+  id?: string;
 }
 
+export type Lists = {
+  subjects?: Suggestion[];
+  channels?: Suggestion[];
+  topics?: Suggestion[];
+};
+
 interface EnrichedEntry {
-  list: string;
-  entry: string;
+  list: SuggestionType;
+  entry: Suggestion;
 }
 
 export const completionsFor = (lists: Lists) => (txt: string): Completion[] =>

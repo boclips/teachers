@@ -27,4 +27,5 @@ export const internalAnalyticsMock = ({
   trackCollectionInteractedWith: jest.fn(),
   trackUserExpired: jest.fn(),
   trackAccountRegistration: jest.fn(),
+  trackSearchQueryCompletionsSuggested: jest.fn(),
 } as any) as BoclipsAnalytics;

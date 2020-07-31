@@ -3,7 +3,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MockStore } from 'redux-mock-store';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import eventually from 'test-support/eventually';
 import { MockStoreFactory, RouterFactory } from 'test-support/factories';
@@ -11,12 +11,50 @@ import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { FakeEventsClient } from 'boclips-api-client/dist/sub-clients/events/client/FakeEventsClient';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
-import SearchBar from './SearchBarWrapper';
+import { FakeSuggestionsClient } from 'boclips-api-client/dist/sub-clients/suggestions/client/FakeSubjectsClient';
+import { SearchBar } from './SearchBarWrapper';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import StatefulSearchBar from './StatefulSearchBar';
 
-let store: MockStore;
+jest.mock(
+  './completionsCreatedBy.json',
+  () => [
+    "Rachel's English",
+    'English for Dummies',
+    'Crash Course English',
+    'Another English Channel',
+    'The Best English Channel',
+    'Crash Course Engineering',
+  ],
+  {
+    virtual: true,
+  },
+);
 
+jest.mock(
+  './completionsTopics.json',
+  () => [
+    'geographical energy',
+    'geographical geology',
+    'geographical process',
+    'geographical urbanization',
+    'geography maps ',
+    'geography topography',
+    ' english as a second language',
+    'english ',
+    ' history',
+    'art history',
+    'british english',
+    ' american english',
+    'american english 2 ',
+    'history europe',
+  ],
+  {
+    virtual: true,
+  },
+);
+
+let store: MockStore;
 let statefulSearchBar: ReactWrapper<any>;
 
 beforeEach(() => {
@@ -67,9 +105,13 @@ describe('SearchBar', () => {
     );
   };
   let eventsClient: FakeEventsClient;
+  let suggestionsClient: FakeSuggestionsClient;
 
   beforeEach(async () => {
     eventsClient = ((await ApiClientWrapper.get()) as FakeBoclipsClient).events;
+    eventsClient.clear();
+    suggestionsClient = ((await ApiClientWrapper.get()) as FakeBoclipsClient)
+      .suggestions;
     eventsClient.clear();
   });
 
@@ -92,7 +134,7 @@ describe('SearchBar', () => {
 
     const events = eventsClient.getEvents();
 
-    expect(wrapper.getByText('urope')).toBeInTheDocument();
+    expect(await wrapper.findByText('urope')).toBeInTheDocument();
 
     await eventually(() => {
       expect(events.length).toBe(1);
@@ -134,44 +176,55 @@ describe('SearchBar', () => {
     const searchInput = wrapper.getByPlaceholderText('Enter your search term');
 
     fireEvent.change(searchInput, { target: { value: 'eng' } });
-
-    const firstAutocompleteDropdown = wrapper.getByRole('listbox').textContent;
-
     fireEvent.change(searchInput, { target: { value: 'engi' } });
-
-    const secondAutocompleteDropdown = wrapper.getByRole('listbox').textContent;
-
-    expect(secondAutocompleteDropdown).not.toEqual(firstAutocompleteDropdown);
-    expect(firstAutocompleteDropdown).toEqual("Rachel's English");
-    expect(secondAutocompleteDropdown).toEqual('Crash Course Engineering');
 
     await eventually(() => {
       const events = eventsClient.getEvents();
       expect(events.length).toBe(2);
       const firstEvent = events[0] as SearchQueryCompletionsSuggestedRequest;
       const secondEvent = events[1] as SearchQueryCompletionsSuggestedRequest;
+      expect(firstEvent.searchQuery).toEqual('eng');
+      expect(firstEvent.impressions).toContain("Rachel's English");
+      expect(secondEvent.searchQuery).toEqual('engi');
+      expect(secondEvent.impressions).toContain('Crash Course Engineering');
       expect(firstEvent.componentId).toEqual(secondEvent.componentId);
+      expect(firstEvent.completionId).not.toEqual(secondEvent.completionId);
     });
   });
 
-  it('decorates content partner auto complete options', () => {
+  it('clicking a subject search suggestion takes you to subject page', async () => {
+    suggestionsClient.populate({
+      suggestionTerm: 'eng',
+      channels: [],
+      subjects: [{ id: 'subject-one', name: 'Magic English' }],
+    });
     const wrapper = getWrapper('');
 
     const input = wrapper.getByPlaceholderText('Enter your search term');
 
-    fireEvent.change(input, { target: { value: 'Hip Hughes History' } });
+    fireEvent.change(input, { target: { value: 'eng' } });
 
-    expect(
-      wrapper.getByTestId(`result-channel-hip-hughes-history`),
-    ).toHaveTextContent('Hip Hughes History');
+    const subjectSuggestion = await wrapper.findByTestId(
+      'result-magic-english',
+    );
+
+    expect(within(subjectSuggestion).getByText('Magic')).toBeInTheDocument();
+    expect(within(subjectSuggestion).getByText('Eng')).toBeInTheDocument();
+    expect(within(subjectSuggestion).getByText('lish')).toBeInTheDocument();
+
+    fireEvent.click(subjectSuggestion);
+
+    expect(wrapper.history.location.pathname).toEqual(`/subjects/subject-one`);
+    expect(wrapper.history.location.search).toMatch(/\?completionId=.+/);
   });
 
-  it('sets the query in the location on submit', () => {
+  it('sets the query in the location on submit', async () => {
     const wrapper = getWrapper('');
 
     const input = wrapper.getByPlaceholderText('Enter your search term');
 
     fireEvent.change(input, { target: { value: 'history' } });
+    await wrapper.findByText('europe');
 
     const searchButton = wrapper.getByText('Search');
 
@@ -182,14 +235,14 @@ describe('SearchBar', () => {
     });
   });
 
-  it('sets completionId when user clicks on it', () => {
+  it('sets completionId when user clicks on it', async () => {
     const wrapper = getWrapper('');
 
     const input = wrapper.getByPlaceholderText('Enter your search term');
 
     fireEvent.change(input, { target: { value: 'history' } });
 
-    const suggestion = wrapper.getByText('europe');
+    const suggestion = await wrapper.findByText('europe');
 
     fireEvent.click(suggestion);
 
@@ -200,6 +253,52 @@ describe('SearchBar', () => {
       expect(
         queryParams.includes(`completion_id=${event.completionId}`),
       ).toBeTruthy();
+    });
+  });
+
+  it('shows max 4 topics, 3 subjects and 3 channels when suggesting', async () => {
+    suggestionsClient.populate({
+      suggestionTerm: 'eng',
+      channels: [],
+      subjects: [
+        { id: 'subject-one', name: 'Magic English' },
+        { id: 'subject-two', name: 'Advanced English' },
+        { id: 'subject-three', name: 'American English' },
+        { id: 'subject-three', name: 'Australian English' },
+      ],
+    });
+
+    const wrapper = getWrapper('');
+    const input = wrapper.getByPlaceholderText('Enter your search term');
+
+    fireEvent.change(input, { target: { value: 'eng' } });
+
+    await wrapper.findByText('Magic');
+
+    await eventually(() => {
+      const events = eventsClient.getEvents();
+      expect(eventsClient.getEvents().length).toBe(1);
+      const event = events[0] as SearchQueryCompletionsSuggestedRequest;
+
+      expect(event.impressions.length).toEqual(10);
+      expect(event.impressions).toContain('english as a second language');
+      expect(event.impressions).toContain('english');
+      expect(event.impressions).toContain('british english');
+      expect(event.impressions).toContain('american english');
+      expect(event.impressions).not.toContain('american english 2');
+
+      expect(event.impressions).toContain('Magic English');
+      expect(event.impressions).toContain('Advanced English');
+      expect(event.impressions).toContain('American English');
+      expect(event.impressions).not.toContain('Australian English');
+
+      expect(event.impressions).toContain("Rachel's English");
+      expect(event.impressions).toContain('English for Dummies');
+      expect(event.impressions).toContain('Another English Channel');
+
+      expect(event.impressions).not.toContain('Crash Course English');
+      expect(event.impressions).not.toContain('The Best English Channel');
+      expect(event.impressions).not.toContain('Crash Course Engineering');
     });
   });
 });

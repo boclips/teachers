@@ -11,11 +11,7 @@ import completionsTopics from './completionsTopics.json';
 import './StatefulSearchBar.less';
 import { v4 as uuidv4 } from 'uuid';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
-
-const getCompletions = completionsFor({
-  topics: completionsTopics,
-  channels: completionsCreatedBy,
-});
+import { fetchSuggestions } from 'src/services/suggestions/fetchSuggestions';
 
 const sendPublishSearchSuggestion = (
   searchQuery: string,
@@ -32,7 +28,11 @@ const sendPublishSearchSuggestion = (
 };
 
 interface Props {
-  onSubmit: (query: string, completionId?: string) => void;
+  onSubmit: (
+    query: string,
+    completionId?: string,
+    completion?: Completion,
+  ) => void;
   value?: string;
 }
 
@@ -56,23 +56,43 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   }
 
   public render() {
-    const onsubmit = (e) => e.preventDefault();
-    const setDataSource = (query: string) => {
-      const suggestions = getCompletions(query);
-      const completionId = uuidv4();
+    const findCompletions = (query: string): void => {
+      if (query.length < 3) {
+        this.setState({
+          completions: [],
+        });
+        return;
+      }
 
-      this.setState({
-        completions: suggestions,
-        completionId,
-      });
-      suggestions?.length > 0 &&
-        sendPublishSearchSuggestion(
-          query,
-          suggestions,
+      fetchSuggestions(query).then((suggestions) => {
+        const completionId = uuidv4();
+
+        const getCompletions = completionsFor({
+          topics: completionsTopics.map((text) => ({ value: text })),
+          channels: completionsCreatedBy.map((text) => ({ value: text })),
+          subjects: suggestions.subjects.map((subject) => ({
+            value: subject.name,
+            id: subject.id,
+          })),
+        });
+
+        const foundCompletions = getCompletions(query);
+        this.setState({
+          completions: foundCompletions,
           completionId,
-          this.state.componentId,
-        );
+        });
+
+        this.state.completions?.length > 0 &&
+          sendPublishSearchSuggestion(
+            query,
+            foundCompletions,
+            completionId,
+            this.state.componentId,
+          );
+      });
     };
+
+    const onsubmit = (e) => e.preventDefault();
 
     return (
       <form
@@ -88,11 +108,14 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           dropdownClassName="search-completions"
           options={this.optionsRender()}
           defaultValue={this.props.value}
-          onSearch={setDataSource}
+          onSearch={findCompletions}
           onSelect={(suggestion) =>
-            this.submit(suggestion, this.state.completionId)
+            this.submit(
+              suggestion,
+              this.state.completionId,
+              this.findSuggestionType(suggestion),
+            )
           }
-          size="large"
           style={{ width: '100%' }}
           data-qa={'testing-autocomplete'}
         >
@@ -111,15 +134,19 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     );
   }
 
+  private findSuggestionType(value: string) {
+    return this.state.completions.find(
+      (completion) => completion.value === value,
+    );
+  }
+
   private optionsRender() {
-    return this.state.completions
-      .sort((r) => (r.list === 'topics' ? -1 : 1))
-      .map((r) => ({
-        key: r.text,
-        value: r.text,
-        label: this.renderResult(r),
-        className: r.list === 'topics' ? 'topics' : 'channels',
-      }));
+    return this.state.completions.map((completion) => ({
+      key: completion.text,
+      value: completion.text,
+      label: this.renderResult(completion),
+      className: `${completion.list} completions`,
+    }));
   }
 
   private renderResult(r: Completion) {
@@ -134,6 +161,10 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           <span className="autocomplete--channel">Channel: </span>
         )}
 
+        {r.list === 'subjects' && (
+          <span className="autocomplete--subject">Subject: </span>
+        )}
+
         {r.textWithHighlights.map((chunk) => (
           <span
             className={chunk.matches ? '' : 'completion-affix'}
@@ -146,12 +177,16 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     );
   }
 
-  private submit(value: string, completionId?: string) {
+  private submit(
+    value: string,
+    completionId?: string,
+    completion?: Completion,
+  ) {
     if (this.submittedText === value) {
       return;
     }
     this.submittedText = value;
-    this.props.onSubmit(value, completionId);
+    this.props.onSubmit(value, completionId, completion);
   }
 }
 

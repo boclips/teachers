@@ -10,14 +10,24 @@
     }
   }
 
-  .channels {
+  .channels, .subjects {
     border-top: 1px solid #848FBB;
   }
+
   .channels ~ .channels {
     border-top: none;
   }
 
-  .autocomplete--channel {
+  .subjects ~ .subjects {
+    border-top: none;
+  }
+
+  .completions {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .autocomplete--channel, .autocomplete--subject {
     color: @shade-6;
     font-weight: bold;
   }
