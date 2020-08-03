@@ -59,7 +59,7 @@ export const ShareCodeDialog = (props: Props) => {
       visible={visible}
       footer={null}
       title={props.title}
-      width="360px"
+      width="390px"
       className="share-code-dialog"
     >
       <div className="share-code-dialog__explainer">

@@ -236,17 +236,21 @@ describe('onboarding form', () => {
     timeoutForFullOnboarding,
   );
 
-  it('does not send information if no T&C', async () => {
-    const wrapper = getView();
+  it(
+    'does not send information if no T&C',
+    async () => {
+      const wrapper = getView();
 
-    await fillStep1(wrapper);
-    await fillStep2(wrapper);
-    await fillStep3(wrapper);
+      await fillStep1(wrapper);
+      await fillStep2(wrapper);
+      await fillStep3(wrapper);
 
-    OnboardingFormHelper.save(wrapper);
+      OnboardingFormHelper.save(wrapper);
 
-    expect(mockOnboardUser).not.toHaveBeenCalled();
-  });
+      expect(mockOnboardUser).not.toHaveBeenCalled();
+    },
+    timeoutForFullOnboarding,
+  );
 
   it('sends a page changed event to Appcues if page has not already been visited', async () => {
     const wrapper = getView();
@@ -287,23 +291,27 @@ describe('onboarding form', () => {
     ]);
   });
 
-  it('does not send duplicated platform interaction event if page has already been visited', async () => {
-    const wrapper = getView();
+  it(
+    'does not send duplicated platform interaction event if page has already been visited',
+    async () => {
+      const wrapper = getView();
 
-    await fillStep1(wrapper);
-    await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[0]);
-    await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
+      await fillStep1(wrapper);
+      await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[0]);
+      await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
 
-    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
-    expect(client.events.getEvents()).toEqual([
-      {
-        anonymous: true,
-        subtype: 'ONBOARDING_PAGE_2_STARTED',
-        type: 'PLATFORM_INTERACTED_WITH',
-      },
-    ]);
-  });
+      expect(client.events.getEvents()).toEqual([
+        {
+          anonymous: true,
+          subtype: 'ONBOARDING_PAGE_2_STARTED',
+          type: 'PLATFORM_INTERACTED_WITH',
+        },
+      ]);
+    },
+    timeoutForFullOnboarding,
+  );
 });
 
 const fillStep1 = async (wrapper: ResultingContext) => {
