@@ -43,6 +43,22 @@ describe('CollectionCard', () => {
     expect(tagsContainer).toBeInTheDocument();
   });
 
+  it('renders a clickable header', () => {
+    const collection = VideoCollectionFactory.sample({
+      id: 'collection-id',
+      title: 'My collection',
+    });
+    const videos = [VideoFactory.sample()];
+    const store = createBoclipsStore(MockStoreFactory.sampleState());
+    const component = renderWithBoclipsStore(
+      <CollectionCard collection={collection} videos={videos} grid />,
+      store,
+    );
+    const link = component.getByText('My collection').getAttribute('href');
+
+    expect(link)?.toEqual('/collections/collection-id');
+  });
+
   it('does not display the tags container when the given collection has no tags and grid is false', () => {
     const collection = VideoCollectionFactory.sample({
       id: 'collection-id',

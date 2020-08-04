@@ -118,7 +118,7 @@ export const CollectionCard = withMediaBreakPoint(
         }}
       >
         <section className="collection-card__title">
-          <CollectionTitle collection={props.collection} />
+          <CollectionTitle collection={props.collection} clickableHeader />
           {isSmallCard && (
             <StopClickPropagation
               wrapper="div"

@@ -41,7 +41,7 @@ jest.mock('../../../services/users/fetchUser', () => ({
 }));
 
 AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
-const timeoutForFullOnboarding = 10000;
+const timeoutForFullOnboarding = 20000;
 const mockOnboardUser = onboardUser as Mock;
 const SECTIONS = OnboardingSections;
 const links = LinksFactory.sample({

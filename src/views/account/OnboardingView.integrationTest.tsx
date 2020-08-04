@@ -20,7 +20,7 @@ import MockFetchVerify, {
 import OnboardingPage from '../../../test-support/page-objects/OnboardingPage';
 
 describe('When user is not activated', () => {
-  const timeoutForFullOnboarding = 20000;
+  const timeoutForFullOnboarding = 30000;
   beforeEach(() => {
     new ApiStub({
       _links: {

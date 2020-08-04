@@ -31,7 +31,9 @@ describe('CollectionHeader', () => {
         },
       );
 
-      expect(component.getByText('My collection')).toBeInTheDocument();
+      const title = component.getByText('My collection');
+      expect(title)?.toBeInTheDocument();
+      expect(title.tagName).toEqual('H1');
     });
 
     it('renders the bookmark button', () => {

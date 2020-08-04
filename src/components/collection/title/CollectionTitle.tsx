@@ -5,6 +5,7 @@ import './CollectionTitle.less';
 
 interface Props {
   collection: VideoCollection;
+  clickableHeader?: boolean;
 }
 
 export class CollectionTitle extends React.PureComponent<Props> {
@@ -18,12 +19,16 @@ export class CollectionTitle extends React.PureComponent<Props> {
           id={this.props.collection.id}
           className="collection-title"
         >
-          <Link
-            to={`/collections/${this.props.collection.id}`}
-            onClick={this.handleOnClick}
-          >
-            {this.props.collection.title}
-          </Link>
+          {this.props.clickableHeader ? (
+            <Link
+              to={`/collections/${this.props.collection.id}`}
+              onClick={this.handleOnClick}
+            >
+              {this.props.collection.title}
+            </Link>
+          ) : (
+            this.props.collection.title
+          )}
         </h1>
       </section>
     );
