@@ -5,20 +5,33 @@
   width: 100%;
 
   @media screen and (max-width: @screen-lg-min) {
-    display: none;
+    &__image {
+      svg {
+        display: none;
+      }
+    }
   }
 
   &__content {
     display: flex;
     justify-content: space-between;
     padding: 0 55px;
+
     @media screen and (min-width: 1200px) {
       width: 1200px;
       margin: 0 auto;
     }
+
+    @media screen and (max-width: @screen-sm-max) {
+      padding: 15px 15px;
+    }
   }
   &__headings {
     padding-top: 35px;
+
+    @media screen and (max-width: @screen-sm-max) {
+      padding-top: 15px;
+    }
   }
   &__title {
     color: #00217d;

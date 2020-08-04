@@ -76,33 +76,41 @@ describe('onboarding form', () => {
     );
 
   describe('when USA', () => {
-    it('have to select a state then a school', async () => {
-      const wrapper = getView();
-      await fillStep1(wrapper);
-      await fillStep2(wrapper);
-      await OnboardingFormHelper.editCountry(wrapper, 'United States');
+    it(
+      'have to select a state then a school',
+      async () => {
+        const wrapper = getView();
+        await fillStep1(wrapper);
+        await fillStep2(wrapper);
+        await OnboardingFormHelper.editCountry(wrapper, 'United States');
 
-      await OnboardingFormHelper.editState(wrapper, 'State 1');
-      await OnboardingFormHelper.selectSchool(wrapper, 'school 1');
+        await OnboardingFormHelper.editState(wrapper, 'State 1');
+        await OnboardingFormHelper.selectSchool(wrapper, 'school 1');
 
-      const selectedSchoolItem = wrapper.getAllByTestId('school-option')[0];
-      expect(within(selectedSchoolItem).getByText('school 1'));
-      expect(selectedSchoolItem).toBeVisible();
-      expect(selectedSchoolItem.getAttribute('aria-selected')).toBeTruthy();
-    });
+        const selectedSchoolItem = wrapper.getAllByTestId('school-option')[0];
+        expect(within(selectedSchoolItem).getByText('school 1'));
+        expect(selectedSchoolItem).toBeVisible();
+        expect(selectedSchoolItem.getAttribute('aria-selected')).toBeTruthy();
+      },
+      timeoutForFullOnboarding,
+    );
   });
 
   describe('when not USA', () => {
-    it('renders school input', async () => {
-      const wrapper = getView();
+    it(
+      'renders school input',
+      async () => {
+        const wrapper = getView();
 
-      await fillStep1(wrapper);
-      await fillStep2(wrapper);
-      await OnboardingFormHelper.editCountry(wrapper, 'Spain');
+        await fillStep1(wrapper);
+        await fillStep2(wrapper);
+        await OnboardingFormHelper.editCountry(wrapper, 'Spain');
 
-      expect(wrapper.getByLabelText('School')).toBeInTheDocument();
-      expect(wrapper.queryByLabelText('State')).toBeNull();
-    });
+        expect(wrapper.getByLabelText('School')).toBeInTheDocument();
+        expect(wrapper.queryByLabelText('State')).toBeNull();
+      },
+      timeoutForFullOnboarding,
+    );
 
     it(
       'sends all information with full form',
@@ -252,40 +260,52 @@ describe('onboarding form', () => {
     timeoutForFullOnboarding,
   );
 
-  it('sends a page changed event to Appcues if page has not already been visited', async () => {
-    const wrapper = getView();
-    const trackedPageIndex = 0;
-    await fillStep1(wrapper);
+  it(
+    'sends a page changed event to Appcues if page has not already been visited',
+    async () => {
+      const wrapper = getView();
+      const trackedPageIndex = 0;
+      await fillStep1(wrapper);
 
-    expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(
-      trackedPageIndex,
-    );
-  });
+      expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(
+        trackedPageIndex,
+      );
+    },
+    timeoutForFullOnboarding,
+  );
 
-  it('does not send duplicated page changed event to Appcues if page has already been visited', async () => {
-    const wrapper = getView();
+  it(
+    'does not send duplicated page changed event to Appcues if page has already been visited',
+    async () => {
+      const wrapper = getView();
 
-    await fillStep1(wrapper);
-    await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[0]);
-    await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
+      await fillStep1(wrapper);
+      await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[0]);
+      await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
 
-    expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
-  });
+      expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
+    },
+    timeoutForFullOnboarding,
+  );
 
-  it('sends a platform interaction event when visiting a page ', async () => {
-    const wrapper = getView();
+  it(
+    'sends a platform interaction event when visiting a page ',
+    async () => {
+      const wrapper = getView();
 
-    await fillStep1(wrapper);
-    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      await fillStep1(wrapper);
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
-    expect(client.events.getEvents()).toEqual([
-      {
-        anonymous: true,
-        subtype: 'ONBOARDING_PAGE_2_STARTED',
-        type: 'PLATFORM_INTERACTED_WITH',
-      },
-    ]);
-  });
+      expect(client.events.getEvents()).toEqual([
+        {
+          anonymous: true,
+          subtype: 'ONBOARDING_PAGE_2_STARTED',
+          type: 'PLATFORM_INTERACTED_WITH',
+        },
+      ]);
+    },
+    timeoutForFullOnboarding,
+  );
 
   it(
     'does not send duplicated platform interaction event if page has already been visited',
