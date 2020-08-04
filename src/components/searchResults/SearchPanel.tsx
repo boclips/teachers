@@ -72,7 +72,9 @@ export class SearchPanel extends React.PureComponent<
             collections={collections}
           />
         </Row>
-        <Row>{this.showPagination()}</Row>
+        <Row className="results-pagination-container">
+          {this.showPagination()}
+        </Row>
       </>
     );
   }

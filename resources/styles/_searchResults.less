@@ -1,5 +1,4 @@
-@import "_antd-theme";
-
+@import '_antd-theme';
 
 .search-results-container {
   padding-bottom: 24px;
@@ -16,7 +15,17 @@
 
 .results-pagination {
   margin: 50px 0 0;
-  text-align: center;
+}
+
+.results-pagination-container {
+  display: flex;
+  justify-content: center;
+
+  .ant-pagination-item-container:hover {
+    .ant-pagination-item-ellipsis {
+      opacity: 0;
+    }
+  }
 }
 
 .ant-pagination-item,
@@ -62,4 +71,3 @@
     color: #d9d9d9;
   }
 }
-
