@@ -1,16 +1,12 @@
-import { Form } from '@ant-design/compatible';
-import { Checkbox } from 'antd';
+import { Checkbox, Form } from 'antd';
 import CheckboxGroup from 'antd/lib/checkbox/Group';
 import React from 'react';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { formatCount } from 'src/components/searchResults/filters/utils/formatCount';
-import { GetFieldDecoratorOptions } from '@ant-design/compatible/lib/form/Form';
+import { FormItemProps } from 'antd/es/form';
 
 export interface CheckboxGroupFilterProps {
   filterOptions: FilterOptionResult[];
-  form;
-  fieldId: string;
-  fieldOptions: GetFieldDecoratorOptions;
+  formItemProps?: FormItemProps;
 }
 
 interface FilterOptionResult {
@@ -21,29 +17,24 @@ interface FilterOptionResult {
 
 export const CheckboxGroupFilter = ({
   filterOptions,
-  fieldId,
-  form,
-  fieldOptions,
-}: CheckboxGroupFilterProps & FormComponentProps) => (
-  <>
-    <Form.Item>
-      {form.getFieldDecorator(
-        fieldId,
-        fieldOptions,
-      )(
-        <CheckboxGroup className="filter-form__checkbox-group">
-          {filterOptions
-            .filter((filter) => filter.count > 0)
-            .map((item) => (
-              <Checkbox key={item.label} value={item.value}>
-                {item.label}{' '}
-                <span className="filter-form__checkbox-count">
-                  ({formatCount(item.count)})
-                </span>
-              </Checkbox>
-            ))}
-        </CheckboxGroup>,
-      )}
-    </Form.Item>
-  </>
+  formItemProps,
+}: CheckboxGroupFilterProps) => (
+  <Form.Item
+    name={formItemProps.name}
+    rules={formItemProps.rules}
+    initialValue={formItemProps.initialValue}
+  >
+    <CheckboxGroup className="filter-form__checkbox-group">
+      {filterOptions
+        .filter((filter) => filter.count > 0)
+        .map((item) => (
+          <Checkbox key={item.label} value={item.value}>
+            {item.label}{' '}
+            <span className="filter-form__checkbox-count">
+              ({formatCount(item.count)})
+            </span>
+          </Checkbox>
+        ))}
+    </CheckboxGroup>
+  </Form.Item>
 );

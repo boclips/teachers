@@ -4,14 +4,13 @@ import { useSelector } from 'react-redux';
 import State from 'src/types/State';
 import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
 import { AgeRange } from 'src/types/AgeRange';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
 
 interface Props {
   ageRange: AgeRange[];
-  formFieldId: string;
+  name: string;
 }
 
-export const AgeFilter = (props: Props & FormComponentProps) => {
+export const AgeFilter = ({ ageRange, name }: Props) => {
   const facets = useSelector(
     (state: State) => state.search.videoSearch.facets?.ageRanges,
   );
@@ -21,16 +20,13 @@ export const AgeFilter = (props: Props & FormComponentProps) => {
     value: a.getId(),
     count: extractFacetHits(a.getId(), facets),
   }));
+
   return (
     <CheckboxGroupFilter
       filterOptions={ageRangeFilters}
-      form={props.form}
-      fieldId={props.formFieldId}
-      fieldOptions={{
-        initialValue: props.ageRange
-          ? props.ageRange.map((range) => range.getId())
-          : [],
-        valuePropName: 'value',
+      formItemProps={{
+        name,
+        initialValue: ageRange?.map((range) => range.getId()),
       }}
     />
   );

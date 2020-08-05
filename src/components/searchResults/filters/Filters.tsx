@@ -1,167 +1,116 @@
-import { Form } from '@ant-design/compatible';
-import { Menu } from 'antd';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
-import SubMenu from 'antd/lib/menu/SubMenu';
-import React, { Ref, useCallback, useEffect, useState } from 'react';
+import { Form, Menu } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
   withAppliedSearchParameters,
   WithAppliedSearchParametersProps,
 } from 'src/components/common/higherOrderComponents/withAppliedSearchParametersProps';
-import { Subject } from 'src/types/Subject';
-import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
-import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
-import { extractTotalHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
+
 import { AgeFilter } from 'src/components/searchResults/filters/age/AgeFilter';
 import { DurationFilter } from 'src/components/searchResults/filters/duration/DurationFilter';
 import { SubjectFilter } from 'src/components/searchResults/filters/subject/SubjectFilter';
 import { ResourcesFilter } from 'src/components/searchResults/filters/resources/ResourcesFilter';
+import { extractTotalHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
+import SubMenu from 'antd/lib/menu/SubMenu';
+import ArrowUpSVG from 'resources/images/filters-arrow-up.svg';
+import ArrowDownSVG from 'resources/images/filters-arrow-down.svg';
+import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
+import { FilterOptions } from 'src/components/searchResults/filters/FilterOptions';
+import {
+  FilterKey,
+  allFilterKeys,
+} from 'src/components/searchResults/filters/FilterKey';
 import State from '../../../types/State';
 
-export const FilterKey = {
-  AGE: 'age',
-  DURATION: 'duration',
-  RESOURCE: 'resourceTypes',
-  SUBJECTS: 'subjects',
-};
-
-export interface FilterOptions {
-  duration?: string[];
-  ageRange?: string[];
-  subjects?: string[];
-  resourceTypes?: string[];
-}
-
-interface Props extends StateProps, WithAppliedSearchParametersProps {
+interface Props extends WithAppliedSearchParametersProps {
   onApplyFilters: (FilterOptions) => void;
-  hideFilterTypes?: string[];
+  hiddenFilterKeys?: FilterKey[];
 }
 
-interface StateProps {
-  subjects?: Subject[];
-}
+export const Filters = withAppliedSearchParameters((props: Props) => {
+  const {
+    ageRange,
+    subjectIds,
+    duration,
+    resourceTypes,
+    hiddenFilterKeys,
+    onApplyFilters,
+  } = props;
+  const facets = useSelector((state: State) => state.search.videoSearch.facets);
 
-const Filters = React.forwardRef(
-  (props: FormComponentProps & Props, ref: Ref<any>) => {
-    const {
-      ageRange,
-      subjectIds,
-      duration,
-      resourceTypes,
-      hideFilterTypes,
-    } = props;
-    const { resetFields } = props.form;
-    const facets = useSelector(
-      (state: State) => state.search.videoSearch.facets,
-    );
+  const [form] = Form.useForm();
+  const onValuesChange = (_, allFilterValues: FilterOptions) =>
+    onApplyFilters(allFilterValues);
 
-    const [openFilters, setOpenFilters] = useState(() => [
-      FilterKey.AGE,
-      FilterKey.SUBJECTS,
-      FilterKey.DURATION,
-      FilterKey.RESOURCE,
-    ]);
+  const [openFilters, setOpenFilters] = useState(allFilterKeys);
+  useEffect(() => {
+    form.resetFields();
+  }, [form, ageRange, subjectIds, duration, resourceTypes]);
 
-    useEffect(() => {
-      resetFields();
-    }, [resetFields, ageRange, subjectIds, duration, resourceTypes]);
+  const renderFilterSection = (
+    filterKey: FilterKey,
+    label: string,
+    facetCounts: { [id: string]: Facet },
+    filter: React.ReactNode,
+  ) => {
+    const isHidden = hiddenFilterKeys?.indexOf(filterKey) > -1;
+    const isOpen = openFilters?.indexOf(filterKey) > -1;
+    const hasMatchingFacets = extractTotalHits(facetCounts) > 0;
 
-    const onOpenChange = useCallback((openKeys: string[]) => {
-      setOpenFilters(openKeys);
-    }, []);
+    return !isHidden && hasMatchingFacets ? (
+      <SubMenu
+        key={filterKey}
+        className="filter-form__section"
+        title={
+          <span className="filter-form__submenu-title">
+            {label}
+            {isOpen ? <ArrowUpSVG /> : <ArrowDownSVG />}
+          </span>
+        }
+      >
+        {filter}
+      </SubMenu>
+    ) : null;
+  };
 
-    const isHiddenFilterType = (filterType: string) => {
-      return !!hideFilterTypes?.find((toBeHidden) => toBeHidden === filterType);
-    };
-
-    const renderSubMenuTitle = (title: string, key: string) => (
-      <span className="filter-form__submenu-title">
-        {title}
-        {openFilters.indexOf(key) > -1 ? <ArrowUpSVG /> : <ArrowDownSVG />}
-      </span>
-    );
-    return (
-      <section ref={ref}>
-        <Form className="filter-form">
-          <Menu
-            mode="inline"
-            openKeys={openFilters}
-            inlineIndent={0}
-            onOpenChange={onOpenChange}
-          >
-            {!isHiddenFilterType(FilterKey.AGE) &&
-              extractTotalHits(facets?.ageRanges) > 0 && (
-                <SubMenu
-                  title={renderSubMenuTitle('Age', FilterKey.AGE)}
-                  key={FilterKey.AGE}
-                  className="filter-form__section"
-                >
-                  <AgeFilter
-                    ageRange={ageRange}
-                    form={props.form}
-                    formFieldId="ageRange"
-                  />
-                </SubMenu>
-              )}
-            {!isHiddenFilterType(FilterKey.SUBJECTS) &&
-              extractTotalHits(facets?.subjects) > 0 && (
-                <SubMenu
-                  title={renderSubMenuTitle('Subjects', FilterKey.SUBJECTS)}
-                  key={FilterKey.SUBJECTS}
-                  className="filter-form__section"
-                >
-                  <SubjectFilter
-                    subjectIds={subjectIds}
-                    form={props.form}
-                    formFieldId="subjects"
-                  />
-                </SubMenu>
-              )}
-            {!isHiddenFilterType(FilterKey.RESOURCE) &&
-              extractTotalHits(facets?.resourceTypes) > 0 && (
-                <SubMenu
-                  title={renderSubMenuTitle('Resources', FilterKey.RESOURCE)}
-                  key={FilterKey.RESOURCE}
-                  className="filter-form__section"
-                >
-                  <ResourcesFilter
-                    resourceTypes={resourceTypes}
-                    form={props.form}
-                    formFieldId="resourceTypes"
-                  />
-                </SubMenu>
-              )}
-            {!isHiddenFilterType(FilterKey.DURATION) &&
-              extractTotalHits(facets?.durations) > 0 && (
-                <SubMenu
-                  title={renderSubMenuTitle('Duration', FilterKey.DURATION)}
-                  key={FilterKey.DURATION}
-                  className="filter-form__section"
-                >
-                  <DurationFilter
-                    duration={duration}
-                    form={props.form}
-                    formFieldId="duration"
-                  />
-                </SubMenu>
-              )}
-          </Menu>
-        </Form>
-      </section>
-    );
-  },
-);
-
-export const FiltersWithForm = withAppliedSearchParameters(
-  Form.create<FormComponentProps & Props>({
-    onValuesChange: (props, _, allValues: FilterOptions) => {
-      const filterRequest: FilterOptions = {};
-      filterRequest.duration = allValues.duration;
-      filterRequest.ageRange = allValues.ageRange;
-      filterRequest.subjects = allValues.subjects;
-      filterRequest.resourceTypes = allValues.resourceTypes;
-
-      props.onApplyFilters(filterRequest);
-    },
-  })(Filters),
-);
+  return (
+    <section>
+      <Form form={form} className="filter-form" onValuesChange={onValuesChange}>
+        <Menu
+          mode="inline"
+          openKeys={openFilters}
+          inlineIndent={0}
+          onOpenChange={(keys: any[]) => setOpenFilters(keys)}
+        >
+          {renderFilterSection(
+            FilterKey.AGE,
+            'Age',
+            facets?.ageRanges,
+            <AgeFilter ageRange={ageRange} name="ageRange" />,
+          )}
+          {renderFilterSection(
+            FilterKey.SUBJECTS,
+            'Subjects',
+            facets?.subjects,
+            <SubjectFilter subjectIds={subjectIds} name="subjects" />,
+          )}
+          {renderFilterSection(
+            FilterKey.RESOURCE,
+            'Resources',
+            facets?.resourceTypes,
+            <ResourcesFilter
+              resourceTypes={resourceTypes}
+              name="resourceTypes"
+            />,
+          )}
+          {renderFilterSection(
+            FilterKey.DURATION,
+            'Duration',
+            facets?.durations,
+            <DurationFilter duration={duration} name="duration" />,
+          )}
+        </Menu>
+      </Form>
+    </section>
+  );
+});

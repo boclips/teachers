@@ -15,6 +15,7 @@ import {
 } from 'src/components/searchBar/redux/reducers/searchReducer';
 import { updatePageAction } from 'src/components/searchResults/redux/actions/updatePageAction';
 import { VideoCardsPlaceholder } from 'src/components/searchResults/VideoCardsPlaceholder';
+import { FilterKey } from 'src/components/searchResults/filters/FilterKey';
 import { Links } from 'src/types/Links';
 import {
   CollectionSearchResult,
@@ -41,7 +42,7 @@ interface StateProps {
 
 interface OwnProps {
   subheader: any;
-  hideFilterTypes?: string[];
+  hiddenFilterKeys?: FilterKey[];
 }
 
 interface DispatchProps {
@@ -107,11 +108,11 @@ class SearchResultsView extends React.PureComponent<
   private renderBasicLayoutWithFilterPanel = (
     content: JSX.Element,
   ): JSX.Element => {
-    const { hideFilterTypes } = this.props;
+    const { hiddenFilterKeys } = this.props;
     return (
       <>
         <Col xs={{ span: 0 }} lg={{ span: 6 }}>
-          <FilterPanel hideFilterTypes={hideFilterTypes} />
+          <FilterPanel hiddenFilterKeys={hiddenFilterKeys} />
         </Col>
         <Drawer
           className="display-mobile-and-tablet filters-drawer"
@@ -121,7 +122,7 @@ class SearchResultsView extends React.PureComponent<
           placement="left"
           width="auto"
         >
-          <FilterPanel hideFilterTypes={hideFilterTypes} />
+          <FilterPanel hiddenFilterKeys={hiddenFilterKeys} />
         </Drawer>
         <Col
           xs={{ span: 24 }}

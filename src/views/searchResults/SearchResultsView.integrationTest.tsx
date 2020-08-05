@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import {
   renderSearchResultsView,
   renderSearchResultsViewWithSampleData,
@@ -48,23 +48,20 @@ describe('SearchResultsView', () => {
 
   it('panel contains filters for age, subjects, duration, and resource type', async () => {
     const view = renderSearchResultsViewWithSampleData();
-    const sidebar = view.getByText('Filter results').closest('div');
+    expect(view.getByText('Filter results')).toBeInTheDocument();
 
-    expect(sidebar).toBeInTheDocument();
-
-    await view.findByLabelText(/Arts.*/);
-
-    expect(view.getByText('Age')).toBeInTheDocument();
+    await waitFor(() => expect(view.getByText('Age')).toBeInTheDocument());
     expect(view.getByText('Subjects')).toBeInTheDocument();
     expect(view.getByText('Duration')).toBeInTheDocument();
     expect(view.getByText('Resources')).toBeInTheDocument();
   });
 
   it('can change subject filters', async () => {
-    const { findByLabelText } = renderSearchResultsViewWithSampleData();
+    const view = renderSearchResultsViewWithSampleData();
 
-    const artsCheckbox = await findByLabelText(/Arts.*/);
+    await waitFor(() => expect(view.getByText('Subjects')).toBeInTheDocument());
 
+    const artsCheckbox = view.getByLabelText(/Arts.*/);
     expect(artsCheckbox.closest('input').checked).toEqual(false);
     await fireEvent.click(artsCheckbox);
     expect(artsCheckbox.closest('input').checked).toEqual(true);

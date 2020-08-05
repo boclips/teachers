@@ -1,4 +1,3 @@
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
 import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
@@ -7,10 +6,10 @@ import React from 'react';
 
 interface Props {
   subjectIds: string[] | undefined;
-  formFieldId: string;
+  name: string;
 }
 
-export const SubjectFilter = (props: Props & FormComponentProps) => {
+export const SubjectFilter = ({ subjectIds, name }: Props) => {
   const facets = useSelector(
     (state: State) => state.search.videoSearch.facets?.subjects,
   );
@@ -27,11 +26,10 @@ export const SubjectFilter = (props: Props & FormComponentProps) => {
   return (
     <CheckboxGroupFilter
       filterOptions={subjectFilters}
-      form={props.form}
-      fieldId={props.formFieldId}
-      fieldOptions={{
+      formItemProps={{
+        name,
+        initialValue: subjectIds,
         rules: [{ type: 'array' }],
-        initialValue: props.subjectIds,
       }}
     />
   );

@@ -12,6 +12,7 @@ import './SubjectSearchView.less';
 import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Link } from 'react-router-dom';
+import { FilterKey } from 'src/components/searchResults/filters/FilterKey';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
 
 interface OwnProps {
@@ -67,7 +68,7 @@ class SubjectSearchView extends PureComponent<
       <section data-qa="subject-search-page">
         <ConnectedNewSearchResultsView
           subheader={this.renderSubheader(discipline, subject)}
-          hideFilterTypes={['subjects']}
+          hiddenFilterKeys={[FilterKey.SUBJECTS]}
         />
       </section>
     );

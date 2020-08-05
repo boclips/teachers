@@ -1,4 +1,3 @@
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
 import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
@@ -9,10 +8,10 @@ import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model
 
 interface Props {
   resourceTypes: string[];
-  formFieldId: string;
+  name: string;
 }
 
-export const ResourcesFilter = (props: Props & FormComponentProps) => {
+export const ResourcesFilter = ({ resourceTypes, name }: Props) => {
   const facets = useSelector(
     (state: State) => state.search.videoSearch.facets?.resourceTypes,
   );
@@ -47,10 +46,9 @@ export const ResourcesFilter = (props: Props & FormComponentProps) => {
   return (
     <CheckboxGroupFilter
       filterOptions={resourceTypeFilters}
-      form={props.form}
-      fieldId={props.formFieldId}
-      fieldOptions={{
-        initialValue: props.resourceTypes,
+      formItemProps={{
+        name,
+        initialValue: resourceTypes,
       }}
     />
   );

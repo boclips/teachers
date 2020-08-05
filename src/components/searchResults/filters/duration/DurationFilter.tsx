@@ -3,15 +3,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import State from 'src/types/State';
 import { extractFacetHits } from 'src/components/searchResults/filters/utils/extractFacetHits';
-import { FormComponentProps } from '@ant-design/compatible/lib/form';
 import { DurationRange } from 'src/types/DurationRange';
 
 interface Props {
   duration: DurationRange[];
-  formFieldId: string;
+  name: string;
 }
 
-export const DurationFilter = (props: Props & FormComponentProps) => {
+export const DurationFilter = ({ duration, name }: Props) => {
   const facets = useSelector(
     (state: State) => state.search.videoSearch.facets?.durations,
   );
@@ -27,12 +26,9 @@ export const DurationFilter = (props: Props & FormComponentProps) => {
   return (
     <CheckboxGroupFilter
       filterOptions={durationFilters}
-      form={props.form}
-      fieldId={props.formFieldId}
-      fieldOptions={{
-        initialValue: props.duration
-          ? props.duration.map((range) => range.toString())
-          : [],
+      formItemProps={{
+        name,
+        initialValue: duration?.map((range) => range.toString()),
       }}
     />
   );
