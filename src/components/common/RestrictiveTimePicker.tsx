@@ -1,10 +1,7 @@
-import { Form } from '@ant-design/compatible';
-
-import { Checkbox, TimePicker } from 'antd';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { Checkbox, Form, TimePicker } from 'antd';
 import range from 'lodash/range';
 import moment, { Moment } from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Props {
   checkboxLabel: string;
@@ -13,137 +10,92 @@ interface Props {
   onChange: (seconds: number) => void;
   initialValue: number;
 }
-interface State {
-  value: Moment;
-  disabled: boolean;
+
+interface TimeBound {
+  hours: number;
+  seconds: number;
+  minutes: number;
 }
 
-export class RestrictiveTimePicker extends React.Component<Props, State> {
-  private upperBound: {
-    hours: number;
-    seconds: number;
-    minutes: number;
-  };
+const boundToComponents = (bound: number): TimeBound => ({
+  hours: Math.floor(bound / 60 / 60),
+  minutes: Math.floor((bound / 60) % 60),
+  seconds: bound % 60,
+});
 
-  public constructor(props) {
-    super(props);
-    this.state = {
-      value: moment.utc(this.props.initialValue, 'X'),
-      disabled: true,
-    };
-    this.upperBound = this.boundToComponents(this.props.upperBound);
-  }
+const getSecondsFromTime = (time: Moment): number => {
+  // Moment is not immutable.
+  const startOfTheDay = time.clone().startOf('d');
+  const timeDifference = time.diff(startOfTheDay);
 
-  public componentDidUpdate(prevProps: Readonly<Props>): void {
-    if (prevProps.upperBound !== this.props.upperBound) {
-      this.upperBound = this.boundToComponents(this.props.upperBound);
-    }
-  }
+  return moment.duration(timeDifference).asSeconds();
+};
 
-  private getDisabledHours = () =>
-    range(24).filter((hour) => hour > this.upperBound.hours);
+export const RestrictiveTimePicker = (props: Props) => {
+  const { checkboxLabel, label, upperBound, onChange, initialValue } = props;
+  const upperBoundTime = boundToComponents(upperBound);
 
-  private getDisabledMinutes = (selectedHour) =>
-    range(60).filter((minute) => {
-      if (selectedHour < this.upperBound.hours) {
-        return false;
-      }
+  const [value, setValue] = useState(moment.utc(initialValue, 'X'));
+  const [disabled, setDisabled] = useState(true);
 
-      return minute > this.upperBound.minutes;
-    });
+  const getDisabledHours = () =>
+    range(24).filter((hour) => hour > upperBoundTime.hours);
 
-  private getDisabledSeconds = (selectedHour, selectedMinute) =>
-    range(60).filter((second) =>
-      selectedMinute < this.upperBound.minutes ||
-      selectedHour < this.upperBound.hours
+  const getDisabledMinutes = (selectedHour) =>
+    range(60).filter((minute) =>
+      selectedHour < upperBoundTime.hours
         ? false
-        : second > this.upperBound.seconds,
+        : minute > upperBoundTime.minutes,
     );
 
-  private getSecondsFromValue() {
-    const time = this.state.value;
+  const getDisabledSeconds = (selectedHour, selectedMinute) =>
+    range(60).filter((second) =>
+      selectedMinute < upperBoundTime.minutes ||
+      selectedHour < upperBoundTime.hours
+        ? false
+        : second > upperBoundTime.seconds,
+    );
 
-    // Moment is not immutable.
-    const startOfTheDay = time.clone().startOf('d');
-    const timeDifference = time.diff(startOfTheDay);
-
-    return moment.duration(timeDifference).asSeconds();
-  }
-
-  private handleChange = (time?: Moment) => {
-    if (time == null) {
-      return;
+  const handleChange = (time?: Moment) => {
+    if (time != null) {
+      setValue(time);
+      onChange(getSecondsFromTime(time));
     }
-
-    this.setState({ value: time }, () => {
-      this.props.onChange(this.getSecondsFromValue());
-    });
   };
 
-  private boundToComponents = (bound: number) => ({
-    hours: Math.floor(bound / 60 / 60),
-    minutes: Math.floor((bound / 60) % 60),
-    seconds: bound % 60,
-  });
-
-  private handleOpen = (open: boolean) =>
-    setTimeout(() => {
-      if (open) {
-        // A bit hacky, but the only way we can reliably get the other options to show.
-        // Antd won't give us a reference for the DOM element
-        const selectContainers = document.querySelectorAll(
-          '.ant-time-picker-panel-select',
-        );
-        if (selectContainers.length) {
-          selectContainers.forEach((selectContainer) => {
-            const selected = selectContainer.querySelector(
-              '.ant-time-picker-panel-select-option-selected',
-            ) as HTMLDivElement;
-
-            let scrollTop = 0;
-            if (selected) {
-              scrollTop =
-                selected.offsetTop +
-                selected.clientHeight / 2 -
-                selectContainer.clientHeight / 2;
-            }
-
-            selectContainer.scroll(0, Math.max(0, scrollTop));
-          });
-        }
-      }
-    }, 0);
-
-  private handleCheckboxChange = (event: CheckboxChangeEvent) => {
-    this.setState({ disabled: !event.target.checked }, () => {
-      if (this.state.disabled) {
-        this.props.onChange(undefined);
-      } else {
-        this.props.onChange(this.getSecondsFromValue());
-      }
-    });
+  const onDisableChange = (event) => {
+    const isDisabled = !event.target.checked;
+    setDisabled(isDisabled);
+    if (isDisabled) {
+      onChange(undefined);
+    } else {
+      onChange(getSecondsFromTime(value));
+    }
   };
 
-  public render() {
-    return (
-      <section>
-        <Form.Item label={this.props.checkboxLabel} className="hidden-label">
-          <Checkbox onChange={this.handleCheckboxChange} />
-        </Form.Item>
-        <Form.Item label={this.props.label}>
-          <TimePicker
-            disabled={this.state.disabled}
-            disabledHours={this.getDisabledHours}
-            disabledMinutes={this.getDisabledMinutes}
-            disabledSeconds={this.getDisabledSeconds}
-            format={this.upperBound.hours > 0 ? 'hh:mm:ss' : 'mm:ss'}
-            hideDisabledOptions
-            onChange={this.handleChange}
-            onOpenChange={this.handleOpen}
-            value={this.state.value}
-          />
-        </Form.Item>
-      </section>
-    );
-  }
-}
+  return (
+    <section>
+      <Form.Item
+        label={checkboxLabel}
+        className="hidden-label"
+        hasFeedback={false}
+      >
+        <Checkbox onChange={onDisableChange} />
+      </Form.Item>
+      <Form.Item label={label} hasFeedback={false}>
+        <TimePicker
+          disabled={disabled}
+          disabledHours={getDisabledHours}
+          disabledMinutes={getDisabledMinutes}
+          disabledSeconds={getDisabledSeconds}
+          format={upperBoundTime.hours > 0 ? 'hh:mm:ss' : 'mm:ss'}
+          hideDisabledOptions
+          onChange={handleChange}
+          value={value}
+          showNow={false}
+          allowClear={false}
+        />
+      </Form.Item>
+    </section>
+  );
+};
