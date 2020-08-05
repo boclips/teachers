@@ -128,7 +128,13 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
         </Authenticated>
       </Row>
       <section className="video-details">
-        <p className="description-paragraph">
+        <p
+          className={
+            hasAttachments
+              ? 'narrow-description-paragraph'
+              : 'description-paragraph'
+          }
+        >
           <div
             data-qa="video-description"
             className="description"

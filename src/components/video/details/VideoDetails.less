@@ -1,7 +1,6 @@
 @import '../../../../resources/styles/_antd-theme.less';
 
 .video-details-container {
-
   .video-header {
     display: flex;
     justify-content: space-between;
@@ -91,6 +90,20 @@
         font-weight: bold;
       }
     }
+
+    .additional-description {
+      margin-top: 14px;
+    }
+
+    .description-paragraph {
+      white-space: pre-line;
+      margin-bottom: 45px;
+    }
+
+    .narrow-description-paragraph {
+      width: 75%;
+      overflow-wrap: break-word;
+    }
   }
 
   .buttons-row {
@@ -143,15 +156,6 @@
           }
         }
       }
-    }
-  }
-
-  .description-paragraph {
-    white-space: pre-line;
-    margin-bottom: 45px;
-
-    .additional-description {
-      margin-top: 14px;
     }
   }
 
