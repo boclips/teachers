@@ -1,5 +1,7 @@
 @import '../../../resources/styles/_antd-theme.less';
 
+@home-view-description-line-number: 3;
+
 .home-page {
   .search-section .ant-layout {
     background-color: @shade-2;
@@ -157,6 +159,13 @@
 
       .tag {
         max-width: 198px;
+      }
+      .collection-card__description-preview {
+        -webkit-line-clamp: @home-view-description-line-number;
+        max-height: calc(
+          @home-view-description-line-number *
+            @home-view-description-line-number
+        );
       }
     }
 
