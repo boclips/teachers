@@ -6,8 +6,8 @@ import { AttachmentDetails } from 'src/components/common/AttachmentDetails';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { getAttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
 import { getAttachmentLabels } from 'src/components/common/AttachmentConstants';
+import { AuthenticatedAgeRangeTag } from 'src/components/common/tags/AuthenticatedAgeRangeTag';
 import StopClickPropagation from '../../../common/StopClickPropagation';
-import { AgeRangeTag } from '../../../common/tags/AgeRangeTag';
 import { ConnectedSubjectTag } from '../../../common/tags/SubjectTag';
 import { CollectionTitle } from '../../title/CollectionTitle';
 import { CollectionSubtitle } from '../../CollectionSubtitle';
@@ -36,7 +36,9 @@ export class CollectionHeader extends React.PureComponent<Props> {
   private shouldRenderTagContainer = () =>
     this.hasAgeRange() || this.hasSubjects();
 
-  private getAttachment = () => this.props.collection.attachments?.[0];
+  private getAttachment = () => {
+    return this.props.collection.attachments?.[0];
+  };
 
   private hasAgeRange = () => this.props.collection.ageRange.isBounded();
 
@@ -58,7 +60,7 @@ export class CollectionHeader extends React.PureComponent<Props> {
     this.shouldRenderTagContainer() && (
       <div className="tags-container" data-qa="tags-container" key="tags">
         {this.hasAgeRange() && (
-          <AgeRangeTag ageRange={this.props.collection.ageRange} />
+          <AuthenticatedAgeRangeTag ageRange={this.props.collection.ageRange} />
         )}
         {this.props.collection.subjects.map((subjectId) => (
           <ConnectedSubjectTag key={subjectId} id={subjectId} />

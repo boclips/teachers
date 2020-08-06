@@ -1,6 +1,10 @@
 import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
+import { CollectionHeader } from './CollectionHeader';
+import { AgeRange } from '../../../../types/AgeRange';
+import { renderWithStore } from '../../../../../test-support/renderWithStore';
+import { Link } from '../../../../types/Link';
 import {
   AttachmentFactory,
   CollectionsFactory,
@@ -8,10 +12,6 @@ import {
   VideoCollectionFactory,
   VideoIdFactory,
 } from '../../../../../test-support/factories';
-import { Link } from '../../../../types/Link';
-import { renderWithStore } from '../../../../../test-support/renderWithStore';
-import { AgeRange } from '../../../../types/AgeRange';
-import { CollectionHeader } from './CollectionHeader';
 
 describe('CollectionHeader', () => {
   describe('Simple collection', () => {
@@ -124,6 +124,7 @@ describe('CollectionHeader', () => {
               SubjectFactory.sample({ id: 'subject-id', name: 'Maths' }),
             ],
             collections: CollectionsFactory.sample(),
+            authentication: { status: 'authenticated' },
           },
         },
       );
