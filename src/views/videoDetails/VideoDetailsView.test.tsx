@@ -1,5 +1,9 @@
 import { createMemoryHistory } from 'history';
-import { fireEvent, waitForElement } from '@testing-library/react';
+import {
+  fireEvent,
+  waitForElement,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import { ApiClientWrapper } from 'src/services/apiClient';
@@ -125,9 +129,9 @@ describe('VideoDetailsView', () => {
       user: null,
     };
 
-    it('asks for a code when "share" and "referer" params are present', () => {
+    it('asks for a code', () => {
       const { getByText, getByRole } = createViewWrapper(
-        ['/videos/123?referer=user-123&share=true'],
+        ['/videos/123?referer=user-123'],
         unauthenticatedState,
       );
 
@@ -138,14 +142,33 @@ describe('VideoDetailsView', () => {
       expect(getByText('Enter code to watch video')).toBeInTheDocument();
     });
 
+    it('does not ask for code if it was provided previously', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.shareCodes.clear();
+      client.shareCodes.insertValidShareCode('test-id', 'valid');
+
+      const { queryByText } = createViewWrapper(
+        ['/videos/177?referer=test-id'],
+        {
+          authentication: {
+            status: 'anonymous',
+            shareCode: 'valid',
+          },
+          user: null,
+        },
+      );
+
+      await waitForElementToBeRemoved(() =>
+        queryByText('Enter code to watch video'),
+      );
+      expect(queryByText('Enter code to watch video')).not.toBeInTheDocument();
+    });
+
     it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_IMPRESSION events', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.events.clear();
 
-      createViewWrapper(
-        ['/videos/123?referer=user-123&share=true'],
-        unauthenticatedState,
-      );
+      createViewWrapper(['/videos/123?referer=user-123'], unauthenticatedState);
 
       await eventually(() => {
         expect(client.events.getEvents()).toEqual([
@@ -164,7 +187,7 @@ describe('VideoDetailsView', () => {
       client.shareCodes.insertValidShareCode('test-id', 'valid');
 
       const wrapper = createViewWrapper(
-        ['/videos/123?referer=test-id&share=true'],
+        ['/videos/123?referer=test-id'],
         unauthenticatedState,
       );
 
@@ -193,7 +216,7 @@ describe('VideoDetailsView', () => {
       client.shareCodes.insertValidShareCode('test-id', 'valid');
 
       const wrapper = createViewWrapper(
-        ['/videos/123?referer=test-id&share=true'],
+        ['/videos/123?referer=test-id'],
         unauthenticatedState,
       );
 
@@ -216,26 +239,6 @@ describe('VideoDetailsView', () => {
       });
     });
 
-    it('does not ask for a code when the "referer" param is missing', () => {
-      const { queryByRole, queryByText } = createViewWrapper(
-        ['/videos/123'],
-        unauthenticatedState,
-      );
-
-      expect(queryByRole('dialog')).not.toBeInTheDocument();
-      expect(queryByText('Enter code to watch video')).not.toBeInTheDocument();
-    });
-
-    it('does not ask for a code when the "share" param is missing', () => {
-      const { queryByText, queryByRole } = createViewWrapper(
-        ['/videos/123?referer=user-123'],
-        unauthenticatedState,
-      );
-
-      expect(queryByRole('dialog')).not.toBeInTheDocument();
-      expect(queryByText('Enter code to watch video')).not.toBeInTheDocument();
-    });
-
     it('does not render a share button', () => {
       const { queryByText } = createViewWrapper(
         ['/videos/123'],
@@ -256,7 +259,7 @@ describe('VideoDetailsView', () => {
       client.events.clear();
 
       const { findByText, getByText } = createViewWrapper(
-        ['/videos/123?referer=user-123&share=true'],
+        ['/videos/123?referer=user-123'],
         authenticatedState,
       );
 

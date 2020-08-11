@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import querystring from 'query-string';
 import { replace } from 'connected-react-router';
@@ -6,6 +6,7 @@ import { useLocation } from 'react-router';
 import { isAuthenticated } from 'src/app/redux/authentication/selectors';
 import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
 import { DetailsNotFound } from 'src/components/common/DetailsNotFound';
+import { checkShareCode } from 'src/services/shareCodes/checkShareCode';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import {
@@ -26,23 +27,29 @@ const VideoDetailsView = ({ videoId }: Props) => {
   const location = useLocation();
 
   const authenticated = useSelector(isAuthenticated);
+  const shareCode = useSelector(
+    (state: State) => state.authentication.shareCode,
+  );
   const userId = useSelector((state: State) => state.user && state.user.id);
   const video = useSelector((state: State) => getVideoById(state, videoId));
   const isVideoLoading = useSelector((state: State) => isLoading(state));
+  const [canAccess, setCanAccess] = useState(authenticated);
 
   const params = querystring.parse(location.search);
-  const checkShareCode =
-    !authenticated &&
-    params.share &&
-    params.referer &&
-    params.referer !== 'anonymous';
+  const referer = params.referer as string;
+
+  useEffect(() => {
+    if (shareCode && referer) {
+      checkShareCode(referer, shareCode).then(() => setCanAccess(true));
+    }
+  }, [referer, shareCode]);
 
   useEffect(() => {
     dispatch(fetchVideoAction(videoId));
   }, [dispatch, videoId]);
 
   useEffect(() => {
-    if ((userId || !params.referer) && userId !== params.referer) {
+    if ((userId || !referer) && userId !== referer) {
       dispatch(
         replace({
           pathname: `/videos/${videoId}`,
@@ -53,7 +60,7 @@ const VideoDetailsView = ({ videoId }: Props) => {
         }),
       );
     }
-  }, [dispatch, params, videoId, userId]);
+  }, [dispatch, params, videoId, userId, referer]);
 
   useEffect(() => {
     if (video && video.id !== videoId) {
@@ -84,7 +91,7 @@ const VideoDetailsView = ({ videoId }: Props) => {
           <VideoDetails video={video} />
         </section>
       </section>
-      {checkShareCode && (
+      {!canAccess && (
         <ShareCodeDialog title="Enter code to watch video" cta="Watch video" />
       )}
     </PageLayout>
