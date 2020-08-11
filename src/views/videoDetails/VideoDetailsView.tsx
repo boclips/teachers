@@ -45,7 +45,7 @@ const VideoDetailsView = ({ videoId }: Props) => {
   }, [referer, shareCode]);
 
   useEffect(() => {
-    dispatch(fetchVideoAction(videoId));
+    dispatch(fetchVideoAction({ id: videoId }));
   }, [dispatch, videoId]);
 
   useEffect(() => {

@@ -12,7 +12,9 @@ export function onFetchVideosForCollection(
   store: MiddlewareAPI<Dispatch, LinksState>,
   request: VideosForCollectionRequest,
 ) {
-  Promise.all(request.videos.map((videoId) => fetchVideo(videoId.value)))
+  Promise.all(
+    request.videos.map((videoId) => fetchVideo({ id: videoId.value })),
+  )
     .then((videos) =>
       store.dispatch(
         storeVideosAction({

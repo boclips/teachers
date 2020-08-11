@@ -13,7 +13,7 @@ test('resolves with a video object when successfuly fetched', async () => {
     }),
   );
 
-  const video = await fetchVideo('177');
+  const video = await fetchVideo({ id: '177' });
 
   expect(video.title).toEqual('KS3/4 Science: Demonstrating Chemistry');
 });

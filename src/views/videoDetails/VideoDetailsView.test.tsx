@@ -102,7 +102,7 @@ describe('VideoDetailsView', () => {
   });
 
   it("when the fetched Video's id is different then the requested, load the new video", async () => {
-    const activeVideo = await fetchVideo(video.id);
+    const activeVideo = await fetchVideo({ id: video.id });
 
     const view = renderWithBoclipsStore(
       <VideoDetailsView videoId="deactivated-id" />,

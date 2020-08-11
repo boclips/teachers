@@ -1,3 +1,11 @@
 import { actionCreatorFactory } from '../../../../app/redux/actions';
 
-export const fetchVideoAction = actionCreatorFactory<string>('FETCH_VIDEO');
+export interface FetchVideoParams {
+  id: string;
+  referer?: string;
+  shareCode?: string;
+}
+
+export const fetchVideoAction = actionCreatorFactory<FetchVideoParams>(
+  'FETCH_VIDEO',
+);
