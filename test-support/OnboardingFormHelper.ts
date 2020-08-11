@@ -152,14 +152,16 @@ export class OnboardingFormHelper {
   public static carouselPageIsVisible = async (
     wrapper: ResultingContext,
     section: OnboardingSectionAttributes,
-  ) => {
-    await waitFor(() => {
-      const newSection = wrapper.getByTestId(
-        `onboarding-section-${section.pageIndex}`,
-      );
-      expect(newSection.hidden).toBeFalsy();
-    });
-  };
+  ) =>
+    waitFor(
+      () => {
+        const newSection = wrapper.getByTestId(
+          `onboarding-section-${section.pageIndex}`,
+        );
+        expect(newSection.hidden).toBeFalsy();
+      },
+      { timeout: 20000 },
+    );
 
   public static save(wrapper: ResultingContext) {
     act(() => {
