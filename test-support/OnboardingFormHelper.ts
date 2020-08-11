@@ -1,6 +1,5 @@
 import { fireEvent, waitFor } from '@testing-library/dom';
 import { ResultingContext } from 'test-support/renderWithStore';
-import { act } from 'react-dom/test-utils';
 import { OnboardingSectionAttributes } from 'src/components/account/onboarding/OnboardingFormValues';
 
 export class OnboardingFormHelper {
@@ -9,47 +8,32 @@ export class OnboardingFormHelper {
     firstName: string,
     lastName: string,
   ) {
-    act(() => {
-      fireEvent.change(wrapper.getByPlaceholderText('Enter first name'), {
-        target: { value: firstName },
-      });
+    fireEvent.change(wrapper.getByPlaceholderText('Enter first name'), {
+      target: { value: firstName },
     });
 
-    act(() => {
-      fireEvent.change(wrapper.getByPlaceholderText('Enter last name'), {
-        target: { value: lastName },
-      });
+    fireEvent.change(wrapper.getByPlaceholderText('Enter last name'), {
+      target: { value: lastName },
     });
   }
 
   public static async editRole(wrapper: ResultingContext, value: string) {
-    act(() => {
-      fireEvent.mouseDown(wrapper.getByLabelText("I'm a"));
-    });
-    act(() => {
-      fireEvent.click(wrapper.getByText(value));
-    });
+    fireEvent.mouseDown(wrapper.getByLabelText("I'm a"));
+    fireEvent.click(wrapper.getByText(value));
   }
 
   public static tickMarketingOptIn(wrapper: ResultingContext) {
-    act(() => {
-      fireEvent.click(wrapper.getByTestId('marketing-optin'));
-    });
+    fireEvent.click(wrapper.getByTestId('marketing-optin'));
   }
 
   public static async tickTermsAndConditions(wrapper: ResultingContext) {
     const checkbox = wrapper.getByTestId('privacy-policy') as HTMLInputElement;
-    act(() => {
-      fireEvent.click(checkbox);
-    });
+    fireEvent.click(checkbox);
     await waitFor(() => expect(checkbox.checked).toEqual(true));
   }
 
   public static editSubjects(wrapper: ResultingContext, subjects: string[]) {
-    act(() => {
-      fireEvent.mouseDown(wrapper.getByText('Choose subjects'));
-    });
-
+    fireEvent.mouseDown(wrapper.getByText('Choose subjects'));
     subjects.forEach((subject) => {
       fireEvent.click(wrapper.getByText(subject));
     });
@@ -59,47 +43,33 @@ export class OnboardingFormHelper {
     wrapper: ResultingContext,
     countryName: string,
   ) {
-    act(() => {
-      fireEvent.mouseDown(wrapper.getByLabelText('Country'));
-    });
-    act(() => {
-      fireEvent.click(wrapper.getByText(countryName));
-    });
+    fireEvent.mouseDown(wrapper.getByLabelText('Country'));
+    fireEvent.click(wrapper.getByText(countryName));
     await OnboardingFormHelper.waitForSelectionSuccess(wrapper, countryName);
   }
 
   public static async editState(wrapper: ResultingContext, stateName: string) {
-    act(() => {
-      fireEvent.mouseDown(wrapper.getByLabelText('State'));
-    });
-    act(() => {
-      fireEvent.click(wrapper.getByText(stateName));
-    });
+    fireEvent.mouseDown(wrapper.getByLabelText('State'));
+    fireEvent.click(wrapper.getByText(stateName));
   }
 
   public static async selectSchool(
     wrapper: ResultingContext,
     schoolName: string,
   ) {
-    act(() => {
-      fireEvent.change(wrapper.getByLabelText('School'), {
-        target: { value: { schoolName } },
-      });
+    fireEvent.change(wrapper.getByLabelText('School'), {
+      target: { value: { schoolName } },
     });
     await waitFor(() => wrapper.getByText(schoolName));
-    act(() => {
-      fireEvent.click(wrapper.getByText(schoolName));
-    });
+    fireEvent.click(wrapper.getByText(schoolName));
   }
 
   public static async enterSchool(
     wrapper: ResultingContext,
     schoolName: string,
   ) {
-    act(() => {
-      fireEvent.change(wrapper.getByLabelText('School'), {
-        target: { value: schoolName },
-      });
+    fireEvent.change(wrapper.getByLabelText('School'), {
+      target: { value: schoolName },
     });
   }
 
@@ -118,14 +88,9 @@ export class OnboardingFormHelper {
   }
 
   public static editAgeRange(wrapper: ResultingContext, ageRanges: string[]) {
-    act(() => {
-      fireEvent.mouseDown(wrapper.getByText('Choose ages'));
-    });
-
+    fireEvent.mouseDown(wrapper.getByText('Choose ages'));
     ageRanges.forEach((ageRange) => {
-      act(() => {
-        fireEvent.click(wrapper.getByText(ageRange));
-      });
+      fireEvent.click(wrapper.getByText(ageRange));
     });
   }
 
@@ -133,9 +98,7 @@ export class OnboardingFormHelper {
     wrapper: ResultingContext,
     newSection: OnboardingSectionAttributes,
   ) {
-    act(() => {
-      fireEvent.click(wrapper.getByText('Next').closest('button'));
-    });
+    fireEvent.click(wrapper.getByText('Next').closest('button'));
     await this.carouselPageIsVisible(wrapper, newSection);
   }
 
@@ -143,9 +106,7 @@ export class OnboardingFormHelper {
     wrapper: ResultingContext,
     newSection: OnboardingSectionAttributes,
   ) {
-    act(() => {
-      fireEvent.click(wrapper.getByText('Back').closest('button'));
-    });
+    fireEvent.click(wrapper.getByText('Back').closest('button'));
     await this.carouselPageIsVisible(wrapper, newSection);
   }
 
@@ -153,19 +114,13 @@ export class OnboardingFormHelper {
     wrapper: ResultingContext,
     section: OnboardingSectionAttributes,
   ) =>
-    waitFor(
-      () => {
-        const newSection = wrapper.getByTestId(
-          `onboarding-section-${section.pageIndex}`,
-        );
-        expect(newSection.hidden).toBeFalsy();
-      },
-      { timeout: 20000 },
-    );
+    waitFor(() => {
+      expect(
+        wrapper.getByTestId(`onboarding-section-${section.pageIndex}`),
+      ).toBeVisible();
+    });
 
   public static save(wrapper: ResultingContext) {
-    act(() => {
-      fireEvent.click(wrapper.getByText('Finish').closest('button'));
-    });
+    fireEvent.click(wrapper.getByText('Finish').closest('button'));
   }
 }
