@@ -13,7 +13,7 @@ const UserCollectionsLink = (props: LinkProps) => {
       <span className="icon-container">
         <CollectionsIcon aria-hidden="true" />
       </span>
-      <span>Your resources</span>
+      <span className="account-settings-text">Your resources</span>
     </Link>
   );
 };
@@ -28,7 +28,7 @@ const AccountSettingsLink = (props: LinkProps) => {
       <span className="icon-container">
         <SettingsSVG aria-hidden="true" />
       </span>
-      <span>Settings</span>
+      <span className="account-settings-text">Settings</span>
     </Link>
   );
 };
@@ -45,7 +45,7 @@ const LogoutLink = (props: ButtonProps) => {
       <span className="icon-container">
         <LogoutIconSVG aria-hidden="true" />
       </span>
-      <span>Log out</span>
+      <span className="account-settings-text">Log out</span>
     </section>
   );
 };
