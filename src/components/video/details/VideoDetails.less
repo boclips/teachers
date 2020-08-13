@@ -60,9 +60,16 @@
     margin-top: 35px;
 
     .player,
-    .attachment-details {
+    .attachment-details,
+    .thumbnail-preview-container {
       width: 100%;
       margin-bottom: 20px;
+    }
+
+    .thumbnail-preview-container {
+      text-align: center;
+      background: black;
+      height: 40vh;
     }
 
     @media screen and (min-width: @screen-lg) {
@@ -74,6 +81,10 @@
 
   .video-player {
     flex: 1;
+  }
+
+  .thumbnail-image {
+    height: 100%;
   }
 
   .video-details {

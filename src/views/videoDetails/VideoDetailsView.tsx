@@ -88,7 +88,7 @@ const VideoDetailsView = ({ videoId }: Props) => {
     <PageLayout title={video?.title} showNavigation showFooter showSearchBar>
       <section data-qa="video-details-page">
         <section className="video-details-page" data-qa="video-details">
-          <VideoDetails video={video} />
+          <VideoDetails video={video} showOnlyThumbnail={!canAccess} />
         </section>
       </section>
       {!canAccess && (

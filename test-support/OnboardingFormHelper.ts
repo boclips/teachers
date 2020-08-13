@@ -99,7 +99,7 @@ export class OnboardingFormHelper {
     newSection: OnboardingSectionAttributes,
   ) {
     fireEvent.click(wrapper.getByText('Next').closest('button'));
-    await this.carouselPageIsVisible(wrapper, newSection);
+    return this.carouselPageIsVisible(wrapper, newSection);
   }
 
   public static async moveCarouselBackward(
@@ -107,7 +107,7 @@ export class OnboardingFormHelper {
     newSection: OnboardingSectionAttributes,
   ) {
     fireEvent.click(wrapper.getByText('Back').closest('button'));
-    await this.carouselPageIsVisible(wrapper, newSection);
+    return this.carouselPageIsVisible(wrapper, newSection);
   }
 
   public static carouselPageIsVisible = async (

@@ -333,24 +333,24 @@ describe('onboarding form', () => {
 const fillStep1 = async (wrapper: ResultingContext) => {
   OnboardingFormHelper.editName(wrapper, 'Rebecca', 'Sanchez');
   await OnboardingFormHelper.editRole(wrapper, 'Teacher');
-  await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
+  return OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
 };
 
 const fillStep2 = async (wrapper: ResultingContext) => {
   OnboardingFormHelper.editSubjects(wrapper, ['s1']);
   OnboardingFormHelper.editAgeRange(wrapper, ['3-5']);
-  await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[2]);
+  return OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[2]);
 };
 
 const fillStep3 = async (wrapper: ResultingContext) => {
   await OnboardingFormHelper.editCountry(wrapper, 'Spain');
   await OnboardingFormHelper.enterSchool(wrapper, 'school');
-  await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[3]);
+  return OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[3]);
 };
 
 const fillStep4 = async (wrapper: ResultingContext) => {
   OnboardingFormHelper.tickMarketingOptIn(wrapper);
-  await OnboardingFormHelper.tickTermsAndConditions(wrapper);
+  return OnboardingFormHelper.tickTermsAndConditions(wrapper);
 };
 
 const fillValidForm = async (wrapper: ResultingContext) => {
@@ -359,5 +359,5 @@ const fillValidForm = async (wrapper: ResultingContext) => {
   await fillStep3(wrapper);
   await fillStep4(wrapper);
   await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[2]);
-  await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[3]);
+  return OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[3]);
 };
