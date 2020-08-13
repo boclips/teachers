@@ -4,7 +4,10 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
+import { screen } from '@testing-library/react';
 import { AgeRange } from 'src/types/AgeRange';
+import { Link as ApiClientLink } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
+import { PlaybackFactory } from 'boclips-api-client/dist/test-support/PlaybackFactory';
 import By from '../../../../test-support/By';
 import {
   MockStoreFactory,
@@ -124,6 +127,52 @@ describe('VideoDetails', () => {
       );
 
       expect(wrapper.queryByText(/Content warning:/)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('When unauthenticated', () => {
+    it('renders a thumbnail image', () => {
+      const video = VideoFactory.sample({
+        playback: PlaybackFactory.sample({
+          links: {
+            createPlayerInteractedWithEvent: null,
+            thumbnail: new ApiClientLink({
+              href: "'http://cdn.kaltura.com/thumbnail.jpg'",
+            }),
+            hlsStream: null,
+          },
+        }),
+      });
+
+      renderWithBoclipsStore(
+        <VideoDetails video={video} showOnlyThumbnail />,
+        {
+          authentication: {
+            status: 'anonymous',
+          },
+        },
+        createMemoryHistory(),
+      );
+
+      expect(screen.getByTestId('thumbnail-image')).toBeVisible();
+      expect(screen.queryByTestId('video-player')).not.toBeInTheDocument();
+    });
+
+    it('renders the player if it has the video playback details', () => {
+      const video = VideoFactory.sample();
+
+      renderWithBoclipsStore(
+        <VideoDetails video={video} />,
+        {
+          authentication: {
+            status: 'anonymous',
+          },
+        },
+        createMemoryHistory(),
+      );
+
+      expect(screen.queryByTestId('thumbnail-image')).not.toBeInTheDocument();
+      expect(screen.getByTestId('video-player')).toBeVisible();
     });
   });
 });

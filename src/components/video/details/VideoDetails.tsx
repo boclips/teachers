@@ -20,6 +20,7 @@ import './VideoDetails.less';
 
 interface VideoDetailsProps {
   video: Video | null;
+  showOnlyThumbnail?: boolean;
 }
 
 interface SkeletonProps {
@@ -27,7 +28,8 @@ interface SkeletonProps {
   children?: React.ReactNode;
 }
 
-const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
+const VideoDetailsContent = (props: VideoDetailsProps) => {
+  const { video, showOnlyThumbnail } = props;
   if (!video) {
     return null;
   }
@@ -96,13 +98,21 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
           md={hasAttachments && { span: 24 }}
           lg={hasAttachments && { span: 18 }}
         >
-          <VideoPlayer collectionKey="myCollections" video={video} />
-          <img
-            alt={video.title}
-            src={video.thumbnailUrl}
-            style={{ display: 'none' }}
-            itemProp="image"
-          />
+          {showOnlyThumbnail ? (
+            <div className="thumbnail-preview-container">
+              <img
+                alt={video.title}
+                data-qa="thumbnail-image"
+                src={video.thumbnailUrl}
+                itemProp="image"
+                className="thumbnail-image"
+              />
+            </div>
+          ) : (
+            <div data-qa="video-player">
+              <VideoPlayer collectionKey="myCollections" video={video} />
+            </div>
+          )}
           <div className="transcript-button">
             <DownloadTranscriptButton video={video} />
           </div>
@@ -127,46 +137,48 @@ const VideoDetailsContent = ({ video }: VideoDetailsProps) => {
           )}
         </Authenticated>
       </Row>
-      <section className="video-details">
-        <p
-          className={
-            hasAttachments
-              ? 'narrow-description-paragraph'
-              : 'description-paragraph'
-          }
-        >
-          <div
-            data-qa="video-description"
-            className="description"
-            itemProp="description"
+      <Row>
+        <section className="video-details">
+          <p
+            className={
+              hasAttachments
+                ? 'narrow-description-paragraph'
+                : 'description-paragraph'
+            }
           >
-            {video.description}
-          </div>
-          {!!video.additionalDescription && (
             <div
-              className="additional-description"
-              data-qa="additional-description"
+              data-qa="video-description"
+              className="description"
+              itemProp="description"
             >
-              {video.additionalDescription}
+              {video.description}
             </div>
-          )}
-        </p>
-        <Authenticated>
-          {video.contentWarnings?.length > 0 && (
-            <p className="content-warnings">
-              <span className="content-warnings__icon">
-                <ContentWarningIcon />
-              </span>
-              <span>
-                <span className="content-warnings__title">
-                  Content warning:
-                </span>{' '}
-                {video.contentWarnings.map((it) => it.label).join(', ')}
-              </span>
-            </p>
-          )}
-        </Authenticated>
-      </section>
+            {!!video.additionalDescription && (
+              <div
+                className="additional-description"
+                data-qa="additional-description"
+              >
+                {video.additionalDescription}
+              </div>
+            )}
+          </p>
+          <Authenticated>
+            {video.contentWarnings?.length > 0 && (
+              <p className="content-warnings">
+                <span className="content-warnings__icon">
+                  <ContentWarningIcon />
+                </span>
+                <span>
+                  <span className="content-warnings__title">
+                    Content warning:
+                  </span>{' '}
+                  {video.contentWarnings.map((it) => it.label).join(', ')}
+                </span>
+              </p>
+            )}
+          </Authenticated>
+        </section>
+      </Row>
     </section>
   );
 };
@@ -185,9 +197,9 @@ const VideoDetailsSkeleton = ({ video, children }: SkeletonProps) => (
   </section>
 );
 
-const VideoDetails = ({ video }: VideoDetailsProps) => (
+const VideoDetails = ({ video, showOnlyThumbnail }: VideoDetailsProps) => (
   <VideoDetailsSkeleton video={video}>
-    <VideoDetailsContent video={video} />
+    <VideoDetailsContent video={video} showOnlyThumbnail={showOnlyThumbnail} />
   </VideoDetailsSkeleton>
 );
 
