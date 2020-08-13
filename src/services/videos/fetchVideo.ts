@@ -5,6 +5,8 @@ import { Video } from '../../types/Video';
 
 export function fetchVideo(params: FetchVideoParams): Promise<Video> {
   return ApiClientWrapper.get()
-    .then((client) => client.videos.get(params.id))
+    .then((client) =>
+      client.videos.get(params.id, params.referer, params.shareCode),
+    )
     .then(convertApiClientVideo);
 }

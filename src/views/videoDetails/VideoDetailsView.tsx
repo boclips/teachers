@@ -6,7 +6,6 @@ import { useLocation } from 'react-router';
 import { isAuthenticated } from 'src/app/redux/authentication/selectors';
 import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
 import { DetailsNotFound } from 'src/components/common/DetailsNotFound';
-import { checkShareCode } from 'src/services/shareCodes/checkShareCode';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import {
@@ -27,9 +26,10 @@ const VideoDetailsView = ({ videoId }: Props) => {
   const location = useLocation();
 
   const authenticated = useSelector(isAuthenticated);
-  const shareCode = useSelector(
-    (state: State) => state.authentication.shareCode,
+  const { shareCode, refererId: validReferer } = useSelector(
+    (state: State) => state.authentication,
   );
+
   const userId = useSelector((state: State) => state.user && state.user.id);
   const video = useSelector((state: State) => getVideoById(state, videoId));
   const isVideoLoading = useSelector((state: State) => isLoading(state));
@@ -37,16 +37,21 @@ const VideoDetailsView = ({ videoId }: Props) => {
 
   const params = querystring.parse(location.search);
   const referer = params.referer as string;
+  const isValidShareCode = shareCode && referer === validReferer;
 
   useEffect(() => {
-    if (shareCode && referer) {
-      checkShareCode(referer, shareCode).then(() => setCanAccess(true));
-    }
-  }, [referer, shareCode]);
+    setCanAccess(authenticated || isValidShareCode);
+  }, [isValidShareCode, authenticated]);
 
   useEffect(() => {
-    dispatch(fetchVideoAction({ id: videoId }));
-  }, [dispatch, videoId]);
+    dispatch(
+      fetchVideoAction({
+        id: videoId,
+        referer,
+        shareCode,
+      }),
+    );
+  }, [dispatch, videoId, referer, shareCode]);
 
   useEffect(() => {
     if ((userId || !referer) && userId !== referer) {
