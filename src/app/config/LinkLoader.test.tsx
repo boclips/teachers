@@ -10,7 +10,7 @@ import { Action } from '../redux/actions';
 import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
 import { ErrorView } from '../../views/error/ErrorView';
-import LinkLoader, { UnconnectedLinkLoader } from './LinkLoader';
+import { LinkLoader } from './LinkLoader';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
 
@@ -100,37 +100,5 @@ describe('when authentication is resolved', () => {
 
     expect(errorView).toExist();
     expect(childComponent).not.toExist();
-  });
-});
-
-describe('The component can update links once authenticated', () => {
-  it('requests links when authentication is resolved', () => {
-    const fetchLinksSpy = jest.fn();
-    const requestAuthenticationSpy = jest.fn();
-
-    const component = mount(
-      <UnconnectedLinkLoader
-        authenticationResolved={false}
-        links={{
-          entries: null,
-          loadingState: null,
-        }}
-        fetchLinks={fetchLinksSpy}
-        requestAuthentication={requestAuthenticationSpy}
-      >
-        <ChildComponent />
-      </UnconnectedLinkLoader>,
-    );
-
-    expect(requestAuthenticationSpy).toHaveBeenCalledTimes(1);
-
-    component.setProps({ authenticationResolved: true });
-
-    expect(fetchLinksSpy).toHaveBeenCalledTimes(1);
-
-    component.setProps({ links: { entries: [], loadingState: 'success' } });
-
-    const child = component.find(ChildComponent);
-    expect(child).toExist();
   });
 });

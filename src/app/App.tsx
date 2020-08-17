@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import BoclipsRouter from '../views/router/BoclipsRouter';
-import LinkLoader from './config/LinkLoader';
+import { LinkLoader } from './config/LinkLoader';
 import { createBoclipsStore } from './redux/store';
 
 declare global {

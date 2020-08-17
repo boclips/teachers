@@ -1,83 +1,38 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoadingComponent } from '../../components/common/LoadingComponent';
-import {
-  AuthenticationState,
-  LinksState,
-  LinksStateValue,
-} from '../../types/State';
-import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
-import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
 import { ErrorView } from '../../views/error/ErrorView';
+import State from 'src/types/State';
+import { fetchLinksAction } from 'src/app/redux/links/actions/fetchLinksAction';
+import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
 
-interface StateProps {
-  links: LinksStateValue;
-  authenticationResolved: boolean;
-}
+type Props = { children: any };
 
-interface DispatchProps {
-  requestAuthentication: () => void;
-  fetchLinks: () => void;
-}
+export const LinkLoader = (props: Props) => {
+  const dispatch = useDispatch();
+  const authentication = useSelector((state: State) => state.authentication);
+  const links = useSelector((state: State) => state.links);
 
-type Props = StateProps & DispatchProps & { children: any };
+  const authenticationResolved =
+    authentication && authentication.status !== null;
+  const linksNotLoaded =
+    !links || links.loadingState === null || links.loadingState === 'loading';
 
-export class UnconnectedLinkLoader extends React.PureComponent<Props> {
-  public componentDidMount(): void {
-    if (this.props.authenticationResolved) {
-      this.props.fetchLinks();
+  useEffect(() => {
+    if (linksNotLoaded && authenticationResolved) {
+      dispatch(fetchLinksAction());
     } else {
-      this.props.requestAuthentication();
+      dispatch(requestAuthentication({ authenticationRequired: false }));
     }
+  }, [authenticationResolved, linksNotLoaded]);
+
+  if (linksNotLoaded) {
+    return <LoadingComponent />;
   }
 
-  public componentDidUpdate(prevProps: Props): void {
-    if (
-      this.linksNotLoaded() &&
-      this.props.authenticationResolved &&
-      prevProps.authenticationResolved !== this.props.authenticationResolved
-    ) {
-      this.props.fetchLinks();
-    }
+  if (links.loadingState === 'failure') {
+    return <ErrorView nonRecoverable />;
   }
 
-  private linksNotLoaded(): boolean {
-    return (
-      !this.props.links ||
-      this.props.links.loadingState === null ||
-      this.props.links.loadingState === 'loading'
-    );
-  }
-
-  public render() {
-    if (this.linksNotLoaded()) {
-      return <LoadingComponent />;
-    }
-
-    if (this.props.links.loadingState === 'failure') {
-      return <ErrorView nonRecoverable />;
-    }
-
-    return this.props.children;
-  }
-}
-
-const mapStateToProps = (
-  state: LinksState & AuthenticationState,
-): StateProps => ({
-  links: state.links,
-  authenticationResolved:
-    state.authentication && state.authentication.status !== null,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  requestAuthentication: () =>
-    dispatch(requestAuthentication({ authenticationRequired: false })),
-  fetchLinks: () => dispatch(fetchLinksAction()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UnconnectedLinkLoader);
+  return props.children;
+};

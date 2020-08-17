@@ -114,11 +114,14 @@ export class OnboardingFormHelper {
     wrapper: ResultingContext,
     section: OnboardingSectionAttributes,
   ) =>
-    waitFor(() => {
-      expect(
-        wrapper.getByTestId(`onboarding-section-${section.pageIndex}`),
-      ).toBeVisible();
-    });
+    waitFor(
+      () => {
+        expect(
+          wrapper.getByTestId(`onboarding-section-${section.pageIndex}`),
+        ).toBeVisible();
+      },
+      { timeout: 10000 },
+    );
 
   public static save(wrapper: ResultingContext) {
     fireEvent.click(wrapper.getByText('Finish').closest('button'));

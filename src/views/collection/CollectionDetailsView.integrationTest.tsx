@@ -35,11 +35,11 @@ describe('CollectionDetailsView', () => {
       new ApiStub()
         .defaultUser()
         .fetchCollections()
-        .fetchCollection(collectionResponse([], 'id'));
+        .fetchCollection(collectionResponse([], 'test-collection-id'));
 
       await fakeVideoSetup(video177);
 
-      const collectionPage = await CollectionPage.load();
+      const collectionPage = await CollectionPage.load('test-collection-id');
 
       expect(collectionPage.getCollectionDetails()).toMatchObject({
         title: 'funky collection',
