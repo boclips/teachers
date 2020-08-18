@@ -17,6 +17,7 @@ import { defaultDurations } from 'src/components/durations/redux/durationReducer
 import { Route } from 'react-router';
 import ApiStub from 'test-support/ApiStub';
 import { collectionsResponse } from 'test-support/api-responses';
+import { waitForDomChange } from '@testing-library/dom';
 
 describe('SubjectSearchView', () => {
   const renderSubjectSearchView = () => {
@@ -89,6 +90,12 @@ describe('SubjectSearchView', () => {
       expect(view.queryByText('video 1 hello')).toBeInTheDocument();
       expect(view.queryByText('video 2 hello')).not.toBeInTheDocument();
     });
+  });
+
+  it('page title contains discipline and subject name', async () => {
+    renderSubjectSearchView();
+    await waitForDomChange();
+    expect(document.title).toEqual('Arts - Art history');
   });
 
   it('subject filters are not displayed', async () => {

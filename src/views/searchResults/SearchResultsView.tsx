@@ -43,6 +43,7 @@ interface StateProps {
 interface OwnProps {
   subheader: any;
   hiddenFilterKeys?: FilterKey[];
+  pageTitle?: string;
 }
 
 interface DispatchProps {
@@ -156,10 +157,11 @@ class SearchResultsView extends React.PureComponent<
     this.props.numberOfFiltersApplied > 0;
 
   public render() {
-    const { videoResults, subheader } = this.props;
+    const { videoResults, subheader, pageTitle } = this.props;
+    const title = pageTitle || videoResults.query;
     return (
       <PageLayout
-        title={`"${videoResults.query}"`}
+        title={title}
         showTabs
         showNavigation
         showFooter

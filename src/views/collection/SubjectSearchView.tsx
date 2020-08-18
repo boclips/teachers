@@ -69,6 +69,7 @@ class SubjectSearchView extends PureComponent<
         <ConnectedNewSearchResultsView
           subheader={this.renderSubheader(discipline, subject)}
           hiddenFilterKeys={[FilterKey.SUBJECTS]}
+          pageTitle={`${discipline.name} - ${subject.name}`}
         />
       </section>
     );

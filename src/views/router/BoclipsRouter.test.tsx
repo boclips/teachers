@@ -7,6 +7,7 @@ import SubjectSearchView from 'src/views/collection/SubjectSearchView';
 import {
   DisciplineFactory,
   MockStoreFactory,
+  SubjectFactory,
   UserProfileFactory,
 } from '../../../test-support/factories';
 import AccountSettings from '../../components/account/accountSettings/AccountSettings';
@@ -23,7 +24,12 @@ import BoclipsRouter from './BoclipsRouter';
 function buildStore(authorised: boolean = true) {
   return MockStoreFactory.sample({
     user: authorised ? UserProfileFactory.sample() : null,
-    disciplines: [DisciplineFactory.sample()],
+    disciplines: [
+      DisciplineFactory.sample({
+        subjects: [SubjectFactory.sample({ id: 'maths', name: 'Mathematics' })],
+      }),
+    ],
+    subjects: [SubjectFactory.sample({ id: 'maths', name: 'Mathematics' })],
   });
 }
 
