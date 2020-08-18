@@ -275,47 +275,11 @@ describe('onboarding form', () => {
   );
 
   it(
-    'does not send duplicated page changed event to Appcues if page has already been visited',
-    async () => {
-      const wrapper = getView();
-
-      await fillStep1(wrapper);
-      await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[0]);
-      await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
-
-      expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledTimes(1);
-    },
-    timeoutForFullOnboarding,
-  );
-
-  it(
     'sends a platform interaction event when visiting a page ',
     async () => {
       const wrapper = getView();
 
       await fillStep1(wrapper);
-      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-
-      expect(client.events.getEvents()).toEqual([
-        {
-          anonymous: true,
-          subtype: 'ONBOARDING_PAGE_2_STARTED',
-          type: 'PLATFORM_INTERACTED_WITH',
-        },
-      ]);
-    },
-    timeoutForFullOnboarding,
-  );
-
-  it(
-    'does not send duplicated platform interaction event if page has already been visited',
-    async () => {
-      const wrapper = getView();
-
-      await fillStep1(wrapper);
-      await OnboardingFormHelper.moveCarouselBackward(wrapper, SECTIONS[0]);
-      await OnboardingFormHelper.moveCarouselForward(wrapper, SECTIONS[1]);
-
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
       expect(client.events.getEvents()).toEqual([
