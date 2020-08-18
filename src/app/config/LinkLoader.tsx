@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoadingComponent } from '../../components/common/LoadingComponent';
-import { ErrorView } from '../../views/error/ErrorView';
+import { LoadingComponent } from 'src/components/common/LoadingComponent';
+import { ErrorView } from 'src/views/error/ErrorView';
 import State from 'src/types/State';
 import { fetchLinksAction } from 'src/app/redux/links/actions/fetchLinksAction';
 import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
@@ -24,7 +24,7 @@ export const LinkLoader = (props: Props) => {
     } else {
       dispatch(requestAuthentication({ authenticationRequired: false }));
     }
-  }, [authenticationResolved, linksNotLoaded]);
+  }, [authenticationResolved, linksNotLoaded, dispatch]);
 
   if (linksNotLoaded) {
     return <LoadingComponent />;
