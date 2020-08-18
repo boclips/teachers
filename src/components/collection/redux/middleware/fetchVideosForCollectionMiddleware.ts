@@ -13,7 +13,13 @@ export function onFetchVideosForCollection(
   request: VideosForCollectionRequest,
 ) {
   Promise.all(
-    request.videos.map((videoId) => fetchVideo({ id: videoId.value })),
+    request.videos.map((videoId) =>
+      fetchVideo({
+        id: videoId.value,
+        referer: request.referer,
+        shareCode: request.shareCode,
+      }),
+    ),
   )
     .then((videos) =>
       store.dispatch(

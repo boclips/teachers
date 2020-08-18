@@ -15,5 +15,8 @@ export const toAppcuesVideo = (video: Video) => ({
 
 const convertPlaybackInfo = (playback: Playback) =>
   playback.type === 'STREAM'
-    ? { id: playback.id, streamUrl: playback.links.hlsStream.getOriginalLink() }
+    ? {
+        id: playback.id,
+        streamUrl: playback.links.hlsStream?.getOriginalLink(),
+      }
     : { id: playback.id };

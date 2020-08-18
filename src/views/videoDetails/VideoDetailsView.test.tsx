@@ -192,7 +192,7 @@ describe('VideoDetailsView', () => {
 
     it('does not ask for code if it was provided previously', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-      client.videos.addValidShareCode('active-referer', 'valid')
+      client.videos.addValidShareCode('active-referer', 'valid');
 
       const { queryByText, findByText } = createViewWrapper(
         ['/videos/177?referer=active-referer'],

@@ -13,6 +13,9 @@ export const CollectionDetailsContent = (props: {
   userId: string;
 }) => {
   const dispatch = useDispatch();
+  const { shareCode, refererId } = useSelector(
+    (state: State) => state.authentication,
+  );
   const [videos, setVideos] = useState([]);
   const videosState = useSelector((state: State) => state.entities.videos);
 
@@ -21,10 +24,12 @@ export const CollectionDetailsContent = (props: {
       dispatch(
         fetchVideosByIdsAction({
           videos: props.collection.videoIds,
+          referer: refererId,
+          shareCode,
         }),
       );
     }
-  }, [dispatch, props.collection.videoIds]);
+  }, [dispatch, props.collection.videoIds, refererId, shareCode]);
 
   useEffect(() => {
     setVideos(

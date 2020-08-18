@@ -3,6 +3,8 @@ import { VideoId } from '../../../../types/Video';
 
 export interface VideosForCollectionRequest {
   videos: VideoId[];
+  referer?: string;
+  shareCode?: string;
 }
 
 export const fetchVideosByIdsAction = actionCreatorFactory<
