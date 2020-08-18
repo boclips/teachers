@@ -81,7 +81,7 @@ const CreateAccountForm = () => {
   const onSuccesfulRegistration = (username: string, password: string) => {
     dispatch(
       requestAuthentication({
-        authenticationRequired: true,
+        requireLoginPage: true,
         username,
         password,
       }),

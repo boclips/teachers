@@ -44,7 +44,7 @@ describe('when authentication status is undefined', () => {
     const action: Action<any> = store.getActions()[0];
     expect(action.type).toEqual(requestAuthentication.type);
     expect(action.payload).toEqual({
-      authenticationRequired: false,
+      requireLoginPage: false,
     });
   });
 

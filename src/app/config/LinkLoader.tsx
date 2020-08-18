@@ -22,7 +22,7 @@ export const LinkLoader = (props: Props) => {
     if (linksNotLoaded && authenticationResolved) {
       dispatch(fetchLinksAction());
     } else {
-      dispatch(requestAuthentication({ authenticationRequired: false }));
+      dispatch(requestAuthentication({ requireLoginPage: false }));
     }
   }, [authenticationResolved, linksNotLoaded, dispatch]);
 

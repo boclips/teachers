@@ -15,7 +15,7 @@ it("doesn't send users to login page when authentication not required", async ()
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
 
-  const action = requestAuthentication({ authenticationRequired: false });
+  const action = requestAuthentication({ requireLoginPage: false });
 
   store.dispatch(action);
 
@@ -33,7 +33,7 @@ it('requires login page when authentication is required', async () => {
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
 
-  const action = requestAuthentication({ authenticationRequired: true });
+  const action = requestAuthentication({ requireLoginPage: true });
 
   store.dispatch(action);
 
@@ -41,6 +41,28 @@ it('requires login page when authentication is required', async () => {
     expect(createInstance).toHaveBeenCalledWith(
       expect.objectContaining({
         requireLoginPage: true,
+      }),
+    );
+  });
+});
+
+it('disable checkLoginIframe when creating instance with user details', async () => {
+  const mockStore = configureStore<{}>([...requestAuthenticationMiddleware]);
+  const store = mockStore({});
+  const createInstance = mocked(BoclipsSecurity.createInstance);
+
+  const action = requestAuthentication({
+    requireLoginPage: false,
+    username: 'test',
+    password: 'pass',
+  });
+
+  store.dispatch(action);
+
+  await eventually(() => {
+    expect(createInstance).toHaveBeenCalledWith(
+      expect.objectContaining({
+        checkLoginIframe: false,
       }),
     );
   });

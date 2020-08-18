@@ -106,7 +106,7 @@ function mapStateToProps(
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     authenticate: () => {
-      dispatch(requestAuthentication({ authenticationRequired: true }));
+      dispatch(requestAuthentication({ requireLoginPage: true }));
     },
     redirectToAccessRenewalPage: () => {
       dispatch(push('/trial-expired'));

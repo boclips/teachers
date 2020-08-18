@@ -90,7 +90,7 @@ describe('requesting authorisation', () => {
 
     expect(action.type).toEqual(requestAuthentication.type);
     expect(action.payload).toEqual({
-      authenticationRequired: true,
+      requireLoginPage: true,
     });
   });
 });
