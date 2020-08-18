@@ -1,9 +1,5 @@
 import { createMemoryHistory } from 'history';
-import {
-  fireEvent,
-  waitForElement,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 import React from 'react';
 import { fakeVideoSetup } from 'test-support/fakeApiClientSetup';
 import { ApiClientWrapper } from 'src/services/apiClient';
@@ -60,7 +56,11 @@ describe('VideoDetailsView', () => {
 
   beforeEach(async () => {
     new ApiStub().defaultUser().fetchCollections();
-
+    const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+    client.events.clear();
+    client.users.clear();
+    client.users.insertActiveUserId('active-referer');
+    client.videos.clear();
     await fakeVideoSetup(video);
   });
 
@@ -129,13 +129,61 @@ describe('VideoDetailsView', () => {
       user: null,
     };
 
-    it('asks for a code', () => {
-      const { getByText, getByRole } = createViewWrapper(
-        ['/videos/123?referer=user-123'],
+    it('displays user inactive popup when referer is not active', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      const { findByText, getByRole } = createViewWrapper(
+        ['/videos/123?referer=not-active'],
         unauthenticatedState,
       );
 
-      const button = getByText('Watch video');
+      const popup = await findByText(
+        'This video needs an up to date code ' +
+          'to be watched, please get in touch with your teacher.',
+      );
+      expect(popup).toBeInTheDocument();
+      expect(getByRole('dialog')).toBeInTheDocument();
+      await eventually(() => {
+        expect(client.events.getEvents()).toEqual([
+          {
+            anonymous: true,
+            subtype: 'REFERER_INACTIVE',
+            type: 'PLATFORM_INTERACTED_WITH',
+          },
+        ]);
+      });
+    });
+
+    it('displays no user inactive popup when referer is active', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      const { findByText, queryByText } = createViewWrapper(
+        ['/videos/177?referer=active-referer'],
+        unauthenticatedState,
+      );
+
+      const videoTitle = await findByText('Video Title To Show');
+      expect(videoTitle).toBeInTheDocument();
+      expect(
+        queryByText(
+          'This video needs an up to date code ' +
+            'to be watched, please get in touch with your teacher.',
+        ),
+      ).not.toBeInTheDocument();
+      await eventually(() => {
+        expect(client.events.getEvents()).not.toContain({
+          anonymous: true,
+          subtype: 'REFERER_INACTIVE',
+          type: 'PLATFORM_INTERACTED_WITH',
+        });
+      });
+    });
+
+    it('asks for a code', async () => {
+      const { getByText, getByRole, findByText } = createViewWrapper(
+        ['/videos/123?referer=active-referer'],
+        unauthenticatedState,
+      );
+
+      const button = await findByText('Watch video');
 
       expect(getByRole('dialog')).toBeInTheDocument();
       expect(button).toBeInTheDocument();
@@ -144,31 +192,31 @@ describe('VideoDetailsView', () => {
 
     it('does not ask for code if it was provided previously', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-      client.shareCodes.clear();
-      client.shareCodes.insertValidShareCode('test-id', 'valid');
+      client.videos.addValidShareCode('active-referer', 'valid')
 
-      const { queryByText } = createViewWrapper(
-        ['/videos/177?referer=test-id'],
+      const { queryByText, findByText } = createViewWrapper(
+        ['/videos/177?referer=active-referer'],
         {
           authentication: {
             status: 'anonymous',
             shareCode: 'valid',
+            refererId: 'active-referer',
           },
           user: null,
         },
       );
 
-      await waitForElementToBeRemoved(() =>
-        queryByText('Enter code to watch video'),
-      );
+      expect(await findByText('Video Title To Show')).toBeInTheDocument();
       expect(queryByText('Enter code to watch video')).not.toBeInTheDocument();
     });
 
     it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_IMPRESSION events', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-      client.events.clear();
 
-      createViewWrapper(['/videos/123?referer=user-123'], unauthenticatedState);
+      createViewWrapper(
+        ['/videos/123?referer=active-referer'],
+        unauthenticatedState,
+      );
 
       await eventually(() => {
         expect(client.events.getEvents()).toEqual([
@@ -184,14 +232,14 @@ describe('VideoDetailsView', () => {
     it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_VALID events', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.shareCodes.clear();
-      client.shareCodes.insertValidShareCode('test-id', 'valid');
+      client.shareCodes.insertValidShareCode('active-referer', 'valid');
 
       const wrapper = createViewWrapper(
-        ['/videos/123?referer=test-id'],
+        ['/videos/123?referer=active-referer'],
         unauthenticatedState,
       );
 
-      expect(await wrapper.queryByText('Watch video')).toBeInTheDocument();
+      expect(await wrapper.findByText('Watch video')).toBeInTheDocument();
       client.events.clear();
       const button = wrapper.getByText('Watch video').closest('button');
       const shareField = wrapper.getByPlaceholderText('Enter code');
@@ -213,14 +261,14 @@ describe('VideoDetailsView', () => {
     it('sends PLATFORM_INTERACTED_WITH SHARE_CODE_MODAL_INVALID events', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.shareCodes.clear();
-      client.shareCodes.insertValidShareCode('test-id', 'valid');
+      client.shareCodes.insertValidShareCode('active-referer', 'valid');
 
       const wrapper = createViewWrapper(
-        ['/videos/123?referer=test-id'],
+        ['/videos/123?referer=active-referer'],
         unauthenticatedState,
       );
 
-      expect(await wrapper.queryByText('Watch video')).toBeInTheDocument();
+      expect(await wrapper.findByText('Watch video')).toBeInTheDocument();
       client.events.clear();
       const button = wrapper.getByText('Watch video').closest('button');
       const shareField = wrapper.getByPlaceholderText('Enter code');
@@ -252,14 +300,14 @@ describe('VideoDetailsView', () => {
   describe('When authenticated', () => {
     const authenticatedState = {
       authenticated: { status: 'authenticated' },
-      user: UserProfileFactory.sample({ id: 'user-test-id' }),
+      user: UserProfileFactory.sample({ id: 'active-referer' }),
     };
+
     it('does not ask for a code', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-      client.events.clear();
 
       const { findByText, getByText } = createViewWrapper(
-        ['/videos/123?referer=user-123'],
+        ['/videos/123?referer=active-referer'],
         authenticatedState,
       );
 
@@ -295,6 +343,31 @@ describe('VideoDetailsView', () => {
         expect(history.location.search).toContain(
           `referer=${authenticatedState.user.id}`,
         );
+      });
+    });
+
+    it('does not check whether referer is active or not', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+
+      const { findByText, queryByText } = createViewWrapper(
+        ['/videos/177'],
+        authenticatedState,
+      );
+      const videoTitle = await findByText('Video Title To Show');
+      expect(videoTitle).toBeInTheDocument();
+      expect(
+        queryByText(
+          'This video needs an up to date code ' +
+            'to be watched, please get in touch with your teacher.',
+        ),
+      ).not.toBeInTheDocument();
+
+      await eventually(() => {
+        expect(client.events.getEvents()).not.toContain({
+          anonymous: true,
+          subtype: 'REFERER_INACTIVE',
+          type: 'PLATFORM_INTERACTED_WITH',
+        });
       });
     });
   });

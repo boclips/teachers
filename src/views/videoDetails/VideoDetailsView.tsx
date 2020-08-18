@@ -6,6 +6,11 @@ import { useLocation } from 'react-router';
 import { isAuthenticated } from 'src/app/redux/authentication/selectors';
 import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
 import { DetailsNotFound } from 'src/components/common/DetailsNotFound';
+import { isUserActive } from 'src/services/users/isUserActive';
+import { InactiveRefererModal } from 'src/components/video/details/InactiveRefererModal';
+import { LoadingComponent } from 'src/components/common/LoadingComponent';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
 import PageLayout from '../../components/layout/PageLayout';
 import VideoDetails from '../../components/video/details/VideoDetails';
 import {
@@ -19,6 +24,9 @@ import { useRefererIdInjector } from '../../hooks/useRefererIdInjector';
 interface Props {
   videoId: string;
 }
+const sendPlatformInteractionEvent = AnalyticsFactory.internalAnalytics()
+  .trackPlatformInteraction;
+const { REFERER_INACTIVE } = PlatformInteractionType;
 
 const VideoDetailsView = ({ videoId }: Props) => {
   useRefererIdInjector();
@@ -34,6 +42,7 @@ const VideoDetailsView = ({ videoId }: Props) => {
   const video = useSelector((state: State) => getVideoById(state, videoId));
   const isVideoLoading = useSelector((state: State) => isLoading(state));
   const [canAccess, setCanAccess] = useState(authenticated);
+  const [refererIsActive, setRefererIsActive] = useState<boolean | null>(null);
 
   const params = querystring.parse(location.search);
   const referer = params.referer as string;
@@ -44,14 +53,27 @@ const VideoDetailsView = ({ videoId }: Props) => {
   }, [isValidShareCode, authenticated]);
 
   useEffect(() => {
-    dispatch(
-      fetchVideoAction({
-        id: videoId,
-        referer,
-        shareCode,
-      }),
-    );
-  }, [dispatch, videoId, referer, shareCode]);
+    const fetchVideo = authenticated
+      ? fetchVideoAction({ id: videoId })
+      : fetchVideoAction({
+          id: videoId,
+          referer,
+          shareCode,
+        });
+
+    dispatch(fetchVideo);
+  }, [dispatch, videoId, referer, shareCode, authenticated]);
+
+  useEffect(() => {
+    if (!authenticated) {
+      isUserActive(referer).then((isActive) => {
+        setRefererIsActive(isActive);
+        if (!isActive) {
+          sendPlatformInteractionEvent(REFERER_INACTIVE, true);
+        }
+      });
+    }
+  }, [referer, authenticated]);
 
   useEffect(() => {
     if ((userId || !referer) && userId !== referer) {
@@ -76,6 +98,18 @@ const VideoDetailsView = ({ videoId }: Props) => {
       );
     }
   }, [dispatch, video, videoId]);
+
+  if (!authenticated && !refererIsActive) {
+    return (
+      <PageLayout showNavigation showFooter showSearchBar>
+        {refererIsActive === false ? (
+          <InactiveRefererModal />
+        ) : (
+          <LoadingComponent />
+        )}
+      </PageLayout>
+    );
+  }
 
   if (!video && !isVideoLoading) {
     return (
