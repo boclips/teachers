@@ -31,7 +31,7 @@ const { REFERER_INACTIVE } = PlatformInteractionType;
 export const CollectionDetails = React.memo((props: OwnProps) => {
   const dispatch = useCallback(useDispatch(), []);
   const referer = useRefererIdInjector();
-  const isAnonymous = !referer || referer === 'anonymous';
+  const isAnonymousReferer = !referer || referer === 'anonymous';
   const collection = useSelector((state: State) =>
     getCollectionById(state, props.collectionId),
   );
@@ -76,12 +76,12 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   }, [dispatch, props]);
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && !isAnonymousReferer) {
       isUserActive(referer).then((isActive) => {
         setRefererIsActive(isActive);
       });
     }
-  }, [referer, isLoggedIn]);
+  }, [referer, isLoggedIn, isAnonymousReferer]);
 
   useEffect(() => {
     if (refererIsActive === false) {
@@ -97,8 +97,8 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
     />
   );
 
-  if (!collection) {
-    const missingReferer = !isLoggedIn && isAnonymous;
+  if (!collection && refererIsActive !== false) {
+    const missingReferer = !isLoggedIn && isAnonymousReferer;
     const isAuthenticated = isLoggedIn || shareCode;
 
     if (missingReferer || (isAuthenticated && !isCollectionLoading)) {

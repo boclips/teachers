@@ -427,21 +427,32 @@ describe('CollectionDetailsView', () => {
   });
 
   describe(`collection not found page`, () => {
-    const history = createMemoryHistory({
-      initialEntries: ['/collections/none-collection'],
-    });
+    const renderCollectionDetailsWithAuthState = async (
+      authenticationState,
+      referer = 'anonymous',
+    ) => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.users.clear();
+      if (referer !== 'anonymous') {
+        client.users.insertActiveUserId(referer);
+      }
 
-    const renderCollectionDetailsWithAuthState = (authenticationState) =>
-      renderWithCreatedStore(
+      const history = createMemoryHistory({
+        initialEntries: [`/collections/none-collection?referer=${referer}`],
+      });
+
+      return renderWithCreatedStore(
         <CollectionDetailsView collectionId="none-collection" />,
         createBoclipsStore(
           MockStoreFactory.sampleState({
             authentication: authenticationState,
+            user: null,
           }),
           history,
         ),
         history,
       );
+    };
 
     const validateCollectionNotFoundPage = async (
       wrapper: ResultingContext,
@@ -452,15 +463,12 @@ describe('CollectionDetailsView', () => {
         ),
       ).toBeInTheDocument();
       expect(
-        await wrapper.findByPlaceholderText('Enter your search term'),
-      ).toBeInTheDocument();
-      expect(
         await wrapper.queryByTestId('collection-skeleton'),
       ).not.toBeInTheDocument();
     };
 
     it('Shows not found illustration when not found and no share code possible', async () => {
-      const wrapper = renderCollectionDetailsWithAuthState({
+      const wrapper = await renderCollectionDetailsWithAuthState({
         status: 'anonymous',
       });
 
@@ -468,19 +476,25 @@ describe('CollectionDetailsView', () => {
     });
 
     it('Shows not found illustration when authenticated and collection not found', async () => {
-      const wrapper = renderCollectionDetailsWithAuthState({
-        status: 'authenticated',
-      });
+      const wrapper = await renderCollectionDetailsWithAuthState(
+        {
+          status: 'authenticated',
+        },
+        'user-123',
+      );
 
       await validateCollectionNotFoundPage(wrapper);
     });
 
     it('Shows not found illustration with valid shared code but collection not found', async () => {
-      const wrapper = renderCollectionDetailsWithAuthState({
-        status: 'anonymous',
-        refererId: 'user-123',
-        shareCode: 'ABCD',
-      });
+      const wrapper = await renderCollectionDetailsWithAuthState(
+        {
+          status: 'anonymous',
+          refererId: 'user-123',
+          shareCode: 'ABCD',
+        },
+        'user-123',
+      );
 
       await validateCollectionNotFoundPage(wrapper);
     });
@@ -490,8 +504,6 @@ describe('CollectionDetailsView', () => {
     it('shows user inactive popup when referer not active', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.events.clear();
-
-      new ApiStub().fetchCollection(collectionResponse([], 'new-collection'));
 
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=inactive-id'],
@@ -533,8 +545,6 @@ describe('CollectionDetailsView', () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.users.insertActiveUserId('active-id');
       client.events.clear();
-
-      new ApiStub().fetchCollection(collectionResponse([], 'new-collection'));
 
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=active-id'],
