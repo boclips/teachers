@@ -3,7 +3,10 @@ import SadStudentSVG from 'resources/images/sad-student.svg';
 import React from 'react';
 import './InactiveRefererModal.less';
 
-export const InactiveRefererModal = () => (
+interface Props {
+  resourceType: string;
+}
+export const InactiveRefererModal = ({ resourceType }: Props) => (
   <Bodal
     closable={false}
     destroyOnClose
@@ -15,8 +18,8 @@ export const InactiveRefererModal = () => (
     <div className="body-wrapper">
       <SadStudentSVG />
       <span className="message">
-        This video needs an up to date code to be watched, please get in touch
-        with your teacher.
+        This {resourceType} needs an up to date code to be watched, please get
+        in touch with your teacher.
       </span>
     </div>
   </Bodal>

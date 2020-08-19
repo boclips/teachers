@@ -99,18 +99,6 @@ const VideoDetailsView = ({ videoId }: Props) => {
     }
   }, [dispatch, video, videoId]);
 
-  if (!authenticated && !refererIsActive) {
-    return (
-      <PageLayout showNavigation showFooter showSearchBar>
-        {refererIsActive === false ? (
-          <InactiveRefererModal />
-        ) : (
-          <LoadingComponent />
-        )}
-      </PageLayout>
-    );
-  }
-
   if (!video && !isVideoLoading) {
     return (
       <PageLayout showNavigation showFooter showSearchBar>
@@ -119,6 +107,18 @@ const VideoDetailsView = ({ videoId }: Props) => {
           message="The video you tried to access is not available."
           dataQa="video-not-found"
         />
+      </PageLayout>
+    );
+  }
+
+  if (!authenticated && !refererIsActive) {
+    return (
+      <PageLayout showNavigation showFooter showSearchBar>
+        {refererIsActive === false ? (
+          <InactiveRefererModal resourceType="video" />
+        ) : (
+          <LoadingComponent />
+        )}
       </PageLayout>
     );
   }

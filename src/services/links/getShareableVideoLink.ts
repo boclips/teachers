@@ -8,7 +8,6 @@ export const getShareableVideoLink = (
   segment: Segment = null,
 ): string => {
   const params: { [key: string]: any } = {
-    share: true,
     referer: userId,
   };
 

@@ -254,6 +254,7 @@ describe('CollectionDetailsView', () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.shareCodes.clear();
       client.shareCodes.insertValidShareCode('test-id', 'valid');
+      client.users.insertActiveUserId('test-id');
 
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=test-id'],
@@ -265,6 +266,7 @@ describe('CollectionDetailsView', () => {
           authentication: {
             status: 'anonymous',
           },
+          user: null,
         }),
         history,
       );
@@ -275,7 +277,7 @@ describe('CollectionDetailsView', () => {
         history,
       );
 
-      expect(await wrapper.queryByText('View collection')).toBeInTheDocument();
+      expect(await wrapper.findByText('View collection')).toBeInTheDocument();
 
       const button = wrapper.getByText('View collection').closest('button');
       const shareField = wrapper.getByPlaceholderText('Enter code');
@@ -299,6 +301,7 @@ describe('CollectionDetailsView', () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
       client.shareCodes.clear();
       client.shareCodes.insertValidShareCode('test-id', 'valid');
+      client.users.insertActiveUserId('test-id');
 
       const history = createMemoryHistory({
         initialEntries: ['/collections/new-collection?referer=test-id'],
@@ -310,6 +313,7 @@ describe('CollectionDetailsView', () => {
           authentication: {
             status: 'anonymous',
           },
+          user: null,
         }),
         history,
       );
@@ -321,7 +325,7 @@ describe('CollectionDetailsView', () => {
         history,
       );
 
-      expect(await wrapper.queryByText('View collection')).toBeInTheDocument();
+      expect(await wrapper.findByText('View collection')).toBeInTheDocument();
 
       const button = wrapper.getByText('View collection').closest('button');
       const shareField = wrapper.getByPlaceholderText('Enter code');
@@ -365,114 +369,208 @@ describe('CollectionDetailsView', () => {
       });
     });
   });
-});
 
-describe('when collection of collections', () => {
-  let collectionPage;
-  beforeEach(async () => {
-    new ApiStub()
-      .defaultUser()
-      .fetchCollections()
-      .fetchCollection(
-        parentCollectionResponse('parent-id', false, [
-          collectionResponse(
-            [video177Slim],
-            'child-1',
-            false,
-            'Child collection 1',
-          ),
-          collectionResponse(
-            [video177Slim],
-            'child-2',
-            false,
-            'Child collection 2',
-          ),
-        ]),
+  describe('when collection of collections', () => {
+    let collectionPage;
+    beforeEach(async () => {
+      new ApiStub()
+        .defaultUser()
+        .fetchCollections()
+        .fetchCollection(
+          parentCollectionResponse('parent-id', false, [
+            collectionResponse(
+              [video177Slim],
+              'child-1',
+              false,
+              'Child collection 1',
+            ),
+            collectionResponse(
+              [video177Slim],
+              'child-2',
+              false,
+              'Child collection 2',
+            ),
+          ]),
+        );
+
+      await fakeVideoSetup(video177);
+
+      collectionPage = await CollectionPage.load('parent-id');
+    });
+
+    it('Displays each collection card of sub collections', async () => {
+      expect(collectionPage.getParentCollectionDetails()).toMatchObject({
+        title: 'parent collection',
+        subjects: [],
+        ageRange: '3-9',
+      });
+
+      expect(collectionPage.getSubCollections()).toHaveLength(2);
+    });
+
+    it('Displays collection titles of sub collections in cards and units', async () => {
+      expect(collectionPage.getSubCollections()).toHaveLength(2);
+      expect(collectionPage.getSubCollections()[0].title).toEqual(
+        'Child collection 1',
+      );
+      expect(collectionPage.getSubCollections()[1].title).toEqual(
+        'Child collection 2',
       );
 
-    await fakeVideoSetup(video177);
-
-    collectionPage = await CollectionPage.load('parent-id');
+      expect(collectionPage.getCollectionUnits()).toContain(
+        'Child collection 1',
+      );
+      expect(collectionPage.getCollectionUnits()).toContain(
+        'Child collection 2',
+      );
+    });
   });
 
-  it('Displays each collection card of sub collections', async () => {
-    expect(collectionPage.getParentCollectionDetails()).toMatchObject({
-      title: 'parent collection',
-      subjects: [],
-      ageRange: '3-9',
+  describe(`collection not found page`, () => {
+    const history = createMemoryHistory({
+      initialEntries: ['/collections/none-collection'],
     });
 
-    expect(collectionPage.getSubCollections()).toHaveLength(2);
-  });
-
-  it('Displays collection titles of sub collections in cards and units', async () => {
-    expect(collectionPage.getSubCollections()).toHaveLength(2);
-    expect(collectionPage.getSubCollections()[0].title).toEqual(
-      'Child collection 1',
-    );
-    expect(collectionPage.getSubCollections()[1].title).toEqual(
-      'Child collection 2',
-    );
-
-    expect(collectionPage.getCollectionUnits()).toContain('Child collection 1');
-    expect(collectionPage.getCollectionUnits()).toContain('Child collection 2');
-  });
-});
-
-describe(`collection not found page`, () => {
-  const history = createMemoryHistory({
-    initialEntries: ['/collections/none-collection'],
-  });
-
-  const renderCollectionDetailsWithAuthState = (authenticationState) =>
-    renderWithCreatedStore(
-      <CollectionDetailsView collectionId="none-collection" />,
-      createBoclipsStore(
-        MockStoreFactory.sampleState({
-          authentication: authenticationState,
-        }),
+    const renderCollectionDetailsWithAuthState = (authenticationState) =>
+      renderWithCreatedStore(
+        <CollectionDetailsView collectionId="none-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            authentication: authenticationState,
+          }),
+          history,
+        ),
         history,
-      ),
-      history,
-    );
+      );
 
-  const validateCollectionNotFoundPage = async (wrapper: ResultingContext) => {
-    expect(
-      await wrapper.findByText(
-        'The collection you tried to access is not available.',
-      ),
-    ).toBeInTheDocument();
-    expect(
-      await wrapper.findByPlaceholderText('Enter your search term'),
-    ).toBeInTheDocument();
-    expect(
-      await wrapper.queryByTestId('collection-skeleton'),
-    ).not.toBeInTheDocument();
-  };
+    const validateCollectionNotFoundPage = async (
+      wrapper: ResultingContext,
+    ) => {
+      expect(
+        await wrapper.findByText(
+          'The collection you tried to access is not available.',
+        ),
+      ).toBeInTheDocument();
+      expect(
+        await wrapper.findByPlaceholderText('Enter your search term'),
+      ).toBeInTheDocument();
+      expect(
+        await wrapper.queryByTestId('collection-skeleton'),
+      ).not.toBeInTheDocument();
+    };
 
-  it('Shows not found illustration when not found and no share code possible', async () => {
-    const wrapper = renderCollectionDetailsWithAuthState({
-      status: 'anonymous',
+    it('Shows not found illustration when not found and no share code possible', async () => {
+      const wrapper = renderCollectionDetailsWithAuthState({
+        status: 'anonymous',
+      });
+
+      await validateCollectionNotFoundPage(wrapper);
     });
 
-    await validateCollectionNotFoundPage(wrapper);
+    it('Shows not found illustration when authenticated and collection not found', async () => {
+      const wrapper = renderCollectionDetailsWithAuthState({
+        status: 'authenticated',
+      });
+
+      await validateCollectionNotFoundPage(wrapper);
+    });
+
+    it('Shows not found illustration with valid shared code but collection not found', async () => {
+      const wrapper = renderCollectionDetailsWithAuthState({
+        status: 'anonymous',
+        refererId: 'user-123',
+        shareCode: 'ABCD',
+      });
+
+      await validateCollectionNotFoundPage(wrapper);
+    });
   });
 
-  it('Shows not found illustration when authenticated and collection not found', async () => {
-    const wrapper = renderCollectionDetailsWithAuthState({
-      status: 'authenticated',
+  describe(`check whether referer is active`, () => {
+    it('shows user inactive popup when referer not active', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.events.clear();
+
+      new ApiStub().fetchCollection(collectionResponse([], 'new-collection'));
+
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=inactive-id'],
+      });
+
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            links: LinksStateValueFactory.sample(
+              {},
+              'https://api.example.com/v1',
+            ),
+            router: { location: { search: '?referer=inactive-id' } } as any,
+            authentication: { status: 'anonymous' },
+            user: null,
+          }),
+          history,
+        ),
+        history,
+      );
+
+      expect(
+        await wrapper.findByText(
+          'This collection needs an up to date code to be watched, please get in touch with your teacher.',
+        ),
+      ).toBeInTheDocument();
+
+      await eventually(() => {
+        expect(client.events.getEvents()).toContainEqual({
+          anonymous: true,
+          subtype: 'REFERER_INACTIVE',
+          type: 'PLATFORM_INTERACTED_WITH',
+        });
+      });
     });
 
-    await validateCollectionNotFoundPage(wrapper);
-  });
+    it('doesnt show user inactive popup when active user', async () => {
+      const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
+      client.users.insertActiveUserId('active-id');
+      client.events.clear();
 
-  it('Shows not found illustration with valid shared code but collection not found', async () => {
-    const wrapper = renderCollectionDetailsWithAuthState({
-      status: 'anonymous',
-      refererId: 'user-123',
-      shareCode: 'ABCD',
+      new ApiStub().fetchCollection(collectionResponse([], 'new-collection'));
+
+      const history = createMemoryHistory({
+        initialEntries: ['/collections/new-collection?referer=active-id'],
+      });
+
+      const wrapper = renderWithCreatedStore(
+        <CollectionDetailsView collectionId="new-collection" />,
+        createBoclipsStore(
+          MockStoreFactory.sampleState({
+            links: LinksStateValueFactory.sample(
+              {},
+              'https://api.example.com/v1',
+            ),
+            router: { location: { search: '?referer=active-id' } } as any,
+            authentication: { status: 'anonymous' },
+            user: null,
+          }),
+          history,
+        ),
+        history,
+      );
+
+      expect(await wrapper.queryByText('View collection')).toBeInTheDocument();
+      expect(
+        wrapper.queryByText(
+          'This collection needs an up to date code to be watched, please get in touch with your teacher.',
+        ),
+      ).not.toBeInTheDocument();
+
+      await eventually(() => {
+        expect(client.events.getEvents()).not.toContainEqual({
+          anonymous: true,
+          subtype: 'REFERER_INACTIVE',
+          type: 'PLATFORM_INTERACTED_WITH',
+        });
+      });
     });
-
-    await validateCollectionNotFoundPage(wrapper);
   });
 });

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CollectionDetailsContent } from 'src/components/collection/details/CollectionDetailsContent';
 import { DetailsNotFound } from 'src/components/common/DetailsNotFound';
@@ -8,16 +8,25 @@ import DigitalCitizenshipSVG from 'resources/images/digital-citizenship-banner-i
 import PageLayout from 'src/components/layout/PageLayout';
 import { ShareCodeDialog } from 'src/components/common/share/ShareCodeDialog/ShareCodeDialog';
 import { useRefererIdInjector } from 'src/hooks/useRefererIdInjector';
-import State from '../../../types/State';
-import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
-import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
-import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
-import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
+import { isUserActive } from 'src/services/users/isUserActive';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { PlatformInteractionType } from 'src/services/analytics/boclips/PlatformInteractionType';
+import { InactiveRefererModal } from 'src/components/video/details/InactiveRefererModal';
+import { LoadingComponent } from 'src/components/common/LoadingComponent';
 import { CollectionHeader } from './header/CollectionHeader';
+import { getCollectionById } from '../redux/reducers/collectionEntitiesReducer';
+import { storeCollectionBeingViewedAction } from '../redux/actions/storeCollectionBeingViewedAction';
+import { fetchCollectionAction } from '../redux/actions/fetchCollectionAction';
+import { VideoCardsPlaceholder } from '../../searchResults/VideoCardsPlaceholder';
+import State from '../../../types/State';
 
 interface OwnProps {
   collectionId: string;
 }
+
+const sendPlatformInteractionEvent = AnalyticsFactory.internalAnalytics()
+  .trackPlatformInteraction;
+const { REFERER_INACTIVE } = PlatformInteractionType;
 
 export const CollectionDetails = React.memo((props: OwnProps) => {
   const dispatch = useCallback(useDispatch(), []);
@@ -43,6 +52,9 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   const refererId = useSelector(
     (state: State) => state.authentication.refererId,
   );
+
+  const [refererIsActive, setRefererIsActive] = useState<boolean | null>(null);
+
   useEffect(() => {
     if (!collection) {
       if (isLoggedIn) {
@@ -62,6 +74,20 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   useEffect(() => {
     dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
   }, [dispatch, props]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      isUserActive(referer).then((isActive) => {
+        setRefererIsActive(isActive);
+      });
+    }
+  }, [referer, isLoggedIn]);
+
+  useEffect(() => {
+    if (refererIsActive === false) {
+      sendPlatformInteractionEvent(REFERER_INACTIVE, true);
+    }
+  }, [refererIsActive]);
 
   const digitalCitizenshipBanner = (collectionTitle) => (
     <CollectionBanner
@@ -106,6 +132,18 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
             />
           )}
         </>
+      </PageLayout>
+    );
+  }
+
+  if (!isLoggedIn && !refererIsActive) {
+    return (
+      <PageLayout showNavigation showFooter showSearchBar>
+        {refererIsActive === false ? (
+          <InactiveRefererModal resourceType="collection" />
+        ) : (
+          <LoadingComponent />
+        )}
       </PageLayout>
     );
   }
