@@ -118,6 +118,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
           }
           style={{ width: '100%' }}
           data-qa={'testing-autocomplete'}
+          listHeight={288}
         >
           <MySearch
             prefix={<img src={SearchIcon} alt="" />}
