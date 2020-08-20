@@ -8,12 +8,12 @@ interface Props {
   collectionId: string;
 }
 
-export const CollectionDetailsView = (props: Props) => {
+export const CollectionDetailsView = ({ collectionId }: Props) => {
   useRefererIdInjector();
 
   return (
     <section data-qa="collection-page">
-      <CollectionDetails collectionId={props.collectionId} />
+      <CollectionDetails collectionId={collectionId} />
     </section>
   );
 };

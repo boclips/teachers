@@ -5,15 +5,21 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const common = require('../webpack-config/webpack.common.js');
 
 module.exports = ({ config }) => {
-  const newRules = config.module.rules.reduce((acc, rule) => {
-    if (/static\/media\//.test(rule.query && rule.query.name)) {
-      return acc;
-    } else {
-      acc.push(rule);
-    }
+  // const newRules = config.module.rules.reduce((acc, rule) => {
+  //   if (/static\/media\//.test(rule.query && rule.query.name)) {
+  //     return acc;
+  //   } else {
+  //     acc.push(rule);
+  //   }
+  //
+  //   return acc;
+  // }, []);
 
-    return acc;
-  }, []);
+  const newRules = config.module.rules.map( data => {
+    if (/svg\|/.test( String( data.test ) ))
+      data.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani)(\?.*)?$/;
+    return data;
+  });
 
   return merge.smart(
     {
@@ -42,7 +48,7 @@ module.exports = ({ config }) => {
       resolve: common.resolve,
       plugins: [
         new MiniCssExtractPlugin({ filename: '[name]-[contenthash:20].css' }),
-        new CopyWebpackPlugin([{ from: './static', to: './dist' }]),
+        new CopyWebpackPlugin({patterns: [{ from: './static', to: './dist' }]}),
       ],
     },
   );

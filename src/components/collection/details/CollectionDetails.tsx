@@ -29,7 +29,8 @@ const sendPlatformInteractionEvent = AnalyticsFactory.internalAnalytics()
 const { REFERER_INACTIVE } = PlatformInteractionType;
 
 export const CollectionDetails = React.memo((props: OwnProps) => {
-  const dispatch = useCallback(useDispatch(), []);
+  const dispatch = useDispatch();
+  const memoizedDispatch = useCallback(dispatch, [dispatch]);
   const referer = useRefererIdInjector();
   const isAnonymousReferer = !referer || referer === 'anonymous';
   const collection = useSelector((state: State) =>
@@ -58,9 +59,9 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
   useEffect(() => {
     if (!collection) {
       if (isLoggedIn) {
-        dispatch(fetchCollectionAction({ id: props.collectionId }));
+        memoizedDispatch(fetchCollectionAction({ id: props.collectionId }));
       } else {
-        dispatch(
+        memoizedDispatch(
           fetchCollectionAction({
             id: props.collectionId,
             referer: refererId,
@@ -69,11 +70,13 @@ export const CollectionDetails = React.memo((props: OwnProps) => {
         );
       }
     }
-  }, [collection, dispatch, props, shareCode, refererId, isLoggedIn]);
+  }, [collection, memoizedDispatch, props, shareCode, refererId, isLoggedIn]);
 
   useEffect(() => {
-    dispatch(storeCollectionBeingViewedAction({ id: props.collectionId }));
-  }, [dispatch, props]);
+    memoizedDispatch(
+      storeCollectionBeingViewedAction({ id: props.collectionId }),
+    );
+  }, [memoizedDispatch, props]);
 
   useEffect(() => {
     if (!isLoggedIn && !isAnonymousReferer) {
