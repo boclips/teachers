@@ -39,6 +39,12 @@
     width: 100%;
     min-height: 38px;
 
+    @media (max-width: @screen-xs-max) {
+      span:nth-child(2) {
+        max-width:70%;
+      }
+    }
+
     @media (min-width: @screen-md-min) {
       .attachment-tag {
         margin-left: auto;
