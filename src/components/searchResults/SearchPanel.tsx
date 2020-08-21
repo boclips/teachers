@@ -37,7 +37,11 @@ export class SearchPanel extends React.PureComponent<
           current={currentPage}
           defaultCurrent={currentPage}
           defaultPageSize={videoResults.paging.size}
-          total={videoResults.paging.totalElements}
+          total={
+            videoResults.paging.totalElements > 500
+              ? 500
+              : videoResults.paging.totalElements
+          }
           onChange={onPageChange}
           showSizeChanger={false}
         />
