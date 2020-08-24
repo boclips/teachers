@@ -17,7 +17,7 @@ const onAuthenticationRequested = (
 ) => {
   const enableCheckLoginIframe = options.username === undefined;
   BoclipsSecurity.createInstance({
-    ...getDefaultSecurityOptions(store),
+    ...getSecurityOptions(store),
     requireLoginPage: options.requireLoginPage,
     checkLoginIframe: enableCheckLoginIframe,
     username: options.username,
@@ -30,7 +30,7 @@ const onSsoAuthenticationRequested = (
   identityProvider: string,
 ) => {
   const boclipsSecurity = BoclipsSecurity.createInstance(
-    getDefaultSecurityOptions(store),
+    getSecurityOptions(store, false),
   );
 
   boclipsSecurity.ssoLogin({
@@ -39,7 +39,10 @@ const onSsoAuthenticationRequested = (
   });
 };
 
-const getDefaultSecurityOptions = (store: Store) => ({
+const getSecurityOptions = (
+  store: Store,
+  requireLoginPage: boolean = true,
+) => ({
   onLogin: () => {
     store.dispatch(
       authenticationResolved({
@@ -57,7 +60,7 @@ const getDefaultSecurityOptions = (store: Store) => ({
   realm: 'boclips',
   clientId: 'teachers',
   authEndpoint: Constants.AUTH_ENDPOINT,
-  requireLoginPage: true,
+  requireLoginPage,
 });
 
 export default [
