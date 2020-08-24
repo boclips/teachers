@@ -19,10 +19,14 @@ export const LinkLoader = (props: Props) => {
     !links || links.loadingState === null || links.loadingState === 'loading';
 
   useEffect(() => {
+    if (!authenticationResolved) {
+      dispatch(requestAuthentication({ requireLoginPage: false }));
+    }
+  }, [authenticationResolved, dispatch]);
+
+  useEffect(() => {
     if (linksNotLoaded && authenticationResolved) {
       dispatch(fetchLinksAction());
-    } else {
-      dispatch(requestAuthentication({ requireLoginPage: false }));
     }
   }, [authenticationResolved, linksNotLoaded, dispatch]);
 
