@@ -67,7 +67,6 @@ class VideoPlayer extends React.PureComponent<
     this.player.onEnd((endOverlay: HTMLDivElement) =>
       this.handleVideoEnd(endOverlay),
     );
-    this.loadSegment();
   };
 
   private getPlayerOptions(): Partial<PlayerOptions> {
@@ -148,18 +147,6 @@ class VideoPlayer extends React.PureComponent<
     this.player.play();
   };
 
-  private loadSegment = () => {
-    if (!this.player) {
-      return;
-    }
-    if (this.props.segment.start || this.props.segment.end) {
-      this.player.loadVideo(
-        this.props.video.links.self.getOriginalLink(),
-        this.props.segment,
-      );
-    }
-  };
-
   private handleOnPlayback = (_, startSeconds: number, endSeconds: number) => {
     AnalyticsFactory.externalAnalytics().trackVideoPlayback(
       this.props.video,
@@ -194,6 +181,7 @@ class VideoPlayer extends React.PureComponent<
               playerRef={this.setPlayerRef}
               options={this.getPlayerOptions()}
               videoUri={video.links.self.getOriginalLink()}
+              segment={this.props.segment}
             />
           </div>
         </LazyLoad>

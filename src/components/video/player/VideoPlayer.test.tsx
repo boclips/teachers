@@ -101,7 +101,10 @@ describe('loading the video', () => {
     {
       message: 'no segment',
       search: '',
-      expectedArgs: [video.links.self.getOriginalLink()],
+      expectedArgs: [
+        video.links.self.getOriginalLink(),
+        { start: undefined, end: undefined },
+      ],
     },
     {
       message: 'a start segment',
@@ -155,6 +158,7 @@ it('will load a different video if the video changes', () => {
 
   expect(player.loadVideo).toHaveBeenCalledWith(
     video.links.self.getOriginalLink(),
+    {},
   );
 
   const newVideo = VideoFactory.sample({ id: 'the-new-video' });
@@ -187,6 +191,7 @@ it('will not reload the same video on props change', () => {
 
   expect(player.loadVideo).toHaveBeenCalledWith(
     constantVideo.links.self.getOriginalLink(),
+    {},
   );
 
   component.setProps({
