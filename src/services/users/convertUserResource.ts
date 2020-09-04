@@ -18,5 +18,6 @@ export default function convertUserResource(resource: any): UserProfile {
     shareCode: resource.teacherPlatformAttributes.shareCode,
     links: { self: new Link(resource._links.self) },
     role: resource.role,
+    features: resource.features,
   };
 }

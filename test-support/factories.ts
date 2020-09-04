@@ -287,6 +287,12 @@ export class UserProfileFactory {
       school: arg.school || SchoolFactory.sample(),
       shareCode: arg.shareCode || 'SH4R',
       role: arg.role || 'TEACHER',
+      features: arg.features || {
+        TEACHERS_HOME_BANNER: true,
+        TEACHERS_HOME_PROMOTED_COLLECTIONS: true,
+        TEACHERS_SUBJECTS: true,
+        TEACHERS_HOME_SUGGESTED_VIDEOS: true,
+      },
     });
   }
 }

@@ -19,8 +19,15 @@ export interface UserProfile {
   utm?: Utm;
   school?: School;
   links: UserProfileLinks;
+  features: { [key in UserFeatureKey]?: boolean };
   role: 'TEACHER' | 'PARENT' | 'SCHOOLADMIN' | 'OTHER';
 }
+
+export type UserFeatureKey =
+  | 'TEACHERS_HOME_BANNER'
+  | 'TEACHERS_HOME_SUGGESTED_VIDEOS'
+  | 'TEACHERS_HOME_PROMOTED_COLLECTIONS'
+  | 'TEACHERS_SUBJECTS';
 
 export interface UserProfileLinks {
   self: Link;

@@ -18,7 +18,7 @@ describe('when view is mounted', () => {
         profile: { href: 'https://api.example.com/v1/users/user-id' },
       },
     })
-      .fetchUser(userResponse('user-id'))
+      .fetchUser(userResponse({ id: 'user-id' }))
       .fetchCountries()
       .fetchAmericanSchools('sch', 'CA')
       .fetchTags();

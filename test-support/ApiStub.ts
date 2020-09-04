@@ -1,3 +1,4 @@
+import { UserFeatureKey } from 'src/services/users/UserProfile';
 import MockFetchVerify from './MockFetchVerify';
 import {
   collectionResponse,
@@ -164,8 +165,8 @@ export default class ApiStub {
     return this;
   }
 
-  public defaultUser() {
-    this.fetchUser(userResponse());
+  public defaultUser(features?: { [key in UserFeatureKey]?: boolean }) {
+    this.fetchUser(userResponse({ features }));
     return this;
   }
 }

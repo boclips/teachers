@@ -1,3 +1,5 @@
+import { UserFeatureKey } from 'src/services/users/UserProfile';
+
 const prefix = 'https://api.example.com';
 
 export function buildVideoSearchResponse(videos: any[], facets: any = {}) {
@@ -632,7 +634,19 @@ export function disciplinesResponse() {
   };
 }
 
-export function userResponse(id: string = 'my-user-id') {
+interface UserOptions {
+  id: string;
+  features?: { [key in UserFeatureKey]?: boolean };
+}
+
+export function userResponse(options?: Partial<UserOptions>) {
+  const id = options?.id || 'my-user-id';
+  const features = options?.features || {
+    TEACHERS_HOME_SUGGESTED_VIDEOS: true,
+    TEACHERS_SUBJECTS: true,
+    TEACHERS_HOME_PROMOTED_COLLECTIONS: true,
+    TEACHERS_HOME_BANNER: true,
+  };
   return {
     id,
     firstName: 'Bob',
@@ -646,6 +660,7 @@ export function userResponse(id: string = 'my-user-id') {
       state: { name: 'California', id: 'CA' },
       name: 'My school',
     },
+    features,
     teacherPlatformAttributes: {
       shareCode: 'BOB1',
     },

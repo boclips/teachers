@@ -57,7 +57,7 @@ describe('When user is not activated', () => {
           activate: { href: 'https://api.example.com/v1/users/user-id' },
         },
       })
-        .fetchUser(userResponse('user-id'))
+        .fetchUser(userResponse({ id: 'user-id' }))
         .fetchSchools('ES', 'school')
         .fetchCollections();
 
