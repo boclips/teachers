@@ -11,7 +11,7 @@ interface Props {
 const FeatureGate = ({ flag, children }: Props) => {
   const features = useSelector((state: State) => state.user.features);
 
-  return <>{features[flag] && children}</>;
+  return <>{features && features[flag] && children}</>;
 };
 
 export default FeatureGate;
