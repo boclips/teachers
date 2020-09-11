@@ -27,7 +27,7 @@ export const PrivacyPolicyAgreementForm = (props: Props) => {
         data-qa="privacy-policy"
         aria-required
       >
-        I have read and agree with the Boclips{' '}
+        * I have read and agree with the Boclips{' '}
         <BlankTargetLink
           className="create-account-form__checkbox-link"
           href="https://www.boclips.com/terms-and-conditions"
