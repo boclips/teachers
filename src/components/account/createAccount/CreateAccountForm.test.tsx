@@ -2,9 +2,12 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { Form } from 'antd';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
+import { requestOnboarding } from 'src/app/redux/authentication/actions/requestOnboarding';
+import eventually from 'src/../test-support/eventually';
+import { createAccount } from 'src/services/account/createAccount';
 import By from '../../../../test-support/By';
 import {
   LinksStateValueFactory,
@@ -15,6 +18,9 @@ import { requestSsoAuthentication } from '../../../app/redux/authentication/acti
 import CreateAccountForm from './CreateAccountForm';
 
 jest.mock('boclips-js-security');
+
+jest.mock('src/services/account/createAccount');
+const mockCreateAccount = createAccount as jest.Mock;
 
 describe('create account form', () => {
   let wrapper;
@@ -57,6 +63,40 @@ describe('create account form', () => {
       expect(store.getActions()).toContainEqual(
         requestSsoAuthentication('microsoft'),
       );
+    });
+  });
+
+  describe('Create account submit', () => {
+    it('dispatches request onboarding action', async () => {
+      const form = render(
+        <Provider store={store}>
+          <Router>
+            <CreateAccountForm />
+          </Router>
+        </Provider>,
+      );
+      fireEvent.change(form.getByPlaceholderText('Enter your email'), {
+        target: { value: 'test@test.com' },
+      });
+      fireEvent.change(form.getByPlaceholderText('Enter your password'), {
+        target: { value: 'Aa123456' },
+      });
+      const button = form
+        .getByText('Create account', { selector: 'span' })
+        .closest('button');
+
+      mockCreateAccount.mockReturnValue(Promise.resolve(true));
+      fireEvent.click(button);
+
+      await eventually(() => {
+        expect(store.getActions()).toContainEqual(
+          requestOnboarding({
+            requireLoginPage: true,
+            username: 'test@test.com',
+            password: 'Aa123456',
+          }),
+        );
+      });
     });
   });
 });

@@ -4,6 +4,7 @@ import { Constants } from '../../../AppConstants';
 import { sideEffect } from '../../actions';
 import { authenticationResolved } from '../actions/authenticationResolved';
 import { requestAuthentication } from '../actions/requestAuthentication';
+import { requestOnboarding } from '../actions/requestOnboarding';
 import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 
 export interface AuthenticationOptions {
@@ -15,11 +16,21 @@ const onAuthenticationRequested = (
   store: Store,
   options: AuthenticationOptions,
 ) => {
-  const enableCheckLoginIframe = options.username === undefined;
   BoclipsSecurity.createInstance({
     ...getSecurityOptions(store),
     requireLoginPage: options.requireLoginPage,
-    checkLoginIframe: enableCheckLoginIframe,
+    checkLoginIframe: true,
+  });
+};
+
+const onOnboardingRequested = (
+  store: Store,
+  options: AuthenticationOptions,
+) => {
+  BoclipsSecurity.createInstance({
+    ...getSecurityOptions(store),
+    requireLoginPage: options.requireLoginPage,
+    checkLoginIframe: false,
     username: options.username,
     password: options.password,
   });
@@ -65,5 +76,6 @@ const getSecurityOptions = (
 
 export default [
   sideEffect(requestAuthentication, onAuthenticationRequested),
+  sideEffect(requestOnboarding, onOnboardingRequested),
   sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested),
 ];

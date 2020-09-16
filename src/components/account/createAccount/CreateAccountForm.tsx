@@ -1,7 +1,7 @@
 import { Button, Col, Input, Row, Form } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
+import { requestOnboarding } from 'src/app/redux/authentication/actions/requestOnboarding';
 import GoogleSVG from '../../../../resources/images/google.svg';
 import MicrosoftSVG from '../../../../resources/images/office-365.svg';
 import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
@@ -80,7 +80,7 @@ const CreateAccountForm = () => {
 
   const onSuccessfulRegistration = (username: string, password: string) => {
     dispatch(
-      requestAuthentication({
+      requestOnboarding({
         requireLoginPage: true,
         username,
         password,

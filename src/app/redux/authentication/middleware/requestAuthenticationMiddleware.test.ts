@@ -5,6 +5,7 @@ import { mocked } from 'ts-jest/utils';
 import eventually from '../../../../../test-support/eventually';
 import { Constants } from '../../../AppConstants';
 import { requestAuthentication } from '../actions/requestAuthentication';
+import { requestOnboarding } from '../actions/requestOnboarding';
 import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 import requestAuthenticationMiddleware from './requestAuthenticationMiddleware';
 
@@ -46,12 +47,12 @@ it('requires login page when authentication is required', async () => {
   });
 });
 
-it('disable checkLoginIframe when creating instance with user details', async () => {
+it('disables checkLoginIframe when onboarding', async () => {
   const mockStore = configureStore<{}>([...requestAuthenticationMiddleware]);
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
 
-  const action = requestAuthentication({
+  const action = requestOnboarding({
     requireLoginPage: false,
     username: 'test',
     password: 'pass',
