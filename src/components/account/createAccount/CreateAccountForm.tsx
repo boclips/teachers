@@ -78,7 +78,7 @@ const CreateAccountForm = () => {
     dispatch(requestSsoAuthentication('microsoft'));
   };
 
-  const onSuccesfulRegistration = (username: string, password: string) => {
+  const onSuccessfulRegistration = (username: string, password: string) => {
     dispatch(
       requestAuthentication({
         requireLoginPage: true,
@@ -102,7 +102,7 @@ const CreateAccountForm = () => {
         setCreating(true);
         createAccount(links, values)
           .then(() => {
-            onSuccesfulRegistration(values.email, values.password);
+            onSuccessfulRegistration(values.email, values.password);
           })
           .catch((error) => {
             if (error && error.response.status === 409) {
