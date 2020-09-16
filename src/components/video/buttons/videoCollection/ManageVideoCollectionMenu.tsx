@@ -18,7 +18,7 @@ interface Props {
   onAddToCollection: (collection: VideoCollection) => void;
 }
 
-const ManageVideCollectionMenu = (
+const ManageVideoCollectionMenu = (
   props: Props & WithPageableCollectionProps,
 ) => {
   const [newCollectionTitle, setNewCollectionTitle] = React.useState<
@@ -181,4 +181,4 @@ const ManageVideCollectionMenu = (
   );
 };
 
-export default withPageableCollection<Props>(ManageVideCollectionMenu);
+export default withPageableCollection<Props>(ManageVideoCollectionMenu);
