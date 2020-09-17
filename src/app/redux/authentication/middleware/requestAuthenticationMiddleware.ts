@@ -72,8 +72,8 @@ const onSsoAuthenticationRequested = (
 };
 
 export default [
-  sideEffect(requestLogIn, onLoginRequested), // check whether the user is logged in, if not redirect to login page
-  sideEffect(requestAuthenticationCheck, onAuthenticationCheckRequested), // check whether the user is logged in and then save the answer (no redirect, this is used from public facing pages eg. video details or registration)
-  sideEffect(requestOnboarding, onOnboardingRequested), // try to authenticate the user with the username/password provided in the registration page
-  sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested), // try to authenticate the user through an idp
+  sideEffect(requestLogIn, onLoginRequested),
+  sideEffect(requestAuthenticationCheck, onAuthenticationCheckRequested),
+  sideEffect(requestOnboarding, onOnboardingRequested),
+  sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested),
 ];
