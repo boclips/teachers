@@ -31,6 +31,7 @@ import { PlatformInteractionType } from 'src/services/analytics/boclips/Platform
 import './OnboardingForm.less';
 import { OnboardingIllustration } from 'src/components/account/onboarding/OnboardingIllustration';
 import { convertFormValues } from 'src/components/account/onboarding/convertOnboardingFormValues';
+import { fetchPageableCollectionsAction } from 'src/components/collection/redux/actions/fetchPageableCollectionsAction';
 
 const getFormId = (name: keyof OnboardingFormValues): string => name;
 
@@ -69,6 +70,7 @@ export const OnboardingForm = () => {
     })
       .then(() => {
         dispatch(updateUserAction());
+        dispatch(fetchPageableCollectionsAction({ key: 'myCollections' }));
         dispatch(push('/'));
       })
       .catch((ex) => {
