@@ -4,7 +4,7 @@ import { LoadingComponent } from 'src/components/common/LoadingComponent';
 import { ErrorView } from 'src/views/error/ErrorView';
 import State from 'src/types/State';
 import { fetchLinksAction } from 'src/app/redux/links/actions/fetchLinksAction';
-import { requestAuthentication } from 'src/app/redux/authentication/actions/requestAuthentication';
+import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 
 type Props = { children: any };
 
@@ -20,7 +20,7 @@ export const LinkLoader = (props: Props) => {
 
   useEffect(() => {
     if (!authenticationResolved) {
-      dispatch(requestAuthentication({ requireLoginPage: false }));
+      dispatch(requestAuthenticationCheck());
     }
   }, [authenticationResolved, dispatch]);
 

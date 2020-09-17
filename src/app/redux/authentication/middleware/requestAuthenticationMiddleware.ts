@@ -1,23 +1,42 @@
 import BoclipsSecurity from 'boclips-js-security';
 import { Store } from 'redux';
-import { Constants } from '../../../AppConstants';
+import { Constants } from 'src/app/AppConstants';
 import { sideEffect } from '../../actions';
-import { authenticationResolved } from '../actions/authenticationResolved';
-import { requestAuthentication } from '../actions/requestAuthentication';
+import { successfulAuthentication } from '../actions/successfulAuthentication';
+import { requestLogIn } from '../actions/requestLogIn';
 import { requestOnboarding } from '../actions/requestOnboarding';
 import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
+import { AuthenticateOptions } from 'boclips-js-security/dist/BoclipsSecurity';
+import { failedAuthentication } from 'src/app/redux/authentication/actions/failedAuthentication';
+import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 
-export interface AuthenticationOptions {
-  requireLoginPage: boolean;
-}
-const onAuthenticationRequested = (
-  store: Store,
-  options: AuthenticationOptions,
-) => {
+type BoclipsSecurityBaseOptions = Pick<
+  AuthenticateOptions,
+  'realm' | 'clientId' | 'authEndpoint' | 'requireLoginPage'
+>;
+
+const defaultOptions: BoclipsSecurityBaseOptions = {
+  realm: 'boclips',
+  clientId: 'teachers',
+  authEndpoint: Constants.AUTH_ENDPOINT,
+  requireLoginPage: false,
+};
+
+const onLoginRequested = (store: Store) => {
   BoclipsSecurity.createInstance({
-    ...getSecurityOptions(store),
-    requireLoginPage: options.requireLoginPage,
-    checkLoginIframe: true,
+    ...defaultOptions,
+    onLogin: () => store.dispatch(successfulAuthentication()),
+    onFailure: () => store.dispatch(failedAuthentication()),
+    requireLoginPage: true,
+  });
+};
+
+const onAuthenticationCheckRequested = (store: Store) => {
+  BoclipsSecurity.createInstance({
+    ...defaultOptions,
+    onLogin: () => store.dispatch(successfulAuthentication()),
+    onFailure: () => store.dispatch(failedAuthentication()),
+    requireLoginPage: false,
   });
 };
 
@@ -27,8 +46,9 @@ export interface OnboardingOptions {
 }
 const onOnboardingRequested = (store: Store, options: OnboardingOptions) => {
   BoclipsSecurity.createInstance({
-    ...getSecurityOptions(store),
-    requireLoginPage: false,
+    ...defaultOptions,
+    onLogin: () => store.dispatch(successfulAuthentication()),
+    onFailure: () => store.dispatch(failedAuthentication()),
     checkLoginIframe: false,
     username: options.username,
     password: options.password,
@@ -39,9 +59,11 @@ const onSsoAuthenticationRequested = (
   store: Store,
   identityProvider: string,
 ) => {
-  const boclipsSecurity = BoclipsSecurity.createInstance(
-    getSecurityOptions(store, false),
-  );
+  const boclipsSecurity = BoclipsSecurity.createInstance({
+    ...defaultOptions,
+    onLogin: () => store.dispatch(successfulAuthentication()),
+    onFailure: () => store.dispatch(failedAuthentication()),
+  });
 
   boclipsSecurity.ssoLogin({
     idpHint: identityProvider,
@@ -49,32 +71,9 @@ const onSsoAuthenticationRequested = (
   });
 };
 
-const getSecurityOptions = (
-  store: Store,
-  requireLoginPage: boolean = true,
-) => ({
-  onLogin: () => {
-    store.dispatch(
-      authenticationResolved({
-        success: true,
-      }),
-    );
-  },
-  onFailure: () => {
-    store.dispatch(
-      authenticationResolved({
-        success: false,
-      }),
-    );
-  },
-  realm: 'boclips',
-  clientId: 'teachers',
-  authEndpoint: Constants.AUTH_ENDPOINT,
-  requireLoginPage,
-});
-
 export default [
-  sideEffect(requestAuthentication, onAuthenticationRequested),
-  sideEffect(requestOnboarding, onOnboardingRequested),
-  sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested),
+  sideEffect(requestLogIn, onLoginRequested), //check whether the user is logged in, if not redirect to login page
+  sideEffect(requestAuthenticationCheck, onAuthenticationCheckRequested), //check whether the user is logged in and then save the answer (no redirect, this is used from public facing pages eg. video details or registration)
+  sideEffect(requestOnboarding, onOnboardingRequested), //try to authenticate the user with the username/password provided in the registration page
+  sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested), //try to authenticate the user through an idp
 ];

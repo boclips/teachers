@@ -1,14 +1,13 @@
 import { storeReferrerShareCodeAction } from 'src/app/redux/authentication/actions/storeReferrerShareCodeAction';
-import { authenticationResolved } from '../actions/authenticationResolved';
+import { successfulAuthentication } from '../actions/successfulAuthentication';
 import { authenticationReducer } from './authenticationReducer';
+import { failedAuthentication } from 'src/app/redux/authentication/actions/failedAuthentication';
 
 describe('on authenticationResolved', () => {
   it('will change status to authenticated if authentication succeeds', () => {
     const resultingState = authenticationReducer(
       undefined,
-      authenticationResolved({
-        success: true,
-      }),
+      successfulAuthentication(),
     );
 
     expect(resultingState).toEqual({ status: 'authenticated' });
@@ -17,9 +16,7 @@ describe('on authenticationResolved', () => {
   it('will change status to anonymous if authentication fails', () => {
     const resultingState = authenticationReducer(
       undefined,
-      authenticationResolved({
-        success: false,
-      }),
+      failedAuthentication(),
     );
 
     expect(resultingState).toEqual({ status: 'anonymous' });

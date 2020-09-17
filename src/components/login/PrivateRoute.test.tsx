@@ -8,9 +8,9 @@ import {
   LinksFactory,
   MockStoreFactory,
 } from '../../../test-support/factories';
-import { requestAuthentication } from '../../app/redux/authentication/actions/requestAuthentication';
 import { Link } from '../../types/Link';
 import PrivateRoute from './PrivateRoute';
+import { requestLogIn } from 'src/app/redux/authentication/actions/requestLogIn';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
 
@@ -77,7 +77,7 @@ describe('conditional rendering of children', () => {
 });
 
 describe('requesting authorisation', () => {
-  it('does request authentication when component cannot be rendered', () => {
+  it('does request login when component cannot be rendered', () => {
     const store = MockStoreFactory.sample({
       authentication: { status: 'anonymous' },
     });
@@ -88,9 +88,6 @@ describe('requesting authorisation', () => {
 
     const action = store.getActions()[0];
 
-    expect(action.type).toEqual(requestAuthentication.type);
-    expect(action.payload).toEqual({
-      requireLoginPage: true,
-    });
+    expect(action.type).toEqual(requestLogIn.type);
   });
 });

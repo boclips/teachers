@@ -14,10 +14,10 @@ import { updateSearchParametersMiddleware } from '../components/searchResults/re
 import { updatePageActionMiddleware } from '../components/searchResults/redux/middleware/updatePageActionMiddleware';
 import fetchDisciplinesMiddleware from '../components/disciplines/redux/middleware/fetchDisciplinesMiddleware';
 import updateUserMiddleware from '../components/account/accountSettings/redux/middleware/updateUserMiddleware';
-import requestAuthenticationMiddleware from './redux/authentication/middleware/requestAuthenticationMiddleware';
-import onAuthenticationResolvedMiddleware from './redux/authentication/middleware/onAuthenticationResolvedMiddleware';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
 import { sentryBreadcrumbMiddleware } from './redux/sentryBreadcrumbMiddleware';
+import onAuthenticationResolvedMiddleware from 'src/app/redux/authentication/middleware/onAuthenticationResolvedMiddleware';
+import requestAuthenticationMiddleware from 'src/app/redux/authentication/middleware/requestAuthenticationMiddleware';
 
 export const createMiddleware = (history: History) => {
   const composeEnhancers =
@@ -32,7 +32,7 @@ export const createMiddleware = (history: History) => {
       ...fetchVideosMiddleware,
       fetchLinksMiddleware,
       onStoreLoginMiddleware,
-      onAuthenticationResolvedMiddleware,
+      ...onAuthenticationResolvedMiddleware,
       ...requestAuthenticationMiddleware,
       onRegisterUserForAnalytics,
       ...collectionMiddleware,

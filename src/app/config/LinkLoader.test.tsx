@@ -3,14 +3,14 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
-import { MockStoreFactory } from '../../../test-support/factories';
-import { LoadingComponent } from '../../components/common/LoadingComponent';
-import { AuthenticationStateValue, LinksStateValue } from '../../types/State';
+import { MockStoreFactory } from 'test-support/factories';
+import { LoadingComponent } from 'src/components/common/LoadingComponent';
+import { AuthenticationStateValue, LinksStateValue } from 'src/types/State';
 import { Action } from '../redux/actions';
-import { requestAuthentication } from '../redux/authentication/actions/requestAuthentication';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
-import { ErrorView } from '../../views/error/ErrorView';
+import { ErrorView } from 'src/views/error/ErrorView';
 import { LinkLoader } from './LinkLoader';
+import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
 
@@ -42,10 +42,7 @@ describe('when authentication status is undefined', () => {
 
     expect(store.getActions()).toHaveLength(1);
     const action: Action<any> = store.getActions()[0];
-    expect(action.type).toEqual(requestAuthentication.type);
-    expect(action.payload).toEqual({
-      requireLoginPage: false,
-    });
+    expect(action.type).toEqual(requestAuthenticationCheck.type);
   });
 
   it('should render the loading component', () => {

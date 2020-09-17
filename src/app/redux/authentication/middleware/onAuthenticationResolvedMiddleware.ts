@@ -5,13 +5,20 @@ import { Constants } from 'src/app/AppConstants';
 import { ApiBoclipsClient } from 'boclips-api-client';
 import { userLoggedIn } from '../../../../components/login/redux/actions/userLoggedIn';
 import { sideEffect } from '../../actions';
-import { authenticationResolved } from '../actions/authenticationResolved';
+import { successfulAuthentication } from '../actions/successfulAuthentication';
+import { failedAuthentication } from 'src/app/redux/authentication/actions/failedAuthentication';
 
-const onAuthenticationResolved = (store: Store, { success }) => {
-  if (success) {
-    store.dispatch(userLoggedIn());
-  }
+const setUpApiClient = () =>
   ApiClientWrapper.set(ApiBoclipsClient.create(axios, Constants.API_PREFIX));
+
+const onSuccesfulAuthentication = (store: Store) => {
+  store.dispatch(userLoggedIn());
+  setUpApiClient();
 };
 
-export default sideEffect(authenticationResolved, onAuthenticationResolved);
+const onFailedAuthentication = (_store: Store) => setUpApiClient();
+
+export default [
+  sideEffect(successfulAuthentication, onSuccesfulAuthentication),
+  sideEffect(failedAuthentication, onFailedAuthentication),
+];
