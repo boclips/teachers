@@ -6,11 +6,11 @@ import { Store } from 'redux';
 import { MockStoreFactory } from 'test-support/factories';
 import { LoadingComponent } from 'src/components/common/LoadingComponent';
 import { AuthenticationStateValue, LinksStateValue } from 'src/types/State';
+import { ErrorView } from 'src/views/error/ErrorView';
+import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 import { Action } from '../redux/actions';
 import { fetchLinksAction } from '../redux/links/actions/fetchLinksAction';
-import { ErrorView } from 'src/views/error/ErrorView';
 import { LinkLoader } from './LinkLoader';
-import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
 

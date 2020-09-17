@@ -1,8 +1,8 @@
 import configureStore from 'redux-mock-store';
-import { userLoggedIn } from '../../../../components/login/redux/actions/userLoggedIn';
-import { successfulAuthentication } from '../actions/successfulAuthentication';
 import { failedAuthentication } from 'src/app/redux/authentication/actions/failedAuthentication';
 import onAuthenticationResolvedMiddleware from 'src/app/redux/authentication/middleware/onAuthenticationResolvedMiddleware';
+import { userLoggedIn } from '../../../../components/login/redux/actions/userLoggedIn';
+import { successfulAuthentication } from '../actions/successfulAuthentication';
 
 it('will dispatch a user logged in action, when successful', () => {
   const mockStore = configureStore<{}>([...onAuthenticationResolvedMiddleware]);

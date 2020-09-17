@@ -1,7 +1,7 @@
 import { storeReferrerShareCodeAction } from 'src/app/redux/authentication/actions/storeReferrerShareCodeAction';
+import { failedAuthentication } from 'src/app/redux/authentication/actions/failedAuthentication';
 import { successfulAuthentication } from '../actions/successfulAuthentication';
 import { authenticationReducer } from './authenticationReducer';
-import { failedAuthentication } from 'src/app/redux/authentication/actions/failedAuthentication';
 
 describe('on authenticationResolved', () => {
   it('will change status to authenticated if authentication succeeds', () => {

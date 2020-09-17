@@ -1,6 +1,8 @@
 import { applyMiddleware, compose } from 'redux';
 import { History } from 'history';
 import { routerMiddleware } from 'connected-react-router';
+import onAuthenticationResolvedMiddleware from 'src/app/redux/authentication/middleware/onAuthenticationResolvedMiddleware';
+import requestAuthenticationMiddleware from 'src/app/redux/authentication/middleware/requestAuthenticationMiddleware';
 import searchMiddleware from '../components/searchBar/redux/middleware/searchMiddleware';
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
@@ -16,8 +18,6 @@ import fetchDisciplinesMiddleware from '../components/disciplines/redux/middlewa
 import updateUserMiddleware from '../components/account/accountSettings/redux/middleware/updateUserMiddleware';
 import fetchLinksMiddleware from './redux/links/middleware/fetchLinksMiddleware';
 import { sentryBreadcrumbMiddleware } from './redux/sentryBreadcrumbMiddleware';
-import onAuthenticationResolvedMiddleware from 'src/app/redux/authentication/middleware/onAuthenticationResolvedMiddleware';
-import requestAuthenticationMiddleware from 'src/app/redux/authentication/middleware/requestAuthenticationMiddleware';
 
 export const createMiddleware = (history: History) => {
   const composeEnhancers =

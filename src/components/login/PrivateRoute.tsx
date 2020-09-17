@@ -9,8 +9,8 @@ import {
 import { Dispatch } from 'redux';
 import { push } from 'connected-react-router';
 import { AuthenticationState, LinksState, UserState } from 'src/types/State';
-import { LoadingComponent } from '../common/LoadingComponent';
 import { requestLogIn } from 'src/app/redux/authentication/actions/requestLogIn';
+import { LoadingComponent } from '../common/LoadingComponent';
 
 export interface PrivateRouteComponentParams<TParams>
   extends RouteComponentProps<any> {
