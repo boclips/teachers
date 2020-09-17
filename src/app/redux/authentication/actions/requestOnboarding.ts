@@ -1,6 +1,6 @@
-import { AuthenticationOptions } from 'src/app/redux/authentication/middleware/requestAuthenticationMiddleware';
+import { OnboardingOptions } from 'src/app/redux/authentication/middleware/requestAuthenticationMiddleware';
 import { actionCreatorFactory } from '../../actions';
 
-export const requestOnboarding = actionCreatorFactory<AuthenticationOptions>(
+export const requestOnboarding = actionCreatorFactory<OnboardingOptions>(
   'REQUEST_ONBOARDING',
 );

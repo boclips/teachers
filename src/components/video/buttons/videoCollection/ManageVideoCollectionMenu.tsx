@@ -159,23 +159,23 @@ const ManageVideoCollectionMenu = (
             </Button>
           </section>
         ) : (
-            <section
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) =>
-                e.keyCode === 13 ? setCreateCollectionVisible(true) : null
-              }
-              data-qa="create-collection"
-              className="manage-video-collection-button__create-collection"
-              onClick={() => setCreateCollectionVisible(true)}
-            >
-              <span className="manage-video-collection-button__create-collection-icon">
-                <Icon component={AddSVG} />
-              </span>
+          <section
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) =>
+              e.keyCode === 13 ? setCreateCollectionVisible(true) : null
+            }
+            data-qa="create-collection"
+            className="manage-video-collection-button__create-collection"
+            onClick={() => setCreateCollectionVisible(true)}
+          >
+            <span className="manage-video-collection-button__create-collection-icon">
+              <Icon component={AddSVG} />
+            </span>
 
-              <span>New video collection</span>
-            </section>
-          )}
+            <span>New video collection</span>
+          </section>
+        )}
       </div>
     </>
   );

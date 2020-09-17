@@ -81,7 +81,6 @@ const CreateAccountForm = () => {
   const onSuccessfulRegistration = (username: string, password: string) => {
     dispatch(
       requestOnboarding({
-        requireLoginPage: true,
         username,
         password,
       }),

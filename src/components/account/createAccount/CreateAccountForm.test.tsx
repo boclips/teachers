@@ -91,7 +91,6 @@ describe('create account form', () => {
       await eventually(() => {
         expect(store.getActions()).toContainEqual(
           requestOnboarding({
-            requireLoginPage: true,
             username: 'test@test.com',
             password: 'Aa123456',
           }),

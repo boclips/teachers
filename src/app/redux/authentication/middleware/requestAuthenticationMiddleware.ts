@@ -9,8 +9,6 @@ import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 
 export interface AuthenticationOptions {
   requireLoginPage: boolean;
-  username?: string;
-  password?: string;
 }
 const onAuthenticationRequested = (
   store: Store,
@@ -23,13 +21,14 @@ const onAuthenticationRequested = (
   });
 };
 
-const onOnboardingRequested = (
-  store: Store,
-  options: AuthenticationOptions,
-) => {
+export interface OnboardingOptions {
+  username: string;
+  password: string;
+}
+const onOnboardingRequested = (store: Store, options: OnboardingOptions) => {
   BoclipsSecurity.createInstance({
     ...getSecurityOptions(store),
-    requireLoginPage: options.requireLoginPage,
+    requireLoginPage: false,
     checkLoginIframe: false,
     username: options.username,
     password: options.password,

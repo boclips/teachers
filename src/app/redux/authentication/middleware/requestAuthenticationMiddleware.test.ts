@@ -53,7 +53,6 @@ it('disables checkLoginIframe when onboarding', async () => {
   const createInstance = mocked(BoclipsSecurity.createInstance);
 
   const action = requestOnboarding({
-    requireLoginPage: false,
     username: 'test',
     password: 'pass',
   });
