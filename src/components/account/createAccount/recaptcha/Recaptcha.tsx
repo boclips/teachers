@@ -20,11 +20,12 @@ export class Recaptcha extends React.Component<Props> {
   }
 
   public render() {
+    const { verifyCallback } = this.props;
     return (
       <ReCaptcha
         sitekey={this.siteKey}
         action="registration"
-        verifyCallback={this.props.verifyCallback}
+        verifyCallback={verifyCallback}
       />
     );
   }

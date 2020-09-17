@@ -24,6 +24,7 @@ interface Props {
 }
 
 export const EditProfileForm = (props: Props) => {
+  const { userProfile, links, toggleForm } = props;
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [screenReaderErrors, setScreenReaderErrors] = useState<
@@ -35,7 +36,7 @@ export const EditProfileForm = (props: Props) => {
       AgeRange.fromJson(it),
     );
     const ages = extractContainedAges(ageRanges);
-    editUser(props.links, {
+    editUser(links, {
       firstName: values.firstName,
       lastName: values.lastName,
       ages,
@@ -43,7 +44,7 @@ export const EditProfileForm = (props: Props) => {
     })
       .then(() => {
         dispatch(updateUserAction());
-        props.toggleForm();
+        toggleForm();
       })
       .catch((ex) => {
         console.error(ex);
@@ -66,9 +67,9 @@ export const EditProfileForm = (props: Props) => {
       onFinish={submit}
       onFinishFailed={validationFailed}
       initialValues={{
-        firstName: props.userProfile.firstName,
-        lastName: props.userProfile.lastName,
-        subjects: props.userProfile.subjects,
+        firstName: userProfile.firstName,
+        lastName: userProfile.lastName,
+        subjects: userProfile.subjects,
       }}
     >
       {screenReaderErrors && <ScreenReaderErrors errors={screenReaderErrors} />}
@@ -82,14 +83,14 @@ export const EditProfileForm = (props: Props) => {
 
       <AgeRangeForm
         formItemId="ageRange"
-        initialValue={props.userProfile.ages}
+        initialValue={userProfile.ages}
         label="Age groups"
       />
       <section className="buttons">
         <Button
           data-qa="cancel-edit-button"
           type="ghost"
-          onClick={props.toggleForm}
+          onClick={toggleForm}
           size="large"
         >
           Cancel

@@ -24,23 +24,24 @@ interface Props {
 }
 
 export const EditSchoolSettingsForm = (props: Props) => {
+  const { userProfile, country, links, toggleForm } = props;
   const [screenReaderErrors, setScreenReaderErrors] = useState<
     ScreenReaderError[]
   >([]);
-  const [usaState, setUsaState] = useState<UsaState>(props.userProfile.state);
+  const [usaState, setUsaState] = useState<UsaState>(userProfile.state);
 
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   const submit = (values) => {
-    editUser(props.links, {
+    editUser(links, {
       state: values.state,
       schoolName: values.schoolName,
       schoolId: values.schoolId === UNKNOWN_SCHOOL ? null : values.schoolId,
     })
       .then(() => {
         dispatch(updateUserAction());
-        props.toggleForm();
+        toggleForm();
       })
       .catch((ex) => {
         console.error(ex);
@@ -71,22 +72,22 @@ export const EditSchoolSettingsForm = (props: Props) => {
       onFinish={submit}
       onFinishFailed={validationFailed}
       initialValues={{
-        state: props.userProfile.state.id,
-        schoolName: props.userProfile.school.name,
-        schoolId: props.userProfile.school.name,
+        state: userProfile.state.id,
+        schoolName: userProfile.school.name,
+        schoolId: userProfile.school.name,
       }}
     >
       {screenReaderErrors && <ScreenReaderErrors errors={screenReaderErrors} />}
       <section>
         <StatesForm
           formItemId="state"
-          states={props.country.states}
+          states={country.states}
           onChange={changeUsaState}
         />
 
         <SchoolForm
           formItemId="schoolId"
-          country={props.country}
+          country={country}
           state={usaState}
           allowUnknownSchools={false}
         />
@@ -95,7 +96,7 @@ export const EditSchoolSettingsForm = (props: Props) => {
         <Button
           data-qa="cancel-edit-button"
           type="ghost"
-          onClick={props.toggleForm}
+          onClick={toggleForm}
           size="large"
         >
           Cancel

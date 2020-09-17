@@ -8,24 +8,30 @@ interface Props {
   initialLastName?: string;
 }
 export const NameForm = (props: Props) => {
+  const {
+    firstNameFormItemId,
+    lastNameFormItemId,
+    initialFirstName,
+    initialLastName,
+  } = props;
   return (
     <section>
       <NameInputItem
-        name={props.firstNameFormItemId}
+        name={firstNameFormItemId}
         label="First name"
         validationMessage="Please enter your first name"
         placeholder="Enter first name"
         inputClass="required name-form__item"
-        initialValue={props.initialFirstName}
+        initialValue={initialFirstName}
       />
 
       <NameInputItem
-        name={props.lastNameFormItemId}
+        name={lastNameFormItemId}
         label="Last name"
         validationMessage="Please enter your last name"
         placeholder="Enter last name"
         inputClass="required name-form__item"
-        initialValue={props.initialLastName}
+        initialValue={initialLastName}
       />
     </section>
   );
@@ -39,25 +45,32 @@ interface NameInputItemProps {
   inputClass: string;
   initialValue?: string;
 }
-const NameInputItem = (props: NameInputItemProps) => (
+const NameInputItem = ({
+  name,
+  label,
+  initialValue,
+  validationMessage,
+  placeholder,
+  inputClass,
+}: NameInputItemProps) => (
   <Form.Item
-    name={props.name}
-    initialValue={props.initialValue}
+    name={name}
+    initialValue={initialValue}
     className="required name-form__item"
-    label={props.label}
+    label={label}
     required
     colon={false}
     rules={[
       {
         required: true,
-        message: props.validationMessage,
+        message: validationMessage,
       },
     ]}
   >
     <Input
       size="large"
-      placeholder={props.placeholder}
-      className={props.inputClass}
+      placeholder={placeholder}
+      className={inputClass}
       aria-required
     />
   </Form.Item>

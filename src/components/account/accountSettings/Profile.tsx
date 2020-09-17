@@ -13,26 +13,32 @@ interface Props {
   onEdit: () => void;
 }
 
-export const Profile = (props: Props) => {
+export const Profile = ({
+  firstName,
+  lastName,
+  ages,
+  subjects,
+  onEdit,
+}: Props) => {
   return (
     <section data-qa="current-profile">
       <Row>
         <Col xs={{ span: 24 }}>
           <section className="account-settings__section-header">
             <h1 className="alt account-settings__title">Profile</h1>
-            <EditButton data-qa="profile-edit-button" onClick={props.onEdit} />
+            <EditButton data-qa="profile-edit-button" onClick={onEdit} />
           </section>
         </Col>
       </Row>
       <AccountSettingsItem label="Name">
         <span data-qa="profile-name">
-          {props.firstName} {props.lastName}
+          {firstName} {lastName}
         </span>
       </AccountSettingsItem>
 
       <AccountSettingsItem label="Subjects">
         <span data-qa="profile-subjects">
-          {props.subjects.map((subject) => (
+          {subjects.map((subject) => (
             <ConnectedSubjectTag id={subject} key={subject} hideLabel />
           ))}
         </span>
@@ -40,7 +46,7 @@ export const Profile = (props: Props) => {
 
       <AccountSettingsItem label="Age groups">
         <span data-qa="profile-age-ranges">
-          <AgeRangeTags ageRanges={props.ages} hideLabel />
+          <AgeRangeTags ageRanges={ages} hideLabel />
         </span>
       </AccountSettingsItem>
     </section>

@@ -11,6 +11,7 @@ interface Props {
 
 class SchoolSettings extends React.PureComponent<Props> {
   public render() {
+    const { state, school, onEdit } = this.props;
     return (
       <section data-qa="school-settings">
         <Row>
@@ -19,17 +20,17 @@ class SchoolSettings extends React.PureComponent<Props> {
               <h1 className="alt account-settings__title">School</h1>
               <EditButton
                 data-qa="school-settings-edit-button"
-                onClick={this.props.onEdit}
+                onClick={onEdit}
               />
             </section>
           </Col>
         </Row>
         <AccountSettingsItem label="State">
-          <span data-qa="state-name">{this.props.state}</span>
+          <span data-qa="state-name">{state}</span>
         </AccountSettingsItem>
 
         <AccountSettingsItem label="School">
-          <span data-qa="school-name">{this.props.school}</span>
+          <span data-qa="school-name">{school}</span>
         </AccountSettingsItem>
       </section>
     );
