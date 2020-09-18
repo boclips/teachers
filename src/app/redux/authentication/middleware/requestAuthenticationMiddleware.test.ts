@@ -1,14 +1,14 @@
 import configureStore from 'redux-mock-store';
 import { mocked } from 'ts-jest/utils';
 import BoclipsSecurity from 'boclips-js-security';
-import { requestLogIn } from 'src/app/redux/authentication/actions/requestLogIn';
 import eventually from 'test-support/eventually';
-import { requestOnboarding } from 'src/app/redux/authentication/actions/requestOnboarding';
 import { BoclipsKeycloakSecurity } from 'boclips-js-security/dist/BoclipsKeycloakSecurity';
 import { requestSsoAuthentication } from 'src/app/redux/authentication/actions/requestSsoAuthentication';
 import { Constants } from 'src/app/AppConstants';
 import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 import requestAuthenticationMiddleware from 'src/app/redux/authentication/middleware/requestAuthenticationMiddleware';
+import { authenticationRequiredFirstTime } from 'src/app/redux/authentication/actions/authenticationRequiredFirstTime';
+import { authenticationRequired } from 'src/app/redux/authentication/actions/authenticationRequired';
 
 jest.mock('boclips-js-security');
 
@@ -35,7 +35,7 @@ it('requires login page when authentication is required', async () => {
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
 
-  const action = requestLogIn();
+  const action = authenticationRequired();
 
   store.dispatch(action);
 
@@ -53,7 +53,7 @@ it('disables checkLoginIframe when onboarding', async () => {
   const store = mockStore({});
   const createInstance = mocked(BoclipsSecurity.createInstance);
 
-  const action = requestOnboarding({
+  const action = authenticationRequiredFirstTime({
     username: 'test',
     password: 'pass',
   });

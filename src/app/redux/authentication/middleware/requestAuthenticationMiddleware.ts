@@ -6,64 +6,49 @@ import { failedAuthentication } from 'src/app/redux/authentication/actions/faile
 import { requestAuthenticationCheck } from 'src/app/redux/authentication/actions/requestAuthenticationCheck';
 import { sideEffect } from '../../actions';
 import { successfulAuthentication } from '../actions/successfulAuthentication';
-import { requestLogIn } from '../actions/requestLogIn';
-import { requestOnboarding } from '../actions/requestOnboarding';
+import { authenticationRequired } from '../actions/authenticationRequired';
+import { authenticationRequiredFirstTime } from '../actions/authenticationRequiredFirstTime';
 import { requestSsoAuthentication } from '../actions/requestSsoAuthentication';
 
-type BoclipsSecurityBaseOptions = Pick<
-  AuthenticateOptions,
-  'realm' | 'clientId' | 'authEndpoint' | 'requireLoginPage'
->;
-
-const defaultOptions: BoclipsSecurityBaseOptions = {
-  realm: 'boclips',
-  clientId: 'teachers',
-  authEndpoint: Constants.AUTH_ENDPOINT,
-  requireLoginPage: false,
-};
-
-const onLoginRequested = (store: Store) => {
+const createBoclipsSecurityInstance = (
+  store: Store,
+  customOptions?: Partial<AuthenticateOptions>,
+) =>
   BoclipsSecurity.createInstance({
-    ...defaultOptions,
-    onLogin: () => store.dispatch(successfulAuthentication()),
-    onFailure: () => store.dispatch(failedAuthentication()),
-    requireLoginPage: true,
-  });
-};
-
-const onAuthenticationCheckRequested = (store: Store) => {
-  BoclipsSecurity.createInstance({
-    ...defaultOptions,
-    onLogin: () => store.dispatch(successfulAuthentication()),
-    onFailure: () => store.dispatch(failedAuthentication()),
+    realm: 'boclips',
+    clientId: 'teachers',
+    authEndpoint: Constants.AUTH_ENDPOINT,
     requireLoginPage: false,
+    onLogin: () => store.dispatch(successfulAuthentication()),
+    onFailure: () => store.dispatch(failedAuthentication()),
+    ...customOptions,
   });
-};
 
-export interface OnboardingOptions {
+const onAuthenticationRequired = (store: Store) =>
+  createBoclipsSecurityInstance(store, { requireLoginPage: true });
+
+const onAuthenticationCheckRequested = (store: Store) =>
+  createBoclipsSecurityInstance(store);
+
+export interface SignUpOptions {
   username: string;
   password: string;
 }
-const onOnboardingRequested = (store: Store, options: OnboardingOptions) => {
-  BoclipsSecurity.createInstance({
-    ...defaultOptions,
-    onLogin: () => store.dispatch(successfulAuthentication()),
-    onFailure: () => store.dispatch(failedAuthentication()),
+const onAuthenticationRequiredFirstTime = (
+  store: Store,
+  options: SignUpOptions,
+) =>
+  createBoclipsSecurityInstance(store, {
     checkLoginIframe: false,
     username: options.username,
     password: options.password,
   });
-};
 
 const onSsoAuthenticationRequested = (
   store: Store,
   identityProvider: string,
 ) => {
-  const boclipsSecurity = BoclipsSecurity.createInstance({
-    ...defaultOptions,
-    onLogin: () => store.dispatch(successfulAuthentication()),
-    onFailure: () => store.dispatch(failedAuthentication()),
-  });
+  const boclipsSecurity = createBoclipsSecurityInstance(store);
 
   boclipsSecurity.ssoLogin({
     idpHint: identityProvider,
@@ -72,8 +57,11 @@ const onSsoAuthenticationRequested = (
 };
 
 export default [
-  sideEffect(requestLogIn, onLoginRequested),
+  sideEffect(authenticationRequired, onAuthenticationRequired),
+  sideEffect(
+    authenticationRequiredFirstTime,
+    onAuthenticationRequiredFirstTime,
+  ),
   sideEffect(requestAuthenticationCheck, onAuthenticationCheckRequested),
-  sideEffect(requestOnboarding, onOnboardingRequested),
   sideEffect(requestSsoAuthentication, onSsoAuthenticationRequested),
 ];

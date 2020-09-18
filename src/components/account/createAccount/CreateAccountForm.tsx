@@ -1,16 +1,16 @@
 import { Button, Col, Input, Row, Form } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestOnboarding } from 'src/app/redux/authentication/actions/requestOnboarding';
-import GoogleSVG from '../../../../resources/images/google.svg';
-import MicrosoftSVG from '../../../../resources/images/office-365.svg';
-import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
+import { authenticationRequiredFirstTime } from 'src/app/redux/authentication/actions/authenticationRequiredFirstTime';
+import { requestSsoAuthentication } from 'src/app/redux/authentication/actions/requestSsoAuthentication';
 import {
   createAccount,
   CreateAccountRequest,
-} from '../../../services/account/createAccount';
-import { RegistrationContext } from '../../../services/session/RegistrationContext';
-import { RegistrationContextService } from '../../../services/session/RegistrationContextService';
+} from 'src/services/account/createAccount';
+import { RegistrationContext } from 'src/services/session/RegistrationContext';
+import { RegistrationContextService } from 'src/services/session/RegistrationContextService';
+import MicrosoftSVG from '../../../../resources/images/office-365.svg';
+import GoogleSVG from '../../../../resources/images/google.svg';
 import State from '../../../types/State';
 import {
   ScreenReaderError,
@@ -80,7 +80,7 @@ const CreateAccountForm = () => {
 
   const onSuccessfulRegistration = (username: string, password: string) => {
     dispatch(
-      requestOnboarding({
+      authenticationRequiredFirstTime({
         username,
         password,
       }),

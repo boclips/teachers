@@ -9,7 +9,7 @@ import {
 import { Dispatch } from 'redux';
 import { push } from 'connected-react-router';
 import { AuthenticationState, LinksState, UserState } from 'src/types/State';
-import { requestLogIn } from 'src/app/redux/authentication/actions/requestLogIn';
+import { authenticationRequired } from 'src/app/redux/authentication/actions/authenticationRequired';
 import { LoadingComponent } from '../common/LoadingComponent';
 
 export interface PrivateRouteComponentParams<TParams>
@@ -106,7 +106,7 @@ function mapStateToProps(
 function mapDispatchToProps(dispatch: Dispatch): DispatchProps {
   return {
     logIn: () => {
-      dispatch(requestLogIn());
+      dispatch(authenticationRequired());
     },
     redirectToAccessRenewalPage: () => {
       dispatch(push('/trial-expired'));

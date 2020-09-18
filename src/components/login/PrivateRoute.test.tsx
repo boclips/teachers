@@ -4,12 +4,9 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { Store } from 'redux';
 import { push } from 'connected-react-router';
-import { requestLogIn } from 'src/app/redux/authentication/actions/requestLogIn';
-import {
-  LinksFactory,
-  MockStoreFactory,
-} from '../../../test-support/factories';
-import { Link } from '../../types/Link';
+import { LinksFactory, MockStoreFactory } from 'test-support/factories';
+import { Link } from 'src/types/Link';
+import { authenticationRequired } from 'src/app/redux/authentication/actions/authenticationRequired';
 import PrivateRoute from './PrivateRoute';
 
 const ChildComponent = () => <span data-qa="restricted-content" />;
@@ -88,6 +85,6 @@ describe('requesting authorisation', () => {
 
     const action = store.getActions()[0];
 
-    expect(action.type).toEqual(requestLogIn.type);
+    expect(action.type).toEqual(authenticationRequired.type);
   });
 });

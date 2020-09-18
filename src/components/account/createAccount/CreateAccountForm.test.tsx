@@ -5,16 +5,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent, render } from '@testing-library/react';
 import { Form } from 'antd';
 import { renderWithBoclipsStore } from 'test-support/renderWithStore';
-import { requestOnboarding } from 'src/app/redux/authentication/actions/requestOnboarding';
 import eventually from 'src/../test-support/eventually';
 import { createAccount } from 'src/services/account/createAccount';
-import By from '../../../../test-support/By';
+import { authenticationRequiredFirstTime } from 'src/app/redux/authentication/actions/authenticationRequiredFirstTime';
 import {
   LinksStateValueFactory,
   MockStoreFactory,
   RouterFactory,
-} from '../../../../test-support/factories';
-import { requestSsoAuthentication } from '../../../app/redux/authentication/actions/requestSsoAuthentication';
+} from 'test-support/factories';
+import { requestSsoAuthentication } from 'src/app/redux/authentication/actions/requestSsoAuthentication';
+import By from '../../../../test-support/By';
 import CreateAccountForm from './CreateAccountForm';
 
 jest.mock('boclips-js-security');
@@ -90,7 +90,7 @@ describe('create account form', () => {
 
       await eventually(() => {
         expect(store.getActions()).toContainEqual(
-          requestOnboarding({
+          authenticationRequiredFirstTime({
             username: 'test@test.com',
             password: 'Aa123456',
           }),
