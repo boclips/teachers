@@ -51,4 +51,4 @@ class App extends PureComponent<Props> {
   }
 }
 
-export default hot(App);
+export default App;

@@ -19,7 +19,8 @@
     "lint:eslint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "lint:prettier": "prettier --config .prettierrc --check \"**/*.{ts,tsx}\"",
     "lint:prettier:fix": "prettier --config .prettierrc --write \"**/*.{ts,tsx}\"",
-    "storybook": "start-storybook -s ./ --port 9090"
+    "storybook": "start-storybook -s ./ --port 9090",
+    "cy": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -73,6 +74,8 @@
     "copy-webpack-plugin": "^6.0.3",
     "core-js": "^3.6.5",
     "css-loader": "^4.2.1",
+    "cypress": "^5.2.0",
+    "cypress-react-unit-test": "^4.14.1",
     "dotenv": "^8.2.0",
     "dynamic-cdn-webpack-plugin": "^5.0.0",
     "enzyme": "^3.11.0",

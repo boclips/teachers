@@ -9,15 +9,8 @@ const distPath = path.resolve(__dirname, '../dist');
 const staticPath = path.resolve(__dirname, '../static');
 
 module.exports = {
-  stats: {
-    children: false,
-  },
-  entry: ['react-hot-loader/patch', srcPath],
-  output: {
-    path: distPath,
-    filename: '[name]-[hash:20].js',
-    publicPath: '/',
-  },
+  mode: 'development',
+  devtool: 'eval-source-map',
   // Allows ts(x) and js files to be imported without extension
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -95,14 +88,6 @@ module.exports = {
         exclude: /node_modules/,
         oneOf: [
           {
-            loader: 'file-loader',
-            resourceQuery: /inline/,
-          },
-          {
-            loader: 'image-webpack-loader',
-            resourceQuery: /inline/,
-          },
-          {
             loader: 'svg-react-loader',
             options: {
               props: {
@@ -111,15 +96,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.(gif|png|jpe?g)$/i,
-        use: ['file-loader', 'image-webpack-loader'],
-      },
-      {
-        test: /\.svg$/i,
-        include: /node_modules/,
-        use: ['file-loader', 'image-webpack-loader'],
       },
     ],
   },
