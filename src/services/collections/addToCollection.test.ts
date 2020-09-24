@@ -40,3 +40,14 @@ test('client error when adding to collection', async () => {
 
   expect(success).toEqual(false);
 });
+
+test('no add to collection link when trying to addto collection', async () => {
+  const collectionWithoutLinks = VideoCollectionFactory.sample({
+    links: null,
+  });
+  MockFetchVerify.put('/v1/collections/default/videos/123', '', 404);
+
+  const success = await addToCollection(video, collectionWithoutLinks);
+
+  expect(success).toEqual(false);
+});
