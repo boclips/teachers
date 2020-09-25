@@ -1,0 +1,26 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: node
+    tag: '12-buster'
+
+inputs:
+  - name: source
+  - name: version
+
+params:
+  BIT_TOKEN:
+
+outputs:
+  - name: dist
+
+run:
+  path: pipeline/scripts/build-dependabot.sh
+  dir: source
+
+caches:
+  - path: ../../../../root/.cache
+  - path: ../../../../root/.npm
