@@ -9,4 +9,4 @@ npm -v
 npm ci
 npm run build:ci
 
-cp -R application.conf dist/ Dockerfile ../dist/ 12312
+cp -R application.conf dist/ Dockerfile ../dist/ 12312213
