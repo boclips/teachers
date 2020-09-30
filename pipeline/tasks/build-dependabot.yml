@@ -13,6 +13,7 @@ inputs:
 
 params:
   BIT_TOKEN:
+  GITHUB_TOKEN:
 
 outputs:
   - name: dist

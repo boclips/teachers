@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
-set -x -e
+set -e
 
-SENTRY_RELEASE="teachers-$(cat ../version/tag)"
+if [ -e ../version/tag ]
+then
+  TAG=$(cat ../version/tag)
+else
+  TAG="dependabot"
+fi
+
+SENTRY_RELEASE="teachers-${TAG}"
 export SENTRY_RELEASE
 
 npm -v
