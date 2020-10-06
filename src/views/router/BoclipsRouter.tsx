@@ -6,7 +6,6 @@ import { Route, RouteComponentProps, Switch } from 'react-router';
 import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
 import { Constants } from 'src/app/AppConstants';
 import { RouterState } from 'src/types/State';
-import { Bit } from 'src/views/bit';
 import SubjectSearchView from 'src/views/collection/SubjectSearchView';
 import PrivateRoute from '../../components/login/PrivateRoute';
 import AnalyticsFactory from '../../services/analytics/AnalyticsFactory';
@@ -88,7 +87,6 @@ class BoclipsRouter extends Component<Props & StateProps> {
             <Route path="/error" component={ErrorView} />
             <Route path="/trial-expired" component={TrialExpiredView} />
             <Route path="/create-account" component={CreateAccountView} />
-            <Route path="/bit" component={Bit} />
             <Route path="/videos">
               <Switch>
                 <Route path="/videos/:videoId" component={videoDetailsView} />

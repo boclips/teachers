@@ -155,12 +155,5 @@
     "redux": "^4.0.5",
     "urijs": "^1.19.2",
     "use-force-update": "^1.0.7"
-  },
-  "bit": {
-    "env": {
-      "compiler": "boclips.compilers/compiler@2.0.6"
-    },
-    "componentsDefaultDirectory": "src/bits/{name}",
-    "packageManager": "npm"
   }
 }
