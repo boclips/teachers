@@ -22,7 +22,7 @@ export const ShareCode = React.memo((props: Props) => (
         </section>
       </section>
 
-      <Col xs={4} xl={8}>
+      <Col xs={4} xl={8} className="account-settings__sharecode-wrapper">
         <span className="account-settings__sharecode" data-qa="share-code">
           {props.shareCode}
         </span>
