@@ -26,32 +26,37 @@ AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
 const mockFetchUser = fetchUser as Mock;
 
+const mountWrapperWithAmericanTeacher = (userDataHidden: boolean = false) => {
+  return mount(
+    <Provider
+      store={MockStoreFactory.sample({
+        countries: [
+          CountryFactory.sample({ id: 'ES', name: 'Spain' }),
+          CountryFactory.sample({ id: 'UK', name: 'England' }),
+          CountryFactory.sample({
+            id: 'USA',
+            name: 'United States',
+            states: [{ id: 'state-1', name: 'State 1' }],
+          }),
+        ],
+        user: UserProfileFactory.sample({
+          country: { name: 'United States', id: 'USA' },
+          state: { name: 'State 1', id: 'state-1' },
+          shareCode: 'GR47',
+          features: { USER_DATA_HIDDEN: userDataHidden },
+        }),
+      })}
+    >
+      <AccountSettings />
+    </Provider>,
+  );
+};
+
 describe('account settings form', () => {
   let wrapperWithAmericanTeacher;
   beforeEach(() => {
     mockFetchUser.mockReturnValue(Promise.resolve());
-    wrapperWithAmericanTeacher = mount(
-      <Provider
-        store={MockStoreFactory.sample({
-          countries: [
-            CountryFactory.sample({ id: 'ES', name: 'Spain' }),
-            CountryFactory.sample({ id: 'UK', name: 'England' }),
-            CountryFactory.sample({
-              id: 'USA',
-              name: 'United States',
-              states: [{ id: 'state-1', name: 'State 1' }],
-            }),
-          ],
-          user: UserProfileFactory.sample({
-            country: { name: 'United States', id: 'USA' },
-            state: { name: 'State 1', id: 'state-1' },
-            shareCode: 'GR47',
-          }),
-        })}
-      >
-        <AccountSettings />
-      </Provider>,
-    );
+    wrapperWithAmericanTeacher = mountWrapperWithAmericanTeacher();
   });
 
   it('renders the page with existing first and last name populated', () => {
@@ -87,6 +92,13 @@ describe('account settings form', () => {
       .find(ShareCode)
       .find(By.dataQa('share-code'));
     expect(shareCodeComponent.text()).toEqual('GR47');
+  });
+
+  it('does not render the personal data when USER_DATA_HIDDEN feature set', () => {
+    const wrapper = mountWrapperWithAmericanTeacher(true);
+
+    expect(wrapper.find(By.dataQa('current-profile'))).not.toExist();
+    expect(wrapper.find(By.dataQa('school-settings'))).not.toExist();
   });
 
   describe('school settings', () => {

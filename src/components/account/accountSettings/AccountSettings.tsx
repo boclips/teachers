@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { ShareCode } from 'src/components/account/accountSettings/ShareCode';
+import FeatureGate from 'src/components/common/featuresFlags/FeatureGate';
 import { UserProfile } from '../../../services/users/UserProfile';
 import { Country } from '../../../types/Country';
 import { Links } from '../../../types/Links';
@@ -80,23 +81,27 @@ class AccountSettings extends React.Component<
           <section>
             <h1 className="extra-big">Settings</h1>
             <ShareCode shareCode={this.props.userProfile.shareCode} />
-            <Profile
-              firstName={this.props.userProfile.firstName}
-              onEdit={this.toggleEditProfileForm}
-              ages={this.props.userProfile.ages}
-              lastName={this.props.userProfile.lastName}
-              subjects={this.props.userProfile.subjects}
-            />
-            {this.isUserAmerican() && (
-              <>
-                <hr className="account-settings__divider" />
-                <SchoolSettings
-                  school={this.props.userProfile.school.name}
-                  state={this.props.userProfile.state.name}
-                  onEdit={this.toggleSchoolSettingsForm}
+            <FeatureGate flag="USER_DATA_HIDDEN" featureAvailableValue={false}>
+              <div className="personal-data-settings">
+                <Profile
+                  firstName={this.props.userProfile.firstName}
+                  onEdit={this.toggleEditProfileForm}
+                  ages={this.props.userProfile.ages}
+                  lastName={this.props.userProfile.lastName}
+                  subjects={this.props.userProfile.subjects}
                 />
-              </>
-            )}
+                {this.isUserAmerican() && (
+                  <>
+                    <hr className="account-settings__divider" />
+                    <SchoolSettings
+                      school={this.props.userProfile.school.name}
+                      state={this.props.userProfile.state.name}
+                      onEdit={this.toggleSchoolSettingsForm}
+                    />
+                  </>
+                )}
+              </div>
+            </FeatureGate>
           </section>
         )}
 

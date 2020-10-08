@@ -646,6 +646,7 @@ export function userResponse(options?: Partial<UserOptions>) {
     TEACHERS_SUBJECTS: true,
     TEACHERS_HOME_PROMOTED_COLLECTIONS: true,
     TEACHERS_HOME_BANNER: true,
+    USER_DATA_HIDDEN: false,
   };
   return {
     id,

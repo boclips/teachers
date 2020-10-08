@@ -292,6 +292,7 @@ export class UserProfileFactory {
         TEACHERS_HOME_PROMOTED_COLLECTIONS: true,
         TEACHERS_SUBJECTS: true,
         TEACHERS_HOME_SUGGESTED_VIDEOS: true,
+        USER_DATA_HIDDEN: false,
       },
     });
   }
