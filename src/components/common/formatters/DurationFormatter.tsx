@@ -1,18 +1,19 @@
 import { Duration } from 'moment';
-import 'moment-duration-format';
 import React from 'react';
 
 interface Props {
   duration: Duration;
 }
 
-export default class DurationFormatter extends React.PureComponent<Props> {
-  public render() {
-    if (!this.props.duration) {
-      return null;
-    }
+const DurationFormatter = ({ duration }: Props) => {
+  const durationFormatter = (d: string) =>
+    d.replace('PT', '').replace('H', 'h ').replace('M', 'm ').replace('S', 's');
 
-    const formattedDuration = this.props.duration.format('h[h] m[m] s[s]');
-    return <span>{formattedDuration}</span>;
-  }
-}
+  const formattedDuration = duration
+    ? durationFormatter(duration.toISOString())
+    : null;
+
+  return <span>{formattedDuration}</span>;
+};
+
+export default DurationFormatter;

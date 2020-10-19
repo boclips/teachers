@@ -17,37 +17,17 @@ import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/upd
 import StatefulSearchBar from './StatefulSearchBar';
 
 jest.mock(
-  './completionsCreatedBy.json',
-  () => [
-    "Rachel's English",
-    'English for Dummies',
-    'Crash Course English',
-    'Another English Channel',
-    'The Best English Channel',
-    'Crash Course Engineering',
-  ],
-  {
-    virtual: true,
-  },
-);
-
-jest.mock(
   './completionsTopics.json',
   () => [
-    'geographical energy',
-    'geographical geology',
-    'geographical process',
-    'geographical urbanization',
-    'geography maps ',
-    'geography topography',
-    ' english as a second language',
-    'english ',
-    ' history',
-    'art history',
-    'british english',
-    ' american english',
-    'american english 2 ',
+    'channel completion 1',
+    'channel completion 2',
+    'channel completion 3',
+    'channel completion 4',
+    'channel completion 5',
+    'channel completion 6',
     'history europe',
+    'geography',
+    'geology',
   ],
   {
     virtual: true,
@@ -134,7 +114,7 @@ describe('SearchBar', () => {
 
     const events = eventsClient.getEvents();
 
-    expect(await wrapper.findByText('urope')).toBeInTheDocument();
+    expect(await wrapper.findByText('history europe')).toBeInTheDocument();
 
     await eventually(() => {
       expect(events.length).toBe(1);
@@ -173,10 +153,26 @@ describe('SearchBar', () => {
   it('when user types, fire multiple events to track suggestions', async () => {
     const wrapper = getWrapper('');
 
+    suggestionsClient.populate({
+      suggestionTerm: 'eng',
+      channels: [
+        { id: 'channel-one', name: 'channel English 1' },
+        { id: 'channel-two', name: 'channel English 2' },
+        { id: 'channel-three', name: 'channel English 3' },
+        { id: 'channel-three', name: 'channel English 4' },
+      ],
+      subjects: [
+        { id: 'subject-one', name: 'Magic English' },
+        { id: 'subject-two', name: 'Advanced English' },
+        { id: 'subject-three', name: 'American English' },
+        { id: 'subject-three', name: 'Australian English' },
+      ],
+    });
+
     const searchInput = wrapper.getByPlaceholderText('Enter your search term');
 
     fireEvent.change(searchInput, { target: { value: 'eng' } });
-    fireEvent.change(searchInput, { target: { value: 'engi' } });
+    fireEvent.change(searchInput, { target: { value: 'engl' } });
 
     await eventually(() => {
       const events = eventsClient.getEvents();
@@ -184,9 +180,9 @@ describe('SearchBar', () => {
       const firstEvent = events[0] as SearchQueryCompletionsSuggestedRequest;
       const secondEvent = events[1] as SearchQueryCompletionsSuggestedRequest;
       expect(firstEvent.searchQuery).toEqual('eng');
-      expect(firstEvent.impressions).toContain("Rachel's English");
-      expect(secondEvent.searchQuery).toEqual('engi');
-      expect(secondEvent.impressions).toContain('Crash Course Engineering');
+      expect(firstEvent.impressions).toContain('Magic English');
+      expect(secondEvent.searchQuery).toEqual('engl');
+      expect(secondEvent.impressions).toContain('Advanced English');
       expect(firstEvent.componentId).toEqual(secondEvent.componentId);
       expect(firstEvent.completionId).not.toEqual(secondEvent.completionId);
     });
@@ -259,46 +255,53 @@ describe('SearchBar', () => {
   it('shows max 4 topics, 3 subjects and 3 channels when suggesting', async () => {
     suggestionsClient.populate({
       suggestionTerm: 'eng',
-      channels: [],
+      channels: [
+        { id: 'channel-1', name: 'channel 1' },
+        { id: 'channel-2', name: 'channel 2' },
+        { id: 'channel-3', name: 'channel 3' },
+        { id: 'channel-4', name: 'channel 4' },
+        { id: 'channel-5', name: 'channel 5' },
+        { id: 'channel-6', name: 'channel 6' },
+        { id: 'channel-7', name: 'channel 7' },
+      ],
       subjects: [
-        { id: 'subject-one', name: 'Magic English' },
-        { id: 'subject-two', name: 'Advanced English' },
-        { id: 'subject-three', name: 'American English' },
-        { id: 'subject-three', name: 'Australian English' },
+        { id: 'subject-1', name: 'channel subject 1' },
+        { id: 'subject-2', name: 'channel subject 2' },
+        { id: 'subject-3', name: 'channel subject 3' },
+        { id: 'subject-4', name: 'channel subject 4' },
+        { id: 'subject-5', name: 'channel subject 5' },
+        { id: 'subject-6', name: 'channel subject 6' },
+        { id: 'subject-7', name: 'channel subject 7' },
+        { id: 'subject-8', name: 'channel subject 8' },
       ],
     });
 
     const wrapper = getWrapper('');
     const input = wrapper.getByPlaceholderText('Enter your search term');
 
-    fireEvent.change(input, { target: { value: 'eng' } });
-
-    await wrapper.findByText('Magic');
+    fireEvent.change(input, { target: { value: 'channel' } });
 
     await eventually(() => {
       const events = eventsClient.getEvents();
       expect(eventsClient.getEvents().length).toBe(1);
       const event = events[0] as SearchQueryCompletionsSuggestedRequest;
-
       expect(event.impressions.length).toEqual(10);
-      expect(event.impressions).toContain('english as a second language');
-      expect(event.impressions).toContain('english');
-      expect(event.impressions).toContain('british english');
-      expect(event.impressions).toContain('american english');
-      expect(event.impressions).not.toContain('american english 2');
+      expect(event.impressions).toContain('channel completion 1');
+      expect(event.impressions).toContain('channel completion 2');
+      expect(event.impressions).toContain('channel completion 3');
+      expect(event.impressions).toContain('channel completion 4');
 
-      expect(event.impressions).toContain('Magic English');
-      expect(event.impressions).toContain('Advanced English');
-      expect(event.impressions).toContain('American English');
-      expect(event.impressions).not.toContain('Australian English');
+      expect(event.impressions).toContain('channel subject 1');
+      expect(event.impressions).toContain('channel subject 2');
+      expect(event.impressions).toContain('channel subject 3');
 
-      expect(event.impressions).toContain("Rachel's English");
-      expect(event.impressions).toContain('English for Dummies');
-      expect(event.impressions).toContain('Another English Channel');
+      expect(event.impressions).toContain('channel 1');
+      expect(event.impressions).toContain('channel 2');
+      expect(event.impressions).toContain('channel 3');
 
-      expect(event.impressions).not.toContain('Crash Course English');
-      expect(event.impressions).not.toContain('The Best English Channel');
-      expect(event.impressions).not.toContain('Crash Course Engineering');
+      expect(event.impressions).not.toContain('channel 4');
+      expect(event.impressions).not.toContain('channel completion 5');
+      expect(event.impressions).not.toContain('channel subject 4');
     });
   });
 });

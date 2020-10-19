@@ -9,7 +9,7 @@ import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { DownloadTranscriptButton } from 'src/components/video/buttons/downloadTranscriptButton/DownloadTranscriptButton';
 import ContentWarningIcon from 'resources/images/warning.svg';
 import { getAttachmentLabels } from 'src/components/common/AttachmentConstants';
-import { Video } from '../../../types/Video';
+import { Video } from 'src/types/Video';
 import DateFormatter from '../../common/formatters/DateFormatter';
 import DurationFormatter from '../../common/formatters/DurationFormatter';
 import { SubjectTag } from '../../common/tags/SubjectTag';

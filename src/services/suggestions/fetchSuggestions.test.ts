@@ -20,9 +20,11 @@ test('fetch suggestions', async () => {
     channels: [
       {
         name: 'The History Channel',
+        id: '1',
       },
       {
         name: 'Crash Course History',
+        id: '2',
       },
     ],
     subjects: [
