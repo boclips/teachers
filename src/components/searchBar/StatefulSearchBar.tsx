@@ -1,28 +1,28 @@
 /* eslint-disable */
-import { AutoComplete } from "antd";
-import Search from "antd/lib/input/Search";
-import { SearchProps } from "antd/es/input";
-import React, { Ref } from "react";
-import SearchIcon from "resources/images/search-icon.png";
-import CloseSVG from "resources/images/close.svg";
-import { Completion, completionsFor } from "./completions";
-import completionsTopics from "./completionsTopics.json";
-import "./StatefulSearchBar.less";
-import { v4 as uuidv4 } from "uuid";
-import AnalyticsFactory from "src/services/analytics/AnalyticsFactory";
-import { fetchSuggestions } from "src/services/suggestions/fetchSuggestions";
+import { AutoComplete } from 'antd';
+import Search from 'antd/lib/input/Search';
+import { SearchProps } from 'antd/es/input';
+import React, { Ref } from 'react';
+import SearchIcon from 'resources/images/search-icon.png';
+import CloseSVG from 'resources/images/close.svg';
+import { Completion, completionsFor } from './completions';
+import completionsTopics from './completionsTopics.json';
+import './StatefulSearchBar.less';
+import { v4 as uuidv4 } from 'uuid';
+import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
+import { fetchSuggestions } from 'src/services/suggestions/fetchSuggestions';
 
 const sendPublishSearchSuggestion = (
   searchQuery: string,
   suggestions: Completion[],
   completionId: string,
-  componentId: string
+  componentId: string,
 ): void => {
   AnalyticsFactory.internalAnalytics().trackSearchSuggestionImpression({
     searchQuery,
     impressions: suggestions.map((suggestion) => suggestion.text),
     completionId,
-    componentId
+    componentId,
   });
 };
 
@@ -30,7 +30,7 @@ interface Props {
   onSubmit: (
     query: string,
     completionId?: string,
-    completion?: Completion
+    completion?: Completion,
   ) => void;
   value?: string;
 }
@@ -42,14 +42,14 @@ interface State {
 }
 
 class FreshSearchOnValueChange extends React.Component<Props, State> {
-  private submittedText = "";
+  private submittedText = '';
 
   public constructor(props: Props) {
     super(props);
     this.state = {
       completions: [],
       completionId: undefined,
-      componentId: uuidv4()
+      componentId: uuidv4(),
     };
     this.submit = this.submit.bind(this);
   }
@@ -57,14 +57,14 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   public findCompletions = async (query: string) => {
     if (query.length < 3) {
       this.setState({
-        completions: []
+        completions: [],
       });
       return;
     }
 
     const suggestions = await fetchSuggestions(query);
 
-    console.log(query)
+    console.log(query);
 
     const completionId = uuidv4();
 
@@ -72,40 +72,39 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
       topics: completionsTopics.map((text) => ({ value: text })),
       channels: suggestions.channels.map((channel) => ({
         value: channel.name,
-        id: channel.id
+        id: channel.id,
       })),
       subjects: suggestions.subjects.map((subject) => ({
         value: subject.name,
-        id: subject.id
-      }))
+        id: subject.id,
+      })),
     });
 
     const foundCompletions = getCompletions(query);
 
     this.setState({
       completions: foundCompletions,
-      completionId
+      completionId,
     });
 
     this.state.completions?.length > 0 &&
-    sendPublishSearchSuggestion(
-      query,
-      foundCompletions,
-      completionId,
-      this.state.componentId
-    );
+      sendPublishSearchSuggestion(
+        query,
+        foundCompletions,
+        completionId,
+        this.state.componentId,
+      );
   };
 
   public onSubmit = (e) => e.preventDefault();
 
   public render() {
-
     return (
       <form
         action=""
         onSubmit={this.onSubmit}
         className="searchbar"
-        data-qa={"testing-form"}
+        data-qa={'testing-form'}
       >
         <AutoComplete
           defaultActiveFirstOption={false}
@@ -119,15 +118,15 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
             this.submit(
               suggestion,
               this.state.completionId,
-              this.findSuggestionType(suggestion)
+              this.findSuggestionType(suggestion),
             )
           }
-          style={{ width: "100%" }}
-          data-qa={"testing-autocomplete"}
+          style={{ width: '100%' }}
+          data-qa={'testing-autocomplete'}
           listHeight={288}
         >
           <MySearch
-            prefix={<img src={SearchIcon} alt=""/>}
+            prefix={<img src={SearchIcon} alt="" />}
             placeholder="Enter your search term"
             type="search"
             data-qa={`search-input-${this.state.componentId}`}
@@ -143,7 +142,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
 
   private findSuggestionType(value: string) {
     return this.state.completions.find(
-      (completion) => completion.value === value
+      (completion) => completion.value === value,
     );
   }
 
@@ -152,7 +151,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
       key: completion.text,
       value: completion.text,
       label: this.renderResult(completion),
-      className: `${completion.list} completions`
+      className: `${completion.list} completions`,
     }));
   }
 
@@ -160,21 +159,21 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
     return (
       <div
         data-qa={`result-${
-          r.list === "channels" ? "channel-" : ""
-        }${r.text.replace(/\s+/g, "-").toLowerCase()}`}
+          r.list === 'channels' ? 'channel-' : ''
+        }${r.text.replace(/\s+/g, '-').toLowerCase()}`}
         className="result"
       >
-        {r.list === "channels" && (
+        {r.list === 'channels' && (
           <span className="autocomplete--channel">Channel: </span>
         )}
 
-        {r.list === "subjects" && (
+        {r.list === 'subjects' && (
           <span className="autocomplete--subject">Subject: </span>
         )}
 
         {r.textWithHighlights.map((chunk) => (
           <span
-            className={chunk.matches ? "" : "completion-affix"}
+            className={chunk.matches ? '' : 'completion-affix'}
             key={chunk.text}
           >
             {chunk.text}
@@ -187,7 +186,7 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
   private submit(
     value: string,
     completionId?: string,
-    completion?: Completion
+    completion?: Completion,
   ) {
     if (this.submittedText === value) {
       return;
@@ -198,26 +197,26 @@ class FreshSearchOnValueChange extends React.Component<Props, State> {
 }
 
 const MySearch = React.forwardRef((props: SearchProps, ref: Ref<any>) => {
-  const Clear = props.value !== "" && (
+  const Clear = props.value !== '' && (
     <CloseSVG
       data-qa="clear-search-button"
       onClick={() => {
-        props.onChange({ target: { value: "" } as any } as any);
+        props.onChange({ target: { value: '' } as any } as any);
       }}
     />
   );
 
-  return <Search ref={ref} {...props} suffix={Clear}/>;
+  return <Search ref={ref} {...props} suffix={Clear} />;
 });
 
 export default class StatefulSearchBar extends React.Component<Props> {
   public render() {
     return [
       <FreshSearchOnValueChange
-        key={this.props.value || ""}
+        key={this.props.value || ''}
         onSubmit={this.props.onSubmit}
         value={this.props.value}
-      />
+      />,
     ];
   }
 }
