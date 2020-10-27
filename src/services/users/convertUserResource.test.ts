@@ -16,7 +16,7 @@ describe('convertUserResource', () => {
         state: null,
         country: { id: 'GBR', name: 'United Kingdom', states: null },
       },
-      teacherPlatformAttributes: { shareCode: 'N501' },
+      shareCode: 'N501',
       _links: {
         self: {
           href: 'https://api.staging-boclips.com/v1/users/user-id',

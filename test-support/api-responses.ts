@@ -662,9 +662,7 @@ export function userResponse(options?: Partial<UserOptions>) {
       name: 'My school',
     },
     features,
-    teacherPlatformAttributes: {
-      shareCode: 'BOB1',
-    },
+    shareCode: 'BOB1',
     _links: {
       self: { href: 'http://localhost/v1/users/my-user-id' },
     },
