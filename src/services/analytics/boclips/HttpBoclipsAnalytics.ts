@@ -25,6 +25,7 @@ export default class HttpBoclipsAnalytics extends AbstractBoclipsAnalytics {
       link.getTemplatedLink({
         type: interactionType,
       }),
+      {},
       {
         headers: { 'Boclips-Referer': window.location.href },
       },

@@ -31,6 +31,7 @@ describe('Boclips analytics', () => {
     expect(axiosMock.history.post[0].url).toEqual(
       '/v1/videos/id-1/events?logVideoInteraction=true&type=copied-to-google-classroom',
     );
+    expect(axiosMock.history.post[0].headers['Boclips-Referer']).not.toBeNull();
   });
 
   it('logInteraction rejects when link is missing', async () => {
