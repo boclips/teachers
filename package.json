@@ -125,7 +125,7 @@
     "axios": "^0.20.0",
     "boclips-api-client": "19.0.1",
     "boclips-js-security": "^4.0.2",
-    "boclips-player": "6.0.5",
+    "boclips-player": "6.2.0",
     "boclips-player-react": "1.2.1",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",
