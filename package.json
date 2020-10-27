@@ -44,7 +44,7 @@
     "@storybook/addon-actions": "^6.0.15",
     "@storybook/addon-console": "^1.2.1",
     "@storybook/addon-knobs": "^6.0.15",
-    "@storybook/addon-viewport": "^6.0.15",
+    "@storybook/addon-viewport": "^6.0.27",
     "@storybook/react": "^6.0.15",
     "@testing-library/dom": "^7.24.5",
     "@testing-library/jest-dom": "^5.11.5",
