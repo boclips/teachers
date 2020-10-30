@@ -52,7 +52,7 @@
     "@types/enzyme": "^3.10.7",
     "@types/jest": "^26.0.14",
     "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.6",
+    "@types/react-dom": "^16.9.9",
     "@types/react-helmet": "^6.1.0",
     "@types/react-infinite-scroll-component": "^4.2.5",
     "@types/react-redux": "^7.1.7",
