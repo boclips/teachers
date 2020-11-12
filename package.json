@@ -120,7 +120,7 @@
     "@ant-design/icons": "^4.1.0",
     "@hot-loader/react-dom": "16.13.0",
     "@sentry/browser": "^5.27.2",
-    "@sentry/integrations": "^5.26.0",
+    "@sentry/integrations": "^5.27.3",
     "antd": "^4.3.5",
     "axios": "^0.20.0",
     "boclips-api-client": "19.0.1",
