@@ -94,7 +94,7 @@
     "jest": "^26.4.1",
     "jest-enzyme": "^7.1.2",
     "jest-simple-dot-reporter": "^1.0.5",
-    "jsdom": "^15.2.1",
+    "jsdom": "^16.4.0",
     "less": "^3.11.1",
     "less-loader": "^6.2.0",
     "mini-css-extract-plugin": "^1.1.2",
