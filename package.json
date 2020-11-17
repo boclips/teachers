@@ -101,7 +101,7 @@
     "npm-check-updates": "^7.1.1",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "prettier": "^2.0.4",
+    "prettier": "^2.1.2",
     "reduce-reducers": "^1.0.4",
     "redux-mock-store": "^1.5.4",
     "svg-react-loader": "^0.4.6",
