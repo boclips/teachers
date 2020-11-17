@@ -117,7 +117,7 @@
     "webpack-merge": "^5.1.2"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.1.0",
+    "@ant-design/icons": "^4.3.0",
     "@hot-loader/react-dom": "16.13.0",
     "@sentry/browser": "^5.27.2",
     "@sentry/integrations": "^5.27.3",
