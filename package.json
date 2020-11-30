@@ -126,7 +126,7 @@
     "boclips-api-client": "19.0.1",
     "boclips-js-security": "^4.0.2",
     "boclips-player": "6.2.0",
-    "boclips-player-react": "1.2.1",
+    "boclips-player-react": "1.2.2",
     "js-cookie": "^2.2.1",
     "lodash.debounce": "^4.0.8",
     "lodash.sortby": "^4.7.0",
