@@ -11,7 +11,7 @@ interface Props {
 
 export const SubjectFilterTag = ({ subjectId, subjectIds }: Props) => {
   const dispatch = useDispatch();
-  const subject = useSelector(
+  const currentSubject = useSelector(
     (state: State) =>
       state.subjects.filter((subject) => subject.id === subjectId)[0],
   );
@@ -24,9 +24,9 @@ export const SubjectFilterTag = ({ subjectId, subjectIds }: Props) => {
     );
   };
 
-  return subject ? (
+  return currentSubject ? (
     <span data-qa="subject-filter-tag">
-      <ClosableTag label="Subject" value={subject.name} onClose={onClose} />
+      <ClosableTag label="Subject" value={currentSubject.name} onClose={onClose} />
     </span>
   ) : null;
 };
