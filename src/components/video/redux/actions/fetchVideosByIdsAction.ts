@@ -7,6 +7,6 @@ export interface VideosForCollectionRequest {
   shareCode?: string;
 }
 
-export const fetchVideosByIdsAction = actionCreatorFactory<
-  VideosForCollectionRequest
->('FETCH_VIDEOS_BY_IDS');
+export const fetchVideosByIdsAction = actionCreatorFactory<VideosForCollectionRequest>(
+  'FETCH_VIDEOS_BY_IDS',
+);

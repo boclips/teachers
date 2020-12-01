@@ -10,6 +10,6 @@ export interface StoreCollectionsRequest {
   request?: CollectionSearchRequest;
 }
 
-export const storeCollectionsAction = actionCreatorFactory<
-  StoreCollectionsRequest
->('STORE_COLLECTIONS');
+export const storeCollectionsAction = actionCreatorFactory<StoreCollectionsRequest>(
+  'STORE_COLLECTIONS',
+);

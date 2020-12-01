@@ -24,9 +24,10 @@ const ManageVideoCollectionMenu = (
   const [newCollectionTitle, setNewCollectionTitle] = React.useState<
     string | null
   >();
-  const [createCollectionVisible, setCreateCollectionVisible] = React.useState<
-    boolean
-  >(false);
+  const [
+    createCollectionVisible,
+    setCreateCollectionVisible,
+  ] = React.useState<boolean>(false);
 
   const {
     collections,

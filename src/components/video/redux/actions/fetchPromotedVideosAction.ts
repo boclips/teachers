@@ -6,6 +6,6 @@ export interface PromotedVideosRequest {
   additionalVideos: boolean;
 }
 
-export const fetchPromotedVideosAction = actionCreatorFactory<
-  PromotedVideosRequest
->('FETCH_PROMOTED_VIDEOS');
+export const fetchPromotedVideosAction = actionCreatorFactory<PromotedVideosRequest>(
+  'FETCH_PROMOTED_VIDEOS',
+);
