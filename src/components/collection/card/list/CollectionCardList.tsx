@@ -19,7 +19,9 @@ export interface CollectionCardListProps
   infiniteScroll?: InfiniteScrollProps;
 }
 
-export class CollectionCardList extends React.PureComponent<CollectionCardListProps> {
+export class CollectionCardList extends React.PureComponent<
+  CollectionCardListProps
+> {
   private singleColumn() {
     return !this.props.grid;
   }

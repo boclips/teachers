@@ -1,6 +1,8 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import State from '../../../../types/State';
+import { Subject } from '../../../../types/Subject';
 import { ClosableTag } from '../../../common/tags/Tag';
 import { updateSearchParamsAction } from '../../redux/actions/updateSearchParametersActions';
 
@@ -9,24 +11,45 @@ interface Props {
   subjectIds: string[];
 }
 
-export const SubjectFilterTag = ({ subjectId, subjectIds }: Props) => {
-  const dispatch = useDispatch();
-  const currentSubject = useSelector(
-    (state: State) =>
-      state.subjects.filter((subject) => subject.id === subjectId)[0],
-  );
+interface StateProps {
+  subject?: Subject;
+}
 
-  const onClose = () => {
-    dispatch(
-      updateSearchParamsAction({
-        subject: subjectIds.filter((item) => item !== subjectId),
-      }),
-    );
-  };
+interface DispatchProps {
+  onClose: () => void;
+}
 
-  return currentSubject ? (
+const SubjectFilterTag = ({
+  subject,
+  onClose,
+}: Props & DispatchProps & StateProps) =>
+  subject ? (
     <span data-qa="subject-filter-tag">
-      <ClosableTag label="Subject" value={currentSubject.name} onClose={onClose} />
+      <ClosableTag label="Subject" value={subject.name} onClose={onClose} />
     </span>
   ) : null;
-};
+
+function mapStateToProps(state: State, ownProps: Props): StateProps {
+  return {
+    subject: state.subjects.filter(
+      (subject) => subject.id === ownProps.subjectId,
+    )[0],
+  };
+}
+
+const mapDispatchToProps = (
+  dispatch: Dispatch,
+  ownProps: Props,
+): DispatchProps => ({
+  onClose: () => {
+    dispatch(
+      updateSearchParamsAction({
+        subject: ownProps.subjectIds.filter(
+          (item) => item !== ownProps.subjectId,
+        ),
+      }),
+    );
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubjectFilterTag);

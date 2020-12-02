@@ -54,7 +54,9 @@ const GenericVideoCardList = React.memo<GenericProps>((props) => {
   );
 });
 
-export class CollectionVideoCardList extends React.PureComponent<CollectionProps> {
+export class CollectionVideoCardList extends React.PureComponent<
+  CollectionProps
+> {
   public render() {
     const { userId, currentCollection, videos } = this.props;
     return (

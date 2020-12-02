@@ -7,17 +7,17 @@ export interface AppendCollectionRequest {
   collections: Pageable<VideoCollection>;
   key: CollectionKey;
 }
-export const appendDiscoverCollectionsAction = actionCreatorFactory<AppendCollectionRequest>(
-  'APPEND_DISCOVER_COLLECTIONS',
-);
+export const appendDiscoverCollectionsAction = actionCreatorFactory<
+  AppendCollectionRequest
+>('APPEND_DISCOVER_COLLECTIONS');
 
-export const appendBookmarkedCollectionsAction = actionCreatorFactory<AppendCollectionRequest>(
-  'APPEND_BOOKMARKED_COLLECTIONS',
-);
+export const appendBookmarkedCollectionsAction = actionCreatorFactory<
+  AppendCollectionRequest
+>('APPEND_BOOKMARKED_COLLECTIONS');
 
-export const appendMyCollectionsAction = actionCreatorFactory<AppendCollectionRequest>(
-  'APPEND_MY_COLLECTIONS',
-);
+export const appendMyCollectionsAction = actionCreatorFactory<
+  AppendCollectionRequest
+>('APPEND_MY_COLLECTIONS');
 
 export const appendPageableCollectionsAction = (
   request: AppendCollectionRequest,

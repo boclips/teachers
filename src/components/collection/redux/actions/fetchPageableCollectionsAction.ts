@@ -6,6 +6,6 @@ export interface FetchPageableCollectionRequest {
   key: CollectionKey;
   request?: CollectionSearchRequest;
 }
-export const fetchPageableCollectionsAction = actionCreatorFactory<FetchPageableCollectionRequest>(
-  'FETCH_COLLECTIONS',
-);
+export const fetchPageableCollectionsAction = actionCreatorFactory<
+  FetchPageableCollectionRequest
+>('FETCH_COLLECTIONS');

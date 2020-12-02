@@ -9,7 +9,9 @@ interface OwnProps {
   collection?: VideoCollection;
 }
 
-export default class VideoCollectionButton extends React.PureComponent<OwnProps> {
+export default class VideoCollectionButton extends React.PureComponent<
+  OwnProps
+> {
   public render() {
     if (this.props.collection && this.props.collection.links.removeVideo) {
       return (
