@@ -89,7 +89,7 @@
     "file-loader": "^6.0.0",
     "hoist-non-react-statics": "^3.3.2",
     "html-webpack-plugin": "^4.5.0",
-    "image-webpack-loader": "^6.0.0",
+    "image-webpack-loader": "^7.0.1",
     "immer": "^6.0.3",
     "jest": "^26.4.1",
     "jest-enzyme": "^7.1.2",
