@@ -54,7 +54,7 @@ class VideoPlayer extends React.PureComponent<
     const currentVideoUri = this.props.video.links.self.getOriginalLink();
 
     if (this.player && prevVideoUri !== currentVideoUri) {
-      this.player.loadVideo(currentVideoUri);
+      this.player.loadVideo(currentVideoUri, this.props.segment);
     }
   }
 
