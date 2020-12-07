@@ -4,6 +4,7 @@ import { RouterActionType } from 'connected-react-router';
 import { mount } from 'enzyme';
 import React from 'react';
 import { mocked } from 'ts-jest/utils';
+import { Link } from 'src/types/Link';
 import {
   MockStoreFactory,
   RouterFactory,
@@ -16,7 +17,6 @@ import {
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import VideoPlayer, { OwnProps } from './VideoPlayer';
-import { Link } from 'src/types/Link';
 
 jest.mock('boclips-player');
 jest.unmock('boclips-player-react');
@@ -218,7 +218,7 @@ describe('video player', () => {
       links: {
         ...video.links,
         self: new Link({
-          href: video.links.self.getOriginalLink() + '?sharecode=1234',
+          href: `${video.links.self.getOriginalLink()}'?sharecode=1234`,
           templated: false,
         }),
       },
