@@ -122,7 +122,7 @@
     "@sentry/browser": "^5.27.2",
     "@sentry/integrations": "^5.27.3",
     "antd": "^4.3.5",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "boclips-api-client": "19.0.1",
     "boclips-js-security": "^4.0.2",
     "boclips-player": "6.2.0",
