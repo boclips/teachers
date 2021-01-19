@@ -151,7 +151,7 @@
     "react-router-dom": "^5.1.2",
     "react-transition-group": "^4.3.0",
     "redux": "^4.0.5",
-    "urijs": "^1.19.2",
+    "urijs": "^1.19.4",
     "use-force-update": "^1.0.7"
   }
 }
