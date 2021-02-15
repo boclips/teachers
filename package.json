@@ -41,7 +41,7 @@
   "homepage": "https://github.com/knowledgemotion/teachers#readme",
   "devDependencies": {
     "@sheerun/mutationobserver-shim": "^0.3.3",
-    "@storybook/addon-actions": "^6.0.15",
+    "@storybook/addon-actions": "^6.1.18",
     "@storybook/addon-console": "^1.2.2",
     "@storybook/addon-knobs": "^6.0.15",
     "@storybook/addon-viewport": "^6.0.28",
