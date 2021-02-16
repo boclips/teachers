@@ -1,7 +1,6 @@
 import { MiddlewareAPI } from 'redux';
 import { clearDiscoverCollectionsAction } from 'src/components/collection/redux/actions/clearDiscoverCollectionsAction';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import {
   fetchNextCollectionsPage,
   fetchPageableCollections,
@@ -46,7 +45,6 @@ export function onFetchNextCollections(
   const collectionsToFetch = store.getState().collections[request];
   fetchNextCollectionsPage(collectionsToFetch)
     .then((collections) => {
-      AnalyticsFactory.externalAnalytics().trackMoreCollectionsLoaded(request);
       store.dispatch(
         appendPageableCollectionsAction({
           collections,

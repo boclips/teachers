@@ -4,7 +4,6 @@ import Button from 'antd/lib/button';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import DeleteIconSVG from '../../../../resources/images/delete-collection.svg';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../types/VideoCollection';
 import { deleteCollectionAction } from '../redux/actions/deleteCollectionAction';
 import './RemoveCollectionButton.less';
@@ -34,9 +33,6 @@ export const RemoveCollectionButton = React.memo((props: Props) => {
         </span>
       ),
       onOk: () => {
-        AnalyticsFactory.externalAnalytics().trackCollectionRemoved(
-          props.collection,
-        );
         dispatch(deleteCollectionAction(props.collection));
       },
       onCancel: () => {

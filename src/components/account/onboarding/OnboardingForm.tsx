@@ -84,9 +84,6 @@ export const OnboardingForm = () => {
 
   const afterCarouselChange = (index: number) => {
     if (index > farthestVisitedPage) {
-      AnalyticsFactory.externalAnalytics().trackOnboardingPageChanged(
-        index - 1,
-      );
       AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
         PlatformInteractionType[`ONBOARDING_PAGE_${index + 1}_STARTED`],
         true,

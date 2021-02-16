@@ -17,10 +17,6 @@ export class AppConstants {
     return this.window.Environment.API_PREFIX;
   }
 
-  public get APPCUES_PLAN_TYPE(): string {
-    return this.window.Environment.APPCUES_PLAN_TYPE;
-  }
-
   public get RECAPTCHA_SITE_KEY(): string {
     return this.window.Environment.RECAPTCHA_SITE_KEY;
   }

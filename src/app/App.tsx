@@ -7,18 +7,6 @@ import BoclipsRouter from '../views/router/BoclipsRouter';
 import { LinkLoader } from './config/LinkLoader';
 import { createBoclipsStore } from './redux/store';
 
-declare global {
-  interface Window {
-    Appcues: Appcues;
-  }
-
-  interface Appcues {
-    identify: (userId: string, user: any) => {};
-    page: () => {};
-    track: (event: string, payload: any) => {};
-  }
-}
-
 interface Props {
   apiPrefix: string;
   history?: History;

@@ -7,7 +7,6 @@ import searchMiddleware from '../components/searchBar/redux/middleware/searchMid
 import videoDetailsMiddleware from '../components/video/redux/middleware/videoDetailsMiddleware';
 import fetchVideosMiddleware from '../components/video/redux/middleware/fetchVideosMiddleware';
 import onStoreLoginMiddleware from '../components/login/redux/middleware/onLoginMiddleware';
-import onRegisterUserForAnalytics from '../components/login/redux/middleware/onRegisterUserForAnalytics';
 import collectionMiddleware from '../components/collection/redux/middleware/collectionMiddleware';
 import fetchSubjectsMiddleware from '../components/multipleSelect/redux/middleware/fetchSubjectsMiddleware';
 import fetchCountriesMiddleware from '../components/account/onboarding/redux/middleware/fetchCountriesMiddleware';
@@ -34,7 +33,6 @@ export const createMiddleware = (history: History) => {
       onStoreLoginMiddleware,
       ...onAuthenticationResolvedMiddleware,
       ...requestAuthenticationMiddleware,
-      onRegisterUserForAnalytics,
       ...collectionMiddleware,
       fetchSubjectsMiddleware,
       fetchCountriesMiddleware,

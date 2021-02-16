@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import RemoveBookmarkSVG from '../../../../../resources/images/remove-video.svg';
 import SaveBookmarkSVG from '../../../../../resources/images/save.svg';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import { A11yButton } from '../../../common/a11y/A11yButton';
 import { bookmarkCollectionAction } from '../../redux/actions/bookmarkCollectionAction';
@@ -37,16 +36,10 @@ export class BookmarkCollectionButtonInner extends PureComponent<
   };
 
   private bookmarkCollection = () => {
-    AnalyticsFactory.externalAnalytics().trackCollectionBookmarked(
-      this.props.collection,
-    );
     this.props.onBookmarkCollectionAction(this.props.collection);
   };
 
   private unBookmarkCollection = () => {
-    AnalyticsFactory.externalAnalytics().trackCollectionUnbookmarked(
-      this.props.collection,
-    );
     this.props.onUnbookmarkCollectionAction(this.props.collection);
   };
 

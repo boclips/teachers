@@ -29,7 +29,6 @@ export class OnboardingViewComponent extends PureComponent<
         PlatformInteractionType.ONBOARDING_PAGE_1_STARTED,
         true,
       );
-      AnalyticsFactory.externalAnalytics().trackOnboardingStarted();
     }
   }
 

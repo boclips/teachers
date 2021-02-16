@@ -6,7 +6,6 @@ import querystring from 'query-string';
 import React from 'react';
 import { connect } from 'react-redux';
 import { CollectionKey } from 'src/types/CollectionKey';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import MediaBreakpoints from '../../../types/MediaBreakpoints';
 import State from '../../../types/State';
 import { Segment, Video } from '../../../types/Video';
@@ -78,7 +77,7 @@ class VideoPlayer extends React.PureComponent<
           videoId: this.props.video.id,
           videoIndex: this.props.videoIndex,
         },
-        handleOnSegmentPlayback: this.handleOnPlayback,
+        handleOnSegmentPlayback: () => {},
       },
       api: {
         tokenFactory: async () => {
@@ -145,14 +144,6 @@ class VideoPlayer extends React.PureComponent<
   public replayOnClickDestroyOverlay = () => {
     this.setState({ overlayVisible: false });
     this.player.play();
-  };
-
-  private handleOnPlayback = (_, startSeconds: number, endSeconds: number) => {
-    AnalyticsFactory.externalAnalytics().trackVideoPlayback(
-      this.props.video,
-      startSeconds,
-      endSeconds,
-    );
   };
 
   public render() {

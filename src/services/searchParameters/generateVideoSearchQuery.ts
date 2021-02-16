@@ -3,7 +3,6 @@ import {
   UpdateDurationFilter,
   SearchRequest,
 } from 'src/components/searchResults/redux/actions/updateSearchParametersActions';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { ParsedQuery } from 'query-string';
 import { VideoSearchQuery } from 'src/services/searchParameters/VideoSearchQuery';
 
@@ -20,8 +19,6 @@ export function generateVideoSearchQuery(
     ...newQueryParams.reduce((acc, param) => ({ ...acc, ...param }), []),
     page: 1,
   };
-
-  AnalyticsFactory.externalAnalytics().trackSearchFiltersApplied(updates);
 
   return newQuery;
 }

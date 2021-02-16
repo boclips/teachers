@@ -124,11 +124,6 @@ export class CollectionHeader extends React.PureComponent<Props> {
               )}
               link={attachmentToRender.links.download.getOriginalLink()}
               onClick={() => {
-                AnalyticsFactory.externalAnalytics().trackCollectionAttachmentLinkVisited(
-                  this.props.collection.id,
-                  attachmentToRender,
-                );
-
                 AnalyticsFactory.internalAnalytics().trackCollectionInteractedWith(
                   this.props.collection,
                   'VISIT_LESSON_GUIDE',

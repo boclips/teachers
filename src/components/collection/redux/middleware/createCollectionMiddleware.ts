@@ -1,6 +1,5 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import {
   createCollection,
   CreateCollectionRequest,
@@ -25,7 +24,6 @@ export function onCreateCollection(
     .catch(() => {
       NotificationFactory.error({ message: 'Error creating collection.' });
     });
-  AnalyticsFactory.externalAnalytics().trackCollectionCreated(request);
 }
 
 export default sideEffect(createCollectionAction, onCreateCollection);

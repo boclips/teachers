@@ -1,7 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Links } from '../../types/Links';
 import Utm from '../account/Utm';
-import AnalyticsFactory from '../analytics/AnalyticsFactory';
 
 export interface UpdateUserRequest {
   firstName?: string;
@@ -21,20 +20,18 @@ export interface UpdateUserRequest {
 export function onboardUser(
   links: Links,
   request: UpdateUserRequest,
-): Promise<void> {
+): Promise<void | AxiosResponse> {
   if (userCannotActivate(links) || userCannotUpdate(links)) {
     return Promise.reject();
   }
 
-  return updateUser(links, request, () => {
-    AnalyticsFactory.externalAnalytics().trackOnboardingCompleted();
-  });
+  return updateUser(links, request);
 }
 
 export function editUser(
   links: Links,
   request: UpdateUserRequest,
-): Promise<void> {
+): Promise<void | AxiosResponse> {
   if (userCannotUpdate(links)) {
     return Promise.reject();
   }
@@ -53,12 +50,8 @@ function userCannotUpdate(links: Links) {
 function updateUser(
   links: Links,
   request: UpdateUserRequest,
-  callback?: () => void,
-) {
-  return axios
-    .put(links.profile.getOriginalLink(), request)
-    .then(callback)
-    .catch((error) => {
-      console.error('An error occurred while updating the user', error);
-    });
+): Promise<void | AxiosResponse> {
+  return axios.put(links.profile.getOriginalLink(), request).catch((error) => {
+    console.error('An error occurred while updating the user', error);
+  });
 }

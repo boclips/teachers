@@ -2,7 +2,6 @@ import { MiddlewareAPI } from 'redux';
 import { VideoSearchFacets } from 'src/types/VideoSearchFacets';
 import { VideoSearchResult } from 'src/types/SearchResults';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { searchCollections } from '../../../../services/collections/searchCollections';
 import fetchVideos from '../../../../services/videos/fetchVideos';
 import { CollectionSearchRequest } from '../../../../types/CollectionSearchRequest';
@@ -26,7 +25,6 @@ export function onSearchVideos(
 
   fetchVideos(searchRequest, facets).then((result: VideoSearchResult) => {
     store.dispatch(storeVideoSearchResultsAction(result));
-    AnalyticsFactory.externalAnalytics().trackVideoSearch(result);
   });
 }
 
@@ -38,8 +36,6 @@ export function onSearchCollections(
 
   searchCollections(searchRequest, links).then((results) => {
     store.dispatch(storeCollectionSearchResultsAction(results));
-
-    AnalyticsFactory.externalAnalytics().trackCollectionSearch(results);
   });
 }
 

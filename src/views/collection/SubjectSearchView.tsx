@@ -10,7 +10,6 @@ import {
 } from 'src/components/common/higherOrderComponents/withMediaBreakPoint';
 import './SubjectSearchView.less';
 import ConnectedNewSearchResultsView from 'src/views/searchResults/SearchResultsView';
-import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { Link } from 'react-router-dom';
 import { FilterKey } from 'src/components/searchResults/filters/FilterKey';
 import DisciplineLogo from '../../components/disciplines/DisciplineLogo';
@@ -30,11 +29,6 @@ const { Content } = Layout;
 class SubjectSearchView extends PureComponent<
   OwnProps & StateProps & WithMediaBreakPointProps
 > {
-  public componentDidMount(): void {
-    const { subjectId } = this.props;
-    AnalyticsFactory.externalAnalytics().trackDiscoveryPage([subjectId]);
-  }
-
   private renderSubheader = (discipline: Discipline, subject: Subject) => {
     return (
       subject && (

@@ -1,7 +1,6 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import { fetchVideo } from 'src/services/videos/fetchVideo';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { LinksState } from '../../../../types/State';
 import { Video } from '../../../../types/Video';
 import {
@@ -16,7 +15,6 @@ export function onFetchVideo(
 ) {
   return fetchVideo(params)
     .then((video: Video) => {
-      AnalyticsFactory.externalAnalytics().trackVideoVisited(video);
       return video;
     })
     .then((fetchedVideo) =>

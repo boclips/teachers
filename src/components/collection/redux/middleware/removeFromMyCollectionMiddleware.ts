@@ -1,6 +1,5 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import removeFromCollection from '../../../../services/collections/removeFromCollection';
 import { Video } from '../../../../types/Video';
 import { VideoCollection } from '../../../../types/VideoCollection';
@@ -22,10 +21,6 @@ export function onRemoveFromCollection(
       );
     })
     .catch(console.error);
-  AnalyticsFactory.externalAnalytics().trackVideoRemovedFromCollection(
-    request.video,
-    request.collection,
-  );
 }
 
 export default sideEffect(

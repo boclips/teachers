@@ -11,20 +11,12 @@ import { registerUserForAnalytics } from '../actions/registerUserForAnalytics';
 import { userDetailsFetched } from '../actions/userDetailsFetched';
 import { userLoggedIn } from '../actions/userLoggedIn';
 import onStoreLoginMiddleware from './onLoginMiddleware';
-import analytics from './onRegisterUserForAnalytics';
 
 jest.mock('../../../searchBar/redux/dispatchSearchActions');
 jest.mock('../../../../services/analytics/AnalyticsFactory');
 jest.mock('../../../../services/users/updateUser');
 
-const onRegisterUserMiddleware = analytics;
-const onRegisterUserForAnalytics = analytics;
-
-const mockStore = configureStore<{}>([
-  onStoreLoginMiddleware,
-  onRegisterUserMiddleware,
-  onRegisterUserForAnalytics,
-]);
+const mockStore = configureStore<{}>([onStoreLoginMiddleware]);
 const store = mockStore({
   apiPrefix: 'https://api.example.com',
 });
@@ -94,14 +86,6 @@ describe('on store login', () => {
       await eventually(() => {
         expect(store.getActions().map((action) => action.type)).toContain(
           fetchTagsAction().type,
-        );
-      });
-    });
-
-    it('sets up appcues', async () => {
-      await eventually(() => {
-        expect(store.getActions()).toContainEqual(
-          registerUserForAnalytics(user),
         );
       });
     });

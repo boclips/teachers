@@ -14,14 +14,12 @@ import {
   MockStoreFactory,
   SubjectFactory,
 } from 'test-support/factories';
-import { analyticsMock } from 'test-support/getAnalyticsMock';
 import { RegistrationContext } from 'src/services/session/RegistrationContext';
 import { onboardUser } from 'src/services/users/updateUser';
 import { Link } from 'src/types/Link';
 import eventually from 'test-support/eventually';
 import { OnboardingFormHelper } from 'test-support/OnboardingFormHelper';
 import { within } from '@testing-library/dom';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { OnboardingForm } from './OnboardingForm';
 
 import Mock = jest.Mock;
@@ -40,7 +38,6 @@ jest.mock('../../../services/users/fetchUser', () => ({
   fetchUser: jest.fn().mockResolvedValue(Promise.resolve()),
 }));
 
-AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 const timeoutForFullOnboarding = 20000;
 const mockOnboardUser = onboardUser as Mock;
 const SECTIONS = OnboardingSections;
@@ -256,20 +253,6 @@ describe('onboarding form', () => {
       OnboardingFormHelper.save(wrapper);
 
       expect(mockOnboardUser).not.toHaveBeenCalled();
-    },
-    timeoutForFullOnboarding,
-  );
-
-  it(
-    'sends a page changed event to Appcues if page has not already been visited',
-    async () => {
-      const wrapper = getView();
-      const trackedPageIndex = 0;
-      await fillStep1(wrapper);
-
-      expect(analyticsMock.trackOnboardingPageChanged).toHaveBeenCalledWith(
-        trackedPageIndex,
-      );
     },
     timeoutForFullOnboarding,
   );

@@ -56,16 +56,8 @@ class BoclipsRouter extends Component<Props & StateProps> {
     this.trackRenderedPage();
   }
 
-  public componentDidUpdate(prevProps: Props & StateProps) {
-    const { pathname } = this.props;
-    const previousPath = prevProps.pathname;
-    const currentPath = pathname;
-
+  public componentDidUpdate() {
     this.trackRenderedPage();
-
-    if (previousPath !== currentPath) {
-      AnalyticsFactory.externalAnalytics().pageChange();
-    }
   }
 
   private getFullUrl() {

@@ -1,6 +1,5 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { editCollection } from '../../../../services/collections/editCollection';
 import NotificationFactory from '../../../common/NotificationFactory';
 import {
@@ -26,10 +25,6 @@ export function onEditCollection(
       console.error(error);
       NotificationFactory.error({ message: 'Error renaming collection.' });
     });
-
-  if (request.changes.title != null) {
-    AnalyticsFactory.externalAnalytics().trackCollectionRenamed(request);
-  }
 }
 
 const createUpdatedCollection = ({

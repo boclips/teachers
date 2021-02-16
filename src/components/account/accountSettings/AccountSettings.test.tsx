@@ -8,9 +8,7 @@ import {
   MockStoreFactory,
   UserProfileFactory,
 } from 'test-support/factories';
-import { analyticsMock } from 'test-support/getAnalyticsMock';
 import { fetchUser } from 'src/services/users/fetchUser';
-import AnalyticsFactory from '../../../services/analytics/AnalyticsFactory';
 import { SubjectTag } from '../../common/tags/SubjectTag';
 import AccountSettings from './AccountSettings';
 import { EditProfileForm } from './EditProfileForm';
@@ -21,8 +19,6 @@ import SchoolSettings from './SchoolSettings';
 import Mock = jest.Mock;
 
 jest.mock('../../../services/users/fetchUser');
-
-AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 
 const mockFetchUser = fetchUser as Mock;
 

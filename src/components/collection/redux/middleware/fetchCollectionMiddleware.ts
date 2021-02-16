@@ -1,6 +1,5 @@
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { fetchCollection } from '../../../../services/collections/fetchCollection';
 import { LinksState } from '../../../../types/State';
 import { fetchCollectionAction } from '../actions/fetchCollectionAction';
@@ -15,7 +14,6 @@ export function onFetchCollection(
   fetchCollection(links, id, referer, shareCode)
     .then((collection) => {
       store.dispatch(storeCollectionAction(collection));
-      AnalyticsFactory.externalAnalytics().trackCollectionVisited(collection);
     })
     .catch((e) => {
       if (

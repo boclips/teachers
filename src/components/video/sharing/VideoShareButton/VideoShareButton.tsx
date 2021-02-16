@@ -55,17 +55,12 @@ export const VideoShareButtonForm = ({ video }: VideoShareButtonForm) => {
   const shareLink = getShareableVideoLink(video.id, user.id, segment);
 
   const handleCopyLink = () => {
-    AnalyticsFactory.externalAnalytics().trackVideoLinkCopied(video, segment);
     AnalyticsFactory.internalAnalytics()
       .trackVideoLinkCopied(video)
       .catch(console.error);
   };
 
   const handleGoogleShare = () => {
-    AnalyticsFactory.externalAnalytics().trackVideoSharedInGoogle(
-      video,
-      segment,
-    );
     AnalyticsFactory.internalAnalytics()
       .trackVideoSharedInGoogle(video)
       .catch(console.error);

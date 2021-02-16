@@ -35,13 +35,6 @@ declare const window: any;
 // JSDom doesn't implement scrollTo
 window.scrollTo = jest.fn();
 
-// This is mocking the Appcues import from index.html
-window.Appcues = {
-  page: jest.fn(),
-  identify: jest.fn(),
-  track: jest.fn(),
-};
-
 window.open = jest.fn();
 
 Object.defineProperty(window, 'matchMedia', {

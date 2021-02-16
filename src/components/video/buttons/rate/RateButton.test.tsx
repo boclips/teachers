@@ -2,16 +2,12 @@ import RateButton from 'src/components/video/buttons/rate/RateButton';
 import { VideoFactory } from 'test-support/factories';
 import { fireEvent } from '@testing-library/react';
 import React from 'react';
-import {
-  analyticsMock,
-  internalAnalyticsMock,
-} from 'test-support/getAnalyticsMock';
+import { internalAnalyticsMock } from 'test-support/getAnalyticsMock';
 import AnalyticsFactory from 'src/services/analytics/AnalyticsFactory';
 import { renderWithStore } from 'test-support/renderWithStore';
 
 jest.mock('src/services/analytics/AnalyticsFactory');
 
-AnalyticsFactory.externalAnalytics = jest.fn(() => analyticsMock);
 AnalyticsFactory.internalAnalytics = jest.fn(() => internalAnalyticsMock);
 
 describe('RateButton', () => {

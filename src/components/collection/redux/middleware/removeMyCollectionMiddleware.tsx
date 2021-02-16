@@ -2,7 +2,6 @@ import { push } from 'connected-react-router';
 import React from 'react';
 import { MiddlewareAPI } from 'redux';
 import { sideEffect } from '../../../../app/redux/actions';
-import AnalyticsFactory from '../../../../services/analytics/AnalyticsFactory';
 import { deleteCollection } from '../../../../services/collections/deleteCollection';
 import { VideoCollection } from '../../../../types/VideoCollection';
 import NotificationFactory from '../../../common/NotificationFactory';
@@ -30,7 +29,6 @@ export function onDeleteCollection(
     .catch(() => {
       NotificationFactory.error({ message: 'Error deleting collection.' });
     });
-  AnalyticsFactory.externalAnalytics().trackCollectionRemoved(request);
 }
 
 export default sideEffect(deleteCollectionAction, onDeleteCollection);
