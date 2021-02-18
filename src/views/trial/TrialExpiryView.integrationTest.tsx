@@ -43,7 +43,7 @@ describe('TrialExpiryView', () => {
 
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
 
-    expect(client.events.getEvents()).toContain('USER_EXPIRED');
+    expect(client.events.getEvents()[0].type).toEqual('USER_EXPIRED');
   });
 
   it('does not tell the user the trial is over, when it is not over', async () => {
