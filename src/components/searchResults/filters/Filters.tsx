@@ -50,7 +50,7 @@ export const Filters = withAppliedSearchParameters((props: Props) => {
   const renderFilterSection = (
     filterKey: FilterKey,
     label: string,
-    facetCounts: { [id: string]: Facet },
+    facetCounts: Facet[],
     filter: React.ReactNode,
   ) => {
     const isHidden = hiddenFilterKeys?.indexOf(filterKey) > -1;

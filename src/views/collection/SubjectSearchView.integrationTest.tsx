@@ -18,6 +18,8 @@ import { Route } from 'react-router';
 import ApiStub from 'test-support/ApiStub';
 import { collectionsResponse } from 'test-support/api-responses';
 import { waitForDomChange } from '@testing-library/dom';
+import { FacetsFactory } from 'boclips-api-client/dist/test-support/FacetsFactory';
+import { VideoType } from 'src/types/Video';
 
 describe('SubjectSearchView', () => {
   const renderSubjectSearchView = () => {
@@ -66,6 +68,7 @@ describe('SubjectSearchView', () => {
         id: '177',
         title: `video 1 hello`,
         subjects: [SubjectFactory.sample({ id: 'arts-subject-1' })],
+        types: [{ id: 0, name: VideoType.INSTRUCTIONAL }],
       }),
     );
     client.videos.insertVideo(
@@ -73,6 +76,7 @@ describe('SubjectSearchView', () => {
         id: '456',
         title: `video 2 hello`,
         subjects: [SubjectFactory.sample({ id: 'arts-subject-2' })],
+        types: [{ id: 0, name: VideoType.INSTRUCTIONAL }],
       }),
     );
     new ApiStub().defaultUser().queryCollections({
@@ -100,24 +104,31 @@ describe('SubjectSearchView', () => {
 
   it('subject filters are not displayed', async () => {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-    client.videos.setFacets({
-      subjects: {
-        'math-subject-1': {
-          hits: 1,
-        },
-      },
-      ageRanges: {
-        '3-5': {
-          hits: 1,
-        },
-      },
-      durations: {
-        'PT0S-PT2M': {
-          hits: 1,
-        },
-      },
-      resourceTypes: {},
-    });
+    client.videos.setFacets(
+      FacetsFactory.sample({
+        subjects: [
+          {
+            id: 'arts-subject-1',
+            name: 'Arts',
+            hits: 1,
+          },
+        ],
+        ageRanges: [
+          {
+            id: '3-5',
+            name: '3-5',
+            hits: 1,
+          },
+        ],
+        durations: [
+          {
+            id: 'PT0S-PT2M',
+            name: 'PT0S-PT2M',
+            hits: 1,
+          },
+        ],
+      }),
+    );
     const view = renderSubjectSearchView();
     const sidebar = view.getByText('Filter results').closest('div');
 

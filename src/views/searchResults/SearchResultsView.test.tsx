@@ -5,6 +5,7 @@ import { renderSearchResultsViewWithSampleData } from 'test-support/views/search
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { FacetsFactory } from 'boclips-api-client/dist/test-support/FacetsFactory';
 
 jest.mock('lodash/debounce', () => {
   let latestCallback = null;
@@ -34,31 +35,43 @@ describe('SearchResultsView - mocked debounce', () => {
       VideoFactory.sample({ id: '456', title: `video 2 hello` }),
     );
 
-    client.videos.setFacets({
-      ageRanges: {
-        '3-5': {
-          hits: 3,
-        },
-      },
-      subjects: {
-        'art-id': {
-          hits: 10,
-        },
-        'other-id': {
-          hits: 12,
-        },
-      },
-      durations: {
-        'PT10M-PT20M': {
-          hits: 3,
-        },
-      },
-      resourceTypes: {
-        Activity: {
-          hits: 2,
-        },
-      },
-    });
+    client.videos.setFacets(
+      FacetsFactory.sample({
+        subjects: [
+          {
+            id: 'art-id',
+            name: 'Arts',
+            hits: 10,
+          },
+          {
+            id: 'other-id',
+            name: 'Other',
+            hits: 12,
+          },
+        ],
+        ageRanges: [
+          {
+            id: '3-5',
+            name: '3-5',
+            hits: 3,
+          },
+        ],
+        durations: [
+          {
+            id: 'PT10M-PT20M',
+            name: 'PT10M-PT20M',
+            hits: 3,
+          },
+        ],
+        resourceTypes: [
+          {
+            id: 'Activity',
+            name: 'Activity',
+            hits: 2,
+          },
+        ],
+      }),
+    );
   });
 
   it('changing multiple filters does not trigger multiple searches but waits', async () => {

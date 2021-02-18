@@ -1,24 +1,21 @@
 import { MaxElementCount } from 'src/services/videos/parseVideosResponse';
 import { Facet } from 'boclips-api-client/dist/sub-clients/videos/model/VideoFacets';
 
-export const extractFacetHits = (
-  id: string,
-  facet: { [id: string]: Facet },
-): number => {
+export const extractFacetHits = (id: string, facets: Facet[]): number => {
+  if (!facets) {
+    return 0;
+  }
+
+  const facet = facets.find((f) => f.id === id);
+
   if (!facet) {
     return 0;
   }
 
-  if (!facet[id]) {
-    return 0;
-  }
-
-  return facet[id].hits > MaxElementCount ? MaxElementCount : facet[id].hits;
+  return facet.hits > MaxElementCount ? MaxElementCount : facet.hits;
 };
 
-export const extractTotalHits = (facets?: { [id: string]: Facet }): number =>
+export const extractTotalHits = (facets?: Facet[]): number =>
   facets
-    ? Object.keys(facets)
-        .map((key) => facets[key].hits)
-        .reduce((acc, value) => acc + value, 0)
+    ? facets.map((facet) => facet.hits).reduce((acc, value) => acc + value, 0)
     : 0;

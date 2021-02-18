@@ -1,3 +1,4 @@
+import { FacetsFactory } from 'boclips-api-client/dist/test-support/FacetsFactory';
 import {
   EntitiesFactory,
   MockStoreFactory,
@@ -6,12 +7,12 @@ import {
   VideoFactory,
   VideoSearchFactory,
   CollectionSearchFactory,
-} from '../../../../../test-support/factories';
-import { createReducer } from '../../../../app/redux/createReducer';
+} from 'test-support/factories';
+import { createReducer } from 'src/app/redux/createReducer';
 import {
   CollectionSearchResult,
   VideoSearchResult,
-} from '../../../../types/SearchResults';
+} from 'src/types/SearchResults';
 import State, {
   CollectionSearchStateValue,
   VideoSearchStateValue,
@@ -112,12 +113,7 @@ describe('searching videos', () => {
   it('can store search facets', () => {
     const stateBefore = MockStoreFactory.sampleState({});
 
-    const facets = {
-      subjects: {},
-      ageRanges: {},
-      durations: {},
-      resourceTypes: {},
-    };
+    const facets = FacetsFactory.sample({});
 
     const newState = searchReducer(
       stateBefore,

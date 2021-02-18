@@ -8,42 +8,64 @@ import { collectionsResponse } from 'test-support/api-responses';
 import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { VideoFactory } from 'boclips-api-client/dist/test-support/VideosFactory';
+import { FacetsFactory } from 'boclips-api-client/dist/test-support/FacetsFactory';
+import { VideoType } from 'src/types/Video';
 
 describe('SearchResultsView', () => {
   beforeEach(async () => {
     const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
     client.videos.insertVideo(
-      VideoFactory.sample({ id: '177', title: `video 1 hello` }),
+      VideoFactory.sample({
+        id: '177',
+        title: `video 1 hello`,
+        types: [{ id: 0, name: VideoType.INSTRUCTIONAL }],
+      }),
     );
     client.videos.insertVideo(
-      VideoFactory.sample({ id: '456', title: `video 2 hello` }),
+      VideoFactory.sample({
+        id: '456',
+        title: `video 2 hello`,
+        types: [{ id: 0, name: VideoType.INSTRUCTIONAL }],
+      }),
     );
 
-    client.videos.setFacets({
-      ageRanges: {
-        '3-5': {
-          hits: 3,
-        },
-      },
-      subjects: {
-        'art-id': {
-          hits: 10,
-        },
-        'other-id': {
-          hits: 12,
-        },
-      },
-      durations: {
-        'PT10M-PT20M': {
-          hits: 3,
-        },
-      },
-      resourceTypes: {
-        Activity: {
-          hits: 2,
-        },
-      },
-    });
+    client.videos.setFacets(
+      FacetsFactory.sample({
+        subjects: [
+          {
+            id: 'art-id',
+            name: 'art',
+            hits: 10,
+          },
+          {
+            id: 'other-id',
+            name: 'other',
+            hits: 12,
+          },
+        ],
+        ageRanges: [
+          {
+            id: '3-5',
+            name: '3-5',
+            hits: 3,
+          },
+        ],
+        durations: [
+          {
+            id: 'PT10M-PT20M',
+            name: 'PT10M-PT20M',
+            hits: 3,
+          },
+        ],
+        resourceTypes: [
+          {
+            id: 'Activity',
+            name: 'Activity',
+            hits: 2,
+          },
+        ],
+      }),
+    );
   });
 
   it('panel contains filters for age, subjects, duration, and resource type', async () => {
@@ -104,24 +126,32 @@ describe('SearchResultsView', () => {
     it('provides the correct counts for age range and subject filter', async () => {
       const initialQuery = 'hello';
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-      client.videos.setFacets({
-        subjects: {
-          'art-id': {
-            hits: 1,
-          },
-        },
-        ageRanges: {
-          '3-5': {
-            hits: 100,
-          },
-        },
-        durations: {
-          'PT0S-PT2M': {
-            hits: 101,
-          },
-        },
-        resourceTypes: {},
-      });
+
+      client.videos.setFacets(
+        FacetsFactory.sample({
+          subjects: [
+            {
+              id: 'art-id',
+              name: 'Arts',
+              hits: 1,
+            },
+          ],
+          ageRanges: [
+            {
+              id: '3-5',
+              name: '3-5',
+              hits: 100,
+            },
+          ],
+          durations: [
+            {
+              id: 'PT0S-PT2M',
+              name: 'PT0S-PT2M',
+              hits: 101,
+            },
+          ],
+        }),
+      );
 
       new ApiStub().defaultUser().queryCollections({
         query: initialQuery,
@@ -137,24 +167,32 @@ describe('SearchResultsView', () => {
 
     it('renders only filters with a filter count greater 0', async () => {
       const client = (await ApiClientWrapper.get()) as FakeBoclipsClient;
-      client.videos.setFacets({
-        subjects: {
-          'art-id': {
-            hits: 0,
-          },
-        },
-        ageRanges: {
-          '3-5': {
-            hits: 0,
-          },
-        },
-        durations: {
-          'PT0S-PT2M': {
-            hits: 0,
-          },
-        },
-        resourceTypes: {},
-      });
+
+      client.videos.setFacets(
+        FacetsFactory.sample({
+          subjects: [
+            {
+              id: 'art-id',
+              name: 'art',
+              hits: 0,
+            },
+          ],
+          ageRanges: [
+            {
+              id: '3-5',
+              name: '3-5',
+              hits: 0,
+            },
+          ],
+          durations: [
+            {
+              id: 'PT0S-PT2M',
+              name: 'PT0S-PT2M',
+              hits: 0,
+            },
+          ],
+        }),
+      );
 
       new ApiStub().defaultUser().queryCollections({
         query: 'climate',
