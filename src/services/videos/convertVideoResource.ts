@@ -1,6 +1,6 @@
-import moment from 'moment';
 import { AgeRange } from 'src/types/AgeRange';
 import { PlaybackConverter } from 'boclips-api-client/dist/sub-clients/common/model/PlaybackConverter';
+import dayjs from 'src/types/dayjs';
 import { Link } from '../../types/Link';
 import { Video } from '../../types/Video';
 
@@ -19,7 +19,7 @@ export default function convertVideoResource(resource: any): Video {
     id: resource.id,
     title: resource.title,
     description: resource.description,
-    duration: moment.duration(resource.playback.duration),
+    duration: dayjs.duration(resource.playback.duration),
     releasedOn: new Date(resource.releasedOn),
     createdBy: resource.createdBy,
     thumbnailUrl: getEffectiveThumbnailUrl(

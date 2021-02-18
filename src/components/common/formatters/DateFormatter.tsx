@@ -1,5 +1,5 @@
-import moment from 'moment';
 import * as React from 'react';
+import dayjs from 'dayjs';
 
 interface Props {
   date: Date | string;
@@ -11,7 +11,7 @@ export default class DateFormatter extends React.PureComponent<Props> {
       return null;
     }
 
-    const parsedDate = moment(this.props.date);
+    const parsedDate = dayjs(this.props.date);
 
     if (!parsedDate.isValid()) {
       return null;

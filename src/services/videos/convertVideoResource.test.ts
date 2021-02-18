@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import {
   video177,
   videoWithoutTemplatedThumbnail,
@@ -22,7 +21,8 @@ test('converts a video with stream playback', () => {
   expect(video.id).toEqual('177');
   expect(video.title).toEqual('KS3/4 Science: Demonstrating Chemistry');
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
-  expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
+  expect(video.duration.minutes()).toEqual('1');
+  expect(video.duration.seconds()).toEqual('2');
   expect(video.ageRange.resolveMin()).toEqual(4);
   expect(video.ageRange.resolveMax()).toEqual(5);
   expect(video.releasedOn).toEqual(new Date('2018-02-11T10:12:33Z'));
@@ -62,7 +62,8 @@ test('converts a video with youtube playback', () => {
   expect(video.id).toEqual('1');
   expect(video.title).toEqual('A youtube video');
   expect(video.description).toEqual('Matthew Tosh shows us the science.');
-  expect(video.duration).toEqual(moment.duration({ minutes: 1, seconds: 2 }));
+  expect(video.duration.minutes()).toEqual('1');
+  expect(video.duration.seconds()).toEqual('2');
   expect(video.releasedOn).toEqual(new Date('2018-02-11T10:12:33Z'));
   expect(video.createdBy).toEqual('cp1');
   expect(video.thumbnailUrl).toEqual('https://cdn.kaltura.com/thumbs/177.jpg');

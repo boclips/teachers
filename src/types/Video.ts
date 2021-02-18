@@ -1,4 +1,4 @@
-import { Duration } from 'moment';
+import { Duration } from 'dayjs/plugin/duration';
 import { AgeRange } from 'src/types/AgeRange';
 import { Playback } from 'boclips-api-client/dist/sub-clients/common/model/Playback';
 import { Attachment } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';

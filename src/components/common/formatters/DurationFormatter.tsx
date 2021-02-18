@@ -1,4 +1,4 @@
-import { Duration } from 'moment';
+import { Duration } from 'dayjs/plugin/duration';
 import React from 'react';
 
 interface Props {

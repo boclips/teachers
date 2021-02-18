@@ -1,15 +1,15 @@
 import { Video as ClientVideo } from 'boclips-api-client/dist/sub-clients/videos/model/Video';
 import { Link } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
-import moment from 'moment';
 import { convertApiClientVideo } from 'src/services/videos/convertApiClientVideo';
 import { Video } from 'src/types/Video';
 import { AgeRange } from 'src/types/AgeRange';
 import { AttachmentType } from 'boclips-api-client/dist/sub-clients/common/model/Attachment';
+import dayjs from 'src/types/dayjs';
 
 describe('ApiClientVideo', () => {
   it('can convert to a Teachers Video', () => {
     const date = new Date();
-    const duration = moment.duration();
+    const duration = dayjs.duration(100);
 
     const apiClientVideo: ClientVideo = {
       id: 'video444',

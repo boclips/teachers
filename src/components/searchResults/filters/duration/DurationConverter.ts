@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'src/types/dayjs';
 
 export default class DurationConverter {
   public secondsToIso = (seconds: number): string => {
@@ -6,6 +6,6 @@ export default class DurationConverter {
       return 'PT0S';
     }
 
-    return moment.duration(seconds, 'seconds').toISOString();
+    return dayjs.duration(seconds, 'seconds').toISOString();
   };
 }

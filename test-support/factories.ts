@@ -4,7 +4,6 @@ import {
   RouterActionType,
   RouterState as ReactRouterState,
 } from 'connected-react-router';
-import * as moment from 'moment';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import { UserProfile, UserProfileLinks } from 'src/services/users/UserProfile';
 import { AgeRange } from 'src/types/AgeRange';
@@ -37,6 +36,7 @@ import { defaultDurations } from 'src/components/durations/redux/durationReducer
 import { Link as ApiClientLink } from 'boclips-api-client/dist/sub-clients/common/model/LinkEntity';
 import { Link } from 'src/types/Link';
 import { ResourceType } from 'src/types/ResourceType';
+import dayjs from 'src/types/dayjs';
 import { video177 } from './api-responses';
 
 export class VideoFactory {
@@ -49,7 +49,7 @@ export class VideoFactory {
       additionalDescription:
         arg.additionalDescription || 'my additional video description',
       createdBy: arg.createdBy || 'Bodevs Productions',
-      duration: arg.duration || moment.duration(2, 'minutes'),
+      duration: arg.duration || dayjs.duration(2, 'minutes'),
       ageRange: arg.ageRange || new AgeRange(3, 5),
       releasedOn: arg.releasedOn || new Date('2018-06-20T10:12:33Z'),
       thumbnailUrl: arg.thumbnailUrl || 'http://cdn.kaltura.com/thumbnail.jpg',
