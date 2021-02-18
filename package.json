@@ -125,7 +125,7 @@
     "axios": "^0.21.1",
     "boclips-api-client": "^31.0.2",
     "boclips-js-security": "^4.0.2",
-    "boclips-player": "6.2.0",
+    "boclips-player": "6.3.3",
     "boclips-player-react": "1.2.2",
     "dayjs": "^1.9.7",
     "js-cookie": "^2.2.1",
