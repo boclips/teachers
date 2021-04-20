@@ -7,7 +7,7 @@
     "audit": "audit-ci --critical",
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev": "webpack-dev-server --config webpack-config/webpack.dev.js --hot",
+    "dev": "webpack serve --config webpack-config/webpack.dev.js --hot",
     "build": "webpack --config webpack-config/webpack.prod.js",
     "build:ci": "npm-run-all --parallel --print-label --aggregate-output lint compile test build",
     "analyse": "webpack --config webpack-config/webpack.analyse.js",
