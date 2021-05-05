@@ -118,7 +118,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@hot-loader/react-dom": "16.13.0",
+    "@hot-loader/react-dom": "16.14.0",
     "@sentry/browser": "^5.27.2",
     "@sentry/integrations": "^5.27.3",
     "antd": "^4.3.5",
