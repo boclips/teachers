@@ -23,12 +23,7 @@ export interface UserProfile {
   role: 'TEACHER' | 'PARENT' | 'SCHOOLADMIN' | 'OTHER';
 }
 
-export type UserFeatureKey =
-  | 'TEACHERS_HOME_BANNER'
-  | 'TEACHERS_HOME_SUGGESTED_VIDEOS'
-  | 'TEACHERS_HOME_PROMOTED_COLLECTIONS'
-  | 'TEACHERS_SUBJECTS'
-  | 'USER_DATA_HIDDEN';
+export type UserFeatureKey = 'USER_DATA_HIDDEN';
 
 export interface UserProfileLinks {
   self: Link;

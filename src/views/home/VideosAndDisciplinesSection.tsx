@@ -2,7 +2,6 @@ import Col from 'antd/lib/grid/col';
 import Row from 'antd/lib/grid/row';
 import Layout from 'antd/lib/layout/layout';
 import React from 'react';
-import FeatureGate from 'src/components/common/featuresFlags/FeatureGate';
 import { Link } from 'react-router-dom';
 import { HomeViewVideoList } from 'src/views/home/HomeViewVideoList';
 import ForwardArrowIcon from '../../../resources/images/forward-arrow.svg';
@@ -45,20 +44,14 @@ export const VideosAndDisciplinesSection = withMediaBreakPoint(
           {screenIsDesktop ? (
             <Row gutter={90}>
               <Col lg={{ span: 8 }}>
-                <FeatureGate flag="TEACHERS_HOME_SUGGESTED_VIDEOS">
-                  <HomeViewVideoList />
-                </FeatureGate>
+                <HomeViewVideoList />
               </Col>
               <Col lg={{ span: 16 }}>
-                <FeatureGate flag="TEACHERS_SUBJECTS">
-                  <DisciplineSection screenIsMobile={screenIsMobile} />
-                </FeatureGate>
+                <DisciplineSection screenIsMobile={screenIsMobile} />
               </Col>
             </Row>
           ) : (
-            <FeatureGate flag="TEACHERS_SUBJECTS">
-              <DisciplineSection screenIsMobile={screenIsMobile} />
-            </FeatureGate>
+            <DisciplineSection screenIsMobile={screenIsMobile} />
           )}
         </Content>
       </section>

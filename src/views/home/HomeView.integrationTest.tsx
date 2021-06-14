@@ -66,11 +66,4 @@ describe('Home page', () => {
       title: video177.title,
     });
   });
-
-  test(`does not load home banner if feature is disabled`, async () => {
-    new ApiStub().defaultUser({ TEACHERS_HOME_PROMOTED_COLLECTIONS: false });
-    const homePage = await HomePage.load();
-
-    expect(homePage.getPromotedCollections()).toHaveLength(0);
-  });
 });

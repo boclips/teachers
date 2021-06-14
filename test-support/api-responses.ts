@@ -642,10 +642,6 @@ interface UserOptions {
 export function userResponse(options?: Partial<UserOptions>) {
   const id = options?.id || 'my-user-id';
   const features = options?.features || {
-    TEACHERS_HOME_SUGGESTED_VIDEOS: true,
-    TEACHERS_SUBJECTS: true,
-    TEACHERS_HOME_PROMOTED_COLLECTIONS: true,
-    TEACHERS_HOME_BANNER: true,
     USER_DATA_HIDDEN: false,
   };
   return {

@@ -7,7 +7,6 @@ import { PlatformInteractionType } from 'src/services/analytics/boclips/Platform
 import { InteractionTracker } from 'src/components/common/InteractionTracker';
 import { Link } from 'react-router-dom';
 import { SearchBar } from 'src/components/searchBar/SearchBarWrapper';
-import FeatureGate from 'src/components/common/featuresFlags/FeatureGate';
 import { PromotedCollectionsGrid } from '../../components/collection/grid/PromotedCollectionsGrid';
 import { BoclipsFooter } from '../../components/common/BoclipsFooter';
 import PageLayout from '../../components/layout/PageLayout';
@@ -47,54 +46,46 @@ export default class HomeView extends PureComponent {
 
           <section>
             <Content>
-              <FeatureGate flag="TEACHERS_HOME_BANNER">
-                <InteractionTracker
-                  onInteraction={() =>
-                    AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
-                      PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
-                    )
-                  }
+              <InteractionTracker
+                onInteraction={() =>
+                  AnalyticsFactory.internalAnalytics().trackPlatformInteraction(
+                    PlatformInteractionType.DIGITAL_CITIZENSHIP_COLLECTION_OPENED,
+                  )
+                }
+              >
+                <Link
+                  to="/collections/5ecd3a5515f802372946d4dc"
+                  className="home-banner"
                 >
-                  <Link
-                    to="/collections/5ecd3a5515f802372946d4dc"
-                    className="home-banner"
-                  >
-                    <div className="home-banner__illustration display-desktop">
-                      <DigitalCitizenshipSVG />
-                    </div>
-                    <div className="copy-col">
-                      <h1 className="alt">
-                        Digital Citizenship - Social Media
-                      </h1>
-                      <p>Help students understand how to keep safe online</p>
-                      <Button className="display-desktop">
-                        Explore series
-                      </Button>
-                    </div>
-                  </Link>
-                </InteractionTracker>
-              </FeatureGate>
+                  <div className="home-banner__illustration display-desktop">
+                    <DigitalCitizenshipSVG />
+                  </div>
+                  <div className="copy-col">
+                    <h1 className="alt">Digital Citizenship - Social Media</h1>
+                    <p>Help students understand how to keep safe online</p>
+                    <Button className="display-desktop">Explore series</Button>
+                  </div>
+                </Link>
+              </InteractionTracker>
             </Content>
           </section>
 
           <VideosAndDisciplinesSection />
 
-          <FeatureGate flag="TEACHERS_HOME_PROMOTED_COLLECTIONS">
-            <section className="discovery-section">
-              <Content>
-                <Row>
-                  <Col>
-                    <section className="home-collections">
-                      <PromotedCollectionsGrid
-                        maxNumberOfCollections={COLLECTIONS_COUNT}
-                        description="Explore our curated collections made to engage students of all ages and enrich learning opportunities in the classroom."
-                      />
-                    </section>
-                  </Col>
-                </Row>
-              </Content>
-            </section>
-          </FeatureGate>
+          <section className="discovery-section">
+            <Content>
+              <Row>
+                <Col>
+                  <section className="home-collections">
+                    <PromotedCollectionsGrid
+                      maxNumberOfCollections={COLLECTIONS_COUNT}
+                      description="Explore our curated collections made to engage students of all ages and enrich learning opportunities in the classroom."
+                    />
+                  </section>
+                </Col>
+              </Row>
+            </Content>
+          </section>
           <BoclipsFooter />
         </section>
       </>

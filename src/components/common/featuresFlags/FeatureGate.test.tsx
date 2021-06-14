@@ -6,12 +6,12 @@ import React from 'react';
 describe(`FeatureGate`, () => {
   it(`renders the child component when the user has the feature`, () => {
     const wrapper = renderWithBoclipsStore(
-      <FeatureGate flag="TEACHERS_HOME_BANNER">
+      <FeatureGate flag="USER_DATA_HIDDEN">
         <div>Hello world</div>
       </FeatureGate>,
       MockStoreFactory.sampleState({
         user: UserProfileFactory.sample({
-          features: { TEACHERS_HOME_BANNER: true },
+          features: { USER_DATA_HIDDEN: true },
         }),
       }),
     );
@@ -21,12 +21,12 @@ describe(`FeatureGate`, () => {
 
   it('does not render component when user does not have feature enabled', async () => {
     const wrapper = renderWithBoclipsStore(
-      <FeatureGate flag="TEACHERS_HOME_BANNER">
+      <FeatureGate flag="USER_DATA_HIDDEN">
         <div>Hello world</div>
       </FeatureGate>,
       MockStoreFactory.sampleState({
         user: UserProfileFactory.sample({
-          features: { TEACHERS_SUBJECTS: true, TEACHERS_HOME_BANNER: false },
+          features: { USER_DATA_HIDDEN: false },
         }),
       }),
     );
