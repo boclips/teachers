@@ -1,6 +1,6 @@
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { ApiClientWrapper } from 'src/services/apiClient';
-import { FakeSuggestionsClient } from 'boclips-api-client/dist/sub-clients/suggestions/client/FakeSubjectsClient';
+import { FakeSuggestionsClient } from 'boclips-api-client/dist/sub-clients/suggestions/client/FakeSuggestionsClient';
 import { fetchSuggestions } from 'src/services/suggestions/fetchSuggestions';
 import { Suggestions } from 'boclips-api-client/dist/sub-clients/suggestions/model/Suggestions';
 

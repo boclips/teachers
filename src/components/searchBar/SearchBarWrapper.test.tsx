@@ -11,7 +11,7 @@ import { ApiClientWrapper } from 'src/services/apiClient';
 import { FakeBoclipsClient } from 'boclips-api-client/dist/test-support';
 import { FakeEventsClient } from 'boclips-api-client/dist/sub-clients/events/client/FakeEventsClient';
 import { SearchQueryCompletionsSuggestedRequest } from 'boclips-api-client/dist/sub-clients/events/model/SearchQueryCompletionsSuggestedRequest';
-import { FakeSuggestionsClient } from 'boclips-api-client/dist/sub-clients/suggestions/client/FakeSubjectsClient';
+import { FakeSuggestionsClient } from 'boclips-api-client/dist/sub-clients/suggestions/client/FakeSuggestionsClient';
 import { SearchBar } from './SearchBarWrapper';
 import { bulkUpdateSearchParamsAction } from '../searchResults/redux/actions/updateSearchParametersActions';
 import StatefulSearchBar from './StatefulSearchBar';

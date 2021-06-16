@@ -68,7 +68,7 @@ module.exports = {
             options: {
               lessOptions: {
                 javascriptEnabled: true,
-              }
+              },
             },
           },
         ],
@@ -126,16 +126,15 @@ module.exports = {
       template: path.resolve(srcPath, 'index.html'),
       ga: 'replaced-by-profile',
     }),
-    new CopyWebpackPlugin(
-      {
-        patterns: [
-          { from: staticPath, to: distPath },
-          {
-            from: './resources/youtube-play.svg',
-            to: 'resources',
-          },
-        ]
-      }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: staticPath, to: distPath },
+        {
+          from: './resources/youtube-play.svg',
+          to: 'resources',
+        },
+      ],
+    }),
     new DynamicCdnWebpackPlugin({
       exclude: ['react-router', 'react-router-dom'],
     }),

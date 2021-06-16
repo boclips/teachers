@@ -15,8 +15,8 @@ module.exports = ({ config }) => {
   //   return acc;
   // }, []);
 
-  const newRules = config.module.rules.map( data => {
-    if (/svg\|/.test( String( data.test ) ))
+  const newRules = config.module.rules.map((data) => {
+    if (/svg\|/.test(String(data.test)))
       data.test = /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani)(\?.*)?$/;
     return data;
   });
@@ -48,7 +48,9 @@ module.exports = ({ config }) => {
       resolve: common.resolve,
       plugins: [
         new MiniCssExtractPlugin({ filename: '[name]-[contenthash:20].css' }),
-        new CopyWebpackPlugin({patterns: [{ from: './static', to: './dist' }]}),
+        new CopyWebpackPlugin({
+          patterns: [{ from: './static', to: './dist' }],
+        }),
       ],
     },
   );
